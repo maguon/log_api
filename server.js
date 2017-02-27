@@ -10,6 +10,7 @@ var restify = require('restify');
 var sysConfig = require('./config/SystemConfig.js');
 var serverLogger = require('./util/ServerLogger.js');
 var logger = serverLogger.createLogger('Server.js');
+var adminUser = require('./bl/AdminUser.js');
 
 
 ///--- API
@@ -99,6 +100,15 @@ function createServer() {
     server.get(/\.html\?/i,restify.serveStatic({
         directory: './public/docs',
         maxAge: 0}));
+
+    /**
+     * Admin User Module
+     */
+    server.get('/api/admin/:adminId' ,adminUser.getAdminUserInfo);
+    server.post({path:'/api/admin/do/login',contentType: 'application/json'},adminUser.adminUserLogin);
+    server.put({path:'/api/admin/:adminId/password',contentType: 'application/json'} ,adminUser.changeAdminPassword);
+    server.put({path:'/api/admin/:adminId',contentType: 'application/json'} ,adminUser.updateAdminInfo);
+
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

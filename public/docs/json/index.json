@@ -17,15 +17,172 @@
   "basePath": "/api",
   "tags": [
     {
-      "name": "user",
-      "description": "log system user info"
+      "name": "admin",
+      "description": "Admin of authauto api "
     }
   ],
   "schemes": [
     "http"
   ],
   "paths": {
+    "/admin/do/login": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Admin user do login",
+        "description": "",
+        "operationId": "admin login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Admin base info ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/admin"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "query admin user info",
+        "description": "Get admin user info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin id",
+            "required": true,
+            "type": "integer"
 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/admin"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid admin id"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "update admin user info",
+        "description": "update admin user info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "admin",
+            "in": "body",
+            "description": "admin base info:name,phone and remark is needed .",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/admin"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/admin"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid admin id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/password": {
+      "put": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "update admin user password",
+        "description": "update admin user password",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "admin base info:origin and new password is needed .",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/password"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/password"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid admin id"
+          }
+        }
+      }
+    }
   },
   "securityDefinitions": {
     "petstore_auth": {
@@ -44,6 +201,64 @@
     }
   },
   "definitions": {
+    "admin": {
+      "type": "object",
+      "required": [
+        "id",
+        "username",
+        "password"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "admin_status": {
+          "type": "integer",
+          "description": "admin status",
+          "enum": [
+            "0",
+            "1"
+          ]
+        }
+      },
+      "xml": {
+        "name": "admin"
+      }
+    },
+    "password": {
+      "type": "object",
+      "required": [
+        "originPassword",
+        "newPassword"
+      ],
+      "properties": {
+        "originPassword": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "password"
+      }
+    }
   },
   "externalDocs": {
     "description": "Find more on developer website",
