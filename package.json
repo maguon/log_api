@@ -7,7 +7,7 @@
         "extend": "*",
         "gm": "1.23.0",
         "log4js": "*",
-        "mongodb": "2.0.27",
+        "mongodb": "2.2.24",
         "mysql": "*",
         "oauth": ">=0.9.0 <1.0.0",
         "oauth2-provider": "1.x",
