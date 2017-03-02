@@ -1,5 +1,5 @@
 {
-    "name": "authauto",
+    "name": "log_api",
     "version": "0.0.1",
     "dependencies": {
         "assert-plus": "*",
@@ -7,13 +7,11 @@
         "extend": "*",
         "gm": "1.23.0",
         "log4js": "*",
-        "kafka-node": "1.0.7",
         "mongodb": "2.0.27",
         "mysql": "*",
         "oauth": ">=0.9.0 <1.0.0",
         "oauth2-provider": "1.x",
         "posix-getopt": "1.0.0",
-        "qr-image": "*",
         "request": "*",
         "restify": "4.0.3",
         "restify-errors" :"*",

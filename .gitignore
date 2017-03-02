@@ -1,5 +1,6 @@
 *.log
 config/config.js
+config/SystemConfig.js
 conf.json
 public/apidocs/json/index.json
 .idea/*
