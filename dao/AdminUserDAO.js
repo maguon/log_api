@@ -13,7 +13,6 @@ function updatePassword(params,callback){
         logger.debug(' updatePassword ');
         return callback(error,rows);
     });
-
 }
 
 function updateInfo(params,callback){
