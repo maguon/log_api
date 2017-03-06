@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "localhost:8081",
+  "host": "localhost:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -113,7 +113,7 @@
           {
             "name": "admin",
             "in": "body",
-            "description": "admin base info:name,phone and remark is needed .",
+            "description": "admin base info:name,mobile and remark is needed .",
             "required": true,
             "schema": {
               "$ref": "#/definitions/admin"
@@ -213,22 +213,19 @@
           "type": "integer",
           "format": "int64"
         },
-        "username": {
+        "user_name": {
           "type": "string"
         },
         "password": {
           "type": "string"
         },
-        "name": {
+        "real name": {
           "type": "string"
         },
-        "phone": {
+        "mobile": {
           "type": "string"
         },
-        "remark": {
-          "type": "string"
-        },
-        "admin_status": {
+        "status": {
           "type": "integer",
           "description": "admin status",
           "enum": [
