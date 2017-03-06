@@ -13,14 +13,14 @@ function updatePassword(params,callback){
         logger.debug(' updatePassword ');
         return callback(error,rows);
     });
+
 }
 
 function updateInfo(params,callback){
-    var query = " update admin_user set name = ? ,remark= ?,phone=? where id = ?";
+    var query = " update admin_user set real_name = ? ,mobile=? where id = ?";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.name;
-    paramsArray[i++] = params.remark;
-    paramsArray[i++] = params.phone;
+    paramsArray[i++] = params.real_name;
+    paramsArray[i++] = params.mobile;
     paramsArray[i] = params.adminId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateInfo ');
@@ -35,9 +35,9 @@ function queryAdminUser(params,callback){
         paramsArray[i++] = params.adminId;
         query = query + " and id = ? ";
     }
-    if(params.username){
-        paramsArray[i++] = params.username;
-        query = query + " and username = ? ";
+    if(params.user_name){
+        paramsArray[i++] = params.user_name;
+        query = query + " and user_name = ? ";
     }
 
     db.dbQuery(query,paramsArray,function(error,rows){
