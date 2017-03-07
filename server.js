@@ -11,7 +11,7 @@ var sysConfig = require('./config/SystemConfig.js');
 var serverLogger = require('./util/ServerLogger.js');
 var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
-
+var user = require('./bl/User.js');
 
 ///--- API
 
@@ -109,6 +109,10 @@ function createServer() {
     server.put({path:'/api/admin/:adminId/password',contentType: 'application/json'} ,adminUser.changeAdminPassword);
     server.put({path:'/api/admin/:adminId',contentType: 'application/json'} ,adminUser.updateAdminInfo);
 
+    /**
+     * User Module
+     */
+    server.post({path:'/api/user',contentType: 'application/json'} , user.userRegister);
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");
