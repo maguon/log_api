@@ -18,7 +18,11 @@
   "tags": [
     {
       "name": "admin",
-      "description": "Admin of authauto api "
+      "description": "Admin of log api "
+    },
+    {
+      "name": "user",
+      "description": "log user info"
     }
   ],
   "schemes": [
@@ -182,6 +186,44 @@
           }
         }
       }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "user register",
+        "description": "user sign up",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -219,7 +261,7 @@
         "password": {
           "type": "string"
         },
-        "real name": {
+        "real_name": {
           "type": "string"
         },
         "mobile": {
@@ -254,6 +296,39 @@
       },
       "xml": {
         "name": "password"
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+
+        "user_name": {
+          "type": "string"
+        },
+        "real_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "string"
+        },
+        "tel": {
+          "type": "string"
+        },
+        "fax": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "user"
       }
     }
   },
