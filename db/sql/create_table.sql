@@ -12,11 +12,12 @@ CREATE TABLE `admin_user` (
   `real_name` varchar(50) DEFAULT NULL COMMENT '真实姓名',
   `password` varchar(50) DEFAULT NULL COMMENT '用户密码',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
+  `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
   `status` char(1) DEFAULT '1' COMMENT '状态',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for department
@@ -28,19 +29,6 @@ CREATE TABLE `department` (
   `tel` varchar(50) DEFAULT NULL COMMENT '电话',
   `fax` varchar(50) DEFAULT NULL COMMENT '传真',
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for sys_log
--- ----------------------------
-DROP TABLE IF EXISTS `sys_log`;
-CREATE TABLE `sys_log` (
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `user_name` varchar(50) DEFAULT NULL COMMENT '用户USER_NAME',
-  `time` datetime DEFAULT NULL COMMENT '记录时间',
-  `ip` varchar(20) DEFAULT NULL COMMENT 'IP地址',
-  `log_type` char(1) DEFAULT '1' COMMENT '日志类型',
-  PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -64,17 +52,6 @@ CREATE TABLE `user_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `not_login` char(1) DEFAULT '1' COMMENT '禁止登录系统(0-禁止,1-不禁止)',
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for user_online
--- ----------------------------
-DROP TABLE IF EXISTS `user_online`;
-CREATE TABLE `user_online` (
-  `uid` int(11) NOT NULL COMMENT '在线人员UID',
-  `time` datetime DEFAULT NULL COMMENT '更新时间',
-  `sid` varchar(50) DEFAULT NULL COMMENT '在线人员SessionID',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
