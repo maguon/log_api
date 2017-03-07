@@ -113,6 +113,8 @@ function createServer() {
      * User Module
      */
     server.post({path:'/api/user',contentType: 'application/json'} , user.userRegister);
+    server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
+    server.get('/api/admin/:adminId/user' ,user.queryUser);
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

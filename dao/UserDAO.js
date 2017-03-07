@@ -29,9 +29,9 @@ function getUser(params,callback) {
         paramsArray[i++] = params.userId;
         query = query + " and uid = ? ";
     }
-    if(params.email){
-        paramsArray[i++] = params.email;
-        query = query + " and email = ? ";
+    if(params.user_name){
+        paramsArray[i++] = params.user_name;
+        query = query + " and user_name = ? ";
     }
     if(params.status){
         paramsArray[i++] = params.status;
@@ -47,7 +47,35 @@ function getUser(params,callback) {
         return callback(error,rows);
     });
 }
+
+function getUserBase(params,callback){
+    var query = " select uid,user_name,real_name,password,sex,tel,fax,mobile,email from user_info where uid is not null ";
+    var paramsArray=[],i=0;
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and uid = ? ";
+    }
+    if(params.status){
+        paramsArray[i++] = params.status;
+        query = query + " and status = ? ";
+    }
+    if(params.email){
+        paramsArray[i++] = params.email;
+        query = query + " and email = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getUserBase ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addUser : addUser,
-    getUser : getUser
+    getUser : getUser,
+    getUserBase :getUserBase
 }

@@ -17,7 +17,7 @@ function userRegister(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        userDAO.getUser({email:params.email},function(error,rows){
+        userDAO.getUser({user_name:params.user_name},function(error,rows){
             if (error) {
                 logger.error(' addUser ' + error.message);
                 //res.send(200,{success:false,errMsg:sysMsg.SYS_INTERNAL_ERROR_MSG});
@@ -25,7 +25,7 @@ function userRegister(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' addUser ' +params.phone||params.email+ sysMsg.CUST_SIGNUP_REGISTERED);
+                    logger.warn(' addUser ' +params.user_name+ sysMsg.CUST_SIGNUP_REGISTERED);
                     resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED) ;
                     return next();
                 }else{
@@ -59,7 +59,70 @@ function userRegister(req,res,next){
         })
     })
 }
+function userLogin(req,res,next){
+    var params = req.params;
 
+    userDAO.getUser(params,function(error,rows){
+        if (error) {
+            logger.error(' userLogin ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            if(rows && rows.length<1){
+                logger.warn(' userLogin ' + params.email||params.phone+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                //res.send(200, {success:false,errMsg:sysMsg.ADMIN_LOGIN_USER_UNREGISTERED});
+                resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_USER_UNREGISTERED) ;
+                return next();
+            }else{
+                var passwordMd5 = encrypt.encryptByMd5(params.password);
+                if(passwordMd5 != rows[0].password){
+                    logger.warn(' userLogin ' +params.phone+ sysMsg.CUST_LOGIN_PSWD_ERROR);
+                    //res.send(200, {success:false,errMsg:sysMsg.CUST_LOGIN_PSWD_ERROR});
+                    resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_PSWD_ERROR) ;
+                    return next();
+
+                }else{
+                    if(rows[0].status == listOfValue.USER_STATUS_NOT_ACTIVE){
+                        //Admin User status is not verified return user id
+                        var user = {
+                            userId : rows[0].id,
+                            userStatus : rows[0].status,
+                            type : rows[0].type
+                        }
+                        logger.info('userLogin' +params.email||params.phone+ " not actived");
+                        resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR);
+                        return next();
+                    }else{
+                        //admin user status is active,return token
+                        var user = {
+                            userId : rows[0].id,
+                            userStatus : rows[0].status,
+                            type : rows[0].type
+                        }
+                        user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
+                        logger.info(' userLogin' +params.username+ " success");
+                        resUtil.resetQueryRes(res,user,null);
+                        return next();
+                    }
+                }
+            }
+        }
+    })
+}
+function queryUser(req,res,next){
+    var params = req.params ;
+    userDAO.getUserBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryUser ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryUser ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
 module.exports = {
-    userRegister : userRegister
+    userRegister : userRegister,
+    userLogin : userLogin,
+    queryUser : queryUser
 }
