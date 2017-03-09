@@ -42,7 +42,7 @@ CREATE TABLE `user_info` (
   `password` varchar(50) DEFAULT NULL COMMENT '用户密码',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门ID',
-  `sex` char(1) DEFAULT '1' COMMENT '性别',
+  `gender` char(1) DEFAULT '1' COMMENT '性别',
   `tel` varchar(50) DEFAULT NULL COMMENT '电话',
   `fax` varchar(50) DEFAULT NULL COMMENT '传真',
   `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',

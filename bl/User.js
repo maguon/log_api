@@ -17,7 +17,7 @@ function userRegister(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        userDAO.getUser({user_name:params.user_name},function(error,rows){
+        userDAO.getUser({userName:params.userName},function(error,rows){
             if (error) {
                 logger.error(' addUser ' + error.message);
                 //res.send(200,{success:false,errMsg:sysMsg.SYS_INTERNAL_ERROR_MSG});
@@ -25,7 +25,7 @@ function userRegister(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' addUser ' +params.user_name+ sysMsg.CUST_SIGNUP_REGISTERED);
+                    logger.warn(' addUser ' +params.userName+ sysMsg.CUST_SIGNUP_REGISTERED);
                     resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED) ;
                     return next();
                 }else{
@@ -59,6 +59,7 @@ function userRegister(req,res,next){
         })
     })
 }
+
 function userLogin(req,res,next){
     var params = req.params;
 
@@ -108,6 +109,7 @@ function userLogin(req,res,next){
         }
     })
 }
+
 function queryUser(req,res,next){
     var params = req.params ;
     userDAO.getUserBase(params,function(error,result){
@@ -121,8 +123,64 @@ function queryUser(req,res,next){
         }
     })
 }
+
+function updateUserInfo (req,res,next){
+    var params = req.params;
+    userDAO.updateUserInfo(params,function(error,result){
+        if (error) {
+            logger.error(' updateUserInfo ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateUserInfo ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function changeUserPassword(req,res,next){
+    var params = req.params;
+
+    Seq().seq(function(){
+        var that = this;
+        userDAO.getUser(params,function(error,rows){
+            if (error) {
+                logger.error(' changeUserPassword ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(rows && rows.length<1){
+                    logger.warn(' changeUserPassword ' + sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    return next();
+                }else if(encrypt.encryptByMd5(params.originPassword) != rows[0].password){
+                    logger.warn(' changeUserPassword ' + sysMsg.CUST_ORIGIN_PSWD_ERROR);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_ORIGIN_PSWD_ERROR);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        params.password = encrypt.encryptByMd5(params.newPassword);
+        userDAO.updateUserPassword(params,function(error,result){
+            if (error) {
+                logger.error(' changeUserPassword ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' changeUserPassword ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
+
 module.exports = {
     userRegister : userRegister,
     userLogin : userLogin,
-    queryUser : queryUser
+    queryUser : queryUser,
+    updateUserInfo : updateUserInfo,
+    changeUserPassword : changeUserPassword
 }

@@ -12,6 +12,7 @@ var serverLogger = require('./util/ServerLogger.js');
 var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
+var department = require('./bl/Department');
 
 ///--- API
 
@@ -112,9 +113,18 @@ function createServer() {
     /**
      * User Module
      */
+    server.get('/api/admin/:adminId/user' ,user.queryUser);
     server.post({path:'/api/user',contentType: 'application/json'} , user.userRegister);
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
-    server.get('/api/admin/:adminId/user' ,user.queryUser);
+    server.put({path:'/api/user/:userId',contentType: 'application/json'} ,user.updateUserInfo);
+    server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
+
+    /**
+     * Department Module
+     */
+    server.get('/api/admin/:adminId/department' , department.queryDepartment);
+    server.post({path:'/api/admin/:adminId/department',contentType: 'application/json'},department.createDepartment);
+    server.put({path:'/api/admin/:adminId/department/:departmentId',contentType: 'application/json'} ,department.updateDepartment);
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

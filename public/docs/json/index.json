@@ -18,11 +18,15 @@
   "tags": [
     {
       "name": "admin",
-      "description": "Admin of log api "
+      "description": "Admin of log api"
     },
     {
       "name": "user",
-      "description": "log user info"
+      "description": "User of log api"
+    },
+    {
+      "name":"department",
+      "description":"Department of log api"
     }
   ],
   "schemes": [
@@ -75,7 +79,7 @@
           {
             "name": "adminId",
             "in": "path",
-            "description": "admin id",
+            "description": "admin Id",
             "required": true,
             "type": "integer"
 
@@ -109,7 +113,7 @@
           {
             "name": "adminId",
             "in": "path",
-            "description": "admin id",
+            "description": "admin Id",
             "required": true,
             "type": "integer"
 
@@ -155,7 +159,7 @@
           {
             "name": "adminId",
             "in": "path",
-            "description": "admin id",
+            "description": "admin Id",
             "required": true,
             "type": "integer"
 
@@ -277,7 +281,7 @@
           {
             "name": "adminId",
             "in": "path",
-            "description": "adminId",
+            "description": "admin Id",
             "required": true,
             "type": "integer"
 
@@ -338,6 +342,264 @@
           }
         }
       }
+    },
+    "/user/{userId}": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "update user info",
+        "description": "update user info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user base info:name,mobile and remark is needed .",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/password": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "update user password",
+        "description": "update user password",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "user base info:origin and new password is needed .",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/password"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/password"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/department": {
+      "get": {
+        "tags": [
+          "department"
+        ],
+        "summary": "query  department list",
+        "description": "query department",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "deptId",
+            "in": "query",
+            "description": "department id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "deptName",
+            "in": "query",
+            "description": "department name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "tel",
+            "in": "query",
+            "description": "department tel",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "fax",
+            "in": "query",
+            "description": "department fax",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/department"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid postal id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "department"
+        ],
+        "summary": "admin create department",
+        "description": "admin create department",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "department",
+            "in": "body",
+            "description": "department info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/department"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/department/{departmentId}": {
+      "put": {
+        "tags": [
+          "department"
+        ],
+        "summary": "update department info",
+        "description": "update department info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "departmentId",
+            "in": "path",
+            "description": "department id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "department",
+            "in": "body",
+            "description": "department info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/department"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -361,7 +623,7 @@
       "type": "object",
       "required": [
         "id",
-        "username",
+        "userName",
         "password"
       ],
       "properties": {
@@ -369,13 +631,13 @@
           "type": "integer",
           "format": "int64"
         },
-        "user_name": {
+        "userName": {
           "type": "string"
         },
         "password": {
           "type": "string"
         },
-        "real_name": {
+        "realName": {
           "type": "string"
         },
         "mobile": {
@@ -416,16 +678,16 @@
       "type": "object",
       "properties": {
 
-        "user_name": {
+        "userName": {
           "type": "string"
         },
-        "real_name": {
+        "realName": {
           "type": "string"
         },
         "password": {
           "type": "string"
         },
-        "sex": {
+        "gender": {
           "type": "string"
         },
         "tel": {
@@ -443,6 +705,24 @@
       },
       "xml": {
         "name": "user"
+      }
+    },
+    "department": {
+      "type": "object",
+      "properties": {
+
+        "deptName": {
+          "type": "string"
+        },
+        "tel": {
+          "type": "string"
+        },
+        "fax": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "department"
       }
     }
   },

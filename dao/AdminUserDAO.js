@@ -17,9 +17,9 @@ function updatePassword(params,callback){
 }
 
 function updateInfo(params,callback){
-    var query = " update admin_user set real_name = ? ,mobile=? where id = ?";
+    var query = " update admin_user set real_name = ? ,mobile = ? where id = ?";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.real_name;
+    paramsArray[i++] = params.realName;
     paramsArray[i++] = params.mobile;
     paramsArray[i] = params.adminId;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -35,8 +35,8 @@ function queryAdminUser(params,callback){
         paramsArray[i++] = params.adminId;
         query = query + " and id = ? ";
     }
-    if(params.user_name){
-        paramsArray[i++] = params.user_name;
+    if(params.userName){
+        paramsArray[i++] = params.userName;
         query = query + " and user_name = ? ";
     }
 
@@ -46,7 +46,7 @@ function queryAdminUser(params,callback){
     });
 }
 
-function queryAdminInfo(req,res,next){
+function queryAdminInfo(params,callback){
     var query = " select * from admin_user where id is not null";
     var paramsArray=[],i=0;
     if(params.adminId){

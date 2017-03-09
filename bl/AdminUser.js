@@ -18,7 +18,7 @@ function adminUserLogin(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             if(rows && rows.length<1){
-                logger.warn(' adminUserLogin ' +params.username+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                logger.warn(' adminUserLogin ' +params.userName+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
                 //res.send(200, {success:false,errMsg:sysMsg.ADMIN_LOGIN_USER_UNREGISTERED});
                 resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED) ;
                 return next();
@@ -37,7 +37,7 @@ function adminUserLogin(req,res,next){
                             userId : rows[0].id,
                             userStatus : rows[0].admin_status
                         }
-                        logger.info('adminUserLogin' +params.username+ " not verified");
+                        logger.info('adminUserLogin' +params.userName+ " not verified");
                         resUtil.resetQueryRes(res,user,null);
                         return next();
                     }else{
@@ -47,7 +47,7 @@ function adminUserLogin(req,res,next){
                             userStatus : rows[0].admin_status
                         }
                         user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.admin,user.userId,user.userStatus);
-                        logger.info('adminUserLogin' +params.username+ " success");
+                        logger.info('adminUserLogin' +params.userName+ " success");
                         resUtil.resetQueryRes(res,user,null);
                         return next();
                     }
@@ -97,7 +97,6 @@ function changeAdminPassword(req,res,next){
             } else {
                 if(rows && rows.length<1){
                     logger.warn(' changeAdminPassword ' + sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
-
 
                     //res.send(200, {success:false,errMsg:sysMsg.ADMIN_LOGIN_USER_UNREGISTERED});
                     resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
