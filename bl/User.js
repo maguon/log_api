@@ -13,19 +13,18 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('User.js');
 
-function userRegister(req,res,next){
+function createUser(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
         userDAO.getUser({userName:params.userName},function(error,rows){
             if (error) {
-                logger.error(' addUser ' + error.message);
-                //res.send(200,{success:false,errMsg:sysMsg.SYS_INTERNAL_ERROR_MSG});
+                logger.error(' createUser ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' addUser ' +params.userName+ sysMsg.CUST_SIGNUP_REGISTERED);
+                    logger.warn(' createUser ' +params.userName+ sysMsg.CUST_SIGNUP_REGISTERED);
                     resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED) ;
                     return next();
                 }else{
@@ -37,11 +36,11 @@ function userRegister(req,res,next){
         params.password = encrypt.encryptByMd5(params.password);
         userDAO.addUser(params,function(error,result){
             if (error) {
-                logger.error(' addUser ' + error.message);
+                logger.error(' createUser ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result && result.insertId>0){
-                    logger.info(' addUser ' + 'success');
+                    logger.info(' createUser ' + 'success');
                     var user = {
                         userId : result.insertId,
                         userStatus : listOfValue.USER_STATUS_ACTIVE
@@ -50,8 +49,7 @@ function userRegister(req,res,next){
 
                     resUtil.resetQueryRes(res,user,null);
                 }else{
-                    logger.warn(' addUser ' + 'false');
-                    //res.send(200,  {success:false,errMsg:sysMsg.SYS_INTERNAL_ERROR_MSG});
+                    logger.warn(' createUser ' + 'false');
                     resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 }
                 return next();
@@ -178,7 +176,7 @@ function changeUserPassword(req,res,next){
 
 
 module.exports = {
-    userRegister : userRegister,
+    createUser : createUser,
     userLogin : userLogin,
     queryUser : queryUser,
     updateUserInfo : updateUserInfo,

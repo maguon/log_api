@@ -113,8 +113,8 @@ function createServer() {
     /**
      * User Module
      */
+    server.post({path:'/api/admin/:adminId/user',contentType: 'application/json'} , user.createUser);
     server.get('/api/admin/:adminId/user' ,user.queryUser);
-    server.post({path:'/api/user',contentType: 'application/json'} , user.userRegister);
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.get('/api/user/:userId' , user.queryUser);
     server.put({path:'/api/user/:userId',contentType: 'application/json'} ,user.updateUserInfo);

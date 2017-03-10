@@ -191,44 +191,6 @@
         }
       }
     },
-    "/user": {
-      "post": {
-        "tags": [
-          "user"
-        ],
-        "summary": "user register",
-        "description": "user sign up",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "user info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/user"
-            }
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid user id"
-          }
-        }
-      }
-    },
     "/admin/{adminId}/user": {
       "get": {
         "tags": [
@@ -301,6 +263,49 @@
           },
           "400": {
             "description": "Invalid token value or invalid postal id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "admin create user",
+        "description": "admin create user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
           }
         }
       }
