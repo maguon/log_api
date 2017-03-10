@@ -105,10 +105,10 @@ function createServer() {
     /**
      * Admin User Module
      */
-    server.get('/api/admin/:adminId' ,adminUser.getAdminUserInfo);
     server.post({path:'/api/admin/do/login',contentType: 'application/json'},adminUser.adminUserLogin);
-    server.put({path:'/api/admin/:adminId/password',contentType: 'application/json'} ,adminUser.changeAdminPassword);
+    server.get('/api/admin/:adminId' ,adminUser.getAdminUserInfo);
     server.put({path:'/api/admin/:adminId',contentType: 'application/json'} ,adminUser.updateAdminInfo);
+    server.put({path:'/api/admin/:adminId/password',contentType: 'application/json'} ,adminUser.changeAdminPassword);
 
     /**
      * User Module
@@ -116,14 +116,15 @@ function createServer() {
     server.get('/api/admin/:adminId/user' ,user.queryUser);
     server.post({path:'/api/user',contentType: 'application/json'} , user.userRegister);
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
+    server.get('/api/user/:userId' , user.queryUser);
     server.put({path:'/api/user/:userId',contentType: 'application/json'} ,user.updateUserInfo);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
 
     /**
      * Department Module
      */
-    server.get('/api/admin/:adminId/department' , department.queryDepartment);
     server.post({path:'/api/admin/:adminId/department',contentType: 'application/json'},department.createDepartment);
+    server.get('/api/admin/:adminId/department' , department.queryDepartment);
     server.put({path:'/api/admin/:adminId/department/:departmentId',contentType: 'application/json'} ,department.updateDepartment);
 
     server.on('NotFound', function (req, res, next) {

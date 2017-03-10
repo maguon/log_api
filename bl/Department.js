@@ -26,6 +26,7 @@ function createDepartment(req,res,next){
         }
     })
 }
+
 function queryDepartment(req,res,next){
     var params = req.params ;
     departmentDAO.getDepartment(params,function(error,result){
@@ -39,6 +40,7 @@ function queryDepartment(req,res,next){
         }
     })
 }
+
 function updateDepartment(req,res,next){
     var params = req.params ;
     departmentDAO.updateDepartment(params,function(error,result){

@@ -17,6 +17,7 @@ function addDepartment(params,callback){
         return callback(error,rows);
     });
 }
+
 function getDepartment(params,callback) {
     var query = " select * from department where dept_id is not null ";
     var paramsArray=[],i=0;
@@ -41,6 +42,7 @@ function getDepartment(params,callback) {
         return callback(error,rows);
     });
 }
+
 function updateDepartment(params,callback){
     var query = " update department set dept_name = ? ,tel = ? ,fax = ?  where dept_id = ? " ;
     var paramsArray=[],i=0;
@@ -53,7 +55,6 @@ function updateDepartment(params,callback){
         return callback(error,rows);
     });
 }
-
 
 module.exports ={
     addDepartment : addDepartment,

@@ -229,44 +229,6 @@
         }
       }
     },
-    "/userLogin": {
-      "post": {
-        "tags": [
-          "user"
-        ],
-        "summary": "user login",
-        "description": "user sign in",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "user info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/user"
-            }
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid user id"
-          }
-        }
-      }
-    },
     "/admin/{adminId}/user": {
       "get": {
         "tags": [
@@ -343,7 +305,79 @@
         }
       }
     },
+    "/userLogin": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "user login",
+        "description": "user sign in",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/user/{userId}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "query user profile",
+        "description": "query user info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+    },
       "put": {
         "tags": [
           "user"

@@ -57,20 +57,6 @@ function adminUserLogin(req,res,next){
     })
 }
 
-function updateAdminInfo (req,res,next){
-    var params = req.params;
-    adminUserDao.updateInfo(params,function(error,result){
-        if (error) {
-            logger.error(' updateAdminInfo ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateAdminInfo ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function getAdminUserInfo(req,res,next){
     var params = req.params;
     adminUserDao.queryAdminUser(params,function(error,rows){
@@ -80,6 +66,20 @@ function getAdminUserInfo(req,res,next){
         } else {
             logger.info(' getAdminUserInfo ' + 'success');
             resUtil.resetQueryRes(res,rows,null);
+            return next();
+        }
+    })
+}
+
+function updateAdminInfo (req,res,next){
+    var params = req.params;
+    adminUserDao.updateInfo(params,function(error,result){
+        if (error) {
+            logger.error(' updateAdminInfo ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateAdminInfo ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
             return next();
         }
     })
@@ -125,9 +125,10 @@ function changeAdminPassword(req,res,next){
             })
         })
 }
+
 module.exports = {
-    adminUserLogin : adminUserLogin ,
-    updateAdminInfo : updateAdminInfo ,
-    changeAdminPassword : changeAdminPassword ,
-    getAdminUserInfo  : getAdminUserInfo
+    adminUserLogin : adminUserLogin,
+    getAdminUserInfo  : getAdminUserInfo,
+    updateAdminInfo : updateAdminInfo,
+    changeAdminPassword : changeAdminPassword
 }
