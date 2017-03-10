@@ -11,7 +11,7 @@ function addDepartment(params,callback){
     var paramsArray=[],i=0;
     paramsArray[i++]=params.deptName;
     paramsArray[i++]=params.tel;
-    paramsArray[i++]=params.fax;
+    paramsArray[i]=params.fax;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDepartment ');
         return callback(error,rows);
@@ -56,8 +56,19 @@ function updateDepartment(params,callback){
     });
 }
 
+function deleteDepartment(params,callback) {
+    var query = " delete from department where dept_id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i]=params.departmentId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteDepartment ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addDepartment : addDepartment,
     getDepartment : getDepartment,
-    updateDepartment : updateDepartment
+    updateDepartment : updateDepartment,
+    deleteDepartment : deleteDepartment
 }

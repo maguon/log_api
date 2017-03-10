@@ -126,6 +126,7 @@ function createServer() {
     server.post({path:'/api/admin/:adminId/department',contentType: 'application/json'},department.createDepartment);
     server.get('/api/admin/:adminId/department' , department.queryDepartment);
     server.put({path:'/api/admin/:adminId/department/:departmentId',contentType: 'application/json'} ,department.updateDepartment);
+    server.del('/api/admin/:adminId/department/:departmentId' , department.deleteDepartment);
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

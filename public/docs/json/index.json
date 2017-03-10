@@ -638,6 +638,41 @@
             "description": "Invalid token value or invalid user id"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "department"
+        ],
+        "summary": "Deletes a department",
+        "description": "",
+        "operationId": "deleteDepartment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "departmentId",
+            "in": "path",
+            "description": "department id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "department not found"
+          }
+        }
       }
     }
   },

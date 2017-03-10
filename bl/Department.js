@@ -55,9 +55,24 @@ function updateDepartment(req,res,next){
     })
 }
 
+function deleteDepartment(req,res,next){
+    var params = req.params ;
+    departmentDAO.deleteDepartment(params,function(error,result){
+        if (error) {
+            logger.error(' deleteDepartment ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' deleteDepartment ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDepartment : createDepartment,
     queryDepartment : queryDepartment,
-    updateDepartment : updateDepartment
+    updateDepartment : updateDepartment,
+    deleteDepartment : deleteDepartment
 }
