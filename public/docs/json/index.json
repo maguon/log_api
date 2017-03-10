@@ -310,6 +310,59 @@
         }
       }
     },
+    "/admin/{adminId}/user/{userId}": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "admin update user info",
+        "description": "admin update user info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/userLogin": {
       "post": {
         "tags": [
@@ -635,7 +688,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid user id"
+            "description": "Invalid token value or invalid department id"
           }
         }
       },
