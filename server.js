@@ -13,6 +13,7 @@ var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
 var department = require('./bl/Department');
+var userRole = require('./bl/UserRole');
 
 ///--- API
 
@@ -128,6 +129,11 @@ function createServer() {
     server.get('/api/admin/:adminId/department' , department.queryDepartment);
     server.put({path:'/api/admin/:adminId/department/:departmentId',contentType: 'application/json'} ,department.updateDepartment);
     server.del('/api/admin/:adminId/department/:departmentId' , department.deleteDepartment);
+
+    /**
+     * User Role Module
+     */
+    server.post({path:'/api/admin/:adminId/userRole',contentType: 'application/json'},userRole.createUserRole);
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

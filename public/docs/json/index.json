@@ -27,6 +27,10 @@
     {
       "name":"department",
       "description":"Department of log api"
+    },
+    {
+      "name":"userRole",
+      "description":"UserRole of log api"
     }
   ],
   "schemes": [
@@ -634,7 +638,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid user id"
+            "description": "Invalid token value or invalid department id"
           }
         }
       }
@@ -724,6 +728,51 @@
           },
           "404": {
             "description": "department not found"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/userRole": {
+      "post": {
+        "tags": [
+          "userRole"
+        ],
+        "summary": "admin create userRole",
+        "description": "admin create userRole",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "userRole",
+            "in": "body",
+            "description": "userRole info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userRole"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid userRole id"
           }
         }
       }
@@ -850,6 +899,18 @@
       },
       "xml": {
         "name": "department"
+      }
+    },
+    "userRole": {
+      "type": "object",
+      "properties": {
+
+        "roleName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "userRole"
       }
     }
   },
