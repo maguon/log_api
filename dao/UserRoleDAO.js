@@ -16,6 +16,24 @@ function addUserRole(params,callback){
     });
 }
 
+function getUserRole(params,callback) {
+    var query = " select * from user_role where role_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.roleId){
+        paramsArray[i++] = params.roleId;
+        query = query + " and role_id = ? ";
+    }
+    if(params.roleName){
+        paramsArray[i++] = params.roleName;
+        query = query + " and role_name = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getUserRole ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
-    addUserRole : addUserRole
+    addUserRole : addUserRole,
+    getUserRole : getUserRole
 }

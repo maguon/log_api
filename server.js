@@ -134,6 +134,7 @@ function createServer() {
      * User Role Module
      */
     server.post({path:'/api/admin/:adminId/userRole',contentType: 'application/json'},userRole.createUserRole);
+    server.get('/api/admin/:adminId/userRole' , userRole.queryUserRole);
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

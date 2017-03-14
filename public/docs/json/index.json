@@ -266,7 +266,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid postal id"
+            "description": "Invalid token value or invalid user id"
           }
         }
       },
@@ -594,7 +594,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid postal id"
+            "description": "Invalid token value or invalid department id"
           }
         }
       },
@@ -733,6 +733,56 @@
       }
     },
     "/admin/{adminId}/userRole": {
+      "get": {
+        "tags": [
+          "userRole"
+        ],
+        "summary": "query  userRole list",
+        "description": "query userRole",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "roleId",
+            "in": "query",
+            "description": "userRole id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "roleName",
+            "in": "query",
+            "description": "userRole name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/userRole"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid userRole id"
+          }
+        }
+      },
       "post": {
         "tags": [
           "userRole"

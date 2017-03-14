@@ -27,7 +27,22 @@ function createUserRole(req,res,next){
     })
 }
 
+function queryUserRole(req,res,next){
+    var params = req.params ;
+    userRoleDAO.getUserRole(params,function(error,result){
+        if (error) {
+            logger.error(' queryUserRole ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryUserRole ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createUserRole : createUserRole
+    createUserRole : createUserRole,
+    queryUserRole : queryUserRole
 }
