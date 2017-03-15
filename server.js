@@ -15,6 +15,7 @@ var user = require('./bl/User.js');
 var department = require('./bl/Department');
 var userRole = require('./bl/UserRole');
 var truck = require('./bl/Truck');
+var drive = require('./bl/Drive');
 
 ///--- API
 
@@ -138,9 +139,16 @@ function createServer() {
     server.get('/api/admin/:adminId/userRole' , userRole.queryUserRole);
 
     /**
-     * User Vehicle Module
+     * Truck Module
      */
     server.get('/api/user/:userId/truck' , truck.queryTruck);
+
+    /**
+     * Drive Module
+     */
+    server.get('/api/user/:userId/drive' , drive.queryDrive);
+
+
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

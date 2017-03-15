@@ -38,7 +38,8 @@ DROP TABLE IF EXISTS `drive_info`;
 CREATE TABLE `drive_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `drive_name` varchar(50) DEFAULT NULL COMMENT '司机姓名',
-  `drive_type` varchar(50) DEFAULT '1' COMMENT '司机所属类型（1-自营,2-承包,3-供方,4-外协,5-短驳）',
+  `ascription_type` varchar(50) DEFAULT '1' COMMENT '所属类型（1-自营,2-承包,3-供方,4-外协）',
+  `drive_type` varchar(50) DEFAULT '1' COMMENT '司机所属类型（1-板车司机,2-短驳司机）',
   `drive_status` varchar(50) DEFAULT '1' COMMENT '司机状态(0-在途,1-待运,2-休息)',
   `license_level` varchar(50) DEFAULT NULL COMMENT '驾驶证级别',
   `license_date` datetime DEFAULT NULL COMMENT '驾驶证到期日期',
@@ -47,7 +48,7 @@ CREATE TABLE `drive_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for truck_info
@@ -69,7 +70,7 @@ CREATE TABLE `truck_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user_info

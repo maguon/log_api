@@ -35,6 +35,10 @@
     {
       "name":"truck",
       "description":"truck of log api"
+    },
+    {
+      "name":"drive",
+      "description":"drive of log api"
     }
   ],
   "schemes": [
@@ -911,6 +915,90 @@
           },
           "400": {
             "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/drive": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  drive list",
+        "description": "query drive",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "ascriptionType",
+            "in": "query",
+            "description": "ascription type",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveType",
+            "in": "query",
+            "description": "drive type",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveStatus",
+            "in": "query",
+            "description": "drive status",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseLevel",
+            "in": "query",
+            "description": "license level",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
           }
         }
       }
