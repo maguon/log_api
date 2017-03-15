@@ -14,6 +14,7 @@ var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
 var department = require('./bl/Department');
 var userRole = require('./bl/UserRole');
+var truck = require('./bl/Truck');
 
 ///--- API
 
@@ -135,6 +136,11 @@ function createServer() {
      */
     server.post({path:'/api/admin/:adminId/userRole',contentType: 'application/json'},userRole.createUserRole);
     server.get('/api/admin/:adminId/userRole' , userRole.queryUserRole);
+
+    /**
+     * User Vehicle Module
+     */
+    server.get('/api/user/:userId/truck' , truck.queryTruck);
 
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");

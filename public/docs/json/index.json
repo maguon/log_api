@@ -31,6 +31,10 @@
     {
       "name":"userRole",
       "description":"UserRole of log api"
+    },
+    {
+      "name":"truck",
+      "description":"truck of log api"
     }
   ],
   "schemes": [
@@ -823,6 +827,90 @@
           },
           "400": {
             "description": "Invalid token value or invalid userRole id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truck": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truck list",
+        "description": "query truck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "brand",
+            "in": "query",
+            "description": "brand",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckStatus",
+            "in": "query",
+            "description": "truck status",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
           }
         }
       }

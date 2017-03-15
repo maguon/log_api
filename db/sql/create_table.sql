@@ -50,6 +50,28 @@ CREATE TABLE `drive_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for truck_info
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_info`;
+CREATE TABLE `truck_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `truck_num` varchar(50) DEFAULT NULL COMMENT '车牌号或挂车号',
+  `brand` varchar(50) DEFAULT NULL COMMENT '品牌',
+  `truck_tel` varchar(50) DEFAULT NULL COMMENT '随车电话',
+  `the_code` varchar(50) DEFAULT NULL COMMENT '车辆识别代码（头车/挂车车架号）',
+  `operate_type` varchar(50) DEFAULT '1' COMMENT '运营类型（1-自营,2-承包,3-供方,4-外协）',
+  `truck_type` varchar(50) DEFAULT '1' COMMENT '车辆类型（1-车头,2-挂车）',
+  `truck_status` varchar(50) DEFAULT '0' COMMENT '当前状态(0-可用,1-使用中,2-维修中,3-报废)',
+  `number` varchar(50) DEFAULT NULL COMMENT '板车位数',
+  `driving_image` varchar(100) DEFAULT NULL COMMENT '行驶证照片',
+  `operation_image` varchar(100) DEFAULT NULL COMMENT '营运证照片',
+  `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
@@ -83,25 +105,3 @@ CREATE TABLE `user_role` (
   `func_id_str` varchar(10000) DEFAULT NULL COMMENT '角色对应的功能ID串',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for vehicle
--- ----------------------------
-DROP TABLE IF EXISTS `vehicle`;
-CREATE TABLE `vehicle` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `vehicle` varchar(50) DEFAULT NULL COMMENT '车牌号或挂车号',
-  `brand` varchar(50) DEFAULT NULL COMMENT '品牌',
-  `vehicle_tel` varchar(50) DEFAULT NULL COMMENT '随车电话',
-  `the_code` varchar(50) DEFAULT NULL COMMENT '车辆识别代码（头车/挂车车架号）',
-  `operate_type` varchar(50) DEFAULT '1' COMMENT '运营类型（1-自营,2-承包,3-供方,4-外协）',
-  `vehicle_type` varchar(50) DEFAULT '1' COMMENT '车辆类型（1-车头,2-挂车）',
-  `vehicle_status` varchar(50) DEFAULT '0' COMMENT '当前状态(0-可用,1-使用中,2-维修中,3-报废)',
-  `number` varchar(50) DEFAULT NULL COMMENT '板车位数',
-  `driving_image` varchar(100) DEFAULT NULL COMMENT '行驶证照片',
-  `operation_image` varchar(100) DEFAULT NULL COMMENT '营运证照片',
-  `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
