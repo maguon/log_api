@@ -4,7 +4,7 @@
 
 var mysqlConnectOptions ={
     user: 'log',
-    password: 'logbase',
+    password: 'log_base',
     database:'log_base',
     host: '127.0.0.1' ,
     charset : 'utf8mb4',
