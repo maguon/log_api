@@ -1,4 +1,4 @@
-
+SET NAMES utf8mb4;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -13,11 +13,11 @@ CREATE TABLE `admin_user` (
   `password` varchar(50) DEFAULT NULL COMMENT '用户密码',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
-  `status` char(1) DEFAULT '1' COMMENT '状态',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for department
@@ -29,7 +29,7 @@ CREATE TABLE `department` (
   `tel` varchar(50) DEFAULT NULL COMMENT '电话',
   `fax` varchar(50) DEFAULT NULL COMMENT '传真',
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for drive_info
@@ -48,7 +48,7 @@ CREATE TABLE `drive_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for truck_info
@@ -70,7 +70,7 @@ CREATE TABLE `truck_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for user_info
@@ -93,7 +93,7 @@ CREATE TABLE `user_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for user_role
@@ -105,4 +105,4 @@ CREATE TABLE `user_role` (
   `role_sort` varchar(200) DEFAULT NULL COMMENT '角色排序号',
   `func_id_str` varchar(10000) DEFAULT NULL COMMENT '角色对应的功能ID串',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
