@@ -1,7 +1,3 @@
-
-
-
-
 var mysqlConnectOptions ={
     user: 'log',
     password: 'log_base',
@@ -10,8 +6,6 @@ var mysqlConnectOptions ={
     charset : 'utf8mb4',
     //,dateStrings : 'DATETIME'
 };
-
-
 var logLevel = 'DEBUG';
 var loggerConfig = {
     appenders: [
@@ -32,7 +26,6 @@ function getMysqlConnectOptions (){
 var mongoConfig = {
     connect : 'mongodb://127.0.0.1:27017/log'
 }
-
 
 module.exports = {
     getMysqlConnectOptions : getMysqlConnectOptions,
