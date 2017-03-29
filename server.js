@@ -141,6 +141,7 @@ function createServer() {
     /**
      * Truck Module
      */
+    server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.get('/api/user/:userId/truck' , truck.queryTruck);
 
     /**

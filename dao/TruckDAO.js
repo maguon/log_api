@@ -6,6 +6,27 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckDAO.js');
 
+function addTruck(params,callback){
+    var query = " insert into truck_info (truck_num,brand,truck_tel,the_code,operate_type,truck_type,truck_status,number,driving_image,operation_image,remark)" +
+        " values (? , ? , ? , ? , ? , ? , ? , ?, ? , ?)";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckNum;
+    paramsArray[i++]=params.brand;
+    paramsArray[i++]=params.truckTel;
+    paramsArray[i++]=params.theCode;
+    paramsArray[i++]=params.operateType;
+    paramsArray[i++]=params.truckType;
+    paramsArray[i++]=params.truckStatus;
+    paramsArray[i++]=params.number;
+    paramsArray[i++]=params.drivingImage;
+    paramsArray[i++]=params.operationImage;
+    paramsArray[i]=params.remark;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug( ' addTruck ');
+        return callback(error,rows);
+    })
+}
+
 function getTruck(params,callback) {
     var query = " select * from truck_info where id is not null ";
     var paramsArray=[],i=0;
@@ -43,6 +64,9 @@ function getTruck(params,callback) {
     });
 }
 
+
 module.exports ={
+    addTruck : addTruck,
     getTruck : getTruck
+
 }

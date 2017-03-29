@@ -13,6 +13,21 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('Truck.js');
 
+function createTruck(req,res,next){
+    var params = req.params;
+    truckDAO.addTruck(params,function(error,result){
+        if (error) {
+            logger.error(' createTruck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createTruck ' + 'success');
+
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryTruck(req,res,next){
     var params = req.params ;
     truckDAO.getTruck(params,function(error,result){
@@ -29,5 +44,6 @@ function queryTruck(req,res,next){
 
 
 module.exports = {
+    createTruck : createTruck,
     queryTruck : queryTruck
 }
