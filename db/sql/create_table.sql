@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `company_info`;
 CREATE TABLE `company_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `company_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司名称',
-  `operate_type` tinyint(1) DEFAULT NULL COMMENT '所属类型(1-自营,2-承包,3-供方,4-外协)',
+  `operate_type` tinyint(1) DEFAULT '1' COMMENT '所属类型(1-自营,2-承包,3-供方,4-外协)',
   `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
   `operate_city` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所属城市',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

@@ -16,6 +16,7 @@ var department = require('./bl/Department');
 var userRole = require('./bl/UserRole');
 var truck = require('./bl/Truck');
 var drive = require('./bl/Drive');
+var company = require('./bl/Company');
 
 ///--- API
 
@@ -148,6 +149,13 @@ function createServer() {
      * Drive Module
      */
     server.get('/api/user/:userId/drive' , drive.queryDrive);
+
+    /**
+     * Company Module
+     */
+    server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
+    server.get('/api/user/:userId/company',company.queryCompany);
+    server.put({path:'/api/user/:userId/company/:companyId',contentType: 'application/json'} ,company.updateCompany);
 
 
 
