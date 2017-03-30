@@ -7,8 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckDAO.js');
 
 function addTruck(params,callback){
-    var query = " insert into truck_info (truck_num,brand,truck_tel,the_code,operate_type,truck_type,truck_status,number,driving_image,operation_image,remark)" +
-        " values (? , ? , ? , ? , ? , ? , ? , ?, ? , ?)";
+    var query = " insert into truck_info (truck_num,brand,truck_tel,the_code,operate_type,truck_type,truck_status,number,driving_image,operation_image,remark) " +
+        " values (? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ?)";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brand;
