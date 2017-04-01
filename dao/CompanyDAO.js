@@ -58,7 +58,7 @@ function updateCompany(params,callback){
     paramsArray[i++]=params.contacts;
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.cityId;
-    paramsArray[i]=params.remark;
+    paramsArray[i++]=params.remark;
     paramsArray[i]=params.companyId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCompany ');
