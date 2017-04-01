@@ -7,12 +7,16 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CompanyDAO.js');
 
 function addCompany(params,callback){
-    var query = " insert into company_info (company_name,operate_type,tel,operate_city) values (? , ? , ? , ?)";
+    var query = " insert into company_info (company_name,operate_type,cooperation_time,contacts,tel,city_id,remark) " +
+        " values (? , ? , ? , ? , ? , ? , ?)";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.companyName;
     paramsArray[i++]=params.operateType;
+    paramsArray[i++]=params.cooperationTime;
+    paramsArray[i++]=params.contacts;
     paramsArray[i++]=params.tel;
-    paramsArray[i]=params.operateCity;
+    paramsArray[i++]=params.cityId;
+    paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCompany ');
         return callback(error,rows);
@@ -45,12 +49,16 @@ function getCompany(params,callback) {
 }
 
 function updateCompany(params,callback){
-    var query = " update company_info set company_name = ? ,operate_type = ? ,tel = ? ,operate_city = ?  where id = ? " ;
+    var query = " update company_info set company_name = ?,operate_type = ?," +
+        " cooperation_time = ?,contacts = ?,tel = ?,city_id = ?,remark = ?  where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.companyName;
     paramsArray[i++]=params.operateType;
+    paramsArray[i++]=params.cooperationTime;
+    paramsArray[i++]=params.contacts;
     paramsArray[i++]=params.tel;
-    paramsArray[i++]=params.operateCity;
+    paramsArray[i++]=params.cityId;
+    paramsArray[i]=params.remark;
     paramsArray[i]=params.companyId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCompany ');
