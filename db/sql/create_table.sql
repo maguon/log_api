@@ -20,6 +20,35 @@ CREATE TABLE `admin_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
+-- Table structure for app_version
+-- ----------------------------
+DROP TABLE IF EXISTS `app_version`;
+CREATE TABLE `app_version` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `app` tinyint(1) unsigned NOT NULL,
+  `type` tinyint(1) NOT NULL,
+  `version` varchar(20) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `force_update` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `remark` varchar(400) DEFAULT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Table structure for city_info
+-- ----------------------------
+DROP TABLE IF EXISTS `city_info`;
+CREATE TABLE `city_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `city_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '城市名称',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
 -- Table structure for company_info
 -- ----------------------------
 DROP TABLE IF EXISTS `company_info`;
@@ -27,12 +56,15 @@ CREATE TABLE `company_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `company_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司名称',
   `operate_type` tinyint(1) DEFAULT '1' COMMENT '所属类型(1-自营,2-承包,3-供方,4-外协)',
+  `cooperation_time` datetime DEFAULT NULL,
+  `contacts` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
-  `operate_city` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所属城市',
+  `city_id` int(10) DEFAULT NULL COMMENT '城市ID',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for department
@@ -55,7 +87,7 @@ DROP TABLE IF EXISTS `drive_info`;
 CREATE TABLE `drive_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
-  `gender` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '性别',
+  `gender` char(1) COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '性别',
   `truck_id` int(10) DEFAULT NULL COMMENT '头车ID',
   `id_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '身份证号码',
   `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
@@ -81,7 +113,7 @@ CREATE TABLE `truck_brand` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for truck_info
@@ -106,7 +138,7 @@ CREATE TABLE `truck_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for user_info
@@ -145,21 +177,3 @@ CREATE TABLE `user_role` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
--- ----------------------------
---  Table structure for `app_version`
--- ----------------------------
-DROP TABLE IF EXISTS `app_version`;
-CREATE TABLE `app_version` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `app` tinyint(1) unsigned NOT NULL,
-  `type` tinyint(1) NOT NULL,
-  `version` varchar(20) NOT NULL,
-  `url` varchar(200) NOT NULL,
-  `force_update` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `remark` varchar(400) DEFAULT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
