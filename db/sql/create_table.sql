@@ -145,3 +145,21 @@ CREATE TABLE `user_role` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- ----------------------------
+--  Table structure for `app_version`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_version`;
+CREATE TABLE `app_version` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `app` tinyint(1) unsigned NOT NULL,
+  `type` tinyint(1) NOT NULL,
+  `version` varchar(20) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `force_update` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `remark` varchar(400) DEFAULT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
