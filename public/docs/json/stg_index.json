@@ -1565,10 +1565,19 @@
         "operateType": {
           "type": "integer"
         },
+        "cooperationTime": {
+          "type": "string"
+        },
+        "contacts": {
+          "type": "string"
+        },
         "tel": {
           "type": "string"
         },
-        "operateCity": {
+        "cityId": {
+          "type": "integer"
+        },
+        "remark": {
           "type": "string"
         }
       },
