@@ -42,8 +42,23 @@ function queryTruck(req,res,next){
     })
 }
 
+function updateTruck(req,res,next){
+    var params = req.params ;
+    truckDAO.updateTruck(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruck ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruck : createTruck,
-    queryTruck : queryTruck
+    queryTruck : queryTruck,
+    updateTruck : updateTruck
 }
