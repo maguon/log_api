@@ -43,10 +43,6 @@
     {
       "name":"company",
       "description":"Company of log api"
-    },
-    {
-      "name":"app",
-      "description":"app version"
     }
   ],
   "schemes": [
@@ -1296,50 +1292,6 @@
           }
         }
       }
-    },
-    "/app": {
-      "get": {
-        "tags": [
-          "app"
-        ],
-        "summary": "query  app version ",
-        "description": "query app",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "app",
-            "in": "query",
-            "description": "app name :1-storage app",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "description": "app type : 1-android,2-ios",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/app"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value "
-          }
-        }
-      }
     }
   },
   "securityDefinitions": {
@@ -1359,33 +1311,6 @@
     }
   },
   "definitions": {
-    "app": {
-      "type": "object",
-      "properties": {
-
-        "app": {
-          "type": "integer"
-        },
-        "type": {
-          "type": "integer"
-        },
-        "force_update": {
-          "type": "integer"
-        },
-        "version": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        },
-        "remark": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "department"
-      }
-    },
     "admin": {
       "type": "object",
       "required": [
