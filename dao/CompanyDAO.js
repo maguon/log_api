@@ -24,29 +24,27 @@ function addCompany(params,callback){
 }
 
 function getCompany(params,callback) {
-    var query = " select c.*,y.city_name,count(t.id) as truck_count from company_info c " +
-        " left join truck_info t on c.id=t.company_id left join city_info y on c.city_id = y.id " +
-        " where t.truck_type=1 or c.id is not null group by c.id ";
+    var query = " select c.*,y.city_name from company_info c left join city_info y on c.city_id = y.id  where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.companyId){
         paramsArray[i++] = params.companyId;
-        query = query + " and id = ? ";
+        query = query + " and c.id = ? ";
     }
     if(params.companyName){
         paramsArray[i++] = params.companyName;
-        query = query + " and company_name = ? ";
+        query = query + " and c.company_name = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and operate_type = ? ";
+        query = query + " and c.operate_type = ? ";
     }
     if(params.contacts){
         paramsArray[i++] = params.contacts;
-        query = query + " and contacts = ? ";
+        query = query + " and c.contacts = ? ";
     }
-    if(params.operateCity){
-        paramsArray[i++] = params.operateCity;
-        query = query + " and operate_city = ? ";
+    if(params.cityId){
+        paramsArray[i++] = params.cityId;
+        query = query + " and c.city_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
