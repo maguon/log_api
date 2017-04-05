@@ -18,6 +18,7 @@ var truck = require('./bl/Truck');
 var drive = require('./bl/Drive');
 var company = require('./bl/Company');
 var city = require('./bl/City');
+var brand = require('./bl/Brand');
 var app = require('./bl/App');
 
 ///--- API
@@ -166,6 +167,13 @@ function createServer() {
     server.post({path:'/api/user/:userId/city',contentType: 'application/json'},city.createCity);
     server.get('/api/user/:userId/city',city.queryCity);
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
+
+    /**
+     * Brand Module
+     */
+    server.post({path:'/api/user/:userId/brand',contentType: 'application/json'},brand.createBrand);
+    server.get('/api/user/:userId/brand',brand.queryBrand);
+    server.put({path:'/api/user/:userId/brand/:brandId',contentType: 'application/json'} ,brand.updateBrand);
 
     /**
      * App Module

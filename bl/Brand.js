@@ -7,48 +7,48 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var cityDAO = require('../dao/CityDAO.js');
+var brandDAO = require('../dao/BrandDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('City.js');
+var logger = serverLogger.createLogger('Brand.js');
 
-function createCity(req,res,next){
+function createBrand(req,res,next){
     var params = req.params ;
-    cityDAO.addCity(params,function(error,result){
+    brandDAO.addBrand(params,function(error,result){
         if (error) {
-            logger.error(' createCity ' + error.message);
+            logger.error(' createBrand ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createCity ' + 'success');
+            logger.info(' createBrand ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryCity(req,res,next){
+function queryBrand(req,res,next){
     var params = req.params ;
-    cityDAO.getCity(params,function(error,result){
+    brandDAO.getBrand(params,function(error,result){
         if (error) {
-            logger.error(' queryCity ' + error.message);
+            logger.error(' queryBrand ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryCity ' + 'success');
+            logger.info(' queryBrand ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function updateCity(req,res,next){
+function updateBrand(req,res,next){
     var params = req.params ;
-    cityDAO.updateCity(params,function(error,result){
+    brandDAO.updateBrand(params,function(error,result){
         if (error) {
-            logger.error(' updateCity ' + error.message);
+            logger.error(' updateBrand ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' updateCity ' + 'success');
+            logger.info(' updateBrand ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
@@ -57,7 +57,7 @@ function updateCity(req,res,next){
 
 
 module.exports = {
-    createCity : createCity,
-    queryCity : queryCity,
-    updateCity : updateCity
+    createBrand : createBrand,
+    queryBrand : queryBrand,
+    updateBrand : updateBrand
 }

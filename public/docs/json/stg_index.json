@@ -47,6 +47,10 @@
     {
       "name":"city",
       "description":"City of log api"
+    },
+    {
+      "name":"brand",
+      "description":"Brand of log api"
     }
   ],
   "schemes": [
@@ -1453,6 +1457,155 @@
           }
         }
       }
+    },
+    "/user/{userId}/brand": {
+      "get": {
+        "tags": [
+          "brand"
+        ],
+        "summary": "query  brand list",
+        "description": "query brand",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandId",
+            "in": "query",
+            "description": "brand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandName",
+            "in": "query",
+            "description": "brand name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/brand"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid brand id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "brand"
+        ],
+        "summary": "user create brand",
+        "description": "user create brand",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brand",
+            "in": "body",
+            "description": "brand info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/brand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid brand id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/brand/{brandId}": {
+      "put": {
+        "tags": [
+          "brand"
+        ],
+        "summary": "update brand info",
+        "description": "update brand info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandId",
+            "in": "path",
+            "description": "brand id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brand",
+            "in": "body",
+            "description": "brand info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/brand"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid brand id"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -1681,6 +1834,18 @@
       },
       "xml": {
         "name": "city"
+      }
+    },
+    "brand": {
+      "type": "object",
+      "properties": {
+
+        "brandName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "brand"
       }
     }
   },
