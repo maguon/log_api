@@ -86,6 +86,34 @@ function getTruck(params,callback) {
     });
 }
 
+function getFirstCount(params,callback) {
+    var query = " select count(t.id) as firstCount from truck_info t left join company_info c on t.company_id = c.id " +
+        " where t.truck_type = 1 and t.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and c.id= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getFirstCount ');
+        return callback(error,rows);
+    });
+}
+
+function getTrailerCount(params,callback) {
+    var query = " select count(t.id) as firstCount from truck_info t left join company_info c on t.company_id = c.id " +
+        " where t.truck_type = 2 and t.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and c.id= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTrailerCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? ,brand_id = ? ,truck_tel = ? ," +
         " the_code = ? ,drive_id = ? ,copilot = ? ,company_id = ? ,truck_type = ? ,rel_id = ? ," +
@@ -116,6 +144,8 @@ function updateTruck(params,callback){
 module.exports ={
     addTruck : addTruck,
     getTruck : getTruck,
+    getFirstCount : getFirstCount,
+    getTrailerCount : getTrailerCount,
     updateTruck : updateTruck
 
 }
