@@ -17,6 +17,7 @@ var userRole = require('./bl/UserRole');
 var truck = require('./bl/Truck');
 var drive = require('./bl/Drive');
 var company = require('./bl/Company');
+var city = require('./bl/City');
 var app = require('./bl/App');
 
 ///--- API
@@ -158,6 +159,13 @@ function createServer() {
     server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
     server.get('/api/user/:userId/company',company.queryCompany);
     server.put({path:'/api/user/:userId/company/:companyId',contentType: 'application/json'} ,company.updateCompany);
+
+    /**
+     * City Module
+     */
+    server.post({path:'/api/user/:userId/city',contentType: 'application/json'},city.createCity);
+    server.get('/api/user/:userId/city',city.queryCity);
+    server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
 
     /**
      * App Module

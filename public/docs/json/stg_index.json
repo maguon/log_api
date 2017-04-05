@@ -43,6 +43,10 @@
     {
       "name":"company",
       "description":"Company of log api"
+    },
+    {
+      "name":"city",
+      "description":"City of log api"
     }
   ],
   "schemes": [
@@ -1300,6 +1304,155 @@
           }
         }
       }
+    },
+    "/user/{userId}/city": {
+      "get": {
+        "tags": [
+          "city"
+        ],
+        "summary": "query  city list",
+        "description": "query city",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "city id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityName",
+            "in": "query",
+            "description": "city name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/city"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid city id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "city"
+        ],
+        "summary": "user create city",
+        "description": "user create city",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "city",
+            "in": "body",
+            "description": "city info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/city"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid city id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/city/{cityId}": {
+      "put": {
+        "tags": [
+          "city"
+        ],
+        "summary": "update city info",
+        "description": "update city info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityId",
+            "in": "path",
+            "description": "city id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "city",
+            "in": "body",
+            "description": "city info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/city"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid city id"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -1516,6 +1669,18 @@
       },
       "xml": {
         "name": "company"
+      }
+    },
+    "city": {
+      "type": "object",
+      "properties": {
+
+        "cityName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "city"
       }
     }
   },
