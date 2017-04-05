@@ -1172,6 +1172,14 @@
 
           },
           {
+            "name": "contacts",
+            "in": "query",
+            "description": "contacts type",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "operateCity",
             "in": "query",
             "description": "operate City",
