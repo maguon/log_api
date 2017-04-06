@@ -13,7 +13,7 @@ var loggerConfig = {
         {
             "type": "file",
             "filename": "../stage/log_api.html",
-            "maxLogSize": 2048000,
+            "maxLogSize": 20480,
             "backups": 10
         }
     ]
