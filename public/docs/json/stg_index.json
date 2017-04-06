@@ -998,6 +998,94 @@
         }
       }
     },
+    "/user/{userId}/company/{companyId}/firstCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query first count",
+        "description": "query first count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "company id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/first"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/company/{companyId}/trailerCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query trailer count",
+        "description": "query trailer count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "company id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/trailer"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}": {
       "put": {
         "tags": [
@@ -1175,7 +1263,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid drive id"
+            "description": "Invalid token value or invalid company id"
           }
         }
       }
