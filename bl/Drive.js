@@ -27,7 +27,22 @@ function queryDrive(req,res,next){
     })
 }
 
+function queryDriveCount(req,res,next){
+    var params = req.params ;
+    driveDAO.getDriveCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    queryDrive : queryDrive
+    queryDrive : queryDrive,
+    queryDriveCount :queryDriveCount
 }

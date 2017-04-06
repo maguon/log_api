@@ -44,6 +44,21 @@ function getDrive(params,callback) {
     });
 }
 
+function getDriveCount(params,callback) {
+    var query = " select count(d.id) as driveCount from drive_info d left join company_info c on d.company_id = c.id where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and c.id= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveCount ');
+        return callback(error,rows);
+    });
+}
+
+
 module.exports ={
-    getDrive : getDrive
+    getDrive : getDrive,
+    getDriveCount :getDriveCount
 }

@@ -42,6 +42,34 @@ function queryTruck(req,res,next){
     })
 }
 
+function queryFirstCount(req,res,next){
+    var params = req.params ;
+    truckDAO.getFirstCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryFirstCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryFirstCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryTrailerCount(req,res,next){
+    var params = req.params ;
+    truckDAO.getTrailerCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryTrailerCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTrailerCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruck(req,res,next){
     var params = req.params ;
     truckDAO.updateTruck(params,function(error,result){
@@ -60,5 +88,7 @@ function updateTruck(req,res,next){
 module.exports = {
     createTruck : createTruck,
     queryTruck : queryTruck,
+    queryFirstCount : queryFirstCount,
+    queryTrailerCount : queryTrailerCount,
     updateTruck : updateTruck
 }

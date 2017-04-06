@@ -147,12 +147,15 @@ function createServer() {
      */
     server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.get('/api/user/:userId/truck' , truck.queryTruck);
+    server.get('/api/user/:userId/company/:companyId/firstCount' , truck.queryFirstCount);
+    server.get('/api/user/:userId/company/:companyId/trailerCount' , truck.queryTrailerCount);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
 
     /**
      * Drive Module
      */
     server.get('/api/user/:userId/drive' , drive.queryDrive);
+    server.get('/api/user/:userId/company/:companyId/driveCount' , drive.queryDriveCount);
 
     /**
      * Company Module
