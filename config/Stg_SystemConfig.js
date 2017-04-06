@@ -12,7 +12,7 @@ var loggerConfig = {
         { type: 'console' },
         {
             "type": "file",
-            "filename": "../stage/log_api.log",
+            "filename": "../stage/log_api.html",
             "maxLogSize": 2048000,
             "backups": 10
         }
