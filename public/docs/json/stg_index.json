@@ -459,50 +459,6 @@
             "description": "Invalid token value or invalid user id"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "update user info",
-        "description": "update user info",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "user",
-            "in": "body",
-            "description": "user base info:name,mobile and remark is needed .",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/user"
-            }
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/user"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid user id"
-          }
-        }
       }
     },
     "/user/{userId}/password": {
@@ -1825,20 +1781,17 @@
         "password": {
           "type": "string"
         },
+        "deptId": {
+          "type": "integer"
+        },
         "gender": {
-          "type": "string"
-        },
-        "tel": {
-          "type": "string"
-        },
-        "fax": {
           "type": "string"
         },
         "mobile": {
           "type": "string"
         },
-        "email": {
-          "type": "string"
+        "status": {
+          "type": "integer"
         }
       },
       "xml": {

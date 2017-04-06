@@ -7,16 +7,14 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('UserDAO.js');
 
 function addUser(params,callback){
-    var query = " insert into user_info (user_name,real_name,password,gender,tel,fax,mobile,email) values (? , ? , ? , ? , ? , ? , ? , ?)";
+    var query = " insert into user_info (user_name,real_name,password,dept_id,gender,mobile) values (? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userName;
     paramsArray[i++]=params.realName;
     paramsArray[i++]=params.password;
+    paramsArray[i++]=params.deptId;
     paramsArray[i++]=params.gender;
-    paramsArray[i++]=params.tel;
-    paramsArray[i++]=params.fax;
-    paramsArray[i++]=params.mobile;
-    paramsArray[i]=params.email;
+    paramsArray[i]=params.mobile;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addUser ');
         return callback(error,rows);
@@ -24,7 +22,7 @@ function addUser(params,callback){
 }
 
 function getUser(params,callback) {
-    var query = " select * from user_info where uid is not null ";
+    var query = " select u.*,d.dept_name from user_info u left join department d on u.dept_id = d.dept_id where uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
         paramsArray[i++] = params.userId;
@@ -50,7 +48,9 @@ function getUser(params,callback) {
 }
 
 function getUserBase(params,callback){
-    var query = " select uid,user_name,real_name,password,gender,tel,fax,mobile,email from user_info where uid is not null ";
+    var query = " select u.uid,u.user_name,u.real_name,u.password,u.dept_id,u.gender,u.mobile," +
+        " u.status,d.dept_name from user_info u left join department d on u.dept_id = d.dept_id " +
+        " where uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
         paramsArray[i++] = params.userId;
@@ -76,14 +76,13 @@ function getUserBase(params,callback){
 }
 
 function updateUserInfo(params,callback){
-    var query = " update user_info set real_name = ? ,gender = ? ,tel = ? ,fax = ? ,mobile = ? ,email = ?  where uid = ?";
+    var query = " update user_info set real_name = ? , dept_id = ? , gender = ? , mobile = ? ,status = ?  where uid = ?";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.realName;
+    paramsArray[i++] = params.deptId;
     paramsArray[i++] = params.gender;
-    paramsArray[i++] = params.tel;
-    paramsArray[i++] = params.fax;
     paramsArray[i++] = params.mobile;
-    paramsArray[i++] = params.email;
+    paramsArray[i++] = params.status;
     paramsArray[i] = params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateUserInfo ');

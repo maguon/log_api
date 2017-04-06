@@ -13,7 +13,7 @@ CREATE TABLE `admin_user` (
   `password` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户密码',
   `role_id` int(10) DEFAULT NULL COMMENT '角色ID',
   `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '手机号',
-  `status` tinyint(1) DEFAULT '1' COMMENT '状态',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态(0-停用,1-可用)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -157,8 +157,7 @@ CREATE TABLE `user_info` (
   `fax` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '传真',
   `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '手机号',
   `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '邮箱',
-  `status` tinyint(1) DEFAULT '1' COMMENT '状态',
-  `work_status` tinyint(1) DEFAULT '0' COMMENT '工作状态(0-正常,1-停用)',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态(0-停用,1-可用)',
   `last_login_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
