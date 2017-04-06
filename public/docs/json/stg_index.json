@@ -998,50 +998,6 @@
         }
       }
     },
-    "/user/{userId}/company/{companyId}/trailerCount": {
-      "get": {
-        "tags": [
-          "truck"
-        ],
-        "summary": "query trailer count",
-        "description": "query trailer count",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "companyId",
-            "in": "path",
-            "description": "company id",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/trailer"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid company id"
-          }
-        }
-      }
-    },
     "/user/{userId}/truck/{truckId}": {
       "put": {
         "tags": [
