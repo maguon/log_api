@@ -243,9 +243,9 @@
 
           },
           {
-            "name": "email",
+            "name": "mobile",
             "in": "query",
-            "description": "user email",
+            "description": "user mobile",
             "required": false,
             "type": "string"
 

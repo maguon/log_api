@@ -55,13 +55,13 @@ function getUserBase(params,callback){
         paramsArray[i++] = params.userId;
         query = query + " and uid = ? ";
     }
+    if(params.mobile){
+        paramsArray[i++] = params.mobile;
+        query = query + " and mobile = ? ";
+    }
     if(params.status){
         paramsArray[i++] = params.status;
         query = query + " and status = ? ";
-    }
-    if(params.email){
-        paramsArray[i++] = params.email;
-        query = query + " and email = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

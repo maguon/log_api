@@ -145,16 +145,13 @@ CREATE TABLE `truck_info` (
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
   `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `user_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户名',
+  `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户名(手机号)',
   `real_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '真实姓名',
   `password` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户密码',
   `type` tinyint(1) DEFAULT '0' COMMENT '用户类型',
   `role_id` int(10) DEFAULT NULL COMMENT '角色ID',
   `dept_id` int(10) DEFAULT NULL COMMENT '部门ID',
   `gender` char(1) COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '性别',
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
-  `fax` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '传真',
-  `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '手机号',
   `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '邮箱',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态(0-停用,1-可用)',
   `last_login_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
