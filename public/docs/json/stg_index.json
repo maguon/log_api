@@ -1869,7 +1869,7 @@
       "type": "object",
       "properties": {
 
-        "userName": {
+        "mobile": {
           "type": "string"
         },
         "realName": {
@@ -1882,9 +1882,6 @@
           "type": "integer"
         },
         "gender": {
-          "type": "string"
-        },
-        "mobile": {
           "type": "string"
         },
         "status": {

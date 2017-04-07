@@ -7,14 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('UserDAO.js');
 
 function addUser(params,callback){
-    var query = " insert into user_info (user_name,real_name,password,dept_id,gender,mobile) values (? , ? , ? , ? , ? , ? )";
+    var query = " insert into user_info (mobile,real_name,password,dept_id,gender) values ( ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.userName;
+    paramsArray[i++]=params.mobile;
     paramsArray[i++]=params.realName;
     paramsArray[i++]=params.password;
     paramsArray[i++]=params.deptId;
     paramsArray[i++]=params.gender;
-    paramsArray[i]=params.mobile;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addUser ');
         return callback(error,rows);
@@ -28,9 +27,9 @@ function getUser(params,callback) {
         paramsArray[i++] = params.userId;
         query = query + " and uid = ? ";
     }
-    if(params.userName){
-        paramsArray[i++] = params.userName;
-        query = query + " and user_name = ? ";
+    if(params.mobile){
+        paramsArray[i++] = params.mobile;
+        query = query + " and mobile = ? ";
     }
     if(params.status){
         paramsArray[i++] = params.status;
@@ -48,7 +47,7 @@ function getUser(params,callback) {
 }
 
 function getUserBase(params,callback){
-    var query = " select u.uid,u.user_name,u.real_name,u.password,u.dept_id,u.gender,u.mobile," +
+    var query = " select u.uid,u.mobile,u.real_name,u.password,u.dept_id,u.gender," +
         " u.status,d.dept_name from user_info u left join department d on u.dept_id = d.dept_id " +
         " where uid is not null ";
     var paramsArray=[],i=0;

@@ -17,14 +17,14 @@ function createUser(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        userDAO.getUser({userName:params.userName},function(error,rows){
+        userDAO.getUser({mobile:params.mobile},function(error,rows){
             if (error) {
                 logger.error(' createUser ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' createUser ' +params.userName+ sysMsg.CUST_SIGNUP_REGISTERED);
+                    logger.warn(' createUser ' +params.mobile+ sysMsg.CUST_SIGNUP_REGISTERED);
                     resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED) ;
                     return next();
                 }else{
@@ -98,7 +98,7 @@ function userLogin(req,res,next){
                             type : rows[0].type
                         }
                         user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
-                        logger.info(' userLogin' +params.username+ " success");
+                        logger.info(' userLogin' +params.mobile+ " success");
                         resUtil.resetQueryRes(res,user,null);
                         return next();
                     }
