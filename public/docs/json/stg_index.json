@@ -1132,33 +1132,33 @@
 
           },
           {
-            "name": "ascriptionType",
+            "name": "truckNum",
             "in": "query",
-            "description": "ascription type",
+            "description": "truck num",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "driveType",
+            "name": "companyName",
             "in": "query",
-            "description": "drive type",
+            "description": "company name",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
 
           },
           {
             "name": "driveStatus",
             "in": "query",
             "description": "drive status",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "licenseLevel",
-            "in": "query",
-            "description": "license level",
             "required": false,
             "type": "string"
 
@@ -1171,6 +1171,49 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create drive",
+        "description": "user create drive",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "drive",
+            "in": "body",
+            "description": "drive info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/drive"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
               }
             }
           },
@@ -1220,6 +1263,60 @@
           },
           "400": {
             "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/drive/{driveId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update drive info",
+        "description": "update drive info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "drive",
+            "in": "body",
+            "description": "drive info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/drive"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
           }
         }
       }
@@ -1877,6 +1974,45 @@
       },
       "xml": {
         "name": "truck"
+      }
+    },
+    "drive": {
+      "type": "object",
+      "properties": {
+
+        "driveName": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "idNumber": {
+          "type": "string"
+        },
+        "tel": {
+          "type": "string"
+        },
+        "companyId": {
+          "type": "integer"
+        },
+        "licenseLevel": {
+          "type": "string"
+        },
+        "licenseDate": {
+          "type": "string"
+        },
+        "driveImage": {
+          "type": "string"
+        },
+        "licenseImage": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "drive"
       }
     },
     "company": {

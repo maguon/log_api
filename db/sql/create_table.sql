@@ -88,7 +88,6 @@ CREATE TABLE `drive_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
   `gender` char(1) COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '性别',
-  `truck_id` int(10) DEFAULT NULL COMMENT '头车ID',
   `id_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '身份证号码',
   `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
   `company_id` int(10) DEFAULT NULL COMMENT '所属公司ID',

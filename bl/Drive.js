@@ -13,6 +13,21 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('Drive.js');
 
+function createDrive(req,res,next){
+    var params = req.params;
+    driveDAO.addDrive(params,function(error,result){
+        if (error) {
+            logger.error(' createDrive ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createDrive ' + 'success');
+
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDrive(req,res,next){
     var params = req.params ;
     driveDAO.getDrive(params,function(error,result){
@@ -41,8 +56,24 @@ function queryDriveCount(req,res,next){
     })
 }
 
+function updateDrive(req,res,next){
+    var params = req.params ;
+    driveDAO.updateDrive(params,function(error,result){
+        if (error) {
+            logger.error(' updateDrive ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDrive ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
+    createDrive : createDrive,
     queryDrive : queryDrive,
-    queryDriveCount :queryDriveCount
+    queryDriveCount :queryDriveCount,
+    updateDrive : updateDrive
 }

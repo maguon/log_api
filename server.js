@@ -153,8 +153,10 @@ function createServer() {
     /**
      * Drive Module
      */
+    server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive);
     server.get('/api/user/:userId/drive' , drive.queryDrive);
     server.get('/api/user/:userId/company/:companyId/driveCount' , drive.queryDriveCount);
+    server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
 
     /**
      * Company Module

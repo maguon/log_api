@@ -6,32 +6,54 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveDAO.js');
 
+function addDrive(params,callback){
+    var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_level,license_date,drive_image,license_image,remark) " +
+        " values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveName;
+    paramsArray[i++]=params.gender;
+    paramsArray[i++]=params.idNumber;
+    paramsArray[i++]=params.tel;
+    paramsArray[i++]=params.companyId;
+    paramsArray[i++]=params.licenseLevel;
+    paramsArray[i++]=params.licenseDate;
+    paramsArray[i++]=params.driveImage;
+    paramsArray[i++]=params.licenseImage;
+    paramsArray[i]=params.remark;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug( ' addDrive ');
+        return callback(error,rows);
+    })
+}
+
 function getDrive(params,callback) {
-    var query = " select * from drive_info where id is not null ";
+    var query = " select d.*,c.company_name,c.operate_type,t.truck_num " +
+        " from drive_info d left join company_info c on d.company_id = c.id " +
+        " left join truck_info t on d.id = t.drive_id where d.id is not null";
     var paramsArray=[],i=0;
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and id = ? ";
+        query = query + " and d.id = ? ";
     }
     if(params.driveName){
         paramsArray[i++] = params.driveName;
-        query = query + " and drive_name = ? ";
+        query = query + " and d.drive_name = ? ";
     }
-    if(params.ascriptionType){
-        paramsArray[i++] = params.ascriptionType;
-        query = query + " and ascription_type = ? ";
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
     }
-    if(params.driveType){
-        paramsArray[i++] = params.driveType;
-        query = query + " and drive_type = ? ";
+    if(params.companyName){
+        paramsArray[i++] = params.companyName;
+        query = query + " and c.company_name = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and c.operate_type = ? ";
     }
     if(params.driveStatus){
         paramsArray[i++] = params.driveStatus;
-        query = query + " and drive_status = ? ";
-    }
-    if(params.licenseLevel){
-        paramsArray[i++] = params.licenseLevel;
-        query = query + " and license_level = ? ";
+        query = query + " and d.drive_status = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -57,8 +79,32 @@ function getDriveCount(params,callback) {
     });
 }
 
+function updateDrive(params,callback){
+    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , " +
+        " tel = ? , company_id = ? , license_level = ? , license_date = ? , drive_image = ? , " +
+        " license_image = ? , remark= ?  where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveName;
+    paramsArray[i++]=params.gender;
+    paramsArray[i++]=params.idNumber;
+    paramsArray[i++]=params.tel;
+    paramsArray[i++]=params.companyId;
+    paramsArray[i++]=params.licenseLevel;
+    paramsArray[i++]=params.licenseDate;
+    paramsArray[i++]=params.driveImage;
+    paramsArray[i++]=params.licenseImage;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDrive ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
+    addDrive : addDrive,
     getDrive : getDrive,
-    getDriveCount :getDriveCount
+    getDriveCount :getDriveCount,
+    updateDrive : updateDrive
 }
