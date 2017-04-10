@@ -136,6 +136,20 @@ function updateUserInfo (req,res,next){
     })
 }
 
+function updateUserStatus (req,res,next){
+    var params = req.params;
+    userDAO.updateUserStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateUserStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateUserStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function changeUserPassword(req,res,next){
     var params = req.params;
 
@@ -180,5 +194,6 @@ module.exports = {
     userLogin : userLogin,
     queryUser : queryUser,
     updateUserInfo : updateUserInfo,
+    updateUserStatus : updateUserStatus,
     changeUserPassword : changeUserPassword
 }

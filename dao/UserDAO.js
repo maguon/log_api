@@ -89,6 +89,17 @@ function updateUserInfo(params,callback){
     });
 }
 
+function updateUserStatus(params,callback){
+    var query = " update user_info set status = ? where uid = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.status;
+    paramsArray[i] = params.userId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateUserStatus ');
+        return callback(error,rows);
+    });
+}
+
 function updateUserPassword(params,callback){
     var query = " update user_info set password = ? where uid = ?";
     var paramsArray=[],i=0;
@@ -106,5 +117,6 @@ module.exports ={
     getUser : getUser,
     getUserBase : getUserBase,
     updateUserInfo : updateUserInfo,
+    updateUserStatus : updateUserStatus,
     updateUserPassword : updateUserPassword
 }

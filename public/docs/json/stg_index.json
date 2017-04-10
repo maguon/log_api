@@ -387,6 +387,58 @@
         }
       }
     },
+    "/admin/{adminId}/user/{userId}/status/{status}": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "admin update user status",
+        "description": "admin update user status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "user status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/userLogin": {
       "post": {
         "tags": [

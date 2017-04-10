@@ -123,6 +123,7 @@ function createServer() {
     server.post({path:'/api/admin/:adminId/user',contentType: 'application/json'} , user.createUser);
     server.get('/api/admin/:adminId/user' ,user.queryUser);
     server.put({path:'/api/admin/:adminId/user/:userId',contentType: 'application/json'} ,user.updateUserInfo);
+    server.put({path:'/api/admin/:adminId/user/:userId/status/:status',contentType: 'application/json'} ,user.updateUserStatus);
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.get('/api/user/:userId' , user.queryUser);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
