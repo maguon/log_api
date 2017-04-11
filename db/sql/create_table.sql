@@ -11,7 +11,6 @@ CREATE TABLE `admin_user` (
   `user_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户名',
   `real_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '真实姓名',
   `password` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户密码',
-  `role_id` int(10) DEFAULT NULL COMMENT '角色ID',
   `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '手机号',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态(0-停用,1-可用)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -35,6 +34,55 @@ CREATE TABLE `app_version` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Table structure for car_info
+-- ----------------------------
+DROP TABLE IF EXISTS `car_info`;
+CREATE TABLE `car_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `car_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品车名称',
+  `make_id` int(10) DEFAULT NULL COMMENT '品牌ID',
+  `model_id` int(10) DEFAULT NULL COMMENT '型号ID',
+  `pro_date` datetime DEFAULT NULL COMMENT '商品车生产日期',
+  `colour` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '颜色',
+  `engine_num` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '发动机号',
+  `storage_id` int(10) DEFAULT NULL COMMENT '仓库ID',
+  `parking_id` int(10) DEFAULT NULL COMMENT '车位ID',
+  `enter_time` datetime DEFAULT NULL COMMENT '入库时间',
+  `plan_out_time` datetime DEFAULT NULL COMMENT '计划出库时间',
+  `operator` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作员',
+  `car_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品车照片',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for car_make
+-- ----------------------------
+DROP TABLE IF EXISTS `car_make`;
+CREATE TABLE `car_make` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品车品牌名称',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for car_model
+-- ----------------------------
+DROP TABLE IF EXISTS `car_model`;
+CREATE TABLE `car_model` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `make_id` int(10) DEFAULT NULL COMMENT '商品车品牌ID',
+  `model_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '型号名称',
+  `created_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for city_info
@@ -64,21 +112,7 @@ CREATE TABLE `company_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Table structure for department
--- ----------------------------
-DROP TABLE IF EXISTS `department`;
-CREATE TABLE `department` (
-  `dept_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增唯一ID',
-  `dept_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '部门名称',
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
-  `fax` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '传真',
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for drive_info
@@ -101,6 +135,38 @@ CREATE TABLE `drive_info` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for storage_info
+-- ----------------------------
+DROP TABLE IF EXISTS `storage_info`;
+CREATE TABLE `storage_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `storage_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '仓库名称',
+  `total` int(10) DEFAULT NULL COMMENT '仓库总车位',
+  `rest` int(10) DEFAULT NULL COMMENT '仓库剩余车位',
+  `storage_status` tinyint(1) DEFAULT '1' COMMENT '仓库状态(0-停用,1-可用)',
+  `operator` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作员',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for storage_parking
+-- ----------------------------
+DROP TABLE IF EXISTS `storage_parking`;
+CREATE TABLE `storage_parking` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `storage_id` int(10) DEFAULT NULL COMMENT '仓库ID',
+  `row` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '排位',
+  `road` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '道位',
+  `parking_status` tinyint(1) DEFAULT '1' COMMENT '车位状态(0-停用,1-可用)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for truck_brand
@@ -145,12 +211,10 @@ CREATE TABLE `truck_info` (
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
   `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户名(手机号)',
+  `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户名',
   `real_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '真实姓名',
   `password` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户密码',
   `type` tinyint(1) DEFAULT '0' COMMENT '用户类型',
-  `role_id` int(10) DEFAULT NULL COMMENT '角色ID',
-  `dept_id` int(10) DEFAULT NULL COMMENT '部门ID',
   `gender` char(1) COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '性别',
   `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '邮箱',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态(0-停用,1-可用)',
@@ -158,18 +222,4 @@ CREATE TABLE `user_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Table structure for user_role
--- ----------------------------
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
-  `role_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色名称',
-  `role_sort` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色排序号',
-  `func_id_str` varchar(10000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色对应的功能ID串',
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
