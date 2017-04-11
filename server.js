@@ -17,6 +17,8 @@ var drive = require('./bl/Drive');
 var company = require('./bl/Company');
 var city = require('./bl/City');
 var brand = require('./bl/Brand');
+var storage = require('./bl/Storage');
+var carMake = require('./bl/CarMake');
 var app = require('./bl/App');
 
 ///--- API
@@ -163,6 +165,20 @@ function createServer() {
     server.post({path:'/api/user/:userId/brand',contentType: 'application/json'},brand.createBrand);
     server.get('/api/user/:userId/brand',brand.queryBrand);
     server.put({path:'/api/user/:userId/brand/:brandId',contentType: 'application/json'} ,brand.updateBrand);
+
+    /**
+     * Storage Module
+     */
+    server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
+    server.get('/api/admin/:adminId/storage',storage.queryStorage);
+    server.put({path:'/api/admin/:adminId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
+    server.put({path:'/api/admin/:adminId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
+
+    /**
+     * CarMake Module
+     */
+    server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
+    server.get('/api/admin/:adminId/carMake',carMake.queryCarMake);
 
     /**
      * App Module
