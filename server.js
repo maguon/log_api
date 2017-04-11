@@ -12,8 +12,6 @@ var serverLogger = require('./util/ServerLogger.js');
 var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
-var department = require('./bl/Department');
-var userRole = require('./bl/UserRole');
 var truck = require('./bl/Truck');
 var drive = require('./bl/Drive');
 var company = require('./bl/Company');
@@ -127,20 +125,6 @@ function createServer() {
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.get('/api/user/:userId' , user.queryUser);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
-
-    /**
-     * Department Module
-     */
-    server.post({path:'/api/admin/:adminId/department',contentType: 'application/json'},department.createDepartment);
-    server.get('/api/admin/:adminId/department' , department.queryDepartment);
-    server.put({path:'/api/admin/:adminId/department/:departmentId',contentType: 'application/json'} ,department.updateDepartment);
-    server.del('/api/admin/:adminId/department/:departmentId' , department.deleteDepartment);
-
-    /**
-     * User Role Module
-     */
-    server.post({path:'/api/admin/:adminId/userRole',contentType: 'application/json'},userRole.createUserRole);
-    server.get('/api/admin/:adminId/userRole' , userRole.queryUserRole);
 
     /**
      * Truck Module
