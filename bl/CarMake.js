@@ -41,8 +41,23 @@ function queryCarMake(req,res,next){
     })
 }
 
+function updateCarMake(req,res,next){
+    var params = req.params ;
+    carMakeDAO.updateCarMake(params,function(error,result){
+        if (error) {
+            logger.error(' updateCarMake ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateCarMake ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createCarMake : createCarMake,
-    queryCarMake : queryCarMake
+    queryCarMake : queryCarMake,
+    updateCarMake : updateCarMake
 }

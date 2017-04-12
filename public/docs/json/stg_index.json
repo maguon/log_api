@@ -1843,6 +1843,60 @@
           }
         }
       }
+    },
+    "/admin/{adminId}/carMake/{makeId}": {
+      "put": {
+        "tags": [
+          "carMake"
+        ],
+        "summary": "update carMake info",
+        "description": "update carMake info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carMake",
+            "in": "body",
+            "description": "carMake info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carMake"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid make id"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {

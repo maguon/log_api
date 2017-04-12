@@ -179,6 +179,7 @@ function createServer() {
      */
     server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
     server.get('/api/admin/:adminId/carMake',carMake.queryCarMake);
+    server.put({path:'/api/admin/:adminId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
 
     /**
      * App Module

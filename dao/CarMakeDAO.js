@@ -33,8 +33,20 @@ function getCarMake(params,callback) {
     });
 }
 
+function updateCarMake(params,callback){
+    var query = " update car_make set make_name = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.makeName;
+    paramsArray[i]=params.makeId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarMake ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addCarMake : addCarMake,
-    getCarMake : getCarMake
+    getCarMake : getCarMake,
+    updateCarMake : updateCarMake
 }
