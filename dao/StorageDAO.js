@@ -10,7 +10,7 @@ function addStorage(params,callback){
     var query = " insert into storage_info (storage_name,col,road,remark) values (? , ? , ? , ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
-    paramsArray[i++]=params.row;
+    paramsArray[i++]=params.col;
     paramsArray[i++]=params.road;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
