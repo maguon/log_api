@@ -51,6 +51,10 @@
     {
       "name":"carMake",
       "description":"CarMake of log api"
+    },
+    {
+      "name":"carModel",
+      "description":"CarModel of log api"
     }
   ],
   "schemes": [
@@ -1791,7 +1795,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/make"
+                "$ref": "#/definitions/carMake"
               }
             }
           },
@@ -1894,6 +1898,155 @@
           },
           "400": {
             "description": "Invalid token value or invalid make id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/carMake/{makeId}/carModel": {
+      "get": {
+        "tags": [
+          "carModel"
+        ],
+        "summary": "query  carModel list",
+        "description": "query carModel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/carModel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid model id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "carModel"
+        ],
+        "summary": "admin create carModel",
+        "description": "admin create carModel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carModel",
+            "in": "body",
+            "description": "carModel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid model id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/carModel/{modelId}": {
+      "put": {
+        "tags": [
+          "carModel"
+        ],
+        "summary": "update carModel info",
+        "description": "update carModel info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "model id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carModel",
+            "in": "body",
+            "description": "carModel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carModel"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid model id"
           }
         }
       }
@@ -2173,6 +2326,18 @@
       },
       "xml": {
         "name": "carMake"
+      }
+    },
+    "carModel": {
+      "type": "object",
+      "properties": {
+
+        "modelName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "carModel"
       }
     }
   },
