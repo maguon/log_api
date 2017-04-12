@@ -237,3 +237,33 @@ CREATE TABLE `user_info` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- ----------------------------
+--  Table structure for `date_base`
+-- ----------------------------
+DROP TABLE IF EXISTS `date_base`;
+CREATE TABLE `date_base` (
+  `id` int(4) NOT NULL,
+  `day` int(4) NOT NULL,
+  `week` int(4) NOT NULL,
+  `month` int(4) NOT NULL,
+  `year` int(4) NOT NULL,
+  `y_month` int(4) NOT NULL,
+  `y_week` int(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+
+-- ----------------------------
+--  Table structure for `storage_stat_date`
+-- ----------------------------
+DROP TABLE IF EXISTS `storage_stat_date`;
+CREATE TABLE `storage_stat_date` (
+  `date_id` int(11) NOT NULL,
+  `storage_id` int(11) NOT NULL,
+  `imports` int(11) unsigned NOT NULL DEFAULT '0',
+  `exports` int(11) unsigned NOT NULL DEFAULT '0',
+  `balance` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`date_id`,`storage_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
