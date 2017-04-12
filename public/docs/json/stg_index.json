@@ -50,7 +50,7 @@
     },
     {
       "name":"carMake",
-      "description":"carMake of log api"
+      "description":"CarMake of log api"
     }
   ],
   "schemes": [
@@ -2095,7 +2095,7 @@
         "storageName": {
           "type": "string"
         },
-        "row": {
+        "col": {
           "type": "integer"
         },
         "road": {
