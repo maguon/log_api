@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('StorageDAO.js');
 
 function addStorage(params,callback){
-    var query = " insert into storage_info (storage_name,row,road,remark) values (? , ? , ? , ?) ";
+    var query = " insert into storage_info (storage_name,col,road,remark) values (? , ? , ? , ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
     paramsArray[i++]=params.row;
@@ -37,7 +37,7 @@ function getStorage(params,callback) {
 }
 
 function updateStorage(params,callback){
-    var query = " update storage_info set storage_name = ? ,row = ? , road = ? , remark = ? where id = ? " ;
+    var query = " update storage_info set storage_name = ? ,col = ? , road = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
     paramsArray[i++]=params.row;
