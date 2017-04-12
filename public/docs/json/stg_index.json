@@ -43,6 +43,14 @@
     {
       "name":"brand",
       "description":"Brand of log api"
+    },
+    {
+      "name":"storage",
+      "description":"Storage of log api"
+    },
+    {
+      "name":"carMake",
+      "description":"CarMake of log api"
     }
   ],
   "schemes": [
@@ -483,7 +491,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "userId",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -565,7 +573,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -589,7 +597,7 @@
           {
             "name": "brandId",
             "in": "query",
-            "description": "brandId",
+            "description": "brand id",
             "required": false,
             "type": "integer"
 
@@ -671,7 +679,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -804,7 +812,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -940,7 +948,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1029,7 +1037,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1157,7 +1165,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1202,7 +1210,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1306,7 +1314,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1351,7 +1359,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1455,7 +1463,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1500,7 +1508,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
 
@@ -1536,6 +1544,356 @@
           },
           "400": {
             "description": "Invalid token value or invalid brand id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/storage": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storage list",
+        "description": "query storage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageName",
+            "in": "query",
+            "description": "storage name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "admin create storage",
+        "description": "admin create storage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storage",
+            "in": "body",
+            "description": "storage info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/storage/{storageId}": {
+      "put": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "update storage info",
+        "description": "update storage info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "path",
+            "description": "storage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storage",
+            "in": "body",
+            "description": "storage info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storage"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/storage/{storageId}/storageStatus/{storageStatus}": {
+      "put": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "admin update storage status",
+        "description": "admin update storage status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "path",
+            "description": "storage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageStatus",
+            "in": "path",
+            "description": "storage status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/carMake": {
+      "get": {
+        "tags": [
+          "carMake"
+        ],
+        "summary": "query  carMake list",
+        "description": "query carMake",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeName",
+            "in": "query",
+            "description": "make name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/make"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid make id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "carMake"
+        ],
+        "summary": "admin create carMake",
+        "description": "admin create carMake",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carMake",
+            "in": "body",
+            "description": "carMake info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carMake"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid make id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/carMake/{makeId}": {
+      "put": {
+        "tags": [
+          "carMake"
+        ],
+        "summary": "update carMake info",
+        "description": "update carMake info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carMake",
+            "in": "body",
+            "description": "carMake info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carMake"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid make id"
           }
         }
       }
@@ -1782,6 +2140,39 @@
       },
       "xml": {
         "name": "brand"
+      }
+    },
+    "storage": {
+      "type": "object",
+      "properties": {
+
+        "storageName": {
+          "type": "string"
+        },
+        "col": {
+          "type": "integer"
+        },
+        "road": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "storage"
+      }
+    },
+    "carMake": {
+      "type": "object",
+      "properties": {
+
+        "makeName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "carMake"
       }
     }
   },
