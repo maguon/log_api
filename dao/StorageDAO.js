@@ -37,11 +37,9 @@ function getStorage(params,callback) {
 }
 
 function updateStorage(params,callback){
-    var query = " update storage_info set storage_name = ? ,col = ? , road = ? , remark = ? where id = ? " ;
+    var query = " update storage_info set storage_name = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
-    paramsArray[i++]=params.row;
-    paramsArray[i++]=params.road;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.storageId;
     db.dbQuery(query,paramsArray,function(error,rows){
