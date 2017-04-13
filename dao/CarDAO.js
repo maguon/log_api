@@ -25,7 +25,25 @@ function addCar(params,callback){
     });
 }
 
+function getCar(params,callback) {
+    var query = " select c.*,r.*,p.col,p.road from car_info c left join car_storage_rel r on c.id = r.car_id " +
+        " left join storage_parking p on c.id = p.car_id where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.carId){
+        paramsArray[i++] = params.carId;
+        query = query + " and c.id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCar ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
-    addCar : addCar
+    addCar : addCar,
+    getCar : getCar
 }

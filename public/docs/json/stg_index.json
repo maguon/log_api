@@ -1762,6 +1762,56 @@
       }
     },
     "/user/{userId}/car": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car list",
+        "description": "query car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      },
       "post": {
         "tags": [
           "car"
@@ -1806,7 +1856,7 @@
         }
       }
     },
-    "/user/{userId}/car/{carId}/storage/{storageId}/carStorageRel": {
+    "/user/{userId}/carStorageRel": {
       "post": {
         "tags": [
           "carStorageRel"
@@ -1821,22 +1871,6 @@
             "name": "userId",
             "in": "path",
             "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "carId",
-            "in": "path",
-            "description": "car id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "storageId",
-            "in": "path",
-            "description": "storage id",
             "required": true,
             "type": "integer"
 
@@ -2574,13 +2608,19 @@
       "type": "object",
       "properties": {
 
+        "carId": {
+          "type": "integer"
+        },
+        "storageId": {
+          "type": "integer"
+        },
+        "storageName": {
+          "type": "string"
+        },
         "enterTime": {
           "type": "string"
         },
         "planOutTime": {
-          "type": "string"
-        },
-        "remark": {
           "type": "string"
         }
       },

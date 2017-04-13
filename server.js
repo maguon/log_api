@@ -181,11 +181,12 @@ function createServer() {
      * Car Module
      */
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar);
+    server.get('/api/user/:userId/car',car.queryCar);
 
     /**
      * CarStorageRel Module
      */
-    server.post({path:'/api/user/:userId/car/:carId/storage/:storageId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel);
+    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel);
     server.put({path:'/api/user/:userId/carStorageRel/:relId/relStatus/:relStatus',contentType: 'application/json'} ,carStorageRel.updateRelStatus);
 
     /**

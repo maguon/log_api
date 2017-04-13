@@ -27,7 +27,22 @@ function createCar(req,res,next){
     })
 }
 
+function queryCar(req,res,next){
+    var params = req.params ;
+    carDAO.getCar(params,function(error,result){
+        if (error) {
+            logger.error(' queryCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCar ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createCar : createCar
+    createCar : createCar,
+    queryCar : queryCar
 }
