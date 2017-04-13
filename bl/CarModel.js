@@ -55,9 +55,24 @@ function updateCarModel(req,res,next){
     })
 }
 
+function updateModelStatus (req,res,next){
+    var params = req.params;
+    carModelDAO.updateModelStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateModelStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateModelStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createCarModel : createCarModel,
     queryCarModel : queryCarModel,
-    updateCarModel : updateCarModel
+    updateCarModel : updateCarModel,
+    updateModelStatus : updateModelStatus
 }

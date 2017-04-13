@@ -41,9 +41,21 @@ function updateCarModel(params,callback){
     });
 }
 
+function updateModelStatus(params,callback){
+    var query = " update car_model set model_status = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.modelStatus;
+    paramsArray[i] = params.modelId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateModelStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addCarModel : addCarModel,
     getCarModel : getCarModel,
-    updateCarModel : updateCarModel
+    updateCarModel : updateCarModel,
+    updateModelStatus : updateModelStatus
 }
