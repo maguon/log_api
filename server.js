@@ -182,6 +182,7 @@ function createServer() {
     /**
      * storageParking Module
      */
+    server.post({path:'/api/admin/:adminId/storageParking',contentType: 'application/json'},storageParking.createStorageParking);
     server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking);
 
     /**
