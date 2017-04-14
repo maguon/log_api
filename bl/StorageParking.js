@@ -13,6 +13,20 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('StorageParking.js');
 
+function createStorageParking(req,res,next){
+    var params = req.params ;
+    storageParkingDAO.addStorageParking(params,function(error,result){
+        if (error) {
+            logger.error(' createStorageParking ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createStorageParking ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateStorageParking(req,res,next){
     var params = req.params ;
     storageParkingDAO.updateStorageParking(params,function(error,result){
@@ -29,5 +43,6 @@ function updateStorageParking(req,res,next){
 
 
 module.exports = {
-    updateStorageParking : updateStorageParking
+    updateStorageParking : updateStorageParking,
+    createStorageParking : createStorageParking
 }
