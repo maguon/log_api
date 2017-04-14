@@ -41,23 +41,19 @@ CREATE TABLE `app_version` (
 DROP TABLE IF EXISTS `car_info`;
 CREATE TABLE `car_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `car_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品车名称',
+  `vin` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品车VIN码',
   `make_id` int(10) DEFAULT NULL COMMENT '品牌ID',
+  `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '品牌名称',
   `model_id` int(10) DEFAULT NULL COMMENT '型号ID',
+  `model_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '型号名称',
   `pro_date` datetime DEFAULT NULL COMMENT '商品车生产日期',
   `colour` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '颜色',
-  `engine_num` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '发动机号',
-  `storage_id` int(10) DEFAULT NULL COMMENT '仓库ID',
-  `parking_id` int(10) DEFAULT NULL COMMENT '车位ID',
-  `enter_time` datetime DEFAULT NULL COMMENT '入库时间',
-  `plan_out_time` datetime DEFAULT NULL COMMENT '计划出库时间',
-  `user_id` int(10) DEFAULT NULL COMMENT '操作员(USER_ID)',
-  `car_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品车照片',
+  `engine_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发动机号',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for car_make
@@ -66,10 +62,11 @@ DROP TABLE IF EXISTS `car_make`;
 CREATE TABLE `car_make` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品车品牌名称',
+  `make_status` tinyint(1) DEFAULT '1' COMMENT '状态(0-停用,1-可用)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for car_model
@@ -79,10 +76,30 @@ CREATE TABLE `car_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `make_id` int(10) DEFAULT NULL COMMENT '商品车品牌ID',
   `model_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '型号名称',
+  `model_status` tinyint(1) DEFAULT '1' COMMENT '状态(0-停用,1-可用)',
   `created_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for car_storage_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `car_storage_rel`;
+CREATE TABLE `car_storage_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `car_id` int(10) DEFAULT NULL COMMENT '商品车ID',
+  `storage_id` int(10) DEFAULT NULL COMMENT '仓库ID',
+  `storage_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '仓库名称',
+  `enter_time` datetime DEFAULT NULL COMMENT '入库时间',
+  `plan_out_time` datetime DEFAULT NULL COMMENT '计划出库时间',
+  `real_out_time` datetime DEFAULT NULL COMMENT '实际出库时间',
+  `rel_status` tinyint(1) DEFAULT '1' COMMENT '车辆出入状态(1-入库,2-出库)',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for city_info
@@ -157,15 +174,15 @@ CREATE TABLE `drive_info` (
 DROP TABLE IF EXISTS `storage_info`;
 CREATE TABLE `storage_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `storage_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '仓库名称',
-  `col` int(10) DEFAULT NULL COMMENT '排位',
-  `road` int(10) DEFAULT NULL COMMENT '道位',
+  `storage_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '仓库名称',
+  `row` int(10) DEFAULT NULL COMMENT '排位',
+  `col` int(10) DEFAULT NULL COMMENT '道位',
   `storage_status` tinyint(1) DEFAULT '1' COMMENT '仓库状态(0-停用,1-可用)',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for storage_parking
@@ -174,13 +191,27 @@ DROP TABLE IF EXISTS `storage_parking`;
 CREATE TABLE `storage_parking` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `storage_id` int(10) DEFAULT NULL COMMENT '仓库ID',
-  `col` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '排位',
-  `road` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '道位',
+  `row` int(10) DEFAULT NULL COMMENT '排位',
+  `col` int(10) DEFAULT NULL COMMENT '道位',
+  `car_id` int(10) DEFAULT '0' COMMENT '商品车ID',
   `parking_status` tinyint(1) DEFAULT '1' COMMENT '车位状态(0-停用,1-可用)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for storage_stat_date
+-- ----------------------------
+DROP TABLE IF EXISTS `storage_stat_date`;
+CREATE TABLE `storage_stat_date` (
+  `date_id` int(11) NOT NULL,
+  `storage_id` int(11) NOT NULL,
+  `imports` int(11) unsigned NOT NULL DEFAULT '0',
+  `exports` int(11) unsigned NOT NULL DEFAULT '0',
+  `balance` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`date_id`,`storage_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Table structure for truck_brand
@@ -192,7 +223,7 @@ CREATE TABLE `truck_brand` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for truck_info
@@ -237,33 +268,3 @@ CREATE TABLE `user_info` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
--- ----------------------------
---  Table structure for `date_base`
--- ----------------------------
-DROP TABLE IF EXISTS `date_base`;
-CREATE TABLE `date_base` (
-  `id` int(4) NOT NULL,
-  `day` int(4) NOT NULL,
-  `week` int(4) NOT NULL,
-  `month` int(4) NOT NULL,
-  `year` int(4) NOT NULL,
-  `y_month` int(4) NOT NULL,
-  `y_week` int(4) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
-
--- ----------------------------
---  Table structure for `storage_stat_date`
--- ----------------------------
-DROP TABLE IF EXISTS `storage_stat_date`;
-CREATE TABLE `storage_stat_date` (
-  `date_id` int(11) NOT NULL,
-  `storage_id` int(11) NOT NULL,
-  `imports` int(11) unsigned NOT NULL DEFAULT '0',
-  `exports` int(11) unsigned NOT NULL DEFAULT '0',
-  `balance` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`date_id`,`storage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

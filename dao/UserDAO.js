@@ -13,7 +13,7 @@ function addUser(params,callback){
     paramsArray[i++]=params.realName;
     paramsArray[i++]=params.password;
     paramsArray[i++]=params.type;
-    paramsArray[i++]=params.gender;
+    paramsArray[i]=params.gender;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addUser ');
         return callback(error,rows);

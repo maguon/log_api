@@ -49,8 +49,24 @@
       "description":"Storage of log api"
     },
     {
+      "name":"storageParking",
+      "description":"StorageParking of log api"
+    },
+    {
+      "name":"car",
+      "description":"Car of log api"
+    },
+    {
+      "name":"carStorageRel",
+      "description":"CarStorageRel of log api"
+    },
+    {
       "name":"carMake",
       "description":"CarMake of log api"
+    },
+    {
+      "name":"carModel",
+      "description":"CarModel of log api"
     }
   ],
   "schemes": [
@@ -1643,6 +1659,42 @@
         }
       }
     },
+    "/user/{userId}/storageName": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageName list",
+        "description": "query storageName",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/admin/{adminId}/storage/{storageId}": {
       "put": {
         "tags": [
@@ -1749,6 +1801,322 @@
         }
       }
     },
+    "/user/{userId}/storageParking/{parkingId}": {
+      "put": {
+        "tags": [
+          "storageParking"
+        ],
+        "summary": "update storageParking info",
+        "description": "update storageParking info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "parkingId",
+            "in": "path",
+            "description": "parking id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageParking",
+            "in": "body",
+            "description": "storageParking info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storageParking"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid parking id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/car": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car list",
+        "description": "query car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "user create car",
+        "description": "user create car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "car",
+            "in": "body",
+            "description": "car info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/car"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/car/{carId}": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "update car info",
+        "description": "update car info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "car",
+            "in": "body",
+            "description": "car info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/car"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/carStorageRel": {
+      "post": {
+        "tags": [
+          "carStorageRel"
+        ],
+        "summary": "user create carStorageRel",
+        "description": "user create carStorageRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carStorageRel",
+            "in": "body",
+            "description": "carStorageRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carStorageRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid carStorageRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/carStorageRel/{relId}/relStatus/{relStatus}": {
+      "put": {
+        "tags": [
+          "carStorageRel"
+        ],
+        "summary": "update carStorageRel status",
+        "description": "update carStorageRel status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relStatus",
+            "in": "path",
+            "description": "rel status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid carStorageRel id"
+          }
+        }
+      }
+    },
     "/admin/{adminId}/carMake": {
       "get": {
         "tags": [
@@ -1791,7 +2159,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/make"
+                "$ref": "#/definitions/carMake"
               }
             }
           },
@@ -1894,6 +2262,207 @@
           },
           "400": {
             "description": "Invalid token value or invalid make id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/carMake/{makeId}/carModel": {
+      "get": {
+        "tags": [
+          "carModel"
+        ],
+        "summary": "query  carModel list",
+        "description": "query carModel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/carModel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid model id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "carModel"
+        ],
+        "summary": "admin create carModel",
+        "description": "admin create carModel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carModel",
+            "in": "body",
+            "description": "carModel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid model id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/carModel/{modelId}": {
+      "put": {
+        "tags": [
+          "carModel"
+        ],
+        "summary": "update carModel info",
+        "description": "update carModel info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "model id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carModel",
+            "in": "body",
+            "description": "carModel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carModel"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid model id"
+          }
+        }
+      }
+    },
+    "/admin/{adminId}/carModel/{modelId}/modelStatus/{modelStatus}": {
+      "put": {
+        "tags": [
+          "carModel"
+        ],
+        "summary": "update carModel status",
+        "description": "update carModel status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "model id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "modelStatus",
+            "in": "path",
+            "description": "model status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid model id"
           }
         }
       }
@@ -2149,10 +2718,10 @@
         "storageName": {
           "type": "string"
         },
-        "col": {
+        "row": {
           "type": "integer"
         },
-        "road": {
+        "col": {
           "type": "integer"
         },
         "remark": {
@@ -2161,6 +2730,78 @@
       },
       "xml": {
         "name": "storage"
+      }
+    },
+    "storageParking": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "storageParking"
+      }
+    },
+    "car": {
+      "type": "object",
+      "properties": {
+
+        "vin": {
+          "type": "string"
+        },
+        "makeId": {
+          "type": "integer"
+        },
+        "makeName": {
+          "type": "string"
+        },
+        "modelId": {
+          "type": "integer"
+        },
+        "modelName": {
+          "type": "string"
+        },
+        "proDate": {
+          "type": "string"
+        },
+        "colour": {
+          "type": "string"
+        },
+        "engineNum": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "car"
+      }
+    },
+    "carStorageRel": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        },
+        "storageId": {
+          "type": "integer"
+        },
+        "storageName": {
+          "type": "string"
+        },
+        "enterTime": {
+          "type": "string"
+        },
+        "planOutTime": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "carStorageRel"
       }
     },
     "carMake": {
@@ -2173,6 +2814,18 @@
       },
       "xml": {
         "name": "carMake"
+      }
+    },
+    "carModel": {
+      "type": "object",
+      "properties": {
+
+        "modelName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "carModel"
       }
     }
   },

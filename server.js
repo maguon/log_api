@@ -18,7 +18,11 @@ var company = require('./bl/Company');
 var city = require('./bl/City');
 var brand = require('./bl/Brand');
 var storage = require('./bl/Storage');
+var storageParking = require('./bl/StorageParking');
+var car = require('./bl/Car');
+var carStorageRel = require('./bl/CarStorageRel');
 var carMake = require('./bl/CarMake');
+var carModel = require('./bl/CarModel');
 var app = require('./bl/App');
 
 ///--- API
@@ -171,8 +175,27 @@ function createServer() {
      */
     server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
     server.get('/api/admin/:adminId/storage',storage.queryStorage);
+    server.get('/api/user/:userId/storageName',storage.queryStorageName);
     server.put({path:'/api/admin/:adminId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
+
+    /**
+     * storageParking Module
+     */
+    server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking);
+
+    /**
+     * Car Module
+     */
+    server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar);
+    server.get('/api/user/:userId/car',car.queryCar);
+    server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
+
+    /**
+     * CarStorageRel Module
+     */
+    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel);
+    server.put({path:'/api/user/:userId/carStorageRel/:relId/relStatus/:relStatus',contentType: 'application/json'} ,carStorageRel.updateRelStatus);
 
     /**
      * CarMake Module
@@ -180,6 +203,14 @@ function createServer() {
     server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
     server.get('/api/admin/:adminId/carMake',carMake.queryCarMake);
     server.put({path:'/api/admin/:adminId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
+
+    /**
+     * CarModel Module
+     */
+    server.post({path:'/api/admin/:adminId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
+    server.get('/api/admin/:adminId/carMake/:makeId/carModel',carModel.queryCarModel);
+    server.put({path:'/api/admin/:adminId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
+    server.put({path:'/api/admin/:adminId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 
     /**
      * App Module
