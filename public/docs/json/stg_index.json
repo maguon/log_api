@@ -49,10 +49,6 @@
       "description":"Storage of log api"
     },
     {
-      "name":"storageName",
-      "description":"storageName of log api"
-    },
-    {
       "name":"storageParking",
       "description":"StorageParking of log api"
     },
@@ -1666,7 +1662,7 @@
     "/user/{userId}/storageName": {
       "get": {
         "tags": [
-          "storageName"
+          "storage"
         ],
         "summary": "query  storageName list",
         "description": "query storageName",
@@ -1689,7 +1685,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/storageName"
+                "$ref": "#/definitions/storage"
               }
             }
           },
