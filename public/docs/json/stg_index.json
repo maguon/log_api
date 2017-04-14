@@ -49,6 +49,14 @@
       "description":"Storage of log api"
     },
     {
+      "name":"storageName",
+      "description":"storageName of log api"
+    },
+    {
+      "name":"storageParking",
+      "description":"StorageParking of log api"
+    },
+    {
       "name":"car",
       "description":"Car of log api"
     },
@@ -1655,6 +1663,42 @@
         }
       }
     },
+    "/user/{userId}/storageName": {
+      "get": {
+        "tags": [
+          "storageName"
+        ],
+        "summary": "query  storageName list",
+        "description": "query storageName",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageName"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/admin/{adminId}/storage/{storageId}": {
       "put": {
         "tags": [
@@ -1761,6 +1805,60 @@
         }
       }
     },
+    "/user/{userId}/storageParking/{parkingId}": {
+      "put": {
+        "tags": [
+          "storageParking"
+        ],
+        "summary": "update storageParking info",
+        "description": "update storageParking info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "parkingId",
+            "in": "path",
+            "description": "parking id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageParking",
+            "in": "body",
+            "description": "storageParking info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storageParking"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid parking id"
+          }
+        }
+      }
+    },
     "/user/{userId}/car": {
       "get": {
         "tags": [
@@ -1794,6 +1892,22 @@
             "description": "car vin",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
 
           }
         ],
@@ -1838,6 +1952,60 @@
             "schema": {
               "$ref": "#/definitions/car"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/car/{carId}": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "update car info",
+        "description": "update car info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "car",
+            "in": "body",
+            "description": "car info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/car"
+            }
+
           }
         ],
         "responses": {
@@ -2554,10 +2722,10 @@
         "storageName": {
           "type": "string"
         },
-        "col": {
+        "row": {
           "type": "integer"
         },
-        "road": {
+        "col": {
           "type": "integer"
         },
         "remark": {
@@ -2566,6 +2734,18 @@
       },
       "xml": {
         "name": "storage"
+      }
+    },
+    "storageParking": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "storageParking"
       }
     },
     "car": {

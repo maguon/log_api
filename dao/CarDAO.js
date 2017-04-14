@@ -26,7 +26,7 @@ function addCar(params,callback){
 }
 
 function getCar(params,callback) {
-    var query = " select c.*,r.*,p.col,p.road from car_info c left join car_storage_rel r on c.id = r.car_id " +
+    var query = " select c.*,r.*,p.row,p.col from car_info c left join car_storage_rel r on c.id = r.car_id " +
         " left join storage_parking p on c.id = p.car_id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
@@ -37,13 +37,40 @@ function getCar(params,callback) {
         paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
     }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCar ');
         return callback(error,rows);
     });
 }
 
+function updateCar(params,callback){
+    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ," +
+        " pro_date = ? , colour = ? , engine_num = ? , remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.vin;
+    paramsArray[i++]=params.makeId;
+    paramsArray[i++]=params.makeName;
+    paramsArray[i++]=params.modelId;
+    paramsArray[i++]=params.modelName;
+    paramsArray[i++]=params.proDate;
+    paramsArray[i++]=params.colour;
+    paramsArray[i++]=params.engineNum;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCar ');
+        return callback(error,rows);
+    });
+}
+
+
 module.exports ={
     addCar : addCar,
-    getCar : getCar
+    getCar : getCar,
+    updateCar : updateCar
 }

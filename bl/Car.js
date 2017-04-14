@@ -41,8 +41,23 @@ function queryCar(req,res,next){
     })
 }
 
+function updateCar(req,res,next){
+    var params = req.params ;
+    carDAO.updateCar(params,function(error,result){
+        if (error) {
+            logger.error(' updateCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateCar ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createCar : createCar,
-    queryCar : queryCar
+    queryCar : queryCar,
+    updateCar : updateCar
 }
