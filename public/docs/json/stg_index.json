@@ -41,32 +41,12 @@
       "description":"City of log api"
     },
     {
-      "name":"brand",
-      "description":"Brand of log api"
-    },
-    {
       "name":"storage",
       "description":"Storage of log api"
     },
     {
-      "name":"storageParking",
-      "description":"StorageParking of log api"
-    },
-    {
       "name":"car",
       "description":"Car of log api"
-    },
-    {
-      "name":"carStorageRel",
-      "description":"CarStorageRel of log api"
-    },
-    {
-      "name":"carMake",
-      "description":"CarMake of log api"
-    },
-    {
-      "name":"carModel",
-      "description":"CarModel of log api"
     }
   ],
   "schemes": [
@@ -1418,7 +1398,7 @@
     "/user/{userId}/brand": {
       "get": {
         "tags": [
-          "brand"
+          "truck"
         ],
         "summary": "query  brand list",
         "description": "query brand",
@@ -1468,7 +1448,7 @@
       },
       "post": {
         "tags": [
-          "brand"
+          "truck"
         ],
         "summary": "user create brand",
         "description": "user create brand",
@@ -1513,7 +1493,7 @@
     "/user/{userId}/brand/{brandId}": {
       "put": {
         "tags": [
-          "brand"
+          "truck"
         ],
         "summary": "update brand info",
         "description": "update brand info",
@@ -1801,55 +1781,10 @@
         }
       }
     },
-    "/admin/{adminId}/storageParking": {
-      "post": {
-        "tags": [
-          "storageParking"
-        ],
-        "summary": "admin create storageParking",
-        "description": "admin create storageParking",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "storageParking",
-            "in": "body",
-            "description": "storageParking info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/storageParking"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid storageParking id"
-          }
-        }
-      }
-    },
     "/user/{userId}/storageParking/{parkingId}": {
       "put": {
         "tags": [
-          "storageParking"
+          "storage"
         ],
         "summary": "update storageParking info",
         "description": "update storageParking info",
@@ -2068,7 +2003,7 @@
     "/user/{userId}/carStorageRel": {
       "post": {
         "tags": [
-          "carStorageRel"
+          "car"
         ],
         "summary": "user create carStorageRel",
         "description": "user create carStorageRel",
@@ -2113,7 +2048,7 @@
     "/user/{userId}/carStorageRel/{relId}/relStatus/{relStatus}": {
       "put": {
         "tags": [
-          "carStorageRel"
+          "car"
         ],
         "summary": "update carStorageRel status",
         "description": "update carStorageRel status",
@@ -2165,7 +2100,7 @@
     "/admin/{adminId}/carMake": {
       "get": {
         "tags": [
-          "carMake"
+          "car"
         ],
         "summary": "query  carMake list",
         "description": "query carMake",
@@ -2215,7 +2150,7 @@
       },
       "post": {
         "tags": [
-          "carMake"
+          "car"
         ],
         "summary": "admin create carMake",
         "description": "admin create carMake",
@@ -2260,7 +2195,7 @@
     "/user/{userId}/carMakeName": {
       "get": {
         "tags": [
-          "carMake"
+          "car"
         ],
         "summary": "query  carMakeName list",
         "description": "query carMakeName",
@@ -2296,7 +2231,7 @@
     "/admin/{adminId}/carMake/{makeId}": {
       "put": {
         "tags": [
-          "carMake"
+          "car"
         ],
         "summary": "update carMake info",
         "description": "update carMake info",
@@ -2350,7 +2285,7 @@
     "/admin/{adminId}/carMake/{makeId}/carModel": {
       "get": {
         "tags": [
-          "carModel"
+          "car"
         ],
         "summary": "query  carModel list",
         "description": "query carModel",
@@ -2392,7 +2327,7 @@
       },
       "post": {
         "tags": [
-          "carModel"
+          "car"
         ],
         "summary": "admin create carModel",
         "description": "admin create carModel",
@@ -2445,7 +2380,7 @@
     "/user/{userId}/carMake/{makeId}/carModelName": {
       "get": {
         "tags": [
-          "carModel"
+          "car"
         ],
         "summary": "query  carModelName list",
         "description": "query carModelName",
@@ -2489,7 +2424,7 @@
     "/admin/{adminId}/carModel/{modelId}": {
       "put": {
         "tags": [
-          "carModel"
+          "car"
         ],
         "summary": "update carModel info",
         "description": "update carModel info",
@@ -2543,7 +2478,7 @@
     "/admin/{adminId}/carModel/{modelId}/modelStatus/{modelStatus}": {
       "put": {
         "tags": [
-          "carModel"
+          "car"
         ],
         "summary": "update carModel status",
         "description": "update carModel status",
