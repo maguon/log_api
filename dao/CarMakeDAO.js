@@ -33,15 +33,6 @@ function getCarMake(params,callback) {
     });
 }
 
-function getCarMakeName(params,callback) {
-    var query = " select id, make_name from car_make where id is not null ";
-    var paramsArray=[],i=0;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getCarMakeName ');
-        return callback(error,rows);
-    });
-}
-
 function updateCarMake(params,callback){
     var query = " update car_make set make_name = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -57,6 +48,5 @@ function updateCarMake(params,callback){
 module.exports ={
     addCarMake : addCarMake,
     getCarMake : getCarMake,
-    getCarMakeName : getCarMakeName,
     updateCarMake : updateCarMake
 }

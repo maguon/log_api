@@ -2098,56 +2098,6 @@
       }
     },
     "/admin/{adminId}/carMake": {
-      "get": {
-        "tags": [
-          "car"
-        ],
-        "summary": "query  carMake list",
-        "description": "query carMake",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "makeId",
-            "in": "query",
-            "description": "make id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "makeName",
-            "in": "query",
-            "description": "make name",
-            "required": false,
-            "type": "string"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/carMake"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid make id"
-          }
-        }
-      },
       "post": {
         "tags": [
           "car"
@@ -2192,23 +2142,31 @@
         }
       }
     },
-    "/user/{userId}/carMakeName": {
+    "/carMake": {
       "get": {
         "tags": [
           "car"
         ],
-        "summary": "query  carMakeName list",
-        "description": "query carMakeName",
+        "summary": "query  carMake list",
+        "description": "query carMake",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
             "type": "integer"
+
+          },
+          {
+            "name": "makeName",
+            "in": "query",
+            "description": "make name",
+            "required": false,
+            "type": "string"
 
           }
         ],
@@ -2218,7 +2176,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/carMakeName"
+                "$ref": "#/definitions/carMake"
               }
             }
           },
@@ -2283,48 +2241,6 @@
       }
     },
     "/admin/{adminId}/carMake/{makeId}/carModel": {
-      "get": {
-        "tags": [
-          "car"
-        ],
-        "summary": "query  carModel list",
-        "description": "query carModel",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "makeId",
-            "in": "path",
-            "description": "make id",
-            "required": true,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/carModel"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid model id"
-          }
-        }
-      },
       "post": {
         "tags": [
           "car"
@@ -2377,25 +2293,17 @@
         }
       }
     },
-    "/user/{userId}/carMake/{makeId}/carModelName": {
+    "/carMake/{makeId}/carModel": {
       "get": {
         "tags": [
           "car"
         ],
-        "summary": "query  carModelName list",
-        "description": "query carModelName",
+        "summary": "query  carModel list",
+        "description": "query carModel",
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "makeId",
             "in": "path",
@@ -2411,7 +2319,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/carModelName"
+                "$ref": "#/definitions/carModel"
               }
             }
           },

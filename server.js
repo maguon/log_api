@@ -201,16 +201,14 @@ function createServer() {
      * CarMake Module
      */
     server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
-    server.get('/api/admin/:adminId/carMake',carMake.queryCarMake);
-    server.get('/api/user/:userId/carMakeName',carMake.queryCarMakeName);
+    server.get('/api/carMake',carMake.queryCarMake);
     server.put({path:'/api/admin/:adminId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
 
     /**
      * CarModel Module
      */
     server.post({path:'/api/admin/:adminId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
-    server.get('/api/admin/:adminId/carMake/:makeId/carModel',carModel.queryCarModel);
-    server.get('/api/user/:userId/carMake/:makeId/carModelName',carModel.queryCarModelName);
+    server.get('/api/carMake/:makeId/carModel',carModel.queryCarModel);
     server.put({path:'/api/admin/:adminId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/admin/:adminId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 

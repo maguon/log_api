@@ -30,19 +30,6 @@ function getCarModel(params,callback) {
     });
 }
 
-function getCarModelName(params,callback) {
-    var query = " select mo.id,mo.model_name from car_model mo left join car_make ma on mo.make_id = ma.id where mo.id is not null ";
-    var paramsArray=[],i=0;
-    if(params.makeId){
-        paramsArray[i++] = params.makeId;
-        query = query + " and ma.id = ? ";
-    }
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getCarModelName ');
-        return callback(error,rows);
-    });
-}
-
 function updateCarModel(params,callback){
     var query = " update car_model set model_name = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -69,7 +56,6 @@ function updateModelStatus(params,callback){
 module.exports ={
     addCarModel : addCarModel,
     getCarModel : getCarModel,
-    getCarModelName : getCarModelName,
     updateCarModel : updateCarModel,
     updateModelStatus : updateModelStatus
 }
