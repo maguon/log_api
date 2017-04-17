@@ -203,6 +203,7 @@ function createServer() {
      */
     server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
     server.get('/api/admin/:adminId/carMake',carMake.queryCarMake);
+    server.get('/api/user/:userId/carMakeName',carMake.queryCarMakeName);
     server.put({path:'/api/admin/:adminId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
 
     /**
@@ -210,6 +211,7 @@ function createServer() {
      */
     server.post({path:'/api/admin/:adminId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.get('/api/admin/:adminId/carMake/:makeId/carModel',carModel.queryCarModel);
+    server.get('/api/user/:userId/carMake/:makeId/carModelName',carModel.queryCarModelName);
     server.put({path:'/api/admin/:adminId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/admin/:adminId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 

@@ -62,7 +62,7 @@ function createStorage(req,res,next){
                     }
                 })
             }).seq(function(){
-                that();
+                that(null,i);
             })
         }).seq(function(){
             that();

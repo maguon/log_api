@@ -41,6 +41,20 @@ function queryCarModel(req,res,next){
     })
 }
 
+function queryCarModelName(req,res,next){
+    var params = req.params ;
+    carModelDAO.getCarModelName(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarModelName ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarModelName ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCarModel(req,res,next){
     var params = req.params ;
     carModelDAO.updateCarModel(params,function(error,result){
@@ -73,6 +87,7 @@ function updateModelStatus (req,res,next){
 module.exports = {
     createCarModel : createCarModel,
     queryCarModel : queryCarModel,
+    queryCarModelName : queryCarModelName,
     updateCarModel : updateCarModel,
     updateModelStatus : updateModelStatus
 }

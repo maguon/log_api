@@ -41,6 +41,20 @@ function queryCarMake(req,res,next){
     })
 }
 
+function queryCarMakeName(req,res,next){
+    var params = req.params ;
+    carMakeDAO.getCarMakeName(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarMakeName ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarMakeName ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCarMake(req,res,next){
     var params = req.params ;
     carMakeDAO.updateCarMake(params,function(error,result){
@@ -59,5 +73,6 @@ function updateCarMake(req,res,next){
 module.exports = {
     createCarMake : createCarMake,
     queryCarMake : queryCarMake,
+    queryCarMakeName : queryCarMakeName,
     updateCarMake : updateCarMake
 }
