@@ -174,8 +174,7 @@ function createServer() {
      * Storage Module
      */
     server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
-    server.get('/api/admin/:adminId/storage',storage.queryStorage);
-    server.get('/api/user/:userId/storageName',storage.queryStorageName);
+    server.get('/api/storage',storage.queryStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
 

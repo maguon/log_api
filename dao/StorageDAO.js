@@ -36,15 +36,6 @@ function getStorage(params,callback) {
     });
 }
 
-function getStorageName(params,callback) {
-    var query = " select id, storage_name from storage_info where id is not null ";
-    var paramsArray=[],i=0;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getStorageName ');
-        return callback(error,rows);
-    });
-}
-
 function updateStorage(params,callback){
     var query = " update storage_info set storage_name = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -72,7 +63,6 @@ function updateStorageStatus(params,callback){
 module.exports ={
     addStorage : addStorage,
     getStorage : getStorage,
-    getStorageName : getStorageName,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }
