@@ -27,7 +27,22 @@ function updateStorageParking(req,res,next){
     })
 }
 
+function updateStorageParkingOut(req,res,next){
+    var params = req.params ;
+    storageParkingDAO.updateStorageParkingOut(params,function(error,result){
+        if (error) {
+            logger.error(' updateStorageParkingOut ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateStorageParkingOut ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    updateStorageParking : updateStorageParking
+    updateStorageParking : updateStorageParking,
+    updateStorageParkingOut : updateStorageParkingOut
 }
