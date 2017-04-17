@@ -39,6 +39,25 @@ function createCarStorageRel(req,res,next){
         var that = this;
         var subParams ={
             carId : carId,
+            parkingId : params.parkingId,
+        }
+        storageParkingDAO.updateStorageParking(subParams,function(err,result){
+            if (err) {
+                logger.error(' updateStorageParking ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' updateStorageParking ' + 'success');
+                }else{
+                    logger.warn(' updateStorageParking ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        var subParams ={
+            carId : carId,
             storageId : params.storageId,
             storageName : params.storageName,
             enterTime : params.enterTime,
@@ -53,25 +72,6 @@ function createCarStorageRel(req,res,next){
                     logger.info(' createCarStorageRel ' + 'success');
                 }else{
                     logger.warn(' createCarStorageRel ' + 'failed');
-                }
-                that();
-            }
-        })
-    }).seq(function(){
-        var that = this;
-        var subParams ={
-            carId : carId,
-            parkingId : params.parkingId,
-        }
-        storageParkingDAO.updateStorageParking(subParams,function(err,result){
-            if (err) {
-                logger.error(' updateStorageParking ' + err.message);
-                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    logger.info(' updateStorageParking ' + 'success');
-                }else{
-                    logger.warn(' updateStorageParking ' + 'failed');
                 }
                 that();
             }
