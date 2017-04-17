@@ -2710,7 +2710,34 @@
       "type": "object",
       "properties": {
 
-        "carId": {
+        "vin": {
+          "type": "string"
+        },
+        "makeId": {
+          "type": "integer"
+        },
+        "makeName": {
+          "type": "string"
+        },
+        "modelId": {
+          "type": "integer"
+        },
+        "modelName": {
+          "type": "string"
+        },
+        "proDate": {
+          "type": "string"
+        },
+        "colour": {
+          "type": "string"
+        },
+        "engineNum": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "parkingId": {
           "type": "integer"
         },
         "storageId": {
