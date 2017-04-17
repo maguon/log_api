@@ -181,6 +181,7 @@ function createServer() {
     /**
      * storageParking Module
      */
+    server.get('/api/storage/:storageId/storageParking',storageParking.queryStorageParking);
     server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking);
     server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParkingOut);
 
