@@ -32,7 +32,7 @@ function getStorageParking(params,callback) {
         query = query + " and p.id = ? ";
     }
     if(params.carId){
-        paramsArray[i] = params.carId;
+        paramsArray[i++] = params.carId;
         query = query + " and r.car_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){

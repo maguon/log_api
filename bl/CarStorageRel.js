@@ -18,6 +18,7 @@ var logger = serverLogger.createLogger('CarStorageRel.js');
 function createCarStorageRel(req,res,next){
     var params = req.params ;
     var carId = 0;
+    var myDate = new Date();
     Seq().seq(function(){
         var that = this;
         storageParkingDAO.getStorageParking(params,function(error,rows){
@@ -57,7 +58,7 @@ function createCarStorageRel(req,res,next){
             carId : carId,
             storageId : params.storageId,
             storageName : params.storageName,
-            enterTime : params.enterTime,
+            enterTime : myDate,
             planOutTime : params.planOutTime,
         }
         carStorageRelDAO.addCarStorageRel(subParams,function(err,result){
@@ -97,10 +98,23 @@ function createCarStorageRel(req,res,next){
         resUtil.resetCreateRes(res,{insertId:carId},null);
         return next();
     })
-
 }
 
-function updateRelStatus (req,res,next){
+function queryCarStorageRel(req,res,next){
+    var params = req.params ;
+    carStorageRelDAO.getCarStorageRel(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarStorageRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarStorageRel ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateRelStatus(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
@@ -117,9 +131,25 @@ function updateRelStatus (req,res,next){
                 that();
             }
         })
+    }).seq(function(){
+        var that = this;
+        carStorageRelDAO.getCarStorageRel(params,function(error,rows){
+            if (error) {
+                logger.error(' getCarStorageRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length==1&&rows[0].rel_status == 2){
+                    that();
+                }else{
+                    logger.warn(' getCarStorageRel ' + 'failed');
+                    resUtil.resetFailedRes(res,"carStorageRel is not empty");
+                    return next();
+                }
+            }
+        })
     }).seq(function () {
-        storageParkingDAO.updateStorageParkingOut(params,function(err,result){
-            if (err) {
+        storageParkingDAO.updateStorageParkingOut(params,function(error,result){
+            if (error) {
                 logger.error(' updateStorageParkingOut ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
@@ -134,5 +164,6 @@ function updateRelStatus (req,res,next){
 
 module.exports = {
     createCarStorageRel : createCarStorageRel,
+    queryCarStorageRel : queryCarStorageRel,
     updateRelStatus : updateRelStatus
 }

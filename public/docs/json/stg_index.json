@@ -1803,13 +1803,11 @@
 
           },
           {
-            "name": "storageParking",
-            "in": "body",
-            "description": "storageParking info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/storageParking"
-            }
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
 
           }
         ],
@@ -2039,6 +2037,58 @@
         }
       }
     },
+    "/carStorageRel": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  carStorageRel list",
+        "description": "query carStorageRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "relStatus",
+            "in": "query",
+            "description": "rel status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/carStorageRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid carStorageRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/carStorageRel/{relId}/relStatus/{relStatus}": {
       "put": {
         "tags": [
@@ -2086,6 +2136,14 @@
             "name": "storageId",
             "in": "query",
             "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
             "required": false,
             "type": "integer"
 
@@ -2709,18 +2767,6 @@
       },
       "xml": {
         "name": "storage"
-      }
-    },
-    "storageParking": {
-      "type": "object",
-      "properties": {
-
-        "carId": {
-          "type": "integer"
-        }
-      },
-      "xml": {
-        "name": "storageParking"
       }
     },
     "car": {
