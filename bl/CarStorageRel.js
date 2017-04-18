@@ -54,11 +54,14 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         var that = this;
+        if(params.enterTime == null){
+            params.enterTime = myDate;
+        }
         var subParams ={
             carId : carId,
             storageId : params.storageId,
             storageName : params.storageName,
-            enterTime : myDate,
+            enterTime : params.enterTime,
             planOutTime : params.planOutTime,
         }
         carStorageRelDAO.addCarStorageRel(subParams,function(err,result){

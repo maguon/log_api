@@ -1803,6 +1803,22 @@
 
           },
           {
+            "name": "originParkingId",
+            "in": "query",
+            "description": "originParking id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "carId",
             "in": "query",
             "description": "car id",

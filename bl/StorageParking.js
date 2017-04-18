@@ -29,35 +29,53 @@ function queryStorageParking(req,res,next){
 
 function updateStorageParking(req,res,next){
     var params = req.params ;
-    storageParkingDAO.updateStorageParking(params,function(error,result){
-        if (error) {
-            logger.error(' updateStorageParking ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateStorageParking ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
-}
-
-function updateStorageParkingOut(req,res,next){
-    var params = req.params ;
-    storageParkingDAO.updateStorageParkingOut(params,function(error,result){
-        if (error) {
-            logger.error(' updateStorageParkingOut ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateStorageParkingOut ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        storageParkingDAO.getStorageParking(params,function(error,rows){
+            if (error) {
+                logger.error(' getStorageParking ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length==1&&rows[0].car_id == 0){
+                    that();
+                }else{
+                    logger.warn(' getStorageParking ' + 'failed');
+                    resUtil.resetFailedRes(res,"parking is not empty");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        storageParkingDAO.updateStorageParkingMove(params,function(error,result){
+            if (error) {
+                logger.error(' updateStorageParkingMove ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateStorageParkingMove ' + 'success');
+                }else{
+                    logger.warn(' updateStorageParkingMove ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        storageParkingDAO.updateStorageParking(params,function(error,result){
+            if (error) {
+                logger.error(' updateStorageParking ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateStorageParking ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
 
 module.exports = {
     queryStorageParking : queryStorageParking,
-    updateStorageParking : updateStorageParking,
-    updateStorageParkingOut : updateStorageParkingOut
+    updateStorageParking : updateStorageParking
 }
