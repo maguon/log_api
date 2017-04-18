@@ -2073,7 +2073,24 @@
             "required": true,
             "type": "integer"
 
+          },
+          {
+            "name": "parkingId",
+            "in": "query",
+            "description": "parking id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
           }
+
         ],
         "responses": {
           "200": {

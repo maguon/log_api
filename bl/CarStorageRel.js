@@ -101,16 +101,33 @@ function createCarStorageRel(req,res,next){
 }
 
 function updateRelStatus (req,res,next){
-    var params = req.params;
-    carStorageRelDAO.updateRelStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateRelStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateRelStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        carStorageRelDAO.updateRelStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateRelStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateRelStatus ' + 'success');
+                }else{
+                    logger.warn(' updateRelStatus ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        storageParkingDAO.updateStorageParkingOut(params,function(err,result){
+            if (err) {
+                logger.error(' updateStorageParkingOut ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateStorageParkingOut ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

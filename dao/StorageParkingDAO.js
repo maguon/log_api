@@ -24,8 +24,16 @@ function getStorageParking(params,callback) {
         " from storage_parking p left join storage_info s on p.storage_id = s.id left join car_storage_rel r on p.car_id = r.car_id where p.id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
-        paramsArray[i] = params.storageId;
+        paramsArray[i++] = params.storageId;
         query = query + " and s.id = ? ";
+    }
+    if(params.parkingId){
+        paramsArray[i++] = params.parkingId;
+        query = query + " and p.id = ? ";
+    }
+    if(params.carId){
+        paramsArray[i] = params.carId;
+        query = query + " and r.car_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageParking ');
@@ -45,10 +53,11 @@ function updateStorageParking(params,callback){
 }
 
 function updateStorageParkingOut(params,callback){
-    var query = " update storage_parking set car_id= 0 where id = ? and storage_id= ? " ;
+    var query = " update storage_parking set car_id= 0 where id = ? and storage_id= ? and car_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.parkingId;
-    paramsArray[i]=params.storageId;
+    paramsArray[i++]=params.storageId;
+    paramsArray[i]=params.carId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateStorageParkingOut ');
         return callback(error,rows);

@@ -32,6 +32,7 @@ function updateRelStatus(params,callback){
     });
 }
 
+//getRel出库等操作查询判断使用
 
 module.exports ={
     addCarStorageRel : addCarStorageRel,
