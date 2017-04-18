@@ -19,7 +19,7 @@ function addStorageParking(params,callback){
 }
 
 function getStorageParking(params,callback) {
-    var query = " select p.* from storage_parking p inner join storage_info s on p.storage_id = s.id where p.id is not null ";
+    var query = " select * from storage_parking p inner join storage_info s on p.storage_id = s.id where p.id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
         paramsArray[i] = params.storageId;
