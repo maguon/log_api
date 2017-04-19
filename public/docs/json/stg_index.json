@@ -1803,22 +1803,6 @@
 
           },
           {
-            "name": "originParkingId",
-            "in": "query",
-            "description": "originParking id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "storageId",
-            "in": "query",
-            "description": "storage id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "carId",
             "in": "query",
             "description": "car id",
@@ -1871,14 +1855,6 @@
 
           },
           {
-            "name": "vin",
-            "in": "query",
-            "description": "car vin",
-            "required": false,
-            "type": "string"
-
-          },
-          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -1902,49 +1878,6 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/car"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid car id"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "car"
-        ],
-        "summary": "user create car",
-        "description": "user create car",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "car",
-            "in": "body",
-            "description": "car info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/car"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
               }
             }
           },
@@ -2044,58 +1977,6 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid carStorageRel id"
-          }
-        }
-      }
-    },
-    "/carStorageRel": {
-      "get": {
-        "tags": [
-          "car"
-        ],
-        "summary": "query  carStorageRel list",
-        "description": "query carStorageRel",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "storageId",
-            "in": "query",
-            "description": "storage id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "carId",
-            "in": "query",
-            "description": "car id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "relStatus",
-            "in": "query",
-            "description": "rel status",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/carStorageRel"
               }
             }
           },

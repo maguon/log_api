@@ -103,20 +103,6 @@ function createCarStorageRel(req,res,next){
     })
 }
 
-function queryCarStorageRel(req,res,next){
-    var params = req.params ;
-    carStorageRelDAO.getCarStorageRel(params,function(error,result){
-        if (error) {
-            logger.error(' queryCarStorageRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryCarStorageRel ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function updateRelStatus(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
@@ -167,6 +153,5 @@ function updateRelStatus(req,res,next){
 
 module.exports = {
     createCarStorageRel : createCarStorageRel,
-    queryCarStorageRel : queryCarStorageRel,
     updateRelStatus : updateRelStatus
 }

@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var storageParkingDAO = require('../dao/StorageParkingDAO.js');
+var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -29,7 +30,26 @@ function queryStorageParking(req,res,next){
 
 function updateStorageParking(req,res,next){
     var params = req.params ;
+    var parkObj = {};
     Seq().seq(function(){
+        var that = this;
+        carDAO.getCar(params,function(error,rows){
+            if (error) {
+                logger.error(' getCar ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length==1){
+                    parkObj.parkingId = rows[0].p_id;
+                    parkObj.storageId = rows[0].storage_id;
+                    that();
+                }else{
+                    logger.warn(' getCar ' + 'failed');
+                    resUtil.resetFailedRes(res,"car is not empty");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
         var that = this;
         storageParkingDAO.getStorageParking(params,function(error,rows){
             if (error) {
@@ -47,7 +67,11 @@ function updateStorageParking(req,res,next){
         })
     }).seq(function () {
         var that = this;
-        storageParkingDAO.updateStorageParkingMove(params,function(error,result){
+        var subParams ={
+            parkingId:parkObj.parkingId,
+            storageId:parkObj.storageId
+        }
+        storageParkingDAO.updateStorageParkingMove(subParams,function(error,result){
             if (error) {
                 logger.error(' updateStorageParkingMove ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
