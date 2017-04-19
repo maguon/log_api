@@ -26,12 +26,11 @@ function addCar(params,callback){
 }
 
 function getCar(params,callback) {
-    var query = " select c.*,r.*,p.row,p.col from car_info c left join car_storage_rel r on c.id = r.car_id " +
-        " left join storage_parking p on c.id = p.car_id where c.id is not null ";
+    var query = " select * from car_info where id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
-        query = query + " and c.id = ? ";
+        query = query + " and id = ? ";
     }
     if(params.vin){
         paramsArray[i++] = params.vin;
