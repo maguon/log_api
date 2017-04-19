@@ -2742,9 +2742,6 @@
         "storageName": {
           "type": "string"
         },
-        "enterTime": {
-          "type": "string"
-        },
         "planOutTime": {
           "type": "string"
         }
