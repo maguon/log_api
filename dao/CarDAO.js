@@ -34,7 +34,7 @@ function getCar(params,callback) {
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
-        query = query + " and id = ? ";
+        query = query + " and c.id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
