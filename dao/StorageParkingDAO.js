@@ -32,7 +32,7 @@ function getStorageParking(params,callback) {
         paramsArray[i++] = params.storageId;
         query = query + " and s.id = ? ";
     }
-    query = query + '  order by p.id ';
+    query = query + ' order by p.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageParking ');
         return callback(error,rows);
@@ -51,9 +51,10 @@ function updateStorageParking(params,callback){
 }
 
 function updateStorageParkingMove(params,callback){
-    var query = " update storage_parking set car_id= 0 where id = ?[ " ;
+    var query = " update storage_parking set car_id= 0 where id = ? and storage_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.parkingId;
+    paramsArray[i]=params.storageId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateStorageParkingMove ');
         return callback(error,rows);
