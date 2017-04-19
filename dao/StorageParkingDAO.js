@@ -32,7 +32,7 @@ function getStorageParking(params,callback) {
         paramsArray[i++] = params.storageId;
         query = query + " and s.id = ? ";
     }
-    query = query + '  order by id ';
+    query = query + '  order by p.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageParking ');
         return callback(error,rows);
