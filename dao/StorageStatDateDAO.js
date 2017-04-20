@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('StorageStatDateDAO.js');
 
 function getStorageStatDate(params,callback) {
-    var query = " select d.* from storage_stat_date d left join storage_info s on d.storage_id = s.id where d.id is not null ";
+    var query = " select d.* from storage_stat_date d left join storage_info s on d.storage_id = s.id where d.date_id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
         paramsArray[i++] = params.storageId;
