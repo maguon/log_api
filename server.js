@@ -13,12 +13,13 @@ var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
 var truck = require('./bl/Truck');
+var brand = require('./bl/Brand');
 var drive = require('./bl/Drive');
 var company = require('./bl/Company');
 var city = require('./bl/City');
-var brand = require('./bl/Brand');
 var storage = require('./bl/Storage');
 var storageParking = require('./bl/StorageParking');
+var storageStatDate = require('./bl/StorageStatDate');
 var car = require('./bl/Car');
 var carStorageRel = require('./bl/CarStorageRel');
 var carMake = require('./bl/CarMake');
@@ -116,74 +117,79 @@ function createServer() {
     /**
      * Admin User Module
      */
-    server.post({path:'/api/admin/do/login',contentType: 'application/json'},adminUser.adminUserLogin);
     server.get('/api/admin/:adminId' ,adminUser.getAdminUserInfo);
+    server.post({path:'/api/admin/do/login',contentType: 'application/json'},adminUser.adminUserLogin);
     server.put({path:'/api/admin/:adminId',contentType: 'application/json'} ,adminUser.updateAdminInfo);
     server.put({path:'/api/admin/:adminId/password',contentType: 'application/json'} ,adminUser.changeAdminPassword);
 
     /**
      * User Module
      */
-    server.post({path:'/api/admin/:adminId/user',contentType: 'application/json'} , user.createUser);
     server.get('/api/admin/:adminId/user' ,user.queryUser);
+    server.post({path:'/api/admin/:adminId/user',contentType: 'application/json'} , user.createUser);
     server.put({path:'/api/admin/:adminId/user/:userId',contentType: 'application/json'} ,user.updateUserInfo);
     server.put({path:'/api/admin/:adminId/user/:userId/status/:status',contentType: 'application/json'} ,user.updateUserStatus);
-    server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.get('/api/user/:userId' , user.queryUser);
+    server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
 
     /**
      * Truck Module
      */
-    server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.get('/api/user/:userId/truck' , truck.queryTruck);
     server.get('/api/user/:userId/company/:companyId/firstCount' , truck.queryFirstCount);
     server.get('/api/user/:userId/company/:companyId/trailerCount' , truck.queryTrailerCount);
+    server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
+
+    /**
+     * Brand Module
+     */
+    server.get('/api/brand',brand.queryBrand);
+    server.post({path:'/api/user/:userId/brand',contentType: 'application/json'},brand.createBrand);
+    server.put({path:'/api/user/:userId/brand/:brandId',contentType: 'application/json'} ,brand.updateBrand);
 
     /**
      * Drive Module
      */
-    server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive);
     server.get('/api/user/:userId/drive' , drive.queryDrive);
     server.get('/api/user/:userId/company/:companyId/driveCount' , drive.queryDriveCount);
+    server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
 
     /**
      * Company Module
      */
-    server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
     server.get('/api/user/:userId/company',company.queryCompany);
+    server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
     server.put({path:'/api/user/:userId/company/:companyId',contentType: 'application/json'} ,company.updateCompany);
 
     /**
      * City Module
      */
-    server.post({path:'/api/user/:userId/city',contentType: 'application/json'},city.createCity);
     server.get('/api/user/:userId/city',city.queryCity);
+    server.post({path:'/api/user/:userId/city',contentType: 'application/json'},city.createCity);
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
-
-    /**
-     * Brand Module
-     */
-    server.post({path:'/api/user/:userId/brand',contentType: 'application/json'},brand.createBrand);
-    server.get('/api/user/:userId/brand',brand.queryBrand);
-    server.put({path:'/api/user/:userId/brand/:brandId',contentType: 'application/json'} ,brand.updateBrand);
 
     /**
      * Storage Module
      */
-    server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
-    server.get('/api/admin/:adminId/storage',storage.queryStorage);
+    server.get('/api/storage',storage.queryStorage);
     server.get('/api/storageToday',storage.queryStorageToday);
+    server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
 
     /**
      * storageParking Module
      */
-    server.get('/api/storage/:storageId/storageParking',storageParking.queryStorageParking);
+    server.get('/api/storageParking',storageParking.queryStorageParking);
     server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking);
+
+    /**
+     * storageParking Module
+     */
+    server.get('/api/storageStatDate',storageStatDate.queryStorageStatDate);
 
     /**
      * Car Module
@@ -200,15 +206,15 @@ function createServer() {
     /**
      * CarMake Module
      */
-    server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
     server.get('/api/carMake',carMake.queryCarMake);
+    server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
     server.put({path:'/api/admin/:adminId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
 
     /**
      * CarModel Module
      */
-    server.post({path:'/api/admin/:adminId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.get('/api/carMake/:makeId/carModel',carModel.queryCarModel);
+    server.post({path:'/api/admin/:adminId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.put({path:'/api/admin/:adminId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/admin/:adminId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 
