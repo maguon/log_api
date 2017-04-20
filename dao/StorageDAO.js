@@ -36,6 +36,26 @@ function getStorage(params,callback) {
     });
 }
 
+function getStorageToday(params,callback) {
+    var query = " select s.*,count(p.id) as pCount,d.imports,d.exports from storage_info s " +
+        " left join (select * from storage_stat_date where date_id = current_date()) d on s.id = d.storage_id " +
+        " left join (select * from storage_parking where car_id = 0) p on s.id = p.storage_id where s.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.storageId){
+        paramsArray[i++] = params.storageId
+        query = query + " and s.id = ? ";
+    }
+    if(params.storageName){
+        paramsArray[i++] = params.storageName;
+        query = query + " and storage_name = ? ";
+    }
+    query = query + ' group by s.id ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getStorage ');
+        return callback(error,rows);
+    });
+}
+
 function updateStorage(params,callback){
     var query = " update storage_info set storage_name = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -63,6 +83,7 @@ function updateStorageStatus(params,callback){
 module.exports ={
     addStorage : addStorage,
     getStorage : getStorage,
+    getStorageToday : getStorageToday,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }

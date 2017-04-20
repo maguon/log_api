@@ -90,6 +90,20 @@ function queryStorage(req,res,next){
     })
 }
 
+function queryStorageToday(req,res,next){
+    var params = req.params ;
+    storageDAO.getStorageToday(params,function(error,result){
+        if (error) {
+            logger.error(' queryStorageToday ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryStorageToday ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateStorage(req,res,next){
     var params = req.params ;
     storageDAO.updateStorage(params,function(error,result){
@@ -122,6 +136,7 @@ function updateStorageStatus (req,res,next){
 module.exports = {
     createStorage : createStorage,
     queryStorage : queryStorage,
+    queryStorageToday : queryStorageToday,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }
