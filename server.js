@@ -187,7 +187,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking);
 
     /**
-     * storageParking Module
+     * storageStatDate Module
      */
     server.get('/api/storageStatDate',storageStatDate.queryStorageStatDate);
 
