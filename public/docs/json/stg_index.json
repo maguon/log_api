@@ -1865,6 +1865,50 @@
         }
       }
     },
+    "/storageStatDate": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageStatDate list",
+        "description": "query storageStatDate",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateId",
+            "in": "query",
+            "description": "date id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageStatDate"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/car": {
       "get": {
         "tags": [
