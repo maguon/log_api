@@ -1545,6 +1545,56 @@
       }
     },
     "/admin/{adminId}/storage": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storage list",
+        "description": "query storage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "description": "admin Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageName",
+            "in": "query",
+            "description": "storage name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      },
       "post": {
         "tags": [
           "storage"
@@ -1589,13 +1639,13 @@
         }
       }
     },
-    "/storage": {
+    "/storageToday": {
       "get": {
         "tags": [
           "storage"
         ],
-        "summary": "query  storage list",
-        "description": "query storage",
+        "summary": "query  storageToday list",
+        "description": "query storageToday",
         "produces": [
           "application/json"
         ],
