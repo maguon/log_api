@@ -2504,7 +2504,6 @@
             "description": "app name :1-storage app",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "type",
@@ -2512,7 +2511,6 @@
             "description": "app type : 1-android,2-ios",
             "required": false,
             "type": "integer"
-
           }
         ],
         "responses": {
@@ -2530,6 +2528,7 @@
           }
         }
       }
+    }
   },
   "securityDefinitions": {
     "petstore_auth": {
