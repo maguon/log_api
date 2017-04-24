@@ -47,6 +47,23 @@ function getCar(params,callback) {
     });
 }
 
+function getCarBase(params,callback) {
+    var query = " select id,vin from car_info where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.carId){
+        paramsArray[i++] = params.carId;
+        query = query + " and id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i] = params.vin;
+        query = query + " and vin = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarBase ');
+        return callback(error,rows);
+    });
+}
+
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ," +
         " pro_date = ? , colour = ? , engine_num = ? , remark = ? where id = ? " ;
@@ -71,5 +88,6 @@ function updateCar(params,callback){
 module.exports ={
     addCar : addCar,
     getCar : getCar,
+    getCarBase : getCarBase,
     updateCar : updateCar
 }
