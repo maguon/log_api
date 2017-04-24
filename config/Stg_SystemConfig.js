@@ -27,9 +27,14 @@ var mongoConfig = {
     connect : 'mongodb://127.0.0.1:27017/log'
 }
 
+var hosts = {
+    record : 'stg.myxxjs.com:9004/api'
+}
+
 module.exports = {
     getMysqlConnectOptions : getMysqlConnectOptions,
     loggerConfig : loggerConfig,
     logLevel : logLevel ,
-    mongoConfig : mongoConfig
+    mongoConfig : mongoConfig ,
+    hosts : hosts
 }

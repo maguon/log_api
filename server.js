@@ -25,6 +25,7 @@ var carStorageRel = require('./bl/CarStorageRel');
 var carMake = require('./bl/CarMake');
 var carModel = require('./bl/CarModel');
 var app = require('./bl/App');
+var sysRecord = require('./bl/SysRecord');
 
 ///--- API
 
@@ -200,7 +201,7 @@ function createServer() {
     /**
      * CarStorageRel Module
      */
-    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel);
+    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/carStorageRel/:relId/relStatus/:relStatus',contentType: 'application/json'} ,carStorageRel.updateRelStatus);
 
     /**
