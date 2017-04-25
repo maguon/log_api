@@ -139,7 +139,11 @@ function updateRelStatus(req,res,next){
                 if(rows&&rows.length==1&&rows[0].rel_status == 1){
                     parkObj.parkingId = rows[0].p_id;
                     parkObj.storageId = rows[0].storage_id;
+                    parkObj.storageName = rows[0].storage_name;
+                    parkObj.row = rows[0].row;
+                    parkObj.col = rows[0].col;
                     parkObj.carId = rows[0].id;
+                    parkObj.vin = rows[0].vin;
                     that();
                 }else{
                     logger.warn(' getCar ' + 'failed');
@@ -191,6 +195,9 @@ function updateRelStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateStorageParkingOut ' + 'success');
+                req.params.carContent =" Import storage "+parkObj.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+                req.params.vin =parkObj.vin;
+                req.params.op =13;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
