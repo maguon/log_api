@@ -28,7 +28,7 @@ var mongoConfig = {
 }
 
 var hosts = {
-    record : 'stg.myxxjs.com:9004/api'
+    record : {host:"stg.myxxjs.com",port:9004}
 }
 
 module.exports = {
