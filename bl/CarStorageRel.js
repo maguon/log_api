@@ -17,6 +17,7 @@ var logger = serverLogger.createLogger('CarStorageRel.js');
 
 function createCarStorageRel(req,res,next){
     var params = req.params ;
+    var parkObj = {};
     var carId = 0;
     var myDate = new Date();
     Seq().seq(function(){
@@ -27,6 +28,8 @@ function createCarStorageRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1&&rows[0].car_id == 0){
+                    parkObj.row = rows[0].row;
+                    parkObj.col = rows[0].col;
                     that();
                 }else{
                     logger.warn(' getStorageParking ' + 'failed');
@@ -116,7 +119,8 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         logger.info(' createCarStorageRel ' + 'success');
-        req.params.carContent =" Import storage "+req.params.storageName + " parking at " ;
+        req.params.carContent =" Import storage "+req.params.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+        req.params.op =11;
         resUtil.resetCreateRes(res,{insertId:carId},null);
         return next();
     })
