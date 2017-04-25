@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SysRecord.js');
 
 function saveCarRecord (req,res,next){
-    if(res.success){
+    if(res._body.success){
         var params = req.params;
         console.log(params);
         var recordParams ={};
@@ -17,6 +17,7 @@ function saveCarRecord (req,res,next){
         recordParams.content = params.carContent;
         recordParams.carId = params.carId;
         recordParams.vin = params.vin;
+        recordParams.op = params.op;
         sysRecordDAO.addRecord(req,recordParams,function(error,result){
             if(error){
                 logger.error('saveCarRecord ' + error.stack);
