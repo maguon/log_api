@@ -62,6 +62,7 @@ function createCarStorageRel(req,res,next){
                 if(result&&result.insertId>0){
                     logger.info(' createCar ' + 'success');
                     carId = result.insertId;
+                    req.params.carId = carId;
                     that();
                 }else{
                     resUtil.resetFailedRes(res,"create car failed");
@@ -115,6 +116,7 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         logger.info(' createCarStorageRel ' + 'success');
+        req.params.carContent =" Import storage "+req.params.storageName + " parking at " ;
         resUtil.resetCreateRes(res,{insertId:carId},null);
         return next();
     })
