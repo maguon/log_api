@@ -19,6 +19,7 @@ function createCarStorageRel(req,res,next){
     var params = req.params ;
     var parkObj = {};
     var carId = 0;
+    var newCarFlag  = true;
     var myDate = new Date();
     Seq().seq(function(){
         var that = this;
@@ -46,10 +47,15 @@ function createCarStorageRel(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0){
+                if(rows && rows.length>0&&rows[0].rel_status == listOfValue.REL_STATUS_MOVE){
                     logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_SIGNUP_REGISTERED);
                     resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED);
+                    newCarFlag = false;
                     return next();
+                }else if(rows && rows.length>0&&rows[0].rel_status == listOfValue.REL_STATUS_OUT){
+                    carId = rows[0].id;
+                    newCarFlag = false;
+                    that();
                 }else{
                     that();
                 }
@@ -57,22 +63,26 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        carDAO.addCar(params,function(error,result){
-            if (error) {
-                logger.error(' createCar ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    logger.info(' createCar ' + 'success');
-                    carId = result.insertId;
-                    req.params.carId = carId;
-                    that();
-                }else{
-                    resUtil.resetFailedRes(res,"create car failed");
-                    return next();
+        if(newCarFlag){
+            carDAO.addCar(params,function(error,result){
+                if (error) {
+                    logger.error(' createCar ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' createCar ' + 'success');
+                        carId = result.insertId;
+                        req.params.carId = carId;
+                        that();
+                    }else{
+                        resUtil.resetFailedRes(res,"create car failed");
+                        return next();
+                    }
                 }
-            }
-        })
+            })
+        }else{
+            that();
+        }
     }).seq(function(){
         var that = this;
         if(params.enterTime == null){
