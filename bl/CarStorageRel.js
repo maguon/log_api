@@ -208,7 +208,7 @@ function updateRelStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateStorageParkingOut ' + 'success');
-                req.params.carContent =" Import storage "+parkObj.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+                req.params.carContent =" export storage "+parkObj.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
                 req.params.vin =parkObj.vin;
                 req.params.op =13;
                 resUtil.resetUpdateRes(res,result,null);
