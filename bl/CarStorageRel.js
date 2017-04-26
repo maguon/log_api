@@ -17,7 +17,9 @@ var logger = serverLogger.createLogger('CarStorageRel.js');
 
 function createCarStorageRel(req,res,next){
     var params = req.params ;
+    var parkObj = {};
     var carId = 0;
+    var newCarFlag  = true;
     var myDate = new Date();
     Seq().seq(function(){
         var that = this;
@@ -27,6 +29,8 @@ function createCarStorageRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1&&rows[0].car_id == 0){
+                    parkObj.row = rows[0].row;
+                    parkObj.col = rows[0].col;
                     that();
                 }else{
                     logger.warn(' getStorageParking ' + 'failed');
@@ -43,10 +47,15 @@ function createCarStorageRel(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0){
+                if(rows && rows.length>0&&rows[0].rel_status == listOfValue.REL_STATUS_MOVE){
                     logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_SIGNUP_REGISTERED);
                     resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED);
+                    newCarFlag = false;
                     return next();
+                }else if(rows && rows.length>0&&rows[0].rel_status == listOfValue.REL_STATUS_OUT){
+                    carId = rows[0].id;
+                    newCarFlag = false;
+                    that();
                 }else{
                     that();
                 }
@@ -54,22 +63,26 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        carDAO.addCar(params,function(error,result){
-            if (error) {
-                logger.error(' createCar ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    logger.info(' createCar ' + 'success');
-                    carId = result.insertId;
-                    req.params.carId = carId;
-                    that();
-                }else{
-                    resUtil.resetFailedRes(res,"create car failed");
-                    return next();
+        if(newCarFlag){
+            carDAO.addCar(params,function(error,result){
+                if (error) {
+                    logger.error(' createCar ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' createCar ' + 'success');
+                        carId = result.insertId;
+                        req.params.carId = carId;
+                        that();
+                    }else{
+                        resUtil.resetFailedRes(res,"create car failed");
+                        return next();
+                    }
                 }
-            }
-        })
+            })
+        }else{
+            that();
+        }
     }).seq(function(){
         var that = this;
         if(params.enterTime == null){
@@ -116,7 +129,8 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         logger.info(' createCarStorageRel ' + 'success');
-        req.params.carContent =" Import storage "+req.params.storageName + " parking at " ;
+        req.params.carContent =" Import storage "+req.params.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+        req.params.op =11;
         resUtil.resetCreateRes(res,{insertId:carId},null);
         return next();
     })
@@ -132,10 +146,14 @@ function updateRelStatus(req,res,next){
                 logger.error(' getCar ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length==1&&rows[0].rel_status == 1){
+                if(rows&&rows.length==1&&rows[0].rel_status == listOfValue.REL_STATUS_MOVE){
                     parkObj.parkingId = rows[0].p_id;
                     parkObj.storageId = rows[0].storage_id;
+                    parkObj.storageName = rows[0].storage_name;
+                    parkObj.row = rows[0].row;
+                    parkObj.col = rows[0].col;
                     parkObj.carId = rows[0].id;
+                    parkObj.vin = rows[0].vin;
                     that();
                 }else{
                     logger.warn(' getCar ' + 'failed');
@@ -166,7 +184,7 @@ function updateRelStatus(req,res,next){
                 logger.error(' getCarStorageRel ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length==1&&rows[0].rel_status == 2){
+                if(rows&&rows.length==1&&rows[0].rel_status == listOfValue.REL_STATUS_OUT){
                     that();
                 }else{
                     logger.warn(' getCarStorageRel ' + 'failed');
@@ -187,6 +205,9 @@ function updateRelStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateStorageParkingOut ' + 'success');
+                req.params.carContent =" Import storage "+parkObj.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+                req.params.vin =parkObj.vin;
+                req.params.op =13;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
