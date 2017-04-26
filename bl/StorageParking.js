@@ -42,6 +42,7 @@ function updateStorageParking(req,res,next){
                     parkObj.parkingId = rows[0].p_id;
                     parkObj.storageId = rows[0].storage_id;
                     parkObj.storageName = rows[0].storage_name;
+                    parkObj.relId = rows[0].r_id;
                     parkObj.carId = rows[0].id;
                     parkObj.vin = rows[0].vin;
                     that();
@@ -90,7 +91,13 @@ function updateStorageParking(req,res,next){
             }
         })
     }).seq(function () {
-        storageParkingDAO.updateStorageParking(params,function(error,result){
+        var subParams ={
+            parkingId:params.parkingId,
+            carId:params.carId,
+            relId:parkObj.relId
+
+        }
+        storageParkingDAO.updateStorageParking(subParams,function(error,result){
             if (error) {
                 logger.error(' updateStorageParking ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);

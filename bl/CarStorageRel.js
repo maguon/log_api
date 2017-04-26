@@ -19,6 +19,7 @@ function createCarStorageRel(req,res,next){
     var params = req.params ;
     var parkObj = {};
     var carId = 0;
+    var relId = 0;
     var newCarFlag  = true;
     var myDate = new Date();
     Seq().seq(function(){
@@ -102,6 +103,7 @@ function createCarStorageRel(req,res,next){
             } else {
                 if(result&&result.insertId>0){
                     logger.info(' createCarStorageRel ' + 'success');
+                    relId = result.insertId;
                 }else{
                     logger.warn(' createCarStorageRel ' + 'failed');
                 }
@@ -112,6 +114,7 @@ function createCarStorageRel(req,res,next){
         var that = this;
         var subParams ={
             carId : carId,
+            relId : relId,
             parkingId : params.parkingId,
         }
         storageParkingDAO.updateStorageParking(subParams,function(err,result){
