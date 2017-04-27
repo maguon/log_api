@@ -57,9 +57,21 @@ function updateRelStatus(params,callback){
     });
 }
 
+function updateRelPlanOutTime(params,callback){
+    var query = " update car_storage_rel set plan_out_time = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.planOutTime;
+    paramsArray[i] = params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateRelPlanOutTime ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addCarStorageRel : addCarStorageRel,
     getCarStorageRel : getCarStorageRel,
-    updateRelStatus : updateRelStatus
+    updateRelStatus : updateRelStatus,
+    updateRelPlanOutTime : updateRelPlanOutTime
 }

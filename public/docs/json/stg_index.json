@@ -2247,6 +2247,60 @@
         }
       }
     },
+    "/user/{userId}/carStorageRel/{relId}/planOutTime": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "update rel planOutTime",
+        "description": "update rel planOutTime",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "planOutTime",
+            "in": "body",
+            "description": "rel planOutTime",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/planOutTime"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid rel id"
+          }
+        }
+      }
+    },
     "/carMake": {
       "get": {
         "tags": [
@@ -3013,6 +3067,18 @@
       },
       "xml": {
         "name": "carStorageRel"
+      }
+    },
+    "planOutTime": {
+      "type": "object",
+      "properties": {
+
+        "planOutTime": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "RelPlanOutTime"
       }
     },
     "carMake": {
