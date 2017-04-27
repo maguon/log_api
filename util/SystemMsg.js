@@ -32,6 +32,7 @@ var CUST_ACTIVE_DUPLICATE_ERROR = "The user has been actived" // User do active 
 var CUST_ACTIVE_STATE_ERROR = "The user is not actived" // User do active when user state is active.
 var CUST_FORBIDDEN_STATE_ERROR = "The user is forbidden" // User status is forbidden.
 var CUST_CHANGE_EMAIL_DATA_ERROR = "The change email url is not valid" // User do active when user state is active.
+var CUST_CREATE_EXISTING = "已经存在";
 
 /**
  * The module for admin
@@ -81,6 +82,7 @@ module.exports = {
     CUST_ACTIVE_STATE_ERROR : CUST_ACTIVE_STATE_ERROR,
     CUST_CHANGE_EMAIL_DATA_ERROR : CUST_CHANGE_EMAIL_DATA_ERROR,
     CUST_FORBIDDEN_STATE_ERROR : CUST_FORBIDDEN_STATE_ERROR ,
+    CUST_CREATE_EXISTING : CUST_CREATE_EXISTING,
 
     IMG_QUERY_NO_EXIST : IMG_QUERY_NO_EXIST,
     SYS_ADD_API_RECORD_ERROR : SYS_ADD_API_RECORD_ERROR,

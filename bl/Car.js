@@ -52,8 +52,8 @@ function updateCarVin(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_SIGNUP_REGISTERED);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED);
+                    logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
                     return next();
                 }else{
                     that();
