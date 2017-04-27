@@ -852,6 +852,50 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/TruckDriveRel": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update TruckDrive rel",
+        "description": "update TruckDrive rel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -2027,6 +2071,60 @@
         }
       }
     },
+    "/user/{userId}/car/{carId}/vin": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "update car vin",
+        "description": "update car vin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "body",
+            "description": "car vin",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/vin"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
     "/user/{userId}/carStorageRel": {
       "post": {
         "tags": [
@@ -2855,6 +2953,18 @@
       },
       "xml": {
         "name": "car"
+      }
+    },
+    "vin": {
+      "type": "object",
+      "properties": {
+
+        "vin": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "vin"
       }
     },
     "carStorageRel": {

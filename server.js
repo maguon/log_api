@@ -142,6 +142,7 @@ function createServer() {
     server.get('/api/user/:userId/company/:companyId/trailerCount' , truck.queryTrailerCount);
     server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
+    server.put({path:'/api/user/:userId/truck/:truckId/TruckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
 
     /**
      * Brand Module

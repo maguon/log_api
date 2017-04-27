@@ -140,12 +140,22 @@ function updateTruck(params,callback){
     });
 }
 
+function updateTruckDriveRel(params,callback){
+    var query = " update truck_info set drive_id = 0 ,copilot = null where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckDriveRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruck : addTruck,
     getTruck : getTruck,
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
-    updateTruck : updateTruck
-
+    updateTruck : updateTruck,
+    updateTruckDriveRel : updateTruckDriveRel
 }

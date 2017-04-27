@@ -84,11 +84,26 @@ function updateTruck(req,res,next){
     })
 }
 
+function updateTruckDriveRel(req,res,next){
+    var params = req.params ;
+    truckDAO.updateTruckDriveRel(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckDriveRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckDriveRel ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruck : createTruck,
     queryTruck : queryTruck,
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
-    updateTruck : updateTruck
+    updateTruck : updateTruck,
+    updateTruckDriveRel : updateTruckDriveRel
 }
