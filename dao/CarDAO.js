@@ -89,10 +89,22 @@ function updateCar(params,callback){
     });
 }
 
+function updateCarVin(params,callback){
+    var query = " update car_info set vin = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.vin;
+    paramsArray[i]=params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarVin ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addCar : addCar,
     getCar : getCar,
     getCarBase : getCarBase,
-    updateCar : updateCar
+    updateCar : updateCar,
+    updateCarVin : updateCarVin
 }

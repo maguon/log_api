@@ -41,8 +41,42 @@ function updateCar(req,res,next){
     })
 }
 
+function updateCarVin(req,res,next){
+    var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        carDAO.getCarBase({vin:params.vin},function(error,rows){
+            if (error) {
+                logger.error(' getCarBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_SIGNUP_REGISTERED);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        carDAO.updateCarVin(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarVin ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCarVin ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     queryCar : queryCar,
-    updateCar : updateCar
+    updateCar : updateCar,
+    updateCarVin : updateCarVin
 }

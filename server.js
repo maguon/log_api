@@ -197,6 +197,7 @@ function createServer() {
      */
     server.get('/api/user/:userId/car',car.queryCar);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
+    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin);
 
     /**
      * CarStorageRel Module
