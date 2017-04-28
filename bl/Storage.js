@@ -124,14 +124,14 @@ function updateStorageStatus (req,res,next){
         var that = this;
         storageDAO.getStorageToday(params,function(error,rows){
             if (error) {
-                logger.error(' getStorageBalance ' + error.message);
+                logger.error(' Balance ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1&&rows[0].balance == 0){
                     that();
                 }else{
-                    logger.warn(' getStorageBalance ' + 'failed');
-                    resUtil.resetFailedRes(res,"getStorageBalance is not empty");
+                    logger.warn(' Balance ' + 'failed');
+                    resUtil.resetFailedRes(res,"StorageParking is not empty");
                     return next();
                 }
             }
