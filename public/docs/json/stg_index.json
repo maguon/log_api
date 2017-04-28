@@ -1612,6 +1612,14 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "storageStatus",
+            "in": "query",
+            "description": "storage status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

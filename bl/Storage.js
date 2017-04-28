@@ -120,15 +120,33 @@ function updateStorage(req,res,next){
 
 function updateStorageStatus (req,res,next){
     var params = req.params;
-    storageDAO.updateStorageStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateStorageStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateStorageStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        storageDAO.getStorageToday(params,function(error,rows){
+            if (error) {
+                logger.error(' getStorageBalance ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length==1&&rows[0].balance == 0){
+                    that();
+                }else{
+                    logger.warn(' getStorageBalance ' + 'failed');
+                    resUtil.resetFailedRes(res,"getStorageBalance is not empty");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        storageDAO.updateStorageStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateStorageStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateStorageStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
