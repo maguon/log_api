@@ -1847,22 +1847,6 @@
             "required": true,
             "type": "integer"
 
-          },
-          {
-            "name": "dateStart",
-            "in": "query",
-            "description": "date start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "dateEnd",
-            "in": "query",
-            "description": "date end",
-            "required": false,
-            "type": "integer"
-
           }
         ],
         "responses": {

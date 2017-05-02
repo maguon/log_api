@@ -36,12 +36,12 @@ function getCar(params,callback) {
         paramsArray[i++] = params.carId;
         query = query + " and c.id = ? ";
     }
+    query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
         query += " limit ? , ? "
     }
-    query = query + '  order by c.id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCar ');
         return callback(error,rows);

@@ -120,9 +120,16 @@ function updateStorage(req,res,next){
 
 function updateStorageStatus (req,res,next){
     var params = req.params;
+    var d = new Date();
+    var myDate = d.getFullYear()+"0"+(d.getMonth()+1)+"0"+d.getDate();
     Seq().seq(function(){
         var that = this;
-        storageDAO.getStorageDate(params,function(error,rows){
+        var subParams ={
+            storageId : params.storageId,
+            dateStart : myDate,
+            dateEnd : myDate
+        }
+        storageDAO.getStorageDate(subParams,function(error,rows){
             if (error) {
                 logger.error(' getStorageDate ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
