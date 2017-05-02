@@ -1955,6 +1955,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "dateStartMonth",
+            "in": "query",
+            "description": "date startMonth",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateEndMonth",
+            "in": "query",
+            "description": "date endMonth",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
