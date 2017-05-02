@@ -19,7 +19,6 @@ var company = require('./bl/Company');
 var city = require('./bl/City');
 var storage = require('./bl/Storage');
 var storageParking = require('./bl/StorageParking');
-var storageStatDate = require('./bl/StorageStatDate');
 var car = require('./bl/Car');
 var carStorageRel = require('./bl/CarStorageRel');
 var carMake = require('./bl/CarMake');
@@ -177,7 +176,7 @@ function createServer() {
      * Storage Module
      */
     server.get('/api/storage',storage.queryStorage);
-    server.get('/api/storageToday',storage.queryStorageToday);
+    server.get('/api/storageDate',storage.queryStorageDate);
     server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
@@ -187,11 +186,6 @@ function createServer() {
      */
     server.get('/api/storageParking',storageParking.queryStorageParking);
     server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking,sysRecord.saveCarRecord);
-
-    /**
-     * storageStatDate Module
-     */
-    server.get('/api/storageStatDate',storageStatDate.queryStorageStatDate);
 
     /**
      * Car Module

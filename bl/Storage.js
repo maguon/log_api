@@ -90,14 +90,14 @@ function queryStorage(req,res,next){
     })
 }
 
-function queryStorageToday(req,res,next){
+function queryStorageDate(req,res,next){
     var params = req.params ;
-    storageDAO.getStorageToday(params,function(error,result){
+    storageDAO.getStorageDate(params,function(error,result){
         if (error) {
-            logger.error(' queryStorageToday ' + error.message);
+            logger.error(' queryStorageDate ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryStorageToday ' + 'success');
+            logger.info(' queryStorageDate ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -122,15 +122,15 @@ function updateStorageStatus (req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        storageDAO.getStorageToday(params,function(error,rows){
+        storageDAO.getStorageDate(params,function(error,rows){
             if (error) {
-                logger.error(' getStorageToday ' + error.message);
+                logger.error(' getStorageDate ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1&&rows[0].balance == 0){
                     that();
                 }else{
-                    logger.warn(' getStorageToday ' + 'failed');
+                    logger.warn(' getStorageDate ' + 'failed');
                     resUtil.resetFailedRes(res,"StorageParking is not empty");
                     return next();
                 }
@@ -154,7 +154,7 @@ function updateStorageStatus (req,res,next){
 module.exports = {
     createStorage : createStorage,
     queryStorage : queryStorage,
-    queryStorageToday : queryStorageToday,
+    queryStorageDate : queryStorageDate,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }

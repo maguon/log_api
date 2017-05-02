@@ -40,10 +40,8 @@ function getStorage(params,callback) {
     });
 }
 
-function getStorageToday(params,callback) {
-    var query = " select s.*,count(p.id) as pCount,d.imports,d.exports,d.balance from storage_info s " +
-        " left join (select * from storage_stat_date where date_id = current_date()) d on s.id = d.storage_id " +
-        " left join (select * from storage_parking where car_id = 0) p on s.id = p.storage_id where s.id is not null ";
+function getStorageDate(params,callback) {
+    var query = " select d.*,s.* from storage_stat_date d left join storage_info s on d.storage_id = s.id where d.date_id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
         paramsArray[i++] = params.storageId;
@@ -53,9 +51,25 @@ function getStorageToday(params,callback) {
         paramsArray[i++] = params.storageName;
         query = query + " and storage_name = ? ";
     }
-    query = query + ' group by s.id ';
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
+        query = query + " and d.date_id >= ? ";
+    }
+    if(params.dateEnd){
+        paramsArray[i++] = params.dateEnd;
+        query = query + " and d.date_id <= ? ";
+    }
+    if(params.dateStartMonth){
+        paramsArray[i++] = params.dateStartMonth;
+        query = query + " and date_format(d.date_id,'%Y%m') >= ? ";
+    }
+    if(params.dateEndMonth){
+        paramsArray[i] = params.dateEndMonth;
+        query = query + " and date_format(d.date_id,'%Y%m') <= ? ";
+    }
+
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getStorage ');
+        logger.debug(' getStorageDate ');
         return callback(error,rows);
     });
 }
@@ -87,7 +101,7 @@ function updateStorageStatus(params,callback){
 module.exports ={
     addStorage : addStorage,
     getStorage : getStorage,
-    getStorageToday : getStorageToday,
+    getStorageDate : getStorageDate,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }
