@@ -13,9 +13,13 @@ function getStorageStatDate(params,callback) {
         paramsArray[i++] = params.storageId;
         query = query + " and s.id = ? ";
     }
-    if(params.dateId){
-        paramsArray[i++] = params.dateId;
-        query = query + " and date_format(d.date_id,'%Y%m') = ? ";
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
+        query = query + " and d.date_id >= ? ";
+    }
+    if(params.dateEnd){
+        paramsArray[i] = params.dateEnd;
+        query = query + " and d.date_id <= ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageStatDate ');
