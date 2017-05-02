@@ -41,6 +41,7 @@ function getCar(params,callback) {
         paramsArray[i++] = parseInt(params.size);
         query += " limit ? , ? "
     }
+    query = query + '  order by c.id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCar ');
         return callback(error,rows);
