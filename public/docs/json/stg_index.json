@@ -1714,6 +1714,58 @@
         }
       }
     },
+    "/storageSum": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageSum",
+        "description": "query storageSum",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateStart",
+            "in": "query",
+            "description": "date start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateEnd",
+            "in": "query",
+            "description": "date end",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageSum"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/admin/{adminId}/storage": {
       "post": {
         "tags": [

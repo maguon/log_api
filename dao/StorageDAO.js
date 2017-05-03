@@ -67,9 +67,30 @@ function getStorageDate(params,callback) {
         paramsArray[i] = params.dateEndMonth;
         query = query + " and date_format(d.date_id,'%Y%m') <= ? ";
     }
-
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageDate ');
+        return callback(error,rows);
+    });
+}
+
+function getStorageSum(params,callback) {
+    var query = " select sum(s.row*s.col),sum(d.imports),sum(d.exports) from storage_info s " +
+        " left join storage_stat_date d on s.id = d.storage_id where s.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.storageId){
+        paramsArray[i++] = params.storageId;
+        query = query + " and s.id = ? ";
+    }
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
+        query = query + " and d.date_id >= ? ";
+    }
+    if(params.dateEnd){
+        paramsArray[i++] = params.dateEnd;
+        query = query + " and d.date_id <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getStorageSum ');
         return callback(error,rows);
     });
 }
@@ -102,6 +123,7 @@ module.exports ={
     addStorage : addStorage,
     getStorage : getStorage,
     getStorageDate : getStorageDate,
+    getStorageSum : getStorageSum,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }
