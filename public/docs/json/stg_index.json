@@ -1714,13 +1714,13 @@
         }
       }
     },
-    "/storageSum": {
+    "/storageCount": {
       "get": {
         "tags": [
           "storage"
         ],
-        "summary": "query  storageSum",
-        "description": "query storageSum",
+        "summary": "query  storageCount",
+        "description": "query storageCount",
         "produces": [
           "application/json"
         ],
@@ -1756,7 +1756,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/storageSum"
+                "$ref": "#/definitions/storageCount"
               }
             }
           },

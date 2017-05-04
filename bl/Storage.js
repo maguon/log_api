@@ -104,14 +104,14 @@ function queryStorageDate(req,res,next){
     })
 }
 
-function queryStorageSum(req,res,next){
+function queryStorageCount(req,res,next){
     var params = req.params ;
-    storageDAO.getStorageSum(params,function(error,result){
+    storageDAO.getStorageCount(params,function(error,result){
         if (error) {
-            logger.error(' queryStorageSum ' + error.message);
+            logger.error(' queryStorageCount ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryStorageSum ' + 'success');
+            logger.info(' queryStorageCount ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -176,7 +176,7 @@ module.exports = {
     createStorage : createStorage,
     queryStorage : queryStorage,
     queryStorageDate : queryStorageDate,
-    queryStorageSum : queryStorageSum,
+    queryStorageCount : queryStorageCount,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }
