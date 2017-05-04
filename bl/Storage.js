@@ -118,6 +118,34 @@ function queryStorageCount(req,res,next){
     })
 }
 
+function queryStorageTotalMonth(req,res,next){
+    var params = req.params ;
+    storageDAO.getStorageTotalMonth(params,function(error,result){
+        if (error) {
+            logger.error(' queryStorageTotalMonth ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryStorageTotalMonth ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryStorageTotalDay(req,res,next){
+    var params = req.params ;
+    storageDAO.getStorageTotalDay(params,function(error,result){
+        if (error) {
+            logger.error(' queryStorageTotalDay ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryStorageTotalDay ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateStorage(req,res,next){
     var params = req.params ;
     storageDAO.updateStorage(params,function(error,result){
@@ -177,6 +205,8 @@ module.exports = {
     queryStorage : queryStorage,
     queryStorageDate : queryStorageDate,
     queryStorageCount : queryStorageCount,
+    queryStorageTotalMonth : queryStorageTotalMonth,
+    queryStorageTotalDay : queryStorageTotalDay,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }

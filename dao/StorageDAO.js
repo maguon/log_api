@@ -95,6 +95,50 @@ function getStorageCount(params,callback) {
     });
 }
 
+function getStorageTotalMonth(params,callback) {
+    var query = " select db.y_month,sum(d.imports) as total_imports,sum(d.exports) as total_exports,sum(d.balance) as total_balance " +
+        " from storage_stat_date d left join  date_base db on d.date_id = db.id " +
+        " left join storage_info s on d.storage_id = s.id where d.date_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.year){
+        paramsArray[i++] = params.year;
+        query = query + " and db.year = ? ";
+    }
+    if(params.storageId){
+        paramsArray[i] = params.storageId;
+        query = query + " and d.storage_id = ? ";
+    }
+    query = query + ' group by db.y_month ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getStorageTotalMonth ');
+        return callback(error,rows);
+    });
+}
+
+function getStorageTotalDay(params,callback) {
+    var query = " select d.date_id,sum(d.imports) as total_imports,sum(d.exports) as total_exports,sum(d.balance) as total_balance " +
+        " from storage_stat_date d left join date_base db on d.date_id = db.id " +
+        " left join storage_info s on d.storage_id = s.id where d.date_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.year){
+        paramsArray[i++] = params.year;
+        query = query + " and db.year = ? ";
+    }
+    if(params.month){
+        paramsArray[i++] = params.month;
+        query = query + " and db.month = ? ";
+    }
+    if(params.storageId){
+        paramsArray[i] = params.storageId;
+        query = query + " and d.storage_id = ? ";
+    }
+    query = query + ' group by d.date_id ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getStorageTotalDay ');
+        return callback(error,rows);
+    });
+}
+
 function updateStorage(params,callback){
     var query = " update storage_info set storage_name = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -124,6 +168,8 @@ module.exports ={
     getStorage : getStorage,
     getStorageDate : getStorageDate,
     getStorageCount : getStorageCount,
+    getStorageTotalMonth : getStorageTotalMonth,
+    getStorageTotalDay : getStorageTotalDay,
     updateStorage : updateStorage,
     updateStorageStatus : updateStorageStatus
 }

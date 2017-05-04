@@ -1766,6 +1766,102 @@
         }
       }
     },
+    "/storageTotalMonth": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageTotalMonth list",
+        "description": "query storageTotalMonth",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "description": "total year",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageTotalMonth"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
+    "/storageTotalDay": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageTotalDay list",
+        "description": "query storageTotalDay",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "description": "total year",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "description": "total month",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageTotalDay"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/admin/{adminId}/storage": {
       "post": {
         "tags": [

@@ -178,6 +178,8 @@ function createServer() {
     server.get('/api/storage',storage.queryStorage);
     server.get('/api/storageDate',storage.queryStorageDate);
     server.get('/api/storageCount',storage.queryStorageCount);
+    server.get('/api/storageTotalMonth',storage.queryStorageTotalMonth);
+    server.get('/api/storageTotalDay',storage.queryStorageTotalDay);
     server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
     server.put({path:'/api/admin/:adminId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
