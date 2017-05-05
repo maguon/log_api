@@ -67,6 +67,11 @@ function createServer() {
         rate: 50,
         ip: true
     }));
+
+    restify.CORS.ALLOW_HEADERS.push('auth-token');
+    restify.CORS.ALLOW_HEADERS.push('user-name');
+    restify.CORS.ALLOW_HEADERS.push('user-type');
+    restify.CORS.ALLOW_HEADERS.push('user-id');
     restify.CORS.ALLOW_HEADERS.push('Access-Control-Allow-Origin');
     restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","GET");
     restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","POST");
