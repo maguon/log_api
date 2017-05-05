@@ -144,7 +144,7 @@ function updateRelStatus(req,res,next){
     var parkObj = {};
     Seq().seq(function(){
         var that = this;
-        carDAO.getCar(params,function(error,rows){
+        carDAO.getCar({carId:params.carId},function(error,rows){
             if (error) {
                 logger.error(' getCar ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
