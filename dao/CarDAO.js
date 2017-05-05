@@ -30,16 +30,60 @@ function getCar(params,callback) {
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
-        " left join car_storage_rel r on c.id = r.car_id where p.car_id>0 and c.id is not null ";
+        " left join car_storage_rel r on c.id = r.car_id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
         query = query + " and c.id = ? ";
     }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.modelId){
+        paramsArray[i++] = params.modelId;
+        query = query + " and c.model_id = ? ";
+    }
+    if(params.enterTimeStart){
+        paramsArray[i++] = params.enterTimeStart;
+        query = query + " and date_format(r.enter_time,'%Y%m%d') >= ? ";
+    }
+    if(params.enterTimeEnd){
+        paramsArray[i++] = params.enterTimeEnd;
+        query = query + " and date_format(r.enter_time,'%Y%m%d') <= ? ";
+    }
+    if(params.planOutTimeStart){
+        paramsArray[i++] = params.planOutTimeStart;
+        query = query + " and r.plan_out_time >= ? ";
+    }
+    if(params.planOutTimeEnd){
+        paramsArray[i++] = params.planOutTimeEnd;
+        query = query + " and r.plan_out_time <= ? ";
+    }
+    if(params.realOutTimeStart){
+        paramsArray[i++] = params.realOutTimeStart;
+        query = query + " and date_format(r.real_out_time,'%Y%m%d') >= ? ";
+    }
+    if(params.realOutTimeEnd){
+        paramsArray[i++] = params.realOutTimeEnd;
+        query = query + " and date_format(r.real_out_time,'%Y%m%d') <= ? ";
+    }
+    if(params.relStatus){
+        paramsArray[i++] = params.relStatus;
+        query = query + " and r.rel_status = ? ";
+    }
+    if(params.storageId){
+        paramsArray[i++] = params.storageId;
+        query = query + " and p.storage_id = ? ";
+    }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
+        paramsArray[i] = parseInt(params.size);
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){

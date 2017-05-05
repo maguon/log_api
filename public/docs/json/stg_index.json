@@ -2129,6 +2129,94 @@
 
           },
           {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "modelId",
+            "in": "query",
+            "description": "model id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "enterTimeStart",
+            "in": "query",
+            "description": "enterTime start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "enterTimeEnd",
+            "in": "query",
+            "description": "enterTime end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "planOutTimeStart",
+            "in": "query",
+            "description": "planOutTime start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "planOutTimeEnd",
+            "in": "query",
+            "description": "planOutTime end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "realOutTimeStart",
+            "in": "query",
+            "description": "realOutTime start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "realOutTimeEnd",
+            "in": "query",
+            "description": "realOutTime end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "relStatus",
+            "in": "query",
+            "description": "rel status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
