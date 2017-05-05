@@ -48,6 +48,10 @@ function getCar(params,callback) {
         paramsArray[i++] = params.modelId;
         query = query + " and c.model_id = ? ";
     }
+    if(params.colour){
+        paramsArray[i++] = params.colour;
+        query = query + " and c.colour = ? ";
+    }
     if(params.enterStart){
         paramsArray[i++] = params.enterStart;
         query = query + " and date_format(r.enter_time,'%Y%m%d') >= ? ";
@@ -79,6 +83,14 @@ function getCar(params,callback) {
     if(params.storageId){
         paramsArray[i++] = params.storageId;
         query = query + " and p.storage_id = ? ";
+    }
+    if(params.row){
+        paramsArray[i++] = params.row;
+        query = query + " and p.row = ? ";
+    }
+    if(params.col){
+        paramsArray[i++] = params.col;
+        query = query + " and p.col = ? ";
     }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
