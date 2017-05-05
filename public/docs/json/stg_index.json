@@ -2153,49 +2153,49 @@
 
           },
           {
-            "name": "enterTimeStart",
+            "name": "enterStart",
             "in": "query",
-            "description": "enterTime start",
+            "description": "enter start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "enterTimeEnd",
+            "name": "enterEnd",
             "in": "query",
-            "description": "enterTime end",
+            "description": "enter end",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "planOutTimeStart",
+            "name": "planStart",
             "in": "query",
-            "description": "planOutTime start",
+            "description": "plan start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "planOutTimeEnd",
+            "name": "planEnd",
             "in": "query",
-            "description": "planOutTime end",
+            "description": "plan end",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "realOutTimeStart",
+            "name": "realStart",
             "in": "query",
-            "description": "realOutTime start",
+            "description": "real start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "realOutTimeEnd",
+            "name": "realEnd",
             "in": "query",
-            "description": "realOutTime end",
+            "description": "real end",
             "required": false,
             "type": "string"
 
