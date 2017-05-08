@@ -83,7 +83,7 @@ function userLogin(req,res,next){
                     if(rows[0].status == listOfValue.USER_STATUS_NOT_ACTIVE){
                         //Admin User status is not verified return user id
                         var user = {
-                            userId : rows[0].id,
+                            userId : rows[0].uid,
                             userStatus : rows[0].status,
                             type : rows[0].type
                         }
@@ -93,7 +93,7 @@ function userLogin(req,res,next){
                     }else{
                         //admin user status is active,return token
                         var user = {
-                            userId : rows[0].id,
+                            userId : rows[0].uid,
                             userStatus : rows[0].status,
                             type : rows[0].type
                         }
