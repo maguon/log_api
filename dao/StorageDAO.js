@@ -74,7 +74,7 @@ function getStorageDate(params,callback) {
 }
 
 function getStorageCount(params,callback) {
-    var query = " select sum(s.row*s.col) as sumParking,sum(d.imports) as sumImports,sum(d.exports) as sumExports from storage_info s " +
+    var query = " select sum(d.imports) as sumImports,sum(d.exports) as sumExports,sum(d.balance) as sumBalance from storage_info s " +
         " left join storage_stat_date d on s.id = d.storage_id where s.id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
