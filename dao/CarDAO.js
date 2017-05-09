@@ -54,11 +54,11 @@ function getCar(params,callback) {
     }
     if(params.enterStart){
         paramsArray[i++] = params.enterStart;
-        query = query + " and date_format(r.enter_time,'%Y%m%d') >= ? ";
+        query = query + " and date_format(r.enter_time,'%Y%m%d 00:00:00') >= ? ";
     }
     if(params.enterEnd){
         paramsArray[i++] = params.enterEnd;
-        query = query + " and date_format(r.enter_time,'%Y%m%d') <= ? ";
+        query = query + " and date_format(r.enter_time,'%Y%m%d 23:59:59') <= ? ";
     }
     if(params.planStart){
         paramsArray[i++] = params.planStart;
@@ -70,11 +70,11 @@ function getCar(params,callback) {
     }
     if(params.realStart){
         paramsArray[i++] = params.realStart;
-        query = query + " and date_format(r.real_out_time,'%Y%m%d') >= ? ";
+        query = query + " and date_format(r.real_out_time,'%Y%m%d 00:00:00') >= ? ";
     }
     if(params.realEnd){
         paramsArray[i++] = params.realEnd;
-        query = query + " and date_format(r.real_out_time,'%Y%m%d') <= ? ";
+        query = query + " and date_format(r.real_out_time,'%Y%m%d 23:59:59') <= ? ";
     }
     if(params.relStatus){
         paramsArray[i++] = params.relStatus;
