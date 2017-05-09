@@ -70,10 +70,25 @@ function updateDrive(req,res,next){
     })
 }
 
+function updateDriveStatus (req,res,next){
+    var params = req.params;
+    driveDAO.updateDriveStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDrive : createDrive,
     queryDrive : queryDrive,
     queryDriveCount :queryDriveCount,
-    updateDrive : updateDrive
+    updateDrive : updateDrive,
+    updateDriveStatus : updateDriveStatus
 }

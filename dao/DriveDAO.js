@@ -82,7 +82,7 @@ function getDriveCount(params,callback) {
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , " +
         " tel = ? , company_id = ? , license_level = ? , license_date = ? , drive_image = ? , " +
-        " license_image = ? , remark= ?  where id = ?";
+        " license_image = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -101,10 +101,22 @@ function updateDrive(params,callback){
     });
 }
 
+function updateDriveStatus(params,callback){
+    var query = " update drive_info set drive_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.driveStatus;
+    paramsArray[i] = params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDrive : addDrive,
     getDrive : getDrive,
     getDriveCount :getDriveCount,
-    updateDrive : updateDrive
+    updateDrive : updateDrive,
+    updateDriveStatus : updateDriveStatus
 }

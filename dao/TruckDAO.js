@@ -150,6 +150,17 @@ function updateTruckDriveRel(params,callback){
     });
 }
 
+function updateTruckStatus(params,callback){
+    var query = " update truck_info set truck_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.truckStatus;
+    paramsArray[i] = params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruck : addTruck,
@@ -157,5 +168,6 @@ module.exports ={
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
     updateTruck : updateTruck,
-    updateTruckDriveRel : updateTruckDriveRel
+    updateTruckDriveRel : updateTruckDriveRel,
+    updateTruckStatus : updateTruckStatus
 }

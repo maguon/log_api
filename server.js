@@ -147,6 +147,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
     server.put({path:'/api/user/:userId/truck/:truckId/TruckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
+    server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus',contentType: 'application/json'} ,truck.updateTruckStatus);
 
     /**
      * Brand Module
@@ -162,6 +163,7 @@ function createServer() {
     server.get('/api/user/:userId/company/:companyId/driveCount' , drive.queryDriveCount);
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
+    server.put({path:'/api/user/:userId/drive/:driveId/driveStatus/:driveStatus',contentType: 'application/json'} ,drive.updateDriveStatus);
 
     /**
      * Company Module
