@@ -2537,7 +2537,7 @@
             "name": "carId",
             "in": "query",
             "description": "car id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
@@ -2545,7 +2545,7 @@
             "name": "vin",
             "in": "query",
             "description": "car vin",
-            "required": false,
+            "required": true,
             "type": "string"
 
           },
