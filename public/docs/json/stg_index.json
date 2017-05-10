@@ -2514,6 +2514,67 @@
         }
       }
     },
+    "/user/{userId}/againCarStorageRel": {
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "user create againCarStorageRel",
+        "description": "user create againCarStorageRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "againCarStorageRel",
+            "in": "body",
+            "description": "againCarStorageRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/againCarStorageRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid againCarStorageRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/carStorageRel/{relId}/relStatus/{relStatus}": {
       "put": {
         "tags": [
@@ -3411,6 +3472,27 @@
       },
       "xml": {
         "name": "carStorageRel"
+      }
+    },
+    "againCarStorageRel": {
+      "type": "object",
+      "properties": {
+
+        "parkingId": {
+          "type": "integer"
+        },
+        "storageId": {
+          "type": "integer"
+        },
+        "storageName": {
+          "type": "string"
+        },
+        "planOutTime": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "againCarStorageRel"
       }
     },
     "planOutTime": {
