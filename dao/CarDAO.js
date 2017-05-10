@@ -48,10 +48,6 @@ function getCar(params,callback) {
         paramsArray[i++] = params.modelId;
         query = query + " and c.model_id = ? ";
     }
-    if(params.colour){
-        paramsArray[i++] = params.colour;
-        query = query + " and c.colour = ? ";
-    }
     if(params.enterStart){
         paramsArray[i++] = params.enterStart;
         query = query + " and date_format(r.enter_time,'%Y%m%d 00:00:00') >= ? ";
@@ -80,17 +76,13 @@ function getCar(params,callback) {
         paramsArray[i++] = params.relStatus;
         query = query + " and r.rel_status = ? ";
     }
+    if(params.active){
+        paramsArray[i++] = params.active;
+        query = query + " and r.active = ? ";
+    }
     if(params.storageId){
         paramsArray[i++] = params.storageId;
         query = query + " and p.storage_id = ? ";
-    }
-    if(params.row){
-        paramsArray[i++] = params.row;
-        query = query + " and p.row = ? ";
-    }
-    if(params.col){
-        paramsArray[i++] = params.col;
-        query = query + " and p.col = ? ";
     }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
@@ -109,7 +101,7 @@ function getCarBase(params,callback) {
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
-        " left join car_storage_rel r on c.id = r.car_id where c.id is not null ";
+        " left join car_storage_rel r on c.id = r.car_id where r.active = 1 and c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;

@@ -2257,14 +2257,6 @@
 
           },
           {
-            "name": "colour",
-            "in": "query",
-            "description": "car colour",
-            "required": false,
-            "type": "string"
-
-          },
-          {
             "name": "enterStart",
             "in": "query",
             "description": "enter start",
@@ -2321,25 +2313,17 @@
 
           },
           {
+            "name": "active",
+            "in": "query",
+            "description": "rel active",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "storageId",
             "in": "query",
             "description": "storage id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "row",
-            "in": "query",
-            "description": "parking row",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "col",
-            "in": "query",
-            "description": "parking col",
             "required": false,
             "type": "integer"
 
