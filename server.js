@@ -12,19 +12,19 @@ var serverLogger = require('./util/ServerLogger.js');
 var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
-var truck = require('./bl/Truck');
-var brand = require('./bl/Brand');
-var drive = require('./bl/Drive');
-var company = require('./bl/Company');
-var city = require('./bl/City');
-var storage = require('./bl/Storage');
-var storageParking = require('./bl/StorageParking');
-var car = require('./bl/Car');
-var carStorageRel = require('./bl/CarStorageRel');
-var carMake = require('./bl/CarMake');
-var carModel = require('./bl/CarModel');
-var app = require('./bl/App');
-var sysRecord = require('./bl/SysRecord');
+var truck = require('./bl/Truck.js');
+var brand = require('./bl/Brand.js');
+var drive = require('./bl/Drive.js');
+var company = require('./bl/Company.js');
+var city = require('./bl/City.js');
+var storage = require('./bl/Storage.js');
+var storageParking = require('./bl/StorageParking.js');
+var car = require('./bl/Car.js');
+var carStorageRel = require('./bl/CarStorageRel.js');
+var carMake = require('./bl/CarMake.js');
+var carModel = require('./bl/CarModel.js');
+var app = require('./bl/App.js');
+var sysRecord = require('./bl/SysRecord.js');
 
 ///--- API
 
