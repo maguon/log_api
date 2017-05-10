@@ -162,14 +162,17 @@ function updateStorage(req,res,next){
 
 function updateStorageStatus (req,res,next){
     var params = req.params;
-    var d = new Date();
-    var myDate = d.getFullYear()+"0"+(d.getMonth()+1)+"0"+d.getDate();
+    var myDate = new Date();
+    var year = myDate.getFullYear();
+    var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
+    var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
+    var dateStr = year + month + day;
     Seq().seq(function(){
         var that = this;
         var subParams ={
             storageId : params.storageId,
-            dateStart : myDate,
-            dateEnd : myDate
+            dateStart : dateStr,
+            dateEnd : dateStr
         }
         storageDAO.getStorageDate(subParams,function(error,rows){
             if (error) {
