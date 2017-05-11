@@ -67,6 +67,7 @@ function getStorageDate(params,callback) {
         paramsArray[i] = params.dateEndMonth;
         query = query + " and date_format(d.date_id,'%Y%m') <= ? ";
     }
+    query = query + ' order by d.date_id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageDate ');
         return callback(error,rows);
