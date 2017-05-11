@@ -84,7 +84,7 @@ function getCar(params,callback) {
         paramsArray[i++] = params.storageId;
         query = query + " and p.storage_id = ? ";
     }
-    query = query + '  order by c.id desc ';
+    query = query + '  order by r.plan_out_time ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
