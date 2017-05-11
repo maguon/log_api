@@ -289,9 +289,9 @@ function updateRelStatus(req,res,next){
     var parkObj = {};
     Seq().seq(function(){
         var that = this;
-        carDAO.getCar({carId:params.carId},function(error,rows){
+        carDAO.getCarBase({carId:params.carId},function(error,rows){
             if (error) {
-                logger.error(' getCar ' + error.message);
+                logger.error(' getCarBase ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1&&rows[0].rel_status == listOfValue.REL_STATUS_MOVE){
@@ -304,7 +304,7 @@ function updateRelStatus(req,res,next){
                     parkObj.vin = rows[0].vin;
                     that();
                 }else{
-                    logger.warn(' getCar ' + 'failed');
+                    logger.warn(' getCarBase ' + 'failed');
                     resUtil.resetFailedRes(res,"car is not empty");
                     return next();
                 }
