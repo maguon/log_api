@@ -137,6 +137,7 @@ function createServer() {
     server.get('/api/user/:userId' , user.queryUser);
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
+    server.get('/api/user/:userId/token/:token' , user.changeUserToken);
 
     /**
      * Truck Module
