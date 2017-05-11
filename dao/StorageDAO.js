@@ -129,10 +129,16 @@ function getStorageTotalDay(params,callback) {
         query = query + " and db.month = ? ";
     }
     if(params.storageId){
-        paramsArray[i] = params.storageId;
+        paramsArray[i++] = params.storageId;
         query = query + " and d.storage_id = ? ";
     }
     query = query + ' group by d.date_id ';
+    query = query + ' order by d.date_id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageTotalDay ');
         return callback(error,rows);
