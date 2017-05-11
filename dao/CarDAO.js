@@ -49,12 +49,12 @@ function getCar(params,callback) {
         query = query + " and c.model_id = ? ";
     }
     if(params.enterStart){
-        paramsArray[i++] = params.enterStart;
-        query = query + " and date_format(r.enter_time,'%Y%m%d 00:00:00') >= ? ";
+        paramsArray[i++] = params.enterStart +" 00:00:00";
+        query = query + " and  r.enter_time  >= ? ";
     }
     if(params.enterEnd){
-        paramsArray[i++] = params.enterEnd;
-        query = query + " and date_format(r.enter_time,'%Y%m%d 23:59:59') <= ? ";
+        paramsArray[i++] = params.enterEnd +" 23:59:59";
+        query = query + " and r.enter_time  <= ? ";
     }
     if(params.planStart){
         paramsArray[i++] = params.planStart;
@@ -65,12 +65,12 @@ function getCar(params,callback) {
         query = query + " and r.plan_out_time <= ? ";
     }
     if(params.realStart){
-        paramsArray[i++] = params.realStart;
-        query = query + " and date_format(r.real_out_time,'%Y%m%d 00:00:00') >= ? ";
+        paramsArray[i++] = params.realStart +" 00:00:00";
+        query = query + " and r.real_out_time >= ? ";
     }
     if(params.realEnd){
-        paramsArray[i++] = params.realEnd;
-        query = query + " and date_format(r.real_out_time,'%Y%m%d 23:59:59') <= ? ";
+        paramsArray[i++] = params.realEnd +" 23:59:59";
+        query = query + " and r.real_out_time <= ? ";
     }
     if(params.relStatus){
         paramsArray[i++] = params.relStatus;
