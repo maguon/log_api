@@ -68,10 +68,22 @@ function updateRelPlanOutTime(params,callback){
     });
 }
 
+function updateRelActive(params,callback){
+    var query = " update car_storage_rel set active = 0 where car_id = ? and id != ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.carId;
+    paramsArray[i] = params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateRelActive ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addCarStorageRel : addCarStorageRel,
     getCarStorageRel : getCarStorageRel,
     updateRelStatus : updateRelStatus,
-    updateRelPlanOutTime : updateRelPlanOutTime
+    updateRelPlanOutTime : updateRelPlanOutTime,
+    updateRelActive : updateRelActive
 }

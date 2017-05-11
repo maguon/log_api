@@ -245,6 +245,25 @@ function createAgainCarStorageRel(req,res,next){
         var subParams ={
             carId : carId,
             relId : relId,
+        }
+        carStorageRelDAO.updateRelActive(subParams,function(err,result){
+            if (err) {
+                logger.error(' updateRelActive ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateRelActive ' + 'success');
+                }else{
+                    logger.warn(' updateRelActive ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        var subParams ={
+            carId : carId,
+            relId : relId,
             parkingId : params.parkingId,
         }
         storageParkingDAO.updateStorageParking(subParams,function(err,result){
