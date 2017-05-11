@@ -217,15 +217,20 @@ function createServer() {
      */
     server.get('/api/carMake',carMake.queryCarMake);
     server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
+    server.post({path:'/api/user/:userId/carMake',contentType: 'application/json'},carMake.createCarMake);
     server.put({path:'/api/admin/:adminId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
+    server.put({path:'/api/user/:userId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
 
     /**
      * CarModel Module
      */
     server.get('/api/carMake/:makeId/carModel',carModel.queryCarModel);
     server.post({path:'/api/admin/:adminId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
+    server.post({path:'/api/user/:userId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.put({path:'/api/admin/:adminId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
+    server.put({path:'/api/user/:userId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/admin/:adminId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
+    server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 
     /**
      * App Module
