@@ -33,9 +33,9 @@ function updateStorageParking(req,res,next){
     var parkObj = {};
     Seq().seq(function(){
         var that = this;
-        carDAO.getCar(params,function(error,rows){
+        carDAO.getCarBase(params,function(error,rows){
             if (error) {
-                logger.error(' getCar ' + error.message);
+                logger.error(' getCarBase ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1){
@@ -47,7 +47,7 @@ function updateStorageParking(req,res,next){
                     parkObj.vin = rows[0].vin;
                     that();
                 }else{
-                    logger.warn(' getCar ' + 'failed');
+                    logger.warn(' getCarBase ' + 'failed');
                     resUtil.resetFailedRes(res,"car is not empty");
                     return next();
                 }
