@@ -15,15 +15,34 @@ var logger = serverLogger.createLogger('CarMake.js');
 
 function createCarMake(req,res,next){
     var params = req.params ;
-    carMakeDAO.addCarMake(params,function(error,result){
-        if (error) {
-            logger.error(' createCarMake ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createCarMake ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        carMakeDAO.getCarMake({makeName:params.makeName},function(error,rows){
+            if (error) {
+                logger.error(' getCarMake ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getCarMake ' +params.makeName+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING) ;
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        carMakeDAO.addCarMake(params,function(error,result){
+            if (error) {
+                logger.error(' createCarMake ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createCarMake ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
@@ -43,15 +62,34 @@ function queryCarMake(req,res,next){
 
 function updateCarMake(req,res,next){
     var params = req.params ;
-    carMakeDAO.updateCarMake(params,function(error,result){
-        if (error) {
-            logger.error(' updateCarMake ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateCarMake ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        carMakeDAO.getCarMake({makeName:params.makeName},function(error,rows){
+            if (error) {
+                logger.error(' getCarMake ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getCarMake ' +params.makeName+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING) ;
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        carMakeDAO.updateCarMake(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarMake ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCarMake ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
