@@ -31,6 +31,14 @@ function getUser(params,callback) {
         paramsArray[i++] = params.mobile;
         query = query + " and mobile = ? ";
     }
+    if(params.realName){
+        paramsArray[i++] = params.realName;
+        query = query + " and real_name = ? ";
+    }
+    if(params.type){
+        paramsArray[i++] = params.type;
+        query = query + " and type = ? ";
+    }
     if(params.status){
         paramsArray[i++] = params.status;
         query = query + " and status = ? ";
@@ -56,6 +64,10 @@ function getUserBase(params,callback){
     if(params.mobile){
         paramsArray[i++] = params.mobile;
         query = query + " and mobile = ? ";
+    }
+    if(params.realName){
+        paramsArray[i++] = params.realName;
+        query = query + " and real_name = ? ";
     }
     if(params.type){
         paramsArray[i++] = params.type;
