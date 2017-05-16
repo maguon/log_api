@@ -130,6 +130,7 @@ function createServer() {
     /**
      * User Module
      */
+    server.get('/api/user' ,user.queryUser);
     server.get('/api/admin/:adminId/user' ,user.queryUser);
     server.post({path:'/api/admin/:adminId/user',contentType: 'application/json'} , user.createUser);
     server.put({path:'/api/admin/:adminId/user/:userId',contentType: 'application/json'} ,user.updateUserInfo);
@@ -138,6 +139,7 @@ function createServer() {
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
     server.get('/api/user/:userId/token/:token' , user.changeUserToken);
+
 
     /**
      * Truck Module
