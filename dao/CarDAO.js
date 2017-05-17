@@ -84,6 +84,10 @@ function getCar(params,callback) {
         paramsArray[i++] = params.storageId;
         query = query + " and p.storage_id = ? ";
     }
+    if(params.vinCode){
+        paramsArray[i++] = params.vinCode;
+        query = query + " and c.vin like '%"+params.vinCode+"%'";
+    }
     query = query + '  order by r.plan_out_time ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
