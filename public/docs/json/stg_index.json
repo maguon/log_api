@@ -2588,7 +2588,7 @@
         }
       }
     },
-    "/user/{userId}/car/{carId}/vin": {
+    "/admin/{adminId}/car/{carId}/vin": {
       "put": {
         "tags": [
           "car"
@@ -2600,9 +2600,9 @@
         ],
         "parameters": [
           {
-            "name": "userId",
+            "name": "adminId",
             "in": "path",
-            "description": "user Id",
+            "description": "admin Id",
             "required": true,
             "type": "integer"
 
