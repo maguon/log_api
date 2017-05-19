@@ -221,6 +221,10 @@ function changeUserToken(req,res,next){
             resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR) ;
             return next();
         }
+    }else{
+        logger.warn(' changeUserToken' +params.userId+ " failed");
+        resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR) ;
+        return next();
     }
 
 }
