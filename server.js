@@ -40,7 +40,7 @@ function createServer() {
     // 1.0.0
     var server = restify.createServer({
 
-        name: 'LOG-API',
+        name: 'LOG-API-HONYA',
         version: '0.0.1'
     });
 
