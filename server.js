@@ -25,6 +25,7 @@ var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
+var oauth = require('./bl/OAuth.js');
 
 ///--- API
 
@@ -88,6 +89,7 @@ function createServer() {
     server.use(restify.authorizationParser());
     server.use(restify.queryParser());
     server.use(restify.gzipResponse());
+    server.use(oauth.transferToken());
 
 
 

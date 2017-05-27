@@ -75,27 +75,34 @@ function userLogin(req,res,next){
                     resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_PSWD_ERROR) ;
                     return next();
                 }else{
+                    var user = {
+                        userId : rows[0].uid,
+                        userStatus : rows[0].status,
+                        type : rows[0].type,
+                        name : rows[0].real_name,
+                        phone: params.mobile
+                    }
                     if(rows[0].status == listOfValue.USER_STATUS_NOT_ACTIVE){
                         //Admin User status is not verified return user id
-                        var user = {
-                            userId : rows[0].uid,
-                            userStatus : rows[0].status,
-                            type : rows[0].type
-                        }
-                        logger.info('userLogin' +params.email||params.phone+ " not actived");
+
+                        logger.info('userLogin' +params.email||params.mobile+ " not actived");
                         resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR);
                         return next();
                     }else{
                         //admin user status is active,return token
-                        var user = {
-                            userId : rows[0].uid,
-                            userStatus : rows[0].status,
-                            type : rows[0].type
-                        }
+
                         user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
-                        logger.info(' userLogin' +params.mobile+ " success");
-                        resUtil.resetQueryRes(res,user,null);
-                        return next();
+                        oAuthUtil.saveToken(user,function(error,result){
+                            if(error){
+                                logger.error(' userLogin ' + error.stack);
+                                return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
+                            }else{
+                                logger.info(' userLogin' +params.mobile+ " success");
+                                resUtil.resetQueryRes(res,user,null);
+                                return next();
+                            }
+                        })
+
                     }
                 }
             }
@@ -200,12 +207,27 @@ function changeUserToken(req,res,next){
                         var user = {
                             userId : rows[0].uid,
                             userStatus : rows[0].status,
-                            type : rows[0].type
+                            type : rows[0].type,
+                            name : rows[0].real_name,
+                            phone: rows[0].mobile
                         }
                         user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
-                        logger.info(' changeUserToken' +params.userId+ " success");
-                        resUtil.resetQueryRes(res,user,null);
-                        return next();
+                        oAuthUtil.removeToken({accessToken:params.token},function(error,result){
+                            if(error) {
+                                logger.error(' changeUserToken ' + error.stack);
+                            }
+                        })
+                        oAuthUtil.saveToken(user,function(error,result){
+                            if(error){
+                                logger.error(' changeUserToken ' + error.stack);
+                                return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
+                            }else{
+                                logger.info(' changeUserToken' +params.userId+ " success");
+                                resUtil.resetQueryRes(res,user,null);
+                                return next();
+                            }
+                        })
+
                     }
                 }
             })
@@ -219,7 +241,6 @@ function changeUserToken(req,res,next){
         resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR) ;
         return next();
     }
-
 }
 
 

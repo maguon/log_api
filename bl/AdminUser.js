@@ -28,27 +28,34 @@ function adminUserLogin(req,res,next){
                     return next();
 
                 }else{
+                    var user = {
+                        userId : rows[0].uid,
+                        userStatus : rows[0].status,
+                        type : rows[0].type,
+                        name : rows[0].real_name,
+                        phone: params.mobile
+                    }
                     if(rows[0].status == listOfValue.ADMIN_USER_STATUS_NOT_ACTIVE){
                         //Admin User status is not verified return user id
-                        var user = {
-                            userId : rows[0].uid,
-                            userStatus : rows[0].status,
-                            type : rows[0].type
-                        }
+
                         logger.info('adminUserLogin' +params.mobile+ " not verified");
                         resUtil.resetQueryRes(res,user,null);
                         return next();
                     }else{
                         //admin user status is active,return token
-                        var user = {
-                            userId : rows[0].uid,
-                            userStatus : rows[0].status,
-                            type : rows[0].type
-                        }
+
                         user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.admin,user.userId,user.userStatus);
-                        logger.info('adminUserLogin' +params.mobile+ " success");
-                        resUtil.resetQueryRes(res,user,null);
-                        return next();
+                        oAuthUtil.saveToken(user,function(error,result){
+                            if(error){
+                                logger.error(' adminUserLogin ' + error.stack);
+                                return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
+                            }else{
+                                logger.info('adminUserLogin' +params.mobile+ " success");
+                                resUtil.resetQueryRes(res,user,null);
+                                return next();
+                            }
+                        })
+
                     }
                 }
             }

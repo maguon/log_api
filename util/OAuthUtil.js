@@ -5,6 +5,8 @@
 var serializer = require('serializer');
 var serverLogger = require('./ServerLogger.js');
 var logger = serverLogger.createLogger('OAuthUtil.js');
+var httpUtil = require('./HttpUtil.js');
+var systemConfig = require('../config/SystemConfig.js');
 //var userDao = require('../dao/UserDAO.js')
 var options ={
     crypt_key: 'mp',
@@ -132,10 +134,6 @@ function parseAdminToken(req){
     return resultObj;
 }
 
-
-
-
-
 function getCookie(cookie ,name)
 {
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
@@ -145,10 +143,32 @@ function getCookie(cookie ,name)
         return null;
 }
 
+function saveToken(params,callback){
+    httpUtil.httpPost(systemConfig.hosts.auth,'/api/token',{},params,function(error,result){
+        callback(error,result)
+    })
+}
+
+
+function removeToken(params,callback){
+    httpUtil.httpDelete(systemConfig.hosts.auth,'/api/token/'+params.accessToken,{},params,function(error,result){
+        callback(error,result)
+    })
+}
+
+function getToken(params,callback){
+    httpUtil.httpGet(systemConfig.hosts.auth,'/api/token/'+params.accessToken,{},{},function(error,result){
+        callback(error,result)
+    })
+}
 module.exports = {
     createAccessToken: createAccessToken,
     parseAccessToken : parseAccessToken,
     clientType : clientType,
+    headerTokenMeta : headerTokenMeta,
     parseAdminToken:parseAdminToken,
-    parseUserToken : parseUserToken
+    parseUserToken : parseUserToken ,
+    saveToken : saveToken ,
+    removeToken : removeToken ,
+    getToken : getToken
 };
