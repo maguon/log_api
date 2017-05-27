@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "stg.myxxjs.com:9001",
+  "host": "localhost:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -57,38 +57,6 @@
     "http"
   ],
   "paths": {
-    "/admin/do/login": {
-      "post": {
-        "tags": [
-          "admin"
-        ],
-        "summary": "Admin user do login",
-        "description": "",
-        "operationId": "admin login",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Admin base info ",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/admin"
-            }
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
     "/admin/{adminId}": {
       "get": {
         "tags": [
@@ -123,94 +91,36 @@
             "description": "Invalid token value or invalid admin id"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "admin"
-        ],
-        "summary": "update admin user info",
-        "description": "update admin user info",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "admin",
-            "in": "body",
-            "description": "admin base info:name,mobile and remark is needed .",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/admin"
-            }
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/admin"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid admin id"
-          }
-        }
       }
     },
-    "/admin/{adminId}/password": {
-      "put": {
+    "/admin/do/login": {
+      "post": {
         "tags": [
           "admin"
         ],
-        "summary": "update admin user password",
-        "description": "update admin user password",
+        "summary": "Admin user do login",
+        "description": "",
+        "operationId": "admin login",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "password",
             "in": "body",
-            "description": "admin base info:origin and new password is needed .",
+            "name": "body",
+            "description": "Admin base info ",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/password"
+              "$ref": "#/definitions/user"
             }
-
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/password"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid admin id"
+          "405": {
+            "description": "Invalid input"
           }
         }
       }
@@ -297,117 +207,17 @@
             "description": "Invalid token value or invalid user id"
           }
         }
-      }
-    },
-    "/admin/{adminId}/user": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "query  user list",
-        "description": "query user",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "user id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "mobile",
-            "in": "query",
-            "description": "user mobile",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "realName",
-            "in": "query",
-            "description": "real name",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "description": "user type",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "user status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "description": " list start pos",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "list size for pagination",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/user"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid user id"
-          }
-        }
       },
       "post": {
         "tags": [
           "user"
         ],
-        "summary": "admin create user",
-        "description": "admin create user",
+        "summary": "create user",
+        "description": "create user",
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "user",
             "in": "body",
@@ -416,111 +226,6 @@
             "schema": {
               "$ref": "#/definitions/user"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid user id"
-          }
-        }
-      }
-    },
-    "/admin/{adminId}/user/{userId}": {
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "admin update user info",
-        "description": "admin update user info",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "user",
-            "in": "body",
-            "description": "user info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/user"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid user id"
-          }
-        }
-      }
-    },
-    "/admin/{adminId}/user/{userId}/status/{status}": {
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "admin update user status",
-        "description": "admin update user status",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "status",
-            "in": "path",
-            "description": "user status",
-            "required": true,
-            "type": "integer"
-
           }
         ],
         "responses": {
@@ -611,15 +316,13 @@
             "description": "Invalid token value or invalid user id"
           }
         }
-      }
-    },
-    "/user/{userId}/token/{token}": {
-      "get": {
+      },
+      "put": {
         "tags": [
           "user"
         ],
-        "summary": "get user new token",
-        "description": "change  user token",
+        "summary": "update user info",
+        "description": "update user info",
         "produces": [
           "application/json"
         ],
@@ -633,11 +336,56 @@
 
           },
           {
-            "name": "token",
-            "in": "path",
-            "description": "token",
+            "name": "user",
+            "in": "body",
+            "description": "user info",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/status/{status}": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "update user status",
+        "description": "update user status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "user status",
+            "required": true,
+            "type": "integer"
 
           }
         ],
@@ -645,7 +393,10 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "object"
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
             }
           },
           "400": {
@@ -692,6 +443,47 @@
               "items": {
                 "$ref": "#/definitions/password"
               }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/token/{token}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get user new token",
+        "description": "change  user token",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "description": "token",
+            "required": true,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
             }
           },
           "400": {
@@ -3734,61 +3526,6 @@
         "name": "department"
       }
     },
-    "admin": {
-      "type": "object",
-      "required": [
-        "id",
-        "userName",
-        "password"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "userName": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "realName": {
-          "type": "string"
-        },
-        "mobile": {
-          "type": "string"
-        },
-        "status": {
-          "type": "integer",
-          "description": "admin status",
-          "enum": [
-            "0",
-            "1"
-          ]
-        }
-      },
-      "xml": {
-        "name": "admin"
-      }
-    },
-    "password": {
-      "type": "object",
-      "required": [
-        "originPassword",
-        "newPassword"
-      ],
-      "properties": {
-        "originPassword": {
-          "type": "string"
-        },
-        "newPassword": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "password"
-      }
-    },
     "user": {
       "type": "object",
       "properties": {
@@ -3807,13 +3544,28 @@
         },
         "gender": {
           "type": "string"
-        },
-        "status": {
-          "type": "integer"
         }
       },
       "xml": {
         "name": "user"
+      }
+    },
+    "password": {
+      "type": "object",
+      "required": [
+        "originPassword",
+        "newPassword"
+      ],
+      "properties": {
+        "originPassword": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "password"
       }
     },
     "truck": {

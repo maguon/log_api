@@ -46,7 +46,6 @@ function createUser(req,res,next){
                         userStatus : listOfValue.USER_STATUS_ACTIVE
                     }
                     user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
-
                     resUtil.resetQueryRes(res,user,null);
                 }else{
                     logger.warn(' createUser ' + 'false');
@@ -60,7 +59,6 @@ function createUser(req,res,next){
 
 function userLogin(req,res,next){
     var params = req.params;
-
     userDAO.getUser(params,function(error,rows){
         if (error) {
             logger.error(' userLogin ' + error.message);
@@ -68,17 +66,14 @@ function userLogin(req,res,next){
         } else {
             if(rows && rows.length<1){
                 logger.warn(' userLogin ' + params.email||params.phone+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
-                //res.send(200, {success:false,errMsg:sysMsg.ADMIN_LOGIN_USER_UNREGISTERED});
                 resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_USER_UNREGISTERED) ;
                 return next();
             }else{
                 var passwordMd5 = encrypt.encryptByMd5(params.password);
                 if(passwordMd5 != rows[0].password){
                     logger.warn(' userLogin ' +params.phone+ sysMsg.CUST_LOGIN_PSWD_ERROR);
-                    //res.send(200, {success:false,errMsg:sysMsg.CUST_LOGIN_PSWD_ERROR});
                     resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_PSWD_ERROR) ;
                     return next();
-
                 }else{
                     if(rows[0].status == listOfValue.USER_STATUS_NOT_ACTIVE){
                         //Admin User status is not verified return user id
@@ -152,7 +147,6 @@ function updateUserStatus (req,res,next){
 
 function changeUserPassword(req,res,next){
     var params = req.params;
-
     Seq().seq(function(){
         var that = this;
         userDAO.getUser(params,function(error,rows){
@@ -187,7 +181,6 @@ function changeUserPassword(req,res,next){
         })
     })
 }
-
 
 function changeUserToken(req,res,next){
     var params = req.params;
@@ -229,12 +222,13 @@ function changeUserToken(req,res,next){
 
 }
 
+
 module.exports = {
     createUser : createUser,
     userLogin : userLogin,
     queryUser : queryUser,
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,
-    changeUserPassword : changeUserPassword ,
+    changeUserPassword : changeUserPassword,
     changeUserToken : changeUserToken
 }

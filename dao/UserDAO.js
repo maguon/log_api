@@ -55,7 +55,7 @@ function getUser(params,callback) {
 }
 
 function getUserBase(params,callback){
-    var query = " select uid,mobile,real_name,password,type,gender,status from user_info where uid is not null ";
+    var query = " select uid,mobile,real_name,type,gender,status from user_info where uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
         paramsArray[i++] = params.userId;
@@ -89,13 +89,12 @@ function getUserBase(params,callback){
 }
 
 function updateUserInfo(params,callback){
-    var query = " update user_info set real_name = ? , type = ? , gender = ? , mobile = ? ,status = ?  where uid = ?";
+    var query = " update user_info set mobile = ? , real_name = ? , type = ? , gender = ? where uid = ?";
     var paramsArray=[],i=0;
+    paramsArray[i++] = params.mobile;
     paramsArray[i++] = params.realName;
     paramsArray[i++] = params.type;
     paramsArray[i++] = params.gender;
-    paramsArray[i++] = params.mobile;
-    paramsArray[i++] = params.status;
     paramsArray[i] = params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateUserInfo ');
