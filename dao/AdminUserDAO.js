@@ -32,7 +32,7 @@ function queryAdminUser(params,callback){
 }
 
 function queryAdminBase(params,callback){
-    var query = " select uid,mobile,real_name,type,gender,status from user_info where uid is not null ";
+    var query = " select uid,mobile,real_name,type,gender,status from user_info where sa = 0 and uid is not null ";
     var paramsArray=[],i=0;
     if(params.adminId){
         paramsArray[i++] = params.adminId;

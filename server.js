@@ -141,9 +141,9 @@ function createServer() {
     /**
      * Truck Module
      */
-    server.get('/api/user/:userId/truck' , truck.queryTruck);
-    server.get('/api/user/:userId/company/:companyId/firstCount' , truck.queryFirstCount);
-    server.get('/api/user/:userId/company/:companyId/trailerCount' , truck.queryTrailerCount);
+    server.get('/api/truck' , truck.queryTruck);
+    server.get('/api/company/:companyId/firstCount' , truck.queryFirstCount);
+    server.get('/api/company/:companyId/trailerCount' , truck.queryTrailerCount);
     server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
     server.put({path:'/api/user/:userId/truck/:truckId/TruckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
@@ -159,8 +159,8 @@ function createServer() {
     /**
      * Drive Module
      */
-    server.get('/api/user/:userId/drive' , drive.queryDrive);
-    server.get('/api/user/:userId/company/:companyId/driveCount' , drive.queryDriveCount);
+    server.get('/api/drive' , drive.queryDrive);
+    server.get('/api/company/:companyId/driveCount' , drive.queryDriveCount);
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/driveStatus/:driveStatus',contentType: 'application/json'} ,drive.updateDriveStatus);
@@ -168,14 +168,14 @@ function createServer() {
     /**
      * Company Module
      */
-    server.get('/api/user/:userId/company',company.queryCompany);
+    server.get('/api/company',company.queryCompany);
     server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
     server.put({path:'/api/user/:userId/company/:companyId',contentType: 'application/json'} ,company.updateCompany);
 
     /**
      * City Module
      */
-    server.get('/api/user/:userId/city',city.queryCity);
+    server.get('/api/city',city.queryCity);
     server.post({path:'/api/user/:userId/city',contentType: 'application/json'},city.createCity);
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
 
@@ -187,9 +187,9 @@ function createServer() {
     server.get('/api/storageCount',storage.queryStorageCount);
     server.get('/api/storageTotalMonth',storage.queryStorageTotalMonth);
     server.get('/api/storageTotalDay',storage.queryStorageTotalDay);
-    server.post({path:'/api/admin/:adminId/storage',contentType: 'application/json'},storage.createStorage);
-    server.put({path:'/api/admin/:adminId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
-    server.put({path:'/api/admin/:adminId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
+    server.post({path:'/api/user/:userId/storage',contentType: 'application/json'},storage.createStorage);
+    server.put({path:'/api/user/:userId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
+    server.put({path:'/api/user/:userId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
 
     /**
      * storageParking Module
@@ -200,10 +200,9 @@ function createServer() {
     /**
      * Car Module
      */
-    server.get('/api/user/:userId/car',car.queryCar);
+    server.get('/api/car',car.queryCar);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
-    server.get('/api/admin/:adminId/car',car.queryCar);
-    server.put({path:'/api/admin/:adminId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin);
+    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin);
 
     /**
      * CarStorageRel Module
@@ -217,20 +216,15 @@ function createServer() {
      * CarMake Module
      */
     server.get('/api/carMake',carMake.queryCarMake);
-    server.post({path:'/api/admin/:adminId/carMake',contentType: 'application/json'},carMake.createCarMake);
     server.post({path:'/api/user/:userId/carMake',contentType: 'application/json'},carMake.createCarMake);
-    server.put({path:'/api/admin/:adminId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
     server.put({path:'/api/user/:userId/carMake/:makeId',contentType: 'application/json'} ,carMake.updateCarMake);
 
     /**
      * CarModel Module
      */
     server.get('/api/carMake/:makeId/carModel',carModel.queryCarModel);
-    server.post({path:'/api/admin/:adminId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.post({path:'/api/user/:userId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
-    server.put({path:'/api/admin/:adminId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/user/:userId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
-    server.put({path:'/api/admin/:adminId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
     server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 
     /**

@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "localhost:9001",
+  "host": "stg.myxxjs.com:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -492,7 +492,7 @@
         }
       }
     },
-    "/user/{userId}/truck": {
+    "/truck": {
       "get": {
         "tags": [
           "truck"
@@ -503,14 +503,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "truckId",
             "in": "query",
@@ -598,7 +590,9 @@
             "description": "Invalid token value or invalid truck id"
           }
         }
-      },
+      }
+    },
+    "/user/{userId}/truck": {
       "post": {
         "tags": [
           "truck"
@@ -643,7 +637,7 @@
         }
       }
     },
-    "/user/{userId}/company/{companyId}/firstCount": {
+    "/company/{companyId}/firstCount": {
       "get": {
         "tags": [
           "truck"
@@ -654,14 +648,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "companyId",
             "in": "path",
@@ -687,7 +673,7 @@
         }
       }
     },
-    "/user/{userId}/company/{companyId}/trailerCount": {
+    "/company/{companyId}/trailerCount": {
       "get": {
         "tags": [
           "truck"
@@ -698,14 +684,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "companyId",
             "in": "path",
@@ -1024,7 +1002,7 @@
         }
       }
     },
-    "/user/{userId}/drive": {
+    "/drive": {
       "get": {
         "tags": [
           "drive"
@@ -1035,14 +1013,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "driveId",
             "in": "query",
@@ -1106,7 +1076,9 @@
             "description": "Invalid token value or invalid drive id"
           }
         }
-      },
+      }
+    },
+    "/user/{userId}/drive": {
       "post": {
         "tags": [
           "drive"
@@ -1151,7 +1123,7 @@
         }
       }
     },
-    "/user/{userId}/company/{companyId}/driveCount": {
+    "/company/{companyId}/driveCount": {
       "get": {
         "tags": [
           "drive"
@@ -1162,14 +1134,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "companyId",
             "in": "path",
@@ -1301,7 +1265,7 @@
         }
       }
     },
-    "/user/{userId}/company": {
+    "/company": {
       "get": {
         "tags": [
           "company"
@@ -1312,14 +1276,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "companyId",
             "in": "query",
@@ -1375,7 +1331,9 @@
             "description": "Invalid token value or invalid company id"
           }
         }
-      },
+      }
+    },
+    "/user/{userId}/company": {
       "post": {
         "tags": [
           "company"
@@ -1474,7 +1432,7 @@
         }
       }
     },
-    "/user/{userId}/city": {
+    "/city": {
       "get": {
         "tags": [
           "city"
@@ -1485,14 +1443,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "cityId",
             "in": "query",
@@ -1524,7 +1474,9 @@
             "description": "Invalid token value or invalid city id"
           }
         }
-      },
+      }
+    },
+    "/user/{userId}/city": {
       "post": {
         "tags": [
           "city"
@@ -1931,21 +1883,21 @@
         }
       }
     },
-    "/admin/{adminId}/storage": {
+    "/user/{userId}/storage": {
       "post": {
         "tags": [
           "storage"
         ],
-        "summary": "admin create storage",
-        "description": "admin create storage",
+        "summary": "create storage",
+        "description": "create storage",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "adminId",
+            "name": "userId",
             "in": "path",
-            "description": "admin Id",
+            "description": "user Id",
             "required": true,
             "type": "integer"
 
@@ -1976,7 +1928,7 @@
         }
       }
     },
-    "/admin/{adminId}/storage/{storageId}": {
+    "/user/{userId}/storage/{storageId}": {
       "put": {
         "tags": [
           "storage"
@@ -1988,9 +1940,9 @@
         ],
         "parameters": [
           {
-            "name": "adminId",
+            "name": "userId",
             "in": "path",
-            "description": "admin Id",
+            "description": "user Id",
             "required": true,
             "type": "integer"
 
@@ -2030,21 +1982,21 @@
         }
       }
     },
-    "/admin/{adminId}/storage/{storageId}/storageStatus/{storageStatus}": {
+    "/user/{userId}/storage/{storageId}/storageStatus/{storageStatus}": {
       "put": {
         "tags": [
           "storage"
         ],
-        "summary": "admin update storage status",
-        "description": "admin update storage status",
+        "summary": "update storage status",
+        "description": "update storage status",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "adminId",
+            "name": "userId",
             "in": "path",
-            "description": "admin Id",
+            "description": "user Id",
             "required": true,
             "type": "integer"
 
@@ -2170,7 +2122,7 @@
         }
       }
     },
-    "/user/{userId}/car": {
+    "/car": {
       "get": {
         "tags": [
           "car"
@@ -2181,14 +2133,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
-          },
           {
             "name": "carId",
             "in": "query",
@@ -2388,171 +2332,7 @@
         }
       }
     },
-    "/admin/{admin}/car": {
-      "get": {
-        "tags": [
-          "car"
-        ],
-        "summary": "query  car list",
-        "description": "query car",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "carId",
-            "in": "query",
-            "description": "car id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "vin",
-            "in": "query",
-            "description": "car vin",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "vinCode",
-            "in": "query",
-            "description": "vin code",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "makeId",
-            "in": "query",
-            "description": "make id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "modelId",
-            "in": "query",
-            "description": "model id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "enterStart",
-            "in": "query",
-            "description": "enter start",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "enterEnd",
-            "in": "query",
-            "description": "enter end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "planStart",
-            "in": "query",
-            "description": "plan start",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "planEnd",
-            "in": "query",
-            "description": "plan end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "realStart",
-            "in": "query",
-            "description": "real start",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "realEnd",
-            "in": "query",
-            "description": "real end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "relStatus",
-            "in": "query",
-            "description": "rel status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "active",
-            "in": "query",
-            "description": "rel active",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "storageId",
-            "in": "query",
-            "description": "storage id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "description": " list start pos",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "list size for pagination",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/car"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid car id"
-          }
-        }
-      }
-    },
-    "/admin/{adminId}/car/{carId}/vin": {
+    "/user/{userId}/car/{carId}/vin": {
       "put": {
         "tags": [
           "car"
@@ -2564,9 +2344,9 @@
         ],
         "parameters": [
           {
-            "name": "adminId",
+            "name": "userId",
             "in": "path",
-            "description": "admin Id",
+            "description": "user Id",
             "required": true,
             "type": "integer"
 
@@ -2887,51 +2667,6 @@
         }
       }
     },
-    "/admin/{adminId}/carMake": {
-      "post": {
-        "tags": [
-          "car"
-        ],
-        "summary": "admin create carMake",
-        "description": "admin create carMake",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "carMake",
-            "in": "body",
-            "description": "carMake info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/carMake"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid make id"
-          }
-        }
-      }
-    },
     "/user/{userId}/carMake": {
       "post": {
         "tags": [
@@ -2959,60 +2694,6 @@
             "schema": {
               "$ref": "#/definitions/carMake"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid make id"
-          }
-        }
-      }
-    },
-    "/admin/{adminId}/carMake/{makeId}": {
-      "put": {
-        "tags": [
-          "car"
-        ],
-        "summary": "update carMake info",
-        "description": "update carMake info",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "makeId",
-            "in": "path",
-            "description": "make id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "carMake",
-            "in": "body",
-            "description": "carMake info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/carMake"
-            }
-
           }
         ],
         "responses": {
@@ -3121,59 +2802,6 @@
         }
       }
     },
-    "/admin/{adminId}/carMake/{makeId}/carModel": {
-      "post": {
-        "tags": [
-          "car"
-        ],
-        "summary": "admin create carModel",
-        "description": "admin create carModel",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "makeId",
-            "in": "path",
-            "description": "make id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "carModel",
-            "in": "body",
-            "description": "carModel info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/carModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid model id"
-          }
-        }
-      }
-    },
     "/user/{userId}/carMake/{makeId}/carModel": {
       "post": {
         "tags": [
@@ -3227,60 +2855,6 @@
         }
       }
     },
-    "/admin/{adminId}/carModel/{modelId}": {
-      "put": {
-        "tags": [
-          "car"
-        ],
-        "summary": "update carModel info",
-        "description": "update carModel info",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "modelId",
-            "in": "path",
-            "description": "model id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "carModel",
-            "in": "body",
-            "description": "carModel info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/carModel"
-            }
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid model id"
-          }
-        }
-      }
-    },
     "/user/{userId}/carModel/{modelId}": {
       "put": {
         "tags": [
@@ -3316,58 +2890,6 @@
             "schema": {
               "$ref": "#/definitions/carModel"
             }
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid model id"
-          }
-        }
-      }
-    },
-    "/admin/{adminId}/carModel/{modelId}/modelStatus/{modelStatus}": {
-      "put": {
-        "tags": [
-          "car"
-        ],
-        "summary": "update carModel status",
-        "description": "update carModel status",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "path",
-            "description": "admin Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "modelId",
-            "in": "path",
-            "description": "model id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "modelStatus",
-            "in": "path",
-            "description": "model status",
-            "required": true,
-            "type": "integer"
 
           }
         ],
