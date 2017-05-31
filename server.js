@@ -17,6 +17,7 @@ var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
+var dealer = require('./bl/Dealer.js');
 var storage = require('./bl/Storage.js');
 var storageParking = require('./bl/StorageParking.js');
 var car = require('./bl/Car.js');
@@ -180,6 +181,12 @@ function createServer() {
     server.get('/api/city',city.queryCity);
     server.post({path:'/api/user/:userId/city',contentType: 'application/json'},city.createCity);
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
+
+    /**
+     * Dealer Module
+     */
+    server.get('/api/dealer',dealer.queryDealer);
+    server.post({path:'/api/user/:userId/dealer',contentType: 'application/json'},dealer.createDealer);
 
     /**
      * Storage Module

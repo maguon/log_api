@@ -41,6 +41,10 @@
       "description":"City of log api"
     },
     {
+      "name":"dealer",
+      "description":"Dealer of log api"
+    },
+    {
       "name":"storage",
       "description":"Storage of log api"
     },
@@ -1575,6 +1579,111 @@
         }
       }
     },
+    "/dealer": {
+      "get": {
+        "tags": [
+          "dealer"
+        ],
+        "summary": "query dealer list",
+        "description": "query dealer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dealerId",
+            "in": "query",
+            "description": "dealer id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dealerName",
+            "in": "query",
+            "description": "dealer name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "description": "dealer address",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "city id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dealer"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dealer id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dealer": {
+      "post": {
+        "tags": [
+          "dealer"
+        ],
+        "summary": "user create dealer",
+        "description": "user create dealer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dealer",
+            "in": "body",
+            "description": "dealer info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dealer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dealer id"
+          }
+        }
+      }
+    },
     "/storage": {
       "get": {
         "tags": [
@@ -2169,6 +2278,14 @@
             "name": "modelId",
             "in": "query",
             "description": "model id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dealerId",
+            "in": "query",
+            "description": "dealer id",
             "required": false,
             "type": "integer"
 
@@ -3222,6 +3339,36 @@
         "name": "city"
       }
     },
+    "dealer": {
+      "type": "object",
+      "properties": {
+
+        "dealerName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "lng": {
+          "type": "integer"
+        },
+        "lat": {
+          "type": "integer"
+        },
+        "cityId": {
+          "type": "integer"
+        },
+        "cityName": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dealer"
+      }
+    },
     "brand": {
       "type": "object",
       "properties": {
@@ -3274,6 +3421,9 @@
         "modelName": {
           "type": "string"
         },
+        "dealerId": {
+          "type": "integer"
+        },
         "proDate": {
           "type": "string"
         },
@@ -3321,6 +3471,9 @@
         },
         "modelName": {
           "type": "string"
+        },
+        "dealerId": {
+          "type": "integer"
         },
         "proDate": {
           "type": "string"
