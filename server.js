@@ -18,6 +18,7 @@ var drive = require('./bl/Drive.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var dealer = require('./bl/Dealer.js');
+var entrust = require('./bl/Entrust.js');
 var storage = require('./bl/Storage.js');
 var storageParking = require('./bl/StorageParking.js');
 var car = require('./bl/Car.js');
@@ -187,6 +188,14 @@ function createServer() {
      */
     server.get('/api/dealer',dealer.queryDealer);
     server.post({path:'/api/user/:userId/dealer',contentType: 'application/json'},dealer.createDealer);
+    server.put({path:'/api/user/:userId/dealer/:dealerId',contentType: 'application/json'} ,dealer.updateDealer);
+
+    /**
+     * Entrust Module
+     */
+    server.get('/api/entrust',entrust.queryEntrust);
+    server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
+    server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);
 
     /**
      * Storage Module

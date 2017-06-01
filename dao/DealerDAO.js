@@ -52,8 +52,26 @@ function getDealer(params,callback) {
     });
 }
 
+function updateDealer(params,callback){
+    var query = " update dealer_info set dealer_name = ?,address = ?,lng = ?,lat = ?,city_id = ?,city_name = ?,remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.dealerName;
+    paramsArray[i++]=params.address;
+    paramsArray[i++]=params.lng;
+    paramsArray[i++]=params.lat;
+    paramsArray[i++]=params.cityId;
+    paramsArray[i++]=params.cityName;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.dealerId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDealer ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDealer : addDealer,
-    getDealer : getDealer
+    getDealer : getDealer,
+    updateDealer : updateDealer
 }

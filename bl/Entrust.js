@@ -1,5 +1,5 @@
 /**
- * Created by zwl on 2017/5/31.
+ * Created by zwl on 2017/6/1.
  */
 
 var sysMsg = require('../util/SystemMsg.js');
@@ -7,48 +7,48 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var dealerDAO = require('../dao/DealerDAO.js');
+var entrustDAO = require('../dao/EntrustDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('Dealer.js');
+var logger = serverLogger.createLogger('Entrust.js');
 
-function createDealer(req,res,next){
+function createEntrust(req,res,next){
     var params = req.params ;
-    dealerDAO.addDealer(params,function(error,result){
+    entrustDAO.addEntrust(params,function(error,result){
         if (error) {
-            logger.error(' createDealer ' + error.message);
+            logger.error(' createEntrust ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDealer ' + 'success');
+            logger.info(' createEntrust ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDealer(req,res,next){
+function queryEntrust(req,res,next){
     var params = req.params ;
-    dealerDAO.getDealer(params,function(error,result){
+    entrustDAO.getEntrust(params,function(error,result){
         if (error) {
-            logger.error(' queryDealer ' + error.message);
+            logger.error(' queryEntrust ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDealer ' + 'success');
+            logger.info(' queryEntrust ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function updateDealer(req,res,next){
+function updateEntrust(req,res,next){
     var params = req.params ;
-    dealerDAO.updateDealer(params,function(error,result){
+    entrustDAO.updateEntrust(params,function(error,result){
         if (error) {
-            logger.error(' updateDealer ' + error.message);
+            logger.error(' updateEntrust ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' updateDealer ' + 'success');
+            logger.info(' updateEntrust ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
@@ -57,7 +57,7 @@ function updateDealer(req,res,next){
 
 
 module.exports = {
-    createDealer : createDealer,
-    queryDealer : queryDealer,
-    updateDealer : updateDealer
+    createEntrust : createEntrust,
+    queryEntrust : queryEntrust,
+    updateEntrust : updateEntrust
 }

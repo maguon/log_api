@@ -287,3 +287,14 @@ CREATE TABLE `dealer_info` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for entrust_info
+-- ----------------------------
+DROP TABLE IF EXISTS `entrust_info`;
+CREATE TABLE `entrust_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT '唯一自增ID',
+  `entrust_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL '委托方名称(结算公司)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
