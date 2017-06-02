@@ -45,6 +45,10 @@
       "description":"Dealer of log api"
     },
     {
+      "name":"entrust",
+      "description":"Entrust of log api"
+    },
+    {
       "name":"storage",
       "description":"Storage of log api"
     },
@@ -1684,6 +1688,203 @@
         }
       }
     },
+    "/user/{userId}/dealer/{dealerId}": {
+      "put": {
+        "tags": [
+          "dealer"
+        ],
+        "summary": "update dealer info",
+        "description": "update dealer info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dealerId",
+            "in": "path",
+            "description": "dealer id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dealer",
+            "in": "body",
+            "description": "dealer info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dealer"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dealer id"
+          }
+        }
+      }
+    },
+    "/entrust": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query entrust list",
+        "description": "query entrust",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustName",
+            "in": "query",
+            "description": "entrust name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrust"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrust id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrust": {
+      "post": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "user create entrust",
+        "description": "user create entrust",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrust",
+            "in": "body",
+            "description": "entrust info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entrust"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrust id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrust/{entrustId}": {
+      "put": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "update entrust info",
+        "description": "update entrust info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrust",
+            "in": "body",
+            "description": "entrust info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entrust"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrust id"
+          }
+        }
+      }
+    },
     "/storage": {
       "get": {
         "tags": [
@@ -2286,6 +2487,14 @@
             "name": "dealerId",
             "in": "query",
             "description": "dealer id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "carStatus",
+            "in": "query",
+            "description": "car status",
             "required": false,
             "type": "integer"
 
@@ -3258,6 +3467,18 @@
         "name": "truck"
       }
     },
+    "brand": {
+      "type": "object",
+      "properties": {
+
+        "brandName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "brand"
+      }
+    },
     "drive": {
       "type": "object",
       "properties": {
@@ -3369,16 +3590,16 @@
         "name": "dealer"
       }
     },
-    "brand": {
+    "entrust": {
       "type": "object",
       "properties": {
 
-        "brandName": {
+        "entrustName": {
           "type": "string"
         }
       },
       "xml": {
-        "name": "brand"
+        "name": "entrust"
       }
     },
     "storage": {
@@ -3433,6 +3654,9 @@
         "engineNum": {
           "type": "string"
         },
+        "arriveTime": {
+          "type": "string"
+        },
         "remark": {
           "type": "string"
         }
@@ -3482,6 +3706,9 @@
           "type": "string"
         },
         "engineNum": {
+          "type": "string"
+        },
+        "arriveTime": {
           "type": "string"
         },
         "remark": {

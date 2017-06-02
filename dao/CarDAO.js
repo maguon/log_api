@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CarDAO.js');
 
 function addCar(params,callback){
-    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,dealer_id,pro_date,colour,engine_num,remark) " +
+    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,dealer_id,pro_date,colour,engine_num,arrive_time,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
@@ -19,6 +19,7 @@ function addCar(params,callback){
     paramsArray[i++]=params.proDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
+    paramsArray[i++]=params.arriveTime;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCar ');
@@ -54,6 +55,10 @@ function getCar(params,callback) {
     if(params.dealerId){
         paramsArray[i++] = params.dealerId;
         query = query + " and c.dealer_id = ? ";
+    }
+    if(params.carStatus){
+        paramsArray[i++] = params.carStatus;
+        query = query + " and c.car_status = ? ";
     }
     if(params.enterStart){
         paramsArray[i++] = params.enterStart +" 00:00:00";
@@ -123,7 +128,7 @@ function getCarBase(params,callback) {
         paramsArray[i] = params.vin;
         query = query + " and c.vin = ? ";
     }
-    query = query + '  order by r.id desc ';
+    query = query + ' order by r.id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarBase ');
         return callback(error,rows);
@@ -132,7 +137,7 @@ function getCarBase(params,callback) {
 
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ," +
-        " dealer_id = ? , pro_date = ? , colour = ? , engine_num = ? , remark = ? where id = ? " ;
+        " dealer_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -143,6 +148,7 @@ function updateCar(params,callback){
     paramsArray[i++]=params.proDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
+    paramsArray[i++]=params.arriveTime;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.carId;
     db.dbQuery(query,paramsArray,function(error,rows){
