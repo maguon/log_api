@@ -17,7 +17,7 @@ var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
-var dealer = require('./bl/Dealer.js');
+var receive = require('./bl/Receive.js');
 var entrust = require('./bl/Entrust.js');
 var storage = require('./bl/Storage.js');
 var storageParking = require('./bl/StorageParking.js');
@@ -184,11 +184,11 @@ function createServer() {
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
 
     /**
-     * Dealer Module
+     * receive Module
      */
-    server.get('/api/dealer',dealer.queryDealer);
-    server.post({path:'/api/user/:userId/dealer',contentType: 'application/json'},dealer.createDealer);
-    server.put({path:'/api/user/:userId/dealer/:dealerId',contentType: 'application/json'} ,dealer.updateDealer);
+    server.get('/api/receive',receive.queryReceive);
+    server.post({path:'/api/user/:userId/receive',contentType: 'application/json'},receive.createReceive);
+    server.put({path:'/api/user/:userId/receive/:receiveId',contentType: 'application/json'} ,receive.updateReceive);
 
     /**
      * Entrust Module

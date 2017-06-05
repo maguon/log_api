@@ -46,7 +46,7 @@ CREATE TABLE `car_info` (
   `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '品牌名称',
   `model_id` int(10) DEFAULT NULL COMMENT '型号ID',
   `model_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '型号名称',
-  `dealer_id` int(10) DEFAULT NULL COMMENT '经销商ID',
+  `receive_id` int(10) DEFAULT NULL COMMENT '经销商ID',
   `pro_date` datetime DEFAULT NULL COMMENT '商品车生产日期',
   `colour` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '颜色',
   `engine_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发动机号',
@@ -272,12 +272,12 @@ CREATE TABLE `user_info` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
--- Table structure for dealer_info
+-- Table structure for receive_info
 -- ----------------------------
-DROP TABLE IF EXISTS `dealer_info`;
-CREATE TABLE `dealer_info` (
+DROP TABLE IF EXISTS `receive_info`;
+CREATE TABLE `receive_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `dealer_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经销商名称',
+  `receive_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经销商名称',
   `address` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '详细地址',
   `lng` decimal(10,5) DEFAULT NULL COMMENT '经度',
   `lat` decimal(10,5) DEFAULT NULL COMMENT '纬度',

@@ -41,8 +41,8 @@
       "description":"City of log api"
     },
     {
-      "name":"dealer",
-      "description":"Dealer of log api"
+      "name":"receive",
+      "description":"Receive of log api"
     },
     {
       "name":"entrust",
@@ -1583,29 +1583,29 @@
         }
       }
     },
-    "/dealer": {
+    "/receive": {
       "get": {
         "tags": [
-          "dealer"
+          "receive"
         ],
-        "summary": "query dealer list",
-        "description": "query dealer",
+        "summary": "query receive list",
+        "description": "query receive",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "dealerId",
+            "name": "receiveId",
             "in": "query",
-            "description": "dealer id",
+            "description": "receive id",
             "required": false,
             "type": "integer"
 
           },
           {
-            "name": "dealerName",
+            "name": "receiveName",
             "in": "query",
-            "description": "dealer name",
+            "description": "receive name",
             "required": false,
             "type": "string"
 
@@ -1613,7 +1613,7 @@
           {
             "name": "address",
             "in": "query",
-            "description": "dealer address",
+            "description": "receive address",
             "required": false,
             "type": "string"
 
@@ -1633,23 +1633,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dealer"
+                "$ref": "#/definitions/receive"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dealer id"
+            "description": "Invalid token value or invalid receive id"
           }
         }
       }
     },
-    "/user/{userId}/dealer": {
+    "/user/{userId}/receive": {
       "post": {
         "tags": [
-          "dealer"
+          "receive"
         ],
-        "summary": "user create dealer",
-        "description": "user create dealer",
+        "summary": "user create receive",
+        "description": "user create receive",
         "produces": [
           "application/json"
         ],
@@ -1663,12 +1663,12 @@
 
           },
           {
-            "name": "dealer",
+            "name": "receive",
             "in": "body",
-            "description": "dealer info",
+            "description": "receive info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dealer"
+              "$ref": "#/definitions/receive"
             }
           }
         ],
@@ -1683,18 +1683,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dealer id"
+            "description": "Invalid token value or invalid receive id"
           }
         }
       }
     },
-    "/user/{userId}/dealer/{dealerId}": {
+    "/user/{userId}/receive/{receiveId}": {
       "put": {
         "tags": [
-          "dealer"
+          "receive"
         ],
-        "summary": "update dealer info",
-        "description": "update dealer info",
+        "summary": "update receive info",
+        "description": "update receive info",
         "produces": [
           "application/json"
         ],
@@ -1708,20 +1708,20 @@
 
           },
           {
-            "name": "dealerId",
+            "name": "receiveId",
             "in": "path",
-            "description": "dealer id",
+            "description": "receive id",
             "required": true,
             "type": "integer"
 
           },
           {
-            "name": "dealer",
+            "name": "receive",
             "in": "body",
-            "description": "dealer info",
+            "description": "receive info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dealer"
+              "$ref": "#/definitions/receive"
             }
 
           }
@@ -1737,7 +1737,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dealer id"
+            "description": "Invalid token value or invalid receive id"
           }
         }
       }
@@ -2484,9 +2484,9 @@
 
           },
           {
-            "name": "dealerId",
+            "name": "receiveId",
             "in": "query",
-            "description": "dealer id",
+            "description": "receive id",
             "required": false,
             "type": "integer"
 
@@ -3560,11 +3560,11 @@
         "name": "city"
       }
     },
-    "dealer": {
+    "receive": {
       "type": "object",
       "properties": {
 
-        "dealerName": {
+        "receiveName": {
           "type": "string"
         },
         "address": {
@@ -3587,7 +3587,7 @@
         }
       },
       "xml": {
-        "name": "dealer"
+        "name": "receive"
       }
     },
     "entrust": {
@@ -3642,7 +3642,7 @@
         "modelName": {
           "type": "string"
         },
-        "dealerId": {
+        "receiveId": {
           "type": "integer"
         },
         "proDate": {
@@ -3696,7 +3696,7 @@
         "modelName": {
           "type": "string"
         },
-        "dealerId": {
+        "receiveId": {
           "type": "integer"
         },
         "proDate": {

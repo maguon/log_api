@@ -7,48 +7,48 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var dealerDAO = require('../dao/DealerDAO.js');
+var receiveDAO = require('../dao/ReceiveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('Dealer.js');
+var logger = serverLogger.createLogger('Receive.js');
 
-function createDealer(req,res,next){
+function createReceive(req,res,next){
     var params = req.params ;
-    dealerDAO.addDealer(params,function(error,result){
+    receiveDAO.addReceive(params,function(error,result){
         if (error) {
-            logger.error(' createDealer ' + error.message);
+            logger.error(' createReceive ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDealer ' + 'success');
+            logger.info(' createReceive ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDealer(req,res,next){
+function queryReceive(req,res,next){
     var params = req.params ;
-    dealerDAO.getDealer(params,function(error,result){
+    receiveDAO.getReceive(params,function(error,result){
         if (error) {
-            logger.error(' queryDealer ' + error.message);
+            logger.error(' queryReceive ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDealer ' + 'success');
+            logger.info(' queryReceive ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function updateDealer(req,res,next){
+function updateReceive(req,res,next){
     var params = req.params ;
-    dealerDAO.updateDealer(params,function(error,result){
+    receiveDAO.updateReceive(params,function(error,result){
         if (error) {
-            logger.error(' updateDealer ' + error.message);
+            logger.error(' updateReceive ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' updateDealer ' + 'success');
+            logger.info(' updateReceive ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
@@ -57,7 +57,7 @@ function updateDealer(req,res,next){
 
 
 module.exports = {
-    createDealer : createDealer,
-    queryDealer : queryDealer,
-    updateDealer : updateDealer
+    createReceive : createReceive,
+    queryReceive : queryReceive,
+    updateReceive : updateReceive
 }
