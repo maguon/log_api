@@ -13,6 +13,20 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('Car.js');
 
+function createUploadCar(req,res,next){
+    var params = req.params ;
+    carDAO.addUploadCar(params,function(error,result){
+        if (error) {
+            logger.error(' createUploadCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createUploadCar ' + 'success ');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryCar(req,res,next){
     var params = req.params ;
     carDAO.getCar(params,function(error,result){
@@ -76,6 +90,7 @@ function updateCarVin(req,res,next){
 
 
 module.exports = {
+    createUploadCar : createUploadCar,
     queryCar : queryCar,
     updateCar : updateCar,
     updateCarVin : updateCarVin

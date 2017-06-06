@@ -6,9 +6,26 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CarDAO.js');
 
+function addUploadCar(params,callback){
+    var query = " insert into car_info(vin,make_id,make_name,receive_id,entrust_id,arrive_time) " +
+        " select tmp.vin,ma.id as make_id,ma.make_name,re.id as receive_id,en.id as entrust_id,tmp.arrive_time from tmp_car_info tmp " +
+        " left join car_make ma on tmp.make_name = ma.make_name " +
+        " left join receive_info re on tmp.receive_name = re.receive_name " +
+        " left join entrust_info en on tmp.entrust_name = en.entrust_name where tmp.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.uploadId){
+        paramsArray[i++] = params.uploadId;
+        query = query + " and tmp.upload_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addUploadCar ');
+        return callback(error,rows);
+    });
+}
+
 function addCar(params,callback){
-    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,receive_id,pro_date,colour,engine_num,arrive_time,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,receive_id,entrust_id,pro_date,colour,engine_num,arrive_time,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -16,6 +33,7 @@ function addCar(params,callback){
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
     paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.proDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
@@ -29,12 +47,14 @@ function addCar(params,callback){
 
 function getCar(params,callback) {
     var query = " select c.*, " +
+        " en.id as en_id,en.entrust_name, " +
         " re.id as re_id,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.city_name,re.remark, " +
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
-        " left join receive_info re on c.receive_id = re.id where c.id is not null ";
+        " left join receive_info re on c.receive_id = re.id " +
+        " left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
@@ -113,12 +133,14 @@ function getCar(params,callback) {
 
 function getCarBase(params,callback) {
     var query = " select c.*, " +
+        " en.id as en_id,en.entrust_name, " +
         " re.id as de_id,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.city_name,re.remark, " +
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
-        " left join receive_info re on c.receive_id = re.id where r.active = 1 and c.id is not null ";
+        " left join receive_info re on c.receive_id = re.id " +
+        " left join entrust_info en on c.entrust_id = en.id where r.active = 1 and c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
@@ -137,7 +159,7 @@ function getCarBase(params,callback) {
 
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ," +
-        " receive_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
+        " receive_id = ? , entrust_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -145,6 +167,7 @@ function updateCar(params,callback){
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
     paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.proDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
@@ -170,6 +193,7 @@ function updateCarVin(params,callback){
 
 
 module.exports ={
+    addUploadCar : addUploadCar,
     addCar : addCar,
     getCar : getCar,
     getCarBase : getCarBase,

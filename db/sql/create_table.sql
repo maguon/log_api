@@ -47,6 +47,7 @@ CREATE TABLE `car_info` (
   `model_id` int(10) DEFAULT NULL COMMENT '型号ID',
   `model_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '型号名称',
   `receive_id` int(10) DEFAULT NULL COMMENT '经销商ID',
+  `entrust_id` int(10) DEFAULT NULL COMMENT '委托方ID',
   `pro_date` datetime DEFAULT NULL COMMENT '商品车生产日期',
   `colour` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '颜色',
   `engine_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发动机号',
