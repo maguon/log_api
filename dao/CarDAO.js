@@ -7,15 +7,15 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CarDAO.js');
 
 function addCar(params,callback){
-    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,dealer_id,pro_date,colour,engine_num,arrive_time,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,receive_id,pro_date,colour,engine_num,arrive_time,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
-    paramsArray[i++]=params.dealerId;
+    paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.proDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
@@ -29,12 +29,12 @@ function addCar(params,callback){
 
 function getCar(params,callback) {
     var query = " select c.*, " +
-        " de.id as de_id,de.dealer_name,de.address,de.lng,de.lat,de.city_id,de.city_name,de.remark, " +
+        " re.id as re_id,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.city_name,re.remark, " +
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
-        " left join dealer_info de on c.dealer_id = de.id where c.id is not null ";
+        " left join receive_info re on c.receive_id = re.id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
@@ -52,9 +52,9 @@ function getCar(params,callback) {
         paramsArray[i++] = params.modelId;
         query = query + " and c.model_id = ? ";
     }
-    if(params.dealerId){
-        paramsArray[i++] = params.dealerId;
-        query = query + " and c.dealer_id = ? ";
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
     }
     if(params.carStatus){
         paramsArray[i++] = params.carStatus;
@@ -113,12 +113,12 @@ function getCar(params,callback) {
 
 function getCarBase(params,callback) {
     var query = " select c.*, " +
-        " de.id as de_id,de.dealer_name,de.address,de.lng,de.lat,de.city_id,de.city_name,de.remark, " +
+        " re.id as de_id,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.city_name,re.remark, " +
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
-        " left join dealer_info de on c.dealer_id = de.id where r.active = 1 and c.id is not null ";
+        " left join receive_info re on c.receive_id = re.id where r.active = 1 and c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
@@ -137,14 +137,14 @@ function getCarBase(params,callback) {
 
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ," +
-        " dealer_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
+        " receive_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
-    paramsArray[i++]=params.dealerId;
+    paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.proDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;

@@ -129,7 +129,7 @@ function createCarStorageRel(req,res,next){
         logger.info(' createCarStorageRel ' + 'success');
         req.params.carContent =" Import storage "+req.params.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
         req.params.op =11;
-        resUtil.resetCreateRes(res,{insertId:carId},null);
+        resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();
     })
 }
@@ -275,7 +275,7 @@ function createAgainCarStorageRel(req,res,next){
         logger.info(' createAgainCarStorageRel ' + 'success');
         req.params.carContent =" Import storage "+req.params.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
         req.params.op =11;
-        resUtil.resetCreateRes(res,{insertId:carId},null);
+        resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();
     })
 }
