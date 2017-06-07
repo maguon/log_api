@@ -41,6 +41,20 @@ function queryCar(req,res,next){
     })
 }
 
+function queryCarCount(req,res,next){
+    var params = req.params ;
+    carDAO.getCarCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCar(req,res,next){
     var params = req.params ;
     carDAO.updateCar(params,function(error,result){
@@ -92,6 +106,7 @@ function updateCarVin(req,res,next){
 module.exports = {
     createUploadCar : createUploadCar,
     queryCar : queryCar,
+    queryCarCount : queryCarCount,
     updateCar : updateCar,
     updateCarVin : updateCarVin
 }
