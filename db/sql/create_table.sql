@@ -180,6 +180,8 @@ CREATE TABLE `storage_info` (
   `storage_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '仓库名称',
   `row` int(10) NOT NULL COMMENT '排位',
   `col` int(10) NOT NULL COMMENT '道位',
+  `city_id` int(10) DEFAULT NULL COMMENT '城市ID',
+  `city_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '城市名称',
   `storage_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '仓库状态(0-停用,1-可用)',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -278,7 +280,8 @@ CREATE TABLE `user_info` (
 DROP TABLE IF EXISTS `receive_info`;
 CREATE TABLE `receive_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
-  `receive_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经销商名称',
+  `short_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '经销商简称',
+  `receive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '经销商名称',
   `address` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '详细地址',
   `lng` decimal(10,5) DEFAULT NULL COMMENT '经度',
   `lat` decimal(10,5) DEFAULT NULL COMMENT '纬度',
@@ -295,7 +298,23 @@ CREATE TABLE `receive_info` (
 DROP TABLE IF EXISTS `entrust_info`;
 CREATE TABLE `entrust_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT '唯一自增ID',
+  `short_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '委托方简称',
   `entrust_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL '委托方名称(结算公司)',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for receive_contacts
+-- ----------------------------
+DROP TABLE IF EXISTS `receive_contacts`;
+CREATE TABLE `receive_contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `receive_id` int(10) DEFAULT NULL COMMENT '经销商ID',
+  `contacts_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人名称',
+  `position` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人职务',
+  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
