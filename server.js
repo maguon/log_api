@@ -18,6 +18,7 @@ var drive = require('./bl/Drive.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var receive = require('./bl/Receive.js');
+var receiveContacts = require('./bl/ReceiveContacts.js');
 var entrust = require('./bl/Entrust.js');
 var storage = require('./bl/Storage.js');
 var storageParking = require('./bl/StorageParking.js');
@@ -184,11 +185,17 @@ function createServer() {
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
 
     /**
-     * receive Module
+     * Receive Module
      */
     server.get('/api/receive',receive.queryReceive);
     server.post({path:'/api/user/:userId/receive',contentType: 'application/json'},receive.createReceive);
     server.put({path:'/api/user/:userId/receive/:receiveId',contentType: 'application/json'} ,receive.updateReceive);
+
+    /**
+     * ReceiveContacts Module
+     */
+    server.get('/api/receive/:receiveId/contacts',receiveContacts.queryReceiveContacts);
+    server.post({path:'/api/user/:userId/receive/:receiveId/contacts',contentType: 'application/json'},receiveContacts.createReceiveContacts);
 
     /**
      * Entrust Module
@@ -219,6 +226,7 @@ function createServer() {
      * Car Module
      */
     server.get('/api/car',car.queryCar);
+    server.get('/api/carCount',car.queryCarCount);
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createUploadCar);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
     server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin);

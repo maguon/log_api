@@ -7,9 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('EntrustDAO.js');
 
 function addEntrust(params,callback){
-    var query = " insert into entrust_info (entrust_name)  values (?)";
+    var query = " insert into entrust_info (short_name,entrust_name,remark)  values ( ? , ? , ? )";
     var paramsArray=[],i=0;
-    paramsArray[i]=params.entrustName;
+    paramsArray[i++]=params.shortName;
+    paramsArray[i++]=params.entrustName;
+    paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addEntrust ');
         return callback(error,rows);
@@ -39,9 +41,11 @@ function getEntrust(params,callback) {
 }
 
 function updateEntrust(params,callback){
-    var query = " update entrust_info set entrust_name = ? where id = ? " ;
+    var query = " update entrust_info set short_name = ?,entrust_name = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.entrustName;
+    paramsArray[i++]=params.remark;
     paramsArray[i]=params.entrustId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateEntrust ');
