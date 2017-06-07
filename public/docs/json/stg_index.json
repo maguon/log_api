@@ -49,6 +49,10 @@
       "description":"Entrust of log api"
     },
     {
+      "name":"contacts",
+      "description":"Contacts of log api"
+    },
+    {
       "name":"storage",
       "description":"Storage of log api"
     },
@@ -1742,6 +1746,95 @@
         }
       }
     },
+    "/receive/{receiveId}/contacts": {
+      "get": {
+        "tags": [
+          "receive"
+        ],
+        "summary": "query  contacts list",
+        "description": "query contacts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "receiveId",
+            "in": "path",
+            "description": "receive id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/receive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid receive id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/receive/{receiveId}/contacts": {
+      "post": {
+        "tags": [
+          "receive"
+        ],
+        "summary": "user create contacts",
+        "description": "user create contacts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "path",
+            "description": "receive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contacts",
+            "in": "body",
+            "description": "contacts info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/contacts"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid contacts id"
+          }
+        }
+      }
+    },
     "/entrust": {
       "get": {
         "tags": [
@@ -2583,6 +2676,58 @@
             "name": "size",
             "in": "query",
             "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/carCount": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car count",
+        "description": "query car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "relStatus",
+            "in": "query",
+            "description": "rel status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "city id",
             "required": false,
             "type": "integer"
 
@@ -3608,6 +3753,9 @@
       "type": "object",
       "properties": {
 
+        "shortName": {
+          "type": "string"
+        },
         "receiveName": {
           "type": "string"
         },
@@ -3638,12 +3786,36 @@
       "type": "object",
       "properties": {
 
+        "shortName": {
+          "type": "string"
+        },
         "entrustName": {
+          "type": "string"
+        },
+        "remark": {
           "type": "string"
         }
       },
       "xml": {
         "name": "entrust"
+      }
+    },
+    "contacts": {
+      "type": "object",
+      "properties": {
+
+        "contactsName": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "tel": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "contacts"
       }
     },
     "storage": {
