@@ -20,6 +20,7 @@ var city = require('./bl/City.js');
 var receive = require('./bl/Receive.js');
 var receiveContacts = require('./bl/ReceiveContacts.js');
 var entrust = require('./bl/Entrust.js');
+var entrustContacts = require('./bl/EntrustContacts.js');
 var storage = require('./bl/Storage.js');
 var storageParking = require('./bl/StorageParking.js');
 var car = require('./bl/Car.js');
@@ -196,7 +197,7 @@ function createServer() {
      */
     server.get('/api/receive/:receiveId/contacts',receiveContacts.queryReceiveContacts);
     server.post({path:'/api/user/:userId/receive/:receiveId/contacts',contentType: 'application/json'},receiveContacts.createReceiveContacts);
-    server.put({path:'/api/user/:userId/contacts/:contactsId',contentType: 'application/json'} ,receiveContacts.updateReceiveContacts);
+    server.put({path:'/api/user/:userId/contacts/:contactsId/receiveContacts',contentType: 'application/json'} ,receiveContacts.updateReceiveContacts);
 
     /**
      * Entrust Module
@@ -204,6 +205,13 @@ function createServer() {
     server.get('/api/entrust',entrust.queryEntrust);
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
     server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);
+
+    /**
+     * EntrustContacts Module
+     */
+    server.get('/api/entrust/:entrustId/contacts',entrustContacts.queryEntrustContacts);
+    server.post({path:'/api/user/:userId/entrust/:entrustId/contacts',contentType: 'application/json'},entrustContacts.createEntrustContacts);
+    server.put({path:'/api/user/:userId/contacts/:contactsId/entrustContacts',contentType: 'application/json'} ,entrustContacts.updateEntrustContacts);
 
     /**
      * Storage Module

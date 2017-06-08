@@ -49,10 +49,6 @@
       "description":"Entrust of log api"
     },
     {
-      "name":"contacts",
-      "description":"Contacts of log api"
-    },
-    {
       "name":"storage",
       "description":"Storage of log api"
     },
@@ -1835,7 +1831,7 @@
         }
       }
     },
-    "/user/{userId}/contacts/{contactsId}": {
+    "/user/{userId}/contacts/{contactsId}/receiveContacts": {
       "put": {
         "tags": [
           "receive"
@@ -2028,6 +2024,149 @@
           },
           "400": {
             "description": "Invalid token value or invalid entrust id"
+          }
+        }
+      }
+    },
+    "/entrust/{entrustId}/contacts": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query  contacts list",
+        "description": "query contacts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrust"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrust id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrust/{entrustId}/contacts": {
+      "post": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "user create contacts",
+        "description": "user create contacts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contacts",
+            "in": "body",
+            "description": "contacts info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/contacts"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid contacts id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/contacts/{contactsId}/entrustContacts": {
+      "put": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "update contacts info",
+        "description": "update contacts info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contactsId",
+            "in": "path",
+            "description": "contacts id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contacts",
+            "in": "body",
+            "description": "contacts info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/contacts"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid contacts id"
           }
         }
       }
