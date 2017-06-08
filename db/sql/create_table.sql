@@ -319,3 +319,17 @@ CREATE TABLE `receive_contacts` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for entrust_contacts
+-- ----------------------------
+DROP TABLE IF EXISTS `entrust_contacts`;
+CREATE TABLE `entrust_contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `entrust_id` int(10) DEFAULT NULL COMMENT '委托方ID',
+  `contacts_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人名称',
+  `position` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人职务',
+  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
