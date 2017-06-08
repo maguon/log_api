@@ -4024,6 +4024,12 @@
         "col": {
           "type": "integer"
         },
+        "cityId": {
+          "type": "integer"
+        },
+        "cityName": {
+          "type": "string"
+        },
         "remark": {
           "type": "string"
         }
