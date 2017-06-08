@@ -196,6 +196,7 @@ function createServer() {
      */
     server.get('/api/receive/:receiveId/contacts',receiveContacts.queryReceiveContacts);
     server.post({path:'/api/user/:userId/receive/:receiveId/contacts',contentType: 'application/json'},receiveContacts.createReceiveContacts);
+    server.put({path:'/api/user/:userId/contacts/:contactsId',contentType: 'application/json'} ,receiveContacts.updateReceiveContacts);
 
     /**
      * Entrust Module

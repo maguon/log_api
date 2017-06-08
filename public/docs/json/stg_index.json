@@ -1835,6 +1835,60 @@
         }
       }
     },
+    "/user/{userId}/contacts/{contactsId}": {
+      "put": {
+        "tags": [
+          "receive"
+        ],
+        "summary": "update contacts info",
+        "description": "update contacts info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contactsId",
+            "in": "path",
+            "description": "contacts id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contacts",
+            "in": "body",
+            "description": "contacts info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/contacts"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid contacts id"
+          }
+        }
+      }
+    },
     "/entrust": {
       "get": {
         "tags": [

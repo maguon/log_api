@@ -41,8 +41,23 @@ function queryReceiveContacts(req,res,next){
     })
 }
 
+function updateReceiveContacts(req,res,next){
+    var params = req.params ;
+    receiveContactsDAO.updateReceiveContacts(params,function(error,result){
+        if (error) {
+            logger.error(' updateReceiveContacts ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateReceiveContacts ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createReceiveContacts : createReceiveContacts,
-    queryReceiveContacts : queryReceiveContacts
+    queryReceiveContacts : queryReceiveContacts,
+    updateReceiveContacts : updateReceiveContacts
 }

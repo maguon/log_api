@@ -32,8 +32,22 @@ function getReceiveContacts(params,callback) {
     });
 }
 
+function updateReceiveContacts(params,callback){
+    var query = " update receive_contacts set contacts_name = ? , position = ? , tel = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.contactsName;
+    paramsArray[i++]=params.position;
+    paramsArray[i++]=params.tel;
+    paramsArray[i]=params.contactsId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateReceiveContacts ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addReceiveContacts : addReceiveContacts,
-    getReceiveContacts : getReceiveContacts
+    getReceiveContacts : getReceiveContacts,
+    updateReceiveContacts : updateReceiveContacts
 }
