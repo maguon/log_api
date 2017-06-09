@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('ReceiveDAO.js');
 
 function addReceive(params,callback){
-    var query = " insert into receive_info (short_name,receive_name,address,lng,lat,city_id,city_name,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into receive_info (short_name,receive_name,address,lng,lat,city_id,remark) values ( ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.receiveName;
@@ -15,7 +15,6 @@ function addReceive(params,callback){
     paramsArray[i++]=params.lng;
     paramsArray[i++]=params.lat;
     paramsArray[i++]=params.cityId;
-    paramsArray[i++]=params.cityName;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addReceive ');
@@ -53,7 +52,7 @@ function getReceive(params,callback) {
 }
 
 function updateReceive(params,callback){
-    var query = " update receive_info set short_name = ?, receive_name = ?,address = ?,lng = ?,lat = ?,city_id = ?,city_name = ?,remark = ? where id = ? " ;
+    var query = " update receive_info set short_name = ?, receive_name = ?,address = ?,lng = ?,lat = ?,city_id = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.receiveName;
@@ -61,7 +60,6 @@ function updateReceive(params,callback){
     paramsArray[i++]=params.lng;
     paramsArray[i++]=params.lat;
     paramsArray[i++]=params.cityId;
-    paramsArray[i++]=params.cityName;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.receiveId;
     db.dbQuery(query,paramsArray,function(error,rows){
