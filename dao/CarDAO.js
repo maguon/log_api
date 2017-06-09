@@ -11,7 +11,7 @@ function addUploadCar(params,callback){
         " select tmp.vin,ma.id as make_id,ma.make_name,re.id as receive_id,en.id as entrust_id,tmp.arrive_time from tmp_car_info tmp " +
         " left join car_make ma on tmp.make_name = ma.make_name " +
         " left join receive_info re on tmp.receive_name = re.receive_name " +
-        " left join entrust_info en on tmp.entrust_name = en.entrust_name where tmp.id is not null ";
+        " left join entrust_info en on tmp.short_name = en.short_name where tmp.id is not null ";
     var paramsArray=[],i=0;
     if(params.uploadId){
         paramsArray[i++] = params.uploadId;
