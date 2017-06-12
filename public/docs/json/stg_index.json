@@ -2890,37 +2890,57 @@
         }
       }
     },
-    "/carCount": {
+    "/carRouteEndCount": {
       "get": {
         "tags": [
           "car"
         ],
-        "summary": "query  car count",
+        "summary": "query  car routeEndCount",
         "description": "query car",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "relStatus",
+            "name": "proDate",
             "in": "query",
-            "description": "rel status",
+            "description": "car proDate",
             "required": false,
             "type": "integer"
 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
           },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/carReceiveCount": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car ReceiveCount",
+        "description": "query car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
           {
-            "name": "receiveId",
+            "name": "proDate",
             "in": "query",
-            "description": "receive id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "cityId",
-            "in": "query",
-            "description": "city id",
+            "description": "car proDate",
             "required": false,
             "type": "integer"
 
@@ -3094,13 +3114,13 @@
         }
       }
     },
-    "/user/{userId}/carStorageRel": {
+    "/user/{userId}/storageCarRel": {
       "post": {
         "tags": [
           "car"
         ],
-        "summary": "user create carStorageRel",
-        "description": "user create carStorageRel",
+        "summary": "user create storageCarRel",
+        "description": "user create storageCarRel",
         "produces": [
           "application/json"
         ],
@@ -3114,12 +3134,12 @@
 
           },
           {
-            "name": "carStorageRel",
+            "name": "storageCarRel",
             "in": "body",
-            "description": "carStorageRel info",
+            "description": "storageCarRel info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/carStorageRel"
+              "$ref": "#/definitions/storageCarRel"
             }
           }
         ],
@@ -3134,18 +3154,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid carStorageRel id"
+            "description": "Invalid token value or invalid storageCarRel id"
           }
         }
       }
     },
-    "/user/{userId}/againCarStorageRel": {
+    "/user/{userId}/againStorageCarRel": {
       "post": {
         "tags": [
           "car"
         ],
-        "summary": "user create againCarStorageRel",
-        "description": "user create againCarStorageRel",
+        "summary": "user create againStorageCarRel",
+        "description": "user create againStorageCarRel",
         "produces": [
           "application/json"
         ],
@@ -3175,12 +3195,12 @@
 
           },
           {
-            "name": "againCarStorageRel",
+            "name": "againStorageCarRel",
             "in": "body",
-            "description": "againCarStorageRel info",
+            "description": "againStorageCarRel info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/againCarStorageRel"
+              "$ref": "#/definitions/againStorageCarRel"
             }
           }
         ],
@@ -3964,9 +3984,6 @@
         "cityId": {
           "type": "integer"
         },
-        "cityName": {
-          "type": "string"
-        },
         "remark": {
           "type": "string"
         }
@@ -4057,6 +4074,12 @@
         "modelName": {
           "type": "string"
         },
+        "routeStart": {
+          "type": "string"
+        },
+        "routeEnd": {
+          "type": "string"
+        },
         "receiveId": {
           "type": "integer"
         },
@@ -4095,7 +4118,7 @@
         "name": "vin"
       }
     },
-    "carStorageRel": {
+    "storageCarRel": {
       "type": "object",
       "properties": {
 
@@ -4112,6 +4135,12 @@
           "type": "integer"
         },
         "modelName": {
+          "type": "string"
+        },
+        "routeStart": {
+          "type": "string"
+        },
+        "routeEnd": {
           "type": "string"
         },
         "receiveId": {
@@ -4149,10 +4178,10 @@
         }
       },
       "xml": {
-        "name": "carStorageRel"
+        "name": "storageCarRel"
       }
     },
-    "againCarStorageRel": {
+    "againStorageCarRel": {
       "type": "object",
       "properties": {
 
@@ -4170,7 +4199,7 @@
         }
       },
       "xml": {
-        "name": "againCarStorageRel"
+        "name": "againStorageCarRel"
       }
     },
     "planOutTime": {

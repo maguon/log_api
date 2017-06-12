@@ -159,27 +159,30 @@ function getCarBase(params,callback) {
     });
 }
 
-function getCarCount(params,callback) {
-    var query = " select count(c.id) as car_count " +
-        " from car_info c left join storage_parking p on c.id = p.car_id " +
-        " left join car_storage_rel r on c.id = r.car_id " +
-        " left join receive_info re on c.receive_id = re.id " +
-        " left join entrust_info en on c.entrust_id = en.id where r.active = 1 and c.id is not null ";
+function getCarRouteEndCount(params,callback) {
+    var query = " select count(id) as route_end_count,route_end from car_info where id is not null ";
     var paramsArray=[],i=0;
-    if(params.relStatus){
-        paramsArray[i++] = params.relStatus;
-        query = query + " and r.rel_status = ? ";
+    if(params.proDate){
+        paramsArray[i++] = params.proDate;
+        query = query + " and pro_date = ? ";
     }
-    if(params.receiveId){
-        paramsArray[i++] = params.receiveId;
-        query = query + " and re.id = ? ";
-    }
-    if(params.cityId){
-        paramsArray[i++] = params.cityId;
-        query = query + " and re.city_id = ? ";
-    }
+    query = query + ' group by route_end ';
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getCarCount ');
+        logger.debug(' getCarRouteEndCount ');
+        return callback(error,rows);
+    });
+}
+
+function getCarReceiveCount(params,callback) {
+    var query = " select count(id) as receive_count,receive_id from car_info where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.proDate){
+        paramsArray[i++] = params.proDate;
+        query = query + " and pro_date = ? ";
+    }
+    query = query + ' group by receive_id ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarReceiveCount ');
         return callback(error,rows);
     });
 }
@@ -226,7 +229,8 @@ module.exports ={
     addCar : addCar,
     getCar : getCar,
     getCarBase : getCarBase,
-    getCarCount : getCarCount,
+    getCarRouteEndCount : getCarRouteEndCount,
+    getCarReceiveCount : getCarReceiveCount,
     updateCar : updateCar,
     updateCarVin : updateCarVin
 }
