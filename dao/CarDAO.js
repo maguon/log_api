@@ -7,8 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CarDAO.js');
 
 function addUploadCar(params,callback){
-    var query = " insert into car_info(vin,make_id,make_name,receive_id,entrust_id,arrive_time) " +
-        " select tmp.vin,ma.id as make_id,ma.make_name,re.id as receive_id,en.id as entrust_id,tmp.arrive_time from tmp_car_info tmp " +
+    var query = " insert into car_info(vin,make_id,make_name,route_start,route_end,receive_id,entrust_id,arrive_time) " +
+        " select tmp.vin,ma.id as make_id,ma.make_name,route_start,route_end,re.id as receive_id,en.id as entrust_id,tmp.arrive_time from tmp_car_info tmp " +
         " left join car_make ma on tmp.make_name = ma.make_name " +
         " left join receive_info re on tmp.receive_name = re.receive_name " +
         " left join entrust_info en on tmp.short_name = en.short_name where tmp.id is not null ";
@@ -24,7 +24,7 @@ function addUploadCar(params,callback){
 }
 
 function addCar(params,callback){
-    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,receive_id,entrust_id,pro_date,colour,engine_num,arrive_time,remark) " +
+    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,route_start,route_end,receive_id,entrust_id,pro_date,colour,engine_num,arrive_time,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
@@ -32,6 +32,8 @@ function addCar(params,callback){
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
+    paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.proDate;
@@ -183,7 +185,7 @@ function getCarCount(params,callback) {
 }
 
 function updateCar(params,callback){
-    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ," +
+    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ,route_start = ? , route_end = ? ," +
         " receive_id = ? , entrust_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
@@ -191,6 +193,8 @@ function updateCar(params,callback){
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
+    paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.proDate;

@@ -46,6 +46,8 @@ CREATE TABLE `car_info` (
   `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '品牌名称',
   `model_id` int(10) DEFAULT NULL COMMENT '型号ID',
   `model_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '型号名称',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '起始地',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '目的地',
   `receive_id` int(10) DEFAULT '0' COMMENT '经销商ID',
   `entrust_id` int(10) DEFAULT '0' COMMENT '委托方ID',
   `pro_date` datetime DEFAULT NULL COMMENT '商品车生产日期',
@@ -333,14 +335,16 @@ CREATE TABLE `entrust_contacts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
--- Table structure for tmp_car_info
+-- Table structure for car_info_tmp
 -- ----------------------------
-DROP TABLE IF EXISTS `tmp_car_info`;
-CREATE TABLE `tmp_car_info` (
+DROP TABLE IF EXISTS `car_info_tmp`;
+CREATE TABLE `car_info_tmp` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `upload_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上传ID',
   `vin` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品车VIN码',
   `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '品牌名称',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '起始地',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '目的地',
   `receive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '经销商名称',
   `short_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '委托方简称',
   `arrive_time` datetime DEFAULT NULL COMMENT '到港时间',
