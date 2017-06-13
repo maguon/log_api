@@ -55,9 +55,24 @@ function updateCity(req,res,next){
     })
 }
 
+function updateCityStatus (req,res,next){
+    var params = req.params;
+    cityDAO.updateCityStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateCityStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateCityStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createCity : createCity,
     queryCity : queryCity,
-    updateCity : updateCity
+    updateCity : updateCity,
+    updateCityStatus : updateCityStatus
 }

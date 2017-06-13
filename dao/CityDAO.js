@@ -49,10 +49,22 @@ function updateCity(params,callback){
     });
 }
 
+function updateCityStatus(params,callback){
+    var query = " update city_info set city_status = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.cityStatus;
+    paramsArray[i] = params.cityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCityStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 
 module.exports ={
     addCity : addCity,
     getCity : getCity,
-    updateCity : updateCity
+    updateCity : updateCity,
+    updateCityStatus : updateCityStatus
 }

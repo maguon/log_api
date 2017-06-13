@@ -7,13 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('StorageDAO.js');
 
 function addStorage(params,callback){
-    var query = " insert into storage_info (storage_name,row,col,city_id,city_name,remark) values (? , ? , ? , ? , ? , ?) ";
+    var query = " insert into storage_info (storage_name,row,col,city_id,remark) values (? , ? , ? , ? , ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
     paramsArray[i++]=params.row;
     paramsArray[i++]=params.col;
     paramsArray[i++]=params.cityId;
-    paramsArray[i++]=params.cityName;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addStorage ');
@@ -22,19 +21,19 @@ function addStorage(params,callback){
 }
 
 function getStorage(params,callback) {
-    var query = " select * from storage_info where id is not null ";
+    var query = " select s.*,cy.city_name from storage_info s left join city_info cy on s.city_id = cy.id where s.id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
         paramsArray[i++] = params.storageId;
-        query = query + " and id = ? ";
+        query = query + " and s.id = ? ";
     }
     if(params.storageName){
         paramsArray[i++] = params.storageName;
-        query = query + " and storage_name = ? ";
+        query = query + " and s.storage_name = ? ";
     }
     if(params.storageStatus){
         paramsArray[i] = params.storageStatus;
-        query = query + " and storage_status = ? ";
+        query = query + " and s.storage_status = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorage ');
@@ -154,11 +153,10 @@ function getStorageTotalDay(params,callback) {
 }
 
 function updateStorage(params,callback){
-    var query = " update storage_info set storage_name = ? , city_id = ? , city_name = ? , remark = ? where id = ? " ;
+    var query = " update storage_info set storage_name = ? , city_id = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
     paramsArray[i++]=params.cityId;
-    paramsArray[i++]=params.cityName;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.storageId;
     db.dbQuery(query,paramsArray,function(error,rows){

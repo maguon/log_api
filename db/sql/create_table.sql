@@ -113,6 +113,7 @@ DROP TABLE IF EXISTS `city_info`;
 CREATE TABLE `city_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `city_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '城市名称',
+  `city_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '城市状态',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -182,8 +183,7 @@ CREATE TABLE `storage_info` (
   `storage_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '仓库名称',
   `row` int(10) NOT NULL COMMENT '排位',
   `col` int(10) NOT NULL COMMENT '道位',
-  `city_id` int(10) DEFAULT NULL COMMENT '城市ID',
-  `city_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '城市名称',
+  `city_id` int(10) DEFAULT '0' COMMENT '城市ID',
   `storage_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '仓库状态(0-停用,1-可用)',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
