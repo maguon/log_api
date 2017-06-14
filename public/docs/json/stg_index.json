@@ -4123,8 +4123,14 @@
         "modelName": {
           "type": "string"
         },
+        "routeStartId": {
+          "type": "integer"
+        },
         "routeStart": {
           "type": "string"
+        },
+        "routeEndId": {
+          "type": "integer"
         },
         "routeEnd": {
           "type": "string"
@@ -4186,8 +4192,14 @@
         "modelName": {
           "type": "string"
         },
+        "routeStartId": {
+          "type": "integer"
+        },
         "routeStart": {
           "type": "string"
+        },
+        "routeEndId": {
+          "type": "integer"
         },
         "routeEnd": {
           "type": "string"

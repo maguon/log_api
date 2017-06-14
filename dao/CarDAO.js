@@ -27,15 +27,17 @@ function addUploadCar(params,callback){
 }
 
 function addCar(params,callback){
-    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,route_start,route_end,receive_id,entrust_id,pro_date,colour,engine_num,arrive_time,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,route_start_id,route_start,route_end_id,route_end,receive_id,entrust_id,pro_date,colour,engine_num,arrive_time,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
+    paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
@@ -191,7 +193,7 @@ function getCarReceiveCount(params,callback) {
 }
 
 function updateCar(params,callback){
-    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? ,route_start = ? , route_end = ? ," +
+    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , route_start_id = ? , route_start = ? , route_end_id = ? , route_end = ? ," +
         " receive_id = ? , entrust_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
@@ -199,7 +201,9 @@ function updateCar(params,callback){
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
+    paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
