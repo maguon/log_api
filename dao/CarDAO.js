@@ -194,7 +194,7 @@ function getCarReceiveCount(params,callback) {
 
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , route_start_id = ? , route_start = ? , route_end_id = ? , route_end = ? ," +
-        " receive_id = ? , entrust_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? " ;
+        " receive_id = ? , entrust_id = ? , pro_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
