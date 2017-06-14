@@ -2954,9 +2954,9 @@
         ],
         "parameters": [
           {
-            "name": "proDate",
+            "name": "orderDate",
             "in": "query",
-            "description": "car proDate",
+            "description": "car orderDate",
             "required": false,
             "type": "integer"
 
@@ -2990,9 +2990,9 @@
         ],
         "parameters": [
           {
-            "name": "proDate",
+            "name": "orderDate",
             "in": "query",
-            "description": "car proDate",
+            "description": "car orderDate",
             "required": false,
             "type": "integer"
 
@@ -3014,7 +3014,7 @@
         }
       }
     },
-    "/user/{userId}/car": {
+    "/user/{userId}/uploadCar": {
       "post": {
         "tags": [
           "car"
@@ -4141,7 +4141,7 @@
         "entrustId": {
           "type": "integer"
         },
-        "proDate": {
+        "orderDate": {
           "type": "string"
         },
         "colour": {
@@ -4210,7 +4210,7 @@
         "entrustId": {
           "type": "integer"
         },
-        "proDate": {
+        "orderDate": {
           "type": "string"
         },
         "colour": {

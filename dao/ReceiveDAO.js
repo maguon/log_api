@@ -23,22 +23,22 @@ function addReceive(params,callback){
 }
 
 function getReceive(params,callback) {
-    var query = " select * from receive_info where id is not null ";
+    var query = " select re.*,c.city_name from receive_info re left join city_info c on re.city_id = c.id where re.id is not null ";
     var paramsArray=[],i=0;
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
-        query = query + " and id = ? ";
+        query = query + " and re.id = ? ";
     }
     if(params.receiveName){
-        query = query + " and receive_name like '%"+params.receiveName+"%'";
+        query = query + " and re.receive_name like '%"+params.receiveName+"%'";
     }
     if(params.address){
         paramsArray[i++] = params.address;
-        query = query + " and address = ? ";
+        query = query + " and re.address = ? ";
     }
     if(params.cityId){
         paramsArray[i++] = params.cityId;
-        query = query + " and city_id = ? ";
+        query = query + " and re.city_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
