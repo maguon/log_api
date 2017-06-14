@@ -3166,13 +3166,13 @@
         }
       }
     },
-    "/user/{userId}/storageCarRel": {
+    "/user/{userId}/carStorageRel": {
       "post": {
         "tags": [
           "car"
         ],
-        "summary": "user create storageCarRel",
-        "description": "user create storageCarRel",
+        "summary": "user create carStorageRel",
+        "description": "user create carStorageRel",
         "produces": [
           "application/json"
         ],
@@ -3186,12 +3186,12 @@
 
           },
           {
-            "name": "storageCarRel",
+            "name": "carStorageRel",
             "in": "body",
-            "description": "storageCarRel info",
+            "description": "carStorageRel info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/storageCarRel"
+              "$ref": "#/definitions/carStorageRel"
             }
           }
         ],
@@ -3206,18 +3206,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid storageCarRel id"
+            "description": "Invalid token value or invalid carStorageRel id"
           }
         }
       }
     },
-    "/user/{userId}/againStorageCarRel": {
+    "/user/{userId}/againCarStorageRel": {
       "post": {
         "tags": [
           "car"
         ],
-        "summary": "user create againStorageCarRel",
-        "description": "user create againStorageCarRel",
+        "summary": "user create againCarStorageRel",
+        "description": "user create againCarStorageRel",
         "produces": [
           "application/json"
         ],
@@ -3247,12 +3247,12 @@
 
           },
           {
-            "name": "againStorageCarRel",
+            "name": "againCarStorageRel",
             "in": "body",
-            "description": "againStorageCarRel info",
+            "description": "againCarStorageRel info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/againStorageCarRel"
+              "$ref": "#/definitions/againCarStorageRel"
             }
           }
         ],
@@ -4167,7 +4167,7 @@
         "name": "vin"
       }
     },
-    "storageCarRel": {
+    "carStorageRel": {
       "type": "object",
       "properties": {
 
@@ -4227,10 +4227,10 @@
         }
       },
       "xml": {
-        "name": "storageCarRel"
+        "name": "carStorageRel"
       }
     },
-    "againStorageCarRel": {
+    "againCarStorageRel": {
       "type": "object",
       "properties": {
 
@@ -4248,7 +4248,7 @@
         }
       },
       "xml": {
-        "name": "againStorageCarRel"
+        "name": "againCarStorageRel"
       }
     },
     "planOutTime": {
