@@ -1583,6 +1583,58 @@
         }
       }
     },
+    "/user/{userId}/city/{cityId}/cityStatus/{cityStatus}": {
+      "put": {
+        "tags": [
+          "city"
+        ],
+        "summary": "update city status",
+        "description": "update city status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityId",
+            "in": "path",
+            "description": "city id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityStatus",
+            "in": "path",
+            "description": "city status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid city id"
+          }
+        }
+      }
+    },
     "/receive": {
       "get": {
         "tags": [
@@ -4043,9 +4095,6 @@
         },
         "cityId": {
           "type": "integer"
-        },
-        "cityName": {
-          "type": "string"
         },
         "remark": {
           "type": "string"

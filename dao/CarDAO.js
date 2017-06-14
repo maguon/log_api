@@ -7,18 +7,21 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CarDAO.js');
 
 function addUploadCar(params,callback){
-    var query = " insert into car_info(vin,make_id,make_name,route_start,route_end,receive_id,entrust_id,arrive_time) " +
-        " select tmp.vin,ma.id as make_id,ma.make_name,route_start,route_end,re.id as receive_id,en.id as entrust_id,tmp.arrive_time from tmp_car_info tmp " +
-        " left join car_make ma on tmp.make_name = ma.make_name " +
-        " left join receive_info re on tmp.receive_name = re.receive_name " +
-        " left join entrust_info en on tmp.short_name = en.short_name where tmp.id is not null ";
+    var query = " insert into car_info(vin,make_id,make_name,route_start_id,route_start,route_end_id,route_end,receive_id,entrust_id,arrive_time) " +
+        " select tmp.vin,tmp.make_id,ma.make_name,tmp.route_start_id,cs.city_name as route_start,tmp.route_end_id,ce.city_name as route_end, " +
+        " tmp.receive_id,tmp.entrust_id,tmp.arrive_time from car_info_tmp tmp " +
+        " left join car_make ma on tmp.make_id = ma.id " +
+        " left join city_info cs on tmp.route_start_id = cs.id " +
+        " left join city_info ce on tmp.route_end_id = ce.id " +
+        " left join receive_info re on tmp.receive_id = re.id " +
+        " left join entrust_info en on tmp.entrust_id = en.id where tmp.id is not null ";
     var paramsArray=[],i=0;
     if(params.uploadId){
         paramsArray[i++] = params.uploadId;
         query = query + " and tmp.upload_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' addUploadCar ');
+        logger.debug(' addUpl oadCar ');
         return callback(error,rows);
     });
 }
@@ -49,8 +52,8 @@ function addCar(params,callback){
 
 function getCar(params,callback) {
     var query = " select c.*, " +
-        " en.id as en_id,en.entrust_name, " +
-        " re.id as re_id,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.remark, " +
+        " en.id as en_id,en.short_name as en_short_name,en.entrust_name, " +
+        " re.id as re_id,re.short_name as re_short_name,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.remark, " +
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
