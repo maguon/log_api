@@ -166,7 +166,7 @@ function getCarBase(params,callback) {
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
         " left join receive_info re on c.receive_id = re.id " +
-        " left join entrust_info en on c.entrust_id = en.id where r.active = 1 and c.id is not null ";
+        " left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
