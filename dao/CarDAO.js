@@ -71,6 +71,30 @@ function addCar(params,callback){
     });
 }
 
+function getCarList(params,callback) {
+    var query = " select c.*,re.receive_name,en.entrust_name from car_info c " +
+        " left join receive_info re on c.receive_id = re.id left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.carId){
+        paramsArray[i++] = params.carId;
+        query = query + " and c.id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    query = query + '  order by c.order_date ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarList ');
+        return callback(error,rows);
+    });
+}
+
 function getCar(params,callback) {
     var query = " select c.*, " +
         " en.id as en_id,en.short_name as en_short_name,en.entrust_name, " +
@@ -254,6 +278,7 @@ module.exports ={
     addUploadCar : addUploadCar,
     addCarTmp : addCarTmp,
     addCar : addCar,
+    getCarList : getCarList,
     getCar : getCar,
     getCarBase : getCarBase,
     getCarRouteEndCount : getCarRouteEndCount,

@@ -60,6 +60,20 @@ function createCar(req,res,next){
     })
 }
 
+function queryCarList(req,res,next){
+    var params = req.params ;
+    carDAO.getCarList(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarList ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarList ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryCar(req,res,next){
     var params = req.params ;
     carDAO.getCar(params,function(error,result){
@@ -153,6 +167,7 @@ function updateCarVin(req,res,next){
 module.exports = {
     createUploadCar : createUploadCar,
     createCar : createCar,
+    queryCarList : queryCarList,
     queryCar : queryCar,
     queryCarRouteEndCount : queryCarRouteEndCount,
     queryCarReceiveCount : queryCarReceiveCount,

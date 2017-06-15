@@ -235,6 +235,7 @@ function createServer() {
     /**
      * Car Module
      */
+    server.get('/api/carList',car.queryCarList);
     server.get('/api/car',car.queryCar);
     server.get('/api/carRouteEndCount',car.queryCarRouteEndCount);
     server.get('/api/carReceiveCount',car.queryCarReceiveCount);
