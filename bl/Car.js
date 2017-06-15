@@ -27,6 +27,39 @@ function createUploadCar(req,res,next){
     })
 }
 
+function createCar(req,res,next){
+    var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        carDAO.getCarBase({vin:params.vin},function(error,rows){
+            if (error) {
+                logger.error(' getCarBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+            carDAO.addCar(params,function(error,result){
+                if (error) {
+                    logger.error(' createCar ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    logger.info(' createCar ' + 'success');
+                    resUtil.resetCreateRes(res,result,null);
+                    return next();
+                }
+            })
+    })
+}
+
 function queryCar(req,res,next){
     var params = req.params ;
     carDAO.getCar(params,function(error,result){
@@ -119,6 +152,7 @@ function updateCarVin(req,res,next){
 
 module.exports = {
     createUploadCar : createUploadCar,
+    createCar : createCar,
     queryCar : queryCar,
     queryCarRouteEndCount : queryCarRouteEndCount,
     queryCarReceiveCount : queryCarReceiveCount,
