@@ -222,6 +222,7 @@ function createServer() {
     server.get('/api/storageCount',storage.queryStorageCount);
     server.get('/api/storageTotalMonth',storage.queryStorageTotalMonth);
     server.get('/api/storageTotalDay',storage.queryStorageTotalDay);
+    server.get('/api/storageCar.csv', storage.getStorageCarCsv);
     server.post({path:'/api/user/:userId/storage',contentType: 'application/json'},storage.createStorage);
     server.put({path:'/api/user/:userId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
     server.put({path:'/api/user/:userId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);

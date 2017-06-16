@@ -203,6 +203,22 @@ function updateStorageStatus (req,res,next){
 }
 
 
+function getStorageCarCsv(req,res,next){
+    var str = "";
+    var header = "订单号" + ',' + "分类" + ',' + "企业名称" + ','+ "金额" + ','+ "类型" + ',' + "业务类型" + ',' + "尺寸" + ',' + "箱型" + ',' + "提单号" + ','
+        + "交易方式" + ',' + "时间" ;
+    str = header + '\r\n'+str;
+    var csvString = str;
+    var csvBuffer = new Buffer(csvString,'utf8')
+    res.set('content-type', 'application/csv');
+    res.set('charset', 'utf8');
+    res.set('content-length', csvBuffer.length);
+    res.writeHead(200);
+    res.write(csvBuffer);//TODO
+    res.end();
+    return next(false);
+}
+
 module.exports = {
     createStorage : createStorage,
     queryStorage : queryStorage,
@@ -211,5 +227,6 @@ module.exports = {
     queryStorageTotalMonth : queryStorageTotalMonth,
     queryStorageTotalDay : queryStorageTotalDay,
     updateStorage : updateStorage,
-    updateStorageStatus : updateStorageStatus
+    updateStorageStatus : updateStorageStatus,
+    getStorageCarCsv : getStorageCarCsv
 }
