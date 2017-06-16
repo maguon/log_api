@@ -20,7 +20,7 @@ function addReceiveContacts(params,callback){
 }
 
 function getReceiveContacts(params,callback) {
-    var query = " select rc.* from receive_contacts rc left join receive_info re on rc.receive_id = re.id where rc.id is not null ";
+    var query = " select rc.* from receive_contacts rc left join receive_info re on rc.receive_id = re.id where rc.contacts_status = 1 and rc.id is not null ";
     var paramsArray=[],i=0;
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
@@ -45,9 +45,21 @@ function updateReceiveContacts(params,callback){
     });
 }
 
+function updateContactsStatus(params,callback){
+    var query = " update receive_contacts set contacts_status = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.receiveContactsStatus;
+    paramsArray[i] = params.contactsId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateContactsStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addReceiveContacts : addReceiveContacts,
     getReceiveContacts : getReceiveContacts,
-    updateReceiveContacts : updateReceiveContacts
+    updateReceiveContacts : updateReceiveContacts,
+    updateContactsStatus : updateContactsStatus
 }

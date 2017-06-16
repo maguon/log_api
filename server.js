@@ -199,6 +199,7 @@ function createServer() {
     server.get('/api/receive/:receiveId/contacts',receiveContacts.queryReceiveContacts);
     server.post({path:'/api/user/:userId/receive/:receiveId/contacts',contentType: 'application/json'},receiveContacts.createReceiveContacts);
     server.put({path:'/api/user/:userId/contacts/:contactsId/receiveContacts',contentType: 'application/json'} ,receiveContacts.updateReceiveContacts);
+    server.put({path:'/api/user/:userId/contacts/:contactsId/receiveContactsStatus/:receiveContactsStatus',contentType: 'application/json'} ,receiveContacts.updateContactsStatus);
 
     /**
      * Entrust Module
@@ -213,6 +214,7 @@ function createServer() {
     server.get('/api/entrust/:entrustId/contacts',entrustContacts.queryEntrustContacts);
     server.post({path:'/api/user/:userId/entrust/:entrustId/contacts',contentType: 'application/json'},entrustContacts.createEntrustContacts);
     server.put({path:'/api/user/:userId/contacts/:contactsId/entrustContacts',contentType: 'application/json'} ,entrustContacts.updateEntrustContacts);
+    server.put({path:'/api/user/:userId/contacts/:contactsId/entrustContactsStatus/:entrustContactsStatus',contentType: 'application/json'} ,entrustContacts.updateContactsStatus);
 
     /**
      * Storage Module

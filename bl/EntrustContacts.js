@@ -55,9 +55,24 @@ function updateEntrustContacts(req,res,next){
     })
 }
 
+function updateContactsStatus(req,res,next){
+    var params = req.params ;
+    entrustContactsDAO.updateContactsStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateContactsStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateContactsStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createEntrustContacts : createEntrustContacts,
     queryEntrustContacts : queryEntrustContacts,
-    updateEntrustContacts : updateEntrustContacts
+    updateEntrustContacts : updateEntrustContacts,
+    updateContactsStatus : updateContactsStatus
 }

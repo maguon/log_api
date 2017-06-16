@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var storageDAO = require('../dao/StorageDAO.js');
 var storageParkingDAO = require('../dao/StorageParkingDAO.js');
+var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -204,11 +205,12 @@ function updateStorageStatus (req,res,next){
 
 
 function getStorageCarCsv(req,res,next){
-    var str = "";
+    var csvString = "";
     var header = "vin" + ',' + "车型" + ',' + "委托方" + ','+ "收货方" + ','+ "目的地城市" + ','+ "指令时间" ;
-    str = header + '\r\n'+str;
-    var csvString = str;
-    var csvBuffer = new Buffer(csvString,'utf8')
+    csvString = header + '\r\n'+csvString;
+    csvString = csvString+"123123123"+","+"lsv"+","+"dafa0"+","+"23jlsfkjl"+","+""+","+"2017-7-7";
+
+    var csvBuffer = new Buffer(csvString,'utf8');
     res.set('content-type', 'application/csv');
     res.set('charset', 'utf8');
     res.set('content-length', csvBuffer.length);

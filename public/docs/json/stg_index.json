@@ -1937,6 +1937,58 @@
         }
       }
     },
+    "/user/{userId}/contacts/{contactsId}/receiveContactsStatus/{receiveContactsStatus}": {
+      "put": {
+        "tags": [
+          "receive"
+        ],
+        "summary": "update receive status",
+        "description": "update receive status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contactsId",
+            "in": "path",
+            "description": "contacts id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveContactsStatus",
+            "in": "path",
+            "description": "receiveContacts status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid contacts id"
+          }
+        }
+      }
+    },
     "/entrust": {
       "get": {
         "tags": [
@@ -2204,6 +2256,58 @@
             "schema": {
               "$ref": "#/definitions/contacts"
             }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid contacts id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/contacts/{contactsId}/entrustContactsStatus/{entrustContactsStatus}": {
+      "put": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "update contacts status",
+        "description": "update contacts status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "contactsId",
+            "in": "path",
+            "description": "contacts id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustContactsStatus",
+            "in": "path",
+            "description": "entrustContacts status",
+            "required": true,
+            "type": "integer"
 
           }
         ],
@@ -2527,6 +2631,50 @@
           },
           "400": {
             "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
+    "/storageCar.csv": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageCar.csv list",
+        "description": "query storageCar.csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageCar.csv"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
           }
         }
       }
