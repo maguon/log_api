@@ -7,9 +7,9 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CarDAO.js');
 
 function addUploadCar(params,callback){
-    var query = " insert into car_info(vin,make_id,make_name,route_start_id,route_start,route_end_id,route_end,receive_id,entrust_id,order_date,arrive_time) " +
+    var query = " insert into car_info(vin,make_id,make_name,route_start_id,route_start,route_end_id,route_end,receive_id,entrust_id,order_date) " +
         " select tmp.vin,tmp.make_id,ma.make_name,tmp.route_start_id,cs.city_name as route_start,tmp.route_end_id,ce.city_name as route_end, " +
-        " tmp.receive_id,tmp.entrust_id,tmp.order_date,tmp.arrive_time from car_info_tmp tmp " +
+        " tmp.receive_id,tmp.entrust_id,tmp.order_date from car_info_tmp tmp " +
         " left join car_make ma on tmp.make_id = ma.id " +
         " left join city_info cs on tmp.route_start_id = cs.id " +
         " left join city_info ce on tmp.route_end_id = ce.id " +
@@ -21,13 +21,13 @@ function addUploadCar(params,callback){
         query = query + " and tmp.upload_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' addUpl oadCar ');
+        logger.debug(' addUploadCar ');
         return callback(error,rows);
     });
 }
 
 function addCarTmp(params,callback){
-    var query = " insert into car_info_tmp (upload_id,vin,make_id,route_start_id,route_end_id,receive_id,entrust_id,order_date,arrive_time) " +
+    var query = " insert into car_info_tmp (upload_id,vin,make_id,route_start_id,route_end_id,receive_id,entrust_id,order_date) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.uploadId;
@@ -37,8 +37,7 @@ function addCarTmp(params,callback){
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
-    paramsArray[i++]=params.orderDate;
-    paramsArray[i]=params.arriveTime;
+    paramsArray[i]=params.orderDate;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCarTmp ');
         return callback(error,rows);
@@ -46,8 +45,8 @@ function addCarTmp(params,callback){
 }
 
 function addCar(params,callback){
-    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,route_start_id,route_start,route_end_id,route_end,receive_id,entrust_id,order_date,colour,engine_num,arrive_time,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,route_start_id,route_start,route_end_id,route_end,receive_id,entrust_id,order_date,colour,engine_num,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -63,7 +62,6 @@ function addCar(params,callback){
     paramsArray[i++]=params.orderDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
-    paramsArray[i++]=params.arriveTime;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCar ');
@@ -237,7 +235,7 @@ function getCarReceiveCount(params,callback) {
 
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , route_start_id = ? , route_start = ? , route_end_id = ? , route_end = ? ," +
-        " receive_id = ? , entrust_id = ? , order_date = ? , colour = ? , engine_num = ? , arrive_time = ? , remark = ? where id = ? "  ;
+        " receive_id = ? , entrust_id = ? , order_date = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -253,7 +251,6 @@ function updateCar(params,callback){
     paramsArray[i++]=params.orderDate;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
-    paramsArray[i++]=params.arriveTime;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.carId;
     db.dbQuery(query,paramsArray,function(error,rows){

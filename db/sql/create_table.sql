@@ -55,7 +55,7 @@ CREATE TABLE `car_info` (
     `order_date` datetime DEFAULT NULL COMMENT '指令日期',
     `colour` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '颜色',
     `engine_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发动机号',
-    `arrive_time` datetime DEFAULT NULL COMMENT '到港时间',
+    `port_time` datetime DEFAULT NULL COMMENT '到港时间',
     `car_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '车辆状态',
     `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
     `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -350,7 +350,7 @@ CREATE TABLE `car_info_tmp` (
   `route_end_id` int(10) DEFAULT NULL COMMENT '目的地ID',
   `receive_id` int(10) DEFAULT NULL COMMENT '经销商ID',
   `entrust_id` int(10) DEFAULT NULL COMMENT '委托方ID',
-  `arrive_time` datetime DEFAULT NULL COMMENT '到港时间',
+  `port_time` datetime DEFAULT NULL COMMENT '到港时间',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
