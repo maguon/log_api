@@ -205,8 +205,7 @@ function updateStorageStatus (req,res,next){
 
 function getStorageCarCsv(req,res,next){
     var str = "";
-    var header = "订单号" + ',' + "分类" + ',' + "企业名称" + ','+ "金额" + ','+ "类型" + ',' + "业务类型" + ',' + "尺寸" + ',' + "箱型" + ',' + "提单号" + ','
-        + "交易方式" + ',' + "时间" ;
+    var header = "vin" + ',' + "车型" + ',' + "委托方" + ','+ "收货方" + ','+ "目的地城市" + ','+ "指令时间" ;
     str = header + '\r\n'+str;
     var csvString = str;
     var csvBuffer = new Buffer(csvString,'utf8')
