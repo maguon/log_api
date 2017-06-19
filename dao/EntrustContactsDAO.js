@@ -38,7 +38,7 @@ function updateEntrustContacts(params,callback){
     paramsArray[i++]=params.contactsName;
     paramsArray[i++]=params.position;
     paramsArray[i++]=params.tel;
-    paramsArray[i]=params.contactsId;
+    paramsArray[i]=params.entrustContactsId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateEntrustContacts ');
         return callback(error,rows);
@@ -48,8 +48,8 @@ function updateEntrustContacts(params,callback){
 function updateContactsStatus(params,callback){
     var query = " update entrust_contacts set contacts_status = ? where id = ?";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.entrustContactsStatus;
-    paramsArray[i] = params.contactsId;
+    paramsArray[i++] = params.contactsStatus;
+    paramsArray[i] = params.entrustContactsId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateContactsStatus ');
         return callback(error,rows);

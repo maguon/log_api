@@ -1883,7 +1883,7 @@
         }
       }
     },
-    "/user/{userId}/contacts/{contactsId}/receiveContacts": {
+    "/user/{userId}/receiveContacts/{receiveContactsId}": {
       "put": {
         "tags": [
           "receive"
@@ -1903,9 +1903,9 @@
 
           },
           {
-            "name": "contactsId",
+            "name": "receiveContactsId",
             "in": "path",
-            "description": "contacts id",
+            "description": "receiveContacts id",
             "required": true,
             "type": "integer"
 
@@ -1935,15 +1935,14 @@
             "description": "Invalid token value or invalid contacts id"
           }
         }
-      }
-    },
-    "/user/{userId}/contacts/{contactsId}/receiveContactsStatus/{receiveContactsStatus}": {
-      "put": {
+      },
+      "delete": {
         "tags": [
           "receive"
         ],
-        "summary": "update receive status",
-        "description": "update receive status",
+        "summary": "Deletes a contacts",
+        "description": "",
+        "operationId": "deleteContacts",
         "produces": [
           "application/json"
         ],
@@ -1951,40 +1950,24 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
-
           },
           {
-            "name": "contactsId",
+            "name": "receiveContactsId",
             "in": "path",
-            "description": "contacts id",
+            "description": "receiveContacts id to delete",
             "required": true,
             "type": "integer"
-
-          },
-          {
-            "name": "receiveContactsStatus",
-            "in": "path",
-            "description": "receiveContacts status",
-            "required": true,
-            "type": "integer"
-
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
           "400": {
-            "description": "Invalid token value or invalid contacts id"
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
@@ -2221,7 +2204,7 @@
         }
       }
     },
-    "/user/{userId}/contacts/{contactsId}/entrustContacts": {
+    "/user/{userId}/entrustContacts/{entrustContactsId}": {
       "put": {
         "tags": [
           "entrust"
@@ -2241,9 +2224,9 @@
 
           },
           {
-            "name": "contactsId",
+            "name": "entrustContactsId",
             "in": "path",
-            "description": "contacts id",
+            "description": "entrustContacts id",
             "required": true,
             "type": "integer"
 
@@ -2273,15 +2256,14 @@
             "description": "Invalid token value or invalid contacts id"
           }
         }
-      }
-    },
-    "/user/{userId}/contacts/{contactsId}/entrustContactsStatus/{entrustContactsStatus}": {
-      "put": {
+      },
+      "delete": {
         "tags": [
           "entrust"
         ],
-        "summary": "update contacts status",
-        "description": "update contacts status",
+        "summary": "Deletes a contacts",
+        "description": "",
+        "operationId": "deleteContacts",
         "produces": [
           "application/json"
         ],
@@ -2289,40 +2271,24 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
-
           },
           {
-            "name": "contactsId",
+            "name": "entrustContactsId",
             "in": "path",
-            "description": "contacts id",
+            "description": "entrustContacts id to delete",
             "required": true,
             "type": "integer"
-
-          },
-          {
-            "name": "entrustContactsStatus",
-            "in": "path",
-            "description": "entrustContacts status",
-            "required": true,
-            "type": "integer"
-
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
           "400": {
-            "description": "Invalid token value or invalid contacts id"
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
