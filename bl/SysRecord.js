@@ -11,9 +11,9 @@ function saveCarRecord (req,res,next){
         var params = req.params;
         console.log(params);
         var recordParams ={};
-        recordParams.userId = params.userId;
-        recordParams.userType = req.headers['user-type'] || 9;
-        recordParams.username = req.headers['user-name'] || 'admin';
+        recordParams.userId = params._uid;
+        recordParams.userType = params._utype || 99;
+        recordParams.username = params._uname || 'admin';
         recordParams.content = params.carContent;
         recordParams.carId = params.carId;
         recordParams.vin = params.vin;
