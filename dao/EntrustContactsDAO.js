@@ -20,7 +20,7 @@ function addEntrustContacts(params,callback){
 }
 
 function getEntrustContacts(params,callback) {
-    var query = " select ec.* from entrust_contacts ec left join entrust_info en on ec.entrust_id = en.id where ec.id is not null ";
+    var query = " select ec.* from entrust_contacts ec left join entrust_info en on ec.entrust_id = en.id where ec.contacts_status = 1 and ec.id is not null ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
@@ -38,9 +38,20 @@ function updateEntrustContacts(params,callback){
     paramsArray[i++]=params.contactsName;
     paramsArray[i++]=params.position;
     paramsArray[i++]=params.tel;
-    paramsArray[i]=params.contactsId;
+    paramsArray[i]=params.entrustContactsId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateEntrustContacts ');
+        return callback(error,rows);
+    });
+}
+
+function updateContactsStatus(params,callback){
+    var query = " update entrust_contacts set contacts_status = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.contactsStatus;
+    paramsArray[i] = params.entrustContactsId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateContactsStatus ');
         return callback(error,rows);
     });
 }
@@ -49,5 +60,6 @@ function updateEntrustContacts(params,callback){
 module.exports ={
     addEntrustContacts : addEntrustContacts,
     getEntrustContacts : getEntrustContacts,
-    updateEntrustContacts : updateEntrustContacts
+    updateEntrustContacts : updateEntrustContacts,
+    updateContactsStatus : updateContactsStatus
 }

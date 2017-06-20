@@ -81,6 +81,14 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
     }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
     query = query + '  order by c.order_date ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

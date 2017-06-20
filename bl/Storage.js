@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var storageDAO = require('../dao/StorageDAO.js');
 var storageParkingDAO = require('../dao/StorageParkingDAO.js');
+var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -204,18 +205,36 @@ function updateStorageStatus (req,res,next){
 
 
 function getStorageCarCsv(req,res,next){
-    var str = "";
-    var header = "vin" + ',' + "车型" + ',' + "委托方" + ','+ "收货方" + ','+ "目的地城市" + ','+ "指令时间" ;
-    str = header + '\r\n'+str;
-    var csvString = str;
-    var csvBuffer = new Buffer(csvString,'utf8')
-    res.set('content-type', 'application/csv');
-    res.set('charset', 'utf8');
-    res.set('content-length', csvBuffer.length);
-    res.writeHead(200);
-    res.write(csvBuffer);//TODO
-    res.end();
-    return next(false);
+    var csvString = "";
+    var header = "VIN" + ',' + "制造商" + ',' + "起始地城市" + ','+ "目的地城市" + ','+ "经销商"+ ','+ "委托方" + ','+ "指令时间" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    carDAO.getCarList(params,function(error,rows){
+        if (error) {
+            logger.error(' queryCarList ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.vin = rows[i].vin;
+                parkObj.makeName = rows[i].make_name;
+                parkObj.routeStart = rows[i].route_start;
+                parkObj.routeEnd = rows[i].route_end;
+                parkObj.receiveName = rows[i].receive_name;
+                parkObj.entrustName = rows[i].entrust_name;
+                parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.receiveName+","+parkObj.entrustName+","+parkObj.orderDate+ '\r\n';
+            }
+                var csvBuffer = new Buffer(csvString,'utf8');
+                res.set('content-type', 'application/csv');
+                res.set('charset', 'utf8');
+                res.set('content-length', csvBuffer.length);
+                res.writeHead(200);
+                res.write(csvBuffer);//TODO
+                res.end();
+                return next(false);
+        }
+    })
 }
 
 module.exports = {

@@ -55,9 +55,25 @@ function updateReceiveContacts(req,res,next){
     })
 }
 
+function removeContacts(req,res,next){
+    var params = req.params ;
+    params.contactsStatus = listOfValue.CONTACTS_STATUS_NOT_ACTIVE;
+    receiveContactsDAO.updateContactsStatus(params,function(error,result){
+        if (error) {
+            logger.error(' removeContacts ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeContacts ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createReceiveContacts : createReceiveContacts,
     queryReceiveContacts : queryReceiveContacts,
-    updateReceiveContacts : updateReceiveContacts
+    updateReceiveContacts : updateReceiveContacts,
+    removeContacts : removeContacts
 }

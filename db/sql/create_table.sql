@@ -60,7 +60,8 @@ CREATE TABLE `car_info` (
     `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
     `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vin` (`vin`) USING BTREE COMMENT '唯一VIN'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
@@ -119,7 +120,8 @@ CREATE TABLE `city_info` (
   `city_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '城市状态',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `city_name` (`city_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
@@ -132,7 +134,7 @@ CREATE TABLE `company_info` (
   `operate_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '所属类型(1-自营,2-承包,3-供方,4-外协)',
   `cooperation_time` datetime DEFAULT NULL,
   `contacts` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
+  `tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
   `city_id` int(10) NOT NULL COMMENT '城市ID',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -164,7 +166,7 @@ CREATE TABLE `drive_info` (
   `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '司机姓名',
   `gender` char(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' COMMENT '性别',
   `id_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '身份证号码',
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
+  `tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
   `company_id` int(10) NOT NULL COMMENT '所属公司ID',
   `drive_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '司机状态(0-停用,1-可用)',
   `license_level` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '驾驶证级别',
@@ -244,7 +246,7 @@ CREATE TABLE `truck_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `truck_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '车牌号或挂车号',
   `brand_id` int(10) DEFAULT NULL COMMENT '品牌ID',
-  `truck_tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '随车电话',
+  `truck_tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '随车电话',
   `the_code` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '车辆识别代码(头车/挂车车架号)',
   `drive_id` int(10) DEFAULT '0' COMMENT '主驾ID',
   `copilot` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '副驾',
@@ -307,7 +309,9 @@ CREATE TABLE `entrust_info` (
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+    UNIQUE KEY `short_name` (`short_name`),
+    UNIQUE KEY `entrust_name` (`entrust_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- Table structure for receive_contacts
@@ -318,10 +322,12 @@ CREATE TABLE `receive_contacts` (
   `receive_id` int(10) DEFAULT NULL COMMENT '经销商ID',
   `contacts_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人名称',
   `position` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人职务',
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
+  `tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+    UNIQUE KEY `short_name` (`short_name`),
+    UNIQUE KEY `receive_name` (`receive_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- Table structure for entrust_contacts
@@ -332,7 +338,7 @@ CREATE TABLE `entrust_contacts` (
   `entrust_id` int(10) DEFAULT NULL COMMENT '委托方ID',
   `contacts_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人名称',
   `position` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人职务',
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
+  `tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

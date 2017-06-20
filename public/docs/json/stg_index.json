@@ -1883,7 +1883,7 @@
         }
       }
     },
-    "/user/{userId}/contacts/{contactsId}/receiveContacts": {
+    "/user/{userId}/receiveContacts/{receiveContactsId}": {
       "put": {
         "tags": [
           "receive"
@@ -1903,9 +1903,9 @@
 
           },
           {
-            "name": "contactsId",
+            "name": "receiveContactsId",
             "in": "path",
-            "description": "contacts id",
+            "description": "receiveContacts id",
             "required": true,
             "type": "integer"
 
@@ -1933,6 +1933,41 @@
           },
           "400": {
             "description": "Invalid token value or invalid contacts id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "receive"
+        ],
+        "summary": "Deletes a contacts",
+        "description": "",
+        "operationId": "deleteContacts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "receiveContactsId",
+            "in": "path",
+            "description": "receiveContacts id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
@@ -2169,7 +2204,7 @@
         }
       }
     },
-    "/user/{userId}/contacts/{contactsId}/entrustContacts": {
+    "/user/{userId}/entrustContacts/{entrustContactsId}": {
       "put": {
         "tags": [
           "entrust"
@@ -2189,9 +2224,9 @@
 
           },
           {
-            "name": "contactsId",
+            "name": "entrustContactsId",
             "in": "path",
-            "description": "contacts id",
+            "description": "entrustContacts id",
             "required": true,
             "type": "integer"
 
@@ -2219,6 +2254,41 @@
           },
           "400": {
             "description": "Invalid token value or invalid contacts id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "Deletes a contacts",
+        "description": "",
+        "operationId": "deleteContacts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "entrustContactsId",
+            "in": "path",
+            "description": "entrustContacts id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
@@ -2527,6 +2597,50 @@
           },
           "400": {
             "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
+    "/storageCar.csv": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageCar.csv list",
+        "description": "query storageCar.csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageCar.csv"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
           }
         }
       }
