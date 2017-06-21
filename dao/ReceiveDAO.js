@@ -29,6 +29,9 @@ function getReceive(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and re.id = ? ";
     }
+    if(params.shortName){
+        query = query + " and re.short_name like '%"+params.shortName+"%'";
+    }
     if(params.receiveName){
         query = query + " and re.receive_name like '%"+params.receiveName+"%'";
     }

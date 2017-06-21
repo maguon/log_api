@@ -25,9 +25,12 @@ function getEntrust(params,callback) {
         paramsArray[i++] = params.entrustId;
         query = query + " and id = ? ";
     }
+    if(params.shortName){
+        query = query + " and short_name like '%"+params.shortName+"%'";
+    }
     if(params.entrustName){
         paramsArray[i++] = params.entrustName;
-        query = query + " and entrust_name = ? ";
+        query = query + " and entrust_name like '%"+params.entrustName+"%'";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
