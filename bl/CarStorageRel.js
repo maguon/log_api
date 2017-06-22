@@ -127,7 +127,7 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         logger.info(' createCarStorageRel ' + 'success');
-        req.params.carContent =" Import storage "+req.params.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+        req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
         req.params.op =11;
         resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();
@@ -256,7 +256,7 @@ function createAgainCarStorageRel(req,res,next){
         })
     }).seq(function(){
         logger.info(' createAgainCarStorageRel ' + 'success');
-        req.params.carContent =" Import storage "+req.params.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+        req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
         req.params.op =11;
         resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();
@@ -332,7 +332,7 @@ function updateRelStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateStorageParkingOut ' + 'success');
-                req.params.carContent =" export storage "+parkObj.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+                req.params.carContent =" 出库 "+parkObj.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
                 req.params.vin =parkObj.vin;
                 req.params.op =13;
                 resUtil.resetUpdateRes(res,result,null);

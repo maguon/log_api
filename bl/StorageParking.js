@@ -103,7 +103,7 @@ function updateStorageParking(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateStorageParking ' + 'success');
-                req.params.carContent =" moving storage "+parkObj.storageName + " parking at row " +parkObj.row+ " column "+parkObj.col;
+                req.params.carContent =" 移位 "+parkObj.storageName+ " 至 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
                 req.params.vin =parkObj.vin;
                 req.params.op =12;
                 resUtil.resetUpdateRes(res,result,null);

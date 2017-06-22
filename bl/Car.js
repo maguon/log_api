@@ -54,7 +54,7 @@ function createCar(req,res,next){
                     throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
                     logger.info(' createCar ' + 'success');
-                    req.params.carContent =" 新增商品车信息 ";
+                    req.params.carContent =" 商品车信息录入 ";
                     carId = result.insertId;
                     req.params.carId = carId;
                     req.params.op =10;
