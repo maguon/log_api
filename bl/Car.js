@@ -29,6 +29,7 @@ function createUploadCar(req,res,next){
 
 function createCar(req,res,next){
     var params = req.params ;
+    var carId = 0;
     Seq().seq(function(){
         var that = this;
         carDAO.getCarBase({vin:params.vin},function(error,rows){
@@ -54,6 +55,8 @@ function createCar(req,res,next){
                 } else {
                     logger.info(' createCar ' + 'success');
                     req.params.carContent =" 新增商品车信息 ";
+                    carId = result.insertId;
+                    req.params.carId = carId;
                     req.params.op =10;
                     resUtil.resetCreateRes(res,result,null);
                     return next();
