@@ -228,7 +228,7 @@ function getCarRouteEndCount(params,callback) {
         paramsArray[i++] = params.orderDate;
         query = query + " and order_date = ? ";
     }
-    query = query + ' group by route_start,route_end ';
+    query = query + ' group by route_start,route_end,order_date ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarRouteEndCount ');
         return callback(error,rows);
@@ -236,14 +236,14 @@ function getCarRouteEndCount(params,callback) {
 }
 
 function getCarReceiveCount(params,callback) {
-    var query = " select count(c.id) as receive_count,c.route_start_id,c.route_start,c.receive_id,re.receive_name " +
+    var query = " select count(c.id) as receive_count,c.route_start_id,c.route_start,c.receive_id,re.receive_name,c.order_date " +
         " from car_info c left join receive_info re on c.receive_id = re.id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
         query = query + " and c.order_date = ? ";
     }
-    query = query + ' group by c.route_start_id,c.route_start,c.receive_id ';
+    query = query + ' group by c.route_start_id,c.route_start,c.receive_id,re.receive_name,c.order_date ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarReceiveCount ');
         return callback(error,rows);
