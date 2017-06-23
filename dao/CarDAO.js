@@ -243,7 +243,7 @@ function getCarReceiveCount(params,callback) {
         paramsArray[i++] = params.orderDate;
         query = query + " and c.order_date = ? ";
     }
-    query = query + ' group by c.receive_id ';
+    query = query + ' group by c.route_start_id,c.route_start,c.receive_id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarReceiveCount ');
         return callback(error,rows);
