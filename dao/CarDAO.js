@@ -45,8 +45,9 @@ function addCarTmp(params,callback){
 }
 
 function addCar(params,callback){
-    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name,route_start_id,route_start,route_end_id,route_end,receive_id,entrust_id,order_date,colour,engine_num,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into car_info (vin,make_id,make_name,model_id,model_name," +
+        " route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,entrust_id,order_date,colour,engine_num,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -55,6 +56,7 @@ function addCar(params,callback){
     paramsArray[i++]=params.modelName;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.baseAddrId;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
@@ -70,8 +72,10 @@ function addCar(params,callback){
 }
 
 function getCarList(params,callback) {
-    var query = " select c.*,re.receive_name,en.entrust_name from car_info c " +
-        " left join receive_info re on c.receive_id = re.id left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
+    var query = " select c.*,ba.addr_name,re.receive_name,en.entrust_name from car_info c " +
+        " left join receive_info re on c.receive_id = re.id " +
+        " left join entrust_info en on c.entrust_id = en.id " +
+        " left join base_addr ba on c.base_addr_id = ba.id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
@@ -102,13 +106,14 @@ function getCarList(params,callback) {
 }
 
 function getCar(params,callback) {
-    var query = " select c.*, " +
-        " en.id as en_id,en.short_name as en_short_name,en.entrust_name, " +
-        " re.id as re_id,re.short_name as re_short_name,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.remark, " +
+    var query = " select c.*,ba.addr_name, " +
+        " re.short_name as re_short_name,re.receive_name, " +
+        " en.short_name as en_short_name,en.entrust_name, " +
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info re on c.receive_id = re.id " +
         " left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
     var paramsArray=[],i=0;
@@ -188,13 +193,14 @@ function getCar(params,callback) {
 }
 
 function getCarBase(params,callback) {
-    var query = " select c.*, " +
-        " en.id as en_id,en.short_name as en_short_name,en.entrust_name, " +
-        " re.id as re_id,re.short_name as re_short_name,re.receive_name,re.address,re.lng,re.lat,re.city_id,re.remark, " +
+    var query = " select c.*,ba.addr_name, " +
+        " re.short_name as re_short_name,re.receive_name, " +
+        " en.short_name as en_short_name,en.entrust_name, " +
         " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info re on c.receive_id = re.id " +
         " left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
     var paramsArray=[],i=0;
@@ -242,8 +248,9 @@ function getCarReceiveCount(params,callback) {
 }
 
 function updateCar(params,callback){
-    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , route_start_id = ? , route_start = ? , route_end_id = ? , route_end = ? ," +
-        " receive_id = ? , entrust_id = ? , order_date = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
+    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
+        " route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , receive_id = ? , " +
+        " entrust_id = ? , order_date = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -252,6 +259,7 @@ function updateCar(params,callback){
     paramsArray[i++]=params.modelName;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.baseAddrId;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
