@@ -41,6 +41,10 @@
       "description":"City of log api"
     },
     {
+      "name":"baseAddr",
+      "description":"BaseAddr of log api"
+    },
+    {
       "name":"receive",
       "description":"Receive of log api"
     },
@@ -1631,6 +1635,165 @@
           },
           "400": {
             "description": "Invalid token value or invalid city id"
+          }
+        }
+      }
+    },
+    "/baseAddr": {
+      "get": {
+        "tags": [
+          "baseAddr"
+        ],
+        "summary": "query baseAddr list",
+        "description": "query baseAddr",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "addrName",
+            "in": "query",
+            "description": "addr name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "description": "receive address",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "city id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/baseAddr"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid baseAddr id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/baseAddr": {
+      "post": {
+        "tags": [
+          "baseAddr"
+        ],
+        "summary": "user create baseAddr",
+        "description": "user create baseAddr",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddr",
+            "in": "body",
+            "description": "baseAddr info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/baseAddr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid baseAddr id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/baseAddr/{baseAddrId}": {
+      "put": {
+        "tags": [
+          "baseAddr"
+        ],
+        "summary": "update baseAddr info",
+        "description": "update baseAddr info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "path",
+            "description": "baseAddr id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddr",
+            "in": "body",
+            "description": "baseAddr info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/baseAddr"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid baseAddr id"
           }
         }
       }
@@ -4247,6 +4410,33 @@
       },
       "xml": {
         "name": "city"
+      }
+    },
+    "baseAddr": {
+      "type": "object",
+      "properties": {
+
+        "addrName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "lng": {
+          "type": "integer"
+        },
+        "lat": {
+          "type": "integer"
+        },
+        "cityId": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "baseAddr"
       }
     },
     "receive": {

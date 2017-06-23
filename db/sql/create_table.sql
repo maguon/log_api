@@ -296,7 +296,9 @@ CREATE TABLE `receive_info` (
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `short_name` (`short_name`),
+  UNIQUE KEY `receive_name` (`receive_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- Table structure for entrust_info
@@ -325,9 +327,7 @@ CREATE TABLE `receive_contacts` (
   `tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-    UNIQUE KEY `short_name` (`short_name`),
-    UNIQUE KEY `receive_name` (`receive_name`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- Table structure for entrust_contacts
@@ -361,3 +361,20 @@ CREATE TABLE `car_info_tmp` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for base_addr
+-- ----------------------------
+DROP TABLE IF EXISTS `base_addr`;
+CREATE TABLE `base_addr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `addr_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发货地名称',
+  `address` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '详细地址',
+  `lng` decimal(10,5) DEFAULT NULL COMMENT '经度',
+  `lat` decimal(10,5) DEFAULT NULL COMMENT '纬度',
+  `city_id` int(10) DEFAULT NULL COMMENT '城市ID',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `addr_name` (`addr_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

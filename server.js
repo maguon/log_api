@@ -17,6 +17,7 @@ var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
+var baseAddr = require('./bl/BaseAddr.js');
 var receive = require('./bl/Receive.js');
 var receiveContacts = require('./bl/ReceiveContacts.js');
 var entrust = require('./bl/Entrust.js');
@@ -185,6 +186,13 @@ function createServer() {
     server.post({path:'/api/user/:userId/city',contentType: 'application/json'},city.createCity);
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
     server.put({path:'/api/user/:userId/city/:cityId/cityStatus/:cityStatus',contentType: 'application/json'} ,city.updateCityStatus);
+
+    /**
+     * BaseAddr Module
+     */
+    server.get('/api/baseAddr',baseAddr.queryBaseAddr);
+    server.post({path:'/api/user/:userId/baseAddr',contentType: 'application/json'},baseAddr.createBaseAddr);
+    server.put({path:'/api/user/:userId/baseAddr/:baseAddrId',contentType: 'application/json'} ,baseAddr.updateBaseAddr);
 
     /**
      * Receive Module
