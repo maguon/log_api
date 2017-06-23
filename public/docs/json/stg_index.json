@@ -4554,6 +4554,9 @@
         "routeStart": {
           "type": "string"
         },
+        "baseAddrId": {
+          "type": "integer"
+        },
         "routeEndId": {
           "type": "integer"
         },
@@ -4619,6 +4622,9 @@
         },
         "routeStart": {
           "type": "string"
+        },
+        "baseAddrId": {
+          "type": "integer"
         },
         "routeEndId": {
           "type": "integer"
