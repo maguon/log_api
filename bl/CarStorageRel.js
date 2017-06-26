@@ -53,9 +53,9 @@ function createCarStorageRel(req,res,next){
                     resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
                     return next();
                 }else if(rows && rows.length>0&&rows[0].rel_status == listOfValue.REL_STATUS_OUT) {
-                    carId = rows[0].id;
-                    newCarFlag = false;
-                    that();
+                    logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
+                    return next();
                 }else if(rows && rows.length>0&&rows[0].rel_status == null){
                     carId = rows[0].id;
                     newCarFlag = false;
