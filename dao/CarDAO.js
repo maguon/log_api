@@ -237,7 +237,7 @@ function getCarRouteEndCount(params,callback) {
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
-        query = query + " and order_date = ? ";
+        query = query + " and date_format(order_date,'%Y-%m-%d') = ? ";
     }
     query = query + ' group by route_start,route_end ';
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -247,11 +247,11 @@ function getCarRouteEndCount(params,callback) {
 }
 
 function getCarOrderDateCount(params,callback) {
-    var query = " select count(id) as route_end_count,route_start,route_end,order_date from car_info where id is not null ";
+    var query = " select count(id) as route_end_count,route_start,route_end,date_format(order_date,'%Y-%m-%d') as order_date from car_info where id is not null ";
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
-        query = query + " and order_date = ? ";
+        query = query + " and date_format(order_date,'%Y-%m-%d') = ? ";
     }
     query = query + ' group by route_start,route_end,order_date ';
     query = query + ' order by order_date ';
@@ -267,7 +267,7 @@ function getCarReceiveCount(params,callback) {
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
-        query = query + " and c.order_date = ? ";
+        query = query + " and date_format(order_date,'%Y-%m-%d') = ? ";
     }
     query = query + ' group by c.route_start_id,c.route_start,c.receive_id,re.receive_name ';
     db.dbQuery(query,paramsArray,function(error,rows){
