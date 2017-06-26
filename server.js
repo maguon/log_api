@@ -249,6 +249,7 @@ function createServer() {
     server.get('/api/carList',car.queryCarList);
     server.get('/api/car',car.queryCar);
     server.get('/api/carRouteEndCount',car.queryCarRouteEndCount);
+    server.get('/api/carOrderDateCount',car.queryCarOrderDateCount);
     server.get('/api/carReceiveCount',car.queryCarReceiveCount);
     server.post({path:'/api/user/:userId/uploadCar',contentType: 'application/json'},car.createUploadCar);
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.saveCarRecord);
