@@ -3355,6 +3355,42 @@
         }
       }
     },
+    "/carOrderDateCount": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car orderDateCount",
+        "description": "query car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "orderDate",
+            "in": "query",
+            "description": "car orderDate",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
     "/carReceiveCount": {
       "get": {
         "tags": [
