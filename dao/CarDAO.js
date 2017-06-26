@@ -87,6 +87,14 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
     }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
     if(params.orderStart){
         paramsArray[i++] = params.orderStart;
         query = query + " and c.order_date >= ? ";
