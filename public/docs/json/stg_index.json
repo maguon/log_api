@@ -3091,6 +3091,30 @@
 
           },
           {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
