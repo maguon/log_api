@@ -107,7 +107,15 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
     }
-    query = query + '  order by c.order_date ';
+    if(params.createdStart){
+        paramsArray[i++] = params.createdStart +" 00:00:00";
+        query = query + " and c.created_on >= ? ";
+    }
+    if(params.createdEnd){
+        paramsArray[i++] = params.createdEnd +" 23:59:59";
+        query = query + " and c.created_on <= ? ";
+    }
+    query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
@@ -194,7 +202,7 @@ function getCar(params,callback) {
     if(params.vinCode){
         query = query + " and c.vin like '%"+params.vinCode+"%'";
     }
-    query = query + '  order by r.plan_out_time ';
+    query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
