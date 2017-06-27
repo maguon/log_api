@@ -167,6 +167,18 @@ function getCar(params,callback) {
         paramsArray[i++] = params.modelId;
         query = query + " and c.model_id = ? ";
     }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
         query = query + " and c.receive_id = ? ";

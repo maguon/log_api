@@ -3255,6 +3255,30 @@
 
           },
           {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "receiveId",
             "in": "query",
             "description": "receive id",
