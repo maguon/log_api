@@ -57,6 +57,7 @@ CREATE TABLE `car_info` (
     `colour` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '颜色',
     `engine_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发动机号',
     `port_time` datetime DEFAULT NULL COMMENT '到港时间',
+    `upload_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上传ID',
     `car_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '车辆状态',
     `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
     `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -350,6 +351,7 @@ CREATE TABLE `entrust_contacts` (
 DROP TABLE IF EXISTS `car_info_tmp`;
 CREATE TABLE `car_info_tmp` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `user_id` int(10) DEFAULT NULL COMMENT '用户ID',
   `upload_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '上传ID',
   `vin` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品车VIN码',
   `make_id` int(10) DEFAULT NULL COMMENT '品牌ID',
