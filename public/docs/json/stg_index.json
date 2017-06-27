@@ -3669,13 +3669,13 @@
         }
       }
     },
-    "/user/{userId}/againCarStorageRel": {
-      "post": {
+    "/user/{userId}/car/{carId}/carStorageRel": {
+      "put": {
         "tags": [
           "car"
         ],
-        "summary": "user create againCarStorageRel",
-        "description": "user create againCarStorageRel",
+        "summary": "user update carStorageRel",
+        "description": "user update carStorageRel",
         "produces": [
           "application/json"
         ],
@@ -3690,7 +3690,7 @@
           },
           {
             "name": "carId",
-            "in": "query",
+            "in": "path",
             "description": "car id",
             "required": true,
             "type": "integer"
@@ -3705,9 +3705,9 @@
 
           },
           {
-            "name": "againCarStorageRel",
+            "name": "carStorageRel",
             "in": "body",
-            "description": "againCarStorageRel info",
+            "description": "carStorageRel info",
             "required": true,
             "schema": {
               "$ref": "#/definitions/againCarStorageRel"
@@ -3725,7 +3725,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid againCarStorageRel id"
+            "description": "Invalid token value or invalid car id"
           }
         }
       }

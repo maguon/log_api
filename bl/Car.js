@@ -32,14 +32,14 @@ function createCar(req,res,next){
     var carId = 0;
     Seq().seq(function(){
         var that = this;
-        carDAO.getCarBase({vin:params.vin},function(error,rows){
+        carDAO.getCarList({vin:params.vin},function(error,rows){
             if (error) {
-                logger.error(' getCarBase ' + error.message);
+                logger.error(' getCarList ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_CREATE_EXISTING);
+                    logger.warn(' getCarList ' +params.vin+ sysMsg.CUST_CREATE_EXISTING);
                     resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
                     return next();
                 }else{
