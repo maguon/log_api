@@ -99,6 +99,18 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.addrId;
         query = query + " and c.base_addr_id = ? ";
     }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
     if(params.orderStart){
         paramsArray[i++] = params.orderStart;
         query = query + " and c.order_date >= ? ";
