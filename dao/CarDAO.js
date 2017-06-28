@@ -255,8 +255,12 @@ function getCarBase(params,callback) {
         query = query + " and c.id = ? ";
     }
     if(params.vin){
-        paramsArray[i] = params.vin;
+        paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
+    }
+    if(params.active){
+        paramsArray[i++] = params.active;
+        query = query + " and r.active = ? ";
     }
     query = query + ' order by r.id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -266,7 +270,7 @@ function getCarBase(params,callback) {
 }
 
 function getCarRouteEndCount(params,callback) {
-    var query = " select count(id) as route_end_count,route_start,route_end from car_info where id is not null ";
+    var query = " select count(id) as route_end_count,route_start,route_end from car_info where car_status = 1 and id is not null ";
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
@@ -280,7 +284,8 @@ function getCarRouteEndCount(params,callback) {
 }
 
 function getCarOrderDateCount(params,callback) {
-    var query = " select count(id) as route_end_count,route_start,route_end,date_format(order_date,'%Y-%m-%d') as order_date from car_info where id is not null ";
+    var query = " select count(id) as route_end_count,route_start,route_end, " +
+        " date_format(order_date,'%Y-%m-%d') as order_date from car_info where car_status = 1 and id is not null ";
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
@@ -296,7 +301,7 @@ function getCarOrderDateCount(params,callback) {
 
 function getCarReceiveCount(params,callback) {
     var query = " select count(c.id) as receive_count,c.route_start_id,c.route_start,c.receive_id,re.short_name,re.receive_name " +
-        " from car_info c left join receive_info re on c.receive_id = re.id where c.id is not null ";
+        " from car_info c left join receive_info re on c.receive_id = re.id where car_status = 1 and c.id is not null ";
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
@@ -348,6 +353,17 @@ function updateCarVin(params,callback){
     });
 }
 
+function updateCarStatus(params,callback){
+    var query = " update car_info set car_status = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.carStatus;
+    paramsArray[i] = params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUploadCar : addUploadCar,
@@ -360,5 +376,6 @@ module.exports ={
     getCarOrderDateCount : getCarOrderDateCount,
     getCarReceiveCount : getCarReceiveCount,
     updateCar : updateCar,
-    updateCarVin : updateCarVin
+    updateCarVin : updateCarVin,
+    updateCarStatus : updateCarStatus
 }

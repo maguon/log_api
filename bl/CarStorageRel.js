@@ -249,6 +249,23 @@ function createAgainCarStorageRel(req,res,next){
                 that();
             }
         })
+    }).seq(function () {
+        var that = this;
+        var params = req.params ;
+        params.carStatus = listOfValue.CAR_STATUS_MOVE;
+        carDAO.updateCarStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCarStatus ' + 'success');
+                }else{
+                    logger.warn(' updateCarStatus ' + 'failed');
+                }
+                that();
+            }
+        })
     }).seq(function(){
         logger.info(' createAgainCarStorageRel ' + 'success');
         req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
@@ -316,6 +333,7 @@ function updateRelStatus(req,res,next){
             }
         })
     }).seq(function () {
+        var that = this;
         var subParams ={
             parkingId:parkObj.parkingId,
             storageId:parkObj.storageId,
@@ -326,7 +344,23 @@ function updateRelStatus(req,res,next){
                 logger.error(' updateStorageParkingOut ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateStorageParkingOut ' + 'success');
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateStorageParkingOut ' + 'success');
+                }else{
+                    logger.warn(' updateStorageParkingOut ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var params = req.params ;
+        params.carStatus = listOfValue.CAR_STATUS_OUT;
+        carDAO.updateCarStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCarStatus ' + 'success');
                 req.params.carContent =" 出库 "+parkObj.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
                 req.params.vin =parkObj.vin;
                 req.params.op =13;
