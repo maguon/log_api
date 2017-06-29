@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "stg.myxxjs.com:9001",
+  "host": "localhost:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -3685,6 +3685,58 @@
             "schema": {
               "$ref": "#/definitions/vin"
             }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/car/{carId}/carStatus/{carStatus}": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "update car status",
+        "description": "update car status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carStatus",
+            "in": "path",
+            "description": "car status",
+            "required": true,
+            "type": "integer"
 
           }
         ],

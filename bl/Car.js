@@ -182,6 +182,19 @@ function updateCarVin(req,res,next){
     })
 }
 
+function updateCarStatus(req,res,next){
+    var params = req.params ;
+    carDAO.updateCarStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateCarStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateCarStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
 
 module.exports = {
     createUploadCar : createUploadCar,
@@ -192,5 +205,6 @@ module.exports = {
     queryCarOrderDateCount : queryCarOrderDateCount,
     queryCarReceiveCount : queryCarReceiveCount,
     updateCar : updateCar,
-    updateCarVin : updateCarVin
+    updateCarVin : updateCarVin,
+    updateCarStatus : updateCarStatus
 }

@@ -255,6 +255,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
     server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin);
+    server.put({path:'/api/user/:userId/car/:carId/carStatus/:carStatus',contentType: 'application/json'} ,car.updateCarStatus);
 
     /**
      * CarStorageRel Module
