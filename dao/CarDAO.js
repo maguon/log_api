@@ -183,6 +183,14 @@ function getCar(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and c.receive_id = ? ";
     }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
     if(params.carStatus){
         paramsArray[i++] = params.carStatus;
         query = query + " and c.car_status = ? ";
