@@ -3107,6 +3107,14 @@
 
           },
           {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "addrId",
             "in": "query",
             "description": "addr id",
@@ -3250,6 +3258,14 @@
             "name": "modelId",
             "in": "query",
             "description": "model id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
             "required": false,
             "type": "integer"
 

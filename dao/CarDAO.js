@@ -95,6 +95,10 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.makeId;
         query = query + " and c.make_id = ? ";
     }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
+    }
     if(params.addrId){
         paramsArray[i++] = params.addrId;
         query = query + " and c.base_addr_id = ? ";
@@ -166,6 +170,10 @@ function getCar(params,callback) {
     if(params.modelId){
         paramsArray[i++] = params.modelId;
         query = query + " and c.model_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
     }
     if(params.addrId){
         paramsArray[i++] = params.addrId;
