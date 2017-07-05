@@ -267,6 +267,37 @@ CREATE TABLE `truck_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
+-- Table structure for truck_insure
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_insure`;
+CREATE TABLE `truck_insure` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `insure_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '保险公司名称',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `insure_name` (`insure_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for truck_insure_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_insure_rel`;
+CREATE TABLE `truck_insure_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `truck_id` int(10) NOT NULL COMMENT '货车ID',
+  `insure_id` int(10) NOT NULL COMMENT '保险公司名称',
+  `insure_type` tinyint(1) DEFAULT '0' COMMENT '保险类型',
+  `insure_money` decimal(10,2) DEFAULT NULL COMMENT '投保金额',
+  `insure_time` datetime DEFAULT NULL COMMENT '投保时间',
+  `expire_time` datetime DEFAULT NULL COMMENT '到期时间',
+  `insure_status` tinyint(1) DEFAULT '1' COMMENT '投保状态',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
