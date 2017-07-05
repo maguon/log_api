@@ -361,7 +361,7 @@ function updateRelStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateCarStatus ' + 'success');
-                req.params.carContent =" 出库 "+parkObj.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
+                req.params.carContent =" 从 "+parkObj.storageName+ " 出库 ";
                 req.params.vin =parkObj.vin;
                 req.params.op =13;
                 resUtil.resetUpdateRes(res,result,null);
