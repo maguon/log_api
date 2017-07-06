@@ -871,6 +871,149 @@
         }
       }
     },
+    "/truckInsure": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckInsure list",
+        "description": "query truckInsure",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "insure",
+            "in": "query",
+            "description": "insure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureName",
+            "in": "query",
+            "description": "insure name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckInsure"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid insure id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckInsure": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckInsure",
+        "description": "user create truckInsure",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckInsure",
+            "in": "body",
+            "description": "truckInsure info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckInsure"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid insure id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckInsure/{insureId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckInsure info",
+        "description": "update truckInsure info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureId",
+            "in": "path",
+            "description": "insure id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brand",
+            "in": "body",
+            "description": "truckInsure info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckInsure"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid insure id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -4593,18 +4736,24 @@
         "number": {
           "type": "string"
         },
-        "drivingImage": {
-          "type": "string"
-        },
-        "operationImage": {
-          "type": "string"
-        },
         "remark": {
           "type": "string"
         }
       },
       "xml": {
         "name": "truck"
+      }
+    },
+    "truckInsure": {
+      "type": "object",
+      "properties": {
+
+        "insureName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckInsure"
       }
     },
     "brand": {
