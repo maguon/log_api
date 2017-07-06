@@ -261,6 +261,8 @@ CREATE TABLE `truck_info` (
    `driving_date` datetime DEFAULT NULL COMMENT '行驶证检验日期',
    `license_date` datetime DEFAULT NULL COMMENT '营运证检验日期',
    `two_date` datetime DEFAULT NULL COMMENT '二保卡检验日期',
+   `driving_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '行驶证照片',
+   `license_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '营运证照片',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
