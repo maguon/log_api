@@ -871,6 +871,141 @@
         }
       }
     },
+    "/truckInsureRel": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckInsureRel list",
+        "description": "query truckInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckInsureRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckInsureRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckInsureRel": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckInsureRel",
+        "description": "user create truckInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckInsureRel",
+            "in": "body",
+            "description": "truckInsureRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckInsureRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckInsureRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckInsureRel/{relId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckInsureRel info",
+        "description": "update truckInsureRel info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brand",
+            "in": "body",
+            "description": "truckInsureRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckInsureRel"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckInsureRel id"
+          }
+        }
+      }
+    },
     "/truckInsure": {
       "get": {
         "tags": [
@@ -4736,7 +4871,55 @@
         "number": {
           "type": "string"
         },
+        "drivingDate": {
+          "type": "string"
+        },
+        "licenseDate": {
+          "type": "string"
+        },
+        "twoDate": {
+          "type": "string"
+        },
+        "drivingImage": {
+          "type": "string"
+        },
+        "licenseImage": {
+          "type": "string"
+        },
         "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truck"
+      }
+    },
+    "truckInsureRel": {
+      "type": "object",
+      "properties": {
+
+        "truckId": {
+          "type": "integer"
+        },
+        "insureId": {
+          "type": "integer"
+        },
+        "insureType": {
+          "type": "integer"
+        },
+        "insureNum": {
+          "type": "string"
+        },
+        "insureMoney": {
+          "type": "integer"
+        },
+        "insureDate": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
           "type": "string"
         }
       },

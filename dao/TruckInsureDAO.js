@@ -32,7 +32,7 @@ function getTruckInsure(params,callback) {
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getEntrust ');
+        logger.debug(' getTruckInsure ');
         return callback(error,rows);
     });
 }

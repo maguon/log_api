@@ -13,6 +13,7 @@ var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
 var truck = require('./bl/Truck.js');
+var truckInsureRel = require('./bl/TruckInsureRel.js');
 var truckInsure = require('./bl/TruckInsure.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
@@ -156,6 +157,13 @@ function createServer() {
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
     server.put({path:'/api/user/:userId/truck/:truckId/TruckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus',contentType: 'application/json'} ,truck.updateTruckStatus);
+
+    /**
+     * TruckInsureRel Module
+     */
+    server.get('/api/truckInsureRel' , truckInsureRel.queryTruckInsureRel);
+    server.post({path:'/api/user/:userId/truckInsureRel',contentType: 'application/json'},truckInsureRel.createTruckInsureRel);
+    server.put({path:'/api/user/:userId/truckInsureRel/:relId',contentType: 'application/json'} ,truckInsureRel.updateTruckInsureRel);
 
     /**
      * TruckInsure Module
