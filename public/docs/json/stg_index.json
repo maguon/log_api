@@ -604,33 +604,24 @@
         }
       }
     },
-    "/user/{userId}/truck": {
-      "post": {
+    "/operateTypeCount": {
+      "get": {
         "tags": [
           "truck"
         ],
-        "summary": "user create truck",
-        "description": "user create truck",
+        "summary": "query operateType count",
+        "description": "query operateType count",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
             "required": true,
             "type": "integer"
 
-          },
-          {
-            "name": "truck",
-            "in": "body",
-            "description": "truck info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/truck"
-            }
           }
         ],
         "responses": {
@@ -639,7 +630,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/ApiResponse"
+                "$ref": "#/definitions/operateType"
               }
             }
           },
@@ -717,6 +708,51 @@
           },
           "400": {
             "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truck": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truck",
+        "description": "user create truck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truck",
+            "in": "body",
+            "description": "truck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
           }
         }
       }

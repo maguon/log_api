@@ -151,6 +151,7 @@ function createServer() {
      * Truck Module
      */
     server.get('/api/truck' , truck.queryTruck);
+    server.get('/api/operateTypeCount' , truck.queryOperateTypeCount);
     server.get('/api/company/:companyId/firstCount' , truck.queryFirstCount);
     server.get('/api/company/:companyId/trailerCount' , truck.queryTrailerCount);
     server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);

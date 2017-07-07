@@ -42,6 +42,20 @@ function queryTruck(req,res,next){
     })
 }
 
+function queryOperateTypeCount(req,res,next){
+    var params = req.params ;
+    truckDAO.getOperateTypeCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryOperateTypeCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryOperateTypeCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryFirstCount(req,res,next){
     var params = req.params ;
     truckDAO.getFirstCount(params,function(error,result){
@@ -116,6 +130,7 @@ function updateTruckStatus (req,res,next){
 module.exports = {
     createTruck : createTruck,
     queryTruck : queryTruck,
+    queryOperateTypeCount : queryOperateTypeCount,
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
     updateTruck : updateTruck,
