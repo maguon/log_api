@@ -630,7 +630,43 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/operateType"
+                "$ref": "#/definitions/operateTypeCount"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
+    "/truckStatusCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query truckStatus count",
+        "description": "query truckStatus count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckStatusCount"
               }
             }
           },
@@ -666,7 +702,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/first"
+                "$ref": "#/definitions/firstCount"
               }
             }
           },
@@ -702,7 +738,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/trailer"
+                "$ref": "#/definitions/trailerCount"
               }
             }
           },
