@@ -301,14 +301,14 @@ function getCarRouteEndCount(params,callback) {
 
 function getCarOrderDateCount(params,callback) {
     var query = " select count(id) as route_end_count,route_start,route_end, " +
-        " date_format(order_date,'%Y-%m-%d') as order_date from car_info where car_status = 1 and id is not null ";
+        " date_format(order_date,'%Y-%m-%d') as group_day from car_info where car_status = 1 and id is not null ";
     var paramsArray=[],i=0;
     if(params.orderDate){
         paramsArray[i++] = params.orderDate;
         query = query + " and date_format(order_date,'%Y-%m-%d') = ? ";
     }
-    query = query + ' group by route_start,route_end,order_date ';
-    query = query + ' order by order_date ';
+    query = query + ' group by route_start,route_end,group_day ';
+    query = query + ' order by group_day ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarOrderDateCount ');
         return callback(error,rows);
