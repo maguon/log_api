@@ -3,6 +3,7 @@ var sysError = require('../util/SystemError.js');
 var encrypt = require('../util/Encrypt.js');
 var resUtil = require('../util/ResponseUtil.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var adminUserDao = require('../dao/AdminUserDAO.js');
 var serverLogger = require('../util/ServerLogger.js');
@@ -11,6 +12,7 @@ var logger = serverLogger.createLogger('Admin.js');
 
 function adminUserLogin(req,res,next){
     var params = req.params;
+    params.type = sysConst.USER_TYPE.admin;
     adminUserDao.queryAdminUser(params,function(error,rows){
         if (error) {
             logger.error(' adminUserLogin ' + error.message);
