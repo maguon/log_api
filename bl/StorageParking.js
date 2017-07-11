@@ -61,15 +61,22 @@ function updateStorageParking(req,res,next){
                 logger.error(' getStorageParking ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length==1&&rows[0].car_id == 0){
-                    parkObj.row = rows[0].row;
-                    parkObj.col = rows[0].col;
-                    that();
+                if(parkObj.storageId==rows[0].storage_id){
+                    if(rows&&rows.length==1&&rows[0].car_id == 0){
+                        parkObj.row = rows[0].row;
+                        parkObj.col = rows[0].col;
+                        that();
+                    }else{
+                        logger.warn(' getStorageParking ' + 'failed');
+                        resUtil.resetFailedRes(res,"parking is not empty");
+                        return next();
+                    }
                 }else{
-                    logger.warn(' getStorageParking ' + 'failed');
-                    resUtil.resetFailedRes(res,"parking is not empty");
+                    logger.warn(' getStorage ' + 'failed');
+                    resUtil.resetFailedRes(res,"storage is not conformity");
                     return next();
                 }
+
             }
         })
     }).seq(function () {
