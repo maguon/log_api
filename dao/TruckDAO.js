@@ -106,6 +106,42 @@ function getOperateTypeCount(params,callback) {
     });
 }
 
+function getTruckCount(params,callback) {
+    var query = " select count(t.id) as truck_count from truck_info t left join company_info c on t.company_id = c.id " +
+        " where t.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and t.truck_type = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and c.operate_type = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckCount ');
+        return callback(error,rows);
+    });
+}
+
+function getDrivingCount(params,callback) {
+    var query = " select count(t.id) as truck_count from truck_info t " +
+        " where t.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.drivingDateStart){
+        paramsArray[i++] = params.drivingDateStart;
+        query = query + " and t.driving_date >= ? ";
+    }
+    if(params.drivingDateEnd){
+        paramsArray[i++] = params.drivingDateEnd;
+        query = query + " and t.driving_date <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDrivingCount ');
+        return callback(error,rows);
+    });
+}
+
 function getTruckStatusCount(params,callback) {
     var query = " select count(t.id) as truckStatus_count,t.truck_status from truck_info t left join company_info c on t.company_id = c.id " +
         " where t.id is not null ";
@@ -216,6 +252,8 @@ module.exports ={
     addTruck : addTruck,
     getTruck : getTruck,
     getOperateTypeCount : getOperateTypeCount,
+    getTruckCount : getTruckCount,
+    getDrivingCount : getDrivingCount,
     getTruckStatusCount : getTruckStatusCount,
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,

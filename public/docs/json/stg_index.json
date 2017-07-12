@@ -640,6 +640,94 @@
         }
       }
     },
+    "/truckCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query truck count",
+        "description": "query truck count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/operateTypeCount"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
+    "/drivingCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query driving count",
+        "description": "query driving count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "drivingDateStart",
+            "in": "query",
+            "description": "drivingDate start",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "drivingDateEnd",
+            "in": "query",
+            "description": "drivingDate end",
+            "required": true,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/operateTypeCount"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/truckStatusCount": {
       "get": {
         "tags": [
