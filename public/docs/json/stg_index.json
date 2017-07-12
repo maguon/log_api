@@ -576,7 +576,7 @@
             "in": "query",
             "description": "number",
             "required": false,
-            "type": "string"
+            "type": "integer"
 
           },
           {
@@ -1532,6 +1532,14 @@
 
           },
           {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
@@ -1568,6 +1576,50 @@
             "in": "query",
             "description": "drive status",
             "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
+    "/licenseCount": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query license count",
+        "description": "query license count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "licenseDateStart",
+            "in": "query",
+            "description": "licenseDate start",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseDateEnd",
+            "in": "query",
+            "description": "licenseDate end",
+            "required": true,
             "type": "string"
 
           }
@@ -5089,7 +5141,7 @@
           "type": "integer"
         },
         "number": {
-          "type": "string"
+          "type": "integer"
         },
         "drivingDate": {
           "type": "string"

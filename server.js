@@ -188,6 +188,7 @@ function createServer() {
      * Drive Module
      */
     server.get('/api/drive' , drive.queryDrive);
+    server.get('/api/licenseCount' , drive.queryLicenseCount);
     server.get('/api/company/:companyId/driveCount' , drive.queryDriveCount);
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);

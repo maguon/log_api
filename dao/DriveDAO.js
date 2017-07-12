@@ -35,6 +35,10 @@ function getDrive(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and d.id = ? ";
     }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
         query = query + " and t.truck_num = ? ";
@@ -62,6 +66,23 @@ function getDrive(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDrive ');
+        return callback(error,rows);
+    });
+}
+
+function getLicenseCount(params,callback) {
+    var query = " select count(d.id) as license_count from drive_info d where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.licenseDateStart){
+        paramsArray[i++] = params.licenseDateStart;
+        query = query + " and d.license_date >= ? ";
+    }
+    if(params.licenseDateEnd){
+        paramsArray[i++] = params.licenseDateEnd;
+        query = query + " and d.license_date <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getLicenseCount ');
         return callback(error,rows);
     });
 }
@@ -116,6 +137,7 @@ function updateDriveStatus(params,callback){
 module.exports ={
     addDrive : addDrive,
     getDrive : getDrive,
+    getLicenseCount : getLicenseCount,
     getDriveCount :getDriveCount,
     updateDrive : updateDrive,
     updateDriveStatus : updateDriveStatus

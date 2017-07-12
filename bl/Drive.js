@@ -42,6 +42,20 @@ function queryDrive(req,res,next){
     })
 }
 
+function queryLicenseCount(req,res,next){
+    var params = req.params ;
+    driveDAO.getLicenseCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryLicenseCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryLicenseCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDriveCount(req,res,next){
     var params = req.params ;
     driveDAO.getDriveCount(params,function(error,result){
@@ -88,6 +102,7 @@ function updateDriveStatus (req,res,next){
 module.exports = {
     createDrive : createDrive,
     queryDrive : queryDrive,
+    queryLicenseCount : queryLicenseCount,
     queryDriveCount :queryDriveCount,
     updateDrive : updateDrive,
     updateDriveStatus : updateDriveStatus

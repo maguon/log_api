@@ -257,7 +257,7 @@ CREATE TABLE `truck_info` (
   `truck_type` tinyint(1) DEFAULT '1' COMMENT '车辆类型(1-车头,2-挂车)',
   `rel_id` int(10) DEFAULT '0' COMMENT '车辆关联ID(默认为0)',
   `truck_status` tinyint(1) DEFAULT '1' COMMENT '车辆状态(0-停用,1-可用)',
-  `number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '板车位数',
+  `number` tinyint(2) DEFAULT '0' COMMENT '板车位数',
   `driving_date` datetime DEFAULT NULL COMMENT '行驶证检验日期',
   `license_date` datetime DEFAULT NULL COMMENT '营运证检验日期',
   `two_date` datetime DEFAULT NULL COMMENT '二保卡检验日期',
