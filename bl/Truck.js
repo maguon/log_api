@@ -15,6 +15,9 @@ var logger = serverLogger.createLogger('Truck.js');
 
 function createTruck(req,res,next){
     var params = req.params;
+    if(params.number == null){
+        params.number = 0;
+    }
     truckDAO.addTruck(params,function(error,result){
         if (error) {
             logger.error(' createTruck ' + error.message);

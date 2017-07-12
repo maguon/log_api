@@ -59,6 +59,22 @@ function getDrive(params,callback) {
         paramsArray[i++] = params.driveStatus;
         query = query + " and d.drive_status = ? ";
     }
+    if(params.tel){
+        paramsArray[i++] = params.tel;
+        query = query + " and d.tel = ? ";
+    }
+    if(params.licenseType){
+        paramsArray[i++] = params.licenseType;
+        query = query + " and d.license_type = ? ";
+    }
+    if(params.licenseDateStart){
+        paramsArray[i++] = params.licenseDateStart;
+        query = query + " and d.license_date >= ? ";
+    }
+    if(params.licenseDateEnd){
+        paramsArray[i++] = params.licenseDateEnd;
+        query = query + " and d.license_date <= ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

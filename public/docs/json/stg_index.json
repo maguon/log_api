@@ -1602,6 +1602,38 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "tel",
+            "in": "query",
+            "description": "drive tel",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseType",
+            "in": "query",
+            "description": "license type",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseDateStart",
+            "in": "query",
+            "description": "licenseDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseDateEnd",
+            "in": "query",
+            "description": "licenseDate end",
+            "required": false,
+            "type": "string"
+
           }
         ],
         "responses": {
