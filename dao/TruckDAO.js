@@ -36,8 +36,10 @@ function addTruck(params,callback){
 
 function getTruck(params,callback) {
     var query = " select h.*,t.id as trail_id,t.truck_num as trail_num,t.number as trail_number," +
+        " trel.id as trel_id,trel.insure_id,trel.insure_type,trel.insure_num,trel.insure_money,trel.insure_date,trel.start_date,trel.end_date, " +
         " b.brand_name,d.drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
+        " left join truck_insure_rel trel on h.id = trel.truck_id " +
         " left join truck_brand b on h.brand_id = b.id  " +
         " left join drive_info d on h.drive_id = d.id  " +
         " left join company_info c on h.company_id = c.id where h.id is not null ";
