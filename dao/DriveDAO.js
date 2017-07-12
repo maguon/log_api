@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
-    var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_level,license_date,drive_image,license_image,remark) " +
+    var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_type,license_date,drive_image,license_image,remark) " +
         " values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
@@ -15,7 +15,7 @@ function addDrive(params,callback){
     paramsArray[i++]=params.idNumber;
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.companyId;
-    paramsArray[i++]=params.licenseLevel;
+    paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i++]=params.driveImage;
     paramsArray[i++]=params.licenseImage;
@@ -35,17 +35,17 @@ function getDrive(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and d.id = ? ";
     }
-    if(params.driveName){
-        paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
-    }
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
         query = query + " and t.truck_num = ? ";
     }
-    if(params.companyName){
-        paramsArray[i++] = params.companyName;
-        query = query + " and c.company_name = ? ";
+    if(params.gender){
+        paramsArray[i++] = params.gender;
+        query = query + " and d.gender = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and d.company_id = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
@@ -81,7 +81,7 @@ function getDriveCount(params,callback) {
 
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , " +
-        " tel = ? , company_id = ? , license_level = ? , license_date = ? , drive_image = ? , " +
+        " tel = ? , company_id = ? , license_type = ? , license_date = ? , drive_image = ? , " +
         " license_image = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
@@ -89,7 +89,7 @@ function updateDrive(params,callback){
     paramsArray[i++]=params.idNumber;
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.companyId;
-    paramsArray[i++]=params.licenseLevel;
+    paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i++]=params.driveImage;
     paramsArray[i++]=params.licenseImage;

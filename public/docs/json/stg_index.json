@@ -847,6 +847,58 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/TruckRel": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update Truck rel",
+        "description": "update Truck rel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}/TruckDriveRel": {
       "put": {
         "tags": [
@@ -870,6 +922,14 @@
             "name": "truckId",
             "in": "path",
             "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
             "required": true,
             "type": "integer"
 
@@ -1384,14 +1444,6 @@
 
           },
           {
-            "name": "driveName",
-            "in": "query",
-            "description": "drive name",
-            "required": false,
-            "type": "string"
-
-          },
-          {
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
@@ -1400,11 +1452,19 @@
 
           },
           {
-            "name": "companyName",
+            "name": "gender",
             "in": "query",
-            "description": "company name",
+            "description": "gender",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
 
           },
           {
@@ -1436,6 +1496,42 @@
           },
           "400": {
             "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
+    "/company/{companyId}/driveCount": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query drive count",
+        "description": "query drive count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "company id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid company id"
           }
         }
       }
@@ -1481,42 +1577,6 @@
           },
           "400": {
             "description": "Invalid token value or invalid drive id"
-          }
-        }
-      }
-    },
-    "/company/{companyId}/driveCount": {
-      "get": {
-        "tags": [
-          "drive"
-        ],
-        "summary": "query drive count",
-        "description": "query drive count",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "description": "company id",
-            "required": true,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/drive"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid company id"
           }
         }
       }
@@ -5042,7 +5102,7 @@
         "companyId": {
           "type": "integer"
         },
-        "licenseLevel": {
+        "licenseType": {
           "type": "string"
         },
         "licenseDate": {

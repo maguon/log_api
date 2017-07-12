@@ -157,6 +157,7 @@ function createServer() {
     server.get('/api/company/:companyId/trailerCount' , truck.queryTrailerCount);
     server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
+    server.put({path:'/api/user/:userId/truck/:truckId/TruckRel',contentType: 'application/json'} ,truck.updateTruckRel);
     server.put({path:'/api/user/:userId/truck/:truckId/TruckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus',contentType: 'application/json'} ,truck.updateTruckStatus);
 

@@ -176,9 +176,21 @@ function updateTruck(params,callback){
     });
 }
 
-function updateTruckDriveRel(params,callback){
-    var query = " update truck_info set drive_id = 0 ,copilot = null where id = ? " ;
+function updateTruckRel(params,callback){
+    var query = " update truck_info set rel_id = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.relId;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckRel ');
+        return callback(error,rows);
+    });
+}
+
+function updateTruckDriveRel(params,callback){
+    var query = " update truck_info set drive_id = ? ,copilot = null where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveId
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckDriveRel ');
@@ -206,6 +218,7 @@ module.exports ={
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
     updateTruck : updateTruck,
+    updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
     updateTruckStatus : updateTruckStatus
 }
