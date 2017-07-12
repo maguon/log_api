@@ -36,10 +36,8 @@ function addTruck(params,callback){
 
 function getTruck(params,callback) {
     var query = " select h.*,t.truck_num as trail_num,t.number as trail_number," +
-        " trel.id as trel_id,trel.insure_id,trel.insure_type,trel.insure_num,trel.insure_money,trel.insure_date,trel.start_date,trel.end_date, " +
         " b.brand_name,d.drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
-        " left join truck_insure_rel trel on h.id = trel.truck_id " +
         " left join truck_brand b on h.brand_id = b.id  " +
         " left join drive_info d on h.drive_id = d.id  " +
         " left join company_info c on h.company_id = c.id where h.id is not null ";
@@ -60,6 +58,10 @@ function getTruck(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and h.drive_id = ? ";
     }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
         query = query + " and h.company_id = ? ";
@@ -79,6 +81,14 @@ function getTruck(params,callback) {
     if(params.operateType){
         paramsArray[i++] = params.operateType;
         query = query + " and c.operate_type = ? ";
+    }
+    if(params.drivingDateStart){
+        paramsArray[i++] = params.drivingDateStart;
+        query = query + " and h.driving_date >= ? ";
+    }
+    if(params.drivingDateEnd){
+        paramsArray[i++] = params.drivingDateEnd;
+        query = query + " and h.driving_date <= ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
