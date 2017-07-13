@@ -944,13 +944,13 @@
         }
       }
     },
-    "/user/{userId}/truck": {
+    "/user/{userId}/truckFirst": {
       "post": {
         "tags": [
           "truck"
         ],
-        "summary": "user create truck",
-        "description": "user create truck",
+        "summary": "user create truckFirst",
+        "description": "user create truckFirst",
         "produces": [
           "application/json"
         ],

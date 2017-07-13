@@ -158,7 +158,7 @@ function createServer() {
     server.get('/api/truckStatusCount' , truck.queryTruckStatusCount);
     server.get('/api/company/:companyId/firstCount' , truck.queryFirstCount);
     server.get('/api/company/:companyId/trailerCount' , truck.queryTrailerCount);
-    server.post({path:'/api/user/:userId/truck',contentType: 'application/json'},truck.createTruck);
+    server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
     server.put({path:'/api/user/:userId/truck/:truckId/image',contentType: 'application/json'} ,truck.updateTruckImage);
     server.put({path:'/api/user/:userId/truck/:truckId/TruckRel',contentType: 'application/json'} ,truck.updateTruckRel);
@@ -192,7 +192,7 @@ function createServer() {
     server.get('/api/drive' , drive.queryDrive);
     server.get('/api/licenseCount' , drive.queryLicenseCount);
     server.get('/api/company/:companyId/driveCount' , drive.queryDriveCount);
-    server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive);
+    server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/driveStatus/:driveStatus',contentType: 'application/json'} ,drive.updateDriveStatus);
 

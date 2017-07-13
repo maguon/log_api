@@ -13,7 +13,7 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('Truck.js');
 
-function createTruck(req,res,next){
+function createTruckFirst(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
@@ -61,12 +61,15 @@ function createTruck(req,res,next){
         if(params.number == null){
             params.number = 0;
         }
-        truckDAO.addTruck(params,function(error,result){
+        truckDAO.addTruckFirst(params,function(error,result){
             if (error) {
-                logger.error(' createTruck ' + error.message);
+                logger.error(' createTruckFirst ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' createTruck ' + 'success');
+                logger.info(' createTruckFirst ' + 'success');
+                req.params.truckContent =" 新增车头 ";
+                req.params.vhe = result.insertId;
+                req.params.truckOp =20;
                 resUtil.resetCreateRes(res,result,null);
                 return next();
             }
@@ -258,7 +261,7 @@ function updateTruckStatus (req,res,next){
 
 
 module.exports = {
-    createTruck : createTruck,
+    createTruckFirst : createTruckFirst,
     queryTruckFirst : queryTruckFirst,
     queryTruckTrailer : queryTruckTrailer,
     queryOperateTypeCount : queryOperateTypeCount,

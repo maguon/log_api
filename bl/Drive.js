@@ -21,7 +21,9 @@ function createDrive(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' createDrive ' + 'success');
-
+            req.params.driverContent =" 新增司机 ";
+            req.params.tid = result.insertId;
+            req.params.driverOp =30;
             resUtil.resetCreateRes(res,result,null);
             return next();
         }

@@ -6,7 +6,7 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckDAO.js');
 
-function addTruck(params,callback){
+function addTruckFirst(params,callback){
     var query = "insert into truck_info (truck_num,brand_id,truck_tel,the_code,drive_id,copilot,company_id, " +
         " truck_type,rel_id,truck_status,number,driving_date,license_date,two_date,driving_image,license_image,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
@@ -29,7 +29,7 @@ function addTruck(params,callback){
     paramsArray[i++]=params.licenseImage;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug( ' addTruck ');
+        logger.debug( ' addTruckFirst ');
         return callback(error,rows);
     })
 }
@@ -340,7 +340,7 @@ function updateTruckStatus(params,callback){
 
 
 module.exports ={
-    addTruck : addTruck,
+    addTruckFirst : addTruckFirst,
     getTruckFirst : getTruckFirst,
     getTruckTrailer : getTruckTrailer,
     getTruckBase : getTruckBase,
