@@ -5473,6 +5473,15 @@
         "licenseType": {
           "type": "string"
         },
+        "entryDate": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "sibTel": {
+          "type": "string"
+        },
         "licenseDate": {
           "type": "string"
         },

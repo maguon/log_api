@@ -7,8 +7,9 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
-    var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_type,license_date,drive_image,license_image,remark) " +
-        " values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?) ";
+    var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_type," +
+        " entry_date,address,sib_tel,license_date,drive_image,license_image,remark) " +
+        " values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -16,6 +17,9 @@ function addDrive(params,callback){
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.licenseType;
+    paramsArray[i++]=params.entryDate;
+    paramsArray[i++]=params.address;
+    paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i++]=params.driveImage;
     paramsArray[i++]=params.licenseImage;
@@ -117,9 +121,8 @@ function getDriveCount(params,callback) {
 }
 
 function updateDrive(params,callback){
-    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , " +
-        " tel = ? , company_id = ? , license_type = ? , license_date = ? , drive_image = ? , " +
-        " license_image = ? , remark= ?  where id = ? ";
+    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , tel = ? , company_id = ? , license_type = ? , " +
+        " entry_date = ? , address = ? , sib_tel = ? , license_date = ? , drive_image = ? ,license_image = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -127,6 +130,9 @@ function updateDrive(params,callback){
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.licenseType;
+    paramsArray[i++]=params.entryDate;
+    paramsArray[i++]=params.address;
+    paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i++]=params.driveImage;
     paramsArray[i++]=params.licenseImage;
