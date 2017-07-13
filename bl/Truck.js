@@ -77,6 +77,23 @@ function createTruckFirst(req,res,next){
     })
 }
 
+function createTruckTrailer(req,res,next){
+    var params = req.params;
+    truckDAO.addTruckTrailer(params,function(error,result){
+        if (error) {
+            logger.error(' createTruckTrailer ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createTruckTrailer ' + 'success');
+            req.params.truckContent =" 新增挂车 ";
+            req.params.vhe = result.insertId;
+            req.params.truckOp =20;
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryTruckFirst(req,res,next){
     var params = req.params ;
     truckDAO.getTruckFirst(params,function(error,result){
@@ -262,6 +279,7 @@ function updateTruckStatus (req,res,next){
 
 module.exports = {
     createTruckFirst : createTruckFirst,
+    createTruckTrailer : createTruckTrailer,
     queryTruckFirst : queryTruckFirst,
     queryTruckTrailer : queryTruckTrailer,
     queryOperateTypeCount : queryOperateTypeCount,

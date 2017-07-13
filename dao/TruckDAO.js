@@ -34,7 +34,24 @@ function addTruckFirst(params,callback){
     })
 }
 
-function getTruckFirst (params,callback) {
+function addTruckTrailer(params,callback){
+    var query = "insert into truck_info (truck_num,the_code,company_id,truck_type,rel_id,number,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? )";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckNum;
+    paramsArray[i++]=params.theCode;
+    paramsArray[i++]=params.companyId;
+    paramsArray[i++]=params.truckType;
+    paramsArray[i++]=params.relId;
+    paramsArray[i++]=params.number;
+    paramsArray[i]=params.remark;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug( ' addTruckTrailer ');
+        return callback(error,rows);
+    })
+}
+
+function getTruckFirst(params,callback) {
     var query = " select h.*,t.truck_num as trail_num,t.number as trail_number," +
         " b.brand_name,d.drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
@@ -97,7 +114,7 @@ function getTruckFirst (params,callback) {
     });
 }
 
-function getTruckTrailer (params,callback) {
+function getTruckTrailer(params,callback) {
     var query = " select h.*,t.truck_num as trail_num,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.id = t.rel_id " +
         " left join company_info c on h.company_id = c.id where h.id is not null ";
@@ -349,6 +366,7 @@ function updateTruckStatus(params,callback){
 
 module.exports ={
     addTruckFirst : addTruckFirst,
+    addTruckTrailer : addTruckTrailer,
     getTruckFirst : getTruckFirst,
     getTruckTrailer : getTruckTrailer,
     getTruckBase : getTruckBase,

@@ -1005,6 +1005,51 @@
         }
       }
     },
+    "/user/{userId}/truckTrailer": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckTrailer",
+        "description": "user create truckTrailer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truck",
+            "in": "body",
+            "description": "truck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}": {
       "put": {
         "tags": [
@@ -1715,6 +1760,14 @@
             "description": "drive name",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
 
           },
           {
