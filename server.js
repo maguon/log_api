@@ -263,7 +263,7 @@ function createServer() {
      * storageParking Module
      */
     server.get('/api/storageParking',storageParking.queryStorageParking);
-    server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking,sysRecord.saveCarRecord,sysRecord.save);
+    server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking,sysRecord.saveCarRecord);
 
     /**
      * Car Module
