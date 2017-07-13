@@ -101,6 +101,31 @@ function getTruck(params,callback) {
     });
 }
 
+function getTruckBase(params,callback) {
+    var query = " select t.* from truck_info t where t.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and t.id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and t.drive_id = ? ";
+    }
+    if(params.relId){
+        paramsArray[i++] = params.relId;
+        query = query + " and t.rel_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckBase ');
+        return callback(error,rows);
+    });
+}
+
 function getOperateTypeCount(params,callback) {
     var query = " select count(t.id) as truck_count,c.operate_type from truck_info t left join company_info c on t.company_id = c.id " +
         " where t.id is not null ";
@@ -261,6 +286,7 @@ function updateTruckStatus(params,callback){
 module.exports ={
     addTruck : addTruck,
     getTruck : getTruck,
+    getTruckBase : getTruckBase,
     getOperateTypeCount : getOperateTypeCount,
     getTruckCount : getTruckCount,
     getDrivingCount : getDrivingCount,

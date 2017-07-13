@@ -39,9 +39,9 @@ function saveTruckRecord(req,res,next){
         recordParams.userId = params._uid;
         recordParams.userType = params._utype || 99;
         recordParams.username = params._uname || 'admin';
-        recordParams.content = params.content;
+        recordParams.content = params.truckContent;
         recordParams.vhe = params.vhe;
-        recordParams.op = params.op;
+        recordParams.op = params.truckOp;
         sysRecordDAO.addTruckRecord(req,recordParams,function(error,result){
             if(error){
                 logger.error('saveTruckRecord ' + error.stack);
@@ -63,9 +63,9 @@ function saveDriverRecord(req,res,next){
         recordParams.userId = params._uid;
         recordParams.userType = params._utype || 99;
         recordParams.username = params._uname || 'admin';
-        recordParams.content = params.content;
+        recordParams.content = params.driverContent;
         recordParams.tid = params.tid;
-        recordParams.op = params.op;
+        recordParams.op = params.driverOp;
         sysRecordDAO.addTruckRecord(req,recordParams,function(error,result){
             if(error){
                 logger.error('saveDriverRecord ' + error.stack);

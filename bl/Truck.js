@@ -15,19 +15,62 @@ var logger = serverLogger.createLogger('Truck.js');
 
 function createTruck(req,res,next){
     var params = req.params;
-    if(params.number == null){
-        params.number = 0;
-    }
-    truckDAO.addTruck(params,function(error,result){
-        if (error) {
-            logger.error(' createTruck ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createTruck ' + 'success');
-
-            resUtil.resetCreateRes(res,result,null);
-            return next();
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({relId:params.relId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(params.relId>0){
+                    if(rows && rows.length>0){
+                        logger.warn(' getTruckBase ' +params.relId+ sysMsg.CUST_TRUCK_RELATION);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                        return next();
+                    }else{
+                        that();
+                    }
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({driveId:params.driveId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(params.driveId>0){
+                    if(rows && rows.length>0){
+                        logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_RELATION);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_RELATION);
+                        return next();
+                    }else{
+                        that();
+                    }
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        if(params.number == null){
+            params.number = 0;
         }
+        truckDAO.addTruck(params,function(error,result){
+            if (error) {
+                logger.error(' createTruck ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createTruck ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
@@ -131,16 +174,16 @@ function queryTrailerCount(req,res,next){
 
 function updateTruck(req,res,next){
     var params = req.params ;
-    truckDAO.updateTruck(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruck ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruck ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
+        truckDAO.updateTruck(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruck ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruck ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
 }
 
 function updateTruckRel(req,res,next){
