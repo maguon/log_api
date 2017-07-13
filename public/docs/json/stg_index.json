@@ -680,6 +680,22 @@
 
           },
           {
+            "name": "numberStart",
+            "in": "query",
+            "description": "number start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "numberEnd",
+            "in": "query",
+            "description": "number end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "drivingDateStart",
             "in": "query",
             "description": "drivingDate start",

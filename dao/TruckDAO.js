@@ -126,6 +126,14 @@ function getTruckTrailer (params,callback) {
         paramsArray[i++] = params.operateType;
         query = query + " and c.operate_type = ? ";
     }
+    if(params.numberStart){
+        paramsArray[i++] = params.numberStart;
+        query = query + " and h.number >= ? ";
+    }
+    if(params.numberEnd){
+        paramsArray[i++] = params.numberEnd;
+        query = query + " and h.number <= ? ";
+    }
     if(params.drivingDateStart){
         paramsArray[i++] = params.drivingDateStart;
         query = query + " and h.driving_date >= ? ";

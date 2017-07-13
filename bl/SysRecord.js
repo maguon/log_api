@@ -66,7 +66,7 @@ function saveDriverRecord(req,res,next){
         recordParams.content = params.driverContent;
         recordParams.tid = params.tid;
         recordParams.op = params.driverOp;
-        sysRecordDAO.addTruckRecord(req,recordParams,function(error,result){
+        sysRecordDAO.addDriverRecord(req,recordParams,function(error,result){
             if(error){
                 logger.error('saveDriverRecord ' + error.stack);
             }else{
