@@ -34,7 +34,7 @@ function addTruck(params,callback){
     })
 }
 
-function getTruck(params,callback) {
+function getTruckFirst (params,callback) {
     var query = " select h.*,t.truck_num as trail_num,t.number as trail_number," +
         " b.brand_name,d.drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
@@ -74,9 +74,53 @@ function getTruck(params,callback) {
         paramsArray[i++] = params.truckStatus;
         query = query + " and h.truck_status = ? ";
     }
-    if(params.number){
-        paramsArray[i++] = params.number;
-        query = query + " and h.number = ? ";
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and c.operate_type = ? ";
+    }
+    if(params.drivingDateStart){
+        paramsArray[i++] = params.drivingDateStart;
+        query = query + " and h.driving_date >= ? ";
+    }
+    if(params.drivingDateEnd){
+        paramsArray[i++] = params.drivingDateEnd;
+        query = query + " and h.driving_date <= ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckFirst ');
+        return callback(error,rows);
+    });
+}
+
+function getTruckTrailer (params,callback) {
+    var query = " select h.*,t.truck_num as trail_num,c.company_name,c.operate_type " +
+        " from truck_info h left join truck_info t on h.id = t.rel_id " +
+        " left join company_info c on h.company_id = c.id where h.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and h.id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and h.truck_num = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and h.company_id = ? ";
+    }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and h.truck_type = ? ";
+    }
+    if(params.truckStatus){
+        paramsArray[i++] = params.truckStatus;
+        query = query + " and h.truck_status = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
@@ -96,7 +140,7 @@ function getTruck(params,callback) {
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getTruck ');
+        logger.debug(' getTruckTrailer ');
         return callback(error,rows);
     });
 }
@@ -297,7 +341,8 @@ function updateTruckStatus(params,callback){
 
 module.exports ={
     addTruck : addTruck,
-    getTruck : getTruck,
+    getTruckFirst : getTruckFirst,
+    getTruckTrailer : getTruckTrailer,
     getTruckBase : getTruckBase,
     getOperateTypeCount : getOperateTypeCount,
     getTruckCount : getTruckCount,
