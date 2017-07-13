@@ -29,9 +29,57 @@ function saveCarRecord (req,res,next){
     }else{
         return next();
     }
-
 }
 
+function saveTruckRecord(req,res,next){
+    if(res._body.success){
+        var params = req.params;
+        console.log(params);
+        var recordParams ={};
+        recordParams.userId = params._uid;
+        recordParams.userType = params._utype || 99;
+        recordParams.username = params._uname || 'admin';
+        recordParams.content = params.content;
+        recordParams.vhe = params.vhe;
+        recordParams.op = params.op;
+        sysRecordDAO.addTruckRecord(req,recordParams,function(error,result){
+            if(error){
+                logger.error('saveTruckRecord ' + error.stack);
+            }else{
+                logger.info('saveTruckRecord success')
+            }
+            return next();
+        })
+    }else{
+        return next();
+    }
+}
+
+function saveDriverRecord(req,res,next){
+    if(res._body.success){
+        var params = req.params;
+        console.log(params);
+        var recordParams ={};
+        recordParams.userId = params._uid;
+        recordParams.userType = params._utype || 99;
+        recordParams.username = params._uname || 'admin';
+        recordParams.content = params.content;
+        recordParams.tid = params.tid;
+        recordParams.op = params.op;
+        sysRecordDAO.addTruckRecord(req,recordParams,function(error,result){
+            if(error){
+                logger.error('saveDriverRecord ' + error.stack);
+            }else{
+                logger.info('saveDriverRecord success')
+            }
+            return next();
+        })
+    }else{
+        return next();
+    }
+}
 module.exports ={
-    saveCarRecord : saveCarRecord
+    saveCarRecord : saveCarRecord ,
+    saveTruckRecord : saveTruckRecord ,
+    saveDriverRecord : saveDriverRecord
 }

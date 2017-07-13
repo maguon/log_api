@@ -14,6 +14,21 @@ function addRecord(req,params,callback){
     })
 }
 
+function addTruckRecord(req,params,callback){
+    var url = '/api/truck/'+params.vhe+'/record';
+    httpUtil.httpPost(sysConfig.hosts.record,url,req,params,function(error,result){
+        callback(error,result);
+    })
+}
+
+function addDriverRecord(req,params,callback) {
+    var url = '/api/tuser/'+params.tid+'/record';
+    httpUtil.httpPost(sysConfig.hosts.record,url,req,params,function(error,result){
+        callback(error,result);
+    })
+}
 module.exports ={
-    addRecord : addRecord
+    addRecord : addRecord,
+    addTruckRecord : addTruckRecord ,
+    addDriverRecord : addDriverRecord
 }
