@@ -249,6 +249,18 @@ function updateTruck(params,callback){
     });
 }
 
+function updateTruckImage(params,callback){
+    var query = " update truck_info set driving_image = ? , license_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.drivingImage;
+    paramsArray[i++]=params.licenseImage;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckImage ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruckRel(params,callback){
     var query = " update truck_info set rel_id = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -294,6 +306,7 @@ module.exports ={
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
     updateTruck : updateTruck,
+    updateTruckImage : updateTruckImage,
     updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
     updateTruckStatus : updateTruckStatus

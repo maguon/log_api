@@ -186,6 +186,20 @@ function updateTruck(req,res,next){
         })
 }
 
+function updateTruckImage(req,res,next){
+    var params = req.params ;
+    truckDAO.updateTruckImage(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckImage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckImage ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruckRel(req,res,next){
     var params = req.params ;
     truckDAO.updateTruckRel(params,function(error,result){
@@ -239,6 +253,7 @@ module.exports = {
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
     updateTruck : updateTruck,
+    updateTruckImage : updateTruckImage,
     updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
     updateTruckStatus : updateTruckStatus
