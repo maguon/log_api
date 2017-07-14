@@ -5377,12 +5377,6 @@
         "theCode": {
           "type": "string"
         },
-        "driveId": {
-          "type": "integer"
-        },
-        "copilot": {
-          "type": "string"
-        },
         "companyId": {
           "type": "integer"
         },
