@@ -183,6 +183,10 @@ function getTruckBase(params,callback) {
         paramsArray[i++] = params.relId;
         query = query + " and t.rel_id = ? ";
     }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and t.truck_type = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckBase ');
         return callback(error,rows);
@@ -329,9 +333,9 @@ function updateTruckRel(params,callback){
 }
 
 function updateTruckDriveRel(params,callback){
-    var query = " update truck_info set drive_id = ? ,copilot = null where id = ? " ;
+    var query = " update truck_info set drive_id = ? where id = ? " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.driveId
+    paramsArray[i++]=params.driveId;
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckDriveRel ');

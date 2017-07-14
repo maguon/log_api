@@ -227,29 +227,79 @@ function updateTruckImage(req,res,next){
 
 function updateTruckRel(req,res,next){
     var params = req.params ;
-    truckDAO.updateTruckRel(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({relId:params.relId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(params.relId>0){
+                    if(rows && rows.length>0){
+                        logger.warn(' getTruckBase ' +params.relId+ sysMsg.CUST_TRUCK_RELATION);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                        return next();
+                    }else{
+                        that();
+                    }
+                }else{
+                    logger.warn(' getTruckBase ' + 'failed');
+                    resUtil.resetFailedRes(res,"relId is null");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+            truckDAO.updateTruckRel(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateTruckRel ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    logger.info(' updateTruckRel ' + 'success');
+                    resUtil.resetUpdateRes(res, result, null);
+                    return next();
+                }
+            })
     })
 }
 
 function updateTruckDriveRel(req,res,next){
     var params = req.params ;
-    truckDAO.updateTruckDriveRel(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckDriveRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckDriveRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({driveId:params.driveId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(params.driveId>0){
+                    if(rows && rows.length>0){
+                        logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_RELATION);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_RELATION);
+                        return next();
+                    }else{
+                        that();
+                    }
+                }else{
+                    logger.warn(' getTruckBase ' + 'failed');
+                    resUtil.resetFailedRes(res,"driveId is null");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        truckDAO.updateTruckDriveRel(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckDriveRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckDriveRel ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
