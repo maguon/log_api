@@ -17,50 +17,22 @@ function createTruckFirst(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        truckDAO.getTruckBase({relId:params.relId},function(error,rows){
+        truckDAO.getTruckBase({truckNum:params.truckNum},function(error,rows){
             if (error) {
                 logger.error(' getTruckBase ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(params.relId>0){
-                    if(rows && rows.length>0){
-                        logger.warn(' getTruckBase ' +params.relId+ sysMsg.CUST_TRUCK_RELATION);
-                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
-                        return next();
-                    }else{
-                        that();
-                    }
+                if(rows && rows.length>0){
+                    logger.warn(' getTruckBase ' +params.truckNum+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
+                    return next();
                 }else{
                     that();
                 }
             }
         })
     }).seq(function(){
-        var that = this;
-        truckDAO.getTruckBase({driveId:params.driveId},function(error,rows){
-            if (error) {
-                logger.error(' getTruckBase ' + error.message);
-                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                if(params.driveId>0){
-                    if(rows && rows.length>0){
-                        logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_RELATION);
-                        resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_RELATION);
-                        return next();
-                    }else{
-                        that();
-                    }
-                }else{
-                    that();
-                }
-            }
-        })
-    }).seq(function(){
-        if(params.number == null){
-            params.number = 0;
-        }
         truckDAO.addTruckFirst(params,function(error,result){
             if (error) {
                 logger.error(' createTruckFirst ' + error.message);
@@ -79,18 +51,37 @@ function createTruckFirst(req,res,next){
 
 function createTruckTrailer(req,res,next){
     var params = req.params;
-    truckDAO.addTruckTrailer(params,function(error,result){
-        if (error) {
-            logger.error(' createTruckTrailer ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createTruckTrailer ' + 'success');
-            req.params.truckContent =" 新增挂车 ";
-            req.params.vhe = result.insertId;
-            req.params.truckOp =20;
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({truckNum:params.truckNum},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getTruckBase ' +params.truckNum+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        truckDAO.addTruckTrailer(params,function(error,result){
+            if (error) {
+                logger.error(' createTruckTrailer ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createTruckTrailer ' + 'success');
+                req.params.truckContent =" 新增挂车 ";
+                req.params.vhe = result.insertId;
+                req.params.truckOp =20;
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

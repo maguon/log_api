@@ -7,15 +7,14 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CompanyDAO.js');
 
 function addCompany(params,callback){
-    var query = " insert into company_info (company_name,operate_type,cooperation_time,contacts,tel,city_id,remark) " +
-        " values (? , ? , ? , ? , ? , ? , ?)";
+    var query = " insert into company_info (company_name,operate_type,cooperation_time,contacts,tel,remark) " +
+        " values (? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.companyName;
     paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.cooperationTime;
     paramsArray[i++]=params.contacts;
     paramsArray[i++]=params.tel;
-    paramsArray[i++]=params.cityId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCompany ');
@@ -24,27 +23,23 @@ function addCompany(params,callback){
 }
 
 function getCompany(params,callback) {
-    var query = " select c.*,y.city_name from company_info c left join city_info y on c.city_id = y.id  where c.id is not null ";
+    var query = " select * from company_info where id is not null ";
     var paramsArray=[],i=0;
     if(params.companyId){
         paramsArray[i++] = params.companyId;
-        query = query + " and c.id = ? ";
+        query = query + " and id = ? ";
     }
     if(params.companyName){
         paramsArray[i++] = params.companyName;
-        query = query + " and c.company_name = ? ";
+        query = query + " and company_name = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and c.operate_type = ? ";
+        query = query + " and operate_type = ? ";
     }
     if(params.contacts){
         paramsArray[i++] = params.contacts;
-        query = query + " and c.contacts = ? ";
-    }
-    if(params.cityId){
-        paramsArray[i++] = params.cityId;
-        query = query + " and c.city_id = ? ";
+        query = query + " and contacts = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -59,14 +54,13 @@ function getCompany(params,callback) {
 
 function updateCompany(params,callback){
     var query = " update company_info set company_name = ?,operate_type = ?," +
-        " cooperation_time = ?,contacts = ?,tel = ?,city_id = ?,remark = ?  where id = ? " ;
+        " cooperation_time = ?,contacts = ?,tel = ?,remark = ?  where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.companyName;
     paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.cooperationTime;
     paramsArray[i++]=params.contacts;
     paramsArray[i++]=params.tel;
-    paramsArray[i++]=params.cityId;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.companyId;
     db.dbQuery(query,paramsArray,function(error,rows){

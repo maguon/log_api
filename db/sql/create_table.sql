@@ -138,7 +138,6 @@ CREATE TABLE `company_info` (
   `cooperation_time` datetime DEFAULT NULL,
   `contacts` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
-  `city_id` int(10) NOT NULL COMMENT '城市ID',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

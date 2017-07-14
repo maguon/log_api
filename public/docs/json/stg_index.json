@@ -2132,14 +2132,6 @@
             "required": false,
             "type": "string"
 
-          },
-          {
-            "name": "cityId",
-            "in": "query",
-            "description": "city id",
-            "required": false,
-            "type": "integer"
-
           }
         ],
         "responses": {
@@ -5397,9 +5389,6 @@
         "truckType": {
           "type": "integer"
         },
-        "relId": {
-          "type": "integer"
-        },
         "number": {
           "type": "integer"
         },
@@ -5561,9 +5550,6 @@
         },
         "tel": {
           "type": "string"
-        },
-        "cityId": {
-          "type": "integer"
         },
         "remark": {
           "type": "string"
