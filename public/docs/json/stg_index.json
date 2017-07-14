@@ -5400,9 +5400,6 @@
         "relId": {
           "type": "integer"
         },
-        "truckStatus": {
-          "type": "integer"
-        },
         "number": {
           "type": "integer"
         },

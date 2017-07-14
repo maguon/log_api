@@ -8,8 +8,8 @@ var logger = serverLogger.createLogger('TruckDAO.js');
 
 function addTruckFirst(params,callback){
     var query = "insert into truck_info (truck_num,brand_id,truck_tel,the_code,drive_id,copilot,company_id, " +
-        " truck_type,rel_id,truck_status,number,driving_date,license_date,two_date,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " truck_type,rel_id,number,driving_date,license_date,two_date,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
@@ -20,7 +20,6 @@ function addTruckFirst(params,callback){
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.truckType;
     paramsArray[i++]=params.relId;
-    paramsArray[i++]=params.truckStatus;
     paramsArray[i++]=params.number;
     paramsArray[i++]=params.drivingDate;
     paramsArray[i++]=params.licenseDate;
@@ -292,7 +291,7 @@ function getTrailerCount(params,callback) {
 
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , truck_tel = ? ,the_code = ? , drive_id = ? , " +
-        "copilot = ? , company_id = ? , truck_type = ? , rel_id = ? , truck_status = ? , number = ? , driving_date = ? , " +
+        "copilot = ? , company_id = ? , truck_type = ? , rel_id = ? , number = ? , driving_date = ? , " +
         " license_date = ? , two_date = ? , remark = ?  where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
@@ -304,7 +303,6 @@ function updateTruck(params,callback){
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.truckType;
     paramsArray[i++]=params.relId;
-    paramsArray[i++]=params.truckStatus;
     paramsArray[i++]=params.number;
     paramsArray[i++]=params.drivingDate;
     paramsArray[i++]=params.licenseDate;
