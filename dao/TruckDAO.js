@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('TruckDAO.js');
 
 function addTruckFirst(params,callback){
     var query = "insert into truck_info (truck_num,brand_id,truck_tel,the_code,drive_id,copilot,company_id, " +
-        " truck_type,rel_id,truck_status,number,driving_date,license_date,two_date,driving_image,license_image,remark) " +
+        " truck_type,rel_id,truck_status,number,driving_date,license_date,two_date,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
@@ -25,8 +25,6 @@ function addTruckFirst(params,callback){
     paramsArray[i++]=params.drivingDate;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i++]=params.twoDate;
-    paramsArray[i++]=params.drivingImage;
-    paramsArray[i++]=params.licenseImage;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug( ' addTruckFirst ');
@@ -35,8 +33,8 @@ function addTruckFirst(params,callback){
 }
 
 function addTruckTrailer(params,callback){
-    var query = "insert into truck_info (truck_num,the_code,company_id,truck_type,rel_id,number,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? )";
+    var query = "insert into truck_info (truck_num,the_code,company_id,truck_type,rel_id,number,driving_date,license_date,two_date,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.theCode;
@@ -44,6 +42,9 @@ function addTruckTrailer(params,callback){
     paramsArray[i++]=params.truckType;
     paramsArray[i++]=params.relId;
     paramsArray[i++]=params.number;
+    paramsArray[i++]=params.drivingDate;
+    paramsArray[i++]=params.licenseDate;
+    paramsArray[i++]=params.twoDate;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug( ' addTruckTrailer ');
@@ -292,7 +293,7 @@ function getTrailerCount(params,callback) {
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , truck_tel = ? ,the_code = ? , drive_id = ? , " +
         "copilot = ? , company_id = ? , truck_type = ? , rel_id = ? , truck_status = ? , number = ? , driving_date = ? , " +
-        " license_date = ? , two_date = ? , driving_image = ? , license_image = ? , remark = ?  where id = ? " ;
+        " license_date = ? , two_date = ? , remark = ?  where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
@@ -308,8 +309,6 @@ function updateTruck(params,callback){
     paramsArray[i++]=params.drivingDate;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i++]=params.twoDate;
-    paramsArray[i++]=params.drivingImage;
-    paramsArray[i++]=params.licenseImage;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){

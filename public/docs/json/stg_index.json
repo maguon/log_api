@@ -5415,12 +5415,6 @@
         "twoDate": {
           "type": "string"
         },
-        "drivingImage": {
-          "type": "string"
-        },
-        "licenseImage": {
-          "type": "string"
-        },
         "remark": {
           "type": "string"
         }
