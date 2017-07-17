@@ -2038,6 +2038,60 @@
         }
       }
     },
+    "/user/{userId}/drive/{driveId}/image": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update drive image",
+        "description": "update drive image",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "image",
+            "in": "body",
+            "description": "image url",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveImage"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
     "/user/{userId}/drive/{driveId}/driveStatus/{driveStatus}": {
       "put": {
         "tags": [
@@ -5512,18 +5566,30 @@
         "licenseDate": {
           "type": "string"
         },
-        "driveImage": {
-          "type": "string"
-        },
-        "licenseImage": {
-          "type": "string"
-        },
         "remark": {
           "type": "string"
         }
       },
       "xml": {
         "name": "drive"
+      }
+    },
+    "driveImage": {
+      "type": "object",
+      "properties": {
+
+        "driveImage": {
+          "type": "string"
+        },
+        "licenseImage": {
+          "type": "string"
+        },
+        "imageType": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveImage"
       }
     },
     "company": {

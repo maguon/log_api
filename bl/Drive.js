@@ -86,6 +86,20 @@ function updateDrive(req,res,next){
     })
 }
 
+function updateDriveImage(req,res,next){
+    var params = req.params ;
+    driveDAO.updateDriveImage(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveImage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveImage ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDriveStatus (req,res,next){
     var params = req.params;
     driveDAO.updateDriveStatus(params,function(error,result){
@@ -107,5 +121,6 @@ module.exports = {
     queryLicenseCount : queryLicenseCount,
     queryDriveCount :queryDriveCount,
     updateDrive : updateDrive,
+    updateDriveImage : updateDriveImage,
     updateDriveStatus : updateDriveStatus
 }

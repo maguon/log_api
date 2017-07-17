@@ -8,8 +8,7 @@ var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
     var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_type," +
-        " entry_date,address,sib_tel,license_date,drive_image,license_image,remark) " +
-        " values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " entry_date,address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -21,8 +20,6 @@ function addDrive(params,callback){
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
-    paramsArray[i++]=params.driveImage;
-    paramsArray[i++]=params.licenseImage;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug( ' addDrive ');
@@ -126,7 +123,7 @@ function getDriveCount(params,callback) {
 
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , tel = ? , company_id = ? , license_type = ? , " +
-        " entry_date = ? , address = ? , sib_tel = ? , license_date = ? , drive_image = ? ,license_image = ? , remark= ?  where id = ? ";
+        " entry_date = ? , address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -138,12 +135,22 @@ function updateDrive(params,callback){
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
-    paramsArray[i++]=params.driveImage;
-    paramsArray[i++]=params.licenseImage;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.driveId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDrive ');
+        return callback(error,rows);
+    });
+}
+
+function updateDriveImage(params,callback){
+    var query = " update drive_info set drive_image = ? , license_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveImage;
+    paramsArray[i++]=params.licenseImage;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveImage ');
         return callback(error,rows);
     });
 }
@@ -166,5 +173,6 @@ module.exports ={
     getLicenseCount : getLicenseCount,
     getDriveCount :getDriveCount,
     updateDrive : updateDrive,
+    updateDriveImage : updateDriveImage,
     updateDriveStatus : updateDriveStatus
 }
