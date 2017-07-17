@@ -229,6 +229,23 @@ function updateTruckRel(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
+        truckDAO.getTruckBase({truckId:params.truckId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].rel_id>0){
+                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_RELATION);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
         truckDAO.getTruckBase({relId:params.relId},function(error,rows){
             if (error) {
                 logger.error(' getTruckBase ' + error.message);
@@ -267,6 +284,23 @@ function updateTruckRel(req,res,next){
 function updateTruckDriveRel(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({truckId:params.truckId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].drive_id>0){
+                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_RELATION);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
         var that = this;
         truckDAO.getTruckBase({driveId:params.driveId},function(error,rows){
             if (error) {
