@@ -162,8 +162,9 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckTrailer',contentType: 'application/json'},truck.createTruckTrailer,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
     server.put({path:'/api/user/:userId/truck/:truckId/image',contentType: 'application/json'} ,truck.updateTruckImage);
-    server.put({path:'/api/user/:userId/truck/:truckId/TruckRel',contentType: 'application/json'} ,truck.updateTruckRel);
-    server.put({path:'/api/user/:userId/truck/:truckId/TruckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
+    server.put({path:'/api/user/:userId/truck/:truckId/truckRel/:relId/bind',contentType: 'application/json'} ,truck.updateTruckRelBind);
+    server.put({path:'/api/user/:userId/truck/:truckId/truckRel/:relId/unbind',contentType: 'application/json'} ,truck.updateTruckRelUnBind);
+    server.put({path:'/api/user/:userId/truck/:truckId/truckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus',contentType: 'application/json'} ,truck.updateTruckStatus);
 
     /**

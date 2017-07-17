@@ -225,7 +225,7 @@ function updateTruckImage(req,res,next){
     })
 }
 
-function updateTruckRel(req,res,next){
+function updateTruckRelBind(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
@@ -270,14 +270,28 @@ function updateTruckRel(req,res,next){
     }).seq(function(){
             truckDAO.updateTruckRel(params, function (error, result) {
                 if (error) {
-                    logger.error(' updateTruckRel ' + error.message);
+                    logger.error(' updateTruckRelBind ' + error.message);
                     throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
-                    logger.info(' updateTruckRel ' + 'success');
+                    logger.info(' updateTruckRelBind ' + 'success');
                     resUtil.resetUpdateRes(res, result, null);
                     return next();
                 }
             })
+    })
+}
+
+function updateTruckRelUnBind(req,res,next){
+    var params = req.params ;
+    truckDAO.updateTruckRel(params, function (error, result) {
+        if (error) {
+            logger.error(' updateTruckRelUnBind ' + error.message);
+            throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckRelUnBind ' + 'success');
+            resUtil.resetUpdateRes(res, result, null);
+            return next();
+        }
     })
 }
 
@@ -365,7 +379,8 @@ module.exports = {
     queryTrailerCount : queryTrailerCount,
     updateTruck : updateTruck,
     updateTruckImage : updateTruckImage,
-    updateTruckRel : updateTruckRel,
+    updateTruckRelBind : updateTruckRelBind,
+    updateTruckRelUnBind : updateTruckRelUnBind,
     updateTruckDriveRel : updateTruckDriveRel,
     updateTruckStatus : updateTruckStatus
 }
