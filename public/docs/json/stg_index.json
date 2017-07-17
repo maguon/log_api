@@ -1262,7 +1262,7 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/truckDriveRel": {
+    "/user/{userId}/truck/{truckId}/drive/{driveId}/bind": {
       "put": {
         "tags": [
           "truck"
@@ -1291,7 +1291,7 @@
           },
           {
             "name": "driveId",
-            "in": "query",
+            "in": "path",
             "description": "drive id",
             "required": true,
             "type": "integer"
@@ -5517,6 +5517,9 @@
           "type": "string"
         },
         "licenseImage": {
+          "type": "string"
+        },
+        "inspectImage": {
           "type": "string"
         },
         "imageType": {

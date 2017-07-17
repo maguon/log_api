@@ -164,7 +164,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/truck/:truckId/image',contentType: 'application/json'} ,truck.updateTruckImage);
     server.put({path:'/api/user/:userId/truck/:truckId/truckRel/:relId/bind',contentType: 'application/json'} ,truck.updateTruckRelBind);
     server.put({path:'/api/user/:userId/truck/:truckId/truckRel/:relId/unbind',contentType: 'application/json'} ,truck.updateTruckRelUnBind);
-    server.put({path:'/api/user/:userId/truck/:truckId/truckDriveRel',contentType: 'application/json'} ,truck.updateTruckDriveRel);
+    server.put({path:'/api/user/:userId/truck/:truckId/drive/:driveId/bind',contentType: 'application/json'} ,truck.updateTruckDriveRelBind);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus',contentType: 'application/json'} ,truck.updateTruckStatus);
 
     /**

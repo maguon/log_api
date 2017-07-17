@@ -261,9 +261,7 @@ function updateTruckRelBind(req,res,next){
                         that();
                     }
                 }else{
-                    logger.warn(' getTruckBase ' + 'failed');
-                    resUtil.resetFailedRes(res,"relId is null");
-                    return next();
+                    that();
                 }
             }
         })
@@ -295,7 +293,7 @@ function updateTruckRelUnBind(req,res,next){
     })
 }
 
-function updateTruckDriveRel(req,res,next){
+function updateTruckDriveRelBind(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
@@ -331,19 +329,17 @@ function updateTruckDriveRel(req,res,next){
                         that();
                     }
                 }else{
-                    logger.warn(' getTruckBase ' + 'failed');
-                    resUtil.resetFailedRes(res,"driveId is null");
-                    return next();
+                    that();
                 }
             }
         })
     }).seq(function(){
         truckDAO.updateTruckDriveRel(params,function(error,result){
             if (error) {
-                logger.error(' updateTruckDriveRel ' + error.message);
+                logger.error(' updateTruckDriveRelBind ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateTruckDriveRel ' + 'success');
+                logger.info(' updateTruckDriveRelBind ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -381,6 +377,6 @@ module.exports = {
     updateTruckImage : updateTruckImage,
     updateTruckRelBind : updateTruckRelBind,
     updateTruckRelUnBind : updateTruckRelUnBind,
-    updateTruckDriveRel : updateTruckDriveRel,
+    updateTruckDriveRelBind : updateTruckDriveRelBind,
     updateTruckStatus : updateTruckStatus
 }
