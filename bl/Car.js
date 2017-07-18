@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var carDAO = require('../dao/CarDAO.js');
+var carStorageRelDAO = require('../dao/CarStorageRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -184,15 +185,34 @@ function updateCarVin(req,res,next){
 
 function updateCarStatus(req,res,next){
     var params = req.params ;
-    carDAO.updateCarStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateCarStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateCarStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        carStorageRelDAO.getCarStorageRel({carId:params.carId},function(error,rows){
+            if (error) {
+                logger.error(' getCarStorageRel ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getCarStorageRel ' +params.carId+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        carDAO.updateCarStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCarStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
