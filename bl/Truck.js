@@ -347,6 +347,20 @@ function updateTruckDriveRelBind(req,res,next){
     })
 }
 
+function updateTruckDriveRelUnBind(req,res,next){
+    var params = req.params ;
+    truckDAO.updateTruckDriveRel(params, function (error, result) {
+        if (error) {
+            logger.error(' updateTruckDriveRelUnBind ' + error.message);
+            throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckDriveRelUnBind ' + 'success');
+            resUtil.resetUpdateRes(res, result, null);
+            return next();
+        }
+    })
+}
+
 function updateTruckStatus (req,res,next){
     var params = req.params;
     truckDAO.updateTruckStatus(params,function(error,result){
@@ -378,5 +392,6 @@ module.exports = {
     updateTruckRelBind : updateTruckRelBind,
     updateTruckRelUnBind : updateTruckRelUnBind,
     updateTruckDriveRelBind : updateTruckDriveRelBind,
+    updateTruckDriveRelUnBind : updateTruckDriveRelUnBind,
     updateTruckStatus : updateTruckStatus
 }

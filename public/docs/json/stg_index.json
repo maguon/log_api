@@ -1314,6 +1314,58 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/drive/{driveId}/unbind": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update TruckDrive rel",
+        "description": "update TruckDrive rel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}/truckStatus/{truckStatus}": {
       "put": {
         "tags": [
