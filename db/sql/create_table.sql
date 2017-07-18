@@ -346,7 +346,7 @@ CREATE TABLE `receive_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `entrust_info`;
 CREATE TABLE `entrust_info` (
-  `id` int(11) NOT NULL AUTO_INCREMENT '唯一自增ID',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `short_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '委托方简称',
   `entrust_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL '委托方名称(结算公司)',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
