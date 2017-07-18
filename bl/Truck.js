@@ -227,6 +227,9 @@ function updateTruckImage(req,res,next){
 
 function updateTruckRelBind(req,res,next){
     var params = req.params ;
+    var truckId = 0;
+    var truckNum = "";
+    var firstNum = "";
     Seq().seq(function(){
         var that = this;
         truckDAO.getTruckBase({truckId:params.truckId},function(error,rows){
@@ -240,24 +243,27 @@ function updateTruckRelBind(req,res,next){
                     resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
                     return next();
                 }else{
+                    truckId = rows[0].id;
+                    truckNum = rows[0].truck_num;
                     that();
                 }
             }
         })
     }).seq(function(){
         var that = this;
-        truckDAO.getTruckBase({relId:params.relId},function(error,rows){
+        truckDAO.getTruckTrailer({relId:params.relId},function(error,rows){
             if (error) {
-                logger.error(' getTruckBase ' + error.message);
+                logger.error(' getTruckTrailer ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
                 if(params.relId>0){
-                    if(rows && rows.length>0){
-                        logger.warn(' getTruckBase ' +params.relId+ sysMsg.CUST_TRUCK_RELATION);
+                    if(rows && rows.length>0&&rows[0].first_num!=null){
+                        logger.warn(' getTruckTrailer ' +params.relId+ sysMsg.CUST_TRUCK_RELATION);
                         resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
                         return next();
                     }else{
+                        firstNum = rows[0].truck_num;
                         that();
                     }
                 }else{
@@ -272,6 +278,9 @@ function updateTruckRelBind(req,res,next){
                     throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
                     logger.info(' updateTruckRelBind ' + 'success');
+                    req.params.truckContent =" 头车车牌号 "+truckNum+ " 与 挂车车牌号 " +firstNum+ " 关联绑定 ";
+                    req.params.vhe = truckId;
+                    req.params.truckOp =20;
                     resUtil.resetUpdateRes(res, result, null);
                     return next();
                 }

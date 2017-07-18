@@ -153,6 +153,10 @@ function getTruckTrailer(params,callback) {
         paramsArray[i++] = params.drivingDateEnd;
         query = query + " and h.driving_date <= ? ";
     }
+    if(params.relId){
+        paramsArray[i++] = params.relId;
+        query = query + " and h.id = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
