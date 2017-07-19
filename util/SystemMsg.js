@@ -33,8 +33,10 @@ var CUST_ACTIVE_STATE_ERROR = "The user is not actived" // User do active when u
 var CUST_FORBIDDEN_STATE_ERROR = "The user is forbidden" // User status is forbidden.
 var CUST_CHANGE_EMAIL_DATA_ERROR = "The change email url is not valid" // User do active when user state is active.
 var CUST_CREATE_EXISTING = "已经存在";
-var CUST_TRUCK_RELATION = "车已被关联";
-var CUST_DRIVE_RELATION = "司机已被关联";
+var CUST_TRUCK_BIND = "车已被关联";
+var CUST_TRUCK_UNBIND = "车已被解绑";
+var CUST_DRIVE_BIND = "司机已被关联";
+var CUST_DRIVE_UNBIND = "司机已被解绑";
 
 /**
  * The module for admin
@@ -85,8 +87,10 @@ module.exports = {
     CUST_CHANGE_EMAIL_DATA_ERROR : CUST_CHANGE_EMAIL_DATA_ERROR,
     CUST_FORBIDDEN_STATE_ERROR : CUST_FORBIDDEN_STATE_ERROR ,
     CUST_CREATE_EXISTING : CUST_CREATE_EXISTING,
-    CUST_TRUCK_RELATION : CUST_TRUCK_RELATION,
-    CUST_DRIVE_RELATION : CUST_DRIVE_RELATION,
+    CUST_TRUCK_BIND : CUST_TRUCK_BIND,
+    CUST_TRUCK_UNBIND : CUST_TRUCK_UNBIND,
+    CUST_DRIVE_BIND : CUST_DRIVE_BIND,
+    CUST_DRIVE_UNBIND : CUST_DRIVE_UNBIND,
 
     IMG_QUERY_NO_EXIST : IMG_QUERY_NO_EXIST,
     SYS_ADD_API_RECORD_ERROR : SYS_ADD_API_RECORD_ERROR,

@@ -239,8 +239,8 @@ function updateTruckRelBind(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].rel_id>0){
-                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_RELATION);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                     return next();
                 }else{
                     truckId = rows[0].id;
@@ -259,8 +259,8 @@ function updateTruckRelBind(req,res,next){
             } else {
                 if(params.relId>0){
                     if(rows && rows.length>0&&rows[0].first_num!=null){
-                        logger.warn(' getTruckTrailer ' +params.relId+ sysMsg.CUST_TRUCK_RELATION);
-                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                        logger.warn(' getTruckTrailer ' +params.relId+ sysMsg.CUST_TRUCK_BIND);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                         return next();
                     }else{
                         firstNum = rows[0].truck_num;
@@ -278,7 +278,7 @@ function updateTruckRelBind(req,res,next){
                     throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
                     logger.info(' updateTruckRelBind ' + 'success');
-                    req.params.truckContent =" 头车车牌号 "+truckNum+ " 与 挂车车牌号 " +firstNum+ " 关联绑定 ";
+                    req.params.truckContent =" 头车车牌号 "+truckNum+ " 与 挂车车牌号 " +firstNum+ " 关联 ";
                     req.params.vhe = truckId;
                     req.params.truckOp =20;
                     resUtil.resetUpdateRes(res, result, null);
@@ -290,15 +290,43 @@ function updateTruckRelBind(req,res,next){
 
 function updateTruckRelUnBind(req,res,next){
     var params = req.params ;
-    truckDAO.updateTruckRel(params, function (error, result) {
-        if (error) {
-            logger.error(' updateTruckRelUnBind ' + error.message);
-            throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckRelUnBind ' + 'success');
-            resUtil.resetUpdateRes(res, result, null);
-            return next();
-        }
+    var truckId = 0;
+    var truckNum = "";
+    var trailNum = "";
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckFirst({truckId:params.truckId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckFirst ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].rel_id==0){
+                    logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_TRUCK_UNBIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_UNBIND);
+                    return next();
+                }else{
+                    truckId = rows[0].id;
+                    truckNum = rows[0].truck_num;
+                    trailNum = rows[0].trail_num;
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        truckDAO.updateTruckRel(params, function (error, result) {
+            if (error) {
+                logger.error(' updateTruckRelUnBind ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckRelUnBind ' + 'success');
+                req.params.truckContent =" 头车车牌号 "+truckNum+ " 与 挂车车牌号 " +trailNum+ " 解绑 ";
+                req.params.vhe = truckId;
+                req.params.truckOp =20;
+                resUtil.resetUpdateRes(res, result, null);
+                return next();
+            }
+        })
     })
 }
 
@@ -313,8 +341,8 @@ function updateTruckDriveRelBind(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].drive_id>0){
-                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_RELATION);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                     return next();
                 }else{
                     that();
@@ -331,8 +359,8 @@ function updateTruckDriveRelBind(req,res,next){
             } else {
                 if(params.driveId>0){
                     if(rows && rows.length>0){
-                        logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_RELATION);
-                        resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_RELATION);
+                        logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_BIND);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
                         return next();
                     }else{
                         that();
@@ -381,12 +409,12 @@ function updateTruckStatusFirst(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].drive_id>0){
-                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_RELATION);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                     return next();
                 }else if(rows && rows.length>0&&rows[0].rel_id>0){
-                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_RELATION);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                     return next();
                 }else{
                     that();
@@ -418,8 +446,8 @@ function updateTruckStatusTrailer(req,res,next){
                 return next();
             } else {
                     if(rows && rows.length>0&&rows[0].first_num!=null){
-                        logger.warn(' getTruckTrailer ' +params.truckId+ sysMsg.CUST_TRUCK_RELATION);
-                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_RELATION);
+                        logger.warn(' getTruckTrailer ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                         return next();
                     }else{
                         that();

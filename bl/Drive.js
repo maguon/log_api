@@ -112,8 +112,8 @@ function updateDriveStatus (req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_RELATION);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_RELATION);
+                    logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_BIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
                     return next();
                 }else{
                     that();
