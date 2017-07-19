@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var driveDAO = require('../dao/DriveDAO.js');
+var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -102,15 +103,34 @@ function updateDriveImage(req,res,next){
 
 function updateDriveStatus (req,res,next){
     var params = req.params;
-    driveDAO.updateDriveStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateDriveStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDriveStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({driveId:params.driveId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_RELATION);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_RELATION);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        driveDAO.updateDriveStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDriveStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDriveStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

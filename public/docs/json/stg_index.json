@@ -1398,7 +1398,59 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/truckStatus/{truckStatus}": {
+    "/user/{userId}/truck/{truckId}/truckStatus/{truckStatus}/first": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user update truck status",
+        "description": "user update truck status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckStatus",
+            "in": "path",
+            "description": "truck status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truck/{truckId}/truckStatus/{truckStatus}/trailer": {
       "put": {
         "tags": [
           "truck"
