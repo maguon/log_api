@@ -214,16 +214,42 @@ function updateTruck(req,res,next){
 
 function updateTruckImage(req,res,next){
     var params = req.params ;
-    truckDAO.updateTruckImage(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckImage ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckImage ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
+    if(params.imageType==1){
+        truckDAO.updateTruckDrivingImage(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckDrivingImage ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckDrivingImage ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
+    if(params.imageType==2){
+        truckDAO.updateTruckLicenseImage(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckLicenseImage ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckLicenseImage ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
+    if(params.imageType==3){
+        truckDAO.updateTruckInspectImage(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckInspectImage ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckInspectImage ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
 }
 
 function updateTruckRelBind(req,res,next){

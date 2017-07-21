@@ -313,15 +313,35 @@ function updateTruck(params,callback){
     });
 }
 
-function updateTruckImage(params,callback){
-    var query = " update truck_info set driving_image = ? , license_image = ? , inspect_image = ? where id = ? " ;
+function updateTruckDrivingImage(params,callback){
+    var query = " update truck_info set driving_image = ? where id = ? " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.drivingImage;
-    paramsArray[i++]=params.licenseImage;
-    paramsArray[i++]=params.inspectImage;
+    paramsArray[i++]=params.truckImage;
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateTruckImage ');
+        logger.debug(' updateTruckDrivingImage ');
+        return callback(error,rows);
+    });
+}
+
+function updateTruckLicenseImage(params,callback){
+    var query = " update truck_info set license_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckImage;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckLicenseImage ');
+        return callback(error,rows);
+    });
+}
+
+function updateTruckInspectImage(params,callback){
+    var query = " update truck_info set inspect_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckImage;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckInspectImage ');
         return callback(error,rows);
     });
 }
@@ -373,7 +393,9 @@ module.exports ={
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
     updateTruck : updateTruck,
-    updateTruckImage : updateTruckImage,
+    updateTruckDrivingImage :updateTruckDrivingImage,
+    updateTruckLicenseImage :updateTruckLicenseImage,
+    updateTruckInspectImage :updateTruckInspectImage,
     updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
     updateTruckStatus : updateTruckStatus

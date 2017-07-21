@@ -5665,13 +5665,7 @@
       "type": "object",
       "properties": {
 
-        "drivingImage": {
-          "type": "string"
-        },
-        "licenseImage": {
-          "type": "string"
-        },
-        "inspectImage": {
+        "truckImage": {
           "type": "string"
         },
         "imageType": {
