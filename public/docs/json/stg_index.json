@@ -5782,9 +5782,6 @@
         "driveImage": {
           "type": "string"
         },
-        "licenseImage": {
-          "type": "string"
-        },
         "imageType": {
           "type": "integer"
         }

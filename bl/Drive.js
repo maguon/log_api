@@ -89,16 +89,30 @@ function updateDrive(req,res,next){
 
 function updateDriveImage(req,res,next){
     var params = req.params ;
-    driveDAO.updateDriveImage(params,function(error,result){
-        if (error) {
-            logger.error(' updateDriveImage ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDriveImage ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
+    if(params.imageType==1){
+        driveDAO.updateDriveImage(params,function(error,result){
+            if (error) {
+                logger.error(' updateDriveImage ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDriveImage ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
+    if(params.imageType==2){
+        driveDAO.updateLicenseImage(params,function(error,result){
+            if (error) {
+                logger.error(' updateLicenseImage ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateLicenseImage ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
 }
 
 function updateDriveStatus (req,res,next){

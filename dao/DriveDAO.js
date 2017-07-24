@@ -144,13 +144,23 @@ function updateDrive(params,callback){
 }
 
 function updateDriveImage(params,callback){
-    var query = " update drive_info set drive_image = ? , license_image = ? where id = ? " ;
+    var query = " update drive_info set drive_image = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveImage;
-    paramsArray[i++]=params.licenseImage;
     paramsArray[i]=params.driveId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveImage ');
+        return callback(error,rows);
+    });
+}
+
+function updateLicenseImage(params,callback){
+    var query = " update drive_info set license_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveImage;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateLicenseImage ');
         return callback(error,rows);
     });
 }
@@ -174,5 +184,6 @@ module.exports ={
     getDriveCount :getDriveCount,
     updateDrive : updateDrive,
     updateDriveImage : updateDriveImage,
+    updateLicenseImage : updateLicenseImage,
     updateDriveStatus : updateDriveStatus
 }
