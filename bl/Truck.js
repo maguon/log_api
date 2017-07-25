@@ -324,19 +324,21 @@ function updateTruckRelUnBind(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0&&rows[0].rel_id==0){
-                    logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_TRUCK_UNBIND);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_UNBIND);
-                    return next();
-                }else{
+                if(rows && rows.length>0&&rows[0].rel_id==params.trailId){
                     parkObj.truckId = rows[0].id;
                     parkObj.truckNum = rows[0].truck_num;
                     parkObj.trailNum = rows[0].trail_num;
                     that();
+                }else{
+                    logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_TRUCK_UNBIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_UNBIND);
+                    return next();
+
                 }
             }
         })
     }).seq(function(){
+        params.relId = 0;
         truckDAO.updateTruckRel(params, function (error, result) {
             if (error) {
                 logger.error(' updateTruckRelUnBind ' + error.message);

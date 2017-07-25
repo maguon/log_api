@@ -46,7 +46,7 @@ function addTruckTrailer(params,callback){
 }
 
 function getTruckFirst(params,callback) {
-    var query = " select h.*,t.truck_num as trail_num,t.number as trail_number," +
+    var query = " select h.*,t.id as trail_id,t.truck_num as trail_num,t.number as trail_number," +
         " b.brand_name,d.drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
         " left join truck_brand b on h.brand_id = b.id  " +
@@ -109,7 +109,7 @@ function getTruckFirst(params,callback) {
 }
 
 function getTruckTrailer(params,callback) {
-    var query = " select h.*,t.truck_num as first_num,c.company_name,c.operate_type " +
+    var query = " select h.*,t.id as first_id,t.truck_num as first_num,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.id = t.rel_id " +
         " left join company_info c on h.company_id = c.id where h.id is not null ";
     var paramsArray=[],i=0;
