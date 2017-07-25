@@ -15,15 +15,38 @@ var logger = serverLogger.createLogger('TruckInsureRel.js');
 
 function createTruckInsureRel(req,res,next){
     var params = req.params ;
-    truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
-        if (error) {
-            logger.error(' createTruckInsureRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createTruckInsureRel ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        truckInsureRelDAO.getTruckInsureRel({insureNum:params.insureNum},function(error,rows){
+            if (error) {
+                logger.error(' getTruckInsureRel ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' getTruckInsureRel ' +params.insureNum+ sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        var myDate = new Date();
+        var strDate = myDate.toLocaleString();
+        var dateId = strDate.substring(0,4)+strDate.substring(5,7)+strDate.substring(8,10);
+        params.dateId = parseInt(dateId);
+        truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
+            if (error) {
+                logger.error(' createTruckInsureRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createTruckInsureRel ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

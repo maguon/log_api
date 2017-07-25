@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('TruckInsureRelDAO.js');
 
 function addTruckInsureRel(params,callback){
     var query = " insert into truck_insure_rel (truck_id,insure_id,insure_type,insure_num,insure_money," +
-        " insure_date,start_date,end_date)  values ( ? , ? , ? , ? , ? , ? , ? , ? )";
+        " insure_date,start_date,end_date,date_id)  values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.insureId;
@@ -17,7 +17,8 @@ function addTruckInsureRel(params,callback){
     paramsArray[i++]=params.insureMoney;
     paramsArray[i++]=params.insureDate;
     paramsArray[i++]=params.startDate;
-    paramsArray[i]=params.endDate;
+    paramsArray[i++]=params.endDate;
+    paramsArray[i]=params.dateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addTruckInsureRel ');
         return callback(error,rows);
@@ -30,6 +31,10 @@ function getTruckInsureRel(params,callback) {
     if(params.relId){
         paramsArray[i++] = params.relId;
         query = query + " and id = ? ";
+    }
+    if(params.insureNum){
+        paramsArray[i++] = params.insureNum;
+        query = query + " and insure_num = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
