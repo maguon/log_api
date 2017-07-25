@@ -13,8 +13,8 @@
         "oauth2-provider": "1.x",
         "posix-getopt": "1.0.0",
         "request": "*",
-        "restify": "4.0.0",
-        "restify-errors" :"4.0.3",
+        "restify": "4.0.3",
+        "restify-errors" :"4.0.0",
         "seq": "0.3.5",
         "serializer": ">=0.0.2 <0.1.0"
     },
