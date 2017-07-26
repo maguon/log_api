@@ -276,15 +276,15 @@ function updateTruckRelBind(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        truckDAO.getTruckTrailer({relId:params.relId},function(error,rows){
+        truckDAO.getTruckTrailer({trailId:params.trailId},function(error,rows){
             if (error) {
                 logger.error(' getTruckTrailer ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(params.relId>0){
+                if(params.trailId>0){
                     if(rows && rows.length>0&&rows[0].first_num!=null){
-                        logger.warn(' getTruckTrailer ' +params.relId+ sysMsg.CUST_TRUCK_BIND);
+                        logger.warn(' getTruckTrailer ' +params.trailId+ sysMsg.CUST_TRUCK_BIND);
                         resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                         return next();
                     }else{
@@ -338,7 +338,7 @@ function updateTruckRelUnBind(req,res,next){
             }
         })
     }).seq(function(){
-        params.relId = 0;
+        params.trailId = 0;
         truckDAO.updateTruckRel(params, function (error, result) {
             if (error) {
                 logger.error(' updateTruckRelUnBind ' + error.message);
@@ -431,20 +431,21 @@ function updateTruckDriveRelUnBind(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0&&rows[0].deive_id==0){
-                    logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_DRIVE_UNBIND);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_UNBIND);
-                    return next();
-                }else{
+                if(rows && rows.length>0&&rows[0].drive_id==params.driveId){
                     parkObj.truckId = rows[0].id;
                     parkObj.truckNum = rows[0].truck_num;
                     parkObj.driveId = rows[0].drive_id;
                     parkObj.driveName = rows[0].drive_name;
                     that();
+                }else{
+                    logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_DRIVE_UNBIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_UNBIND);
+                    return next();
                 }
             }
         })
     }).seq(function(){
+        params.driveId = 0;
         truckDAO.updateTruckDriveRel(params, function (error, result) {
             if (error) {
                 logger.error(' updateTruckDriveRelUnBind ' + error.message);

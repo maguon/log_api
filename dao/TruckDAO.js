@@ -153,8 +153,8 @@ function getTruckTrailer(params,callback) {
         paramsArray[i++] = params.drivingDateEnd;
         query = query + " and h.driving_date <= ? ";
     }
-    if(params.relId){
-        paramsArray[i++] = params.relId;
+    if(params.trailId){
+        paramsArray[i++] = params.trailId;
         query = query + " and h.id = ? ";
     }
     if (params.start && params.size) {
@@ -349,7 +349,7 @@ function updateTruckInspectImage(params,callback){
 function updateTruckRel(params,callback){
     var query = " update truck_info set rel_id = ? where id = ? " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.relId;
+    paramsArray[i++]=params.trailId;
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckRel ');

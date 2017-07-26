@@ -1190,7 +1190,7 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/truckRel/{relId}/bind": {
+    "/user/{userId}/truck/{truckId}/trail/{trailId}/bind": {
       "put": {
         "tags": [
           "truck"
@@ -1218,9 +1218,9 @@
 
           },
           {
-            "name": "relId",
+            "name": "trailId",
             "in": "path",
-            "description": "rel id",
+            "description": "trail id",
             "required": true,
             "type": "integer"
 
