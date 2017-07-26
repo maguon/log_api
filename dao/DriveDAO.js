@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
     var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_type," +
-        " confirm_date,address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -16,7 +16,6 @@ function addDrive(params,callback){
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.licenseType;
-    paramsArray[i++]=params.confirmDate;
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
@@ -123,7 +122,7 @@ function getDriveCount(params,callback) {
 
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , tel = ? , company_id = ? , license_type = ? , " +
-        " confirm_date = ? , address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
+        " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -131,7 +130,6 @@ function updateDrive(params,callback){
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.licenseType;
-    paramsArray[i++]=params.confirmDate;
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
