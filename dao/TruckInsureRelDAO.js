@@ -26,15 +26,15 @@ function addTruckInsureRel(params,callback){
 }
 
 function getTruckInsureRel(params,callback) {
-    var query = " select * from truck_insure_rel where id is not null ";
+    var query = " select r.*,i.insure_name from truck_insure_rel r left join truck_insure i on r.insure_id = i.id where r.id is not null ";
     var paramsArray=[],i=0;
     if(params.relId){
         paramsArray[i++] = params.relId;
-        query = query + " and id = ? ";
+        query = query + " and r.id = ? ";
     }
     if(params.insureNum){
         paramsArray[i++] = params.insureNum;
-        query = query + " and insure_num = ? ";
+        query = query + " and r.insure_num = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
