@@ -34,10 +34,17 @@ function createTruckInsureRel(req,res,next){
         })
     }).seq(function(){
         var myDate = new Date();
+        var year = myDate.getFullYear();
+        var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
+        var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
+        var strDate = year + month + day;
+        params.dateId = parseInt(strDate);
+        params.insureDate = myDate;
+/*        var myDate = new Date();
         var strDate = myDate.toLocaleString();
         var dateId = strDate.substring(0,4)+strDate.substring(5,7)+strDate.substring(8,10);
         params.dateId = parseInt(dateId);
-        params.insureDate = myDate;
+        params.insureDate = myDate;*/
         truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
             if (error) {
                 logger.error(' createTruckInsureRel ' + error.message);
