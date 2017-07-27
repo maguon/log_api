@@ -291,8 +291,8 @@ function getTrailerCount(params,callback) {
     });
 }
 
-function getTruckTotalYear(params,callback) {
-    var query = " select db.year,sum(ir.insure_money) as insure_money from truck_insure_rel ir " +
+function getTruckInsureTotalYear(params,callback) {
+    var query = " select db.year,sum(ir.insure_money) as insure_money,i.insure_name from truck_insure_rel ir " +
         " left join truck_insure i on ir.insure_id = i.id " +
         " left join date_base db on ir.date_id = db.id " +
         " where ir.id is not null ";
@@ -305,20 +305,20 @@ function getTruckTotalYear(params,callback) {
         paramsArray[i++] = params.insureId;
         query = query + " and ir.insure_id = ? ";
     }
-    query = query + ' group by db.year ';
+    query = query + ' group by i.insure_name ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getTruckTotalYear ');
+        logger.debug(' getTruckInsureTotalYear ');
         return callback(error,rows);
     });
 }
 
-function getTruckTotalMonth(params,callback) {
-    var query = " select db.y_month,sum(ir.insure_money) as insure_money from truck_insure_rel ir " +
+function getTruckInsureTotalMonth(params,callback) {
+    var query = " select db.y_month,sum(ir.insure_money) as insure_money,i.insure_name from truck_insure_rel ir " +
         " left join truck_insure i on ir.insure_id = i.id " +
         " left join date_base db on ir.date_id = db.id " +
         " where ir.id is not null ";
@@ -331,15 +331,22 @@ function getTruckTotalMonth(params,callback) {
         paramsArray[i++] = params.insureId;
         query = query + " and ir.insure_id = ? ";
     }
-    query = query + ' group by db.y_month ';
-    query = query + ' order by db.y_month desc ';
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month,i.insure_name ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getTruckTotalMonth ');
+        logger.debug(' getTruckInsureTotalMonth ');
         return callback(error,rows);
     });
 }
@@ -445,8 +452,8 @@ module.exports ={
     getTruckStatusCount : getTruckStatusCount,
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
-    getTruckTotalYear : getTruckTotalYear,
-    getTruckTotalMonth : getTruckTotalMonth,
+    getTruckInsureTotalYear : getTruckInsureTotalYear,
+    getTruckInsureTotalMonth : getTruckInsureTotalMonth,
     updateTruck : updateTruck,
     updateTruckDrivingImage :updateTruckDrivingImage,
     updateTruckLicenseImage :updateTruckLicenseImage,

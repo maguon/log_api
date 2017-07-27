@@ -198,28 +198,28 @@ function queryTrailerCount(req,res,next){
     })
 }
 
-function queryTruckTotalYear(req,res,next){
+function queryTruckInsureTotalYear(req,res,next){
     var params = req.params ;
-    truckDAO.getTruckTotalYear(params,function(error,result){
+    truckDAO.getTruckInsureTotalYear(params,function(error,result){
         if (error) {
-            logger.error(' queryTruckTotalYear ' + error.message);
+            logger.error(' queryTruckInsureTotalYear ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryTruckTotalYear ' + 'success');
+            logger.info(' queryTruckInsureTotalYear ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryTruckTotalMonth(req,res,next){
+function queryTruckInsureTotalMonth(req,res,next){
     var params = req.params ;
-    truckDAO.getTruckTotalMonth(params,function(error,result){
+    truckDAO.getTruckInsureTotalMonth(params,function(error,result){
         if (error) {
-            logger.error(' queryTruckTotalMonth ' + error.message);
+            logger.error(' queryTruckInsureTotalMonth ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryTruckTotalMonth ' + 'success');
+            logger.info(' queryTruckInsureTotalMonth ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -574,8 +574,8 @@ module.exports = {
     queryTruckStatusCount : queryTruckStatusCount,
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
-    queryTruckTotalYear : queryTruckTotalYear,
-    queryTruckTotalMonth : queryTruckTotalMonth,
+    queryTruckInsureTotalYear : queryTruckInsureTotalYear,
+    queryTruckInsureTotalMonth : queryTruckInsureTotalMonth,
     updateTruck : updateTruck,
     updateTruckImage : updateTruckImage,
     updateTruckRelBind : updateTruckRelBind,

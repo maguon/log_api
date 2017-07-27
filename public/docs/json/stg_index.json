@@ -992,13 +992,13 @@
         }
       }
     },
-    "/truckTotalYear": {
+    "/truckInsureTotalYear": {
       "get": {
         "tags": [
           "truck"
         ],
-        "summary": "query  truckTotalYear list",
-        "description": "query truckTotalYear",
+        "summary": "query  truckInsureTotalYear list",
+        "description": "query truckInsureTotalYear",
         "produces": [
           "application/json"
         ],
@@ -1052,13 +1052,13 @@
         }
       }
     },
-    "/truckTotalMonth": {
+    "/truckInsureTotalMonth": {
       "get": {
         "tags": [
           "truck"
         ],
-        "summary": "query  truckTotalMonth list",
-        "description": "query truckTotalMonth",
+        "summary": "query  truckInsureTotalMonth list",
+        "description": "query truckInsureTotalMonth",
         "produces": [
           "application/json"
         ],
@@ -1077,6 +1077,22 @@
             "description": "insure id",
             "required": false,
             "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "string"
 
           },
           {

@@ -40,11 +40,6 @@ function createTruckInsureRel(req,res,next){
         var strDate = year + month + day;
         params.dateId = parseInt(strDate);
         params.insureDate = myDate;
-/*        var myDate = new Date();
-        var strDate = myDate.toLocaleString();
-        var dateId = strDate.substring(0,4)+strDate.substring(5,7)+strDate.substring(8,10);
-        params.dateId = parseInt(dateId);
-        params.insureDate = myDate;*/
         truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
             if (error) {
                 logger.error(' createTruckInsureRel ' + error.message);
