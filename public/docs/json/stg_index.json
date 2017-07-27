@@ -992,6 +992,126 @@
         }
       }
     },
+    "/truckTotalYear": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckTotalYear list",
+        "description": "query truckTotalYear",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "description": "total year",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureId",
+            "in": "query",
+            "description": "insure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageTotalMonth"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
+    "/truckTotalMonth": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckTotalMonth list",
+        "description": "query truckTotalMonth",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "description": "total year",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureId",
+            "in": "query",
+            "description": "insure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storageTotalMonth"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckFirst": {
       "post": {
         "tags": [
@@ -1517,6 +1637,14 @@
             "name": "relId",
             "in": "query",
             "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
             "required": false,
             "type": "integer"
 

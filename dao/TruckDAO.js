@@ -291,6 +291,59 @@ function getTrailerCount(params,callback) {
     });
 }
 
+function getTruckTotalYear(params,callback) {
+    var query = " select db.year,sum(ir.insure_money) as insure_money from truck_insure_rel ir " +
+        " left join truck_insure i on ir.insure_id = i.id " +
+        " left join date_base db on ir.date_id = db.id " +
+        " where ir.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.year){
+        paramsArray[i++] = params.year;
+        query = query + " and db.year = ? ";
+    }
+    if(params.insureId){
+        paramsArray[i++] = params.insureId;
+        query = query + " and ir.insure_id = ? ";
+    }
+    query = query + ' group by db.year ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckTotalYear ');
+        return callback(error,rows);
+    });
+}
+
+function getTruckTotalMonth(params,callback) {
+    var query = " select db.y_month,sum(ir.insure_money) as insure_money from truck_insure_rel ir " +
+        " left join truck_insure i on ir.insure_id = i.id " +
+        " left join date_base db on ir.date_id = db.id " +
+        " where ir.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.year){
+        paramsArray[i++] = params.year;
+        query = query + " and db.year = ? ";
+    }
+    if(params.insureId){
+        paramsArray[i++] = params.insureId;
+        query = query + " and ir.insure_id = ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckTotalMonth ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , truck_tel = ? ,the_code = ? , company_id = ? , " +
         " truck_type = ? , number = ? , driving_date = ? , license_date = ? , two_date = ? , remark = ?  where id = ? " ;
@@ -392,6 +445,8 @@ module.exports ={
     getTruckStatusCount : getTruckStatusCount,
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
+    getTruckTotalYear : getTruckTotalYear,
+    getTruckTotalMonth : getTruckTotalMonth,
     updateTruck : updateTruck,
     updateTruckDrivingImage :updateTruckDrivingImage,
     updateTruckLicenseImage :updateTruckLicenseImage,

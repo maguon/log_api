@@ -198,6 +198,34 @@ function queryTrailerCount(req,res,next){
     })
 }
 
+function queryTruckTotalYear(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckTotalYear(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckTotalYear ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckTotalYear ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryTruckTotalMonth(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckTotalMonth(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckTotalMonth ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckTotalMonth ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruck(req,res,next){
     var params = req.params ;
         truckDAO.updateTruck(params,function(error,result){
@@ -546,6 +574,8 @@ module.exports = {
     queryTruckStatusCount : queryTruckStatusCount,
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
+    queryTruckTotalYear : queryTruckTotalYear,
+    queryTruckTotalMonth : queryTruckTotalMonth,
     updateTruck : updateTruck,
     updateTruckImage : updateTruckImage,
     updateTruckRelBind : updateTruckRelBind,
