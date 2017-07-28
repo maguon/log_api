@@ -292,7 +292,7 @@ function getTrailerCount(params,callback) {
 }
 
 function getTruckInsureTotalYear(params,callback) {
-    var query = " select db.year,sum(ir.insure_money) as insure_money,i.insure_name from truck_insure_rel ir " +
+    var query = " select db.year,sum(ir.insure_money) as insure_money,i.insure_name,ir.insure_type from truck_insure_rel ir " +
         " left join truck_insure i on ir.insure_id = i.id " +
         " left join date_base db on ir.date_id = db.id " +
         " where ir.id is not null ";
@@ -305,7 +305,7 @@ function getTruckInsureTotalYear(params,callback) {
         paramsArray[i++] = params.insureId;
         query = query + " and ir.insure_id = ? ";
     }
-    query = query + ' group by db.year,i.insure_name ';
+    query = query + ' group by db.year,i.insure_name,ir.insure_type ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
