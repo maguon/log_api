@@ -305,7 +305,7 @@ function getTruckInsureTotalYear(params,callback) {
         paramsArray[i++] = params.insureId;
         query = query + " and ir.insure_id = ? ";
     }
-    query = query + ' group by i.insure_name ';
+    query = query + ' group by db.year,i.insure_name ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
