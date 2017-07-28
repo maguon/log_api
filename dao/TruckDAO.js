@@ -248,17 +248,17 @@ function getDrivingCount(params,callback) {
     });
 }
 
-function getTruckStatusCount(params,callback) {
-    var query = " select count(t.id) as truckStatus_count,t.truck_status from truck_info t left join company_info c on t.company_id = c.id " +
+function getRepairStatusCount(params,callback) {
+    var query = " select count(t.id) as repairStatus_count,t.repair_status from truck_info t left join company_info c on t.company_id = c.id " +
         " where t.id is not null ";
     var paramsArray=[],i=0;
     if(params.operateType){
         paramsArray[i++] = params.operateType;
         query = query + " and c.operate_type= ? ";
     }
-    query = query + ' group by t.truck_status ';
+    query = query + ' group by t.repair_status ';
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getTruckStatusCount ');
+        logger.debug(' getRepairStatusCount ');
         return callback(error,rows);
     });
 }
@@ -351,6 +351,44 @@ function getTruckInsureTotalMonth(params,callback) {
     });
 }
 
+function getTruckInsureCountTotalMonth(params,callback) {
+    var query = " select db.y_month,count(ir.id) as insure_count from truck_insure_rel ir " +
+        " left join truck_insure i on ir.insure_id = i.id " +
+        " left join date_base db on ir.date_id = db.id " +
+        " where ir.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.year){
+        paramsArray[i++] = params.year;
+        query = query + " and db.year = ? ";
+    }
+    if(params.insureId){
+        paramsArray[i++] = params.insureId;
+        query = query + " and ir.insure_id = ? ";
+    }
+    if(params.insureType){
+        paramsArray[i++] = params.insureType;
+        query = query + " and ir.insure_type = ? ";
+    }
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckInsureCountTotalMonth ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , truck_tel = ? ,the_code = ? , company_id = ? , " +
         " truck_type = ? , number = ? , driving_date = ? , license_date = ? , two_date = ? , remark = ?  where id = ? " ;
@@ -439,6 +477,17 @@ function updateTruckStatus(params,callback){
     });
 }
 
+function updateRepairStatus(params,callback){
+    var query = " update truck_info set repair_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.repairStatus;
+    paramsArray[i] = params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateRepairStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckFirst : addTruckFirst,
@@ -449,16 +498,18 @@ module.exports ={
     getOperateTypeCount : getOperateTypeCount,
     getTruckCount : getTruckCount,
     getDrivingCount : getDrivingCount,
-    getTruckStatusCount : getTruckStatusCount,
+    getRepairStatusCount : getRepairStatusCount,
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
     getTruckInsureTotalYear : getTruckInsureTotalYear,
     getTruckInsureTotalMonth : getTruckInsureTotalMonth,
+    getTruckInsureCountTotalMonth : getTruckInsureCountTotalMonth,
     updateTruck : updateTruck,
     updateTruckDrivingImage :updateTruckDrivingImage,
     updateTruckLicenseImage :updateTruckLicenseImage,
     updateTruckInspectImage :updateTruckInspectImage,
     updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
-    updateTruckStatus : updateTruckStatus
+    updateTruckStatus : updateTruckStatus,
+    updateRepairStatus : updateRepairStatus
 }

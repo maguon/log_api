@@ -156,14 +156,14 @@ function queryDrivingCount(req,res,next){
     })
 }
 
-function queryTruckStatusCount(req,res,next){
+function queryRepairStatusCount(req,res,next){
     var params = req.params ;
-    truckDAO.getTruckStatusCount(params,function(error,result){
+    truckDAO.getRepairStatusCount(params,function(error,result){
         if (error) {
-            logger.error(' queryTruckStatusCount ' + error.message);
+            logger.error(' queryRepairStatusCount ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryTruckStatusCount ' + 'success');
+            logger.info(' queryRepairStatusCount ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -220,6 +220,20 @@ function queryTruckInsureTotalMonth(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' queryTruckInsureTotalMonth ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryTruckInsureCountTotalMonth(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckInsureCountTotalMonth(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckInsureCountTotalMonth ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckInsureCountTotalMonth ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -563,6 +577,20 @@ function updateTruckStatusTrailer(req,res,next){
     })
 }
 
+function updateRepairStatus(req,res,next){
+    var params = req.params;
+        truckDAO.updateRepairStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateRepairStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateRepairStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+}
+
 module.exports = {
     createTruckFirst : createTruckFirst,
     createTruckTrailer : createTruckTrailer,
@@ -571,11 +599,12 @@ module.exports = {
     queryOperateTypeCount : queryOperateTypeCount,
     queryTruckCount : queryTruckCount,
     queryDrivingCount : queryDrivingCount,
-    queryTruckStatusCount : queryTruckStatusCount,
+    queryRepairStatusCount : queryRepairStatusCount,
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
     queryTruckInsureTotalYear : queryTruckInsureTotalYear,
     queryTruckInsureTotalMonth : queryTruckInsureTotalMonth,
+    queryTruckInsureCountTotalMonth : queryTruckInsureCountTotalMonth,
     updateTruck : updateTruck,
     updateTruckImage : updateTruckImage,
     updateTruckRelBind : updateTruckRelBind,
@@ -583,5 +612,6 @@ module.exports = {
     updateTruckDriveRelBind : updateTruckDriveRelBind,
     updateTruckDriveRelUnBind : updateTruckDriveRelUnBind,
     updateTruckStatusFirst : updateTruckStatusFirst,
-    updateTruckStatusTrailer : updateTruckStatusTrailer
+    updateTruckStatusTrailer : updateTruckStatusTrailer,
+    updateRepairStatus : updateRepairStatus
 }
