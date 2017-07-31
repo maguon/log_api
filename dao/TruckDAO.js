@@ -236,6 +236,10 @@ function getDrivingCount(params,callback) {
     var query = " select count(t.id) as driving_count from truck_info t " +
         " where t.id is not null ";
     var paramsArray=[],i=0;
+    if(params.truckStatus){
+        paramsArray[i++] = params.truckStatus;
+        query = query + " and t.truck_status = ? ";
+    }
     if(params.drivingDateStart){
         paramsArray[i++] = params.drivingDateStart;
         query = query + " and t.driving_date >= ? ";

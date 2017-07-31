@@ -852,10 +852,18 @@
         ],
         "parameters": [
           {
+            "name": "truckStatus",
+            "in": "query",
+            "description": "truck status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "drivingDateStart",
             "in": "query",
             "description": "drivingDate start",
-            "required": true,
+            "required": false,
             "type": "string"
 
           },
@@ -863,7 +871,7 @@
             "name": "drivingDateEnd",
             "in": "query",
             "description": "drivingDate end",
-            "required": true,
+            "required": false,
             "type": "string"
 
           }
