@@ -97,6 +97,7 @@ function getTruckFirst(params,callback) {
         paramsArray[i++] = params.drivingDateEnd;
         query = query + " and h.driving_date <= ? ";
     }
+    query = query + '  order by h.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -157,6 +158,7 @@ function getTruckTrailer(params,callback) {
         paramsArray[i++] = params.trailId;
         query = query + " and h.id = ? ";
     }
+    query = query + '  order by h.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
