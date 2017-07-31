@@ -184,7 +184,7 @@ function updateStorageStatus (req,res,next){
                     that();
                 }else{
                     logger.warn(' getStorageDate ' + 'failed');
-                    resUtil.resetFailedRes(res,"StorageParking is not empty");
+                    resUtil.resetFailedRes(res,"仓库车位不为空，禁止停用");
                     return next();
                 }
             }

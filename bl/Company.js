@@ -41,6 +41,20 @@ function queryCompany(req,res,next){
     })
 }
 
+function queryCompanyOperateTypeTotal(req,res,next){
+    var params = req.params ;
+    companyDAO.getCompanyOperateTypeTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryCompanyOperateTypeTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCompanyOperateTypeTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCompany (req,res,next){
     var params = req.params ;
     companyDAO.updateCompany(params,function(error,result){
@@ -58,5 +72,6 @@ function updateCompany (req,res,next){
 module.exports = {
     createCompany : createCompany,
     queryCompany : queryCompany,
+    queryCompanyOperateTypeTotal : queryCompanyOperateTypeTotal,
     updateCompany : updateCompany
 }

@@ -786,7 +786,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/operateTypeCount"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -830,7 +830,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/operateTypeCount"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -874,7 +874,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/operateTypeCount"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -910,7 +910,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckStatusCount"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -946,7 +946,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/firstCount"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -982,7 +982,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/trailerCount"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -1042,7 +1042,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckInsureTotalYear"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -1118,7 +1118,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckInsureTotalMonth"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -1202,7 +1202,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckInsureCountTotalMonth"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -1239,7 +1239,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckTypeCountTotal"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -1275,7 +1275,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckOperateTypeCountTotal"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -2742,6 +2742,42 @@
             "description": "contacts type",
             "required": false,
             "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/company"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
+    "/companyOperateTypeTotal": {
+      "get": {
+        "tags": [
+          "company"
+        ],
+        "summary": "query  companyOperateTypeTotal list",
+        "description": "query companyOperateTypeTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
 
           }
         ],

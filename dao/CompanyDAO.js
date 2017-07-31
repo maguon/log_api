@@ -52,6 +52,20 @@ function getCompany(params,callback) {
     });
 }
 
+function getCompanyOperateTypeTotal(params,callback) {
+    var query = " select count(id) as company_count,operate_type from company_info where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and operate_type = ? ";
+    }
+    query = query + ' group by operate_type ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCompanyOperateTypeTotal ');
+        return callback(error,rows);
+    });
+}
+
 function updateCompany(params,callback){
     var query = " update company_info set company_name = ?,operate_type = ?," +
         " cooperation_time = ?,contacts = ?,tel = ?,remark = ?  where id = ? " ;
@@ -74,5 +88,6 @@ function updateCompany(params,callback){
 module.exports ={
     addCompany : addCompany,
     getCompany : getCompany,
+    getCompanyOperateTypeTotal : getCompanyOperateTypeTotal,
     updateCompany : updateCompany
 }
