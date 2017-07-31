@@ -240,6 +240,34 @@ function queryTruckInsureCountTotalMonth(req,res,next){
     })
 }
 
+function queryTruckTypeCountTotal(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckTypeCountTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckTypeCountTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckTypeCountTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryTruckOperateTypeCountTotal(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckOperateTypeCountTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckOperateTypeCountTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckOperateTypeCountTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruck(req,res,next){
     var params = req.params ;
         truckDAO.updateTruck(params,function(error,result){
@@ -605,6 +633,8 @@ module.exports = {
     queryTruckInsureTotalYear : queryTruckInsureTotalYear,
     queryTruckInsureTotalMonth : queryTruckInsureTotalMonth,
     queryTruckInsureCountTotalMonth : queryTruckInsureCountTotalMonth,
+    queryTruckTypeCountTotal : queryTruckTypeCountTotal,
+    queryTruckOperateTypeCountTotal : queryTruckOperateTypeCountTotal,
     updateTruck : updateTruck,
     updateTruckImage : updateTruckImage,
     updateTruckRelBind : updateTruckRelBind,

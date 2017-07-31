@@ -1042,7 +1042,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/storageTotalMonth"
+                "$ref": "#/definitions/truckInsureTotalYear"
               }
             }
           },
@@ -1118,7 +1118,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/storageTotalMonth"
+                "$ref": "#/definitions/truckInsureTotalMonth"
               }
             }
           },
@@ -1202,7 +1202,80 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/storageTotalMonth"
+                "$ref": "#/definitions/truckInsureCountTotalMonth"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
+    "/truckTypeCountTotal": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckTypeCountTotal list",
+        "description": "query truckTypeCountTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckTypeCountTotal"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
+    "/truckOperateTypeCountTotal": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query truckOperateTypeCountTotal count",
+        "description": "query truckOperateTypeCountTotal count",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckOperateTypeCountTotal"
               }
             }
           },

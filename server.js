@@ -161,6 +161,8 @@ function createServer() {
     server.get('/api/truckInsureTotalYear',truck.queryTruckInsureTotalYear);
     server.get('/api/truckInsureTotalMonth',truck.queryTruckInsureTotalMonth);
     server.get('/api/truckInsureCountTotalMonth',truck.queryTruckInsureCountTotalMonth);
+    server.get('/api/truckTypeCountTotal',truck.queryTruckTypeCountTotal);
+    server.get('/api/truckOperateTypeCountTotal',truck.queryTruckOperateTypeCountTotal);
     server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.saveTruckRecord);
     server.post({path:'/api/user/:userId/truckTrailer',contentType: 'application/json'},truck.createTruckTrailer,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);

@@ -389,6 +389,35 @@ function getTruckInsureCountTotalMonth(params,callback) {
     });
 }
 
+function getTruckTypeCountTotal(params,callback) {
+    var query = " select count(id) as truck_count,truck_type from truck_info where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and truck_type = ? ";
+    }
+    query = query + ' group by truck_type ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckTypeCountTotal ');
+        return callback(error,rows);
+    });
+}
+
+function getTruckOperateTypeCountTotal(params,callback) {
+    var query = " select count(t.id) as truck_count,c.operate_type from truck_info t left join company_info c on t.company_id = c.id " +
+        " where t.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and t.truck_type= ? ";
+    }
+    query = query + ' group by c.operate_type ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckOperateTypeCountTotal ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , truck_tel = ? ,the_code = ? , company_id = ? , " +
         " truck_type = ? , number = ? , driving_date = ? , license_date = ? , two_date = ? , remark = ?  where id = ? " ;
@@ -504,6 +533,8 @@ module.exports ={
     getTruckInsureTotalYear : getTruckInsureTotalYear,
     getTruckInsureTotalMonth : getTruckInsureTotalMonth,
     getTruckInsureCountTotalMonth : getTruckInsureCountTotalMonth,
+    getTruckTypeCountTotal : getTruckTypeCountTotal,
+    getTruckOperateTypeCountTotal : getTruckOperateTypeCountTotal,
     updateTruck : updateTruck,
     updateTruckDrivingImage :updateTruckDrivingImage,
     updateTruckLicenseImage :updateTruckLicenseImage,
