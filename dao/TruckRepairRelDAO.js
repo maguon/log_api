@@ -38,6 +38,10 @@ function getTruckRepairRel(params,callback) {
         paramsArray[i++] = params.repairNum;
         query = query + " and repair_num = ? ";
     }
+    if(params.repairStatus){
+        paramsArray[i++] = params.repairStatus;
+        query = query + " and repair_status = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -45,6 +49,19 @@ function getTruckRepairRel(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairRel ');
+        return callback(error,rows);
+    });
+}
+
+function getTruckRepairRelCount(params,callback) {
+    var query = " select count(id) repair_count from truck_repair_rel where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.repairStatus){
+        paramsArray[i++] = params.repairStatus;
+        query = query + " and repair_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckRepairRelCount ');
         return callback(error,rows);
     });
 }
@@ -68,5 +85,6 @@ function updateTruckRepairRel(params,callback){
 module.exports ={
     addTruckRepairRel : addTruckRepairRel,
     getTruckRepairRel: getTruckRepairRel,
+    getTruckRepairRelCount : getTruckRepairRelCount,
     updateTruckRepairRel : updateTruckRepairRel
 }

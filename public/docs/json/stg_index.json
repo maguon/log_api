@@ -2095,6 +2095,58 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "repairNum",
+            "in": "query",
+            "description": "repair num",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckInsureRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
+    "/truckRepairRelCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckRepairRel count",
+        "description": "query truckRepairRelCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

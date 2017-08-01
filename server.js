@@ -192,6 +192,7 @@ function createServer() {
      * TruckRepairRel Module
      */
     server.get('/api/truckRepairRel' , truckRepairRel.queryTruckRepairRel);
+    server.get('/api/truckRepairRelCount' , truckRepairRel.queryTruckRepairRelCount);
     server.post({path:'/api/user/:userId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
 

@@ -67,6 +67,20 @@ function queryTruckRepairRel(req,res,next){
     })
 }
 
+function queryTruckRepairRelCount(req,res,next){
+    var params = req.params ;
+    truckRepairRelDAO.getTruckRepairRelCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckRepairRelCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckRepairRelCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruckRepairRel(req,res,next){
     var params = req.params ;
     truckRepairRelDAO.updateTruckRepairRel(params,function(error,result){
@@ -85,5 +99,6 @@ function updateTruckRepairRel(req,res,next){
 module.exports = {
     createTruckRepairRel : createTruckRepairRel,
     queryTruckRepairRel : queryTruckRepairRel,
+    queryTruckRepairRelCount : queryTruckRepairRelCount,
     updateTruckRepairRel : updateTruckRepairRel
 }
