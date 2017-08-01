@@ -2061,6 +2061,149 @@
         }
       }
     },
+    "/truckRepairRel": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckRepairRel list",
+        "description": "query truckRepairRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckInsureRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckRepairRel": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckRepairRel",
+        "description": "user create truckRepairRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckRepairRel",
+            "in": "body",
+            "description": "truckRepairRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckRepairRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckRepairRel/{relId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckRepairRel info",
+        "description": "update truckRepairRel info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brand",
+            "in": "body",
+            "description": "truckRepairRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckRepairRel"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -6020,7 +6163,7 @@
         }
       },
       "xml": {
-        "name": "truck"
+        "name": "truckInsureRel"
       }
     },
     "truckInsure": {
@@ -6033,6 +6176,30 @@
       },
       "xml": {
         "name": "truckInsure"
+      }
+    },
+    "truckRepairRel": {
+      "type": "object",
+      "properties": {
+
+        "truckId": {
+          "type": "integer"
+        },
+        "repairType": {
+          "type": "integer"
+        },
+        "repairNum": {
+          "type": "string"
+        },
+        "repairMoney": {
+          "type": "integer"
+        },
+        "endDate": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckRepairRel"
       }
     },
     "brand": {

@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var truckDAO = require('../dao/TruckDAO.js');
 var driveDAO = require('../dao/DriveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -42,7 +43,7 @@ function createTruckFirst(req,res,next){
                 logger.info(' createTruckFirst ' + 'success');
                 req.params.truckContent =" 新增车头 ";
                 req.params.vhe = params.truckNum;
-                req.params.truckOp =20;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
                 resUtil.resetCreateRes(res,result,null);
                 return next();
             }
@@ -78,7 +79,7 @@ function createTruckTrailer(req,res,next){
                 logger.info(' createTruckTrailer ' + 'success');
                 req.params.truckContent =" 新增挂车 ";
                 req.params.vhe = params.truckNum;
-                req.params.truckOp =20;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
                 resUtil.resetCreateRes(res,result,null);
                 return next();
             }
@@ -361,7 +362,7 @@ function updateTruckRelBind(req,res,next){
                     logger.info(' updateTruckRelBind ' + 'success');
                     req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与 挂车车牌号 " +parkObj.firstNum+ " 关联 ";
                     req.params.vhe = parkObj.truckNum;
-                    req.params.truckOp =20;
+                    req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
                     resUtil.resetUpdateRes(res, result, null);
                     return next();
                 }
@@ -403,7 +404,7 @@ function updateTruckRelUnBind(req,res,next){
                 logger.info(' updateTruckRelUnBind ' + 'success');
                 req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与 挂车车牌号 " +parkObj.trailNum+ " 解绑 ";
                 req.params.vhe = parkObj.truckNum;
-                req.params.truckOp =20;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
                 resUtil.resetUpdateRes(res, result, null);
                 return next();
             }
@@ -465,10 +466,10 @@ function updateTruckDriveRelBind(req,res,next){
                 logger.info(' updateTruckDriveRelBind ' + 'success');
                 req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与司机 " +parkObj.driveName+ " 关联 ";
                 req.params.vhe = parkObj.truckNum;
-                req.params.truckOp =20;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
                 req.params.driverContent =" 司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 关联 ";
                 req.params.tid = parkObj.driveId;
-                req.params.driverOp =30;
+                req.params.driverOp =sysConst.RECORD_OP_TYPE.driverOp;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -510,10 +511,10 @@ function updateTruckDriveRelUnBind(req,res,next){
                 logger.info(' updateTruckDriveRelUnBind ' + 'success');
                 req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与司机 " +parkObj.driveName+ " 解绑 ";
                 req.params.vhe = parkObj.truckNum;
-                req.params.truckOp =20;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
                 req.params.driverContent =" 司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 解绑 ";
                 req.params.tid = parkObj.driveId;
-                req.params.driverOp =30;
+                req.params.driverOp =sysConst.RECORD_OP_TYPE.driverOp;
                 resUtil.resetUpdateRes(res, result, null);
                 return next();
             }

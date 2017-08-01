@@ -15,6 +15,7 @@ var user = require('./bl/User.js');
 var truck = require('./bl/Truck.js');
 var truckInsureRel = require('./bl/TruckInsureRel.js');
 var truckInsure = require('./bl/TruckInsure.js');
+var truckRepairRel = require('./bl/TruckRepairRel.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var company = require('./bl/Company.js');
@@ -186,6 +187,13 @@ function createServer() {
     server.get('/api/truckInsure' , truckInsure.queryTruckInsure);
     server.post({path:'/api/user/:userId/truckInsure',contentType: 'application/json'},truckInsure.createTruckInsure);
     server.put({path:'/api/user/:userId/truckInsure/:insureId',contentType: 'application/json'} ,truckInsure.updateTruckInsure);
+
+    /**
+     * TruckRepairRel Module
+     */
+    server.get('/api/truckRepairRel' , truckRepairRel.queryTruckRepairRel);
+    server.post({path:'/api/user/:userId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
+    server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
 
     /**
      * Brand Module
