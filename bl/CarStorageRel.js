@@ -34,7 +34,7 @@ function createCarStorageRel(req,res,next){
                     that();
                 }else{
                     logger.warn(' getStorageParking ' + 'failed');
-                    resUtil.resetFailedRes(res,"parking is not empty");
+                    resUtil.resetFailedRes(res,"车位被占用，不为空 ");
                     return next();
                 }
             }
@@ -69,7 +69,7 @@ function createCarStorageRel(req,res,next){
                         req.params.carId = carId;
                         that();
                     }else{
-                        resUtil.resetFailedRes(res,"create car failed");
+                        resUtil.resetFailedRes(res," 创建商品车失败 ");
                         return next();
                     }
                 }
@@ -149,7 +149,7 @@ function createAgainCarStorageRel(req,res,next){
                     that();
                 }else{
                     logger.warn(' getStorageParking ' + 'failed');
-                    resUtil.resetFailedRes(res,"parking is not empty");
+                    resUtil.resetFailedRes(res,"车位被占用，不为空");
                     return next();
                 }
             }
@@ -296,7 +296,7 @@ function updateRelStatus(req,res,next){
                     that();
                 }else{
                     logger.warn(' getCarBase ' + 'failed');
-                    resUtil.resetFailedRes(res,"car is not empty");
+                    resUtil.resetFailedRes(res," 商品车已存在 ");
                     return next();
                 }
             }
@@ -327,7 +327,7 @@ function updateRelStatus(req,res,next){
                     that();
                 }else{
                     logger.warn(' getCarStorageRel ' + 'failed');
-                    resUtil.resetFailedRes(res,"carStorageRel is not empty");
+                    resUtil.resetFailedRes(res,"商品车已入库 ");
                     return next();
                 }
             }

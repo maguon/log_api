@@ -49,7 +49,7 @@ function updateStorageParking(req,res,next){
                     that();
                 }else{
                     logger.warn(' getCarBase ' + 'failed');
-                    resUtil.resetFailedRes(res,"car is not empty");
+                    resUtil.resetFailedRes(res," 商品车已存在 ");
                     return next();
                 }
             }
@@ -68,12 +68,12 @@ function updateStorageParking(req,res,next){
                         that();
                     }else{
                         logger.warn(' getStorageParking ' + 'failed');
-                        resUtil.resetFailedRes(res,"parking is not empty");
+                        resUtil.resetFailedRes(res," 车位被占用，不为空 ");
                         return next();
                     }
                 }else{
                     logger.warn(' getStorage ' + 'failed');
-                    resUtil.resetFailedRes(res,"storage is not conformity");
+                    resUtil.resetFailedRes(res," 移位仓库不一致 ");
                     return next();
                 }
 
