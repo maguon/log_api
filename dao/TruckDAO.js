@@ -337,6 +337,10 @@ function getTruckInsureTotalMonth(params,callback) {
         paramsArray[i++] = params.insureId;
         query = query + " and ir.insure_id = ? ";
     }
+    if(params.insureType){
+        paramsArray[i++] = params.insureType;
+        query = query + " and ir.insure_type = ? ";
+    }
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";
