@@ -318,11 +318,11 @@ function getTruckInsureTotalYear(params,callback) {
 
 function getTruckInsureTotalMonth(params,callback) {
     if(params.insureId==null){
-        var query = " select db.y_month,tit.id ,sum(tir.insure_money) as money_total" +
+        var query = " select db.y_month,tit.id ,sum(tir.insure_money) as insure_money " +
             " from date_base db inner join truck_insure_type tit " +
             " left join truck_insure_rel tir on db.id = tir.date_id and tit.id = tir.insure_type where db.id is not null ";
     }else{
-        var query = " select db.y_month,tit.id ,sum(case when tir.insure_id = "+params.insureId+" then tir.insure_money end) as money_total" +
+        var query = " select db.y_month,tit.id ,sum(case when tir.insure_id = "+params.insureId+" then tir.insure_money end) as insure_money " +
             " from date_base db inner join truck_insure_type tit " +
             " left join truck_insure_rel tir on db.id = tir.date_id and tit.id = tir.insure_type where db.id is not null ";
     }
