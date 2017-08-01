@@ -15,7 +15,7 @@ function addRecord(req,params,callback){
 }
 
 function addTruckRecord(req,params,callback){
-    var url = '/api/truck/'+params.vhe+'/record';
+    var url = '/api/truckRecord';
     httpUtil.httpPost(sysConfig.hosts.record,url,req,params,function(error,result){
         callback(error,result);
     })
