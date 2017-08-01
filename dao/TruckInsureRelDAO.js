@@ -40,6 +40,10 @@ function getTruckInsureRel(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and r.truck_id = ? ";
     }
+    if(params.active){
+        paramsArray[i++] = params.active;
+        query = query + " and r.active = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

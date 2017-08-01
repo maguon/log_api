@@ -1801,6 +1801,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "rel active",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
