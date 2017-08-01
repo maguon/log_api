@@ -254,21 +254,6 @@ function getDrivingCount(params,callback) {
     });
 }
 
-function getRepairStatusCount(params,callback) {
-    var query = " select count(t.id) as repairStatus_count,t.repair_status from truck_info t left join company_info c on t.company_id = c.id " +
-        " where t.id is not null ";
-    var paramsArray=[],i=0;
-    if(params.operateType){
-        paramsArray[i++] = params.operateType;
-        query = query + " and c.operate_type= ? ";
-    }
-    query = query + ' group by t.repair_status ';
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getRepairStatusCount ');
-        return callback(error,rows);
-    });
-}
-
 function getFirstCount(params,callback) {
     var query = " select count(t.id) as first_count from truck_info t left join company_info c on t.company_id = c.id " +
         " where t.truck_type = 1 and t.id is not null ";
@@ -516,17 +501,6 @@ function updateTruckStatus(params,callback){
     });
 }
 
-function updateRepairStatus(params,callback){
-    var query = " update truck_info set repair_status = ? where id = ? ";
-    var paramsArray=[],i=0;
-    paramsArray[i++] = params.repairStatus;
-    paramsArray[i] = params.truckId;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateRepairStatus ');
-        return callback(error,rows);
-    });
-}
-
 
 module.exports ={
     addTruckFirst : addTruckFirst,
@@ -537,7 +511,6 @@ module.exports ={
     getOperateTypeCount : getOperateTypeCount,
     getTruckCount : getTruckCount,
     getDrivingCount : getDrivingCount,
-    getRepairStatusCount : getRepairStatusCount,
     getFirstCount : getFirstCount,
     getTrailerCount : getTrailerCount,
     getTruckInsureTotalYear : getTruckInsureTotalYear,
@@ -551,6 +524,5 @@ module.exports ={
     updateTruckInspectImage :updateTruckInspectImage,
     updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
-    updateTruckStatus : updateTruckStatus,
-    updateRepairStatus : updateRepairStatus
+    updateTruckStatus : updateTruckStatus
 }

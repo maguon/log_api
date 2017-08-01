@@ -892,42 +892,6 @@
         }
       }
     },
-    "/repairStatusCount": {
-      "get": {
-        "tags": [
-          "truck"
-        ],
-        "summary": "query repairStatus count",
-        "description": "query repairStatus count",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "operateType",
-            "in": "query",
-            "description": "operate type",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/truck"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid truck id"
-          }
-        }
-      }
-    },
     "/company/{companyId}/firstCount": {
       "get": {
         "tags": [
@@ -1790,58 +1754,6 @@
             "name": "truckStatus",
             "in": "path",
             "description": "truck status",
-            "required": true,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid truck id"
-          }
-        }
-      }
-    },
-    "/user/{userId}/truck/{truckId}/repairStatus/{repairStatus}": {
-      "put": {
-        "tags": [
-          "truck"
-        ],
-        "summary": "user update repair status",
-        "description": "user update repair status",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckId",
-            "in": "path",
-            "description": "truck id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "repairStatus",
-            "in": "path",
-            "description": "repair status",
             "required": true,
             "type": "integer"
 

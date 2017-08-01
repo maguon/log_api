@@ -156,20 +156,6 @@ function queryDrivingCount(req,res,next){
     })
 }
 
-function queryRepairStatusCount(req,res,next){
-    var params = req.params ;
-    truckDAO.getRepairStatusCount(params,function(error,result){
-        if (error) {
-            logger.error(' queryRepairStatusCount ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryRepairStatusCount ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function queryFirstCount(req,res,next){
     var params = req.params ;
     truckDAO.getFirstCount(params,function(error,result){
@@ -605,19 +591,6 @@ function updateTruckStatusTrailer(req,res,next){
     })
 }
 
-function updateRepairStatus(req,res,next){
-    var params = req.params;
-        truckDAO.updateRepairStatus(params,function(error,result){
-            if (error) {
-                logger.error(' updateRepairStatus ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' updateRepairStatus ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
-                return next();
-            }
-        })
-}
 
 module.exports = {
     createTruckFirst : createTruckFirst,
@@ -627,7 +600,6 @@ module.exports = {
     queryOperateTypeCount : queryOperateTypeCount,
     queryTruckCount : queryTruckCount,
     queryDrivingCount : queryDrivingCount,
-    queryRepairStatusCount : queryRepairStatusCount,
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
     queryTruckInsureTotalYear : queryTruckInsureTotalYear,
@@ -642,6 +614,5 @@ module.exports = {
     updateTruckDriveRelBind : updateTruckDriveRelBind,
     updateTruckDriveRelUnBind : updateTruckDriveRelUnBind,
     updateTruckStatusFirst : updateTruckStatusFirst,
-    updateTruckStatusTrailer : updateTruckStatusTrailer,
-    updateRepairStatus : updateRepairStatus
+    updateTruckStatusTrailer : updateTruckStatusTrailer
 }
