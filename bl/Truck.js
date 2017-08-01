@@ -41,7 +41,7 @@ function createTruckFirst(req,res,next){
             } else {
                 logger.info(' createTruckFirst ' + 'success');
                 req.params.truckContent =" 新增车头 ";
-                req.params.vhe = result.insertId;
+                req.params.vhe = params.truckNum;
                 req.params.truckOp =20;
                 resUtil.resetCreateRes(res,result,null);
                 return next();
@@ -77,7 +77,7 @@ function createTruckTrailer(req,res,next){
             } else {
                 logger.info(' createTruckTrailer ' + 'success');
                 req.params.truckContent =" 新增挂车 ";
-                req.params.vhe = result.insertId;
+                req.params.vhe = params.truckNum;
                 req.params.truckOp =20;
                 resUtil.resetCreateRes(res,result,null);
                 return next();
@@ -360,7 +360,7 @@ function updateTruckRelBind(req,res,next){
                 } else {
                     logger.info(' updateTruckRelBind ' + 'success');
                     req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与 挂车车牌号 " +parkObj.firstNum+ " 关联 ";
-                    req.params.vhe = parkObj.truckId;
+                    req.params.vhe = parkObj.truckNum;
                     req.params.truckOp =20;
                     resUtil.resetUpdateRes(res, result, null);
                     return next();
@@ -402,7 +402,7 @@ function updateTruckRelUnBind(req,res,next){
             } else {
                 logger.info(' updateTruckRelUnBind ' + 'success');
                 req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与 挂车车牌号 " +parkObj.trailNum+ " 解绑 ";
-                req.params.vhe = parkObj.truckId;
+                req.params.vhe = parkObj.truckNum;
                 req.params.truckOp =20;
                 resUtil.resetUpdateRes(res, result, null);
                 return next();
@@ -464,7 +464,7 @@ function updateTruckDriveRelBind(req,res,next){
             } else {
                 logger.info(' updateTruckDriveRelBind ' + 'success');
                 req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与司机 " +parkObj.driveName+ " 关联 ";
-                req.params.vhe = parkObj.truckId;
+                req.params.vhe = parkObj.truckNum;
                 req.params.truckOp =20;
                 req.params.driverContent =" 司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 关联 ";
                 req.params.tid = parkObj.driveId;
@@ -509,7 +509,7 @@ function updateTruckDriveRelUnBind(req,res,next){
             } else {
                 logger.info(' updateTruckDriveRelUnBind ' + 'success');
                 req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与司机 " +parkObj.driveName+ " 解绑 ";
-                req.params.vhe = parkObj.truckId;
+                req.params.vhe = parkObj.truckNum;
                 req.params.truckOp =20;
                 req.params.driverContent =" 司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 解绑 ";
                 req.params.tid = parkObj.driveId;
