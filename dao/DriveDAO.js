@@ -120,6 +120,21 @@ function getDriveCount(params,callback) {
     });
 }
 
+function getDriveOperateTypeTotal(params,callback) {
+    var query = " select count(d.id) as drive_count,c.operate_type from drive_info d " +
+        " left join company_info c on d.company_id = c.id where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and c.operate_type = ? ";
+    }
+    query = query + ' group by c.operate_type ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveOperateTypeTotal ');
+        return callback(error,rows);
+    });
+}
+
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , tel = ? , company_id = ? , license_type = ? , " +
         " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
@@ -179,7 +194,8 @@ module.exports ={
     addDrive : addDrive,
     getDrive : getDrive,
     getLicenseCount : getLicenseCount,
-    getDriveCount :getDriveCount,
+    getDriveCount : getDriveCount,
+    getDriveOperateTypeTotal : getDriveOperateTypeTotal,
     updateDrive : updateDrive,
     updateDriveImage : updateDriveImage,
     updateLicenseImage : updateLicenseImage,

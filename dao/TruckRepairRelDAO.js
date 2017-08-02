@@ -66,6 +66,32 @@ function getTruckRepairRelCount(params,callback) {
     });
 }
 
+function getTruckRepairRelCountTotal(params,callback) {
+    if(params.truckType==null || params.truckType==""){
+        var query = " select db.y_month,count( trr.id) as repair_count from date_base db " +
+            " left join truck_repair_rel trr on db.id = trr.date_id " +
+            " left join truck_info ti on trr.truck_id = ti.id where db.id is not null ";
+    }else{
+        var query = " select db.y_month,count(case when ti.truck_type = "+params.truckType+" then trr.id end) as repair_count from date_base db " +
+            " left join truck_repair_rel trr on db.id = trr.date_id " +
+            " left join truck_info ti on trr.truck_id = ti.id where db.id is not null ";
+    }
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckRepairRelCountTotal ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruckRepairRel(params,callback){
     var query = " update truck_repair_rel set truck_id = ? , repair_type = ? , repair_num = ? , repair_money = ? , end_date = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -86,5 +112,6 @@ module.exports ={
     addTruckRepairRel : addTruckRepairRel,
     getTruckRepairRel: getTruckRepairRel,
     getTruckRepairRelCount : getTruckRepairRelCount,
+    getTruckRepairRelCountTotal : getTruckRepairRelCountTotal,
     updateTruckRepairRel : updateTruckRepairRel
 }

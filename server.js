@@ -193,6 +193,7 @@ function createServer() {
      */
     server.get('/api/truckRepairRel' , truckRepairRel.queryTruckRepairRel);
     server.get('/api/truckRepairRelCount' , truckRepairRel.queryTruckRepairRelCount);
+    server.get('/api/truckRepairRelCountTotal' , truckRepairRel.queryTruckRepairRelCountTotal);
     server.post({path:'/api/user/:userId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
 
@@ -209,6 +210,7 @@ function createServer() {
     server.get('/api/drive' , drive.queryDrive);
     server.get('/api/licenseCount' , drive.queryLicenseCount);
     server.get('/api/company/:companyId/driveCount' , drive.queryDriveCount);
+    server.get('/api/driveOperateTypeTotal' , drive.queryDriveOperateTypeTotal);
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/image',contentType: 'application/json'} ,drive.updateDriveImage);

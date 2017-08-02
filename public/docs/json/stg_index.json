@@ -2127,7 +2127,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckInsureRel"
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -2163,7 +2163,59 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckInsureRel"
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
+    "/truckRepairRelCountTotal": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckRepairRelCountTotal",
+        "description": "query truckRepairRelCountTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -2631,6 +2683,42 @@
           },
           "400": {
             "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
+    "/driveOperateTypeTotal": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveOperateTypeTotal list",
+        "description": "query driveOperateTypeTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
           }
         }
       }
