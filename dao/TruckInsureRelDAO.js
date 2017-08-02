@@ -145,10 +145,9 @@ function getTruckInsureCountTotal(params,callback) {
 }
 
 function updateTruckInsureRel(params,callback){
-    var query = " update truck_insure_rel set truck_id = ? , insure_id = ? , insure_type = ? , insure_num = ? , insure_money = ? ," +
+    var query = " update truck_insure_rel set insure_id = ? , insure_type = ? , insure_num = ? , insure_money = ? ," +
         " start_date = ? , end_date = ? where id = ? " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.insureNum;

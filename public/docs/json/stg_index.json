@@ -1904,7 +1904,7 @@
 
           },
           {
-            "name": "brand",
+            "name": "truckInsureRel",
             "in": "body",
             "description": "truckInsureRel info",
             "required": true,
@@ -2047,7 +2047,7 @@
 
           },
           {
-            "name": "brand",
+            "name": "truckInsure",
             "in": "body",
             "description": "truckInsure info",
             "required": true,
@@ -2346,7 +2346,7 @@
 
           },
           {
-            "name": "brand",
+            "name": "truckRepairRel",
             "in": "body",
             "description": "truckRepairRel info",
             "required": true,
