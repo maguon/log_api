@@ -158,9 +158,6 @@ function createServer() {
     server.get('/api/drivingCount' , truck.queryDrivingCount);
     server.get('/api/company/:companyId/firstCount' , truck.queryFirstCount);
     server.get('/api/company/:companyId/trailerCount' , truck.queryTrailerCount);
-    server.get('/api/truckInsureTotalYear',truck.queryTruckInsureTotalYear);
-    server.get('/api/truckInsureTotalMonth',truck.queryTruckInsureTotalMonth);
-    server.get('/api/truckInsureCountTotalMonth',truck.queryTruckInsureCountTotalMonth);
     server.get('/api/truckTypeCountTotal',truck.queryTruckTypeCountTotal);
     server.get('/api/truckOperateTypeCountTotal',truck.queryTruckOperateTypeCountTotal);
     server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.saveTruckRecord);
@@ -178,6 +175,9 @@ function createServer() {
      * TruckInsureRel Module
      */
     server.get('/api/truckInsureRel' , truckInsureRel.queryTruckInsureRel);
+    server.get('/api/truckInsureTypeTotal',truckInsureRel.queryTruckInsureTypeTotal);
+    server.get('/api/truckInsureMoneyTotal',truckInsureRel.queryTruckInsureMoneyTotal);
+    server.get('/api/truckInsureCountTotal',truckInsureRel.queryTruckInsureCountTotal);
     server.post({path:'/api/user/:userId/truckInsureRel',contentType: 'application/json'},truckInsureRel.createTruckInsureRel);
     server.put({path:'/api/user/:userId/truckInsureRel/:relId',contentType: 'application/json'} ,truckInsureRel.updateTruckInsureRel);
 

@@ -67,6 +67,48 @@ function queryTruckInsureRel(req,res,next){
     })
 }
 
+function queryTruckInsureTypeTotal(req,res,next){
+    var params = req.params ;
+    truckInsureRelDAO.getTruckInsureTypeTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckInsureTypeTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckInsureTypeTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryTruckInsureMoneyTotal(req,res,next){
+    var params = req.params ;
+    truckInsureRelDAO.getTruckInsureMoneyTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckInsureMoneyTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckInsureMoneyTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryTruckInsureCountTotal(req,res,next){
+    var params = req.params ;
+    truckInsureRelDAO.getTruckInsureCountTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckInsureCountTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckInsureCountTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruckInsureRel(req,res,next){
     var params = req.params ;
     truckInsureRelDAO.updateTruckInsureRel(params,function(error,result){
@@ -85,5 +127,8 @@ function updateTruckInsureRel(req,res,next){
 module.exports = {
     createTruckInsureRel : createTruckInsureRel,
     queryTruckInsureRel : queryTruckInsureRel,
+    queryTruckInsureTypeTotal : queryTruckInsureTypeTotal,
+    queryTruckInsureMoneyTotal : queryTruckInsureMoneyTotal,
+    queryTruckInsureCountTotal : queryTruckInsureCountTotal,
     updateTruckInsureRel : updateTruckInsureRel
 }

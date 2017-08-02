@@ -185,48 +185,6 @@ function queryTrailerCount(req,res,next){
     })
 }
 
-function queryTruckInsureTotalYear(req,res,next){
-    var params = req.params ;
-    truckDAO.getTruckInsureTotalYear(params,function(error,result){
-        if (error) {
-            logger.error(' queryTruckInsureTotalYear ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryTruckInsureTotalYear ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
-function queryTruckInsureTotalMonth(req,res,next){
-    var params = req.params ;
-    truckDAO.getTruckInsureTotalMonth(params,function(error,result){
-        if (error) {
-            logger.error(' queryTruckInsureTotalMonth ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryTruckInsureTotalMonth ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
-function queryTruckInsureCountTotalMonth(req,res,next){
-    var params = req.params ;
-    truckDAO.getTruckInsureCountTotalMonth(params,function(error,result){
-        if (error) {
-            logger.error(' queryTruckInsureCountTotalMonth ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryTruckInsureCountTotalMonth ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function queryTruckTypeCountTotal(req,res,next){
     var params = req.params ;
     truckDAO.getTruckTypeCountTotal(params,function(error,result){
@@ -603,9 +561,6 @@ module.exports = {
     queryDrivingCount : queryDrivingCount,
     queryFirstCount : queryFirstCount,
     queryTrailerCount : queryTrailerCount,
-    queryTruckInsureTotalYear : queryTruckInsureTotalYear,
-    queryTruckInsureTotalMonth : queryTruckInsureTotalMonth,
-    queryTruckInsureCountTotalMonth : queryTruckInsureCountTotalMonth,
     queryTruckTypeCountTotal : queryTruckTypeCountTotal,
     queryTruckOperateTypeCountTotal : queryTruckOperateTypeCountTotal,
     updateTruck : updateTruck,
