@@ -1547,6 +1547,58 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/repairStatus/{repairStatus}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user update repair status",
+        "description": "user update repair status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairStatus",
+            "in": "path",
+            "description": "repair status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/truckInsureRel": {
       "get": {
         "tags": [
@@ -2117,13 +2169,65 @@
         }
       }
     },
-    "/truckRepairRelCountTotal": {
+    "/truckRepairCountTotal": {
       "get": {
         "tags": [
           "truck"
         ],
-        "summary": "query  truckRepairRelCountTotal",
-        "description": "query truckRepairRelCountTotal",
+        "summary": "query  truckRepairCountTotal",
+        "description": "query truckRepairCountTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
+    "/truckRepairMoneyTotal": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckRepairMoneyTotal",
+        "description": "query truckRepairMoneyTotal",
         "produces": [
           "application/json"
         ],
@@ -6294,7 +6398,7 @@
         "repairMoney": {
           "type": "integer"
         },
-        "endDate": {
+        "remark": {
           "type": "string"
         }
       },

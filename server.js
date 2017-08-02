@@ -170,6 +170,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/truck/:truckId/drive/:driveId/unbind',contentType: 'application/json'} ,truck.updateTruckDriveRelUnBind,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus/first',contentType: 'application/json'} ,truck.updateTruckStatusFirst);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus/trailer',contentType: 'application/json'} ,truck.updateTruckStatusTrailer);
+    server.put({path:'/api/user/:userId/truck/:truckId/repairStatus/:repairStatus',contentType: 'application/json'} ,truck.updateRepairStatus);
 
     /**
      * TruckInsureRel Module
@@ -193,7 +194,8 @@ function createServer() {
      */
     server.get('/api/truckRepairRel' , truckRepairRel.queryTruckRepairRel);
     server.get('/api/truckRepairRelCount' , truckRepairRel.queryTruckRepairRelCount);
-    server.get('/api/truckRepairRelCountTotal' , truckRepairRel.queryTruckRepairRelCountTotal);
+    server.get('/api/truckRepairCountTotal' , truckRepairRel.queryTruckRepairCountTotal);
+    server.get('/api/truckRepairMoneyTotal' , truckRepairRel.queryTruckRepairMoneyTotal);
     server.post({path:'/api/user/:userId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
 

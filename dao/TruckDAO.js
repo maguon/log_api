@@ -399,6 +399,17 @@ function updateTruckStatus(params,callback){
     });
 }
 
+function updateRepairStatus(params,callback){
+    var query = " update truck_info set repair_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.repairStatus;
+    paramsArray[i] = params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateRepairStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckFirst : addTruckFirst,
@@ -419,5 +430,6 @@ module.exports ={
     updateTruckInspectImage :updateTruckInspectImage,
     updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
-    updateTruckStatus : updateTruckStatus
+    updateTruckStatus : updateTruckStatus,
+    updateRepairStatus : updateRepairStatus
 }

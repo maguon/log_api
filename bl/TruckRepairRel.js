@@ -81,14 +81,28 @@ function queryTruckRepairRelCount(req,res,next){
     })
 }
 
-function queryTruckRepairRelCountTotal(req,res,next){
+function queryTruckRepairCountTotal(req,res,next){
     var params = req.params ;
-    truckRepairRelDAO.getTruckRepairRelCountTotal(params,function(error,result){
+    truckRepairRelDAO.getTruckRepairCountTotal(params,function(error,result){
         if (error) {
-            logger.error(' queryTruckRepairRelCountTotal ' + error.message);
+            logger.error(' queryTruckRepairCountTotal ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryTruckRepairRelCountTotal ' + 'success');
+            logger.info(' queryTruckRepairCountTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryTruckRepairMoneyTotal(req,res,next){
+    var params = req.params ;
+    truckRepairRelDAO.getTruckRepairMoneyTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckRepairMoneyTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckRepairMoneyTotal ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -97,6 +111,8 @@ function queryTruckRepairRelCountTotal(req,res,next){
 
 function updateTruckRepairRel(req,res,next){
     var params = req.params ;
+    var myDate = new Date();
+    params.endDate = myDate;
     truckRepairRelDAO.updateTruckRepairRel(params,function(error,result){
         if (error) {
             logger.error(' updateTruckRepairRel ' + error.message);
@@ -114,6 +130,7 @@ module.exports = {
     createTruckRepairRel : createTruckRepairRel,
     queryTruckRepairRel : queryTruckRepairRel,
     queryTruckRepairRelCount : queryTruckRepairRelCount,
-    queryTruckRepairRelCountTotal : queryTruckRepairRelCountTotal,
+    queryTruckRepairCountTotal : queryTruckRepairCountTotal,
+    queryTruckRepairMoneyTotal : queryTruckRepairMoneyTotal,
     updateTruckRepairRel : updateTruckRepairRel
 }

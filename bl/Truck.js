@@ -550,6 +550,20 @@ function updateTruckStatusTrailer(req,res,next){
     })
 }
 
+function updateRepairStatus(req,res,next){
+    var params = req.params ;
+    truckDAO.updateRepairStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateRepairStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateRepairStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckFirst : createTruckFirst,
@@ -570,5 +584,6 @@ module.exports = {
     updateTruckDriveRelBind : updateTruckDriveRelBind,
     updateTruckDriveRelUnBind : updateTruckDriveRelUnBind,
     updateTruckStatusFirst : updateTruckStatusFirst,
-    updateTruckStatusTrailer : updateTruckStatusTrailer
+    updateTruckStatusTrailer : updateTruckStatusTrailer,
+    updateRepairStatus : updateRepairStatus
 }
