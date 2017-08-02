@@ -1747,14 +1747,6 @@
 
           },
           {
-            "name": "insureType",
-            "in": "query",
-            "description": "insure type",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "monthStart",
             "in": "query",
             "description": "month start",
