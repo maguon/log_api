@@ -110,8 +110,9 @@ function getTruckFirst(params,callback) {
 }
 
 function getTruckTrailer(params,callback) {
-    var query = " select h.*,t.id as first_id,t.truck_num as first_num,c.company_name,c.operate_type " +
+    var query = " select h.*,t.id as first_id,t.truck_num as first_num,d.id as driveId,d.drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.id = t.rel_id " +
+        " left join drive_info d on t.drive_id = d.id  " +
         " left join company_info c on h.company_id = c.id where h.id is not null ";
     var paramsArray=[],i=0;
     if(params.truckId){

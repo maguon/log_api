@@ -2099,22 +2099,6 @@
             "required": false,
             "type": "integer"
 
-          },
-          {
-            "name": "repairNum",
-            "in": "query",
-            "description": "repair num",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "repairStatus",
-            "in": "query",
-            "description": "repair status",
-            "required": false,
-            "type": "integer"
-
           }
         ],
         "responses": {
@@ -2144,14 +2128,7 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "repairStatus",
-            "in": "query",
-            "description": "repair status",
-            "required": false,
-            "type": "integer"
 
-          }
         ],
         "responses": {
           "200": {
@@ -6394,6 +6371,12 @@
       "type": "object",
       "properties": {
 
+        "driveId": {
+          "type": "integer"
+        },
+        "driveName": {
+          "type": "string"
+        },
         "repairReason": {
           "type": "string"
         },

@@ -7,9 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckRepairRelDAO.js');
 
 function addTruckRepairRel(params,callback){
-    var query = " insert into truck_repair_rel (truck_id,repair_date,date_id,repair_reason)  values ( ? , ? , ? , ? )";
+    var query = " insert into truck_repair_rel (truck_id,drive_id,drive_name,repair_date,date_id,repair_reason) " +
+        " values ( ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.repairDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i]=params.repairReason;
@@ -34,10 +37,6 @@ function getTruckRepairRel(params,callback) {
         paramsArray[i++] = params.repairNum;
         query = query + " and repair_num = ? ";
     }
-    if(params.repairStatus){
-        paramsArray[i++] = params.repairStatus;
-        query = query + " and repair_status = ? ";
-    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -52,10 +51,6 @@ function getTruckRepairRel(params,callback) {
 function getTruckRepairRelCount(params,callback) {
     var query = " select count(id) repair_count from truck_repair_rel where id is not null ";
     var paramsArray=[],i=0;
-    if(params.repairStatus){
-        paramsArray[i++] = params.repairStatus;
-        query = query + " and repair_status = ? ";
-    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairRelCount ');
         return callback(error,rows);
