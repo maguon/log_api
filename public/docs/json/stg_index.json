@@ -3074,7 +3074,7 @@
         "tags": [
           "company"
         ],
-        "summary": "query  companyOperateTypeTotal list",
+        "summary": "query  companyOperateTypeTotal",
         "description": "query companyOperateTypeTotal",
         "produces": [
           "application/json"
@@ -3084,6 +3084,42 @@
             "name": "operateType",
             "in": "query",
             "description": "operate type",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/company"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
+    "/companyTruckCountTotal": {
+      "get": {
+        "tags": [
+          "company"
+        ],
+        "summary": "query  companyTruckCountTotal",
+        "description": "query companyTruckCountTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
             "required": false,
             "type": "integer"
 
