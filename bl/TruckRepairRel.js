@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var truckRepairRelDAO = require('../dao/TruckRepairRelDAO.js');
+var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -92,17 +93,55 @@ function queryTruckRepairMoneyTotal(req,res,next){
 
 function updateTruckRepairRel(req,res,next){
     var params = req.params ;
-    var myDate = new Date();
-    params.endDate = myDate;
-    truckRepairRelDAO.updateTruckRepairRel(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckRepairRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckRepairRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    var truckId = 0;
+    Seq().seq(function(){
+        var that = this;
+        truckRepairRelDAO.getTruckRepairRel({relId:params.relId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckRepairRel ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    truckId = rows[0].truck_id;
+                    that();
+                }else{
+                    logger.warn(' updateCarStatus ' + 'failed');
+                    resUtil.resetFailedRes(res," 维修记录不存在 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        var myDate = new Date();
+        params.endDate = myDate;
+        truckRepairRelDAO.updateTruckRepairRel(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckRepairRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateTruckRepairRel ' + 'success');
+                }else{
+                    logger.warn(' updateTruckRepairRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        params.truckId = truckId;
+        params.repairStatus = listOfValue.REPAIR_STATUS_ACTIVE;
+        truckDAO.updateRepairStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateRepairStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateRepairStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
