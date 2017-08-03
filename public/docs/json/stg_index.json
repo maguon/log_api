@@ -2273,7 +2273,7 @@
         }
       }
     },
-    "/user/{userId}/truckRepairRel": {
+    "/user/{userId}/truck/{truckId}/truckRepairRel": {
       "post": {
         "tags": [
           "truck"
@@ -2288,6 +2288,14 @@
             "name": "userId",
             "in": "path",
             "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
             "required": true,
             "type": "integer"
 
@@ -6386,20 +6394,14 @@
       "type": "object",
       "properties": {
 
-        "truckId": {
-          "type": "integer"
+        "repairReason": {
+          "type": "string"
         },
-        "repairType": {
-          "type": "integer"
-        },
-        "repairNum": {
+        "remark": {
           "type": "string"
         },
         "repairMoney": {
           "type": "integer"
-        },
-        "remark": {
-          "type": "string"
         }
       },
       "xml": {

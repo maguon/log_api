@@ -15,24 +15,6 @@ var logger = serverLogger.createLogger('TruckRepairRel.js');
 
 function createTruckRepairRel(req,res,next){
     var params = req.params ;
-    Seq().seq(function(){
-        var that = this;
-        truckRepairRelDAO.getTruckRepairRel({repairNum:params.repairNum},function(error,rows){
-            if (error) {
-                logger.error(' getTruckRepairRel ' + error.message);
-                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                if(rows && rows.length>0){
-                    logger.warn(' getTruckRepairRel ' +params.repairNum+ sysMsg.CUST_CREATE_EXISTING);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
-                    return next();
-                }else{
-                    that();
-                }
-            }
-        })
-    }).seq(function(){
         var myDate = new Date();
         var year = myDate.getFullYear();
         var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
@@ -50,7 +32,6 @@ function createTruckRepairRel(req,res,next){
                 return next();
             }
         })
-    })
 }
 
 function queryTruckRepairRel(req,res,next){

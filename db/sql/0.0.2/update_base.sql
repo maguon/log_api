@@ -28,7 +28,8 @@ CREATE TABLE `truck_repair_rel` (
   `end_date` datetime DEFAULT NULL COMMENT '结束日期',
   `repair_status` tinyint(1) DEFAULT '0' COMMENT '维修状态(0-维修,1-正常)',
   `date_id` int(4) NOT NULL,
-    `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `repair_reason` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '维修原因',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
