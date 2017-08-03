@@ -67,8 +67,13 @@ function getCompanyOperateTypeTotal(params,callback) {
 }
 
 function getCompanyTruckCountTotal(params,callback) {
-    var query = " select c.id,c.company_name,count(t.id) as truck_count from company_info c" +
-        " left join truck_info t on c.id = t.company_id where c.id is not null ";
+    if(params.truckType==null || params.truckType==""){
+        var query = " select c.id,c.company_name,count(t.id) as truck_count from company_info c" +
+            " left join truck_info t on c.id = t.company_id where c.id is not null ";
+    }else{
+        var query = " select c.id,c.company_name,count(case when t.truck_type = "+params.truckType+" then t.id end) as truck_count from company_info c" +
+            " left join truck_info t on c.id = t.company_id where c.id is not null ";
+    }
     var paramsArray=[],i=0;
     if(params.companyId){
         paramsArray[i++] = params.companyId;

@@ -134,7 +134,7 @@ DROP TABLE IF EXISTS `company_info`;
 CREATE TABLE `company_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `company_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '公司名称',
-  `operate_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '所属类型(1-自营,2-承包,3-供方,4-外协)',
+  `operate_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '所属类型(1-自营,2-外协,3-供方,4-承包)',
   `cooperation_time` datetime DEFAULT NULL,
   `contacts` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tel` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',

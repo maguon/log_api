@@ -3123,6 +3123,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
