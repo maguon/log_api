@@ -16,6 +16,25 @@ var logger = serverLogger.createLogger('TruckRepairRel.js');
 
 function createTruckRepairRel(req,res,next){
     var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({truckId:params.truckId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].repair_status==listOfValue.REPAIR_STATUS_ACTIVE){
+                    that();
+                }else{
+                    logger.warn(' updateCarStatus ' + 'failed');
+                    resUtil.resetFailedRes(res," 货车处于维修状态 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
         var myDate = new Date();
         var year = myDate.getFullYear();
         var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
@@ -28,11 +47,28 @@ function createTruckRepairRel(req,res,next){
                 logger.error(' createTruckRepairRel ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' createTruckRepairRel ' + 'success');
-                resUtil.resetCreateRes(res,result,null);
+                if(result&&result.insertId>0){
+                    logger.info(' createCarStorageRel ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' createTruckRepairRel ' + 'failed');
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.repairStatus = listOfValue.REPAIR_STATUS_NOT_ACTIVE;
+        truckDAO.updateRepairStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateRepairStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateRepairStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
         })
+    })
 }
 
 function queryTruckRepairRel(req,res,next){
