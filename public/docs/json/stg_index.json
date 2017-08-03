@@ -2176,7 +2176,14 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": false,
+            "type": "integer"
 
+          }
         ],
         "responses": {
           "200": {

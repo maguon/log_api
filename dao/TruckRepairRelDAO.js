@@ -73,6 +73,10 @@ function getTruckRepairRel(params,callback) {
 function getTruckRepairRelCount(params,callback) {
     var query = " select count(id) repair_count from truck_repair_rel where id is not null ";
     var paramsArray=[],i=0;
+    if(params.repairStatus){
+        paramsArray[i++] = params.repairStatus;
+        query = query + " and repair_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairRelCount ');
         return callback(error,rows);
