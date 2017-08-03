@@ -23,20 +23,42 @@ function addTruckRepairRel(params,callback){
 }
 
 function getTruckRepairRel(params,callback) {
-    var query = " select * from truck_repair_rel where id is not null ";
+    var query = " select trr.*,ti.truck_num,ti.truck_type from truck_repair_rel trr" +
+        " left join truck_info ti on trr.truck_id = ti.id where trr.id is not null ";
     var paramsArray=[],i=0;
     if(params.relId){
         paramsArray[i++] = params.relId;
-        query = query + " and id = ? ";
+        query = query + " and trr.id = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and truck_id = ? ";
+        query = query + " and trr.truck_id = ? ";
     }
-    if(params.repairNum){
-        paramsArray[i++] = params.repairNum;
-        query = query + " and repair_num = ? ";
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and ti.truck_type = ? ";
     }
+    if(params.repairStatus){
+        paramsArray[i++] = params.repairStatus;
+        query = query + " and trr.repair_status = ? ";
+    }
+    if(params.repairDateStart){
+        paramsArray[i++] = params.repairDateStart +" 00:00:00";
+        query = query + " and trr.repair_date >= ? ";
+    }
+    if(params.repairDateEnd){
+        paramsArray[i++] = params.repairDateEnd +" 23:59:59";
+        query = query + " and trr.repair_date <= ? ";
+    }
+    if(params.endDateStart){
+        paramsArray[i++] = params.endDateStart +" 00:00:00";
+        query = query + " and trr.end_date >= ? ";
+    }
+    if(params.endDateEnd){
+        paramsArray[i++] = params.endDateEnd +" 23:59:59";
+        query = query + " and trr.end_date <= ? ";
+    }
+    query = query + ' order by trr.repair_status ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -110,10 +132,11 @@ function getTruckRepairMoneyTotal(params,callback) {
 }
 
 function updateTruckRepairRel(params,callback){
-    var query = " update truck_repair_rel set repair_money = ? , end_date = ? , remark = ? where id = ? " ;
+    var query = " update truck_repair_rel set repair_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.repairMoney;
     paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.repairStatus;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.relId;
     db.dbQuery(query,paramsArray,function(error,rows){
