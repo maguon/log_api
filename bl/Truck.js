@@ -215,6 +215,9 @@ function queryTruckOperateTypeCountTotal(req,res,next){
 
 function updateTruck(req,res,next){
     var params = req.params ;
+    if(params.number == null || params.number == ""){
+        params.number = 0;
+    }
         truckDAO.updateTruck(params,function(error,result){
             if (error) {
                 logger.error(' updateTruck ' + error.message);

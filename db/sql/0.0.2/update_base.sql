@@ -26,7 +26,6 @@ CREATE TABLE `truck_repair_rel` (
   `repair_money` decimal(10,2) DEFAULT NULL COMMENT '维修金额',
   `repair_date` datetime DEFAULT NULL COMMENT '维修时间',
   `end_date` datetime DEFAULT NULL COMMENT '结束日期',
-  `repair_status` tinyint(1) DEFAULT '0' COMMENT '维修状态(0-维修,1-正常)',
   `date_id` int(4) NOT NULL,
   `repair_reason` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '维修原因',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
