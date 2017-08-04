@@ -21,10 +21,8 @@ DROP TABLE IF EXISTS `truck_repair_rel`;
 CREATE TABLE `truck_repair_rel` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `truck_id` int(10) NOT NULL COMMENT '货车ID',
-  `drive_id` int(10) DEFAULT '0' COMMENT '主驾ID',
+  `drive_id` int(10) DEFAULT NULL COMMENT '主驾ID',
   `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
-  `repair_type` tinyint(1) DEFAULT '0' COMMENT '维修类型',
-  `repair_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '维修编号',
   `repair_money` decimal(10,2) DEFAULT NULL COMMENT '维修金额',
   `repair_date` datetime DEFAULT NULL COMMENT '维修时间',
   `end_date` datetime DEFAULT NULL COMMENT '结束日期',

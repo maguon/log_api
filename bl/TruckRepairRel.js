@@ -27,7 +27,7 @@ function createTruckRepairRel(req,res,next){
                 if(rows && rows.length>0&&rows[0].repair_status==listOfValue.REPAIR_STATUS_ACTIVE){
                     that();
                 }else{
-                    logger.warn(' updateCarStatus ' + 'failed');
+                    logger.warn(' getTruckBase ' + 'failed');
                     resUtil.resetFailedRes(res," 货车处于维修状态 ");
                     return next();
                 }
@@ -48,7 +48,7 @@ function createTruckRepairRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.insertId>0){
-                    logger.info(' createCarStorageRel ' + 'success');
+                    logger.info(' createTruckRepairRel ' + 'success');
                     that();
                 }else{
                     logger.warn(' createTruckRepairRel ' + 'failed');
@@ -138,12 +138,12 @@ function updateTruckRepairRel(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0){
+                if(rows && rows.length>0&&rows[0].repair_status==listOfValue.REPAIR_STATUS_NOT_ACTIVE){
                     truckId = rows[0].truck_id;
                     that();
                 }else{
-                    logger.warn(' updateCarStatus ' + 'failed');
-                    resUtil.resetFailedRes(res," 维修记录不存在 ");
+                    logger.warn(' getTruckRepairRel ' + 'failed');
+                    resUtil.resetFailedRes(res," 已维修结束 ");
                     return next();
                 }
             }
