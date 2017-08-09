@@ -2101,6 +2101,14 @@
 
           },
           {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckType",
             "in": "query",
             "description": "truck type",

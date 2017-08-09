@@ -34,6 +34,10 @@ function getTruckRepairRel(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and trr.truck_id = ? ";
     }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and ti.truck_num = ? ";
+    }
     if(params.truckType){
         paramsArray[i++] = params.truckType;
         query = query + " and ti.truck_type = ? ";
