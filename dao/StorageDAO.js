@@ -18,19 +18,15 @@ function addStorage(params,callback){
 }
 
 function getStorage(params,callback) {
-    var query = " select s.*,cy.city_name from storage_info s left join city_info cy on s.city_id = cy.id where s.id is not null ";
+    var query = " select * from storage_info where id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
         paramsArray[i++] = params.storageId;
-        query = query + " and s.id = ? ";
+        query = query + " and id = ? ";
     }
     if(params.storageName){
         paramsArray[i++] = params.storageName;
-        query = query + " and s.storage_name = ? ";
-    }
-    if(params.storageStatus){
-        paramsArray[i] = params.storageStatus;
-        query = query + " and s.storage_status = ? ";
+        query = query + " and storage_name = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorage ');
