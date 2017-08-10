@@ -17,64 +17,16 @@ var logger = serverLogger.createLogger('Storage.js');
 
 function createStorage(req,res,next){
     var params = req.params ;
-    var storageId = 0;
-    Seq().seq(function(){
-        var that = this;
-        storageDAO.addStorage(params,function(error,result){
-            if (error) {
-                logger.error(' createStorage ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    logger.info(' createStorage ' + 'success');
-                    storageId = result.insertId;
-                    that();
-                }else{
-                    resUtil.resetFailedRes(res,"create storage failed");
-                    return next();
-                }
-            }
-        })
-    }).seq(function(){
-        var that = this;
-        var rowArray = [] ,colArray=[];
-        rowArray.length= params.row;
-        colArray.length= params.col;
-        Seq(rowArray).seqEach(function(rowObj,i){
-            var that = this;
-            Seq(colArray).seqEach(function(colObj,j){
-                var that = this;
-                var subParams ={
-                    storageId : storageId,
-                    row : i+1,
-                    col : j+1,
-                }
-                storageParkingDAO.addStorageParking(subParams,function(err,result){
-                    if (err) {
-                        logger.error(' createStorage ' + err.message);
-                        throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    } else {
-                        if(result&&result.insertId>0){
-                            logger.info(' createStorage parking ' + 'success');
-                        }else{
-                            logger.warn(' createStorage parking ' + 'failed');
-                        }
-                        that(null,j);
-                    }
-                })
-            }).seq(function(){
-                that(null,i);
-            })
-        }).seq(function(){
-            that();
-        })
-
-    }).seq(function(){
-        logger.info(' createStorage ' + 'success');
-        resUtil.resetCreateRes(res,{insertId:storageId},null);
-        return next();
+    storageDAO.addStorage(params,function(error,result){
+        if (error) {
+            logger.error(' createStorage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createStorage ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
     })
-
 }
 
 function queryStorage(req,res,next){

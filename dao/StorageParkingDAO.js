@@ -7,9 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('StorageParkingDAO.js');
 
 function addStorageParking(params,callback){
-    var query = " insert into storage_parking (storage_id,row,col) values (? , ? , ?) ";
+    var query = " insert into storage_parking (storage_id,storage_area_id,row,col) values (? , ? , ? , ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageId;
+    paramsArray[i++]=params.areaId;
     paramsArray[i++]=params.row;
     paramsArray[i]=params.col;
     db.dbQuery(query,paramsArray,function(error,rows){

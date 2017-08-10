@@ -26,6 +26,7 @@ var receiveContacts = require('./bl/ReceiveContacts.js');
 var entrust = require('./bl/Entrust.js');
 var entrustContacts = require('./bl/EntrustContacts.js');
 var storage = require('./bl/Storage.js');
+var storageArea = require('./bl/StorageArea.js');
 var storageParking = require('./bl/StorageParking.js');
 var car = require('./bl/Car.js');
 var carStorageRel = require('./bl/CarStorageRel.js');
@@ -286,7 +287,13 @@ function createServer() {
     server.put({path:'/api/user/:userId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
 
     /**
-     * storageParking Module
+     * StorageArea Module
+     */
+    server.get('/api/storageArea',storageArea.queryStorageArea);
+    server.post({path:'/api/user/:userId/storageArea',contentType: 'application/json'},storageArea.createStorageArea);
+
+    /**
+     * StorageParking Module
      */
     server.get('/api/storageParking',storageParking.queryStorageParking);
     server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking,sysRecord.saveCarRecord);

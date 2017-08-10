@@ -7,12 +7,9 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('StorageDAO.js');
 
 function addStorage(params,callback){
-    var query = " insert into storage_info (storage_name,row,col,city_id,remark) values (? , ? , ? , ? , ?) ";
+    var query = " insert into storage_info (storage_name,remark) values (? , ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
-    paramsArray[i++]=params.row;
-    paramsArray[i++]=params.col;
-    paramsArray[i++]=params.cityId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addStorage ');
@@ -153,10 +150,9 @@ function getStorageTotalDay(params,callback) {
 }
 
 function updateStorage(params,callback){
-    var query = " update storage_info set storage_name = ? , city_id = ? , remark = ? where id = ? " ;
+    var query = " update storage_info set storage_name = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageName;
-    paramsArray[i++]=params.cityId;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.storageId;
     db.dbQuery(query,paramsArray,function(error,rows){
