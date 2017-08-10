@@ -62,6 +62,7 @@ CREATE TABLE `storage_area_info` (
   `row` int(10) NOT NULL COMMENT '排位',
   `col` int(10) NOT NULL COMMENT '道位',
   `area_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '仓储区状态(0-停用,1-可用)',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
