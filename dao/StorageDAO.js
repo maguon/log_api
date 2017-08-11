@@ -35,7 +35,9 @@ function getStorage(params,callback) {
 }
 
 function getStorageDate(params,callback) {
-    var query = " select d.*,s.* from storage_stat_date d left join storage_info s on d.storage_id = s.id where d.date_id is not null ";
+    var query = " select s.id,s.storage_name,sum(sai.col*sai.row) as total_seats,d.* " +
+        " from storage_info s left join storage_area_info sai on s.id = sai.storage_id " +
+        " left join storage_stat_date d on s.id = d.storage_id where s.id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
         paramsArray[i++] = params.storageId;
@@ -61,26 +63,9 @@ function getStorageDate(params,callback) {
         paramsArray[i] = params.dateEndMonth;
         query = query + " and date_format(d.date_id,'%Y%m') <= ? ";
     }
+    query = query + ' group by s.id,d.date_id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageDate ');
-        return callback(error,rows);
-    });
-}
-
-function getStorageParkingCount(params,callback) {
-    var query = " select sum(sa.row*sa.col) sum_storageParking from storage_info s " +
-        " left join storage_area_info sa on s.id = sa.storage_id where s.id is not null ";
-    var paramsArray=[],i=0;
-    if(params.storageId){
-        paramsArray[i++] = params.storageId;
-        query = query + " and s.id = ? ";
-    }
-    if(params.areaId){
-        paramsArray[i++] = params.areaId;
-        query = query + " and sa.id = ? ";
-    }
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getStorageParkingCount ');
         return callback(error,rows);
     });
 }
@@ -191,7 +176,6 @@ module.exports ={
     addStorage : addStorage,
     getStorage : getStorage,
     getStorageDate : getStorageDate,
-    getStorageParkingCount : getStorageParkingCount,
     getStorageCount : getStorageCount,
     getStorageTotalMonth : getStorageTotalMonth,
     getStorageTotalDay : getStorageTotalDay,

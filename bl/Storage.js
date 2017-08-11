@@ -57,20 +57,6 @@ function queryStorageDate(req,res,next){
     })
 }
 
-function queryStorageParkingCount(req,res,next){
-    var params = req.params ;
-    storageDAO.getStorageParkingCount(params,function(error,result){
-        if (error) {
-            logger.error(' queryStorageParkingCount ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryStorageParkingCount ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function queryStorageCount(req,res,next){
     var params = req.params ;
     storageDAO.getStorageCount(params,function(error,result){
@@ -207,7 +193,6 @@ module.exports = {
     createStorage : createStorage,
     queryStorage : queryStorage,
     queryStorageDate : queryStorageDate,
-    queryStorageParkingCount : queryStorageParkingCount,
     queryStorageCount : queryStorageCount,
     queryStorageTotalMonth : queryStorageTotalMonth,
     queryStorageTotalDay : queryStorageTotalDay,
