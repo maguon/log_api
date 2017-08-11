@@ -290,7 +290,7 @@ function createServer() {
      * StorageArea Module
      */
     server.get('/api/storageArea',storageArea.queryStorageArea);
-    server.post({path:'/api/user/:userId/storageArea',contentType: 'application/json'},storageArea.createStorageArea);
+    server.post({path:'/api/user/:userId/storage/:storageId/storageArea',contentType: 'application/json'},storageArea.createStorageArea);
     server.put({path:'/api/user/:userId/storageArea/:areaId',contentType: 'application/json'} ,storageArea.updateStorageArea);
     server.put({path:'/api/user/:userId/storageArea/:areaId/areaStatus/:areaStatus',contentType: 'application/json'} ,storageArea.updateStorageAreaStatus);
 

@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "stg.myxxjs.com:9001",
+  "host": "localhost:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -4902,7 +4902,7 @@
         }
       }
     },
-    "/user/{userId}/storageArea": {
+    "/user/{userId}/storage/{storageId}/storageArea": {
       "post": {
         "tags": [
           "storage"
@@ -4917,6 +4917,14 @@
             "name": "userId",
             "in": "path",
             "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageId",
+            "in": "path",
+            "description": "storage Id",
             "required": true,
             "type": "integer"
 
@@ -6926,9 +6934,6 @@
       "type": "object",
       "properties": {
 
-        "storageId": {
-          "type": "integer"
-        },
         "areaName": {
           "type": "string"
         },
