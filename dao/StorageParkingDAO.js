@@ -24,7 +24,8 @@ function getStorageParking(params,callback) {
         " r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from storage_parking p left join storage_info s on p.storage_id = s.id " +
         " left join car_storage_rel r on p.rel_id = r.id " +
-        " left join car_info c on p.car_id = c.id where p.id is not null ";
+        " left join car_info c on p.car_id = c.id " +
+        " left join storage_area_info sa on p.storage_area_id = sa.id where p.id is not null ";
     var paramsArray=[],i=0;
     if(params.parkingId){
         paramsArray[i++] = params.parkingId;
@@ -37,6 +38,10 @@ function getStorageParking(params,callback) {
     if(params.storageName){
         paramsArray[i] = params.storageName;
         query = query + " and s.storage_name = ? ";
+    }
+    if(params.areaId){
+        paramsArray[i++] = params.areaId;
+        query = query + " and sa.id = ? ";
     }
     query = query + ' order by p.id ';
     db.dbQuery(query,paramsArray,function(error,rows){

@@ -45,7 +45,11 @@ function getStorageDate(params,callback) {
     }
     if(params.storageName){
         paramsArray[i++] = params.storageName;
-        query = query + " and storage_name = ? ";
+        query = query + " and s.storage_name = ? ";
+    }
+    if(params.storageStatus){
+        paramsArray[i++] = params.storageStatus;
+        query = query + " and s.storage_status = ? ";
     }
     if(params.dateStart){
         paramsArray[i++] = params.dateStart;
