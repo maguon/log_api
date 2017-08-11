@@ -4427,14 +4427,6 @@
 
           },
           {
-            "name": "storageStatus",
-            "in": "query",
-            "description": "storage status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "dateStart",
             "in": "query",
             "description": "date start",
@@ -4883,6 +4875,14 @@
             "description": "area name",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "areaStatus",
+            "in": "query",
+            "description": "area status",
+            "required": false,
+            "type": "integer"
 
           },
           {

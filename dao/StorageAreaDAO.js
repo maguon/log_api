@@ -33,6 +33,10 @@ function getStorageArea(params,callback) {
         paramsArray[i++] = params.areaName;
         query = query + " and sa.area_name = ? ";
     }
+    if(params.areaStatus){
+        paramsArray[i++] = params.areaStatus;
+        query = query + " and sa.area_status = ? ";
+    }
     if(params.storageId){
         paramsArray[i++] = params.storageId;
         query = query + " and sa.storage_id = ? ";
