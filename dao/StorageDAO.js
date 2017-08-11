@@ -35,7 +35,7 @@ function getStorage(params,callback) {
 }
 
 function getStorageDate(params,callback) {
-    var query = " select s.id,s.storage_name,sum(sai.col*sai.row) as total_seats,d.* " +
+    var query = " select s.id,s.storage_name,s.storage_status,sum(sai.col*sai.row) as total_seats,d.* " +
         " from storage_info s left join storage_area_info sai on s.id = sai.storage_id " +
         " left join storage_stat_date d on s.id = d.storage_id where s.id is not null ";
     var paramsArray=[],i=0;
