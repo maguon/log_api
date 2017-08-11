@@ -147,7 +147,7 @@ function getCar(params,callback) {
     var query = " select c.*,ba.addr_name, " +
         " re.short_name as re_short_name,re.receive_name, " +
         " en.short_name as en_short_name,en.entrust_name, " +
-        " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
+        " p.id as p_id,p.storage_id,p.storage_area_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
@@ -258,7 +258,7 @@ function getCarBase(params,callback) {
     var query = " select c.*,ba.addr_name, " +
         " re.short_name as re_short_name,re.receive_name, " +
         " en.short_name as en_short_name,en.entrust_name, " +
-        " p.id as p_id,p.storage_id,p.row,p.col,p.parking_status, " +
+        " p.id as p_id,p.storage_id,p.storage_area_id,p.row,p.col,p.parking_status, " +
         " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
