@@ -6826,6 +6826,9 @@
         "areaName": {
           "type": "string"
         },
+        "total": {
+          "type": "integer"
+        },
         "row": {
           "type": "integer"
         },

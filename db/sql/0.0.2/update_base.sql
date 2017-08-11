@@ -59,6 +59,7 @@ CREATE TABLE `storage_area_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
   `storage_id` int(10) NOT NULL COMMENT '仓库ID',
   `area_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '分区名称',
+  `total` int(10) NOT NULL COMMENT '车位总数',
   `row` int(10) NOT NULL COMMENT '排位',
   `col` int(10) NOT NULL COMMENT '道位',
   `area_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '仓储区状态(0-停用,1-可用)',
