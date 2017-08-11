@@ -148,12 +148,14 @@ function getCar(params,callback) {
         " re.short_name as re_short_name,re.receive_name, " +
         " en.short_name as en_short_name,en.entrust_name, " +
         " p.id as p_id,p.storage_id,p.storage_area_id,p.row,p.col,p.parking_status, " +
-        " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
+        " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status, " +
+        " sa.area_name " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info re on c.receive_id = re.id " +
-        " left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
+        " left join entrust_info en on c.entrust_id = en.id " +
+        " left join storage_area_info sa on p.storage_area_id = sa.id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
@@ -259,12 +261,14 @@ function getCarBase(params,callback) {
         " re.short_name as re_short_name,re.receive_name, " +
         " en.short_name as en_short_name,en.entrust_name, " +
         " p.id as p_id,p.storage_id,p.storage_area_id,p.row,p.col,p.parking_status, " +
-        " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
+        " r.id as r_id,r.storage_name,r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status, " +
+        " sa.area_name " +
         " from car_info c left join storage_parking p on c.id = p.car_id " +
         " left join car_storage_rel r on c.id = r.car_id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info re on c.receive_id = re.id " +
-        " left join entrust_info en on c.entrust_id = en.id where c.id is not null ";
+        " left join entrust_info en on c.entrust_id = en.id " +
+        " left join storage_area_info sa on p.storage_area_id = sa.id where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
