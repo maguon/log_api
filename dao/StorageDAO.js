@@ -18,7 +18,7 @@ function addStorage(params,callback){
 }
 
 function getStorage(params,callback) {
-    var query = " select s.*,sum(sa.row*sa.col) as total_seats from storage_info s " +
+    var query = " select s.*,if(isnull(sum(sa.col*sa.row)),0,sum(sa.col*sa.row)) as total_seats from storage_info s " +
         " left join storage_area_info sa on s.id = sa.storage_id where s.id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
@@ -37,7 +37,7 @@ function getStorage(params,callback) {
 }
 
 function getStorageDate(params,callback) {
-    var query = " select s.id,s.storage_name,s.storage_status,sum(sai.col*sai.row) as total_seats,d.* " +
+    var query = " select s.id,s.storage_name,s.storage_status,if(isnull(sum(sai.col*sai.row)),0,sum(sai.col*sai.row)) as total_seats,d.* " +
         " from storage_info s left join storage_area_info sai on s.id = sai.storage_id " +
         " left join storage_stat_date d on s.id = d.storage_id where s.id is not null ";
     var paramsArray=[],i=0;
