@@ -4947,6 +4947,60 @@
         }
       }
     },
+    "/user/{userId}/storageArea/{areaId}": {
+      "put": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "update storageArea info",
+        "description": "update storageArea info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "areaId",
+            "in": "path",
+            "description": "area id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "storageArea",
+            "in": "body",
+            "description": "storageArea info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storageArea"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storageArea id"
+          }
+        }
+      }
+    },
     "/storageParking": {
       "get": {
         "tags": [

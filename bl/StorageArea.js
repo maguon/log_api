@@ -92,8 +92,23 @@ function queryStorageArea(req,res,next){
     })
 }
 
+function updateStorageArea(req,res,next){
+    var params = req.params ;
+    storageAreaDAO.updateStorageArea(params,function(error,result){
+        if (error) {
+            logger.error(' updateStorageArea ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateStorageArea ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createStorageArea : createStorageArea,
-    queryStorageArea : queryStorageArea
+    queryStorageArea : queryStorageArea,
+    updateStorageArea : updateStorageArea
 }

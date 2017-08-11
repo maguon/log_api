@@ -291,6 +291,7 @@ function createServer() {
      */
     server.get('/api/storageArea',storageArea.queryStorageArea);
     server.post({path:'/api/user/:userId/storageArea',contentType: 'application/json'},storageArea.createStorageArea);
+    server.put({path:'/api/user/:userId/storageArea/:areaId',contentType: 'application/json'} ,storageArea.updateStorageArea);
 
     /**
      * StorageParking Module
