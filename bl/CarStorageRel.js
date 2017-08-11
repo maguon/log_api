@@ -29,6 +29,7 @@ function createCarStorageRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1&&rows[0].car_id == 0){
+                    parkObj.areaName = rows[0].area_name;
                     parkObj.row = rows[0].row;
                     parkObj.col = rows[0].col;
                     that();
@@ -122,7 +123,7 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         logger.info(' createCarStorageRel ' + 'success');
-        req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
+        req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " + parkObj.areaName + " " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
         req.params.op =11;
         resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();
@@ -144,6 +145,7 @@ function createAgainCarStorageRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1&&rows[0].car_id == 0){
+                    parkObj.areaName = rows[0].area_name;
                     parkObj.row = rows[0].row;
                     parkObj.col = rows[0].col;
                     that();
@@ -268,7 +270,7 @@ function createAgainCarStorageRel(req,res,next){
         })
     }).seq(function(){
         logger.info(' createAgainCarStorageRel ' + 'success');
-        req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
+        req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " + parkObj.areaName + " " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
         req.params.op =11;
         resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();

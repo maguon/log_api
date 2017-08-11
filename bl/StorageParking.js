@@ -63,6 +63,7 @@ function updateStorageParking(req,res,next){
             } else{
                 if(parkObj.storageId==rows[0].storage_id){
                     if(rows&&rows.length==1&&rows[0].car_id == 0){
+                        parkObj.areaName = rows[0].area_name;
                         parkObj.row = rows[0].row;
                         parkObj.col = rows[0].col;
                         that();
@@ -111,7 +112,7 @@ function updateStorageParking(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateStorageParking ' + 'success');
-                req.params.carContent =" 移位 "+parkObj.storageName+ " 至 " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
+                req.params.carContent =" 移位 "+parkObj.storageName+ " 至 " + parkObj.areaName + " " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
                 req.params.vin =parkObj.vin;
                 req.params.op =12;
                 resUtil.resetUpdateRes(res,result,null);

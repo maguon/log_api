@@ -20,7 +20,7 @@ function addStorageParking(params,callback){
 }
 
 function getStorageParking(params,callback) {
-    var query = " select p.*,c.vin,s.storage_name, " +
+    var query = " select p.*,c.vin,s.storage_name,sa.area_name, " +
         " r.enter_time,r.plan_out_time,r.real_out_time,r.rel_status " +
         " from storage_parking p left join storage_info s on p.storage_id = s.id " +
         " left join car_storage_rel r on p.rel_id = r.id " +
