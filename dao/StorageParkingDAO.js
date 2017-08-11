@@ -45,6 +45,28 @@ function getStorageParking(params,callback) {
     });
 }
 
+function getStorageParkingBase(params,callback) {
+    var query = " select * from storage_parking where car_id >0 and id is not null ";
+    var paramsArray=[],i=0;
+    if(params.parkingId){
+        paramsArray[i++] = params.parkingId;
+        query = query + " and id = ? ";
+    }
+    if(params.storageId){
+        paramsArray[i++] = params.storageId;
+        query = query + " and storage_id = ? ";
+    }
+    if(params.areaId){
+        paramsArray[i++] = params.areaId;
+        query = query + " and storage_area_id = ? ";
+    }
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getStorageParkingBase ');
+        return callback(error,rows);
+    });
+}
+
 function updateStorageParking(params,callback){
     var query = " update storage_parking set car_id = ? , rel_id = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -83,6 +105,7 @@ function updateStorageParkingOut(params,callback){
 module.exports ={
     addStorageParking : addStorageParking,
     getStorageParking : getStorageParking,
+    getStorageParkingBase : getStorageParkingBase,
     updateStorageParking : updateStorageParking,
     updateStorageParkingMove : updateStorageParkingMove,
     updateStorageParkingOut : updateStorageParkingOut

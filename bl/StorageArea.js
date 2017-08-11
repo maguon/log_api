@@ -106,9 +106,42 @@ function updateStorageArea(req,res,next){
     })
 }
 
+function updateStorageAreaStatus (req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        storageParkingDAO.getStorageParkingBase(params,function(error,rows){
+            if (error) {
+                logger.error(' storageParkingDAO ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0){
+                    logger.warn(' storageParkingDAO ' + 'failed');
+                    resUtil.resetFailedRes(res,"仓库车位不为空，禁止停用");
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        storageAreaDAO.updateStorageAreaStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateStorageAreaStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateStorageAreaStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createStorageArea : createStorageArea,
     queryStorageArea : queryStorageArea,
-    updateStorageArea : updateStorageArea
+    updateStorageArea : updateStorageArea,
+    updateStorageAreaStatus : updateStorageAreaStatus
 }

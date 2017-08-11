@@ -55,9 +55,21 @@ function updateStorageArea(params,callback){
     });
 }
 
+function updateStorageAreaStatus(params,callback){
+    var query = " update storage_area_info set area_status = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.areaStatus;
+    paramsArray[i] = params.areaId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateStorageAreaStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addStorageArea : addStorageArea,
     getStorageArea : getStorageArea,
-    updateStorageArea : updateStorageArea
+    updateStorageArea : updateStorageArea,
+    updateStorageAreaStatus : updateStorageAreaStatus
 }
