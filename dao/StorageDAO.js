@@ -67,6 +67,24 @@ function getStorageDate(params,callback) {
     });
 }
 
+function getStorageParkingCount(params,callback) {
+    var query = " select sum(sa.row*sa.col) sum_storageParking from storage_info s " +
+        " left join storage_area_info sa on s.id = sa.storage_id where s.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.storageId){
+        paramsArray[i++] = params.storageId;
+        query = query + " and s.id = ? ";
+    }
+    if(params.areaId){
+        paramsArray[i++] = params.areaId;
+        query = query + " and sa.id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getStorageParkingCount ');
+        return callback(error,rows);
+    });
+}
+
 function getStorageCount(params,callback) {
     var query = " select sum(d.imports) as sumImports,sum(d.exports) as sumExports,sum(d.balance) as sumBalance from storage_info s " +
         " left join storage_stat_date d on s.id = d.storage_id where s.id is not null ";
@@ -173,6 +191,7 @@ module.exports ={
     addStorage : addStorage,
     getStorage : getStorage,
     getStorageDate : getStorageDate,
+    getStorageParkingCount : getStorageParkingCount,
     getStorageCount : getStorageCount,
     getStorageTotalMonth : getStorageTotalMonth,
     getStorageTotalDay : getStorageTotalDay,

@@ -4475,6 +4475,50 @@
         }
       }
     },
+    "/storageParkingCount": {
+      "get": {
+        "tags": [
+          "storage"
+        ],
+        "summary": "query  storageParking count",
+        "description": "query storageParkingCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "storageId",
+            "in": "query",
+            "description": "storage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "areaId",
+            "in": "query",
+            "description": "area Id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/storage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/storageCount": {
       "get": {
         "tags": [

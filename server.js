@@ -278,6 +278,7 @@ function createServer() {
      */
     server.get('/api/storage',storage.queryStorage);
     server.get('/api/storageDate',storage.queryStorageDate);
+    server.get('/api/storageParkingCount',storage.queryStorageParkingCount);
     server.get('/api/storageCount',storage.queryStorageCount);
     server.get('/api/storageTotalMonth',storage.queryStorageTotalMonth);
     server.get('/api/storageTotalDay',storage.queryStorageTotalDay);
