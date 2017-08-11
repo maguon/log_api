@@ -18,16 +18,18 @@ function addStorage(params,callback){
 }
 
 function getStorage(params,callback) {
-    var query = " select * from storage_info where id is not null ";
+    var query = " select s.*,sum(sa.row*sa.col) as total_seats from storage_info s " +
+        " left join storage_area_info sa on s.id = sa.storage_id where s.id is not null ";
     var paramsArray=[],i=0;
     if(params.storageId){
         paramsArray[i++] = params.storageId;
-        query = query + " and id = ? ";
+        query = query + " and s.id = ? ";
     }
     if(params.storageName){
         paramsArray[i++] = params.storageName;
-        query = query + " and storage_name = ? ";
+        query = query + " and s.storage_name = ? ";
     }
+    query = query + ' group by s.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorage ');
         return callback(error,rows);
