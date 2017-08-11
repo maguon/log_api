@@ -22,19 +22,20 @@ function addStorageArea(params,callback){
 }
 
 function getStorageArea(params,callback) {
-    var query = " select * from storage_area_info where id is not null ";
+    var query = " select sa.*,s.storage_name from storage_area_info sa" +
+        " left join storage_info s on sa.storage_id = s.id where sa.id is not null ";
     var paramsArray=[],i=0;
     if(params.areaId){
         paramsArray[i++] = params.areaId;
-        query = query + " and id = ? ";
+        query = query + " and sa.id = ? ";
     }
     if(params.areaName){
         paramsArray[i++] = params.areaName;
-        query = query + " and area_name = ? ";
+        query = query + " and sa.area_name = ? ";
     }
     if(params.storageId){
         paramsArray[i++] = params.storageId;
-        query = query + " and storage_id = ? ";
+        query = query + " and sa.storage_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getStorageArea ');
