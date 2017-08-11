@@ -7,11 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('StorageAreaDAO.js');
 
 function addStorageArea(params,callback){
-    var query = " insert into storage_area_info (storage_id,area_name,total,row,col,remark) values (? , ? , ? , ? , ? , ?)";
+    var query = " insert into storage_area_info (storage_id,area_name,row,col,remark) values (? , ? , ? , ? , ?)";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.storageId;
     paramsArray[i++]=params.areaName;
-    paramsArray[i++]=params.total;
     paramsArray[i++]=params.row;
     paramsArray[i++]=params.col;
     paramsArray[i]=params.remark;
