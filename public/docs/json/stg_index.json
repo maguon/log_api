@@ -3490,6 +3490,173 @@
         }
       }
     },
+    "/cityRoute": {
+      "get": {
+        "tags": [
+          "city"
+        ],
+        "summary": "query  cityRoute list",
+        "description": "query cityRoute",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routeId",
+            "in": "query",
+            "description": "route id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/cityRoute"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid cityRoute id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/cityRoute": {
+      "post": {
+        "tags": [
+          "city"
+        ],
+        "summary": "user create cityRoute",
+        "description": "user create cityRoute",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityRoute",
+            "in": "body",
+            "description": "cityRoute info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cityRoute"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid cityRoute id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/cityRoute/{routeId}": {
+      "put": {
+        "tags": [
+          "city"
+        ],
+        "summary": "update cityRoute info",
+        "description": "update cityRoute info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "description": "route id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityRoute",
+            "in": "body",
+            "description": "cityRoute info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cityRoute"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid cityRoute id"
+          }
+        }
+      }
+    },
     "/baseAddr": {
       "get": {
         "tags": [
@@ -6836,6 +7003,24 @@
       },
       "xml": {
         "name": "city"
+      }
+    },
+    "cityRoute": {
+      "type": "object",
+      "properties": {
+
+        "routeStartId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "km": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "cityRoute"
       }
     },
     "baseAddr": {
