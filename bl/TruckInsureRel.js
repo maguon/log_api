@@ -25,7 +25,7 @@ function createTruckInsureRel(req,res,next){
             } else {
                 if(rows && rows.length>0){
                     logger.warn(' getTruckInsureRel ' +params.insureNum+ sysMsg.CUST_CREATE_EXISTING);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
+                    resUtil.resetFailedRes(res,"保单编号已经存在");
                     return next();
                 }else{
                     that();
