@@ -1,4 +1,5 @@
-
+ALTER TABLE `truck_info`
+ADD COLUMN `flag`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '货车可用运力标识' AFTER `truck_status`;
 -- ----------------------------
 -- Table structure for city_route_info
 -- ----------------------------
