@@ -7,10 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
-    var query = " insert into city_route_info (route_start_id,route_end_id,distance) values ( ? , ? , ? )";
+    var query = " insert into city_route_info (route_start_id,route_start,route_end_id,route_end,distance) values ( ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.routeEnd;
     paramsArray[i]=params.distance;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCityRoute ');
@@ -58,6 +60,16 @@ function getCityRouteBase(params,callback) {
     });
 }
 
+function getCityRouteCheck(params,callback) {
+    var query = " select * from city_route_info where route_start_id = " + params.routeStartId + " and route_end_id = " + params.routeEndId +
+        " union select * from city_route_info where route_end_id = " + params.routeStartId + " and route_start_id = " + params.routeEndId ;
+    var paramsArray=[],i=0;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCityRouteCheck ');
+        return callback(error,rows);
+    });
+}
+
 function updateCityRoute(params,callback){
     var query = " update city_route_info set distance = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -74,5 +86,6 @@ module.exports ={
     addCityRoute : addCityRoute,
     getCityRoute : getCityRoute,
     getCityRouteBase : getCityRouteBase,
+    getCityRouteCheck : getCityRouteCheck,
     updateCityRoute : updateCityRoute
 }

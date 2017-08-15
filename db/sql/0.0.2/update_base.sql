@@ -10,7 +10,7 @@ ADD COLUMN `date_id`  int(4) NOT NULL AFTER `active`;
 ALTER TABLE `truck_info`
 ADD COLUMN `truck_num`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '车牌号或挂车号' AFTER `id`,
 ADD COLUMN `drive_id`  int(10) NOT NULL DEFAULT 0 COMMENT '主驾ID' AFTER `the_code`,
-ADD COLUMN `company_id`  int(10) NOT NULL DEFAULT 0 COMMENT '所属公司ID' AFTER `copilot`;
+ADD COLUMN `company_id`  int(10) NOT NULL DEFAULT 0 COMMENT '所属公司ID' AFTER `copilot`,
 ADD COLUMN `truck_type`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '车辆类型(1-车头,2-挂车)' AFTER `company_id`,
 ADD COLUMN `repair_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '维修状态(0-维修,1-正常)' AFTER `rel_id`,
 ADD COLUMN `truck_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '车辆状态(0-停用,1-可用)' AFTER `repair_status`,
@@ -67,3 +67,19 @@ CREATE TABLE `storage_area_info` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for city_route_info
+-- ----------------------------
+DROP TABLE IF EXISTS `city_route_info`;
+CREATE TABLE `city_route_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `route_start_id` int(10) NOT NULL COMMENT '起始地ID',
+  `route_start` varchar(50) COLLATE utf8mb4_bin NOT NULL COMMENT '起始地名称',
+  `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
+  `route_end` varchar(50) COLLATE utf8mb4_bin NOT NULL COMMENT '目的地名称',
+  `distance` decimal(10,2) NOT NULL COMMENT '公里数',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`route_start_id`,`route_end_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;

@@ -15,15 +15,33 @@ var logger = serverLogger.createLogger('CityRoute.js');
 
 function createCityRoute(req,res,next){
     var params = req.params ;
-    cityRouteDAO.addCityRoute(params,function(error,result){
-        if (error) {
-            logger.error(' createCityRoute ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createCityRoute ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        cityRouteDAO.getCityRouteCheck(params,function(error,rows){
+            if (error) {
+                logger.error(' getCityRouteCheck ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0&&rows[0].distance != null){
+                    logger.warn(' getCityRouteCheck ' + 'failed');
+                    resUtil.resetFailedRes(res," 该路线已经存在 ");
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        cityRouteDAO.addCityRoute(params,function(error,result){
+            if (error) {
+                logger.error(' createCityRoute ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createCityRoute ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

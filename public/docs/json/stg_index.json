@@ -7049,8 +7049,14 @@
         "routeStartId": {
           "type": "integer"
         },
+        "routeStart": {
+          "type": "string"
+        },
         "routeEndId": {
           "type": "integer"
+        },
+        "routeEnd": {
+          "type": "string"
         },
         "distance": {
           "type": "integer"
