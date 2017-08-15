@@ -7,11 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
-    var query = " insert into city_route_info (route_start_id,route_end_id,km) values ( ? , ? , ? )";
+    var query = " insert into city_route_info (route_start_id,route_end_id,distance) values ( ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
-    paramsArray[i]=params.km;
+    paramsArray[i]=params.distance;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCityRoute ');
         return callback(error,rows);
@@ -46,10 +46,24 @@ function getCityRoute(params,callback) {
     });
 }
 
-function updateCityRoute(params,callback){
-    var query = " update city_route_info set km = ? where id = ? ";
+function getCityRouteBase(params,callback) {
+    var query = " select cri.route_start_id start_id, cri.route_end_id as end_id ,cri.distance from city_route_info cri where cri.route_start_id = " + params.routeStartId+
+        " union " +
+        " select cri2.route_end_id start_id ,cri2.route_start_id as end_id ,cri2.distance from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId+
+        " union " +
+        " select " + params.routeStartId + " ,ci.id as end_id , null from city_info ci ";
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.km;
+    query = query + '  order by end_id  ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCityRouteBase ');
+        return callback(error,rows);
+    });
+}
+
+function updateCityRoute(params,callback){
+    var query = " update city_route_info set distance = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.distance;
     paramsArray[i]=params.routeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCityRoute ');
@@ -61,5 +75,6 @@ function updateCityRoute(params,callback){
 module.exports ={
     addCityRoute : addCityRoute,
     getCityRoute : getCityRoute,
+    getCityRouteBase : getCityRouteBase,
     updateCityRoute : updateCityRoute
 }

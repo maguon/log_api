@@ -41,6 +41,20 @@ function queryCityRoute(req,res,next){
     })
 }
 
+function queryCityRouteBase(req,res,next){
+    var params = req.params ;
+    cityRouteDAO.getCityRouteBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryCityRouteBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCityRouteBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCityRoute(req,res,next){
     var params = req.params ;
     cityRouteDAO.updateCityRoute(params,function(error,result){
@@ -59,5 +73,6 @@ function updateCityRoute(req,res,next){
 module.exports = {
     createCityRoute : createCityRoute,
     queryCityRoute : queryCityRoute,
+    queryCityRouteBase : queryCityRouteBase,
     updateCityRoute : updateCityRoute
 }
