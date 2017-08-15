@@ -21,13 +21,13 @@ function addCityRoute(params,callback){
 }
 
 function getCityRoute(params,callback) {
-    if(params.routeStartId !=null && params.routeEndId !=null){
+    if(params.routeStartId >0 && params.routeEndId >0){
         var query = " select * from city_route_info where route_start_id = " + params.routeStartId + " and route_end_id = " + params.routeEndId +
             " union select * from city_route_info where route_end_id = " + params.routeStartId + " and route_start_id = " + params.routeEndId ;
-    }else if(params.routeStartId !=null){
+    }else if(params.routeStartId >0){
         var query = " select * from city_route_info where route_start_id = " + params.routeStartId +
             " union select * from city_route_info where route_end_id = " + params.routeStartId ;
-    }else if(params.routeEndId !=null){
+    }else if(params.routeEndId >0){
         var query = " select * from city_route_info where route_end_id = " + params.routeEndId +
             " union select * from city_route_info where route_start_id = " + params.routeEndId ;
     }else{
