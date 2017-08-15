@@ -3502,14 +3502,6 @@
         ],
         "parameters": [
           {
-            "name": "routeId",
-            "in": "query",
-            "description": "route id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "routeStartId",
             "in": "query",
             "description": "routeStart id",
@@ -3521,22 +3513,6 @@
             "name": "routeEndId",
             "in": "query",
             "description": "routeEnd id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "description": " list start pos",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "list size for pagination",
             "required": false,
             "type": "integer"
 

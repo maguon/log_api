@@ -21,20 +21,19 @@ function addCityRoute(params,callback){
 }
 
 function getCityRoute(params,callback) {
-    var query = " select * from city_route_info where id is not null ";
+    if(params.routeStartId !=null && params.routeEndId !=null){
+        var query = " select * from city_route_info where route_start_id = " + params.routeStartId + " and route_end_id = " + params.routeEndId +
+            " union select * from city_route_info where route_end_id = " + params.routeStartId + " and route_start_id = " + params.routeEndId ;
+    }else if(params.routeStartId !=null){
+        var query = " select * from city_route_info where route_start_id = " + params.routeStartId +
+            " union select * from city_route_info where route_end_id = " + params.routeStartId ;
+    }else if(params.routeEndId !=null){
+        var query = " select * from city_route_info where route_end_id = " + params.routeEndId +
+            " union select * from city_route_info where route_start_id = " + params.routeEndId ;
+    }else{
+        var query = " select * from city_route_info where id is not null ";
+    }
     var paramsArray=[],i=0;
-    if(params.routeId){
-        paramsArray[i++] = params.routeId;
-        query = query + " and id = ? ";
-    }
-    if(params.routeStartId){
-        paramsArray[i++] = params.routeStartId;
-        query = query + " and route_start_id = ? ";
-    }
-    if(params.routeEndId){
-        paramsArray[i++] = params.routeEndId;
-        query = query + " and route_end_id = ? ";
-    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
