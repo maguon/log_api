@@ -3574,7 +3574,7 @@
             "name": "routeStartId",
             "in": "query",
             "description": "routeStart id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           }
