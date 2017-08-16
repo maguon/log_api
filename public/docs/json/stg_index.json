@@ -572,6 +572,14 @@
 
           },
           {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckStatus",
             "in": "query",
             "description": "truck status",
@@ -599,6 +607,22 @@
             "name": "drivingDateEnd",
             "in": "query",
             "description": "drivingDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseDateStart",
+            "in": "query",
+            "description": "licenseDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseDateEnd",
+            "in": "query",
+            "description": "licenseDate end",
             "required": false,
             "type": "string"
 
@@ -680,6 +704,14 @@
 
           },
           {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckStatus",
             "in": "query",
             "description": "truck status",
@@ -723,6 +755,22 @@
             "name": "drivingDateEnd",
             "in": "query",
             "description": "drivingDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseDateStart",
+            "in": "query",
+            "description": "licenseDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "licenseDateEnd",
+            "in": "query",
+            "description": "licenseDate end",
             "required": false,
             "type": "string"
 

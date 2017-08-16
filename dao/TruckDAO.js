@@ -81,6 +81,10 @@ function getTruckFirst(params,callback) {
         paramsArray[i++] = params.truckType;
         query = query + " and h.truck_type = ? ";
     }
+    if(params.repairStatus){
+        paramsArray[i++] = params.repairStatus;
+        query = query + " and h.repair_status = ? ";
+    }
     if(params.truckStatus){
         paramsArray[i++] = params.truckStatus;
         query = query + " and h.truck_status = ? ";
@@ -96,6 +100,14 @@ function getTruckFirst(params,callback) {
     if(params.drivingDateEnd){
         paramsArray[i++] = params.drivingDateEnd;
         query = query + " and h.driving_date <= ? ";
+    }
+    if(params.licenseDateStart){
+        paramsArray[i++] = params.licenseDateStart;
+        query = query + " and h.license_date >= ? ";
+    }
+    if(params.licenseDateEnd){
+        paramsArray[i++] = params.licenseDateEnd;
+        query = query + " and h.license_date <= ? ";
     }
     query = query + '  order by h.id desc ';
     if (params.start && params.size) {
@@ -131,6 +143,10 @@ function getTruckTrailer(params,callback) {
         paramsArray[i++] = params.truckType;
         query = query + " and h.truck_type = ? ";
     }
+    if(params.repairStatus){
+        paramsArray[i++] = params.repairStatus;
+        query = query + " and h.repair_status = ? ";
+    }
     if(params.truckStatus){
         paramsArray[i++] = params.truckStatus;
         query = query + " and h.truck_status = ? ";
@@ -154,6 +170,14 @@ function getTruckTrailer(params,callback) {
     if(params.drivingDateEnd){
         paramsArray[i++] = params.drivingDateEnd;
         query = query + " and h.driving_date <= ? ";
+    }
+    if(params.licenseDateStart){
+        paramsArray[i++] = params.licenseDateStart;
+        query = query + " and h.license_date >= ? ";
+    }
+    if(params.licenseDateEnd){
+        paramsArray[i++] = params.licenseDateEnd;
+        query = query + " and h.license_date <= ? ";
     }
     if(params.trailId){
         paramsArray[i++] = params.trailId;
