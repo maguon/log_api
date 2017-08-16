@@ -1,5 +1,3 @@
-ALTER TABLE `truck_info`
-ADD COLUMN `usable_flag`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '货车可用运力标识' AFTER `truck_status`;
 -- ----------------------------
 -- Table structure for city_route_info
 -- ----------------------------
@@ -16,3 +14,41 @@ CREATE TABLE `city_route_info` (
   PRIMARY KEY (`route_start_id`,`route_end_id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+--  Table structure for `truck_dispatch`
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_dispatch`;
+CREATE TABLE `truck_dispatch` (
+  `truck_id` int(11) NOT NULL,
+  `dispatch_flag` tinyint(1) NOT NULL DEFAULT '0',
+  `current_city` int(11) NOT NULL DEFAULT '0',
+  `task_start` int(11) NOT NULL DEFAULT '0',
+  `task_end` int(11) NOT NULL DEFAULT '0',
+  `car_count` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`truck_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+delimiter $$
+DROP TRIGGER IF EXISTS trg_add_truck_dispatch;
+create  trigger trg_add_truck_dispatch
+after insert on truck_info for each row
+BEGIN
+IF (new.truck_type=1)THEN
+insert into truck_dispatch (truck_id) values(new.id);
+END IF;
+END $$
+delimiter ;
+
+
+delimiter $$
+DROP TRIGGER IF EXISTS trg_set_truck_dispatch;
+CREATE TRIGGER `trg_set_truck_dispatch` AFTER UPDATE ON `truck_info` FOR EACH ROW
+IF(new.drive_id>0&&new.rel_id>0&&new.repair_status=1) THEN
+update truck_dispatch set dispatch_flag =1 where truck_id = new.id;
+ELSEIF(new.drive_id=0||new.rel_id=0||new.repair_status=0) THEN
+update truck_dispatch set dispatch_flag =0 where truck_id = new.id;
+END IF;
+END $$
+delimiter ;
+
