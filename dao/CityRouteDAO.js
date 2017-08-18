@@ -69,6 +69,20 @@ function getCityRouteCheck(params,callback) {
     });
 }
 
+function getCityRouteDispatch(params,callback) {
+    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.distance from city_info ci left join " +
+        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.distance from city_route_info cri where cri.route_start_id = " + params.routeStartId +
+        " union " +
+        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.distance from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
+        " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id where  cd.distance > 0 ";
+    var paramsArray=[],i=0;
+    query = query + '  order by end_id  ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCityRouteDispatch ');
+        return callback(error,rows);
+    });
+}
+
 function updateCityRoute(params,callback){
     var query = " update city_route_info set distance = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -86,5 +100,6 @@ module.exports ={
     getCityRoute : getCityRoute,
     getCityRouteBase : getCityRouteBase,
     getCityRouteCheck : getCityRouteCheck,
+    getCityRouteDispatch : getCityRouteDispatch,
     updateCityRoute : updateCityRoute
 }

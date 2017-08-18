@@ -3619,6 +3619,43 @@
         }
       }
     },
+    "/cityRouteDispatch": {
+      "get": {
+        "tags": [
+          "city"
+        ],
+        "summary": "query  cityRouteDispatch list",
+        "description": "query cityRouteDispatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/cityRoute"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid cityRoute id"
+          }
+        }
+      }
+    },
     "/user/{userId}/cityRoute": {
       "post": {
         "tags": [

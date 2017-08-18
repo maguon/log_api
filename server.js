@@ -242,6 +242,7 @@ function createServer() {
      */
     server.get('/api/cityRoute',cityRoute.queryCityRoute);
     server.get('/api/cityRouteBase',cityRoute.queryCityRouteBase);
+    server.get('/api/cityRouteDispatch',cityRoute.queryCityRouteDispatch);
     server.post({path:'/api/user/:userId/cityRoute',contentType: 'application/json'},cityRoute.createCityRoute);
     server.put({path:'/api/user/:userId/cityRoute/:routeId',contentType: 'application/json'} ,cityRoute.updateCityRoute);
 
