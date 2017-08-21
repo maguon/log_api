@@ -61,7 +61,7 @@
       "description":"Car of log api"
     },
     {
-      "name":"dispatchTruck",
+      "name":"dispatch",
       "description":"Dispatch of log api"
     },
     {
@@ -6753,7 +6753,7 @@
     "/dispatchTruck": {
       "get": {
         "tags": [
-          "dispatchTruck"
+          "dispatch"
         ],
         "summary": "query  dispatchTruck list",
         "description": "query dispatchTruck",
@@ -6789,7 +6789,7 @@
     "/user/{userId}/dispatchTruck": {
       "post": {
         "tags": [
-          "dispatchTruck"
+          "dispatch"
         ],
         "summary": "user create dispatchTruck",
         "description": "user create dispatchTruck",
@@ -6827,6 +6827,87 @@
           },
           "400": {
             "description": "Invalid token value or invalid dispatchTruck id"
+          }
+        }
+      }
+    },
+    "/dispatchTruckRel": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dispatchTruckRel list",
+        "description": "query dispatchTruckRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dispatchTruckRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dispatchTruckRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dispatchTruckRel": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dispatchTruckRel",
+        "description": "user create dispatchTruckRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dispatchTruckRel",
+            "in": "body",
+            "description": "dispatchTruckRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dispatchTruckRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dispatchTruckRel id"
           }
         }
       }
@@ -7566,6 +7647,39 @@
         },
         "orderDate": {
           "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dispatchTruck"
+      }
+    },
+    "dispatchTruckRel": {
+      "type": "object",
+      "properties": {
+
+        "truckId": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "cityRouteId": {
+          "type": "integer"
+        },
+        "baseAddrId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "distance": {
+          "type": "integer"
+        },
+        "receiveId": {
+          "type": "integer"
+        },
+        "carCount": {
+          "type": "integer"
         }
       },
       "xml": {

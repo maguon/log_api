@@ -34,6 +34,7 @@ var carStorageRel = require('./bl/CarStorageRel.js');
 var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
 var dispatchTruck = require('./bl/DispatchTruck.js');
+var dispatchTruckRel = require('./bl/DispatchTruckRel.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -353,6 +354,12 @@ function createServer() {
      */
     server.get('/api/dispatchTruck' , dispatchTruck.queryDispatchTruck);
     server.post({path:'/api/user/:userId/dispatchTruck',contentType: 'application/json'},dispatchTruck.createDispatchTruck);
+
+    /**
+     * DispatchTruckRel Module
+     */
+    server.get('/api/dispatchTruckRel' , dispatchTruckRel.queryDispatchTruckRel);
+    server.post({path:'/api/user/:userId/dispatchTruckRel',contentType: 'application/json'},dispatchTruckRel.createDispatchTruckRel);
 
     /**
      * App Module
