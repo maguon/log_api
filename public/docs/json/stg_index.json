@@ -6750,21 +6750,21 @@
         }
       }
     },
-    "/dispatchTruck": {
+    "/dpTaskStart": {
       "get": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dispatchTruck list",
-        "description": "query dispatchTruck",
+        "summary": "query  dpTaskStart list",
+        "description": "query dpTaskStart",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "dispatchId",
+            "name": "dpTaskStartId",
             "in": "query",
-            "description": "dispatch id",
+            "description": "dpTaskStart id",
             "required": false,
             "type": "integer"
 
@@ -6776,31 +6776,31 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dispatchTruck"
+                "$ref": "#/definitions/dpTaskStart"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruck id"
+            "description": "Invalid token value or invalid dpTaskStart id"
           }
         }
       }
     },
-    "/dispatchTruckBase": {
+    "/dpTaskStartBase": {
       "get": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dispatchTruckBase list",
-        "description": "query dispatchTruckBase",
+        "summary": "query  dpTaskStartBase list",
+        "description": "query dpTaskStartBase",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "dispatchId",
+            "name": "dpTaskStartId",
             "in": "query",
-            "description": "dispatch id",
+            "description": "dpTaskStart id",
             "required": false,
             "type": "integer"
 
@@ -6836,23 +6836,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dispatchTruckBase"
+                "$ref": "#/definitions/dpTaskStartBase"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruckBase id"
+            "description": "Invalid token value or invalid dpTaskStartBase id"
           }
         }
       }
     },
-    "/user/{userId}/dispatchTruck": {
+    "/user/{userId}/dpTaskStart": {
       "post": {
         "tags": [
           "dispatch"
         ],
-        "summary": "user create dispatchTruck",
-        "description": "user create dispatchTruck",
+        "summary": "user create dpTaskStart",
+        "description": "user create dpTaskStart",
         "produces": [
           "application/json"
         ],
@@ -6866,12 +6866,12 @@
 
           },
           {
-            "name": "dispatchTruck",
+            "name": "dpTaskStart",
             "in": "body",
-            "description": "dispatchTruck info",
+            "description": "dpTaskStart info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dispatchTruck"
+              "$ref": "#/definitions/dpTaskStart"
             }
           }
         ],
@@ -6886,26 +6886,26 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruck id"
+            "description": "Invalid token value or invalid dpTaskStart id"
           }
         }
       }
     },
-    "/dispatchTruckRel": {
+    "/dpRootTask": {
       "get": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dispatchTruckRel list",
-        "description": "query dispatchTruckRel",
+        "summary": "query  dpRootTask list",
+        "description": "query dpRootTask",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "relId",
+            "name": "dpRootTaskId",
             "in": "query",
-            "description": "rel id",
+            "description": "dpRootTask id",
             "required": false,
             "type": "integer"
 
@@ -6917,23 +6917,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dispatchTruckRel"
+                "$ref": "#/definitions/dpRootTask"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruckRel id"
+            "description": "Invalid token value or invalid dpRootTask id"
           }
         }
       }
     },
-    "/user/{userId}/dispatchTruckRel": {
+    "/user/{userId}/dpRootTask": {
       "post": {
         "tags": [
           "dispatch"
         ],
-        "summary": "user create dispatchTruckRel",
-        "description": "user create dispatchTruckRel",
+        "summary": "user create dpRootTask",
+        "description": "user create dpRootTask",
         "produces": [
           "application/json"
         ],
@@ -6947,12 +6947,12 @@
 
           },
           {
-            "name": "dispatchTruckRel",
+            "name": "dpRootTask",
             "in": "body",
-            "description": "dispatchTruckRel info",
+            "description": "dpRootTask info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dispatchTruckRel"
+              "$ref": "#/definitions/dpRootTask"
             }
           }
         ],
@@ -6967,7 +6967,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruckRel id"
+            "description": "Invalid token value or invalid dpRootTask id"
           }
         }
       }
@@ -7677,7 +7677,7 @@
         "name": "carModel"
       }
     },
-    "dispatchTruck": {
+    "dpTaskStart": {
       "type": "object",
       "properties": {
 
@@ -7710,10 +7710,10 @@
         }
       },
       "xml": {
-        "name": "dispatchTruck"
+        "name": "dpTaskStart"
       }
     },
-    "dispatchTruckRel": {
+    "dpRootTask": {
       "type": "object",
       "properties": {
 
@@ -7723,10 +7723,7 @@
         "driveId": {
           "type": "integer"
         },
-        "cityRouteId": {
-          "type": "integer"
-        },
-        "baseAddrId": {
+        "routeStartId": {
           "type": "integer"
         },
         "routeEndId": {
@@ -7734,16 +7731,10 @@
         },
         "distance": {
           "type": "integer"
-        },
-        "receiveId": {
-          "type": "integer"
-        },
-        "carCount": {
-          "type": "integer"
         }
       },
       "xml": {
-        "name": "dispatchTruck"
+        "name": "dpRootTask"
       }
     }
   },

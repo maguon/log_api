@@ -7,48 +7,48 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var dispatchTruckDAO = require('../dao/DispatchTruckDAO.js');
+var dpTaskStartDAO = require('../dao/DpTaskStartDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DispatchTruck.js');
+var logger = serverLogger.createLogger('DpTaskStart.js');
 
-function createDispatchTruck(req,res,next){
+function createDpTaskStart(req,res,next){
     var params = req.params ;
-    dispatchTruckDAO.addDispatchTruck(params,function(error,result){
+    dpTaskStartDAO.addDpTaskStart(params,function(error,result){
         if (error) {
-            logger.error(' createDispatchTruck ' + error.message);
+            logger.error(' createDpTaskStart ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDispatchTruck ' + 'success');
+            logger.info(' createDpTaskStart ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDispatchTruck(req,res,next){
+function queryDpTaskStart(req,res,next){
     var params = req.params ;
-    dispatchTruckDAO.getDispatchTruck(params,function(error,result){
+    dpTaskStartDAO.getDpTaskStart(params,function(error,result){
         if (error) {
-            logger.error(' queryDispatchTruck ' + error.message);
+            logger.error(' queryDpTaskStart ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDispatchTruck ' + 'success');
+            logger.info(' queryDpTaskStart ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDispatchTruckBase(req,res,next){
+function queryDpTaskStartBase(req,res,next){
     var params = req.params ;
-    dispatchTruckDAO.getDispatchTruckBase(params,function(error,result){
+    dpTaskStartDAO.getDpTaskStartBase(params,function(error,result){
         if (error) {
-            logger.error(' queryDispatchTruckBase ' + error.message);
+            logger.error(' queryDpTaskStartBase ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDispatchTruckBase ' + 'success');
+            logger.info(' queryDpTaskStartBase ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -57,7 +57,7 @@ function queryDispatchTruckBase(req,res,next){
 
 
 module.exports = {
-    createDispatchTruck : createDispatchTruck,
-    queryDispatchTruck : queryDispatchTruck,
-    queryDispatchTruckBase : queryDispatchTruckBase
+    createDpTaskStart : createDpTaskStart,
+    queryDpTaskStart : queryDpTaskStart,
+    queryDpTaskStartBase : queryDpTaskStartBase
 }

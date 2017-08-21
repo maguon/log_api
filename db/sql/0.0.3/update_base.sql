@@ -1,5 +1,3 @@
-ALTER TABLE `truck_info`
-ADD COLUMN `dispatch_status`  tinyint(1) NOT NULL DEFAULT 0 AFTER `repair_status`;
 -- ----------------------------
 -- Table structure for city_route_info
 -- ----------------------------

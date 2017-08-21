@@ -33,8 +33,8 @@ var car = require('./bl/Car.js');
 var carStorageRel = require('./bl/CarStorageRel.js');
 var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
-var dispatchTruck = require('./bl/DispatchTruck.js');
-var dispatchTruckRel = require('./bl/DispatchTruckRel.js');
+var dpTaskStart = require('./bl/DpTaskStart.js');
+var dpRootTask = require('./bl/DpRootTask.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -350,17 +350,17 @@ function createServer() {
     server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 
     /**
-     * DispatchTruck Module
+     * DpTaskStart Module
      */
-    server.get('/api/dispatchTruck' , dispatchTruck.queryDispatchTruck);
-    server.get('/api/dispatchTruckBase' , dispatchTruck.queryDispatchTruckBase);
-    server.post({path:'/api/user/:userId/dispatchTruck',contentType: 'application/json'},dispatchTruck.createDispatchTruck);
+    server.get('/api/dpTaskStart' , dpTaskStart.queryDpTaskStart);
+    server.get('/api/dpTaskStartBase' , dpTaskStart.queryDpTaskStartBase);
+    server.post({path:'/api/user/:userId/dpTaskStart',contentType: 'application/json'},dpTaskStart.createDpTaskStart);
 
     /**
-     * DispatchTruckRel Module
+     * DpRootTask Module
      */
-    server.get('/api/dispatchTruckRel' , dispatchTruckRel.queryDispatchTruckRel);
-    server.post({path:'/api/user/:userId/dispatchTruckRel',contentType: 'application/json'},dispatchTruckRel.createDispatchTruckRel);
+    server.get('/api/dpRootTask' , dpRootTask.queryDpRootTask);
+    server.post({path:'/api/user/:userId/dpRootTask',contentType: 'application/json'},dpRootTask.createDpRootTask);
 
     /**
      * App Module

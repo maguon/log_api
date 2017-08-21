@@ -7,36 +7,36 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var dispatchTruckRelDAO = require('../dao/DispatchTruckRelDAO.js');
+var dpRootTaskDAO = require('../dao/DpRootTaskDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DispatchTruckRel.js');
+var logger = serverLogger.createLogger('DpRootTask.js');
 
-function createDispatchTruckRel(req,res,next){
+function createDpRootTask(req,res,next){
     var params = req.params ;
     var myDate = new Date();
     params.taskStartDate = myDate;
-    dispatchTruckRelDAO.addDispatchTruckRel(params,function(error,result){
+    dpRootTaskDAO.addDpRootTask(params,function(error,result){
         if (error) {
-            logger.error(' createDispatchTruckRel ' + error.message);
+            logger.error(' createDpRootTask ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDispatchTruckRel ' + 'success');
+            logger.info(' createDpRootTask ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDispatchTruckRel(req,res,next){
+function queryDpRootTask(req,res,next){
     var params = req.params ;
-    dispatchTruckRelDAO.getDispatchTruckRel(params,function(error,result){
+    dpRootTaskDAO.getDpRootTask(params,function(error,result){
         if (error) {
-            logger.error(' queryDispatchTruckRel ' + error.message);
+            logger.error(' queryDpRootTask ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDispatchTruckRel ' + 'success');
+            logger.info(' queryDpRootTask ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -45,6 +45,6 @@ function queryDispatchTruckRel(req,res,next){
 
 
 module.exports = {
-    createDispatchTruckRel : createDispatchTruckRel,
-    queryDispatchTruckRel : queryDispatchTruckRel
+    createDpRootTask : createDpRootTask,
+    queryDpRootTask : queryDpRootTask
 }
