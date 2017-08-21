@@ -6786,6 +6786,66 @@
         }
       }
     },
+    "/dispatchTruckBase": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dispatchTruckBase list",
+        "description": "query dispatchTruckBase",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dispatchId",
+            "in": "query",
+            "description": "dispatch id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dispatchTruckBase"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dispatchTruckBase id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dispatchTruck": {
       "post": {
         "tags": [

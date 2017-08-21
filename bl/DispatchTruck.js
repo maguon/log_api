@@ -41,8 +41,23 @@ function queryDispatchTruck(req,res,next){
     })
 }
 
+function queryDispatchTruckBase(req,res,next){
+    var params = req.params ;
+    dispatchTruckDAO.getDispatchTruckBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryDispatchTruckBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDispatchTruckBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDispatchTruck : createDispatchTruck,
-    queryDispatchTruck : queryDispatchTruck
+    queryDispatchTruck : queryDispatchTruck,
+    queryDispatchTruckBase : queryDispatchTruckBase
 }

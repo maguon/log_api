@@ -353,6 +353,7 @@ function createServer() {
      * DispatchTruck Module
      */
     server.get('/api/dispatchTruck' , dispatchTruck.queryDispatchTruck);
+    server.get('/api/dispatchTruckBase' , dispatchTruck.queryDispatchTruckBase);
     server.post({path:'/api/user/:userId/dispatchTruck',contentType: 'application/json'},dispatchTruck.createDispatchTruck);
 
     /**

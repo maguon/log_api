@@ -45,8 +45,40 @@ function getDispatchTruck(params,callback) {
     });
 }
 
+function getDispatchTruckBase(params,callback) {
+    var query = " select dt.*,r.short_name from dispatch_truck_info dt" +
+        " left join receive_info r on dt.receive_id = r.id where dt.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dispatchId){
+        paramsArray[i++] = params.dispatchId;
+        query = query + " and dt.id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dt.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dt.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and dt.receive_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDispatchTruckBase ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDispatchTruck : addDispatchTruck,
-    getDispatchTruck : getDispatchTruck
+    getDispatchTruck : getDispatchTruck,
+    getDispatchTruckBase : getDispatchTruckBase
 }
