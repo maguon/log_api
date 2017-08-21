@@ -60,8 +60,10 @@ DROP TABLE IF EXISTS `dispatch_truck_info`;
 CREATE TABLE `dispatch_truck_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `route_start_id` int(10) NOT NULL COMMENT '起始地ID',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '起始地城市',
   `base_addr_id` int(10) NOT NULL DEFAULT '0' COMMENT '起始地发货地址ID',
   `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '目的地城市',
   `receive_id` int(10) NOT NULL COMMENT '经销商ID',
   `pre_count` int(10) NOT NULL COMMENT '指令安排台数',
   `plan_count` int(10) NOT NULL DEFAULT '0' COMMENT '调度派发台数',
@@ -80,6 +82,7 @@ CREATE TABLE `dispatch_truck_rel` (
   `drive_id` int(10) NOT NULL COMMENT '司机ID',
   `city_route_id` int(10) NOT NULL COMMENT '城市线路ID',
   `base_addr_id` int(10) DEFAULT NULL COMMENT '起始地发货地址ID',
+  `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
   `receive_id` int(10) NOT NULL COMMENT '经销商ID',
   `task_start_date` datetime DEFAULT NULL COMMENT '任务生成时间',
   `task_end_date` datetime DEFAULT NULL COMMENT '任务结束时间',

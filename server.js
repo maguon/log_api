@@ -33,6 +33,7 @@ var car = require('./bl/Car.js');
 var carStorageRel = require('./bl/CarStorageRel.js');
 var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
+var dispatchTruck = require('./bl/DispatchTruck.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -346,6 +347,12 @@ function createServer() {
     server.post({path:'/api/user/:userId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.put({path:'/api/user/:userId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
+
+    /**
+     * DispatchTruck Module
+     */
+    server.get('/api/dispatchTruck' , dispatchTruck.queryDispatchTruck);
+    server.post({path:'/api/user/:userId/dispatchTruck',contentType: 'application/json'},dispatchTruck.createDispatchTruck);
 
     /**
      * App Module

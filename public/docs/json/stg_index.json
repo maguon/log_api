@@ -61,6 +61,10 @@
       "description":"Car of log api"
     },
     {
+      "name":"dispatchTruck",
+      "description":"Dispatch of log api"
+    },
+    {
       "name":"app",
       "description":"app version"
     }
@@ -6746,6 +6750,87 @@
         }
       }
     },
+    "/dispatchTruck": {
+      "get": {
+        "tags": [
+          "dispatchTruck"
+        ],
+        "summary": "query  dispatchTruck list",
+        "description": "query dispatchTruck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dispatchId",
+            "in": "query",
+            "description": "dispatch id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dispatchTruck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dispatchTruck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dispatchTruck": {
+      "post": {
+        "tags": [
+          "dispatchTruck"
+        ],
+        "summary": "user create dispatchTruck",
+        "description": "user create dispatchTruck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dispatchTruck",
+            "in": "body",
+            "description": "dispatchTruck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dispatchTruck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dispatchTruck id"
+          }
+        }
+      }
+    },
     "/app": {
       "get": {
         "tags": [
@@ -7449,6 +7534,42 @@
       },
       "xml": {
         "name": "carModel"
+      }
+    },
+    "dispatchTruck": {
+      "type": "object",
+      "properties": {
+
+        "routeStartId": {
+          "type": "integer"
+        },
+        "routeStart": {
+          "type": "string"
+        },
+        "baseAddrId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "routeEnd": {
+          "type": "string"
+        },
+        "receiveId": {
+          "type": "integer"
+        },
+        "preCount": {
+          "type": "integer"
+        },
+        "planCount": {
+          "type": "integer"
+        },
+        "orderDate": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dispatchTruck"
       }
     }
   },
