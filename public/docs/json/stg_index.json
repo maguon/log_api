@@ -7701,12 +7701,6 @@
         },
         "preCount": {
           "type": "integer"
-        },
-        "planCount": {
-          "type": "integer"
-        },
-        "orderDate": {
-          "type": "string"
         }
       },
       "xml": {

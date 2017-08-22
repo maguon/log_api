@@ -25,15 +25,14 @@ function addDpTaskStart(params,callback){
 }
 
 function getDpTaskStart(params,callback) {
-    var query = " select sum(dpt.pre_count) as pre_count,dpr.car_count, " +
-        " dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id from dp_task_start dpt " +
-        " left join dp_root_task dpr on dpt.route_start_id = dpr.route_start_id and dpt.route_end_id = dpr.route_end_id where dpt.id is not null ";
+    var query = " select sum(dpt.pre_count) as pre_count,sum(dpt.plan_count) as plan_count, " +
+        " dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id from dp_task_start dpt where dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskStartId){
         paramsArray[i++] = params.dpTaskStartId;
         query = query + " and dpt.id = ? ";
     }
-    query = query + ' group by dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id,dpr.car_count ';
+    query = query + ' group by dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

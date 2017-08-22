@@ -52,10 +52,10 @@ END IF;
 END $$
 delimiter ;
 -- ----------------------------
--- Table structure for dispatch_truck_info
+-- Table structure for dp_task_start
 -- ----------------------------
-DROP TABLE IF EXISTS `dispatch_truck_info`;
-CREATE TABLE `dispatch_truck_info` (
+DROP TABLE IF EXISTS `dp_task_start`;
+CREATE TABLE `dp_task_start` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `route_start_id` int(10) NOT NULL COMMENT '起始地ID',
   `route_start` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '起始地城市',
@@ -63,29 +63,45 @@ CREATE TABLE `dispatch_truck_info` (
   `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
   `route_end` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '目的地城市',
   `receive_id` int(10) NOT NULL COMMENT '经销商ID',
-  `pre_count` int(10) NOT NULL COMMENT '指令安排台数',
-  `plan_count` int(10) NOT NULL DEFAULT '0' COMMENT '调度派发台数',
-  `order_date` datetime DEFAULT NULL COMMENT '指令日期',
+  `pre_count` int(10) NOT NULL DEFAULT '0' COMMENT '指令安排台数',
+  `plan_count` int(10) NOT NULL DEFAULT '0' COMMENT '已派发台数',
+  `date_id` int(4) NOT NULL COMMENT '指令时间',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
--- Table structure for dispatch_truck_rel
+-- Table structure for dp_root_task
 -- ----------------------------
-DROP TABLE IF EXISTS `dispatch_truck_rel`;
-CREATE TABLE `dispatch_truck_rel` (
+DROP TABLE IF EXISTS `dp_root_task`;
+CREATE TABLE `dp_root_task` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `truck_id` int(10) NOT NULL COMMENT '货车ID',
   `drive_id` int(10) NOT NULL COMMENT '司机ID',
-  `city_route_id` int(10) NOT NULL COMMENT '城市线路ID',
-  `base_addr_id` int(10) DEFAULT NULL COMMENT '起始地发货地址ID',
+  `route_start_id` int(10) NOT NULL COMMENT '城市线路ID',
   `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
   `distance` decimal(10,2) NOT NULL COMMENT '公里数',
-  `receive_id` int(10) NOT NULL DEFAULT '0' COMMENT '经销商ID',
   `task_start_date` datetime DEFAULT NULL COMMENT '任务生成时间',
   `task_end_date` datetime DEFAULT NULL COMMENT '任务结束时间',
-  `car_count` int(11) NOT NULL DEFAULT '0' COMMENT '派发商品车数量',
+  `car_count` int(10) NOT NULL DEFAULT '0' COMMENT '派发商品车数量',
+  `task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '任务状态(0-取消安排,1-已安排,2-已完成)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for dp_root_load_task
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_root_load_task`;
+CREATE TABLE `dp_root_load_task` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_root_task_id` int(10) NOT NULL COMMENT '任务路线ID',
+  `route_start_id` int(10) NOT NULL COMMENT '城市线路ID',
+  `base_addr_id` int(10) DEFAULT NULL COMMENT '起始地发货地址ID',
+  `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
+  `receive_id` int(10) NOT NULL COMMENT '经销商ID',
+  `pre_count` int(10) NOT NULL DEFAULT '0' COMMENT '指令安排台数',
+  `plan_count` int(10) NOT NULL DEFAULT '0' COMMENT '派发商品车数量',
   `task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '任务状态(0-取消安排,1-已安排,2-已完成)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
