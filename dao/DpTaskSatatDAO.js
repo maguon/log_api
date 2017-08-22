@@ -45,8 +45,9 @@ function getDpTaskSatat(params,callback) {
 }
 
 function getDpTaskSatatBase(params,callback) {
-    var query = " select dpt.*,r.short_name from dp_task_satat dpt " +
-        " left join receive_info r on dpt.receive_id = r.id where dpt.id is not null ";
+    var query = " select dpt.*,ba.addr_name,r.short_name from dp_task_satat dpt " +
+        " left join receive_info r on dpt.receive_id = r.id " +
+        " left join base_addr ba on dpt.base_addr_id = ba.id where dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskSatatId){
         paramsArray[i++] = params.dpTaskSatatId;
@@ -63,6 +64,10 @@ function getDpTaskSatatBase(params,callback) {
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
         query = query + " and dpt.receive_id = ? ";
+    }
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and dpt.date_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

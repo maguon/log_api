@@ -16,7 +16,7 @@ var logger = serverLogger.createLogger('DpRouteTask.js');
 function createDpRouteTask(req,res,next){
     var params = req.params ;
     var myDate = new Date();
-    params.taskStartDate = myDate;
+    params.taskPlanDate = myDate;
     dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
         if (error) {
             logger.error(' createDpRouteTask ' + error.message);

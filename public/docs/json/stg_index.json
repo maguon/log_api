@@ -2516,10 +2516,10 @@
 
           },
           {
-            "name": "dispatchFlag",
+            "name": "truckType",
             "in": "query",
-            "description": "dispatch flag",
-            "required": true,
+            "description": "truck type",
+            "required": false,
             "type": "integer"
 
           }
@@ -6880,6 +6880,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "dateId",
+            "in": "query",
+            "description": "date id",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -6955,9 +6963,9 @@
         ],
         "parameters": [
           {
-            "name": "dpRouteTaskId",
+            "name": "truckId",
             "in": "query",
-            "description": "dpRouteTask id",
+            "description": "truck id",
             "required": false,
             "type": "integer"
 

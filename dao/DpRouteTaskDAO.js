@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteTaskDAO.js');
 
 function addDpRouteTask(params,callback){
-    var query = " insert into dp_route_task (truck_id,drive_id,route_start_id,route_end_id,distance,task_start_date) " +
+    var query = " insert into dp_route_task (truck_id,drive_id,route_start_id,route_end_id,distance,task_plan_date) " +
         " values ( ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
@@ -15,7 +15,7 @@ function addDpRouteTask(params,callback){
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.distance;
-    paramsArray[i]=params.taskStartDate;
+    paramsArray[i]=params.taskPlanDate;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTask ');
         return callback(error,rows);
@@ -27,9 +27,9 @@ function getDpRouteTask(params,callback) {
         " left join city_info c on dpr.route_start_id = c.id " +
         " left join city_info ce on dpr.route_end_id = ce.id where dpr.id is not null ";
     var paramsArray=[],i=0;
-    if(params.dpRouteTaskId){
-        paramsArray[i++] = params.dpRouteTaskId;
-        query = query + " and dpr.id = ? ";
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpr.truck_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
