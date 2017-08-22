@@ -4,10 +4,10 @@
 
 var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DpRootTaskDAO.js');
+var logger = serverLogger.createLogger('DpRouteTaskDAO.js');
 
-function addDpRootTask(params,callback){
-    var query = " insert into dp_root_task (truck_id,drive_id,route_start_id,route_end_id,distance,task_start_date) " +
+function addDpRouteTask(params,callback){
+    var query = " insert into dp_route_task (truck_id,drive_id,route_start_id,route_end_id,distance,task_start_date) " +
         " values ( ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
@@ -17,18 +17,18 @@ function addDpRootTask(params,callback){
     paramsArray[i++]=params.distance;
     paramsArray[i]=params.taskStartDate;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' addDpRootTask ');
+        logger.debug(' addDpRouteTask ');
         return callback(error,rows);
     });
 }
 
-function getDpRootTask(params,callback) {
-    var query = " select dpr.*,c.city_name as city_route_start,ce.city_name as city_route_end from dp_root_task dpr " +
+function getDpRouteTask(params,callback) {
+    var query = " select dpr.*,c.city_name as city_route_start,ce.city_name as city_route_end from dp_route_task dpr " +
         " left join city_info c on dpr.route_start_id = c.id " +
         " left join city_info ce on dpr.route_end_id = ce.id where dpr.id is not null ";
     var paramsArray=[],i=0;
-    if(params.dpRootTaskId){
-        paramsArray[i++] = params.dpRootTaskId;
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dpr.id = ? ";
     }
     if (params.start && params.size) {
@@ -37,13 +37,13 @@ function getDpRootTask(params,callback) {
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDpRootTask ');
+        logger.debug(' getDpRouteTask ');
         return callback(error,rows);
     });
 }
 
 
 module.exports ={
-    addDpRootTask : addDpRootTask,
-    getDpRootTask : getDpRootTask
+    addDpRouteTask : addDpRouteTask,
+    getDpRouteTask : getDpRouteTask
 }

@@ -7,48 +7,48 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var dpTaskStartDAO = require('../dao/DpTaskStartDAO.js');
+var dpTaskSatatDAO = require('../dao/DpTaskSatatDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DpTaskStart.js');
+var logger = serverLogger.createLogger('DpTaskSatat.js');
 
-function createDpTaskStart(req,res,next){
+function createDpTaskSatat(req,res,next){
     var params = req.params ;
-    dpTaskStartDAO.addDpTaskStart(params,function(error,result){
+    dpTaskSatatDAO.addDpTaskSatat(params,function(error,result){
         if (error) {
-            logger.error(' createDpTaskStart ' + error.message);
+            logger.error(' createDpTaskSatat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDpTaskStart ' + 'success');
+            logger.info(' createDpTaskSatat ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDpTaskStart(req,res,next){
+function queryDpTaskSatat(req,res,next){
     var params = req.params ;
-    dpTaskStartDAO.getDpTaskStart(params,function(error,result){
+    dpTaskSatatDAO.getDpTaskSatat(params,function(error,result){
         if (error) {
-            logger.error(' queryDpTaskStart ' + error.message);
+            logger.error(' queryDpTaskSatat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDpTaskStart ' + 'success');
+            logger.info(' queryDpTaskSatat ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDpTaskStartBase(req,res,next){
+function queryDpTaskSatatBase(req,res,next){
     var params = req.params ;
-    dpTaskStartDAO.getDpTaskStartBase(params,function(error,result){
+    dpTaskSatatDAO.getDpTaskSatatBase(params,function(error,result){
         if (error) {
-            logger.error(' queryDpTaskStartBase ' + error.message);
+            logger.error(' queryDpTaskSatatBase ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDpTaskStartBase ' + 'success');
+            logger.info(' queryDpTaskSatatBase ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -57,7 +57,7 @@ function queryDpTaskStartBase(req,res,next){
 
 
 module.exports = {
-    createDpTaskStart : createDpTaskStart,
-    queryDpTaskStart : queryDpTaskStart,
-    queryDpTaskStartBase : queryDpTaskStartBase
+    createDpTaskSatat : createDpTaskSatat,
+    queryDpTaskSatat : queryDpTaskSatat,
+    queryDpTaskSatatBase : queryDpTaskSatatBase
 }

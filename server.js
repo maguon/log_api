@@ -33,8 +33,8 @@ var car = require('./bl/Car.js');
 var carStorageRel = require('./bl/CarStorageRel.js');
 var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
-var dpTaskStart = require('./bl/DpTaskStart.js');
-var dpRootTask = require('./bl/DpRootTask.js');
+var dpTaskSatat = require('./bl/DpTaskSatat.js');
+var dpRouteTask = require('./bl/DpRouteTask.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -350,17 +350,17 @@ function createServer() {
     server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 
     /**
-     * DpTaskStart Module
+     * DpTaskSatat Module
      */
-    server.get('/api/dpTaskStart' , dpTaskStart.queryDpTaskStart);
-    server.get('/api/dpTaskStartBase' , dpTaskStart.queryDpTaskStartBase);
-    server.post({path:'/api/user/:userId/dpTaskStart',contentType: 'application/json'},dpTaskStart.createDpTaskStart);
+    server.get('/api/dpTaskSatat' , dpTaskSatat.queryDpTaskSatat);
+    server.get('/api/dpTaskSatatBase' , dpTaskSatat.queryDpTaskSatatBase);
+    server.post({path:'/api/user/:userId/dpTaskSatat',contentType: 'application/json'},dpTaskSatat.createDpTaskSatat);
 
     /**
-     * DpRootTask Module
+     * DpRouteTask Module
      */
-    server.get('/api/dpRootTask' , dpRootTask.queryDpRootTask);
-    server.post({path:'/api/user/:userId/dpRootTask',contentType: 'application/json'},dpRootTask.createDpRootTask);
+    server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
+    server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask);
 
     /**
      * App Module

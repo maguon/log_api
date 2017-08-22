@@ -7,36 +7,36 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var dpRootTaskDAO = require('../dao/DpRootTaskDAO.js');
+var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DpRootTask.js');
+var logger = serverLogger.createLogger('DpRouteTask.js');
 
-function createDpRootTask(req,res,next){
+function createDpRouteTask(req,res,next){
     var params = req.params ;
     var myDate = new Date();
     params.taskStartDate = myDate;
-    dpRootTaskDAO.addDpRootTask(params,function(error,result){
+    dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
         if (error) {
-            logger.error(' createDpRootTask ' + error.message);
+            logger.error(' createDpRouteTask ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDpRootTask ' + 'success');
+            logger.info(' createDpRouteTask ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDpRootTask(req,res,next){
+function queryDpRouteTask(req,res,next){
     var params = req.params ;
-    dpRootTaskDAO.getDpRootTask(params,function(error,result){
+    dpRouteTaskDAO.getDpRouteTask(params,function(error,result){
         if (error) {
-            logger.error(' queryDpRootTask ' + error.message);
+            logger.error(' queryDpRouteTask ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDpRootTask ' + 'success');
+            logger.info(' queryDpRouteTask ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -45,6 +45,6 @@ function queryDpRootTask(req,res,next){
 
 
 module.exports = {
-    createDpRootTask : createDpRootTask,
-    queryDpRootTask : queryDpRootTask
+    createDpRouteTask : createDpRouteTask,
+    queryDpRouteTask : queryDpRouteTask
 }

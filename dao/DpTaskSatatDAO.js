@@ -4,10 +4,10 @@
 
 var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DpTaskStartDAO.js');
+var logger = serverLogger.createLogger('DpTaskSatatDAO.js');
 
-function addDpTaskStart(params,callback){
-    var query = " insert into dp_task_start (route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,pre_count,date_id) " +
+function addDpTaskSatat(params,callback){
+    var query = " insert into dp_task_satat (route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,pre_count,date_id) " +
         " values ( ? , ? , ? , ? , ? ,? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.routeStartId;
@@ -19,17 +19,17 @@ function addDpTaskStart(params,callback){
     paramsArray[i++]=params.preCount;
     paramsArray[i]=params.dateId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' addDpTaskStart ');
+        logger.debug(' addDpTaskSatat ');
         return callback(error,rows);
     });
 }
 
-function getDpTaskStart(params,callback) {
+function getDpTaskSatat(params,callback) {
     var query = " select sum(dpt.pre_count) as pre_count,sum(dpt.plan_count) as plan_count, " +
-        " dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id from dp_task_start dpt where dpt.id is not null ";
+        " dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id from dp_task_satat dpt where dpt.id is not null ";
     var paramsArray=[],i=0;
-    if(params.dpTaskStartId){
-        paramsArray[i++] = params.dpTaskStartId;
+    if(params.dpTaskSatatId){
+        paramsArray[i++] = params.dpTaskSatatId;
         query = query + " and dpt.id = ? ";
     }
     query = query + ' group by dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id ';
@@ -39,17 +39,17 @@ function getDpTaskStart(params,callback) {
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDpTaskStart ');
+        logger.debug(' getDpTaskSatat ');
         return callback(error,rows);
     });
 }
 
-function getDpTaskStartBase(params,callback) {
-    var query = " select dpt.*,r.short_name from dp_task_start dpt " +
+function getDpTaskSatatBase(params,callback) {
+    var query = " select dpt.*,r.short_name from dp_task_satat dpt " +
         " left join receive_info r on dpt.receive_id = r.id where dpt.id is not null ";
     var paramsArray=[],i=0;
-    if(params.dpTaskStartId){
-        paramsArray[i++] = params.dpTaskStartId;
+    if(params.dpTaskSatatId){
+        paramsArray[i++] = params.dpTaskSatatId;
         query = query + " and dpt.id = ? ";
     }
     if(params.routeStartId){
@@ -70,14 +70,14 @@ function getDpTaskStartBase(params,callback) {
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDpTaskStartBase ');
+        logger.debug(' getDpTaskSatatBase ');
         return callback(error,rows);
     });
 }
 
 
 module.exports ={
-    addDpTaskStart : addDpTaskStart,
-    getDpTaskStart : getDpTaskStart,
-    getDpTaskStartBase : getDpTaskStartBase
+    addDpTaskSatat : addDpTaskSatat,
+    getDpTaskSatat : getDpTaskSatat,
+    getDpTaskSatatBase : getDpTaskSatatBase
 }
