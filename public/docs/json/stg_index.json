@@ -2488,6 +2488,58 @@
         }
       }
     },
+    "/truckDispatch": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckDispatch",
+        "description": "query truckDispatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "cityName",
+            "in": "query",
+            "description": "city name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dispatchFlag",
+            "in": "query",
+            "description": "dispatch flag",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDispatch id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
