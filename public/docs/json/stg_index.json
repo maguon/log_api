@@ -7032,6 +7032,59 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteLoadTask": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteLoadTask",
+        "description": "user create dpRouteLoadTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTask",
+            "in": "body",
+            "description": "dpRouteLoadTask info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteLoadTask"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTask id"
+          }
+        }
+      }
+    },
     "/app": {
       "get": {
         "tags": [
@@ -7789,6 +7842,33 @@
       },
       "xml": {
         "name": "dpRouteTask"
+      }
+    },
+    "dpRouteLoadTask": {
+      "type": "object",
+      "properties": {
+
+        "routeStartId": {
+          "type": "integer"
+        },
+        "baseAddrId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "receiveId": {
+          "type": "integer"
+        },
+        "dateId": {
+          "type": "integer"
+        },
+        "planCount": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteLoadTask"
       }
     }
   },

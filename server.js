@@ -36,6 +36,7 @@ var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
 var dpTaskSatat = require('./bl/DpTaskSatat.js');
 var dpRouteTask = require('./bl/DpRouteTask.js');
+var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -367,6 +368,11 @@ function createServer() {
      */
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask);
+
+    /**
+     * DpRouteLoadTask Module
+     */
+    server.post({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadTask',contentType: 'application/json'},dpRouteLoadTask.createDpRouteLoadTask);
 
     /**
      * App Module
