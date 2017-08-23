@@ -16,6 +16,7 @@ var truck = require('./bl/Truck.js');
 var truckInsureRel = require('./bl/TruckInsureRel.js');
 var truckInsure = require('./bl/TruckInsure.js');
 var truckRepairRel = require('./bl/TruckRepairRel.js');
+var truckDispatch = require('./bl/TruckDispatch.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var company = require('./bl/Company.js');
@@ -33,8 +34,11 @@ var car = require('./bl/Car.js');
 var carStorageRel = require('./bl/CarStorageRel.js');
 var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
-var dispatchTruck = require('./bl/DispatchTruck.js');
-var dispatchTruckRel = require('./bl/DispatchTruckRel.js');
+var dpDemand = require('./bl/DpDemand.js');
+var dpTaskStat = require('./bl/DpTaskStat.js');
+var dpRouteTask = require('./bl/DpRouteTask.js');
+var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
+var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -204,6 +208,11 @@ function createServer() {
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
 
     /**
+     * TruckDispatch Module
+     */
+    server.get('/api/truckDispatch' , truckDispatch.queryTruckDispatch);
+
+    /**
      * Brand Module
      */
     server.get('/api/brand',brand.queryBrand);
@@ -350,18 +359,36 @@ function createServer() {
     server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
 
     /**
-     * DispatchTruck Module
+     * DpDemand Module
      */
-    server.get('/api/dispatchTruck' , dispatchTruck.queryDispatchTruck);
-    server.get('/api/dispatchTruckBase' , dispatchTruck.queryDispatchTruckBase);
-    server.post({path:'/api/user/:userId/dispatchTruck',contentType: 'application/json'},dispatchTruck.createDispatchTruck);
+    server.get('/api/dpDemand',dpDemand.queryDpDemand);
+    server.post({path:'/api/user/:userId/dpDemand',contentType: 'application/json'},dpDemand.createDpDemand);
 
     /**
-     * DispatchTruckRel Module
+     * DpTaskStat Module
      */
-    server.get('/api/dispatchTruckRel' , dispatchTruckRel.queryDispatchTruckRel);
-    server.post({path:'/api/user/:userId/dispatchTruckRel',contentType: 'application/json'},dispatchTruckRel.createDispatchTruckRel);
+    server.get('/api/dpTaskStat' , dpTaskStat.queryDpTaskStat);
+    server.get('/api/dpTaskStatBase' , dpTaskStat.queryDpTaskStatBase);
+    server.post({path:'/api/user/:userId/dpTaskStat',contentType: 'application/json'},dpTaskStat.createDpTaskStat);
 
+    /**
+     * DpRouteTask Module
+     */
+    server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
+    server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus);
+
+    /**
+     * DpRouteLoadTask Module
+     */
+    server.get('/api/dpRouteTask/:dpRouteTaskId/dpRouteLoadTask',dpRouteLoadTask.queryDpRouteLoadTask);
+    server.post({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadTask',contentType: 'application/json'},dpRouteLoadTask.createDpRouteLoadTask);
+    server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatus/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatus);
+
+    /**
+     * DpRouteLoadTaskDetail Module
+     */
+    server.get('/api/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',dpRouteLoadTaskDetail.queryDpRouteLoadTaskDetail);
     /**
      * App Module
      */

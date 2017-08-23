@@ -112,11 +112,11 @@ function updateStorageAreaStatus (req,res,next){
         var that = this;
         storageParkingDAO.getStorageParkingBase(params,function(error,rows){
             if (error) {
-                logger.error(' storageParkingDAO ' + error.message);
+                logger.error(' storageParking ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length >0){
-                    logger.warn(' storageParkingDAO ' + 'failed');
+                    logger.warn(' storageParking ' + 'failed');
                     resUtil.resetFailedRes(res,"仓库车位不为空，禁止停用");
                     return next();
                 }else{

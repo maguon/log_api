@@ -2488,6 +2488,58 @@
         }
       }
     },
+    "/truckDispatch": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckDispatch",
+        "description": "query truckDispatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "cityName",
+            "in": "query",
+            "description": "city name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dispatchFlag",
+            "in": "query",
+            "description": "dispatch flag",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDispatch id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -6750,21 +6802,109 @@
         }
       }
     },
-    "/dispatchTruck": {
+    "/dpDemand": {
       "get": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dispatchTruck list",
-        "description": "query dispatchTruck",
+        "summary": "query  dpDemand list",
+        "description": "query dpDemand",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "dispatchId",
+            "name": "demandDateStart",
             "in": "query",
-            "description": "dispatch id",
+            "description": "demandDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "demandDateEnd",
+            "in": "query",
+            "description": "demandDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "realName",
+            "in": "query",
+            "description": "real name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "preCountStart",
+            "in": "query",
+            "description": "preCount start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "preCountEnd",
+            "in": "query",
+            "description": "preCount end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "demandStatus",
+            "in": "query",
+            "description": "demand status",
             "required": false,
             "type": "integer"
 
@@ -6776,31 +6916,112 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dispatchTruck"
+                "$ref": "#/definitions/dpRouteTask"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruck id"
+            "description": "Invalid token value or invalid dpRouteTask id"
           }
         }
       }
     },
-    "/dispatchTruckBase": {
-      "get": {
+    "/user/{userId}/dpDemand": {
+      "post": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dispatchTruckBase list",
-        "description": "query dispatchTruckBase",
+        "summary": "user create dpDemand",
+        "description": "user create dpDemand",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "dispatchId",
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpDemand",
+            "in": "body",
+            "description": "dpDemand info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpDemand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpDemand id"
+          }
+        }
+      }
+    },
+    "/dpTaskStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpTaskStat list",
+        "description": "query dpTaskStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpTaskStatId",
             "in": "query",
-            "description": "dispatch id",
+            "description": "dpTaskStat id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpTaskStat"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpTaskStat id"
+          }
+        }
+      }
+    },
+    "/dpTaskStatBase": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpTaskStatBase list",
+        "description": "query dpTaskStatBase",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpTaskStatId",
+            "in": "query",
+            "description": "dpTaskStat id",
             "required": false,
             "type": "integer"
 
@@ -6828,84 +7049,11 @@
             "required": false,
             "type": "integer"
 
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/dispatchTruckBase"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid dispatchTruckBase id"
-          }
-        }
-      }
-    },
-    "/user/{userId}/dispatchTruck": {
-      "post": {
-        "tags": [
-          "dispatch"
-        ],
-        "summary": "user create dispatchTruck",
-        "description": "user create dispatchTruck",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
           },
           {
-            "name": "dispatchTruck",
-            "in": "body",
-            "description": "dispatchTruck info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dispatchTruck"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid dispatchTruck id"
-          }
-        }
-      }
-    },
-    "/dispatchTruckRel": {
-      "get": {
-        "tags": [
-          "dispatch"
-        ],
-        "summary": "query  dispatchTruckRel list",
-        "description": "query dispatchTruckRel",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "relId",
+            "name": "dateId",
             "in": "query",
-            "description": "rel id",
+            "description": "date id",
             "required": false,
             "type": "integer"
 
@@ -6917,23 +7065,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dispatchTruckRel"
+                "$ref": "#/definitions/dpTaskStatBase"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruckRel id"
+            "description": "Invalid token value or invalid dpTaskStatBase id"
           }
         }
       }
     },
-    "/user/{userId}/dispatchTruckRel": {
+    "/user/{userId}/dpTaskStat": {
       "post": {
         "tags": [
           "dispatch"
         ],
-        "summary": "user create dispatchTruckRel",
-        "description": "user create dispatchTruckRel",
+        "summary": "user create dpTaskStat",
+        "description": "user create dpTaskStat",
         "produces": [
           "application/json"
         ],
@@ -6947,12 +7095,12 @@
 
           },
           {
-            "name": "dispatchTruckRel",
+            "name": "dpTaskStat",
             "in": "body",
-            "description": "dispatchTruckRel info",
+            "description": "dpTaskStat info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dispatchTruckRel"
+              "$ref": "#/definitions/dpTaskStat"
             }
           }
         ],
@@ -6967,7 +7115,402 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dispatchTruckRel id"
+            "description": "Invalid token value or invalid dpTaskStat id"
+          }
+        }
+      }
+    },
+    "/dpRouteTask": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTask list",
+        "description": "query dpRouteTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTask": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteTask",
+        "description": "user create dpRouteTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTask",
+            "in": "body",
+            "description": "dpRouteTask info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTask"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/taskStatus/{taskStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update task status",
+        "description": "update task status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "path",
+            "description": "task status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/dpRouteTask/{dpRouteTaskId}/dpRouteLoadTask": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteLoadTask list",
+        "description": "query dpRouteLoadTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteLoadTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteLoadTask": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteLoadTask",
+        "description": "user create dpRouteLoadTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTask",
+            "in": "body",
+            "description": "dpRouteLoadTask info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteLoadTask"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTask id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}/loadTaskStatus/{loadTaskStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update loadTask status",
+        "description": "update loadTask status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "dpRouteLoadTaskId",
+            "in": "path",
+            "description": "dpRouteLoadTask id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "loadTaskStatus",
+            "in": "path",
+            "description": "loadTask status",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTask id"
+          }
+        }
+      }
+    },
+    "/dpRouteLoadTask/{dpRouteLoadTaskId}/dpRouteLoadTaskDetail": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteLoadTaskDetail list",
+        "description": "query dpRouteLoadTaskDetail",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteLoadTaskId",
+            "in": "path",
+            "description": "dpRouteLoadTask id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteLoadTaskDetail"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTask id"
           }
         }
       }
@@ -7677,7 +8220,7 @@
         "name": "carModel"
       }
     },
-    "dispatchTruck": {
+    "dpDemand": {
       "type": "object",
       "properties": {
 
@@ -7702,18 +8245,45 @@
         "preCount": {
           "type": "integer"
         },
-        "planCount": {
+        "dateId": {
           "type": "integer"
-        },
-        "orderDate": {
-          "type": "string"
         }
       },
       "xml": {
-        "name": "dispatchTruck"
+        "name": "dpTaskStat"
       }
     },
-    "dispatchTruckRel": {
+    "dpTaskStat": {
+      "type": "object",
+      "properties": {
+
+        "routeStartId": {
+          "type": "integer"
+        },
+        "routeStart": {
+          "type": "string"
+        },
+        "baseAddrId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "routeEnd": {
+          "type": "string"
+        },
+        "receiveId": {
+          "type": "integer"
+        },
+        "preCount": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpTaskStat"
+      }
+    },
+    "dpRouteTask": {
       "type": "object",
       "properties": {
 
@@ -7723,10 +8293,7 @@
         "driveId": {
           "type": "integer"
         },
-        "cityRouteId": {
-          "type": "integer"
-        },
-        "baseAddrId": {
+        "routeStartId": {
           "type": "integer"
         },
         "routeEndId": {
@@ -7735,15 +8302,39 @@
         "distance": {
           "type": "integer"
         },
+        "taskPlanDate": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTask"
+      }
+    },
+    "dpRouteLoadTask": {
+      "type": "object",
+      "properties": {
+
+        "routeStartId": {
+          "type": "integer"
+        },
+        "baseAddrId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
         "receiveId": {
           "type": "integer"
         },
-        "carCount": {
+        "dateId": {
+          "type": "integer"
+        },
+        "planCount": {
           "type": "integer"
         }
       },
       "xml": {
-        "name": "dispatchTruck"
+        "name": "dpRouteLoadTask"
       }
     }
   },
