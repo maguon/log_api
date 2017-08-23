@@ -34,14 +34,31 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dprl.dp_route_task_id = ? ";
     }
+    if(params.loadTaskStatus){
+        paramsArray[i++] = params.loadTaskStatus;
+        query = query + " and dprl.load_task_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTask ');
         return callback(error,rows);
     });
 }
 
+function updateDpRouteLoadTaskStatus(params,callback){
+    var query = " update dp_route_load_task set load_task_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.loadTaskStatus;
+    paramsArray[i] = params.dpRouteLoadTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteLoadTaskStatus ');
+        return callback(error,rows);
+    });
+}
+
+
 
 module.exports ={
     addDpRouteLoadTask : addDpRouteLoadTask,
-    getDpRouteLoadTask : getDpRouteLoadTask
+    getDpRouteLoadTask : getDpRouteLoadTask,
+    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
 }
