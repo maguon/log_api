@@ -121,4 +121,25 @@ CREATE TABLE `dp_route_load_task_detail` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for dp_demand_info
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_demand_info`;
+CREATE TABLE `dp_demand_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL COMMENT '操作人ID',
+  `route_start_id` int(10) NOT NULL COMMENT '起始地ID',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '起始地城市',
+  `base_addr_id` int(10) NOT NULL DEFAULT '0' COMMENT '起始地发货地址ID',
+  `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '目的地城市',
+  `receive_id` int(10) NOT NULL COMMENT '经销商ID',
+  `pre_count` int(10) NOT NULL DEFAULT '0' COMMENT '指令安排台数',
+  `demand_date` datetime DEFAULT NULL COMMENT '需求生成时间',
+  `date_id` int(4) NOT NULL COMMENT '指令时间',
+  `demand_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '需求状态(0-取消,1-正常)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

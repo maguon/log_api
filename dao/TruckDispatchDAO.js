@@ -16,7 +16,7 @@ function getTruckDispatch(params,callback) {
         " left join truck_info h on td.truck_id = h.id " +
         " left join truck_info t on h.rel_id = t.id " +
         " left join drive_info d on h.drive_id = d.id " +
-        " left join company_info c on h.company_id = c.id ";
+        " left join company_info c on h.company_id = c.id where td.truck_id is not null ";
     var paramsArray=[],i=0;
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
