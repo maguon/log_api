@@ -7190,14 +7190,6 @@
             "required": true,
             "type": "integer"
 
-          },
-          {
-            "name": "loadTaskStatus",
-            "in": "query",
-            "description": "loadTask status",
-            "required": false,
-            "type": "integer"
-
           }
         ],
         "responses": {
