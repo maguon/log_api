@@ -27,7 +27,22 @@ function createDpRouteLoadTask(req,res,next){
     })
 }
 
+function queryDpRouteLoadTask(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskDAO.getDpRouteLoadTask(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTask ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTask ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createDpRouteLoadTask : createDpRouteLoadTask
+    createDpRouteLoadTask : createDpRouteLoadTask,
+    queryDpRouteLoadTask : queryDpRouteLoadTask
 }

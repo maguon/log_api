@@ -33,6 +33,10 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and dpr.truck_id = ? ";
     }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

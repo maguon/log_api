@@ -6969,6 +6969,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -7023,6 +7031,42 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/dpRouteTask/{dpRouteTaskId}/dpRouteLoadTask": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteLoadTask list",
+        "description": "query dpRouteLoadTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteLoadTask"
               }
             }
           },

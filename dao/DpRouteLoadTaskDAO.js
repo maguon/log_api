@@ -23,7 +23,25 @@ function addDpRouteLoadTask(params,callback){
     });
 }
 
+function getDpRouteLoadTask(params,callback) {
+    var query = " select dprl.*,ba.addr_name,c.city_name,r.short_name from dp_route_load_task dprl " +
+        " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
+        " left join base_addr ba on dprl.base_addr_id = ba.id " +
+        " left join city_info c on dprl.route_end_id = c.id " +
+        " left join receive_info r on dprl.receive_id = r.id where dprl.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dprl.dp_route_task_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTask ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDpRouteLoadTask : addDpRouteLoadTask
+    addDpRouteLoadTask : addDpRouteLoadTask,
+    getDpRouteLoadTask : getDpRouteLoadTask
 }
