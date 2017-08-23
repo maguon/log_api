@@ -27,11 +27,53 @@ function getDpRouteTask(params,callback) {
         " left join city_info c on dpr.route_start_id = c.id " +
         " left join city_info ce on dpr.route_end_id = ce.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
-        " left join drive_info d on dpr.drive_id = d.id where dpr.id is not null ";
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " left join dp_route_load_task_detail dpdtl on dprl.id = dpdtl.dp_route_load_task_id where dpr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dpr.id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and dpdtl.vin = ? ";
+    }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and dpr.truck_id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dpr.route_start_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dprl.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dpr.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and dprl.receive_id = ? ";
     }
     if(params.taskStatus){
         paramsArray[i++] = params.taskStatus;
