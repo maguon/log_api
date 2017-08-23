@@ -368,6 +368,7 @@ function createServer() {
      */
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus);
 
     /**
      * DpRouteLoadTask Module

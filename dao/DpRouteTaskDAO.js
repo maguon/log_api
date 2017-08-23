@@ -48,8 +48,20 @@ function getDpRouteTask(params,callback) {
     });
 }
 
+function updateDpRouteTaskStatus(params,callback){
+    var query = " update dp_route_task set task_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.taskStatus;
+    paramsArray[i] = params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTask : addDpRouteTask,
-    getDpRouteTask : getDpRouteTask
+    getDpRouteTask : getDpRouteTask,
+    updateDpRouteTaskStatus : updateDpRouteTaskStatus
 }
