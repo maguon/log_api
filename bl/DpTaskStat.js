@@ -7,48 +7,48 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var dpTaskSatatDAO = require('../dao/DpTaskSatatDAO.js');
+var dpTaskStatDAO = require('../dao/DpTaskStatDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DpTaskSatat.js');
+var logger = serverLogger.createLogger('DpTaskStat.js');
 
-function createDpTaskSatat(req,res,next){
+function createDpTaskStat(req,res,next){
     var params = req.params ;
-    dpTaskSatatDAO.addDpTaskSatat(params,function(error,result){
+    dpTaskStatDAO.addDpTaskStat(params,function(error,result){
         if (error) {
-            logger.error(' createDpTaskSatat ' + error.message);
+            logger.error(' createDpTaskStat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDpTaskSatat ' + 'success');
+            logger.info(' createDpTaskStat ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDpTaskSatat(req,res,next){
+function queryDpTaskStat(req,res,next){
     var params = req.params ;
-    dpTaskSatatDAO.getDpTaskSatat(params,function(error,result){
+    dpTaskStatDAO.getDpTaskStat(params,function(error,result){
         if (error) {
-            logger.error(' queryDpTaskSatat ' + error.message);
+            logger.error(' queryDpTaskStat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDpTaskSatat ' + 'success');
+            logger.info(' queryDpTaskStat ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDpTaskSatatBase(req,res,next){
+function queryDpTaskStatBase(req,res,next){
     var params = req.params ;
-    dpTaskSatatDAO.getDpTaskSatatBase(params,function(error,result){
+    dpTaskStatDAO.getDpTaskStatBase(params,function(error,result){
         if (error) {
-            logger.error(' queryDpTaskSatatBase ' + error.message);
+            logger.error(' queryDpTaskStatBase ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDpTaskSatatBase ' + 'success');
+            logger.info(' queryDpTaskStatBase ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -57,7 +57,7 @@ function queryDpTaskSatatBase(req,res,next){
 
 
 module.exports = {
-    createDpTaskSatat : createDpTaskSatat,
-    queryDpTaskSatat : queryDpTaskSatat,
-    queryDpTaskSatatBase : queryDpTaskSatatBase
+    createDpTaskStat : createDpTaskStat,
+    queryDpTaskStat : queryDpTaskStat,
+    queryDpTaskStatBase : queryDpTaskStatBase
 }

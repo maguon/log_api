@@ -52,12 +52,12 @@ END IF;
 END $$
 delimiter ;
 -- ----------------------------
--- Table structure for dp_task_satat
+-- Table structure for dp_task_stat
 -- ----------------------------
-DROP TABLE IF EXISTS `dp_task_satat`;
-CREATE TABLE `dp_task_satat` (
+DROP TABLE IF EXISTS `dp_task_stat`;
+CREATE TABLE `dp_task_stat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `route_satat_id` int(10) NOT NULL COMMENT '起始地ID',
+  `route_start_id` int(10) NOT NULL COMMENT '起始地ID',
   `route_start` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '起始地城市',
   `base_addr_id` int(10) NOT NULL DEFAULT '0' COMMENT '起始地发货地址ID',
   `route_end_id` int(10) NOT NULL COMMENT '目的地ID',

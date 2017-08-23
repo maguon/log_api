@@ -6802,21 +6802,21 @@
         }
       }
     },
-    "/dpTaskSatat": {
+    "/dpTaskStat": {
       "get": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dpTaskSatat list",
-        "description": "query dpTaskSatat",
+        "summary": "query  dpTaskStat list",
+        "description": "query dpTaskStat",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "dpTaskSatatId",
+            "name": "dpTaskStatId",
             "in": "query",
-            "description": "dpTaskSatat id",
+            "description": "dpTaskStat id",
             "required": false,
             "type": "integer"
 
@@ -6828,31 +6828,31 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dpTaskSatat"
+                "$ref": "#/definitions/dpTaskStat"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dpTaskSatat id"
+            "description": "Invalid token value or invalid dpTaskStat id"
           }
         }
       }
     },
-    "/dpTaskSatatBase": {
+    "/dpTaskStatBase": {
       "get": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dpTaskSatatBase list",
-        "description": "query dpTaskSatatBase",
+        "summary": "query  dpTaskStatBase list",
+        "description": "query dpTaskStatBase",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "dpTaskSatatId",
+            "name": "dpTaskStatId",
             "in": "query",
-            "description": "dpTaskSatat id",
+            "description": "dpTaskStat id",
             "required": false,
             "type": "integer"
 
@@ -6896,23 +6896,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dpTaskSatatBase"
+                "$ref": "#/definitions/dpTaskStatBase"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dpTaskSatatBase id"
+            "description": "Invalid token value or invalid dpTaskStatBase id"
           }
         }
       }
     },
-    "/user/{userId}/dpTaskSatat": {
+    "/user/{userId}/dpTaskStat": {
       "post": {
         "tags": [
           "dispatch"
         ],
-        "summary": "user create dpTaskSatat",
-        "description": "user create dpTaskSatat",
+        "summary": "user create dpTaskStat",
+        "description": "user create dpTaskStat",
         "produces": [
           "application/json"
         ],
@@ -6926,12 +6926,12 @@
 
           },
           {
-            "name": "dpTaskSatat",
+            "name": "dpTaskStat",
             "in": "body",
-            "description": "dpTaskSatat info",
+            "description": "dpTaskStat info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dpTaskSatat"
+              "$ref": "#/definitions/dpTaskStat"
             }
           }
         ],
@@ -6946,7 +6946,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dpTaskSatat id"
+            "description": "Invalid token value or invalid dpTaskStat id"
           }
         }
       }
@@ -7278,7 +7278,6 @@
             "description": "user Id",
             "required": true,
             "type": "integer"
-
           },
           {
             "name": "dpRouteLoadTaskId",
@@ -7286,12 +7285,46 @@
             "description": "dpRouteLoadTask id",
             "required": true,
             "type": "integer"
-
           },
           {
             "name": "loadTaskStatus",
             "in": "path",
             "description": "loadTask status",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTask id"
+          }
+        }
+      }
+    },
+    "/dpRouteLoadTask/{dpRouteLoadTaskId}/dpRouteLoadTaskDetail": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteLoadTaskDetail list",
+        "description": "query dpRouteLoadTaskDetail",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteLoadTaskId",
+            "in": "path",
+            "description": "dpRouteLoadTask id",
             "required": true,
             "type": "integer"
 
@@ -7303,7 +7336,7 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/ApiResponse"
+                "$ref": "#/definitions/dpRouteLoadTaskDetail"
               }
             }
           },
@@ -8018,7 +8051,7 @@
         "name": "carModel"
       }
     },
-    "dpTaskSatat": {
+    "dpTaskStat": {
       "type": "object",
       "properties": {
 
@@ -8045,7 +8078,7 @@
         }
       },
       "xml": {
-        "name": "dpTaskSatat"
+        "name": "dpTaskStat"
       }
     },
     "dpRouteTask": {
