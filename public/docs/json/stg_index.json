@@ -6813,6 +6813,15 @@
           "application/json"
         ],
         "parameters": [
+
+          {
+            "name": "dpDemandId",
+            "in": "query",
+            "description": "dpDemand id",
+            "required": false,
+            "type": "integer"
+
+          },
           {
             "name": "demandDateStart",
             "in": "query",
@@ -6953,6 +6962,58 @@
             "schema": {
               "$ref": "#/definitions/dpDemand"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpDemand id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpDemand/{dpDemandId}/demandStatus/{demandStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpDemand status",
+        "description": "update dpDemand status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpDemandId",
+            "in": "path",
+            "description": "dpDemand id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "demandStatus",
+            "in": "path",
+            "description": "demand status",
+            "required": true,
+            "type": "integer"
+
           }
         ],
         "responses": {

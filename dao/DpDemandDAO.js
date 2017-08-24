@@ -32,6 +32,10 @@ function getDpDemand(params,callback) {
         " left join base_addr ba on dpd.base_addr_id = ba.id " +
         " left join receive_info r on dpd.receive_id = r.id where dpd.id is not null ";
     var paramsArray=[],i=0;
+    if(params.dpDemandId){
+        paramsArray[i++] = params.dpDemandId;
+        query = query + " and dpd.id = ? ";
+    }
     if(params.demandDateStart){
         paramsArray[i++] = params.demandDateStart +" 00:00:00";
         query = query + " and dpd.demand_date >= ? ";
@@ -91,8 +95,20 @@ function getDpDemand(params,callback) {
     });
 }
 
+function updateDpDemandStatus(params,callback){
+    var query = " update dp_demand_info set demand_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.demandStatus;
+    paramsArray[i] = params.dpDemandId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpDemandStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpDemand : addDpDemand,
-    getDpDemand : getDpDemand
+    getDpDemand : getDpDemand,
+    updateDpDemandStatus : updateDpDemandStatus
 }

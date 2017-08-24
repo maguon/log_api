@@ -60,8 +60,23 @@ function queryDpDemand(req,res,next){
     })
 }
 
+function updateDpDemandStatus(req,res,next){
+    var params = req.params;
+    dpDemandDAO.updateDpDemandStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpDemandStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpDemandStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpDemand : createDpDemand,
-    queryDpDemand : queryDpDemand
+    queryDpDemand : queryDpDemand,
+    updateDpDemandStatus : updateDpDemandStatus
 }
