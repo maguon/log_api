@@ -57,6 +57,10 @@ function getDpTaskStatBase(params,callback) {
         paramsArray[i++] = params.routeStartId;
         query = query + " and dpt.route_start_id = ? ";
     }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dpt.base_addr_id = ? ";
+    }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
         query = query + " and dpt.route_end_id = ? ";

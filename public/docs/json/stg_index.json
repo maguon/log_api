@@ -7096,6 +7096,14 @@
 
           },
           {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "routeEndId",
             "in": "query",
             "description": "routeEnd id",
