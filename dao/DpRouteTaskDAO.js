@@ -79,7 +79,7 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.taskStatus;
         query = query + " and dpr.task_status = ? ";
     }
-    query = query + '  group by dpr.id ';
+    query = query + ' group by dpr.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

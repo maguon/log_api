@@ -6834,7 +6834,7 @@
             "in": "query",
             "description": "dateId start",
             "required": false,
-            "type": "integer"
+            "type": "string"
 
           },
           {
@@ -6842,7 +6842,7 @@
             "in": "query",
             "description": "dateId end",
             "required": false,
-            "type": "integer"
+            "type": "string"
 
           },
           {
@@ -8246,7 +8246,7 @@
           "type": "integer"
         },
         "dateId": {
-          "type": "integer"
+          "type": "string"
         }
       },
       "xml": {

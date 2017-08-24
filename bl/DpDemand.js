@@ -11,11 +11,16 @@ var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpDemand.js');
 
 function createDpDemand(req,res,next){
     var params = req.params ;
     var myDate = new Date();
+    var dateId = params.dateId;
+    var d = new Date(dateId);
+    var currentDateStr = moment(d).format('YYYYMMDD');
+    params.dateId = parseInt(currentDateStr);
     params.demandDate = myDate;
     dpDemandDAO.addDpDemand(params,function(error,result){
         if (error) {
@@ -31,6 +36,18 @@ function createDpDemand(req,res,next){
 
 function queryDpDemand(req,res,next){
     var params = req.params ;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
     dpDemandDAO.getDpDemand(params,function(error,result){
         if (error) {
             logger.error(' queryDpDemand ' + error.message);
