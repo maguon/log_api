@@ -96,6 +96,7 @@ CREATE TABLE `dp_route_task` (
 DROP TABLE IF EXISTS `dp_route_load_task`;
 CREATE TABLE `dp_route_load_task` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL COMMENT '派发人ID',
   `dp_route_task_id` int(10) NOT NULL COMMENT '任务路线ID',
   `route_start_id` int(10) NOT NULL COMMENT '城市线路ID',
   `base_addr_id` int(10) DEFAULT NULL COMMENT '起始地发货地址ID',

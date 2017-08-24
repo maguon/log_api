@@ -7,9 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDAO.js');
 
 function addDpRouteLoadTask(params,callback){
-    var query = " insert into dp_route_load_task (dp_route_task_id,route_start_id,base_addr_id,route_end_id,receive_id,date_id,plan_count) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_load_task (user_id,dp_route_task_id,route_start_id,base_addr_id,route_end_id,receive_id,date_id,plan_count) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.baseAddrId;
@@ -24,7 +25,8 @@ function addDpRouteLoadTask(params,callback){
 }
 
 function getDpRouteLoadTask(params,callback) {
-    var query = " select dprl.*,ba.addr_name,c.city_name,r.short_name from dp_route_load_task dprl " +
+    var query = " select dprl.*,u.real_name,ba.addr_name,c.city_name,r.short_name from dp_route_load_task dprl " +
+        " left join user_info u on dprl.user_id = u.uid " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join base_addr ba on dprl.base_addr_id = ba.id " +
         " left join city_info c on dprl.route_end_id = c.id " +
