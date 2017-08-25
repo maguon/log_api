@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "stg.myxxjs.com:9001"
+  "host": "stg.myxxjs.com:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -2511,6 +2511,14 @@
             "name": "cityName",
             "in": "query",
             "description": "city name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskStartName",
+            "in": "query",
+            "description": "taskStart name",
             "required": false,
             "type": "string"
 

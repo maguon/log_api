@@ -16,12 +16,10 @@ var logger = serverLogger.createLogger('DpDemand.js');
 
 function createDpDemand(req,res,next){
     var params = req.params ;
-    var myDate = new Date();
     var dateId = params.dateId;
     var d = new Date(dateId);
     var currentDateStr = moment(d).format('YYYYMMDD');
     params.dateId = parseInt(currentDateStr);
-    params.demandDate = myDate;
     dpDemandDAO.addDpDemand(params,function(error,result){
         if (error) {
             logger.error(' createDpDemand ' + error.message);

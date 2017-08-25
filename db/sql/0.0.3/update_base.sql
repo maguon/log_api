@@ -136,7 +136,6 @@ CREATE TABLE `dp_demand_info` (
   `route_end` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '目的地城市',
   `receive_id` int(10) NOT NULL COMMENT '经销商ID',
   `pre_count` int(10) NOT NULL DEFAULT '0' COMMENT '指令安排台数',
-  `demand_date` datetime DEFAULT NULL COMMENT '需求生成时间',
   `date_id` int(4) NOT NULL COMMENT '指令时间',
   `demand_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '需求状态(0-取消,1-正常)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

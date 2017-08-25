@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DpDemandDAO.js');
 
 function addDpDemand(params,callback){
     var query = " insert into dp_demand_info (user_id,route_start_id,route_start,base_addr_id,route_end_id,route_end, " +
-        " receive_id,pre_count,demand_date,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " receive_id,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.routeStartId;
@@ -18,7 +18,6 @@ function addDpDemand(params,callback){
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.preCount;
-    paramsArray[i++]=params.demandDate;
     paramsArray[i]=params.dateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpDemand ');
@@ -38,11 +37,11 @@ function getDpDemand(params,callback) {
     }
     if(params.demandDateStart){
         paramsArray[i++] = params.demandDateStart +" 00:00:00";
-        query = query + " and dpd.demand_date >= ? ";
+        query = query + " and dpd.created_on >= ? ";
     }
     if(params.demandDateEnd){
         paramsArray[i++] = params.demandDateEnd +" 23:59:59";
-        query = query + " and dpd.demand_date <= ? ";
+        query = query + " and dpd.created_on <= ? ";
     }
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;

@@ -26,6 +26,10 @@ function getTruckDispatch(params,callback) {
         paramsArray[i++] = params.cityName;
         query = query + " and ci.city_name = ? ";
     }
+    if(params.taskStartName){
+        paramsArray[i++] = params.taskStartName;
+        query = query + " and cs.city_name = ? ";
+    }
     if(params.dispatchFlag){
         paramsArray[i++] = params.dispatchFlag;
         query = query + " and td.dispatch_flag = ? ";
