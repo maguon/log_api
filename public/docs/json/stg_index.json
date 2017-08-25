@@ -7590,7 +7590,7 @@
         }
       }
     },
-    "/dpRouteTask/{dpRouteTaskId}/dpRouteLoadTask": {
+    "/dpRouteLoadTask": {
       "get": {
         "tags": [
           "dispatch"
@@ -7603,9 +7603,9 @@
         "parameters": [
           {
             "name": "dpRouteTaskId",
-            "in": "path",
+            "in": "query",
             "description": "dpRouteTask id",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           }
