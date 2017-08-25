@@ -7,14 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpTaskStatDAO.js');
 
 function addDpTaskStat(params,callback){
-    var query = " insert into dp_task_stat (route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,pre_count,date_id) " +
-        " values ( ? , ? , ? , ? , ? ,? , ? , ? ) ";
+    var query = " insert into dp_task_stat (route_start_id,base_addr_id,route_end_id,receive_id,pre_count,date_id) " +
+        " values ( ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.routeStartId;
-    paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
     paramsArray[i++]=params.routeEndId;
-    paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.preCount;
     paramsArray[i]=params.dateId;
@@ -26,13 +24,15 @@ function addDpTaskStat(params,callback){
 
 function getDpTaskStat(params,callback) {
     var query = " select sum(dpt.pre_count) as pre_count,sum(dpt.plan_count) as plan_count, " +
-        " dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id from dp_task_stat dpt where dpt.id is not null ";
+        " dpt.route_start_id,c.city_name as city_route_start,dpt.route_end_id,ce.city_name as city_route_end,dpt.date_id from dp_task_stat dpt " +
+        " left join city_info c on dpt.route_start_id = c.id " +
+        " left join city_info ce on dpt.route_end_id = ce.id where dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskStatId){
         paramsArray[i++] = params.dpTaskStatId;
         query = query + " and dpt.id = ? ";
     }
-    query = query + ' group by dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id ';
+    query = query + ' group by dpt.route_start_id,c.city_name,dpt.route_end_id,ce.city_name,dpt.date_id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -45,9 +45,11 @@ function getDpTaskStat(params,callback) {
 }
 
 function getDpTaskStatBase(params,callback) {
-    var query = " select dpt.*,ba.addr_name,r.short_name from dp_task_stat dpt " +
+    var query = " select dpt.*,c.city_name as city_route_start,ce.city_name as city_route_end,ba.addr_name,r.short_name from dp_task_stat dpt " +
         " left join receive_info r on dpt.receive_id = r.id " +
-        " left join base_addr ba on dpt.base_addr_id = ba.id where dpt.id is not null ";
+        " left join base_addr ba on dpt.base_addr_id = ba.id " +
+        " left join city_info c on dpt.route_start_id = c.id " +
+        " left join city_info ce on dpt.route_end_id = ce.id where dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskStatId){
         paramsArray[i++] = params.dpTaskStatId;
