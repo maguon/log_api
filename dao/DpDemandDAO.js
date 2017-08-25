@@ -35,12 +35,12 @@ function getDpDemand(params,callback) {
         paramsArray[i++] = params.dpDemandId;
         query = query + " and dpd.id = ? ";
     }
-    if(params.demandDateStart){
-        paramsArray[i++] = params.demandDateStart +" 00:00:00";
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
         query = query + " and dpd.created_on >= ? ";
     }
-    if(params.demandDateEnd){
-        paramsArray[i++] = params.demandDateEnd +" 23:59:59";
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and dpd.created_on <= ? ";
     }
     if(params.dateIdStart){
