@@ -80,6 +80,10 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.taskStatus;
         query = query + " and dpr.task_status = ? ";
     }
+    if(params.taskStatusNot){
+        paramsArray[i++] = params.taskStatusNot;
+        query = query + " and dpr.task_status <= ? ";
+    }
     query = query + ' group by dpr.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

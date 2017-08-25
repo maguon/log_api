@@ -7321,6 +7321,14 @@
 
           },
           {
+            "name": "taskStatusNot",
+            "in": "query",
+            "description": "taskStatus not",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
