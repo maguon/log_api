@@ -23,10 +23,11 @@ function addDpRouteTask(params,callback){
 }
 
 function getDpRouteTask(params,callback) {
-    var query = " select dpr.*,t.truck_num,d.drive_name,c.city_name as city_route_start,ce.city_name as city_route_end from dp_route_task dpr " +
+    var query = " select dpr.*,t.truck_num,tl.number as trail_number,d.drive_name,d.tel,c.city_name as city_route_start,ce.city_name as city_route_end from dp_route_task dpr " +
         " left join city_info c on dpr.route_start_id = c.id " +
         " left join city_info ce on dpr.route_end_id = ce.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
+        " left join truck_info tl on t.rel_id = tl.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " left join dp_route_load_task_detail dpdtl on dprl.id = dpdtl.dp_route_load_task_id where dpr.id is not null ";
