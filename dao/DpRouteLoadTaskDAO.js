@@ -27,6 +27,7 @@ function addDpRouteLoadTask(params,callback){
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,u.real_name as dp_op_name,ba.addr_name,c.city_name,r.short_name, " +
         " dpr.task_plan_date,dpr.task_start_date,dpr.task_end_date,t.truck_num,d.drive_name,d.tel from dp_route_load_task dprl " +
+        " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join user_info u on dprl.user_id = u.uid " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
@@ -40,25 +41,9 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dprl.dp_route_task_id = ? ";
     }
-    if(params.routeStartId){
-        paramsArray[i++] = params.routeStartId;
-        query = query + " and dprl.route_start_id = ? ";
-    }
-    if(params.baseAddrId){
-        paramsArray[i++] = params.baseAddrId;
-        query = query + " and dprl.base_addr_id = ? ";
-    }
-    if(params.routeEndId){
-        paramsArray[i++] = params.routeEndId;
-        query = query + " and dprl.route_end_id = ? ";
-    }
-    if(params.receiveId){
-        paramsArray[i++] = params.receiveId;
-        query = query + " and dprl.receive_id = ? ";
-    }
-    if(params.dateId){
-        paramsArray[i++] = params.dateId;
-        query = query + " and dprl.date_id = ? ";
+    if(params.dpDemandId){
+        paramsArray[i++] = params.dpDemandId;
+        query = query + " and dprl.demand_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTask ');

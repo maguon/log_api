@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
+var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -60,15 +61,33 @@ function queryDpDemand(req,res,next){
 
 function updateDpDemandStatus(req,res,next){
     var params = req.params;
-    dpDemandDAO.updateDpDemandStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateDpDemandStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDpDemandStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        dpRouteLoadTaskDAO.getDpRouteLoadTask({dpDemandId:params.dpDemandId},function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTask ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0){
+                    logger.warn(' getDpRouteLoadTask ' + 'failed');
+                    resUtil.resetFailedRes(res," 需求已经指派了任务，请先取消任务 ");
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        dpDemandDAO.updateDpDemandStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpDemandStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpDemandStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

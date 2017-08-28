@@ -49,7 +49,7 @@ function getDpTaskStatBase(params,callback) {
         " left join receive_info r on dpt.receive_id = r.id " +
         " left join base_addr ba on dpt.base_addr_id = ba.id " +
         " left join city_info c on dpt.route_start_id = c.id " +
-        " left join city_info ce on dpt.route_end_id = ce.id where dpt.id is not null ";
+        " left join city_info ce on dpt.route_end_id = ce.id where dpt.pre_count > 0 and dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskStatId){
         paramsArray[i++] = params.dpTaskStatId;
