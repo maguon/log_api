@@ -142,3 +142,27 @@ CREATE TABLE `dp_demand_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
+-- ----------------------------
+--  Triggers structure for table dp_demand_info
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_new_demand_stat`;
+delimiter $$
+CREATE TRIGGER `trg_new_demand_stat` AFTER INSERT ON `dp_demand_info` FOR EACH ROW INSERT INTO dp_task_stat(route_start_id,base_addr_id,route_end_id,receive_id,date_id,pre_count)
+VALUES (new.route_start_id,new.base_addr_id,new.route_end_id,new.receive_id,new.date_id,new.pre_count)
+ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count;
+END $$
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_cancel_demand_stat`;
+delimiter $$
+CREATE TRIGGER `trg_cancel_demand_stat` AFTER UPDATE ON `dp_demand_info` FOR EACH ROW
+BEGIN
+IF (new.demand_status=0 && old.demand_status=1)THEN
+UPDATE dp_task_stat set pre_count = pre_count- new.pre_count
+where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+and route_end_id=new.route_end_id and receive_id = new.receive_id and date_id = new.date_id;
+END IF;
+END $$
+delimiter ;
