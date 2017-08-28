@@ -25,16 +25,40 @@ function addDpRouteLoadTask(params,callback){
 }
 
 function getDpRouteLoadTask(params,callback) {
-    var query = " select dprl.*,u.real_name,ba.addr_name,c.city_name,r.short_name from dp_route_load_task dprl " +
+    var query = " select dprl.*,u.real_name as dp_op_name,ba.addr_name,c.city_name,r.short_name, " +
+        " dpr.task_plan_date,dpr.task_start_date,dpr.task_end_date,t.truck_num,d.drive_name,d.tel from dp_route_load_task dprl " +
         " left join user_info u on dprl.user_id = u.uid " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
         " left join base_addr ba on dprl.base_addr_id = ba.id " +
         " left join city_info c on dprl.route_end_id = c.id " +
-        " left join receive_info r on dprl.receive_id = r.id where dprl.load_task_status > 0 and dprl.id is not null ";
+        " left join receive_info r on dprl.receive_id = r.id " +
+        " where dprl.load_task_status != 5 and dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dprl.dp_route_task_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dprl.route_start_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dprl.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dprl.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and dprl.receive_id = ? ";
+    }
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and dprl.date_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTask ');
