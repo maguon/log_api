@@ -155,12 +155,17 @@ ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count;
 END $$
 delimiter ;
 
-DROP TRIGGER IF EXISTS `trg_cancel_demand_stat`;
+DROP TRIGGER IF EXISTS `trg_update_demand_stat`;
 delimiter $$
-CREATE TRIGGER `trg_cancel_demand_stat` AFTER UPDATE ON `dp_demand_info` FOR EACH ROW
+CREATE TRIGGER `trg_update_demand_stat` AFTER UPDATE ON `dp_demand_info` FOR EACH ROW
 BEGIN
 IF (new.demand_status=0 && old.demand_status=1)THEN
 UPDATE dp_task_stat set pre_count = pre_count- new.pre_count
+where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+and route_end_id=new.route_end_id and receive_id = new.receive_id and date_id = new.date_id;
+END IF;
+IF(new.user_id=0) THEN
+UPDATE dp_task_stat set pre_count = pre_count + (new.pre_count - old.pre_count)
 where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
 and route_end_id=new.route_end_id and receive_id = new.receive_id and date_id = new.date_id;
 END IF;
