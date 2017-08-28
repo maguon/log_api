@@ -6949,12 +6949,73 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dpRouteTask"
+                "$ref": "#/definitions/dpDemand"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dpRouteTask id"
+            "description": "Invalid token value or invalid dpDemand id"
+          }
+        }
+      }
+    },
+    "/dpDemandBase": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpDemandBase list",
+        "description": "query dpDemandBase",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "dpDemandId",
+            "in": "query",
+            "description": "dpDemand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpDemandBase"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpDemandBase id"
           }
         }
       }
@@ -8398,6 +8459,9 @@
       "type": "object",
       "properties": {
 
+        "demandId": {
+          "type": "integer"
+        },
         "routeStartId": {
           "type": "integer"
         },

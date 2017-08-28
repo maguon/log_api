@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDAO.js');
 
 function addDpRouteLoadTask(params,callback){
-    var query = " insert into dp_route_load_task (user_id,dp_route_task_id,route_start_id,base_addr_id,route_end_id,receive_id,date_id,plan_count) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_load_task (user_id,demand_id,dp_route_task_id,route_start_id,base_addr_id,route_end_id,receive_id,date_id,plan_count) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.demandId;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.baseAddrId;
@@ -25,7 +26,7 @@ function addDpRouteLoadTask(params,callback){
 }
 
 function getDpRouteLoadTask(params,callback) {
-    var query = " select dprl.*,u.real_name as dp_op_name,ba.addr_name,c.city_name,r.short_name, " +
+    var query = " select dprl.*,u.real_name as dp_op_name,ba.addr_name,c.city_name,r.short_name,dpd.pre_count, " +
         " dpr.task_plan_date,dpr.task_start_date,dpr.task_end_date,t.truck_num,d.drive_name,d.tel from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join user_info u on dprl.user_id = u.uid " +

@@ -59,6 +59,20 @@ function queryDpDemand(req,res,next){
     })
 }
 
+function queryDpDemandBase(req,res,next){
+    var params = req.params ;
+    dpDemandDAO.getDpDemandBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpDemandBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpDemandBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDpDemandStatus(req,res,next){
     var params = req.params;
     Seq().seq(function(){
@@ -95,5 +109,6 @@ function updateDpDemandStatus(req,res,next){
 module.exports = {
     createDpDemand : createDpDemand,
     queryDpDemand : queryDpDemand,
+    queryDpDemandBase : queryDpDemandBase,
     updateDpDemandStatus : updateDpDemandStatus
 }

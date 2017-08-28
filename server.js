@@ -362,6 +362,7 @@ function createServer() {
      * DpDemand Module
      */
     server.get('/api/dpDemand',dpDemand.queryDpDemand);
+    server.get('/api/dpDemandBase',dpDemand.queryDpDemandBase);
     server.post({path:'/api/user/:userId/dpDemand',contentType: 'application/json'},dpDemand.createDpDemand);
     server.put({path:'/api/user/:userId/dpDemand/:dpDemandId/demandStatus/:demandStatus',contentType: 'application/json'} ,dpDemand.updateDpDemandStatus);
 

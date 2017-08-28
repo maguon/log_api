@@ -94,6 +94,34 @@ function getDpDemand(params,callback) {
     });
 }
 
+function getDpDemandBase(params,callback) {
+    var query = " select dpd.*,u.real_name as demand_op_name,ba.addr_name,r.short_name from dp_demand_info dpd " +
+        " left join user_info u on dpd.user_id = u.uid " +
+        " left join base_addr ba on dpd.base_addr_id = ba.id " +
+        " left join receive_info r on dpd.receive_id = r.id where dpd.demand_status >0 and dpd.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpDemandId){
+        paramsArray[i++] = params.dpDemandId;
+        query = query + " and dpd.id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dpd.route_start_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dpd.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dpd.route_end_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpDemandBase ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpDemandStatus(params,callback){
     var query = " update dp_demand_info set demand_status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -109,5 +137,6 @@ function updateDpDemandStatus(params,callback){
 module.exports ={
     addDpDemand : addDpDemand,
     getDpDemand : getDpDemand,
+    getDpDemandBase : getDpDemandBase,
     updateDpDemandStatus : updateDpDemandStatus
 }
