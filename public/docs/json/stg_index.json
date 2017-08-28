@@ -7398,13 +7398,14 @@
         }
       }
     },
-    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/taskStatus/{taskStatus}": {
-      "put": {
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}": {
+      "delete": {
         "tags": [
           "dispatch"
         ],
-        "summary": "update task status",
-        "description": "update task status",
+        "summary": "Deletes a dpRouteTask",
+        "description": "",
+        "operationId": "deleteDpRouteTask",
         "produces": [
           "application/json"
         ],
@@ -7412,40 +7413,24 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
-
           },
           {
             "name": "dpRouteTaskId",
             "in": "path",
-            "description": "dpRouteTask id",
+            "description": "dpRouteTask id to delete",
             "required": true,
             "type": "integer"
-
-          },
-          {
-            "name": "taskStatus",
-            "in": "path",
-            "description": "task status",
-            "required": true,
-            "type": "integer"
-
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
           "400": {
-            "description": "Invalid token value or invalid dpRouteTask id"
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
@@ -7547,13 +7532,14 @@
         }
       }
     },
-    "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}/loadTaskStatus/{loadTaskStatus}": {
-      "put": {
+    "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}": {
+      "delete": {
         "tags": [
           "dispatch"
         ],
-        "summary": "update loadTask status",
-        "description": "update loadTask status",
+        "summary": "Deletes a dpRouteLoadTask",
+        "description": "",
+        "operationId": "deleteDpRouteLoadTask",
         "produces": [
           "application/json"
         ],
@@ -7561,37 +7547,24 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "user Id",
+            "description": "user id",
             "required": true,
             "type": "integer"
           },
           {
             "name": "dpRouteLoadTaskId",
             "in": "path",
-            "description": "dpRouteLoadTask id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "loadTaskStatus",
-            "in": "path",
-            "description": "loadTask status",
+            "description": "dpRouteLoadTask id to delete",
             "required": true,
             "type": "integer"
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
           "400": {
-            "description": "Invalid token value or invalid dpRouteLoadTask id"
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
