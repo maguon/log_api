@@ -35,7 +35,7 @@ function getDpRouteLoadTask(params,callback) {
         " left join base_addr ba on dprl.base_addr_id = ba.id " +
         " left join city_info c on dprl.route_end_id = c.id " +
         " left join receive_info r on dprl.receive_id = r.id " +
-        " where dprl.load_task_status != 5 and dprl.id is not null ";
+        " where dprl.load_task_status != 8 and dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;

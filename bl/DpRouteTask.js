@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -61,7 +62,7 @@ function removeDpRouteTask(req,res,next){
             }
         })
     }).seq(function () {
-        params.taskStatus = 8;
+        params.taskStatus = sysConst.TASK_STATUS.cancel;
         dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
             if (error) {
                 logger.error(' removeDpRouteTask ' + error.message);

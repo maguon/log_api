@@ -102,8 +102,9 @@ CREATE TABLE `dp_route_load_task` (
   `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
   `receive_id` int(10) NOT NULL COMMENT '经销商ID',
   `date_id` int(4) NOT NULL COMMENT '指令时间',
+  `load_date` datetime DEFAULT NULL COMMENT '装车时间',
   `plan_count` int(10) NOT NULL DEFAULT '0' COMMENT '派发商品车数量',
-  `load_task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '任务状态(1-未装车,3-已装车,5-取消任务,7-已到达)',
+  `load_task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '任务状态(1-未装车,3-已装车,7-已到达,8-取消任务,9-已完成)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
