@@ -9,7 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
-var dpTaskStatDAO = require('../dao/DpTaskStatDAO.js');
+var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -19,22 +19,21 @@ function createDpRouteLoadTask(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
-        dpTaskStatDAO.getDpTaskStatBase(params,function(error,rows){
+        dpDemandDAO.getDpDemandBase({dpDemandId:params.dpDemandId},function(error,rows){
             if (error) {
-                logger.error(' getDpTaskStatBase ' + error.message);
+                logger.error(' getDpDemandBase ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length >0){
-                    var dpCount = rows[0].plan_count+params.planCount;
-                    if(dpCount > rows[0].pre_count){
-                        logger.warn(' getDpTaskStatBase ' + 'failed');
+                    if(params.planCount > rows[0].pre_count){
+                        logger.warn(' getDpDemandBase ' + 'failed');
                         resUtil.resetFailedRes(res," 派发数量不能大于指令数量 ");
                         return next();
                     }else{
                         that();
                     }
                 }else{
-                    logger.warn(' getDpTaskStatBase ' + 'failed');
+                    logger.warn(' getDpDemandBase ' + 'failed');
                     resUtil.resetFailedRes(res," 派发任务与调度需求不符合 ");
                     return next();
                 }
