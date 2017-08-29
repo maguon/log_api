@@ -2854,7 +2854,7 @@
             "name": "licenseDateEnd",
             "in": "query",
             "description": "licenseDate end",
-            "required": true,
+            "required": false,
             "type": "string"
 
           }

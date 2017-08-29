@@ -139,7 +139,7 @@ function getDriveDistanceCount(params,callback) {
     var query = " select d.id as drive_id,d.drive_name,d.tel,t.truck_num, " +
         " count(case when dpr.task_status = 9 then dpr.id end) as complete_count, " +
         " sum(case when dpr.car_count > 5 then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.car_count < 6 then dpr.distance end) as no_load_distance " +
+        " sum(case when dpr.car_count <= 5 then dpr.distance end) as no_load_distance " +
         " from drive_info d " +
         " left join dp_route_task dpr on d.id = dpr.drive_id " +
         " left join truck_info t on dpr.truck_id = t.id " +
