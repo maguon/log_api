@@ -11,7 +11,7 @@ function addDpRouteLoadTask(params,callback){
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
-    paramsArray[i++]=params.demandId;
+    paramsArray[i++]=params.dpDemandId;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.baseAddrId;
