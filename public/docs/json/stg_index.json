@@ -2846,7 +2846,7 @@
             "name": "licenseDateStart",
             "in": "query",
             "description": "licenseDate start",
-            "required": true,
+            "required": false,
             "type": "string"
 
           },
@@ -2854,7 +2854,7 @@
             "name": "licenseDateEnd",
             "in": "query",
             "description": "licenseDate end",
-            "required": false,
+            "required": true,
             "type": "string"
 
           }
