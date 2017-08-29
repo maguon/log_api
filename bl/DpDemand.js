@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
+var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -61,15 +62,33 @@ function queryDpDemand(req,res,next){
 
 function queryDpDemandBase(req,res,next){
     var params = req.params ;
-    dpDemandDAO.getDpDemandBase(params,function(error,result){
-        if (error) {
-            logger.error(' queryDpDemandBase ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryDpDemandBase ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId},function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteTask ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0 && params.routeEndId == rows[0].route_end_id){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteTask ' + 'failed');
+                    resUtil.resetFailedRes(res," 送达城市不在规定路线内，需新建路线任务补全整条路线。 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        dpDemandDAO.getDpDemandBase(params,function(error,result){
+            if (error) {
+                logger.error(' queryDpDemandBase ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' queryDpDemandBase ' + 'success');
+                resUtil.resetQueryRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

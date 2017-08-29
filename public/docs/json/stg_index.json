@@ -6972,6 +6972,14 @@
         "parameters": [
 
           {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "dpDemandId",
             "in": "query",
             "description": "dpDemand id",
