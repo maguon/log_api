@@ -107,6 +107,31 @@ function getDpRouteTask(params,callback) {
     });
 }
 
+function getDriveDistanceCount(params,callback) {
+    var query = " select d.id as drive_id,d.drive_name,d.tel,t.truck_num, " +
+        " count(case when dpr.task_status = 9 then dpr.id end) as complete_count, " +
+        " sum(case when dpr.car_count > 5 then dpr.distance end) as load_distance, " +
+        " sum(case when dpr.car_count <= 5 then dpr.distance end) as no_load_distance " +
+        " from dp_route_task dpr " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
+    query = query + ' group by d.id,t.truck_num ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveDistanceCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskStatus(params,callback){
     var query = " update dp_route_task set task_status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -122,5 +147,6 @@ function updateDpRouteTaskStatus(params,callback){
 module.exports ={
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
+    getDriveDistanceCount : getDriveDistanceCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus
 }

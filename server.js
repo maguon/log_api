@@ -226,7 +226,6 @@ function createServer() {
     server.get('/api/licenseCount' , drive.queryLicenseCount);
     server.get('/api/company/:companyId/driveCount' , drive.queryDriveCount);
     server.get('/api/driveOperateTypeCount' , drive.queryDriveOperateTypeCount);
-    server.get('/api/driveDistanceCount' , drive.queryDriveDistanceCount);
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/image',contentType: 'application/json'} ,drive.updateDriveImage);
@@ -378,6 +377,7 @@ function createServer() {
      * DpRouteTask Module
      */
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
+    server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask);
     server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId' , dpRouteTask.removeDpRouteTask);
 

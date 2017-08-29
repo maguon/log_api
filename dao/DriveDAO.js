@@ -135,31 +135,6 @@ function getDriveOperateTypeCount(params,callback) {
     });
 }
 
-function getDriveDistanceCount(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,d.tel,t.truck_num, " +
-        " count(case when dpr.task_status = 9 then dpr.id end) as complete_count, " +
-        " sum(case when dpr.car_count > 5 then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.car_count <= 5 then dpr.distance end) as no_load_distance " +
-        " from drive_info d " +
-        " left join dp_route_task dpr on d.id = dpr.drive_id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
-        " where d.id is not null ";
-    var paramsArray=[],i=0;
-    if(params.driveName){
-        paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
-    }
-    if(params.truckNum){
-        paramsArray[i++] = params.truckNum;
-        query = query + " and t.truck_num = ? ";
-    }
-    query = query + ' group by d.id,t.truck_num ';
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDriveDistanceCount ');
-        return callback(error,rows);
-    });
-}
-
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , tel = ? , company_id = ? , license_type = ? , " +
         " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
@@ -221,7 +196,6 @@ module.exports ={
     getLicenseCount : getLicenseCount,
     getDriveCount : getDriveCount,
     getDriveOperateTypeCount : getDriveOperateTypeCount,
-    getDriveDistanceCount : getDriveDistanceCount,
     updateDrive : updateDrive,
     updateDriveImage : updateDriveImage,
     updateLicenseImage : updateLicenseImage,

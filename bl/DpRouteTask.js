@@ -43,6 +43,20 @@ function queryDpRouteTask(req,res,next){
     })
 }
 
+function queryDriveDistanceCount(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getDriveDistanceCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveDistanceCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveDistanceCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function removeDpRouteTask(req,res,next){
     var params = req.params;
     Seq().seq(function(){
@@ -80,5 +94,6 @@ function removeDpRouteTask(req,res,next){
 module.exports = {
     createDpRouteTask : createDpRouteTask,
     queryDpRouteTask : queryDpRouteTask,
+    queryDriveDistanceCount : queryDriveDistanceCount,
     removeDpRouteTask : removeDpRouteTask
 }

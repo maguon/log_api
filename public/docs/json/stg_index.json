@@ -2947,50 +2947,6 @@
         }
       }
     },
-    "/driveDistanceCount": {
-      "get": {
-        "tags": [
-          "drive"
-        ],
-        "summary": "query driveDistance count",
-        "description": "query driveDistanceCount",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "driveName",
-            "in": "query",
-            "description": "drive name",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckNum",
-            "in": "query",
-            "description": "truck num",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/drive"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid drive id"
-          }
-        }
-      }
-    },
     "/user/{userId}/drive": {
       "post": {
         "tags": [
@@ -7470,6 +7426,50 @@
           },
           "400": {
             "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/driveDistanceCount": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query driveDistance count",
+        "description": "query driveDistanceCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
           }
         }
       }
