@@ -87,6 +87,20 @@ function queryDriveOperateTypeCount(req,res,next){
     })
 }
 
+function queryDriveDistanceCount(req,res,next){
+    var params = req.params ;
+    driveDAO.getDriveDistanceCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveDistanceCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveDistanceCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDrive(req,res,next){
     var params = req.params ;
     driveDAO.updateDrive(params,function(error,result){
@@ -169,6 +183,7 @@ module.exports = {
     queryLicenseCount : queryLicenseCount,
     queryDriveCount : queryDriveCount,
     queryDriveOperateTypeCount : queryDriveOperateTypeCount,
+    queryDriveDistanceCount : queryDriveDistanceCount,
     updateDrive : updateDrive,
     updateDriveImage : updateDriveImage,
     updateDriveStatus : updateDriveStatus
