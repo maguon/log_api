@@ -95,6 +95,14 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and dprl.receive_id = ? ";
     }
+    if(params.loadDistance){
+        paramsArray[i++] = params.loadDistance;
+        query = query + " and dpr.car_count > ? ";
+    }
+    if(params.noLoadDistance){
+        paramsArray[i++] = params.noLoadDistance;
+        query = query + " and dpr.car_count <= ? ";
+    }
     query = query + ' group by dpr.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -109,9 +117,9 @@ function getDpRouteTask(params,callback) {
 
 function getDriveDistanceCount(params,callback) {
     var query = " select d.id as drive_id,d.drive_name,d.tel,t.truck_num, " +
-        " count(case when dpr.task_status = 9 then dpr.id end) as complete_count, " +
-        " sum(case when dpr.car_count > 5 then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.car_count <= 5 then dpr.distance end) as no_load_distance " +
+        " count(case when dpr.task_status = " + params.taskStatus + " then dpr.id end) as complete_count, " +
+        " sum(case when dpr.car_count > " + params.loadDistance + " then dpr.distance end) as load_distance, " +
+        " sum(case when dpr.car_count <= " + params.noLoadDistance + " then dpr.distance end) as no_load_distance " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +

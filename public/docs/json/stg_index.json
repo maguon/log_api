@@ -7398,6 +7398,22 @@
 
           },
           {
+            "name": "loadDistance",
+            "in": "query",
+            "description": "load distance",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "noLoadDistance",
+            "in": "query",
+            "description": "noLoad distance",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -7441,6 +7457,30 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadDistance",
+            "in": "query",
+            "description": "load distance",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "noLoadDistance",
+            "in": "query",
+            "description": "noLoad distance",
+            "required": true,
+            "type": "integer"
+
+          },
           {
             "name": "driveName",
             "in": "query",
