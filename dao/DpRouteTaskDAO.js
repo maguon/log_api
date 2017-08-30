@@ -124,13 +124,15 @@ function getDpRouteTask(params,callback) {
 }
 
 function getDriveDistanceCount(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,d.tel,t.truck_num, " +
+    var query = " select d.id as drive_id,d.drive_name,d.tel,dpr.truck_id,t.truck_num, " +
         " count(case when dpr.task_status = " + params.taskStatus + " then dpr.id end) as complete_count, " +
         " sum(case when dpr.car_count > " + params.loadDistance + " then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.car_count <= " + params.noLoadDistance + " then dpr.distance end) as no_load_distance " +
+        " sum(case when dpr.car_count <= " + params.noLoadDistance + " then dpr.distance end) as no_load_distance, " +
+        " td.dispatch_flag,td.current_city,td.task_start,td.task_end " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
+        " left join truck_dispatch td on dpr.truck_id = td.truck_id " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveId){
@@ -153,7 +155,7 @@ function getDriveDistanceCount(params,callback) {
         paramsArray[i++] = params.dateIdEnd;
         query = query + " and dpr.date_id <= ? ";
     }
-    query = query + ' group by d.id,t.truck_num ';
+    query = query + ' group by d.id,dpr.truck_id,td.dispatch_flag,td.current_city,td.task_start,td.task_end ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveDistanceCount ');
         return callback(error,rows);
