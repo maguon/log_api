@@ -37,14 +37,6 @@ function getTruckDispatch(params,callback) {
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
     }
-    if(params.cityTaskStart){
-        paramsArray[i++] = params.cityTaskStart;
-        query = query + " and td.current_city = ? ";
-    }
-    if(params.cityTaskStart){
-        paramsArray[i++] = params.cityTaskStart;
-        query = query + " or td.task_start = ? ";
-    }
     if(params.baseAddrId){
         paramsArray[i++] = params.baseAddrId;
         query = query + " and dprl.base_addr_id = ? ";
@@ -56,6 +48,9 @@ function getTruckDispatch(params,callback) {
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
         query = query + " and dprl.receive_id = ? ";
+    }
+    if(params.cityTaskStart){
+        query = query + " and td.current_city = "  + params.cityTaskStart + " or td.task_start = " + params.cityTaskStart;
     }
     query = query + ' group by td.truck_id ';
     if (params.start && params.size) {
