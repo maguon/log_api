@@ -2500,33 +2500,81 @@
         ],
         "parameters": [
           {
+            "name": "dispatchFlag",
+            "in": "query",
+            "description": "dispatch flag",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
             "required": false,
-            "type": "string"
+            "type": "integer"
 
           },
           {
-            "name": "cityName",
+            "name": "driveName",
             "in": "query",
-            "description": "city name",
+            "description": "drive name",
             "required": false,
-            "type": "string"
+            "type": "integer"
 
           },
           {
-            "name": "taskStartName",
+            "name": "cityTaskStart",
             "in": "query",
-            "description": "taskStart name",
+            "description": "cityTask start",
             "required": false,
-            "type": "string"
+            "type": "integer"
 
           },
           {
-            "name": "dispatchFlag",
+            "name": "baseAddrId",
             "in": "query",
-            "description": "dispatch flag",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskEnd",
+            "in": "query",
+            "description": "task end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
             "required": false,
             "type": "integer"
 
@@ -7494,6 +7542,14 @@
             "in": "query",
             "description": "noLoad distance",
             "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
             "type": "integer"
 
           },

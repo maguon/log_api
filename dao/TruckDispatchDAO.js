@@ -16,23 +16,52 @@ function getTruckDispatch(params,callback) {
         " left join truck_info h on td.truck_id = h.id " +
         " left join truck_info t on h.rel_id = t.id " +
         " left join drive_info d on h.drive_id = d.id " +
-        " left join company_info c on h.company_id = c.id where td.truck_id is not null ";
+        " left join company_info c on h.company_id = c.id " +
+        " left join dp_route_task dpr on td.truck_id = dpr.truck_id " +
+        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id" +
+        " where td.truck_id is not null ";
     var paramsArray=[],i=0;
+    if(params.dispatchFlag){
+        paramsArray[i++] = params.dispatchFlag;
+        query = query + " and td.dispatch_flag = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and td.truck_id = ? ";
+    }
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
         query = query + " and h.truck_num = ? ";
     }
-    if(params.cityName){
-        paramsArray[i++] = params.cityName;
-        query = query + " and ci.city_name = ? ";
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
     }
-    if(params.taskStartName){
-        paramsArray[i++] = params.taskStartName;
-        query = query + " and cs.city_name = ? ";
+    if(params.cityTaskStart){
+        paramsArray[i++] = params.cityTaskStart;
+        query = query + " and td.current_city = ? ";
     }
-    if(params.dispatchFlag){
-        paramsArray[i++] = params.dispatchFlag;
-        query = query + " and td.dispatch_flag = ? ";
+    if(params.cityTaskStart){
+        paramsArray[i++] = params.cityTaskStart;
+        query = query + " or td.task_start = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dprl.base_addr_id = ? ";
+    }
+    if(params.taskEnd){
+        paramsArray[i++] = params.taskEnd;
+        query = query + " and td.task_end = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and dprl.receive_id = ? ";
+    }
+    query = query + ' group by td.truck_id ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckDispatch ');

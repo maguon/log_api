@@ -133,6 +133,10 @@ function getDriveDistanceCount(params,callback) {
         " left join truck_info t on dpr.truck_id = t.id " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
     if(params.driveName){
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
