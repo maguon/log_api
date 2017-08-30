@@ -81,7 +81,7 @@ CREATE TABLE `dp_route_task` (
   `distance` decimal(10,2) NOT NULL COMMENT '公里数',
   `task_plan_date` datetime DEFAULT NULL COMMENT '任务计划时间',
   `task_start_date` datetime DEFAULT NULL COMMENT '任务起始时间',
-  `task_end_date` datetime DEFAULT NULL COMMENT '任务结束时间',
+  `date_id` int(4) NOT NULL COMMENT '任务结束时间',
   `car_count` int(10) NOT NULL DEFAULT '0' COMMENT '实际装车商品车数量',
   `task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '指令状态(1-待接受,2-接受,3执行,4-在途,8-取消安排,9-已完成)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

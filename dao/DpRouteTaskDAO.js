@@ -95,6 +95,14 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and dprl.receive_id = ? ";
     }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dpr.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dpr.date_id <= ? ";
+    }
     if(params.loadDistance){
         paramsArray[i++] = params.loadDistance;
         query = query + " and dpr.car_count > ? ";
@@ -123,7 +131,7 @@ function getDriveDistanceCount(params,callback) {
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
-        " where d.id is not null ";
+        " where dpr.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveName){
         paramsArray[i++] = params.driveName;
@@ -132,6 +140,14 @@ function getDriveDistanceCount(params,callback) {
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
         query = query + " and t.truck_num = ? ";
+    }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dpr.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dpr.date_id <= ? ";
     }
     query = query + ' group by d.id,t.truck_num ';
     db.dbQuery(query,paramsArray,function(error,rows){

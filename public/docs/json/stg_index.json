@@ -7390,6 +7390,22 @@
 
           },
           {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "taskStatus",
             "in": "query",
             "description": "task status",
@@ -7495,6 +7511,22 @@
             "description": "truck num",
             "required": false,
             "type": "integer"
+
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
 
           }
         ],

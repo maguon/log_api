@@ -13,6 +13,7 @@ var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteTask.js');
 
 function createDpRouteTask(req,res,next){
@@ -31,6 +32,18 @@ function createDpRouteTask(req,res,next){
 
 function queryDpRouteTask(req,res,next){
     var params = req.params ;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
     dpRouteTaskDAO.getDpRouteTask(params,function(error,result){
         if (error) {
             logger.error(' queryDpRouteTask ' + error.message);
@@ -45,6 +58,18 @@ function queryDpRouteTask(req,res,next){
 
 function queryDriveDistanceCount(req,res,next){
     var params = req.params ;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
     dpRouteTaskDAO.getDriveDistanceCount(params,function(error,result){
         if (error) {
             logger.error(' queryDriveDistanceCount ' + error.message);
