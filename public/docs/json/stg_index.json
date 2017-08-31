@@ -7647,6 +7647,58 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/taskStatus/{taskStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTask status",
+        "description": "update dpRouteTask status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "path",
+            "description": "task status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask/{dpRouteTaskId}": {
       "delete": {
         "tags": [
@@ -7781,6 +7833,58 @@
         }
       }
     },
+    "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}/loadTaskStatus/{loadTaskStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteLoadTask status",
+        "description": "update dpRouteLoadTask status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTaskId",
+            "in": "path",
+            "description": "dpRouteLoadTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadTaskStatus",
+            "in": "path",
+            "description": "loadTask status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}": {
       "delete": {
         "tags": [
@@ -7835,6 +7939,14 @@
             "description": "dpRouteLoadTask id",
             "required": true,
             "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
 
           }
         ],

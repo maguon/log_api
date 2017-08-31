@@ -67,6 +67,20 @@ function queryDpRouteLoadTask(req,res,next){
     })
 }
 
+function updateDpRouteLoadTaskStatus(req,res,next){
+    var params = req.params;
+    dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteLoadTaskStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteLoadTaskStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function removeDpRouteLoadTask(req,res,next){
     var params = req.params;
     params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
@@ -86,5 +100,6 @@ function removeDpRouteLoadTask(req,res,next){
 module.exports = {
     createDpRouteLoadTask : createDpRouteLoadTask,
     queryDpRouteLoadTask : queryDpRouteLoadTask,
+    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus,
     removeDpRouteLoadTask : removeDpRouteLoadTask
 }

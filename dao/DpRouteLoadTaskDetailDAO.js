@@ -15,6 +15,10 @@ function getDpRouteLoadTaskDetail(params,callback) {
         paramsArray[i++] = params.dpRouteLoadTaskId;
         query = query + " and dpdtl.dp_route_load_task_id = ? ";
     }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and dpdtl.vin = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTaskDetail ');
         return callback(error,rows);
