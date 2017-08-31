@@ -27,8 +27,16 @@ function addDriverRecord(req,params,callback) {
         callback(error,result);
     })
 }
+
+function addRouteRecord(req,params,callback) {
+    var url = '/api/routeRecord';
+    httpUtil.httpPost(sysConfig.hosts.record,url,req,params,function(error,result){
+        callback(error,result);
+    })
+}
 module.exports ={
     addRecord : addRecord,
     addTruckRecord : addTruckRecord ,
-    addDriverRecord : addDriverRecord
+    addDriverRecord : addDriverRecord,
+    addRouteRecord : addRouteRecord
 }
