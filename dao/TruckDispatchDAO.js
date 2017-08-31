@@ -37,6 +37,14 @@ function getTruckDispatch(params,callback) {
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
     }
+    if(params.currentCity){
+        paramsArray[i++] = params.currentCity;
+        query = query + " and td.current_city = ? ";
+    }
+    if(params.taskStart){
+        paramsArray[i++] = params.taskStart;
+        query = query + " and td.task_start = ? ";
+    }
     if(params.baseAddrId){
         paramsArray[i++] = params.baseAddrId;
         query = query + " and dprl.base_addr_id = ? ";

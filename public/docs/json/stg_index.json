@@ -2532,6 +2532,22 @@
 
           },
           {
+            "name": "currentCity",
+            "in": "query",
+            "description": "current city",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskStart",
+            "in": "query",
+            "description": "task start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "cityTaskStart",
             "in": "query",
             "description": "cityTask start",
