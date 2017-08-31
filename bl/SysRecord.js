@@ -78,8 +78,33 @@ function saveDriverRecord(req,res,next){
         return next();
     }
 }
+
+
+function saveRouteRecord(req,res,next){
+    if(res._body.success){
+        var params = req.params;
+        console.log(params);
+        var recordParams ={};
+        recordParams.userId = params._uid;
+        recordParams.userType = params._utype || 99;
+        recordParams.username = params._uname || 'admin';
+        recordParams.content = params.routeContent;
+        recordParams.op = params.routeOp;
+        sysRecordDAO.addDriverRecord(req,recordParams,function(error,result){
+            if(error){
+                logger.error('saveRouteRecord ' + error.stack);
+            }else{
+                logger.info('saveRouteRecord success')
+            }
+            return next();
+        })
+    }else{
+        return next();
+    }
+}
 module.exports ={
     saveCarRecord : saveCarRecord ,
     saveTruckRecord : saveTruckRecord ,
-    saveDriverRecord : saveDriverRecord
+    saveDriverRecord : saveDriverRecord ,
+    saveRouteRecord : saveRouteRecord
 }
