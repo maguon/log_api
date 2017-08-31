@@ -58,7 +58,7 @@ function getTruckDispatch(params,callback) {
         query = query + " and dprl.receive_id = ? ";
     }
     if(params.cityTaskStart){
-        query = query + " and concat(td.current_city,td.task_start) like '%"+params.cityTaskStart+"%'";;
+        query = query + " and concat(td.current_city,td.task_start) like '%"+params.cityTaskStart+"%'";
 
     }
     query = query + ' group by td.truck_id ';

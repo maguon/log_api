@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
+var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -69,14 +70,59 @@ function queryDpRouteLoadTask(req,res,next){
 
 function updateDpRouteLoadTaskStatus(req,res,next){
     var params = req.params;
-    dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateDpRouteLoadTaskStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDpRouteLoadTaskStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
+    var newLoadFlag  = false;
+    Seq().seq(function(){
+        var that = this;
+        dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteLoadTaskStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateDpRouteLoadTaskStatus ' + 'success');
+                }else{
+                    logger.warn(' updateDpRouteLoadTaskStatus ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        if(params.loadTaskStatus==3){
+            params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.no_load;
+            dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params,function(error,rows){
+                if (error) {
+                    logger.error(' getDpRouteLoadTaskBase ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else{
+                    if(rows&&rows.length >0){
+                        logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
+                        resUtil.resetFailedRes(res," 车辆未全部完成装车，请继续操作剩余装车任务。 ");
+                        return next();
+                    }else{
+                        logger.info(' getDpRouteLoadTaskBase ' + 'success');
+                        resUtil.resetQueryRes(res," 车辆已全部完成装车，货车将启程驶向目的地，货车状态将转变为在途。");
+                        newLoadFlag = true;
+                        that();
+                    }
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function () {
+        if (newLoadFlag){
+            params.taskStatus = sysConst.TASK_STATUS.transport;
+            dpRouteTaskDAO.updateDpRouteTaskStatus(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateDpRouteTaskStatus ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    logger.info(' updateDpRouteTaskStatus ' + 'success');
+                    resUtil.resetUpdateRes(res, result, null);
+                    return next();
+                }
+            })
         }
     })
 }

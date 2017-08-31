@@ -55,11 +55,30 @@ function getDpRouteLoadTask(params,callback) {
     });
 }
 
+function getDpRouteLoadTaskBase(params,callback) {
+    var query = " select dprl.* from dp_route_load_task dprl " +
+        " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id where dprl.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dprl.dp_route_task_id = ? ";
+    }
+    if(params.loadTaskStatus){
+        paramsArray[i++] = params.loadTaskStatus;
+        query = query + " and dprl.load_task_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskBase ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteLoadTaskStatus(params,callback){
-    var query = " update dp_route_load_task set load_task_status = ? where id = ? ";
+    var query = " update dp_route_load_task set load_task_status = ? where  id = ? and dp_route_task_id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.loadTaskStatus;
-    paramsArray[i] = params.dpRouteLoadTaskId;
+    paramsArray[i++] = params.dpRouteLoadTaskId;
+    paramsArray[i]=params.dpRouteTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadTaskStatus ');
         return callback(error,rows);
@@ -71,5 +90,6 @@ function updateDpRouteLoadTaskStatus(params,callback){
 module.exports ={
     addDpRouteLoadTask : addDpRouteLoadTask,
     getDpRouteLoadTask : getDpRouteLoadTask,
+    getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
     updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
 }
