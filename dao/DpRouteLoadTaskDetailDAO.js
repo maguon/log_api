@@ -25,7 +25,19 @@ function getDpRouteLoadTaskDetail(params,callback) {
     });
 }
 
+function updateDpRouteLoadTaskDetailStatus(params,callback){
+    var query = " update dp_route_load_task_detail set car_load_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.carLoadStatus;
+    paramsArray[i] = params.dpRouteTaskDetailId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteLoadTaskDetailStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    getDpRouteLoadTaskDetail : getDpRouteLoadTaskDetail
+    getDpRouteLoadTaskDetail : getDpRouteLoadTaskDetail,
+    updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus
 }
