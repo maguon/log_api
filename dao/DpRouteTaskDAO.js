@@ -7,9 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteTaskDAO.js');
 
 function addDpRouteTask(params,callback){
-    var query = " insert into dp_route_task (truck_id,drive_id,route_start_id,route_end_id,distance,task_plan_date) " +
-        " values ( ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_task (user_id,truck_id,drive_id,route_start_id,route_end_id,distance,task_plan_date) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.routeStartId;
@@ -24,8 +25,9 @@ function addDpRouteTask(params,callback){
 
 function getDpRouteTask(params,callback) {
     if(params.taskStatus ==null || params.taskStatus ==""){
-        var query = " select dpr.*,t.truck_num,tl.number as trail_number,d.drive_name,d.tel," +
+        var query = " select dpr.*,u.real_name as route_op_name,t.truck_num,tl.number as trail_number,d.drive_name,d.tel," +
             " c.city_name as city_route_start,ce.city_name as city_route_end from dp_route_task dpr " +
+            " left join user_info u on dpr.user_id = u.uid " +
             " left join city_info c on dpr.route_start_id = c.id " +
             " left join city_info ce on dpr.route_end_id = ce.id " +
             " left join truck_info t on dpr.truck_id = t.id " +
@@ -35,8 +37,9 @@ function getDpRouteTask(params,callback) {
             " left join dp_route_load_task_detail dpdtl on dprl.id = dpdtl.dp_route_load_task_id " +
             " where dpr.id is not null ";
     }else{
-        var query = " select dpr.*,t.truck_num,tl.number as trail_number,d.drive_name,d.tel," +
+        var query = " select dpr.*,u.real_name as route_op_name,t.truck_num,tl.number as trail_number,d.drive_name,d.tel," +
             " c.city_name as city_route_start,ce.city_name as city_route_end from dp_route_task dpr " +
+            " left join user_info u on dpr.user_id = u.uid " +
             " left join city_info c on dpr.route_start_id = c.id " +
             " left join city_info ce on dpr.route_end_id = ce.id " +
             " left join truck_info t on dpr.truck_id = t.id " +

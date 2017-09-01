@@ -74,6 +74,7 @@ CREATE TABLE `dp_task_stat` (
 DROP TABLE IF EXISTS `dp_route_task`;
 CREATE TABLE `dp_route_task` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL COMMENT '指令调度人ID',
   `truck_id` int(10) NOT NULL COMMENT '货车ID',
   `drive_id` int(10) NOT NULL COMMENT '司机ID',
   `route_start_id` int(10) NOT NULL COMMENT '城市线路ID',
