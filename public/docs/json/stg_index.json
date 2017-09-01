@@ -7883,14 +7883,6 @@
             "required": true,
             "type": "integer"
 
-          },
-          {
-            "name": "dpRouteTaskId",
-            "in": "query",
-            "description": "dpRouteTask Id",
-            "required": true,
-            "type": "integer"
-
           }
         ],
         "responses": {

@@ -118,7 +118,7 @@ CREATE TABLE `dp_route_load_task_detail` (
   `dp_route_load_task_id` int(10) NOT NULL COMMENT '路线任务ID',
   `car_id` int(10) NOT NULL COMMENT '商品车ID',
   `vin` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品车VIN码',
-  `car_load_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品车状态(1-待装车,2-已装车,3-异常)',
+  `car_load_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品车状态(1-待装车,2-已装车,3-已送达,4-异常)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

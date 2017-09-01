@@ -74,11 +74,10 @@ function getDpRouteLoadTaskBase(params,callback) {
 }
 
 function updateDpRouteLoadTaskStatus(params,callback){
-    var query = " update dp_route_load_task set load_task_status = ? where  id = ? and dp_route_task_id = ? ";
+    var query = " update dp_route_load_task set load_task_status = ? where  id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.loadTaskStatus;
-    paramsArray[i++] = params.dpRouteLoadTaskId;
-    paramsArray[i]=params.dpRouteTaskId;
+    paramsArray[i] = params.dpRouteLoadTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadTaskStatus ');
         return callback(error,rows);
