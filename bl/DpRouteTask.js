@@ -124,6 +124,18 @@ function updateDpRouteTaskStatus(req,res,next){
             that();
         }
     }).seq(function () {
+        var myDate = new Date();
+        var year = myDate.getFullYear();
+        var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
+        var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
+        var strDate = year + month + day;
+        if(params.taskStatus == sysConst.TASK_STATUS.transport){
+            params.taskStartDate = myDate;
+        }
+        if(params.taskStatus == sysConst.TASK_STATUS.complete){
+            params.taskEndDate = myDate;
+            params.dateId = parseInt(strDate);
+        }
         dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
             if (error) {
                 logger.error(' updateDpRouteTaskStatus ' + error.message);

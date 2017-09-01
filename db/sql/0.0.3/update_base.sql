@@ -82,7 +82,8 @@ CREATE TABLE `dp_route_task` (
   `distance` decimal(10,2) NOT NULL COMMENT '公里数',
   `task_plan_date` datetime DEFAULT NULL COMMENT '任务计划时间',
   `task_start_date` datetime DEFAULT NULL COMMENT '任务起始时间',
-  `date_id` int(4) NOT NULL COMMENT '任务结束时间',
+  `task_end_date` datetime DEFAULT NULL COMMENT '任务完成时间',
+  `date_id` int(4) NOT NULL COMMENT '任务完成统计时间',
   `car_count` int(10) NOT NULL DEFAULT '0' COMMENT '实际装车商品车数量',
   `task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '指令状态(1-待接受,2-接受,3执行,4-在途,8-取消安排,9-已完成)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -119,7 +120,7 @@ CREATE TABLE `dp_route_load_task_detail` (
   `dp_route_load_task_id` int(10) NOT NULL COMMENT '路线任务ID',
   `car_id` int(10) NOT NULL COMMENT '商品车ID',
   `vin` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品车VIN码',
-  `car_load_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品车状态(1-待装车,2-已装车,3-已送达,4-异常)',
+  `car_load_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品车状态(1-待装车,2-已装车,3-已送达)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

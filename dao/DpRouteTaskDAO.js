@@ -166,10 +166,22 @@ function getDriveDistanceCount(params,callback) {
 }
 
 function updateDpRouteTaskStatus(params,callback){
-    var query = " update dp_route_task set task_status = ? where id = ? ";
+    var query = " update dp_route_task set task_status = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.taskStatus;
-    paramsArray[i] = params.dpRouteTaskId;
+    if(params.taskStartDate){
+        paramsArray[i++] = params.taskStartDate;
+        query = query + " ,task_start_date = ? ";
+    }
+    if(params.taskEndDate){
+        paramsArray[i++] = params.taskEndDate;
+        query = query + " ,task_end_date = ? ";
+    }
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " ,date_id = ? ";
+    }
+    query = query + ' where id = ' + params.dpRouteTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskStatus ');
         return callback(error,rows);
