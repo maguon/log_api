@@ -103,6 +103,23 @@ function updateDpRouteTaskStatus(req,res,next){
                     }
                 }
             })
+        }else if (params.taskStatus == sysConst.TASK_STATUS.complete) {
+            params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load;
+            dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params, function (error, rows) {
+                if (error) {
+                    logger.error(' getDpRouteLoadTaskBase ' + error.message);
+                    resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    return next();
+                } else {
+                    if (rows && rows.length > 0) {
+                        logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
+                        resUtil.resetFailedRes(res, " 未全部送达，状态不可为完成 ");
+                        return next();
+                    } else {
+                        that();
+                    }
+                }
+            })
         }else{
             that();
         }
