@@ -9,7 +9,6 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
-var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');

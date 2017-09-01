@@ -84,15 +84,39 @@ function queryDriveDistanceCount(req,res,next){
 
 function updateDpRouteTaskStatus(req,res,next){
     var params = req.params;
-    dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateDpRouteTaskStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDpRouteTaskStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
+    Seq().seq(function() {
+        var that = this;
+        if (params.taskStatus == sysConst.TASK_STATUS.transport) {
+            params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.no_load;
+            dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params, function (error, rows) {
+                if (error) {
+                    logger.error(' getDpRouteLoadTaskBase ' + error.message);
+                    resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    return next();
+                } else {
+                    if (rows && rows.length > 0) {
+                        logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
+                        resUtil.resetFailedRes(res, " 未完成装车任务，状态不可为在途 ");
+                        return next();
+                    } else {
+                        that();
+                    }
+                }
+            })
+        }else{
+            that();
         }
+    }).seq(function () {
+        dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteTaskStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpRouteTaskStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
