@@ -7982,6 +7982,59 @@
         }
       }
     },
+    "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}/dpRouteLoadTaskDetail": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteLoadTaskDetail",
+        "description": "user create dpRouteLoadTaskDetail",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTaskId",
+            "in": "path",
+            "description": "dpRouteLoadTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTaskDetail",
+            "in": "body",
+            "description": "dpRouteLoadTaskDetail info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteLoadTaskDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTaskDetail id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTaskDetail/{dpRouteTaskDetailId}/carLoadStatus/{carLoadStatus}": {
       "put": {
         "tags": [
@@ -8851,6 +8904,21 @@
       },
       "xml": {
         "name": "dpRouteLoadTask"
+      }
+    },
+    "dpRouteLoadTaskDetail": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        },
+        "vin": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dpRouteLoadTaskDetail"
       }
     }
   },

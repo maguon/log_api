@@ -6,6 +6,18 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDetailDAO.js');
 
+function addDpRouteLoadTaskDetail(params,callback){
+    var query = " insert into dp_route_load_task_detail (dp_route_load_task_id,car_id,vin) values ( ? , ? , ? ) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.dpRouteLoadTaskId;
+    paramsArray[i++]=params.carId;
+    paramsArray[i]=params.vin;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDpRouteLoadTaskDetail ');
+        return callback(error,rows);
+    });
+}
+
 function getDpRouteLoadTaskDetail(params,callback) {
     var query = " select dpdtl.*,dpdtl.vin,c.make_id,c.make_name from dp_route_load_task_detail dpdtl " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
@@ -38,6 +50,7 @@ function updateDpRouteLoadTaskDetailStatus(params,callback){
 
 
 module.exports ={
+    addDpRouteLoadTaskDetail : addDpRouteLoadTaskDetail,
     getDpRouteLoadTaskDetail : getDpRouteLoadTaskDetail,
     updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus
 }

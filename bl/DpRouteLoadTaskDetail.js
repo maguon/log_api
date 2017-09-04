@@ -13,6 +13,20 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDetail.js');
 
+function createDpRouteLoadTaskDetail(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskDetailDAO.addDpRouteLoadTaskDetail(params,function(error,result){
+        if (error) {
+            logger.error(' createDpRouteLoadTaskDetail ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createDpRouteLoadTaskDetail ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDpRouteLoadTaskDetail(req,res,next){
     var params = req.params ;
     dpRouteLoadTaskDetailDAO.getDpRouteLoadTaskDetail(params,function(error,result){
@@ -43,6 +57,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
 
 
 module.exports = {
+    createDpRouteLoadTaskDetail : createDpRouteLoadTaskDetail,
     queryDpRouteLoadTaskDetail : queryDpRouteLoadTaskDetail,
     updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus
 }
