@@ -33,17 +33,17 @@ var LICENSE_TYPE  ={
 var TASK_STATUS  ={
     ready_accept : 1,
     accept : 2,
-    execute : 3,
-    transport : 4,
+    doing : 3,
+    on_road : 4,
     cancel : 8,
-    complete : 9
+    completed : 9
 };
 var LOAD_TASK_STATUS  ={
     no_load : 1,
     load : 3,
     arrive : 7,
     cancel : 8,
-    complete : 9
+    completed : 9
 };
 
 

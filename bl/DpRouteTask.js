@@ -89,7 +89,7 @@ function updateDpRouteTaskStatus(req,res,next){
     var params = req.params;
     Seq().seq(function() {
         var that = this;
-        if (params.taskStatus == sysConst.TASK_STATUS.transport) {
+        if (params.taskStatus == sysConst.TASK_STATUS.on_road) {
             params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.no_load;
             dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params, function (error, rows) {
                 if (error) {
@@ -106,7 +106,7 @@ function updateDpRouteTaskStatus(req,res,next){
                     }
                 }
             })
-        }else if (params.taskStatus == sysConst.TASK_STATUS.complete) {
+        }else if (params.taskStatus == sysConst.TASK_STATUS.completed) {
             params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load;
             dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params, function (error, rows) {
                 if (error) {
@@ -132,10 +132,10 @@ function updateDpRouteTaskStatus(req,res,next){
         var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
         var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
         var strDate = year + month + day;
-        if(params.taskStatus == sysConst.TASK_STATUS.transport){
+        if(params.taskStatus == sysConst.TASK_STATUS.on_road){
             params.taskStartDate = myDate;
         }
-        if(params.taskStatus == sysConst.TASK_STATUS.complete){
+        if(params.taskStatus == sysConst.TASK_STATUS.completed){
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
         }
@@ -145,6 +145,26 @@ function updateDpRouteTaskStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateDpRouteTaskStatus ' + 'success');
+                if(params.taskStatus==sysConst.TASK_STATUS.accept){
+                    req.params.routeContent =" 接受指令 ";
+                    req.params.routeId = params.dpRouteTaskId;
+                    req.params.routeOp = sysConst.RECORD_OP_TYPE.accept;
+                }
+                if(params.taskStatus==sysConst.TASK_STATUS.doing){
+                    req.params.routeContent =" 执行指令 ";
+                    req.params.routeId = params.dpRouteTaskId;
+                    req.params.routeOp = sysConst.RECORD_OP_TYPE.doing;
+                }
+                if(params.taskStatus==sysConst.TASK_STATUS.on_road){
+                    req.params.routeContent =" 装成完成，货车在途 ";
+                    req.params.routeId = params.dpRouteTaskId;
+                    req.params.routeOp = sysConst.RECORD_OP_TYPE.on_road;
+                }
+                if(params.taskStatus==sysConst.TASK_STATUS.completed){
+                    req.params.routeContent =" 全部送达，任务完成 ";
+                    req.params.routeId = params.dpRouteTaskId;
+                    req.params.routeOp = sysConst.RECORD_OP_TYPE.completed;
+                }
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -178,6 +198,9 @@ function removeDpRouteTask(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' removeDpRouteTask ' + 'success');
+                req.params.routeContent =" 取消路线 ";
+                req.params.routeId = params.dpRouteTaskId;
+                req.params.routeOp =sysConst.RECORD_OP_TYPE.cancel;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
