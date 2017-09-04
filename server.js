@@ -378,7 +378,7 @@ function createServer() {
      */
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
     server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
-    server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask);
+    server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus);
     server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId' , dpRouteTask.removeDpRouteTask);
 

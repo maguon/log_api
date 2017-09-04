@@ -24,6 +24,9 @@ function createDpRouteTask(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' createDpRouteTask ' + 'success');
+            req.params.routeContent =" 生成路线 ";
+            req.params.routeId = result.insertId;
+            req.params.routeOp =sysConst.RECORD_OP_TYPE.create;
             resUtil.resetCreateRes(res,result,null);
             return next();
         }

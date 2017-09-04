@@ -89,8 +89,9 @@ function saveRouteRecord(req,res,next){
         recordParams.userType = params._utype || 99;
         recordParams.username = params._uname || 'admin';
         recordParams.content = params.routeContent;
+        recordParams.routeId = params.routeId;
         recordParams.op = params.routeOp;
-        sysRecordDAO.addDriverRecord(req,recordParams,function(error,result){
+        sysRecordDAO.addRouteRecord(req,recordParams,function(error,result){
             if(error){
                 logger.error('saveRouteRecord ' + error.stack);
             }else{

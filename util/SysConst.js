@@ -12,7 +12,13 @@ var USER_TYPE  ={
 };
 var RECORD_OP_TYPE  ={
     truckOp : 20,
-    driverOp : 30
+    driverOp : 30,
+    create : 31,
+    accept : 32,
+    doing : 33,
+    on_road : 34,
+    cancel : 38,
+    completed : 39
 };
 var LICENSE_TYPE  ={
     A1 : 1,
