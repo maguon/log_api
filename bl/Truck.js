@@ -285,6 +285,10 @@ function updateTruckRelBind(req,res,next){
                     logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
                     resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                     return next();
+                }else if(rows && rows.length>0&&rows[0].truck_status==0){
+                    logger.warn(' getTruckBase ' +params.truckId+ ' 头车已被停用，不能进行绑定 ');
+                    resUtil.resetFailedRes(res,' 头车已被停用，不能进行绑定 ');
+                    return next();
                 }else{
                     parkObj.truckId = rows[0].id;
                     parkObj.truckNum = rows[0].truck_num;
@@ -304,6 +308,10 @@ function updateTruckRelBind(req,res,next){
                     if(rows && rows.length>0&&rows[0].first_num!=null){
                         logger.warn(' getTruckTrailer ' +params.trailId+ sysMsg.CUST_TRUCK_BIND);
                         resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
+                        return next();
+                    }else if(rows && rows.length>0&&rows[0].truck_status==0){
+                        logger.warn(' getTruckTrailer ' +params.truckId+ ' 挂车已被停用，不能进行绑定 ');
+                        resUtil.resetFailedRes(res,' 挂车已被停用，不能进行绑定 ');
                         return next();
                     }else{
                         parkObj.firstNum = rows[0].truck_num;
@@ -388,6 +396,14 @@ function updateTruckDriveRelBind(req,res,next){
                     logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
                     resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
                     return next();
+                }else if(rows && rows.length>0&&rows[0].truck_type==2){
+                    logger.warn(' getTruckFirst ' +params.truckId+ ' 司机不能与挂车绑定 ');
+                    resUtil.resetFailedRes(res,' 司机不能与挂车绑定 ');
+                    return next();
+                }else if(rows && rows.length>0&&rows[0].truck_status==0){
+                    logger.warn(' getTruckFirst ' +params.truckId+ ' 头车已被停用，不能进行绑定 ');
+                    resUtil.resetFailedRes(res,' 头车已被停用，不能进行绑定 ');
+                    return next();
                 }else{
                     parkObj.truckId = rows[0].id;
                     parkObj.truckNum = rows[0].truck_num;
@@ -407,6 +423,10 @@ function updateTruckDriveRelBind(req,res,next){
                     if(rows && rows.length>0&&rows[0].truck_num!=null){
                         logger.warn(' getTruckFirst ' +params.driveId+ sysMsg.CUST_DRIVE_BIND);
                         resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
+                        return next();
+                    }else if(rows && rows.length>0&&rows[0].drive_status==0){
+                        logger.warn(' getTruckFirst ' +params.driveId+ ' 司机已被停用，不能进行绑定 ');
+                        resUtil.resetFailedRes(res,' 司机已被停用，不能进行绑定 ');
                         return next();
                     }else{
                         parkObj.driveId = rows[0].id;
