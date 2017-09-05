@@ -196,20 +196,36 @@ function getTruckRepairCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.truckNum = rows[i].truck_num;
                 if(rows[i].repair_date == null){
-                    parkObj.repairDate = null;
+                    parkObj.repairDate = "";
                 }else{
                     parkObj.repairDate = new Date(rows[i].repair_date).toLocaleDateString();
                 }
                 if(rows[i].end_date == null){
-                    parkObj.endDate = null;
+                    parkObj.endDate = "";
                 }else{
                     parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
                 }
                 parkObj.truckType = rows[i].truck_type;
-                parkObj.repairReason = rows[i].repair_reason;
-                parkObj.remark = rows[i].remark;
-                parkObj.repairMoney = rows[i].repair_money;
-                parkObj.repairUser = rows[i].repair_user;
+                if(rows[i].repair_reason == null){
+                    parkObj.repairReason = "";
+                }else{
+                    parkObj.repairReason = rows[i].repair_reason;
+                }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
+                if(rows[i].repair_money == null){
+                    parkObj.repairMoney = "";
+                }else{
+                    parkObj.repairMoney = rows[i].repair_money;
+                }
+                if(rows[i].repair_user == null){
+                    parkObj.repairUser = "";
+                }else{
+                    parkObj.repairUser = rows[i].repair_user;
+                }
                 csvString = csvString+parkObj.truckNum+","+parkObj.repairDate+","+parkObj.endDate+","+parkObj.truckType+","+parkObj.repairReason+","+parkObj.remark+","+parkObj.repairMoney+","+parkObj.repairUser+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
