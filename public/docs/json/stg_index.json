@@ -8325,6 +8325,9 @@
         "driveName": {
           "type": "string"
         },
+        "repairUser": {
+          "type": "string"
+        },
         "repairReason": {
           "type": "string"
         },

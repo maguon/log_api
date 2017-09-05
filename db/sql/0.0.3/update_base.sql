@@ -196,3 +196,10 @@ UPDATE dp_demand_info set pre_count=pre_count+1 where user_id=0 and route_start_
 END IF ;
 END $$
 delimiter ;
+
+ALTER TABLE `truck_repair_rel`
+MODIFY COLUMN `repair_user`  varchar(50) NULL COMMENT '维修人姓名' AFTER `drive_name`;
+ALTER TABLE `drive_info`
+MODIFY COLUMN `driver_image_re`  varchar(100) NULL COMMENT '司机身份证反面照片' AFTER `drive_image`,
+ADD COLUMN `driver_avatar`  varchar(100) NULL COMMENT '司机个人照片' AFTER `driver_image_re`,
+ADD COLUMN `op_license_image`  varchar(100) NULL COMMENT '准驾证照片' AFTER `driver_avatar`;
