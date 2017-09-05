@@ -182,6 +182,48 @@ function updateTruckRepairRel(req,res,next){
     })
 }
 
+function getTruckRepairCsv(req,res,next){
+    var csvString = "";
+    var header = "车牌号码" + ',' + "维修时间" + ',' + "结束时间" + ','+ "车辆类型" + ','+ "维修原因"+ ','+ "维修描述" + ','+ "维修金额" + ','+ "维修人" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    truckRepairRelDAO.getTruckRepairRel(params,function(error,rows){
+        if (error) {
+            logger.error(' getTruckRepairRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].repair_date == null){
+                    parkObj.repairDate = null;
+                }else{
+                    parkObj.repairDate = new Date(rows[i].repair_date).toLocaleDateString();
+                }
+                if(rows[i].end_date == null){
+                    parkObj.endDate = null;
+                }else{
+                    parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
+                }
+                parkObj.truckType = rows[i].truck_type;
+                parkObj.repairReason = rows[i].repair_reason;
+                parkObj.remark = rows[i].remark;
+                parkObj.repairMoney = rows[i].repair_money;
+                parkObj.repairUser = rows[i].repair_user;
+                csvString = csvString+parkObj.truckNum+","+parkObj.repairDate+","+parkObj.endDate+","+parkObj.truckType+","+parkObj.repairReason+","+parkObj.remark+","+parkObj.repairMoney+","+parkObj.repairUser+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createTruckRepairRel : createTruckRepairRel,
@@ -189,5 +231,6 @@ module.exports = {
     queryTruckRepairRelCount : queryTruckRepairRelCount,
     queryTruckRepairCountTotal : queryTruckRepairCountTotal,
     queryTruckRepairMoneyTotal : queryTruckRepairMoneyTotal,
-    updateTruckRepairRel : updateTruckRepairRel
+    updateTruckRepairRel : updateTruckRepairRel,
+    getTruckRepairCsv : getTruckRepairCsv
 }

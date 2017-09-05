@@ -2381,6 +2381,42 @@
         }
       }
     },
+    "/truckRepair.csv": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckRepair.csv list",
+        "description": "query truckRepair.csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckRepair.csv"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepair id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}/truckRepairRel": {
       "post": {
         "tags": [

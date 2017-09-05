@@ -204,6 +204,7 @@ function createServer() {
     server.get('/api/truckRepairRelCount' , truckRepairRel.queryTruckRepairRelCount);
     server.get('/api/truckRepairCountTotal' , truckRepairRel.queryTruckRepairCountTotal);
     server.get('/api/truckRepairMoneyTotal' , truckRepairRel.queryTruckRepairMoneyTotal);
+    server.get('/api/truckRepair.csv', truckRepairRel.getTruckRepairCsv);
     server.post({path:'/api/user/:userId/truck/:truckId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
 
