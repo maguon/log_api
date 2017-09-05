@@ -8325,10 +8325,10 @@
         "driveName": {
           "type": "string"
         },
-        "repairUser": {
+        "repairReason": {
           "type": "string"
         },
-        "repairReason": {
+        "repairUser": {
           "type": "string"
         },
         "remark": {

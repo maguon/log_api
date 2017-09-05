@@ -7,13 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckRepairRelDAO.js');
 
 function addTruckRepairRel(params,callback){
-    var query = " insert into truck_repair_rel (truck_id,drive_id,drive_name,repair_user,repair_date,date_id,repair_reason) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into truck_repair_rel (truck_id,drive_id,drive_name,repair_date,date_id,repair_reason) " +
+        " values ( ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
-    paramsArray[i++]=params.repairUser;
     paramsArray[i++]=params.repairDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i]=params.repairReason;
@@ -141,8 +140,9 @@ function getTruckRepairMoneyTotal(params,callback) {
 }
 
 function updateTruckRepairRel(params,callback){
-    var query = " update truck_repair_rel set repair_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
+    var query = " update truck_repair_rel set repair_user = ? , repair_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.repairUser;
     paramsArray[i++]=params.repairMoney;
     paramsArray[i++]=params.endDate;
     paramsArray[i++]=params.repairStatus;
