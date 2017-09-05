@@ -116,12 +116,48 @@ function updateDriveImage(req,res,next){
         })
     }
     if(params.imageType==2){
+        driveDAO.updateDriveImageRe(params,function(error,result){
+            if (error) {
+                logger.error(' updateDriveImageRe ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDriveImageRe ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
+    if(params.imageType==3){
         driveDAO.updateLicenseImage(params,function(error,result){
             if (error) {
                 logger.error(' updateLicenseImage ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateLicenseImage ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
+    if(params.imageType==4){
+        driveDAO.updateOpLicenseImage(params,function(error,result){
+            if (error) {
+                logger.error(' updateOpLicenseImage ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateOpLicenseImage ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    }
+    if(params.imageType==5){
+        driveDAO.updateDriverAvatarImage(params,function(error,result){
+            if (error) {
+                logger.error(' updateDriverAvatarImage ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDriverAvatarImage ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

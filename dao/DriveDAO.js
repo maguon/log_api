@@ -167,6 +167,17 @@ function updateDriveImage(params,callback){
     });
 }
 
+function updateDriveImageRe(params,callback){
+    var query = " update drive_info set driver_image_re = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveImage;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveImageRe ');
+        return callback(error,rows);
+    });
+}
+
 function updateLicenseImage(params,callback){
     var query = " update drive_info set license_image = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -174,6 +185,28 @@ function updateLicenseImage(params,callback){
     paramsArray[i]=params.driveId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateLicenseImage ');
+        return callback(error,rows);
+    });
+}
+
+function updateOpLicenseImage(params,callback){
+    var query = " update drive_info set op_license_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveImage;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateOpLicenseImage ');
+        return callback(error,rows);
+    });
+}
+
+function updateDriverAvatarImage(params,callback){
+    var query = " update drive_info set driver_avatar_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveImage;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriverAvatarImage ');
         return callback(error,rows);
     });
 }
@@ -198,6 +231,9 @@ module.exports ={
     getDriveOperateTypeCount : getDriveOperateTypeCount,
     updateDrive : updateDrive,
     updateDriveImage : updateDriveImage,
+    updateDriveImageRe : updateDriveImageRe,
     updateLicenseImage : updateLicenseImage,
+    updateOpLicenseImage : updateOpLicenseImage,
+    updateDriverAvatarImage : updateDriverAvatarImage,
     updateDriveStatus : updateDriveStatus
 }
