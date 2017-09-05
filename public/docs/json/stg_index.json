@@ -2399,6 +2399,54 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairDateStart",
+            "in": "query",
+            "description": "repairDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "repairDateEnd",
+            "in": "query",
+            "description": "repairDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateStart",
+            "in": "query",
+            "description": "endDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
+            "required": false,
+            "type": "string"
+
           }
         ],
         "responses": {
