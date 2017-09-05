@@ -205,7 +205,11 @@ function getTruckRepairCsv(req,res,next){
                 }else{
                     parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
                 }
-                parkObj.truckType = rows[i].truck_type;
+                if(rows[i].truck_type == 1){
+                    parkObj.truckType = "头车";
+                }else{
+                    parkObj.truckType = "挂车";
+                }
                 if(rows[i].repair_reason == null){
                     parkObj.repairReason = "";
                 }else{
