@@ -413,6 +413,17 @@ function updateTruckDriveRel(params,callback){
     });
 }
 
+function updateTruckViceDriveRel(params,callback){
+    var query = " update truck_info set vice_driver_id = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.viceDriverId;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckViceDriveRel ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruckStatus(params,callback){
     var query = " update truck_info set truck_status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -455,6 +466,7 @@ module.exports ={
     updateTruckInspectImage :updateTruckInspectImage,
     updateTruckRel : updateTruckRel,
     updateTruckDriveRel : updateTruckDriveRel,
+    updateTruckViceDriveRel : updateTruckViceDriveRel,
     updateTruckStatus : updateTruckStatus,
     updateRepairStatus : updateRepairStatus
 }

@@ -29,10 +29,14 @@ function addDrive(params,callback){
 function getDrive(params,callback) {
     var query = " select d.*,c.company_name,c.operate_type,t.id as truck_id,t.truck_num " +
         " from drive_info d left join company_info c on d.company_id = c.id " +
-        " left join truck_info t on d.id = t.drive_id where d.id is not null";
+        " left join truck_info t on d.id = t.drive_id or d.id = t.vice_driver_id where d.id is not null";
     var paramsArray=[],i=0;
     if(params.driveId){
         paramsArray[i++] = params.driveId;
+        query = query + " and d.id = ? ";
+    }
+    if(params.viceDriverId){
+        paramsArray[i++] = params.viceDriverId;
         query = query + " and d.id = ? ";
     }
     if(params.driveName){

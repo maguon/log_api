@@ -445,10 +445,10 @@ function updateTruckDriveRelBind(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateTruckDriveRelBind ' + 'success');
-                req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与司机 " +parkObj.driveName+ " 关联 ";
+                req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与主驾司机 " +parkObj.driveName+ " 关联 ";
                 req.params.vhe = parkObj.truckNum;
                 req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
-                req.params.driverContent =" 司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 关联 ";
+                req.params.driverContent =" 主驾司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 关联 ";
                 req.params.tid = parkObj.driveId;
                 req.params.driverOp =sysConst.RECORD_OP_TYPE.driverOp;
                 resUtil.resetUpdateRes(res,result,null);
@@ -490,11 +490,133 @@ function updateTruckDriveRelUnBind(req,res,next){
                 throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateTruckDriveRelUnBind ' + 'success');
-                req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与司机 " +parkObj.driveName+ " 解绑 ";
+                req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与主驾司机 " +parkObj.driveName+ " 解绑 ";
                 req.params.vhe = parkObj.truckNum;
                 req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
-                req.params.driverContent =" 司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 解绑 ";
+                req.params.driverContent =" 主驾司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 解绑 ";
                 req.params.tid = parkObj.driveId;
+                req.params.driverOp =sysConst.RECORD_OP_TYPE.driverOp;
+                resUtil.resetUpdateRes(res, result, null);
+                return next();
+            }
+        })
+    })
+}
+
+function updateTruckViceDriveRelBind(req,res,next){
+    var params = req.params ;
+    var parkObj = {};
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckFirst({truckId:params.truckId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckFirst ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].vice_driver_id>0){
+                    logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
+                    return next();
+                }else if(rows && rows.length>0&&rows[0].truck_type==2){
+                    logger.warn(' getTruckFirst ' +params.truckId+ ' 司机不能与挂车绑定 ');
+                    resUtil.resetFailedRes(res,' 司机不能与挂车绑定 ');
+                    return next();
+                }else if(rows && rows.length>0&&rows[0].truck_status==0){
+                    logger.warn(' getTruckFirst ' +params.truckId+ ' 头车已被停用，不能进行绑定 ');
+                    resUtil.resetFailedRes(res,' 头车已被停用，不能进行绑定 ');
+                    return next();
+                }else{
+                    parkObj.truckId = rows[0].id;
+                    parkObj.truckNum = rows[0].truck_num;
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        driveDAO.getDrive({viceDriverId:params.viceDriverId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckFirst ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(params.viceDriverId>0){
+                    if(rows && rows.length>0&&rows[0].truck_num!=null){
+                        logger.warn(' getTruckFirst ' +params.viceDriverId+ sysMsg.CUST_DRIVE_BIND);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
+                        return next();
+                    }else if(rows && rows.length>0&&rows[0].drive_status==0){
+                        logger.warn(' getTruckFirst ' +params.viceDriverId+ ' 司机已被停用，不能进行绑定 ');
+                        resUtil.resetFailedRes(res,' 司机已被停用，不能进行绑定 ');
+                        return next();
+                    }else{
+                        parkObj.viceDriverId = rows[0].id;
+                        parkObj.driveName = rows[0].drive_name;
+                        that();
+                    }
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        truckDAO.updateTruckViceDriveRel(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckViceDriveRelBind ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckViceDriveRelBind ' + 'success');
+                req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与副驾司机 " +parkObj.driveName+ " 关联 ";
+                req.params.vhe = parkObj.truckNum;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
+                req.params.driverContent =" 副驾司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 关联 ";
+                req.params.tid = parkObj.viceDriverId;
+                req.params.driverOp =sysConst.RECORD_OP_TYPE.driverOp;
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
+function updateTruckViceDriveRelUnBind(req,res,next){
+    var params = req.params ;
+    var parkObj = {};
+    Seq().seq(function(){
+        var that = this;
+        truckDAO.getTruckFirst({truckId:params.truckId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckFirst ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].vice_driver_id==params.viceDriverId){
+                    parkObj.truckId = rows[0].id;
+                    parkObj.truckNum = rows[0].truck_num;
+                    parkObj.viceDriverId = rows[0].vice_driver_id;
+                    parkObj.driveName = rows[0].drive_name;
+                    that();
+                }else{
+                    logger.warn(' getTruckFirst ' +params.truckId+ sysMsg.CUST_DRIVE_UNBIND);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_UNBIND);
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        params.viceDriverId = 0;
+        truckDAO.updateTruckViceDriveRel(params, function (error, result) {
+            if (error) {
+                logger.error(' updateTruckViceDriveRelUnBind ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckViceDriveRelUnBind ' + 'success');
+                req.params.truckContent =" 头车车牌号 "+parkObj.truckNum+ " 与副驾司机 " +parkObj.driveName+ " 解绑 ";
+                req.params.vhe = parkObj.truckNum;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
+                req.params.driverContent =" 副驾司机 "+parkObj.driveName+ " 与头车车牌号 " +parkObj.truckNum+ " 解绑 ";
+                req.params.tid = parkObj.viceDriverId;
                 req.params.driverOp =sysConst.RECORD_OP_TYPE.driverOp;
                 resUtil.resetUpdateRes(res, result, null);
                 return next();
@@ -606,6 +728,8 @@ module.exports = {
     updateTruckRelUnBind : updateTruckRelUnBind,
     updateTruckDriveRelBind : updateTruckDriveRelBind,
     updateTruckDriveRelUnBind : updateTruckDriveRelUnBind,
+    updateTruckViceDriveRelBind : updateTruckViceDriveRelBind,
+    updateTruckViceDriveRelUnBind :updateTruckViceDriveRelUnBind,
     updateTruckStatusFirst : updateTruckStatusFirst,
     updateTruckStatusTrailer : updateTruckStatusTrailer,
     updateRepairStatus : updateRepairStatus
