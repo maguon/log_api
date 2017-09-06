@@ -415,17 +415,17 @@ function updateTruckDriveRelBind(req,res,next){
         var that = this;
         driveDAO.getDrive({driveId:params.driveId},function(error,rows){
             if (error) {
-                logger.error(' getTruckFirst ' + error.message);
+                logger.error(' getDrive ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(params.driveId>0){
-                    if(rows && rows.length>0&&rows[0].truck_num!=null){
-                        logger.warn(' getTruckFirst ' +params.driveId+ sysMsg.CUST_DRIVE_BIND);
+                if(rows && rows.length>0&&params.driveId>0){
+                    if(rows[0].truck_num!=null || rows[0].vice!=null){
+                        logger.warn(' getDrive ' +params.driveId+ sysMsg.CUST_DRIVE_BIND);
                         resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
                         return next();
                     }else if(rows && rows.length>0&&rows[0].drive_status==0){
-                        logger.warn(' getTruckFirst ' +params.driveId+ ' 司机已被停用，不能进行绑定 ');
+                        logger.warn(' getDrive ' +params.driveId+ ' 司机已被停用，不能进行绑定 ');
                         resUtil.resetFailedRes(res,' 司机已被停用，不能进行绑定 ');
                         return next();
                     }else{
@@ -537,17 +537,17 @@ function updateTruckViceDriveRelBind(req,res,next){
         var that = this;
         driveDAO.getDrive({viceDriveId:params.viceDriveId},function(error,rows){
             if (error) {
-                logger.error(' getTruckFirst ' + error.message);
+                logger.error(' getDrive ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(params.viceDriveId>0){
-                    if(rows && rows.length>0&&rows[0].truck_num!=null){
-                        logger.warn(' getTruckFirst ' +params.viceDriveId+ sysMsg.CUST_DRIVE_BIND);
+                if(rows && rows.length>0&&params.viceDriveId>0){
+                    if(rows[0].truck_num!=null || rows[0].vice!=null){
+                        logger.warn(' getDrive ' +params.viceDriveId+ sysMsg.CUST_DRIVE_BIND);
                         resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
                         return next();
                     }else if(rows && rows.length>0&&rows[0].drive_status==0){
-                        logger.warn(' getTruckFirst ' +params.viceDriveId+ ' 司机已被停用，不能进行绑定 ');
+                        logger.warn(' getDrive ' +params.viceDriveId+ ' 司机已被停用，不能进行绑定 ');
                         resUtil.resetFailedRes(res,' 司机已被停用，不能进行绑定 ');
                         return next();
                     }else{
