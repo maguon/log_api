@@ -205,5 +205,5 @@ ADD COLUMN `op_license_image`  varchar(100) NULL COMMENT '准驾证照片' AFTER
 ADD COLUMN `driver_avatar_image`  varchar(100) NULL COMMENT '司机个人照片' AFTER `op_license_image`,
 ALTER TABLE `truck_info`
 DROP COLUMN `copilot`;
-ADD COLUMN `vice_driver_id`  int(10) NULL DEFAULT 0 COMMENT '副驾ID' AFTER `drive_id`;
+ADD COLUMN `vice_drive_id`  int(10) NULL DEFAULT 0 COMMENT '副驾ID' AFTER `drive_id`;
 

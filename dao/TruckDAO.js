@@ -414,9 +414,9 @@ function updateTruckDriveRel(params,callback){
 }
 
 function updateTruckViceDriveRel(params,callback){
-    var query = " update truck_info set vice_driver_id = ? where id = ? " ;
+    var query = " update truck_info set vice_drive_id = ? where id = ? " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.viceDriverId;
+    paramsArray[i++]=params.viceDriveId;
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckViceDriveRel ');

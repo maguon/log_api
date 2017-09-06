@@ -1495,7 +1495,7 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/viceDriver/{viceDriverId}/bind": {
+    "/user/{userId}/truck/{truckId}/viceDrive/{viceDriveId}/bind": {
       "put": {
         "tags": [
           "truck"
@@ -1523,9 +1523,9 @@
 
           },
           {
-            "name": "viceDriverId",
+            "name": "viceDriveId",
             "in": "path",
-            "description": "viceDriver id",
+            "description": "viceDrive id",
             "required": true,
             "type": "integer"
 
@@ -1547,7 +1547,7 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/viceDriver/{viceDriverId}/unbind": {
+    "/user/{userId}/truck/{truckId}/viceDrive/{viceDriveId}/unbind": {
       "put": {
         "tags": [
           "truck"
@@ -1575,9 +1575,9 @@
 
           },
           {
-            "name": "viceDriverId",
+            "name": "viceDriveId",
             "in": "path",
-            "description": "viceDriver id",
+            "description": "viceDrive id",
             "required": true,
             "type": "integer"
 
