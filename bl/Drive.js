@@ -169,16 +169,20 @@ function updateDriveStatus (req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        truckDAO.getTruckBase({driveId:params.driveId},function(error,rows){
+        driveDAO.getDrive({driveId:params.driveId},function(error,rows){
             if (error) {
-                logger.error(' getTruckBase ' + error.message);
+                logger.error(' getDrive ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    logger.warn(' getTruckBase ' +params.driveId+ sysMsg.CUST_DRIVE_BIND);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
-                    return next();
+                    if(rows[0].truck_num!=null || rows[0].vice!=null){
+                        logger.warn(' getDrive ' +params.driveId+ sysMsg.CUST_DRIVE_BIND);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_DRIVE_BIND);
+                        return next();
+                    }else{
+                        that();
+                    }
                 }else{
                     that();
                 }
