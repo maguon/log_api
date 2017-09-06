@@ -635,14 +635,18 @@ function updateTruckStatusFirst(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0&&rows[0].drive_id>0){
-                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
-                    return next();
-                }else if(rows && rows.length>0&&rows[0].rel_id>0){
-                    logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
-                    return next();
+                if(rows && rows.length>0){
+                    if(rows[0].drive_id>0 || rows[0].vice_drive_id>0){
+                        logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
+                        return next();
+                    } else if(rows[0].rel_id>0){
+                        logger.warn(' getTruckBase ' +params.truckId+ sysMsg.CUST_TRUCK_BIND);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_TRUCK_BIND);
+                        return next();
+                    }else{
+                        that();
+                    }
                 }else{
                     that();
                 }
