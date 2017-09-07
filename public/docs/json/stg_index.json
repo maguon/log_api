@@ -8160,6 +8160,14 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "carLoadStatus",
+            "in": "query",
+            "description": "carLoadStatus",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -8295,6 +8303,50 @@
           },
           "400": {
             "description": "Invalid token value or invalid dpRouteTaskDetail id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskDetail/{dpRouteTaskDetailId}": {
+      "delete": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "Deletes a dpRouteTaskDetail",
+        "description": "",
+        "operationId": "deleteDpRouteTaskDetail",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "dpRouteTaskDetailId",
+            "in": "path",
+            "description": "dpRouteTaskDetail id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }

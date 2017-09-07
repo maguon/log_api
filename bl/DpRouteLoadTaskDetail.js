@@ -135,9 +135,42 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
     })
 }
 
+function removeDpRouteLoadTaskDetail(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        dpRouteLoadTaskDetailDAO.deleteDpRouteLoadTaskDetail(params,function(error,result){
+            if (error) {
+                logger.error(' removeDpRouteLoadTaskDetail ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeDpRouteLoadTaskDetail ' + 'success');
+                }else{
+                    logger.warn(' removeDpRouteLoadTaskDetail ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        params.carStatus = listOfValue.CAR_STATUS_MOVE;
+        carDAO.updateCarStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCarStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createDpRouteLoadTaskDetail : createDpRouteLoadTaskDetail,
     queryDpRouteLoadTaskDetail : queryDpRouteLoadTaskDetail,
-    updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus
+    updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus,
+    removeDpRouteLoadTaskDetail : removeDpRouteLoadTaskDetail
 }
