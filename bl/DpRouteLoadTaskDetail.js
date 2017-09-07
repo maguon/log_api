@@ -7,7 +7,9 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
+var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -19,6 +21,23 @@ function createDpRouteLoadTaskDetail(req,res,next){
     var params = req.params ;
     var dpRouteTaskDetailId = 0;
     Seq().seq(function(){
+        var that = this;
+        dpRouteLoadTaskDAO.getDpRouteLoadTaskBase({dpRouteLoadTaskId:params.dpRouteLoadTaskId},function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTaskBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteLoadTaskBase ' +' failed ');
+                    resUtil.resetFailedRes(res,' 任务不是待装车状态，不能进行装车 ');
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
         var that = this;
         carDAO.getCarList({vin:params.vin},function(error,rows){
             if (error) {
