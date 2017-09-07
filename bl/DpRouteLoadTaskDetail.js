@@ -30,7 +30,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
                     that();
                 }else{
                     logger.warn(' getCarList ' +' failed ');
-                    resUtil.resetFailedRes(res,' 商品车不是待装车状态，不能装车 ');
+                    resUtil.resetFailedRes(res,' 商品车不是待装车状态，不能进行装车 ');
                     return next();
                 }
             }
@@ -63,6 +63,22 @@ function createDpRouteLoadTaskDetail(req,res,next){
                     logger.info(' updateTruckDispatch ' + 'success');
                 }else{
                     logger.warn(' updateTruckDispatch ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.carStatus = listOfValue.CAR_STATUS_LOAD;
+        carDAO.updateCarStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCarStatus ' + 'success');
+                }else{
+                    logger.warn(' updateCarStatus ' + 'failed');
                 }
                 that();
             }
