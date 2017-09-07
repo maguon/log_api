@@ -131,6 +131,10 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.createdEnd +" 23:59:59";
         query = query + " and c.created_on <= ? ";
     }
+    if(params.carStatus){
+        paramsArray[i++] = params.carStatus;
+        query = query + " and c.car_status = ? ";
+    }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

@@ -5862,6 +5862,14 @@
 
           },
           {
+            "name": "carStatus",
+            "in": "query",
+            "description": "car status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
