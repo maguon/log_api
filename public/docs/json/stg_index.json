@@ -8190,6 +8190,14 @@
 
           },
           {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
             "name": "dpRouteLoadTaskId",
             "in": "path",
             "description": "dpRouteLoadTask id",
@@ -8238,6 +8246,14 @@
             "name": "userId",
             "in": "path",
             "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
             "required": true,
             "type": "integer"
 
