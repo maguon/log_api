@@ -39,8 +39,7 @@ function createDrive(req,res,next){
         var that = this;
         params.mobile = params.tel;
         params.realName = params.driveName
-        //params.password = encrypt.encryptByMd5(params.password);
-        params.password = "888888";
+        params.password = encrypt.encryptByMd5('888888');
         params.type = sysConst.USER_TYPE.drive_op;
         userDAO.addUser(params,function(error,result){
             if (error) {
