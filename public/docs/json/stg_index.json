@@ -3404,6 +3404,51 @@
         }
       }
     },
+    "/user/{userId}/driveRefuel": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveRefuel",
+        "description": "user create driveRefuel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveRefuel",
+            "in": "body",
+            "description": "driveRefuel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveRefuel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveRefuel id"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [
@@ -8670,6 +8715,42 @@
       },
       "xml": {
         "name": "driveImage"
+      }
+    },
+    "driveRefuel": {
+      "type": "object",
+      "properties": {
+
+        "driveId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "refuelDate": {
+          "type": "string"
+        },
+        "refuelVolume": {
+          "type": "integer"
+        },
+        "refuelAddressType": {
+          "type": "integer"
+        },
+        "refuelAddress": {
+          "type": "string"
+        },
+        "lng": {
+          "type": "integer"
+        },
+        "lat": {
+          "type": "integer"
+        },
+        "refuelMoney": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveRefuel"
       }
     },
     "company": {

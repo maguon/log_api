@@ -19,6 +19,7 @@ var truckRepairRel = require('./bl/TruckRepairRel.js');
 var truckDispatch = require('./bl/TruckDispatch.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
+var driveRefuel = require('./bl/DriveRefuel.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -233,6 +234,11 @@ function createServer() {
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/image',contentType: 'application/json'} ,drive.updateDriveImage);
     server.put({path:'/api/user/:userId/drive/:driveId/driveStatus/:driveStatus',contentType: 'application/json'} ,drive.updateDriveStatus);
+
+    /**
+     * DriveRefuel Module
+     */
+    server.post({path:'/api/user/:userId/driveRefuel',contentType: 'application/json'},driveRefuel.createDriveRefuel);
 
     /**
      * Company Module
