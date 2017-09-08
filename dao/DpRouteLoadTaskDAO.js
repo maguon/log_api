@@ -38,7 +38,7 @@ function getDpRouteLoadTask(params,callback) {
         " left join base_addr ba on dprl.base_addr_id = ba.id " +
         " left join city_info c on dprl.route_end_id = c.id " +
         " left join receive_info r on dprl.receive_id = r.id " +
-        " where dprl.load_task_status != 8 and dprl.id is not null ";
+        " where dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
@@ -47,6 +47,13 @@ function getDpRouteLoadTask(params,callback) {
     if(params.dpDemandId){
         paramsArray[i++] = params.dpDemandId;
         query = query + " and dprl.demand_id = ? ";
+    }
+    if(params.loadTaskStatusArr){
+        query = query + " and dprl.load_task_status in ("+params.loadTaskStatusArr + ") "
+    }
+    if(params.loadTaskStatus){
+        paramsArray[i++] = params.loadTaskStatus;
+        query = query + " and dprl.load_task_status = ? ";
     }
     query = query + ' group by dprl.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
