@@ -7711,6 +7711,14 @@
 
           },
           {
+            "name": "taskStatusArr",
+            "in": "query",
+            "description": "task statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "taskStatus",
             "in": "query",
             "description": "task status",
