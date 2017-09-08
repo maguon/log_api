@@ -8027,22 +8027,6 @@
             "required": false,
             "type": "integer"
 
-          },
-          {
-            "name": "loadTaskStatusArr",
-            "in": "query",
-            "description": "loadTask statusArr",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "loadTaskStatus",
-            "in": "query",
-            "description": "loadTask status",
-            "required": false,
-            "type": "integer"
-
           }
         ],
         "responses": {
