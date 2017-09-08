@@ -8733,6 +8733,9 @@
         "refuelVolume": {
           "type": "integer"
         },
+        "cityRouteId": {
+          "type": "integer"
+        },
         "refuelAddressType": {
           "type": "integer"
         },
