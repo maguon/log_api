@@ -27,7 +27,58 @@ function addDriveRefuel(params,callback){
     });
 }
 
+function getDriveRefuel(params,callback) {
+    var query = " select dr.*,d.drive_name,t.truck_num,cr.route_start,cr.route_end,u.real_name as check_user_name " +
+        " from drive_refuel dr " +
+        " left join drive_info d on dr.drive_id = d.id " +
+        " left join truck_info t on dr.truck_id = t.id " +
+        " left join city_route_info cr on dr.city_route_id = cr.id " +
+        " left join user_info u on dr.check_user_id = u.uid where dr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveRefuelId){
+        paramsArray[i++] = params.driveRefuelId;
+        query = query + " and dr.id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dr.truck_id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dr.drive_id = ? ";
+    }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
+    if(params.refuelAddressType){
+        paramsArray[i++] = params.refuelAddressType;
+        query = query + " and dr.refuel_address_type = ? ";
+    }
+    if(params.refuelDateStart){
+        paramsArray[i++] = params.refuelDateStart +" 00:00:00";
+        query = query + " and dr.refuel_date >= ? ";
+    }
+    if(params.refuelDateEnd){
+        paramsArray[i++] = params.refuelDateEnd +" 23:59:59";
+        query = query + " and dr.refuel_date <= ? ";
+    }
+    if(params.checkStatus){
+        paramsArray[i++] = params.checkStatus;
+        query = query + " and dr.check_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveRefuel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDriveRefuel: addDriveRefuel
+    addDriveRefuel: addDriveRefuel,
+    getDriveRefuel : getDriveRefuel
 }

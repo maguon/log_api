@@ -6,7 +6,7 @@ CREATE TABLE `drive_refuel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `drive_id` int(10) NOT NULL DEFAULT '0' COMMENT '司机ID',
   `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
-  `date_id` int(4) NOT NULL COMMENT '加油申报时间',
+  `date_id` int(4) NOT NULL COMMENT '加油申报统计时间',
   `refuel_date` datetime DEFAULT NULL COMMENT '加油时间',
   `refuel_volume` decimal(10,2) NOT NULL COMMENT '加油量',
   `city_route_id` int(10) DEFAULT NULL COMMENT '城市路线ID',
@@ -18,7 +18,7 @@ CREATE TABLE `drive_refuel` (
   `check_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '审核状态(1-待审核,2-通过,3-拒绝)',
   `check_reason` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '审核拒绝原因',
   `check_user_id` int(10) DEFAULT NULL COMMENT '审核人ID',
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加油申报时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

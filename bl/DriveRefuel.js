@@ -33,7 +33,22 @@ function createDriveRefuel(req,res,next){
     })
 }
 
+function queryDriveRefuel(req,res,next){
+    var params = req.params ;
+    driveRefuelDAO.getDriveRefuel(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveRefuel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveRefuel ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createDriveRefuel : createDriveRefuel
+    createDriveRefuel : createDriveRefuel,
+    queryDriveRefuel : queryDriveRefuel
 }
