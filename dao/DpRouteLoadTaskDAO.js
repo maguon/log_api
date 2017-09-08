@@ -59,6 +59,10 @@ function getDpRouteLoadTaskBase(params,callback) {
     var query = " select dprl.* from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id where dprl.id is not null ";
     var paramsArray=[],i=0;
+    if(params.dpRouteLoadTaskId){
+        paramsArray[i++] = params.dpRouteLoadTaskId;
+        query = query + " and dprl.id = ? ";
+    }
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dprl.dp_route_task_id = ? ";
