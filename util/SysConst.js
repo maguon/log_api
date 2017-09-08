@@ -3,6 +3,7 @@
  */
 var USER_TYPE  ={
     admin : 99,  //系统管理员
+    drive_op : 10,//司机操作员
     truck_op : 11,//车管部操作员
     truck_admin : 19,//车管部管理员
     storage_op : 21, //仓储部操作员

@@ -7,8 +7,9 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var driveDAO = require('../dao/DriveDAO.js');
-var truckDAO = require('../dao/TruckDAO.js');
+var userDAO = require('../dao/UserDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -16,18 +17,66 @@ var logger = serverLogger.createLogger('Drive.js');
 
 function createDrive(req,res,next){
     var params = req.params;
-    driveDAO.addDrive(params,function(error,result){
-        if (error) {
-            logger.error(' createDrive ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createDrive ' + 'success');
-            req.params.driverContent =" 新增司机 ";
-            req.params.tid = result.insertId;
-            req.params.driverOp =30;
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        params.mobile = params.tel;
+        userDAO.getUser({mobile:params.mobile},function(error,rows){
+            if (error) {
+                logger.error(' createUser ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    logger.warn(' createUser ' +params.mobile+ sysMsg.CUST_SIGNUP_REGISTERED);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED) ;
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.mobile = params.tel;
+        params.realName = params.driveName
+        //params.password = encrypt.encryptByMd5(params.password);
+        params.password = "888888";
+        params.type = sysConst.USER_TYPE.drive_op;
+        userDAO.addUser(params,function(error,result){
+            if (error) {
+                logger.error(' createUser ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result && result.insertId>0){
+                    logger.info(' createUser ' + 'success');
+                    var user = {
+                        userId : result.insertId,
+                        userStatus : listOfValue.USER_STATUS_ACTIVE
+                    }
+                    user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
+                    resUtil.resetQueryRes(res,user,null);
+                    that();
+                }else{
+                    logger.warn(' createUser ' + 'false');
+                    resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        driveDAO.addDrive(params,function(error,result){
+            if (error) {
+                logger.error(' createDrive ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createDrive ' + 'success');
+                req.params.driverContent =" 新增司机 ";
+                req.params.tid = result.insertId;
+                req.params.driverOp =30;
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
