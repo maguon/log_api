@@ -158,6 +158,23 @@ function removeDpRouteLoadTaskDetail(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
+        dpRouteLoadTaskDetailDAO.getDpRouteLoadTaskDetail({dpRouteTaskDetailId:params.dpRouteTaskDetailId},function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTaskDetail ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteLoadTaskDetail ' +' failed ');
+                    resUtil.resetFailedRes(res,' 任务不是待装车状态，不能进行删除操作 ');
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
         dpRouteLoadTaskDetailDAO.deleteDpRouteLoadTaskDetail(params,function(error,result){
             if (error) {
                 logger.error(' removeDpRouteLoadTaskDetail ' + error.message);

@@ -19,10 +19,14 @@ function addDpRouteLoadTaskDetail(params,callback){
 }
 
 function getDpRouteLoadTaskDetail(params,callback) {
-    var query = " select dpdtl.*,dpdtl.vin,c.make_id,c.make_name from dp_route_load_task_detail dpdtl " +
+    var query = " select dpdtl.*,c.make_id,c.make_name,dprl.load_task_status from dp_route_load_task_detail dpdtl " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
         " left join car_info c on dpdtl.car_id = c.id where dprl.id is not null ";
     var paramsArray=[],i=0;
+    if(params.dpRouteTaskDetailId){
+        paramsArray[i++] = params.dpRouteTaskDetailId;
+        query = query + " and dpdtl.id = ? ";
+    }
     if(params.dpRouteLoadTaskId){
         paramsArray[i++] = params.dpRouteLoadTaskId;
         query = query + " and dpdtl.dp_route_load_task_id = ? ";
