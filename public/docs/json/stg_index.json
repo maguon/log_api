@@ -7292,6 +7292,51 @@
         }
       }
     },
+    "/user/{userId}/carExceptionRel": {
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "user create carExceptionRel",
+        "description": "user create carExceptionRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carExceptionRel",
+            "in": "body",
+            "description": "carExceptionRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carExceptionRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid carExceptionRel id"
+          }
+        }
+      }
+    },
     "/dpDemand": {
       "get": {
         "tags": [
@@ -9346,6 +9391,21 @@
       },
       "xml": {
         "name": "carModel"
+      }
+    },
+    "carExceptionRel": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "carExceptionRel"
       }
     },
     "dpDemand": {

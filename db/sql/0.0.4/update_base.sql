@@ -1,3 +1,6 @@
+ALTER TABLE `drive_info`
+ADD UNIQUE INDEX `tel` (`tel`) ;
+
 -- ----------------------------
 -- Table structure for drive_refuel
 -- ----------------------------
@@ -22,6 +25,16 @@ CREATE TABLE `drive_refuel` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-ALTER TABLE `drive_info`
-ADD UNIQUE INDEX `tel` (`tel`) ;
+-- ----------------------------
+-- Table structure for car_exception_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `car_exception_rel`;
+CREATE TABLE `car_exception_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `car_id` int(10) NOT NULL COMMENT '商品车ID',
+  `exception_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '车辆状态(1-异常,2-正常)',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '异常描述',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

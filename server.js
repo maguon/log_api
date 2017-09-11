@@ -35,6 +35,7 @@ var car = require('./bl/Car.js');
 var carStorageRel = require('./bl/CarStorageRel.js');
 var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
+var carExceptionRel = require('./bl/CarExceptionRel.js');
 var dpDemand = require('./bl/DpDemand.js');
 var dpTaskStat = require('./bl/DpTaskStat.js');
 var dpRouteTask = require('./bl/DpRouteTask.js');
@@ -368,6 +369,11 @@ function createServer() {
     server.post({path:'/api/user/:userId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.put({path:'/api/user/:userId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
+
+    /**
+     * CarExceptionRel Module
+     */
+    server.post({path:'/api/user/:userId/carExceptionRel',contentType: 'application/json'},carExceptionRel.createCarExceptionRel);
 
     /**
      * DpDemand Module
