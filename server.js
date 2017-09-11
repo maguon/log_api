@@ -240,6 +240,7 @@ function createServer() {
      */
     server.get('/api/driveRefuel' , driveRefuel.queryDriveRefuel);
     server.post({path:'/api/user/:userId/driveRefuel',contentType: 'application/json'},driveRefuel.createDriveRefuel);
+    server.put({path:'/api/user/:userId/driveRefuel/:driveRefuelId/checkStatus/:checkStatus',contentType: 'application/json'} ,driveRefuel.updateDriveRefuelStatus);
 
     /**
      * Company Module

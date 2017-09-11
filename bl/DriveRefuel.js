@@ -47,8 +47,23 @@ function queryDriveRefuel(req,res,next){
     })
 }
 
+function updateDriveRefuelStatus(req,res,next){
+    var params = req.params;
+    driveRefuelDAO.updateDriveRefuelStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveRefuelStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveRefuelStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDriveRefuel : createDriveRefuel,
-    queryDriveRefuel : queryDriveRefuel
+    queryDriveRefuel : queryDriveRefuel,
+    updateDriveRefuelStatus : updateDriveRefuelStatus
 }

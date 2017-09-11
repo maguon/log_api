@@ -3565,6 +3565,67 @@
         }
       }
     },
+    "/user/{userId}/driveRefuel/{driveRefuelId}/checkStatus/{checkStatus}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user update checkStatus",
+        "description": "user update checkStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveRefuelId",
+            "in": "path",
+            "description": "driveRefuel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "checkStatus",
+            "in": "path",
+            "description": "check status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveRefuel",
+            "in": "body",
+            "description": "driveRefuel info",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/checkReason"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveRefuel id"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [
@@ -8886,6 +8947,18 @@
       },
       "xml": {
         "name": "driveRefuel"
+      }
+    },
+    "checkReason": {
+      "type": "object",
+      "properties": {
+
+        "checkReason": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "checkReason"
       }
     },
     "company": {
