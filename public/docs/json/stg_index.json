@@ -8496,6 +8496,14 @@
             "type": "integer"
           },
           {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
             "name": "dpRouteTaskDetailId",
             "in": "path",
             "description": "dpRouteTaskDetail id to delete",

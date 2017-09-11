@@ -74,10 +74,10 @@ function getTruckDispatch(params,callback) {
 }
 
 function updateTruckDispatch(params,callback){
-    if(params.carLoadStatus==2){
-        var query = " update truck_dispatch set car_count = car_count - 1 where truck_id = ? " ;
-    }else{
+    if(params.carLoadStatus==1){
         var query = " update truck_dispatch set car_count = car_count + 1 where truck_id = ? " ;
+    }else{
+        var query = " update truck_dispatch set car_count = car_count - 1 where truck_id = ? " ;
     }
     var paramsArray=[],i=0;
     paramsArray[i]=params.truckId;
