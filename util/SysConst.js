@@ -46,6 +46,10 @@ var LOAD_TASK_STATUS  ={
     cancel : 8,
     completed : 9
 };
+var CAR_LOAD_STATUS  ={
+    load : 1,
+    arrive : 2
+};
 
 
 module.exports = {
@@ -53,5 +57,6 @@ module.exports = {
     RECORD_OP_TYPE : RECORD_OP_TYPE,
     LICENSE_TYPE : LICENSE_TYPE,
     TASK_STATUS : TASK_STATUS,
-    LOAD_TASK_STATUS : LOAD_TASK_STATUS
+    LOAD_TASK_STATUS : LOAD_TASK_STATUS,
+    CAR_LOAD_STATUS : CAR_LOAD_STATUS
 }

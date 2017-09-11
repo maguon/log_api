@@ -189,6 +189,22 @@ function removeDpRouteLoadTaskDetail(req,res,next){
             }
         })
     }).seq(function () {
+        var that = this;
+        params.carLoadStatus = sysConst.CAR_LOAD_STATUS.arrive;
+        truckDispatchDAO.updateTruckDispatch(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckDispatch ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateTruckDispatch ' + 'success');
+                }else{
+                    logger.warn(' updateTruckDispatch ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
         params.carStatus = listOfValue.CAR_STATUS_MOVE;
         carDAO.updateCarStatus(params,function(error,result){
             if (error) {
