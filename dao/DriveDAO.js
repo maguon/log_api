@@ -7,9 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
-    var query = " insert into drive_info (drive_name,gender,id_number,tel,company_id,license_type," +
-        " address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into drive_info (user_id,drive_name,gender,id_number,tel,company_id,license_type," +
+        " address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
     paramsArray[i++]=params.idNumber;

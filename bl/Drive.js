@@ -17,6 +17,7 @@ var logger = serverLogger.createLogger('Drive.js');
 
 function createDrive(req,res,next){
     var params = req.params;
+    var userId = 0;
     Seq().seq(function(){
         var that = this;
         params.mobile = params.tel;
@@ -53,6 +54,7 @@ function createDrive(req,res,next){
                         userStatus : listOfValue.USER_STATUS_ACTIVE
                     }
                     user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
+                    userId = result.insertId
                     resUtil.resetQueryRes(res,user,null);
                     that();
                 }else{
@@ -63,6 +65,7 @@ function createDrive(req,res,next){
             }
         })
     }).seq(function(){
+        params.userId = userId;
         driveDAO.addDrive(params,function(error,result){
             if (error) {
                 logger.error(' createDrive ' + error.message);
