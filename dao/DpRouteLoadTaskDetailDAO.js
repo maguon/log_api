@@ -41,6 +41,7 @@ function getDpRouteLoadTaskDetail(params,callback) {
         paramsArray[i++] = params.carLoadStatus;
         query = query + " and dpdtl.car_load_status = ? ";
     }
+    query = query + ' order by cer.exception_status ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTaskDetail ');
         return callback(error,rows);
