@@ -71,6 +71,11 @@ function getDriveRefuel(params,callback) {
         paramsArray[i++] = params.checkStatus;
         query = query + " and dr.check_status = ? ";
     }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveRefuel ');
         return callback(error,rows);
