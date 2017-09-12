@@ -21,27 +21,28 @@ function addUser(params,callback){
 }
 
 function getUser(params,callback) {
-    var query = " select * from user_info where uid is not null ";
+    /*var query = " select * from user_info where uid is not null ";*/
+    var query = " select u.* from user_info u left join drive_info d on u.uid = d.user_id where u.uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
         paramsArray[i++] = params.userId;
-        query = query + " and uid = ? ";
+        query = query + " and u.uid = ? ";
     }
     if(params.mobile){
         paramsArray[i++] = params.mobile;
-        query = query + " and mobile = ? ";
+        query = query + " and u.mobile = ? ";
     }
     if(params.realName){
         paramsArray[i++] = params.realName;
-        query = query + " and real_name = ? ";
+        query = query + " and u.real_name = ? ";
     }
     if(params.type){
         paramsArray[i++] = params.type;
-        query = query + " and type = ? ";
+        query = query + " and u.type = ? ";
     }
     if(params.status){
         paramsArray[i++] = params.status;
-        query = query + " and status = ? ";
+        query = query + " and u.status = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -55,27 +56,29 @@ function getUser(params,callback) {
 }
 
 function getUserBase(params,callback){
-    var query = " select uid,mobile,real_name,type,gender,status from user_info where sa = 0 and uid is not null ";
+    /*var query = " select uid,mobile,real_name,type,gender,status from user_info where sa = 0 and uid is not null ";*/
+    var query = " select u.uid,u.mobile,u.real_name,u.type,u.gender,u.status,d.id as drive_id from user_info u " +
+        " left join drive_info d on u.uid = d.user_id where u.sa = 0 and u.uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
         paramsArray[i++] = params.userId;
-        query = query + " and uid = ? ";
+        query = query + " and u.uid = ? ";
     }
     if(params.mobile){
         paramsArray[i++] = params.mobile;
-        query = query + " and mobile = ? ";
+        query = query + " and u.mobile = ? ";
     }
     if(params.realName){
         paramsArray[i++] = params.realName;
-        query = query + " and real_name = ? ";
+        query = query + " and u.real_name = ? ";
     }
     if(params.type){
         paramsArray[i++] = params.type;
-        query = query + " and type = ? ";
+        query = query + " and u.type = ? ";
     }
     if(params.status){
         paramsArray[i++] = params.status;
-        query = query + " and status = ? ";
+        query = query + " and u.status = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
