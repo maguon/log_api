@@ -512,6 +512,58 @@
         }
       }
     },
+    "/deviceUser": {
+      "get": {
+        "tags": [
+          "deviceUser"
+        ],
+        "summary": "query deviceUser list",
+        "description": "query deviceUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "deviceUserId",
+            "in": "query",
+            "description": "deviceUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "deviceToken",
+            "in": "query",
+            "description": "device token",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/deviceUser"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid deviceUser id"
+          }
+        }
+      }
+    },
     "/user/{userId}/deviceUser": {
       "post": {
         "tags": [
@@ -553,6 +605,44 @@
           },
           "400": {
             "description": "Invalid token value or invalid deviceUser id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/deviceToken/{deviceToken}": {
+      "delete": {
+        "tags": [
+          "deviceUser"
+        ],
+        "summary": "Deletes a deviceUser",
+        "description": "",
+        "operationId": "deleteDeviceUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "deviceToken",
+            "in": "path",
+            "description": "device token",
+            "required": true,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }

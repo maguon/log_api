@@ -18,7 +18,47 @@ function addDeviceUser(params,callback){
     });
 }
 
+function getDeviceUser(params,callback){
+    var query = " select * from device_user where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.deviceUserId){
+        paramsArray[i++] = params.deviceUserId;
+        query = query + " and id = ? ";
+    }
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and user_id = ? ";
+    }
+    if(params.deviceToken){
+        paramsArray[i++] = params.deviceToken;
+        query = query + " and device_token = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDeviceUser ');
+        return callback(error,rows);
+    });
+}
+
+function deleteDeviceUser(params,callback){
+    var query = " delete from device_user where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and user_id = ? ";
+    }
+    if(params.deviceToken){
+        paramsArray[i++] = params.deviceToken;
+        query = query + " and device_token = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteDeviceUser ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDeviceUser : addDeviceUser
+    addDeviceUser : addDeviceUser,
+    getDeviceUser : getDeviceUser,
+    deleteDeviceUser : deleteDeviceUser
 }

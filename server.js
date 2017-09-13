@@ -161,7 +161,9 @@ function createServer() {
     /**
      * DeviceUser Module
      */
+    server.get('/api/deviceUser' ,deviceUser.queryDeviceUser);
     server.post({path:'/api/user/:userId/deviceUser',contentType: 'application/json'} , deviceUser.createDeviceUser);
+    server.del('/api/user/:userId/deviceToken/:deviceToken' , deviceUser.removeDeviceUser);
 
 
     /**

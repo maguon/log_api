@@ -27,7 +27,37 @@ function createDeviceUser(req,res,next){
     })
 }
 
+function queryDeviceUser(req,res,next){
+    var params = req.params ;
+    deviceUserDAO.getDeviceUser(params,function(error,result){
+        if (error) {
+            logger.error(' queryDeviceUser ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDeviceUser ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function removeDeviceUser (req,res,next){
+    var params = req.params;
+    deviceUserDAO.deleteDeviceUser(params,function(error,result){
+        if (error) {
+            logger.error(' removeDeviceUser ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeDeviceUser ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createDeviceUser : createDeviceUser
+    createDeviceUser : createDeviceUser,
+    queryDeviceUser : queryDeviceUser,
+    removeDeviceUser : removeDeviceUser
 }
