@@ -25,6 +25,10 @@
       "description": "User of log api"
     },
     {
+      "name": "deviceUser",
+      "description": "DeviceUser of log api"
+    },
+    {
       "name":"truck",
       "description":"Truck of log api"
     },
@@ -504,6 +508,51 @@
           },
           "400": {
             "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/deviceUser": {
+      "post": {
+        "tags": [
+          "deviceUser"
+        ],
+        "summary": "create deviceUser",
+        "description": "create deviceUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "deviceUser",
+            "in": "body",
+            "description": "deviceUser info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/deviceUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid deviceUser id"
           }
         }
       }
@@ -8743,6 +8792,21 @@
       },
       "xml": {
         "name": "user"
+      }
+    },
+    "deviceUser": {
+      "type": "object",
+      "properties": {
+
+        "deviceToken": {
+          "type": "string"
+        },
+        "deviceType": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "deviceUser"
       }
     },
     "password": {

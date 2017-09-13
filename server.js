@@ -12,6 +12,7 @@ var serverLogger = require('./util/ServerLogger.js');
 var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
+var deviceUser = require('./bl/DeviceUser.js');
 var truck = require('./bl/Truck.js');
 var truckInsureRel = require('./bl/TruckInsureRel.js');
 var truckInsure = require('./bl/TruckInsure.js');
@@ -156,6 +157,11 @@ function createServer() {
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
     server.get('/api/user/:userId/token/:token' , user.changeUserToken);
+
+    /**
+     * DeviceUser Module
+     */
+    server.post({path:'/api/user/:userId/deviceUser',contentType: 'application/json'} , deviceUser.createDeviceUser);
 
 
     /**
