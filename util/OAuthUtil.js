@@ -161,6 +161,18 @@ function getToken(params,callback){
         callback(error,result)
     })
 }
+
+function savePasswordCode(params,callback) {
+    httpUtil.httpPost(systemConfig.hosts.auth,'/api/'+params.phone+"/passwordCode",{},params,function(error,result){
+        callback(error,result)
+    })
+}
+
+function getPasswordCode(params,callback) {
+    httpUtil.httpPost(systemConfig.hosts.auth,'/api/'+params.phone+"/passwordCode",{},{},function(error,result){
+        callback(error,result)
+    })
+}
 module.exports = {
     createAccessToken: createAccessToken,
     parseAccessToken : parseAccessToken,
@@ -170,5 +182,7 @@ module.exports = {
     parseUserToken : parseUserToken ,
     saveToken : saveToken ,
     removeToken : removeToken ,
-    getToken : getToken
+    getToken : getToken ,
+    savePasswordCode : savePasswordCode ,
+    getPasswordCode : getPasswordCode
 };
