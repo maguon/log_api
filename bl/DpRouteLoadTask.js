@@ -83,16 +83,34 @@ function updateDpRouteLoadTaskStatus(req,res,next){
 
 function removeDpRouteLoadTask(req,res,next){
     var params = req.params;
-    params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
-    dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
-        if (error) {
-            logger.error(' removeDpRouteLoadTask ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' removeDpRouteLoadTask ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params,function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTaskBase ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0&&rows[0].task_status ==sysConst.TASK_STATUS.ready_accept){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
+                    resUtil.resetFailedRes(res," 该任务不是待接受状态，不能删除。 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
+        dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
+            if (error) {
+                logger.error(' removeDpRouteLoadTask ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' removeDpRouteLoadTask ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

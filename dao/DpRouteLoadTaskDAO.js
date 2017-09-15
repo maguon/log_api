@@ -48,13 +48,6 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.dpDemandId;
         query = query + " and dprl.demand_id = ? ";
     }
-/*    if(params.loadTaskStatusArr){
-        query = query + " and dprl.load_task_status in ("+params.loadTaskStatusArr + ") "
-    }
-    if(params.loadTaskStatus){
-        paramsArray[i++] = params.loadTaskStatus;
-        query = query + " and dprl.load_task_status = ? ";
-    }*/
     query = query + ' group by dprl.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTask ');
@@ -63,7 +56,7 @@ function getDpRouteLoadTask(params,callback) {
 }
 
 function getDpRouteLoadTaskBase(params,callback) {
-    var query = " select dprl.* from dp_route_load_task dprl " +
+    var query = " select dprl.*,dpr.task_status from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id where dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteLoadTaskId){
