@@ -71,6 +71,7 @@ function getDriveRefuel(params,callback) {
         paramsArray[i++] = params.checkStatus;
         query = query + " and dr.check_status = ? ";
     }
+    query = query + '  order by dr.refuel_date desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
