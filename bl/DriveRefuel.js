@@ -47,6 +47,20 @@ function queryDriveRefuel(req,res,next){
     })
 }
 
+function queryRefuelVolumeMoneyTotal(req,res,next){
+    var params = req.params ;
+    driveRefuelDAO.getRefuelVolumeMoneyTotal(params,function(error,result){
+        if (error) {
+            logger.error(' queryRefuelVolumeMoneyTotal ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryRefuelVolumeMoneyTotal ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDriveRefuelStatus(req,res,next){
     var params = req.params;
     driveRefuelDAO.updateDriveRefuelStatus(params,function(error,result){
@@ -65,5 +79,6 @@ function updateDriveRefuelStatus(req,res,next){
 module.exports = {
     createDriveRefuel : createDriveRefuel,
     queryDriveRefuel : queryDriveRefuel,
+    queryRefuelVolumeMoneyTotal : queryRefuelVolumeMoneyTotal,
     updateDriveRefuelStatus : updateDriveRefuelStatus
 }

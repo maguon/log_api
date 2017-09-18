@@ -3659,6 +3659,106 @@
         }
       }
     },
+    "/refuelVolumeMoneyTotal": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  refuelVolumeMoney Total",
+        "description": "query refuelVolumeMoneyTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveRefuelId",
+            "in": "query",
+            "description": "driveRefuel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "refuelAddressType",
+            "in": "query",
+            "description": "refuelAddress type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "refuelDateStart",
+            "in": "query",
+            "description": "refuelDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "refuelDateEnd",
+            "in": "query",
+            "description": "refuelDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "checkStatus",
+            "in": "query",
+            "description": "check status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveRefuel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveRefuel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveRefuel": {
       "post": {
         "tags": [

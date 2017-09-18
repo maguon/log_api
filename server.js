@@ -248,6 +248,7 @@ function createServer() {
      * DriveRefuel Module
      */
     server.get('/api/driveRefuel' , driveRefuel.queryDriveRefuel);
+    server.get('/api/refuelVolumeMoneyTotal' , driveRefuel.queryRefuelVolumeMoneyTotal);
     server.post({path:'/api/user/:userId/driveRefuel',contentType: 'application/json'},driveRefuel.createDriveRefuel);
     server.put({path:'/api/user/:userId/driveRefuel/:driveRefuelId/checkStatus/:checkStatus',contentType: 'application/json'} ,driveRefuel.updateDriveRefuelStatus);
 
