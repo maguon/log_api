@@ -12,7 +12,7 @@ CREATE TABLE `drive_refuel` (
   `date_id` int(4) NOT NULL COMMENT '加油申报统计时间',
   `refuel_date` datetime DEFAULT NULL COMMENT '加油时间',
   `refuel_volume` decimal(10,2) NOT NULL COMMENT '加油量',
-  `city_route_id` int(10) DEFAULT NULL COMMENT '城市路线ID',
+  `dp_demand_id` int(10) DEFAULT NULL COMMENT '路线ID',
   `refuel_address_type` tinyint(1) NOT NULL COMMENT '加油地类别(1-内部加油,2-外部加油)',
   `refuel_address` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '加油详细地址',
   `lng` decimal(10,5) DEFAULT NULL COMMENT '经度',

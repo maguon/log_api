@@ -28,11 +28,11 @@ function addDriveRefuel(params,callback){
 }
 
 function getDriveRefuel(params,callback) {
-    var query = " select dr.*,d.drive_name,t.truck_num,cr.route_start,cr.route_end,u.real_name as check_user_name " +
+    var query = " select dr.*,d.drive_name,t.truck_num,dpd.route_start,dpd.route_end,u.real_name as check_user_name " +
         " from drive_refuel dr " +
         " left join drive_info d on dr.drive_id = d.id " +
         " left join truck_info t on dr.truck_id = t.id " +
-        " left join city_route_info cr on dr.city_route_id = cr.id " +
+        " left join dp_demand_info dpd on dr.dp_demand_id = dpd.id " +
         " left join user_info u on dr.check_user_id = u.uid where dr.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveRefuelId){
@@ -88,7 +88,7 @@ function getRefuelVolumeMoneyTotal(params,callback) {
         " from drive_refuel dr " +
         " left join drive_info d on dr.drive_id = d.id " +
         " left join truck_info t on dr.truck_id = t.id " +
-        " left join city_route_info cr on dr.city_route_id = cr.id " +
+        " left join dp_demand_info dpd on dr.dp_demand_id = dpd.id " +
         " left join user_info u on dr.check_user_id = u.uid where dr.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveRefuelId){
