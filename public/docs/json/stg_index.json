@@ -9225,7 +9225,7 @@
         "refuelVolume": {
           "type": "integer"
         },
-        "cityRouteId": {
+        "dpDemandId": {
           "type": "integer"
         },
         "refuelAddressType": {
