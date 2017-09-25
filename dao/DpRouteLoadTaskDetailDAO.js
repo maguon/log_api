@@ -48,10 +48,34 @@ function getDpRouteLoadTaskDetail(params,callback) {
     });
 }
 
+function getCarLoadStatusCount(params,callback) {
+    var query = " select count(id) arrive_count from dp_route_load_task_detail where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.carLoadStatus){
+        paramsArray[i++] = params.carLoadStatus;
+        query = query + " and car_load_status = ? ";
+    }
+    if(params.arriveDateStart){
+        paramsArray[i++] = params.arriveDateStart +" 00:00:00";
+        query = query + " and arrive_date >= ? ";
+    }
+    if(params.arriveDateEnd){
+        paramsArray[i++] = params.arriveDateEnd +" 23:59:59";
+        query = query + " and arrive_date <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarLoadStatusCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteLoadTaskDetailStatus(params,callback){
-    var query = " update dp_route_load_task_detail set car_load_status = ? where id = ? ";
+    var query = " update dp_route_load_task_detail set car_load_status = ?, " +
+        " arrive_date = ?, date_id = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.carLoadStatus;
+    paramsArray[i++] = params.arriveDate;
+    paramsArray[i++] = params.dateId;
     paramsArray[i] = params.dpRouteTaskDetailId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadTaskDetailStatus ');
@@ -73,6 +97,7 @@ function deleteDpRouteLoadTaskDetail(params,callback){
 module.exports ={
     addDpRouteLoadTaskDetail : addDpRouteLoadTaskDetail,
     getDpRouteLoadTaskDetail : getDpRouteLoadTaskDetail,
+    getCarLoadStatusCount : getCarLoadStatusCount,
     updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus,
     deleteDpRouteLoadTaskDetail : deleteDpRouteLoadTaskDetail
 }

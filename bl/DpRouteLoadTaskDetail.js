@@ -123,10 +123,31 @@ function queryDpRouteLoadTaskDetail(req,res,next){
     })
 }
 
+function queryCarLoadStatusCount(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskDetailDAO.getCarLoadStatusCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarLoadStatusCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarLoadStatusCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDpRouteLoadTaskDetailStatus(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
+        var myDate = new Date();
+        var year = myDate.getFullYear();
+        var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
+        var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
+        var strDate = year + month + day;
+        params.dateId = parseInt(strDate);
+        params.arriveDate = myDate;
         dpRouteLoadTaskDetailDAO.updateDpRouteLoadTaskDetailStatus(params,function(error,result){
             if (error) {
                 logger.error(' updateDpRouteLoadTaskDetailStatus ' + error.message);
@@ -223,6 +244,7 @@ function removeDpRouteLoadTaskDetail(req,res,next){
 module.exports = {
     createDpRouteLoadTaskDetail : createDpRouteLoadTaskDetail,
     queryDpRouteLoadTaskDetail : queryDpRouteLoadTaskDetail,
+    queryCarLoadStatusCount : queryCarLoadStatusCount,
     updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus,
     removeDpRouteLoadTaskDetail : removeDpRouteLoadTaskDetail
 }
