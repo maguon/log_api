@@ -471,6 +471,44 @@
         }
       }
     },
+    "/backPassword": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "back user password",
+        "description": "back user password",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "backPassword",
+            "in": "body",
+            "description": "user info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/backPassword"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/backPassword"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/user/{userId}/token/{token}": {
       "get": {
         "tags": [
@@ -9103,6 +9141,23 @@
       },
       "xml": {
         "name": "password"
+      }
+    },
+    "backPassword": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "integer"
+        },
+        "newPassword": {
+          "type": "string"
+        },
+        "confirmNewPassword": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "backPassword"
       }
     },
     "truck": {

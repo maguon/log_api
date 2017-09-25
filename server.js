@@ -156,6 +156,7 @@ function createServer() {
     server.get('/api/user/:userId' , user.queryUser);
     server.post({path:'/api/userLogin' ,contentType: 'application/json'}, user.userLogin);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
+    server.put({path:'/api/backPassword',contentType: 'application/json'} ,user.updateUserPassword);
     server.get('/api/user/:userId/token/:token' , user.changeUserToken);
 
     /**

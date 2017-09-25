@@ -21,7 +21,6 @@ function addUser(params,callback){
 }
 
 function getUser(params,callback) {
-    /*var query = " select * from user_info where uid is not null ";*/
     var query = " select u.* from user_info u left join drive_info d on u.uid = d.user_id where u.uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
@@ -56,7 +55,6 @@ function getUser(params,callback) {
 }
 
 function getUserBase(params,callback){
-    /*var query = " select uid,mobile,real_name,type,gender,status from user_info where sa = 0 and uid is not null ";*/
     var query = " select u.uid,u.mobile,u.real_name,u.type,u.gender,u.status,d.id as drive_id from user_info u " +
         " left join drive_info d on u.uid = d.user_id where u.sa = 0 and u.uid is not null ";
     var paramsArray=[],i=0;
@@ -117,16 +115,23 @@ function updateUserStatus(params,callback){
 }
 
 function updateUserPassword(params,callback){
-    var query = " update user_info set password = ? where uid = ?";
+    var query = " update user_info set password = ? where uid is not null ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.password;
-    paramsArray[i] = params.userId;
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and uid = ? ";
+    }
+    if(params.mobile){
+        paramsArray[i++] = params.mobile;
+        query = query + " and mobile = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateUserPassword ');
         return callback(error,rows);
     });
-
 }
+
 
 module.exports ={
     addUser : addUser,

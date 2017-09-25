@@ -189,6 +189,43 @@ function changeUserPassword(req,res,next){
     })
 }
 
+function updateUserPassword(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        userDAO.getUser(params,function(error,rows){
+            if (error) {
+                logger.error(' getUser ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(rows && rows.length<1){
+                    logger.warn(' getUser ' + sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        if(params.newPassword != params.confirmNewPassword){
+            resUtil.resetFailedRes(res,' 新密码不一致 ');
+            return next();
+        }
+        params.password = encrypt.encryptByMd5(params.newPassword);
+        userDAO.updateUserPassword(params,function(error,result){
+            if (error) {
+                logger.error(' updateUserPassword ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateUserPassword ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 function changeUserToken(req,res,next){
     var params = req.params;
     var tokenObj = oAuthUtil.parseAccessToken(params.token);
@@ -251,5 +288,6 @@ module.exports = {
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,
     changeUserPassword : changeUserPassword,
+    updateUserPassword : updateUserPassword,
     changeUserToken : changeUserToken
 }
