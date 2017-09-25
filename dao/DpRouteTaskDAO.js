@@ -158,6 +158,39 @@ function getDriveDistanceCount(params,callback) {
     });
 }
 
+function getNotCompletedTaskStatusCount(params,callback) {
+    var query = " select count(id) as task_status_count from dp_route_task where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.taskStatusArr){
+        query = query + " and task_status in ("+params.taskStatusArr + ") "
+    }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and task_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getNotCompletedTaskStatusCount ');
+        return callback(error,rows);
+    });
+}
+
+function getTaskStatusCount(params,callback) {
+    var query = " select task_status,count(id) as task_status_count from dp_route_task where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.taskStatusArr){
+        query = query + " and task_status in ("+params.taskStatusArr + ") "
+    }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and task_status = ? ";
+    }
+    query = query + ' group by task_status ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTaskStatusCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskStatus(params,callback){
     var query = " update dp_route_task set task_status = ? ";
     var paramsArray=[],i=0;
@@ -185,6 +218,8 @@ function updateDpRouteTaskStatus(params,callback){
 module.exports ={
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
+    getNotCompletedTaskStatusCount : getNotCompletedTaskStatusCount,
     getDriveDistanceCount : getDriveDistanceCount,
+    getTaskStatusCount : getTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus
 }

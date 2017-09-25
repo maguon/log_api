@@ -8318,12 +8318,100 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/drive"
+                "$ref": "#/definitions/dpRouteTask"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid drive id"
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/notCompletedTaskStatusCount": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query notCompletedTaskStatus count",
+        "description": "query notCompletedTaskStatusCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "taskStatusArr",
+            "in": "query",
+            "description": "task statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/taskStatusCount": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query taskStatusCount count",
+        "description": "query taskStatusCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "taskStatusArr",
+            "in": "query",
+            "description": "task statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
           }
         }
       }
