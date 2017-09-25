@@ -1,5 +1,7 @@
 ALTER TABLE `drive_info`
 ADD UNIQUE INDEX `tel` (`tel`) ;
+ALTER TABLE `dp_route_load_task_detail`
+ADD COLUMN `arrive_date`  datetime NULL COMMENT '送达时间' AFTER `vin`;
 
 -- ----------------------------
 -- Table structure for drive_refuel

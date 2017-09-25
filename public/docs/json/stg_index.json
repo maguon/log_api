@@ -8436,6 +8436,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "taskEndDateStart",
+            "in": "query",
+            "description": "taskEndDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskEndDateEnd",
+            "in": "query",
+            "description": "taskEndDate end",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

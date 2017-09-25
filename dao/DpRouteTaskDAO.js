@@ -184,6 +184,14 @@ function getTaskStatusCount(params,callback) {
         paramsArray[i++] = params.taskStatus;
         query = query + " and task_status = ? ";
     }
+    if(params.taskEndDateStart){
+        paramsArray[i++] = params.taskEndDateStart +" 00:00:00";
+        query = query + " and task_end_date >= ? ";
+    }
+    if(params.taskEndDateEnd){
+        paramsArray[i++] = params.taskEndDateEnd +" 23:59:59";
+        query = query + " and task_end_date <= ? ";
+    }
     query = query + ' group by task_status ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTaskStatusCount ');
