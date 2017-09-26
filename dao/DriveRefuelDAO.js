@@ -134,10 +134,11 @@ function getRefuelVolumeMoneyTotal(params,callback) {
 }
 
 function updateDriveRefuelStatus(params,callback){
-    var query = " update drive_refuel set check_status = ? , check_reason = ? where id = ? ";
+    var query = " update drive_refuel set check_status = ? , check_reason = ? , check_user_id = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.checkStatus;
     paramsArray[i++] = params.checkReason;
+    paramsArray[i++] = params.userId;
     paramsArray[i] = params.driveRefuelId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveRefuelStatus ');
