@@ -55,9 +55,24 @@ function queryDpTaskStatBase(req,res,next){
     })
 }
 
+function queryDpTaskStatCount(req,res,next){
+    var params = req.params ;
+    dpTaskStatDAO.getDpTaskStatCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpTaskStatCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpTaskStatCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpTaskStat : createDpTaskStat,
     queryDpTaskStat : queryDpTaskStat,
-    queryDpTaskStatBase : queryDpTaskStatBase
+    queryDpTaskStatBase : queryDpTaskStatBase,
+    queryDpTaskStatCount : queryDpTaskStatCount
 }

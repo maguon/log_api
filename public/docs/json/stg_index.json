@@ -8041,6 +8041,35 @@
         }
       }
     },
+    "/dpTaskStatCount": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpTaskStat count",
+        "description": "query dpTaskStatCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpTaskStatCount"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpTaskStat id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpTaskStat": {
       "post": {
         "tags": [

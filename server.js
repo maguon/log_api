@@ -398,6 +398,7 @@ function createServer() {
      */
     server.get('/api/dpTaskStat' , dpTaskStat.queryDpTaskStat);
     server.get('/api/dpTaskStatBase' , dpTaskStat.queryDpTaskStatBase);
+    server.get('/api/dpTaskStatCount' , dpTaskStat.queryDpTaskStatCount);
     server.post({path:'/api/user/:userId/dpTaskStat',contentType: 'application/json'},dpTaskStat.createDpTaskStat);
 
     /**
