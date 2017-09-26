@@ -55,7 +55,7 @@ function getUser(params,callback) {
 }
 
 function getUserBase(params,callback){
-    var query = " select u.uid,u.mobile,u.real_name,u.type,u.gender,u.status,d.id as drive_id from user_info u " +
+    var query = " select u.uid,u.mobile,u.real_name,u.type,u.gender,u.avatar_image,u.status,d.id as drive_id from user_info u " +
         " left join drive_info d on u.uid = d.user_id where u.sa = 0 and u.uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
@@ -132,6 +132,17 @@ function updateUserPassword(params,callback){
     });
 }
 
+function updateUserAvatarImage(params,callback){
+    var query = " update user_info set avatar_image = ? where uid = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.avatarImage;
+    paramsArray[i]=params.userId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateUserAvatarImage ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUser : addUser,
@@ -139,5 +150,6 @@ module.exports ={
     getUserBase : getUserBase,
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,
-    updateUserPassword : updateUserPassword
+    updateUserPassword : updateUserPassword,
+    updateUserAvatarImage : updateUserAvatarImage
 }

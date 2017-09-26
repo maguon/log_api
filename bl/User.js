@@ -280,6 +280,20 @@ function changeUserToken(req,res,next){
     }
 }
 
+function updateUserAvatarImage(req,res,next){
+    var params = req.params;
+    userDAO.updateUserAvatarImage(params,function(error,result){
+        if (error) {
+            logger.error(' updateUserAvatarImage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateUserAvatarImage ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createUser : createUser,
@@ -289,5 +303,6 @@ module.exports = {
     updateUserStatus : updateUserStatus,
     changeUserPassword : changeUserPassword,
     updateUserPassword : updateUserPassword,
-    changeUserToken : changeUserToken
+    changeUserToken : changeUserToken,
+    updateUserAvatarImage : updateUserAvatarImage
 }

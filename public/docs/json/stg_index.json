@@ -509,6 +509,52 @@
         }
       }
     },
+    "/user/{userId}/avatarImage": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "update avatar image",
+        "description": "update avatar image",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "image",
+            "in": "body",
+            "description": "image url",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/avatarImage"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/user/{userId}/token/{token}": {
       "get": {
         "tags": [
@@ -9205,6 +9251,18 @@
       },
       "xml": {
         "name": "user"
+      }
+    },
+    "avatarImage": {
+      "type": "object",
+      "properties": {
+
+        "avatarImage": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "avatarImage"
       }
     },
     "deviceUser": {
