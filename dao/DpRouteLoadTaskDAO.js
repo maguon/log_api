@@ -27,12 +27,14 @@ function addDpRouteLoadTask(params,callback){
 
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,u.real_name as task_op_name,ba.addr_name,c.city_name,r.short_name,dpd.pre_count, " +
-        " dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,d.tel,count(dpdtl.id) as car_count " +
+        " dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,d.tel,count(dpdtl.id) as car_count, " +
+        " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join user_info u on dprl.user_id = u.uid " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join dp_route_load_task_detail dpdtl on dprl.id = dpdtl.dp_route_load_task_id " +
+        " left join car_exception_rel cer on dpdtl.car_id = cer.car_id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join base_addr ba on dprl.base_addr_id = ba.id " +
