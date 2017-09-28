@@ -20,6 +20,22 @@ function createDpRouteLoadTask(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
+        dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params,function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTaskBase ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0&&rows[0].task_status ==sysConst.TASK_STATUS.on_road){
+                    logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
+                    resUtil.resetFailedRes(res," 指令状态为在途，不能新增任务。 ");
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
         dpDemandDAO.getDpDemandBase({dpDemandId:params.dpDemandId},function(error,rows){
             if (error) {
                 logger.error(' getDpDemandBase ' + error.message);
