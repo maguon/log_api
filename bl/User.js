@@ -59,6 +59,7 @@ function createUser(req,res,next){
 
 function userLogin(req,res,next){
     var params = req.params;
+    params.sa = 0;
     userDAO.getUser(params,function(error,rows){
         if (error) {
             logger.error(' userLogin ' + error.message);
