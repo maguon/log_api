@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
+var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -90,12 +91,28 @@ function removeDpRouteLoadTask(req,res,next){
                 logger.error(' getDpRouteLoadTaskBase ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length >0&&rows[0].task_status ==sysConst.TASK_STATUS.ready_accept){
+                if(rows&&rows.length >0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
                     that();
                 }else{
                     logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
-                    resUtil.resetFailedRes(res," 该任务不是待接受状态，不能删除。 ");
+                    resUtil.resetFailedRes(res," 该任务不是未装车状态，不能删除。 ");
                     return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        dpRouteLoadTaskDetailDAO.getDpRouteLoadTaskDetail(params,function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTaskDetail ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0){
+                    logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
+                    resUtil.resetFailedRes(res," 该任务已经装有商品车，不能删除。 ");
+                    return next();
+                }else{
+                    that();
                 }
             }
         })
