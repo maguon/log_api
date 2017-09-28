@@ -111,6 +111,56 @@ function userLogin(req,res,next){
     })
 }
 
+function mobileUserLogin(req,res,next){
+    var params = req.params;
+    params.sa = 0;
+    userDAO.getUser(params,function(error,rows){
+        if (error) {
+            logger.error(' mobileUserLogin ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            if(rows && rows.length<1){
+                logger.warn(' mobileUserLogin ' + params.email||params.phone+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED) ;
+                return next();
+            }else{
+                var passwordMd5 = encrypt.encryptByMd5(params.password);
+                if(passwordMd5 != rows[0].password){
+                    logger.warn(' mobileUserLogin ' +params.phone+ sysMsg.CUST_LOGIN_PSWD_ERROR);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_PSWD_ERROR) ;
+                    return next();
+                }else{
+                    var user = {
+                        userId : rows[0].uid,
+                        userStatus : rows[0].status,
+                        type : rows[0].type,
+                        name : rows[0].real_name,
+                        phone: params.mobile
+                    }
+                    if(rows[0].status == listOfValue.USER_STATUS_NOT_ACTIVE){
+                        logger.info('mobileUserLogin' +params.email||params.mobile+ " not actived");
+                        resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR);
+                        return next();
+                    }else{
+                        user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
+                        oAuthUtil.saveToken(user,function(error,result){
+                            if(error){
+                                logger.error(' mobileUserLogin ' + error.stack);
+                                return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
+                            }else{
+                                logger.info(' mobileUserLogin' +params.mobile+ " success");
+                                resUtil.resetQueryRes(res,user,null);
+                                return next();
+                            }
+                        })
+
+                    }
+                }
+            }
+        }
+    })
+}
+
 function queryUser(req,res,next){
     var params = req.params ;
     userDAO.getUserBase(params,function(error,result){
@@ -299,6 +349,7 @@ function updateUserAvatarImage(req,res,next){
 module.exports = {
     createUser : createUser,
     userLogin : userLogin,
+    mobileUserLogin : mobileUserLogin,
     queryUser : queryUser,
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,

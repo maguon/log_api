@@ -298,6 +298,44 @@
         }
       }
     },
+    "/mobileUserLogin": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "mobileUser login",
+        "description": "mobileUser sign in",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/user/{userId}": {
       "get": {
         "tags": [
