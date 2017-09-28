@@ -44,16 +44,17 @@ CREATE TABLE `car_exception_rel` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
--- Table structure for device_user
+-- Table structure for user_device
 -- ----------------------------
-DROP TABLE IF EXISTS `device_user`;
-CREATE TABLE `device_user` (
-  `id` bigint(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) NOT NULL COMMENT '用户ID',
-  `device_token` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '设备标识',
+DROP TABLE IF EXISTS `user_device`;
+CREATE TABLE `user_device` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(11) NOT NULL COMMENT '用户ID',
+  `device_token` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '设备标识',
+  `version` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '设备版本',
+  `app_type` tinyint(1) NOT NULL COMMENT 'app登录类型(1-司机app,2-调度app)',
   `device_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '设备类型(1-android,2-ios)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`user_id`,`device_token`),
-  UNIQUE KEY `id` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

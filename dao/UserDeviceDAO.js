@@ -4,25 +4,27 @@
 
 var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DeviceUserDAO.js');
+var logger = serverLogger.createLogger('UserDeviceDAO.js');
 
-function addDeviceUser(params,callback){
-    var query = " insert into device_user (user_id,device_token,device_type) values ( ? , ? , ? )";
+function addUserDevice(params,callback){
+    var query = " insert into user_device (user_id,device_token,version,app_type,device_type) values ( ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.deviceToken;
+    paramsArray[i++]=params.version;
+    paramsArray[i++]=params.appType;
     paramsArray[i]=params.deviceType;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' addDeviceUser ');
+        logger.debug(' addUserDevice ');
         return callback(error,rows);
     });
 }
 
-function getDeviceUser(params,callback){
-    var query = " select * from device_user where id is not null ";
+function getUserDevice(params,callback){
+    var query = " select * from user_device where id is not null ";
     var paramsArray=[],i=0;
-    if(params.deviceUserId){
-        paramsArray[i++] = params.deviceUserId;
+    if(params.userDeviceId){
+        paramsArray[i++] = params.userDeviceId;
         query = query + " and id = ? ";
     }
     if(params.userId){
@@ -34,13 +36,13 @@ function getDeviceUser(params,callback){
         query = query + " and device_token = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDeviceUser ');
+        logger.debug(' getUserDevice ');
         return callback(error,rows);
     });
 }
 
-function deleteDeviceUser(params,callback){
-    var query = " delete from device_user where id is not null ";
+function deleteUserDevice(params,callback){
+    var query = " delete from user_device where id is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
         paramsArray[i++] = params.userId;
@@ -51,14 +53,14 @@ function deleteDeviceUser(params,callback){
         query = query + " and device_token = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' deleteDeviceUser ');
+        logger.debug(' deleteUserDevice ');
         return callback(error,rows);
     });
 }
 
 
 module.exports ={
-    addDeviceUser : addDeviceUser,
-    getDeviceUser : getDeviceUser,
-    deleteDeviceUser : deleteDeviceUser
+    addUserDevice : addUserDevice,
+    getUserDevice : getUserDevice,
+    deleteUserDevice : deleteUserDevice
 }

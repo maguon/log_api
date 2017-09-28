@@ -12,7 +12,7 @@ var serverLogger = require('./util/ServerLogger.js');
 var logger = serverLogger.createLogger('Server.js');
 var adminUser = require('./bl/AdminUser.js');
 var user = require('./bl/User.js');
-var deviceUser = require('./bl/DeviceUser.js');
+var userDevice = require('./bl/UserDevice.js');
 var truck = require('./bl/Truck.js');
 var truckInsureRel = require('./bl/TruckInsureRel.js');
 var truckInsure = require('./bl/TruckInsure.js');
@@ -161,11 +161,11 @@ function createServer() {
     server.put({path:'/api/user/:userId/avatarImage',contentType: 'application/json'} ,user.updateUserAvatarImage);
 
     /**
-     * DeviceUser Module
+     * UserDevice Module
      */
-    server.get('/api/deviceUser' ,deviceUser.queryDeviceUser);
-    server.post({path:'/api/user/:userId/deviceUser',contentType: 'application/json'} , deviceUser.createDeviceUser);
-    server.del('/api/user/:userId/deviceToken/:deviceToken' , deviceUser.removeDeviceUser);
+    server.get('/api/userDevice' ,userDevice.queryUserDevice);
+    server.post({path:'/api/user/:userId/userDevice',contentType: 'application/json'} , userDevice.createUserDevice);
+    server.del('/api/user/:userId/deviceToken/:deviceToken' , userDevice.removeUserDevice);
 
 
     /**

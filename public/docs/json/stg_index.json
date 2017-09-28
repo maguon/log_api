@@ -25,10 +25,6 @@
       "description": "User of log api"
     },
     {
-      "name": "deviceUser",
-      "description": "DeviceUser of log api"
-    },
-    {
       "name":"truck",
       "description":"Truck of log api"
     },
@@ -596,21 +592,21 @@
         }
       }
     },
-    "/deviceUser": {
+    "/userDevice": {
       "get": {
         "tags": [
-          "deviceUser"
+          "user"
         ],
-        "summary": "query deviceUser list",
-        "description": "query deviceUser",
+        "summary": "query userDevice list",
+        "description": "query userDevice",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "deviceUserId",
+            "name": "userDeviceId",
             "in": "query",
-            "description": "deviceUser id",
+            "description": "userDevice id",
             "required": false,
             "type": "integer"
 
@@ -638,23 +634,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/deviceUser"
+                "$ref": "#/definitions/userDevice"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid deviceUser id"
+            "description": "Invalid token value or invalid userDevice id"
           }
         }
       }
     },
-    "/user/{userId}/deviceUser": {
+    "/user/{userId}/userDevice": {
       "post": {
         "tags": [
-          "deviceUser"
+          "user"
         ],
-        "summary": "create deviceUser",
-        "description": "create deviceUser",
+        "summary": "create userDevice",
+        "description": "create userDevice",
         "produces": [
           "application/json"
         ],
@@ -668,12 +664,12 @@
 
           },
           {
-            "name": "deviceUser",
+            "name": "userDevice",
             "in": "body",
-            "description": "deviceUser info",
+            "description": "userDevice info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/deviceUser"
+              "$ref": "#/definitions/userDevice"
             }
           }
         ],
@@ -688,7 +684,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid deviceUser id"
+            "description": "Invalid token value or invalid userDevice id"
           }
         }
       }
@@ -696,11 +692,11 @@
     "/user/{userId}/deviceToken/{deviceToken}": {
       "delete": {
         "tags": [
-          "deviceUser"
+          "user"
         ],
-        "summary": "Deletes a deviceUser",
+        "summary": "Deletes a userDevice",
         "description": "",
-        "operationId": "deleteDeviceUser",
+        "operationId": "deleteUserDevice",
         "produces": [
           "application/json"
         ],
@@ -9265,19 +9261,25 @@
         "name": "avatarImage"
       }
     },
-    "deviceUser": {
+    "userDevice": {
       "type": "object",
       "properties": {
 
         "deviceToken": {
           "type": "string"
         },
+        "version": {
+          "type": "string"
+        },
+        "appType": {
+          "type": "integer"
+        },
         "deviceType": {
           "type": "integer"
         }
       },
       "xml": {
-        "name": "deviceUser"
+        "name": "userDevice"
       }
     },
     "password": {

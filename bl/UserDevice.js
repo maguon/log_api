@@ -7,48 +7,48 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var deviceUserDAO = require('../dao/DeviceUserDAO.js');
+var userDeviceDAO = require('../dao/UserDeviceDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DeviceUser.js');
+var logger = serverLogger.createLogger('UserDevice.js');
 
-function createDeviceUser(req,res,next){
+function createUserDevice(req,res,next){
     var params = req.params ;
-    deviceUserDAO.addDeviceUser(params,function(error,result){
+    userDeviceDAO.addUserDevice(params,function(error,result){
         if (error) {
-            logger.error(' createDeviceUser ' + error.message);
+            logger.error(' createUserDevice ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createDeviceUser ' + 'success');
+            logger.info(' createUserDevice ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDeviceUser(req,res,next){
+function queryUserDevice(req,res,next){
     var params = req.params ;
-    deviceUserDAO.getDeviceUser(params,function(error,result){
+    userDeviceDAO.getUserDevice(params,function(error,result){
         if (error) {
-            logger.error(' queryDeviceUser ' + error.message);
+            logger.error(' queryUserDevice ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDeviceUser ' + 'success');
+            logger.info(' queryUserDevice ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function removeDeviceUser (req,res,next){
+function removeUserDevice (req,res,next){
     var params = req.params;
-    deviceUserDAO.deleteDeviceUser(params,function(error,result){
+    userDeviceDAO.deleteUserDevice(params,function(error,result){
         if (error) {
-            logger.error(' removeDeviceUser ' + error.message);
+            logger.error(' removeUserDevice ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' removeDeviceUser ' + 'success');
+            logger.info(' removeUserDevice ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
@@ -57,7 +57,7 @@ function removeDeviceUser (req,res,next){
 
 
 module.exports = {
-    createDeviceUser : createDeviceUser,
-    queryDeviceUser : queryDeviceUser,
-    removeDeviceUser : removeDeviceUser
+    createUserDevice : createUserDevice,
+    queryUserDevice : queryUserDevice,
+    removeUserDevice : removeUserDevice
 }
