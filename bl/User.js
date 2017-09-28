@@ -67,7 +67,7 @@ function userLogin(req,res,next){
         } else {
             if(rows && rows.length<1){
                 logger.warn(' userLogin ' + params.email||params.phone+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
-                resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_USER_UNREGISTERED) ;
+                resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED) ;
                 return next();
             }else{
                 var passwordMd5 = encrypt.encryptByMd5(params.password);
