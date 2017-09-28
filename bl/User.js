@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var userDAO = require('../dao/UserDAO.js');
+var userDeviceDAO = require('../dao/UserDeviceDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -113,51 +114,110 @@ function userLogin(req,res,next){
 
 function mobileUserLogin(req,res,next){
     var params = req.params;
-    params.sa = 0;
-    userDAO.getUser(params,function(error,rows){
-        if (error) {
-            logger.error(' mobileUserLogin ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            if(rows && rows.length<1){
-                logger.warn(' mobileUserLogin ' + params.email||params.phone+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
-                resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED) ;
-                return next();
-            }else{
-                var passwordMd5 = encrypt.encryptByMd5(params.password);
-                if(passwordMd5 != rows[0].password){
-                    logger.warn(' mobileUserLogin ' +params.phone+ sysMsg.CUST_LOGIN_PSWD_ERROR);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_PSWD_ERROR) ;
+    var user ={};
+    var newUserDeviceFlag = true;
+    Seq().seq(function(){
+        var that = this;
+        params.sa = 0;
+        userDAO.getUser(params,function(error,rows){
+            if (error) {
+                logger.error(' mobileUserLogin ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(rows && rows.length<1){
+                    logger.warn(' mobileUserLogin ' + params.email||params.phone+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED) ;
                     return next();
                 }else{
-                    var user = {
-                        userId : rows[0].uid,
-                        userStatus : rows[0].status,
-                        type : rows[0].type,
-                        name : rows[0].real_name,
-                        phone: params.mobile
-                    }
-                    if(rows[0].status == listOfValue.USER_STATUS_NOT_ACTIVE){
-                        logger.info('mobileUserLogin' +params.email||params.mobile+ " not actived");
-                        resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR);
+                    var passwordMd5 = encrypt.encryptByMd5(params.password);
+                    if(passwordMd5 != rows[0].password){
+                        logger.warn(' mobileUserLogin ' +params.phone+ sysMsg.CUST_LOGIN_PSWD_ERROR);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_PSWD_ERROR) ;
                         return next();
                     }else{
-                        user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
-                        oAuthUtil.saveToken(user,function(error,result){
-                            if(error){
-                                logger.error(' mobileUserLogin ' + error.stack);
-                                return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
-                            }else{
-                                logger.info(' mobileUserLogin' +params.mobile+ " success");
-                                resUtil.resetQueryRes(res,user,null);
-                                return next();
-                            }
-                        })
-
+                        user = {
+                            userId : rows[0].uid,
+                            userStatus : rows[0].status,
+                            type : rows[0].type,
+                            name : rows[0].real_name,
+                            phone: params.mobile
+                        }
+                        if(rows[0].status == listOfValue.USER_STATUS_NOT_ACTIVE){
+                            logger.info('mobileUserLogin' +params.email||params.mobile+ " not actived");
+                            resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR);
+                            return next();
+                        }else{
+                            user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
+                            oAuthUtil.saveToken(user,function(error,result){
+                                if(error){
+                                    logger.error(' mobileUserLogin ' + error.stack);
+                                    return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
+                                }else{
+                                    logger.info(' mobileUserLogin' + " success");
+                                    that();
+                                }
+                            })
+                        }
                     }
                 }
             }
+        })
+    }).seq(function () {
+        var that = this;
+        params.userId= user.userId;
+        userDeviceDAO.getUserDevice(params, function (error, rows) {
+            if (error) {
+                logger.error(' getUserDevice ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length > 0) {
+                    newUserDeviceFlag = false;
+                    that();
+                } else {
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        if(newUserDeviceFlag) {
+            params.userId= user.userId;
+            userDeviceDAO.addUserDevice(params,function(error,result){
+                if (error) {
+                    logger.error(' addUserDevice ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' addUserDevice ' + 'success');
+                    }else{
+                        logger.warn(' addUserDevice ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            var myDate = new Date();
+            params.updatedOn = myDate;
+            params.userId= user.userId;
+            userDeviceDAO.updateUserDevice(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateUserDevice ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateUserDevice ' + 'success');
+                    } else {
+                        logger.warn(' updateUserDevice ' + 'failed');
+                    }
+                    that();
+                }
+            })
         }
+    }).seq(function(){
+        logger.info(' mobileUserLogin' +params.mobile+ " success");
+        resUtil.resetQueryRes(res,user,null);
+        return next();
     })
 }
 

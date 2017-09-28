@@ -309,6 +309,39 @@
           "application/json"
         ],
         "parameters": [
+
+          {
+            "name": "deviceToken",
+            "in": "query",
+            "description": "device token",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "device version",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "appType",
+            "in": "query",
+            "description": "app Type",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "deviceType",
+            "in": "query",
+            "description": "device type",
+            "required": true,
+            "type": "integer"
+
+          },
           {
             "name": "user",
             "in": "body",

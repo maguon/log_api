@@ -52,7 +52,7 @@ CREATE TABLE `user_device` (
   `user_id` bigint(11) NOT NULL COMMENT '用户ID',
   `device_token` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '设备标识',
   `version` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '设备版本',
-  `app_type` tinyint(1) NOT NULL COMMENT 'app登录类型(1-司机app,2-调度app)',
+  `app_type` tinyint(1) NOT NULL COMMENT 'app登录类型(1-仓储app,2-车管app,3-调度app,4-司机app)',
   `device_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '设备类型(1-android,2-ios)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

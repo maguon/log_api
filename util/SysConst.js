@@ -51,6 +51,13 @@ var CAR_LOAD_STATUS  ={
     arrive : 2
 };
 
+var USER_LOGIN_APP_TYPE  ={
+    storage : 1,
+    truck : 2,
+    dispatch : 3,
+    drive : 4
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -58,5 +65,6 @@ module.exports = {
     LICENSE_TYPE : LICENSE_TYPE,
     TASK_STATUS : TASK_STATUS,
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
-    CAR_LOAD_STATUS : CAR_LOAD_STATUS
+    CAR_LOAD_STATUS : CAR_LOAD_STATUS,
+    USER_LOGIN_APP_TYPE : USER_LOGIN_APP_TYPE
 }
