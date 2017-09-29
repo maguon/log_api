@@ -49,19 +49,24 @@ function getDpRouteLoadTaskDetail(params,callback) {
 }
 
 function getCarLoadStatusCount(params,callback) {
-    var query = " select count(id) arrive_count from dp_route_load_task_detail where id is not null ";
+    var query = " select count(dpdtl.id) arrive_count from dp_route_load_task_detail dpdtl " +
+        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id where dpdtl.id is not null ";
     var paramsArray=[],i=0;
     if(params.carLoadStatus){
         paramsArray[i++] = params.carLoadStatus;
-        query = query + " and car_load_status = ? ";
+        query = query + " and dpdtl.car_load_status = ? ";
     }
     if(params.arriveDateStart){
         paramsArray[i++] = params.arriveDateStart +" 00:00:00";
-        query = query + " and arrive_date >= ? ";
+        query = query + " and dpdtl.arrive_date >= ? ";
     }
     if(params.arriveDateEnd){
         paramsArray[i++] = params.arriveDateEnd +" 23:59:59";
-        query = query + " and arrive_date <= ? ";
+        query = query + " and dpdtl.arrive_date <= ? ";
+    }
+    if(params.dpRouteLoadTaskId){
+        paramsArray[i++] = params.dpRouteLoadTaskId;
+        query = query + " and dpdtl.dp_route_load_task_id= ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarLoadStatusCount ');
