@@ -225,6 +225,17 @@ function updateDpRouteTaskStatus(params,callback){
     });
 }
 
+function updateDpRouteTaskCarCount(params,callback){
+    var query = " update dp_route_task set car_count = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.carCount;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskCarCount ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTask : addDpRouteTask,
@@ -232,5 +243,6 @@ module.exports ={
     getNotCompletedTaskStatusCount : getNotCompletedTaskStatusCount,
     getDriveDistanceCount : getDriveDistanceCount,
     getTaskStatusCount : getTaskStatusCount,
-    updateDpRouteTaskStatus : updateDpRouteTaskStatus
+    updateDpRouteTaskStatus : updateDpRouteTaskStatus,
+    updateDpRouteTaskCarCount : updateDpRouteTaskCarCount
 }

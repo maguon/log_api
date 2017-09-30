@@ -50,7 +50,9 @@ function getDpRouteLoadTaskDetail(params,callback) {
 
 function getCarLoadStatusCount(params,callback) {
     var query = " select count(dpdtl.id) arrive_count from dp_route_load_task_detail dpdtl " +
-        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id where dpdtl.id is not null ";
+        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
+        " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
+        " where dpdtl.id is not null ";
     var paramsArray=[],i=0;
     if(params.carLoadStatus){
         paramsArray[i++] = params.carLoadStatus;
@@ -66,7 +68,11 @@ function getCarLoadStatusCount(params,callback) {
     }
     if(params.dpRouteLoadTaskId){
         paramsArray[i++] = params.dpRouteLoadTaskId;
-        query = query + " and dpdtl.dp_route_load_task_id= ? ";
+        query = query + " and dpdtl.dp_route_load_task_id = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dprl.dp_route_task_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarLoadStatusCount ');

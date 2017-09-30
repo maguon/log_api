@@ -10,6 +10,7 @@ var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
+var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -115,6 +116,8 @@ function queryTaskStatusCount(req,res,next){
 
 function updateDpRouteTaskStatus(req,res,next){
     var params = req.params;
+    var carCount = 0;
+    var newCompletedFlag  = false;
     Seq().seq(function() {
         var that = this;
         if (params.taskStatus == sysConst.TASK_STATUS.on_road) {
@@ -147,8 +150,45 @@ function updateDpRouteTaskStatus(req,res,next){
                         resUtil.resetFailedRes(res, " 未全部送达，状态不可为完成 ");
                         return next();
                     } else {
+                        newCompletedFlag = true;
                         that();
                     }
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function () {
+        var that = this;
+        if(newCompletedFlag) {
+            dpRouteLoadTaskDetailDAO.getCarLoadStatusCount({dpRouteTaskId:params.dpRouteTaskId},function(error,rows){
+                if (error) {
+                    logger.error(' getCarLoadStatusCount ' + error.message);
+                    resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    return next();
+                } else {
+                    carCount=rows[0].arrive_count;
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function () {
+        var that = this;
+        if(newCompletedFlag) {
+            params.carCount = carCount;
+            dpRouteTaskDAO.updateDpRouteTaskCarCount(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateDpRouteTaskCarCount ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDpRouteTaskCarCount ' + 'success');
+                    } else {
+                        logger.warn(' updateDpRouteTaskCarCount ' + 'failed');
+                    }
+                    that();
                 }
             })
         }else{
