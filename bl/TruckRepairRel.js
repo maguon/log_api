@@ -12,6 +12,7 @@ var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('TruckRepairRel.js');
 
 function createTruckRepairRel(req,res,next){
@@ -36,10 +37,7 @@ function createTruckRepairRel(req,res,next){
     }).seq(function(){
         var that = this;
         var myDate = new Date();
-        var year = myDate.getFullYear();
-        var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
-        var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
-        var strDate = year + month + day;
+        var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
         params.repairDate = myDate;
         truckRepairRelDAO.addTruckRepairRel(params,function(error,result){

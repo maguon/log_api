@@ -15,6 +15,7 @@ var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDetail.js');
 
 function createDpRouteLoadTaskDetail(req,res,next){
@@ -142,10 +143,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
     Seq().seq(function(){
         var that = this;
         var myDate = new Date();
-        var year = myDate.getFullYear();
-        var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
-        var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
-        var strDate = year + month + day;
+        var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
         params.arriveDate = myDate;
         dpRouteLoadTaskDetailDAO.updateDpRouteLoadTaskDetailStatus(params,function(error,result){

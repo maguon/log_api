@@ -196,10 +196,7 @@ function updateDpRouteTaskStatus(req,res,next){
         }
     }).seq(function () {
         var myDate = new Date();
-        var year = myDate.getFullYear();
-        var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
-        var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
-        var strDate = year + month + day;
+        var strDate = moment(myDate).format('YYYYMMDD');
         if(params.taskStatus == sysConst.TASK_STATUS.doing){
             params.taskStartDate = myDate;
         }

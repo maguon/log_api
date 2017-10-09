@@ -11,6 +11,7 @@ var truckInsureRelDAO = require('../dao/TruckInsureRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('TruckInsureRel.js');
 
 function createTruckInsureRel(req,res,next){
@@ -34,10 +35,7 @@ function createTruckInsureRel(req,res,next){
         })
     }).seq(function(){
         var myDate = new Date();
-        var year = myDate.getFullYear();
-        var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
-        var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
-        var strDate = year + month + day;
+        var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
         params.insureDate = myDate;
         truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
