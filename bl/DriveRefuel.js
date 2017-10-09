@@ -11,15 +11,13 @@ var driveRefuelDAO = require('../dao/DriveRefuelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DriveRefuel.js');
 
 function createDriveRefuel(req,res,next){
     var params = req.params;
     var myDate = new Date();
-    var year = myDate.getFullYear();
-    var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
-    var day = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
-    var strDate = year + month + day;
+    var strDate = moment(myDate).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
     driveRefuelDAO.addDriveRefuel(params,function(error,result){
         if (error) {
