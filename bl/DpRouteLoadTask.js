@@ -96,7 +96,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     return next();
                 } else {
                     if (rows && rows.length > 0) {
-                        parkObj.cityName = rows[0].city_name;
+                        parkObj.addrName = rows[0].addr_name;
                         parkObj.shortName = rows[0].short_name;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.carExceptionCount = rows[0].car_exception_count;
@@ -118,7 +118,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             } else {
                 logger.info(' updateDpRouteLoadTaskStatus ' + 'success');
                 if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load){
-                    req.params.routeContent =" 从 " + parkObj.cityName + " 到 " + parkObj.shortName + " 已完成装车   装车数量：" + parkObj.carCount ;
+                    req.params.routeContent =" 从 " + parkObj.addrName + " 到 " + parkObj.shortName + " 已完成装车   装车数量：" + parkObj.carCount ;
                     req.params.routeId = parkObj.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.on_road;
                 }
