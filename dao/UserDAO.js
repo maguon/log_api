@@ -43,7 +43,9 @@ function getUser(params,callback) {
         paramsArray[i++] = params.status;
         query = query + " and u.status = ? ";
     }
-    query = query + " and u.sa =  "+params.sa ;
+    if(params.sa==0){
+        query = query + " and u.sa =  "+params.sa ;
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
