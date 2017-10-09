@@ -224,7 +224,7 @@ function updateDpRouteTaskStatus(req,res,next){
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.doing;
                 }
                 if(params.taskStatus==sysConst.TASK_STATUS.on_road){
-                    req.params.routeContent =" 装成完成，货车在途 ";
+                    req.params.routeContent =" 装车完成，货车在途 ";
                     req.params.routeId = params.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.on_road;
                 }

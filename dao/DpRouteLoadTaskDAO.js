@@ -50,6 +50,10 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.dpDemandId;
         query = query + " and dprl.demand_id = ? ";
     }
+    if(params.dpRouteLoadTaskId){
+        paramsArray[i++] = params.dpRouteLoadTaskId;
+        query = query + " and dprl.id = ? ";
+    }
     query = query + ' group by dprl.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTask ');

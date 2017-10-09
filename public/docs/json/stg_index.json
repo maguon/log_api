@@ -8772,6 +8772,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "dpRouteLoadTaskId",
+            "in": "query",
+            "description": "dpRouteLoadTask id",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
