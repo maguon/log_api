@@ -215,22 +215,22 @@ function updateDpRouteTaskStatus(req,res,next){
                 logger.info(' updateDpRouteTaskStatus ' + 'success');
                 if(params.taskStatus==sysConst.TASK_STATUS.accept){
                     req.params.routeContent =" 接受指令 ";
-                    req.params.routeId = params.userId;
+                    req.params.routeId = params.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.accept;
                 }
                 if(params.taskStatus==sysConst.TASK_STATUS.doing){
                     req.params.routeContent =" 执行指令 ";
-                    req.params.routeId = params.userId;
+                    req.params.routeId = params.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.doing;
                 }
                 if(params.taskStatus==sysConst.TASK_STATUS.on_road){
                     req.params.routeContent =" 装成完成，货车在途 ";
-                    req.params.routeId = params.userId;
+                    req.params.routeId = params.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.on_road;
                 }
                 if(params.taskStatus==sysConst.TASK_STATUS.completed){
                     req.params.routeContent =" 全部送达，任务完成 ";
-                    req.params.routeId = params.userId;
+                    req.params.routeId = params.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.completed;
                 }
                 resUtil.resetUpdateRes(res,result,null);
