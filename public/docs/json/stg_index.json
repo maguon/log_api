@@ -65,6 +65,10 @@
       "description":"Dispatch of log api"
     },
     {
+      "name":"msgPush",
+      "description":"MsgPush of log api"
+    },
+    {
       "name":"app",
       "description":"app version"
     }
@@ -9221,6 +9225,55 @@
           },
           "404": {
             "description": "contacts not found"
+          }
+        }
+      }
+    },
+    "/user/{userId}/pushMsg": {
+      "get": {
+        "tags": [
+          "msgPush"
+        ],
+        "summary": "get pushMsg list",
+        "description": "get pushMsg",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "deviceToken",
+            "in": "query",
+            "description": "device token",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "messageType",
+            "in": "query",
+            "description": "message type",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
           }
         }
       }

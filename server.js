@@ -45,6 +45,7 @@ var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
+var msgPush = require('./bl/MsgPush.js');
 
 ///--- API
 
@@ -430,6 +431,11 @@ function createServer() {
     server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail);
     server.put({path:'/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId/carLoadStatus/:carLoadStatus',contentType: 'application/json'} ,dpRouteLoadTaskDetail.updateDpRouteLoadTaskDetailStatus);
     server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail);
+
+    /**
+     * MsgPush Module
+     */
+    server.get('/api/user/:userId/pushMsg' ,msgPush.pushMsg);
 
     /**
      * App Module
