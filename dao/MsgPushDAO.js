@@ -45,9 +45,15 @@ function pushMsg(params, callback) {
         logger.error('pushMsg' + error.stack)
         callback(error,result)
     })*/
-    http.get('http://'+smsConfig.xingeOptions.host+url, function (response) {
-        console.log(response);
-        callback(null,{success:true})
+    http.get('http://'+smsConfig.xingeOptions.host+url, function (req,res){
+        var data='';
+        req.on('data',function(d){
+            data+=d;
+        });
+        req.on('end',function(){
+            var resObj = eval("(" + data + ")");
+            callback(null,resObj);
+        });
     });
 
 
