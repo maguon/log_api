@@ -15,7 +15,7 @@ var logger = serverLogger.createLogger('MsgPush.js');
 
 function pushMsg(req,res,next){
     var params = req.params ;
-    var obj = {"title":"测试消息","content":"来自restapi的单推接口测试消息"};
+    var obj = {title:"t",content:"c"};
     var s = JSON.stringify(obj);
     params.message = s;
     msgPushDAO.pushMsg(params,function(error,result){
