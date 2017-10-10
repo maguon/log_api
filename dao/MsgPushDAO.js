@@ -30,15 +30,17 @@ function pushMsg(params, callback) {
         message : params.message
     }
     var sign= getXingeMD5(md5Param,timestamp);
-    var subParams = {
+    /*var subParams = {
         access_id : smsConfig.xingeOptions.accessId,
         timestamp : timestamp ,
         device_token :params.deviceToken,
         message_type : params.messageType,
         message : params.message,
         sign : sign
-    }
-    httpUtil.httpGet(smsConfig.xingeOptions.host,smsConfig.xingeOptions.url,{},subParams,function(error,result){
+    }*/
+    var url = smsConfig.xingeOptions.url+'?access_id='+smsConfig.xingeOptions.accessId+'&timestamp='+timestamp+'&device_token='+params.deviceToken+
+        '&message_type='+params.messageType+'&message='+params.message+'&sign='+sign
+    httpUtil.httpGet(smsConfig.xingeOptions.host,smsConfig.xingeOptions.url,{},{},function(error,result){
         callback(error,result)
     })
 
