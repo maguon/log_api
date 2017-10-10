@@ -21,19 +21,20 @@ function addUserDevice(params,callback){
 }
 
 function getUserDevice(params,callback){
-    var query = " select * from user_device where id is not null ";
+    var query = " select ud.* from user_device ud " +
+        " left join user_info u on ud.user_id = u.uid where ud.id is not null ";
     var paramsArray=[],i=0;
     if(params.userDeviceId){
         paramsArray[i++] = params.userDeviceId;
-        query = query + " and id = ? ";
+        query = query + " and ud.id = ? ";
     }
     if(params.userId){
         paramsArray[i++] = params.userId;
-        query = query + " and user_id = ? ";
+        query = query + " and ud.user_id = ? ";
     }
     if(params.deviceToken){
         paramsArray[i++] = params.deviceToken;
-        query = query + " and device_token = ? ";
+        query = query + " and ud.device_token = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getUserDevice ');
