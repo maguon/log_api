@@ -18,16 +18,17 @@ function getXingeMD5(params,timestamp){
 function getXingeParamString(params){
     var paramsString = "";
     for(var i in params) {
-        paramsString = paramsString + "i="+params[i];
+        paramsString = paramsString +i+ "="+params[i];
     }
     return paramsString
 }
 
 function pushMsg(params, callback) {
-    var timestamp = new Date().getTime();
+    var timestamp = Number.parseInt(new Date().getTime()/1000);
     var md5Param = {
-        message_type : params.messageType,
-        message : params.message
+        device_token: params.deviceToken,
+        message : params.message,
+        message_type : params.messageType
     }
     var sign= getXingeMD5(md5Param,timestamp);
     /*var subParams = {
@@ -40,7 +41,7 @@ function pushMsg(params, callback) {
     }*/
     var url = smsConfig.xingeOptions.url+'?access_id='+smsConfig.xingeOptions.accessId+'&timestamp='+timestamp+'&device_token='+params.deviceToken+
         '&message_type='+params.messageType+'&message='+params.message+'&sign='+sign
-    httpUtil.httpGet(smsConfig.xingeOptions.host,smsConfig.xingeOptions.url,{},{},function(error,result){
+    httpUtil.httpGet(smsConfig.xingeOptions.host,url,{},{},function(error,result){
         logger.error('pushMsg' + error.stack)
         callback(error,result)
     })
