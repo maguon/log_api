@@ -41,6 +41,7 @@ function pushMsg(params, callback) {
     var url = smsConfig.xingeOptions.url+'?access_id='+smsConfig.xingeOptions.accessId+'&timestamp='+timestamp+'&device_token='+params.deviceToken+
         '&message_type='+params.messageType+'&message='+params.message+'&sign='+sign
     httpUtil.httpGet(smsConfig.xingeOptions.host,smsConfig.xingeOptions.url,{},{},function(error,result){
+        logger.error('pushMsg' + error.stack)
         callback(error,result)
     })
 
