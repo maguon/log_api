@@ -143,13 +143,12 @@ function getDriveOperateTypeCount(params,callback) {
 }
 
 function updateDrive(params,callback){
-    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , tel = ? , company_id = ? , license_type = ? , " +
+    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , company_id = ? , license_type = ? , " +
         " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
     paramsArray[i++]=params.idNumber;
-    paramsArray[i++]=params.tel;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.address;
