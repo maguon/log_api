@@ -15,9 +15,10 @@ var logger = serverLogger.createLogger('MsgPush.js');
 
 function pushMsg(req,res,next){
     var params = req.params ;
-    var obj = {title:"t",content:"c"};
+    var obj = {title:"title",content:"content"};
     var s = JSON.stringify(obj);
-    params.message = s;
+    params.title = "title";
+    params.content ="content"
     msgPushDAO.pushMsg(params,function(error,result){
         if (error) {
             logger.error(' pushMsg ' + error.message);

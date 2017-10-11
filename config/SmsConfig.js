@@ -13,7 +13,7 @@ var smsOptions = {
 var xingeOptions  = {
     host : 'openapi.xg.qq.com',
     url : '/v2/push/single_device',
-    accessId : '2100267013',
+    accessId : 2100267013,
     accessKey : 'A7XR278C4CTR',
     secretKey : 'ea19617c98f096c3004d19f9330b880b'
 }
