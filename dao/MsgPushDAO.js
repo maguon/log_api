@@ -53,7 +53,7 @@ function getBaseAction() {
     return action;
 }
 function pushMsg(params, callback) {
-    var message =  getBaseAndroidMsg(params.title, params.content, getBaseStyle(), getBaseAction)
+    var message =  getBaseAndroidMsg(params.title, params.content, getBaseStyle(), getBaseAction())
     xingeApp.pushToSingleDevice(params.deviceToken, message, 0, function (error, result) {
         callback(error, result);
     });
