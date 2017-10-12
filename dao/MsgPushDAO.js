@@ -36,7 +36,7 @@ function getBaseStyle() {
 }
 function getBaseAndroidMsg(title, content, style, action) {
     var androidMessage = new xinge.AndroidMessage();
-    androidMessage.type = xinge.MESSAGE_TYPE_MESSAGE;
+    androidMessage.type = xinge.MESSAGE_TYPE_NOTIFICATION;
     androidMessage.title = title;
     androidMessage.content = content;
     androidMessage.style = style;
