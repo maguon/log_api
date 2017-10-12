@@ -40,7 +40,6 @@ function getBaseAndroidMsg(title, content, style, action) {
     androidMessage.title = title;
     androidMessage.content = content;
     androidMessage.style = style;
-    action.activity = 'EntryActivity';
     androidMessage.action = action;
     androidMessage.expireTime = 2 * 60 * 60;
     androidMessage.multiPkg = 0;
@@ -49,7 +48,6 @@ function getBaseAndroidMsg(title, content, style, action) {
 function getBaseAction() {
     var action = new xinge.ClickAction();
     action.actionType = xinge.ACTION_TYPE_ACTIVITY;
-    action.activity = 'EntryActivity';
     return action;
 }
 function pushMsg(params, callback) {
