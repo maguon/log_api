@@ -161,6 +161,7 @@ function createServer() {
     server.put({path:'/api/backPassword',contentType: 'application/json'} ,user.updateUserPassword);
     server.get('/api/user/:userId/token/:token' , user.changeUserToken);
     server.put({path:'/api/user/:userId/avatarImage',contentType: 'application/json'} ,user.updateUserAvatarImage);
+    server.get('/api/userDrive' ,user.queryUserDrive);
 
     /**
      * UserDevice Module

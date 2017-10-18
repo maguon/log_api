@@ -235,6 +235,20 @@ function queryUser(req,res,next){
     })
 }
 
+function queryUserDrive(req,res,next){
+    var params = req.params ;
+    userDAO.getUserDrive(params,function(error,result){
+        if (error) {
+            logger.error(' queryUserDrive ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryUserDrive ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateUserInfo (req,res,next){
     var params = req.params;
     userDAO.updateUserInfo(params,function(error,result){
@@ -411,6 +425,7 @@ module.exports = {
     userLogin : userLogin,
     mobileUserLogin : mobileUserLogin,
     queryUser : queryUser,
+    queryUserDrive : queryUserDrive,
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,
     changeUserPassword : changeUserPassword,

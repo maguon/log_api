@@ -92,6 +92,31 @@ function getUserBase(params,callback){
     });
 }
 
+function getUserDrive(params,callback){
+    var query = " select u.* from user_info u where u.sa = 0 and u.uid is not null ";
+    var paramsArray=[],i=0;
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and u.uid = ? ";
+    }
+    if(params.mobile){
+        paramsArray[i++] = params.mobile;
+        query = query + " and u.mobile = ? ";
+    }
+    if(params.type){
+        paramsArray[i++] = params.type;
+        query = query + " and u.type = ? ";
+    }
+    if(params.status){
+        paramsArray[i++] = params.status;
+        query = query + " and u.status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getUserDrive ');
+        return callback(error,rows);
+    });
+}
+
 function updateUserInfo(params,callback){
     var query = " update user_info set mobile = ? , real_name = ? , type = ? , gender = ? where uid = ?";
     var paramsArray=[],i=0;
@@ -151,6 +176,7 @@ module.exports ={
     addUser : addUser,
     getUser : getUser,
     getUserBase : getUserBase,
+    getUserDrive : getUserDrive,
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,
     updateUserPassword : updateUserPassword,
