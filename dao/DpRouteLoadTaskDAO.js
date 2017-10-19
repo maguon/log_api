@@ -84,8 +84,15 @@ function getDpRouteLoadTaskBase(params,callback) {
 }
 
 function updateDpRouteLoadTaskStatus(params,callback){
-    var query = " update dp_route_load_task set load_task_status = ? where  id = ? ";
+    if(params.loadTaskStatus == 3){
+        var query = " update dp_route_load_task set fieid_op_id = ? , load_task_status = ? where  id = ? ";
+    }else{
+        var query = " update dp_route_load_task set load_task_status = ? where  id = ? ";
+    }
     var paramsArray=[],i=0;
+    if(params.loadTaskStatus == 3){
+        paramsArray[i++] = params.userId;
+    }
     paramsArray[i++] = params.loadTaskStatus;
     paramsArray[i] = params.dpRouteLoadTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){

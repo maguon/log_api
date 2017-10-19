@@ -58,3 +58,7 @@ CREATE TABLE `user_device` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE `dp_task_stat`
+ADD COLUMN `not_plan_count`  int(10) NULL DEFAULT 0 COMMENT '未派发台数' AFTER `plan_count`;
+ALTER TABLE `dp_route_load_task`
+ADD COLUMN `fieid_op_id`  int(10) NULL COMMENT '现场调度员ID' AFTER `user_id`;
