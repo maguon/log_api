@@ -61,4 +61,4 @@ CREATE TABLE `user_device` (
 ALTER TABLE `dp_task_stat`
 ADD COLUMN `not_plan_count`  int(10) NULL DEFAULT 0 COMMENT '未派发台数' AFTER `plan_count`;
 ALTER TABLE `dp_route_load_task`
-ADD COLUMN `fieid_op_id`  int(10) NULL COMMENT '现场调度员ID' AFTER `user_id`;
+ADD COLUMN `field_op_id`  int(10) NULL COMMENT '现场调度员ID' AFTER `user_id`;

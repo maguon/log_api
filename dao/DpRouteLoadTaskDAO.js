@@ -26,13 +26,13 @@ function addDpRouteLoadTask(params,callback){
 }
 
 function getDpRouteLoadTask(params,callback) {
-    var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as fieid_op_name,ba.addr_name,c.city_name,r.short_name,dpd.pre_count, " +
+    var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,c.city_name,r.short_name,dpd.pre_count, " +
         " dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,d.tel,count(dpdtl.id) as car_count, " +
         " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join user_info u on dprl.user_id = u.uid " +
-        " left join user_info u1 on dprl.fieid_op_id = u1.uid " +
+        " left join user_info u1 on dprl.field_op_id = u1.uid " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join dp_route_load_task_detail dpdtl on dprl.id = dpdtl.dp_route_load_task_id " +
         " left join car_exception_rel cer on dpdtl.car_id = cer.car_id " +
@@ -86,7 +86,7 @@ function getDpRouteLoadTaskBase(params,callback) {
 
 function updateDpRouteLoadTaskStatus(params,callback){
     if(params.loadTaskStatus == 3){
-        var query = " update dp_route_load_task set fieid_op_id = ? , load_task_status = ? where  id = ? ";
+        var query = " update dp_route_load_task set field_op_id = ? , load_task_status = ? where  id = ? ";
     }else{
         var query = " update dp_route_load_task set load_task_status = ? where  id = ? ";
     }
