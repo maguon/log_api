@@ -15,10 +15,10 @@ var logger = serverLogger.createLogger('MsgPush.js');
 
 function pushMsg(req,res,next){
     var params = req.params ;
-    var obj = {title:"title",content:"content"};
-    var s = JSON.stringify(obj);
-    params.title = "title";
-    params.content ="content"
+    //var obj = {title:"title",content:"content"};
+    //var s = JSON.stringify(obj);
+    params.title = "任务消息";
+    params.content ="你有新的路线任务";
     msgPushDAO.pushMsg(params,function(error,result){
         if (error) {
             logger.error(' pushMsg ' + error.message);
