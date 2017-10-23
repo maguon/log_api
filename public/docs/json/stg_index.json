@@ -9144,6 +9144,14 @@
 
           },
           {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
             "name": "dpRouteLoadTaskId",
             "in": "path",
             "description": "dpRouteLoadTask id",

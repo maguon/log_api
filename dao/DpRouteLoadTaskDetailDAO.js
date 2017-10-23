@@ -7,8 +7,9 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDetailDAO.js');
 
 function addDpRouteLoadTaskDetail(params,callback){
-    var query = " insert into dp_route_load_task_detail (dp_route_load_task_id,car_id,vin) values ( ? , ? , ? ) ";
+    var query = " insert into dp_route_load_task_detail (dp_route_task_id,dp_route_load_task_id,car_id,vin) values (  ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.dpRouteLoadTaskId;
     paramsArray[i++]=params.carId;
     paramsArray[i]=params.vin;

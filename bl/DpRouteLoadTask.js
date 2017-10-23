@@ -111,6 +111,9 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                 }
             })
     }).seq(function () {
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load){
+            params.realCount = parkObj.carCount;
+        }
         dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
             if (error) {
                 logger.error(' updateDpRouteLoadTaskStatus ' + error.message);
