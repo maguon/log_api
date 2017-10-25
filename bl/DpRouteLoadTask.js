@@ -18,6 +18,7 @@ var logger = serverLogger.createLogger('DpRouteLoadTask.js');
 
 function createDpRouteLoadTask(req,res,next){
     var params = req.params ;
+    var planCount = 0;
     Seq().seq(function(){
         var that = this;
         dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params,function(error,rows){
@@ -42,9 +43,10 @@ function createDpRouteLoadTask(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length >0){
-                    if(params.planCount > rows[0].pre_count){
+                    planCount = params.planCount+rows[0].plan_count;
+                    if(planCount > rows[0].pre_count){
                         logger.warn(' getDpDemandBase ' + 'failed');
-                        resUtil.resetFailedRes(res," 派发数量不能大于指令数量 ");
+                        resUtil.resetFailedRes(res," 派发总数量不能大于指令数量 ");
                         return next();
                     }else{
                         that();
@@ -57,13 +59,29 @@ function createDpRouteLoadTask(req,res,next){
             }
         })
     }).seq(function () {
+        var that = this;
         dpRouteLoadTaskDAO.addDpRouteLoadTask(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteLoadTask ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' createDpRouteLoadTask ' + 'success');
-                resUtil.resetCreateRes(res,result,null);
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteLoadTask ' + 'success');
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res," 创建任务失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        dpDemandDAO.updateDpDemandPlanCount(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpDemandPlanCount ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpDemandPlanCount ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
         })

@@ -122,6 +122,17 @@ function getDpDemandBase(params,callback) {
     });
 }
 
+function updateDpDemandPlanCount(params,callback){
+    var query = " update dp_demand_info set plan_count = plan_count + ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.planCount;
+    paramsArray[i] = params.dpDemandId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpDemandPlanCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpDemandStatus(params,callback){
     var query = " update dp_demand_info set demand_status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -138,5 +149,6 @@ module.exports ={
     addDpDemand : addDpDemand,
     getDpDemand : getDpDemand,
     getDpDemandBase : getDpDemandBase,
+    updateDpDemandPlanCount : updateDpDemandPlanCount,
     updateDpDemandStatus : updateDpDemandStatus
 }

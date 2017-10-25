@@ -65,3 +65,5 @@ ADD COLUMN `field_op_id`  int(10) NULL COMMENT '现场调度员ID' AFTER `user_i
 ADD COLUMN `real_count`  int(10) NULL DEFAULT 0 COMMENT '实际装车数量' AFTER `plan_count`;
 ALTER TABLE `dp_route_load_task_detail`
 ADD COLUMN `dp_route_task_id`  int(10) NULL COMMENT '路线ID' AFTER `id`;
+ALTER TABLE `dp_demand_info`
+ADD COLUMN `plan_count`  int(10) NULL DEFAULT 0 COMMENT '计划派发商品车数量' AFTER `pre_count`;
