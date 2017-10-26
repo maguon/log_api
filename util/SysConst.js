@@ -31,6 +31,10 @@ var LICENSE_TYPE  ={
     C2 : 7,
     C3 : 8
 };
+var DEMAND_STATUS  ={
+    not_completed : 1,
+    completed : 2
+};
 var TASK_STATUS  ={
     ready_accept : 1,
     accept : 2,
@@ -63,6 +67,7 @@ module.exports = {
     USER_TYPE : USER_TYPE,
     RECORD_OP_TYPE : RECORD_OP_TYPE,
     LICENSE_TYPE : LICENSE_TYPE,
+    DEMAND_STATUS : DEMAND_STATUS,
     TASK_STATUS : TASK_STATUS,
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,

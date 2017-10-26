@@ -8292,6 +8292,74 @@
         }
       }
     },
+    "/user/{userId}/taskStatStatus": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpTaskStat status",
+        "description": "update dpTaskStat status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateId",
+            "in": "query",
+            "description": "date id",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "taskStatStatus",
+            "in": "query",
+            "description": "taskStat status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpTaskStat id"
+          }
+        }
+      }
+    },
     "/dpRouteTask": {
       "get": {
         "tags": [

@@ -404,6 +404,7 @@ function createServer() {
     server.get('/api/dpTaskStatBase' , dpTaskStat.queryDpTaskStatBase);
     server.get('/api/dpTaskStatCount' , dpTaskStat.queryDpTaskStatCount);
     server.post({path:'/api/user/:userId/dpTaskStat',contentType: 'application/json'},dpTaskStat.createDpTaskStat);
+    server.put({path:'/api/user/:userId/taskStatStatus',contentType: 'application/json'} ,dpTaskStat.updateDpTaskStatStatus);
 
     /**
      * DpRouteTask Module

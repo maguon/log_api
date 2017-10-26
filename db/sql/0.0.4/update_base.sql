@@ -60,6 +60,7 @@ CREATE TABLE `user_device` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ALTER TABLE `dp_task_stat`
 ADD COLUMN `not_plan_count`  int(10) NULL DEFAULT 0 COMMENT '未派发台数' AFTER `plan_count`;
+ADD COLUMN `task_stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '需求统计状态(1-未完成,2-已完成)' AFTER `date_id`;
 ALTER TABLE `dp_route_load_task`
 ADD COLUMN `field_op_id`  int(10) NULL COMMENT '现场调度员ID' AFTER `user_id`;
 ADD COLUMN `real_count`  int(10) NULL DEFAULT 0 COMMENT '实际装车数量' AFTER `plan_count`;

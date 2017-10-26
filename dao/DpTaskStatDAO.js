@@ -95,10 +95,24 @@ function getDpTaskStatCount(params,callback) {
     });
 }
 
+function updateDpTaskStatStatus(params,callback){
+    var query = " update dp_task_stat set task_stat_status = ? where route_start_id = ? and route_end_id = ? and date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.taskStatStatus;
+    paramsArray[i++] = params.routeStartId;
+    paramsArray[i++] = params.routeEndId;
+    paramsArray[i] = params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpTaskStatStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpTaskStat : addDpTaskStat,
     getDpTaskStat : getDpTaskStat,
     getDpTaskStatBase : getDpTaskStatBase,
-    getDpTaskStatCount : getDpTaskStatCount
+    getDpTaskStatCount : getDpTaskStatCount,
+    updateDpTaskStatStatus : updateDpTaskStatStatus
 }

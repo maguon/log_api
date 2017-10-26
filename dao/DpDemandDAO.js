@@ -116,6 +116,14 @@ function getDpDemandBase(params,callback) {
         paramsArray[i++] = params.routeEndId;
         query = query + " and dpd.route_end_id = ? ";
     }
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and dpd.date_id = ? ";
+    }
+    if(params.demandStatus){
+        paramsArray[i++] = params.demandStatus;
+        query = query + " and dpd.demand_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpDemandBase ');
         return callback(error,rows);
