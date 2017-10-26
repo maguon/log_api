@@ -157,6 +157,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
 
 function removeDpRouteLoadTask(req,res,next){
     var params = req.params;
+    var parkObj = {};
     Seq().seq(function(){
         var that = this;
         dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params,function(error,rows){
@@ -165,6 +166,8 @@ function removeDpRouteLoadTask(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length >0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
+                    parkObj.demandId = rows[0].demand_id;
+                    parkObj.planCount = rows[0].plan_count;
                     that();
                 }else{
                     logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
@@ -190,13 +193,33 @@ function removeDpRouteLoadTask(req,res,next){
             }
         })
     }).seq(function () {
+        var that = this;
         params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
         dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
             if (error) {
                 logger.error(' removeDpRouteLoadTask ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' removeDpRouteLoadTask ' + 'success');
+                if (result && result.affectedRows > 0) {
+                    logger.info(' removeDpRouteLoadTask ' + 'success');
+                    that();
+                } else {
+                    logger.warn(' removeDpRouteLoadTask ' + 'failed');
+                    resUtil.resetFailedRes(res," 删除任务失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
+        params.dpDemandId = parkObj.demandId;
+        params.planCount = parkObj.planCount;
+        dpDemandDAO.updateDpDemandPlanCount(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpDemandPlanCount ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpDemandPlanCount ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

@@ -123,7 +123,11 @@ function getDpDemandBase(params,callback) {
 }
 
 function updateDpDemandPlanCount(params,callback){
-    var query = " update dp_demand_info set plan_count = plan_count + ? where id = ? ";
+    if(params.loadTaskStatus==8){
+        var query = " update dp_demand_info set plan_count = plan_count - ? where id = ? ";
+    }else{
+        var query = " update dp_demand_info set plan_count = plan_count + ? where id = ? ";
+    }
     var paramsArray=[],i=0;
     paramsArray[i++] = params.planCount;
     paramsArray[i] = params.dpDemandId;
