@@ -130,6 +130,8 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             })
     }).seq(function () {
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load){
+            var myDate = new Date();
+            params.loadDate = myDate;
             params.realCount = parkObj.carCount;
         }
         dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
