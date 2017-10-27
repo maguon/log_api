@@ -62,7 +62,7 @@ function queryDpDemand(req,res,next){
 
 function queryDpDemandBase(req,res,next){
     var params = req.params ;
-    Seq().seq(function(){
+/*    Seq().seq(function(){
         var that = this;
         dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId},function(error,rows){
             if (error) {
@@ -78,7 +78,7 @@ function queryDpDemandBase(req,res,next){
                 }
             }
         })
-    }).seq(function () {
+    }).seq(function () {*/
         dpDemandDAO.getDpDemandBase(params,function(error,result){
             if (error) {
                 logger.error(' queryDpDemandBase ' + error.message);
@@ -89,7 +89,7 @@ function queryDpDemandBase(req,res,next){
                 return next();
             }
         })
-    })
+/*    })*/
 }
 
 function updateDpDemandStatus(req,res,next){
