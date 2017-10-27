@@ -10344,6 +10344,9 @@
         "dateId": {
           "type": "integer"
         },
+        "planDate": {
+          "type": "string"
+        },
         "planCount": {
           "type": "integer"
         }
