@@ -74,15 +74,15 @@ function createDpRouteLoadTaskDetail(req,res,next){
         })
     }).seq(function () {
         var that = this;
-        truckDispatchDAO.updateTruckDispatch(params,function(error,result){
+        truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {
-                logger.error(' updateTruckDispatch ' + error.message);
+                logger.error(' updateTruckDispatchCarCount ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.affectedRows>0){
-                    logger.info(' updateTruckDispatch ' + 'success');
+                    logger.info(' updateTruckDispatchCarCount ' + 'success');
                 }else{
-                    logger.warn(' updateTruckDispatch ' + 'failed');
+                    logger.warn(' updateTruckDispatchCarCount ' + 'failed');
                 }
                 that();
             }
@@ -160,12 +160,12 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
             }
         })
     }).seq(function () {
-        truckDispatchDAO.updateTruckDispatch(params,function(error,result){
+        truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {
-                logger.error(' updateTruckDispatch ' + error.message);
+                logger.error(' updateTruckDispatchCarCount ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateTruckDispatch ' + 'success');
+                logger.info(' updateTruckDispatchCarCount ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -210,15 +210,15 @@ function removeDpRouteLoadTaskDetail(req,res,next){
     }).seq(function () {
         var that = this;
         params.carLoadStatus = sysConst.CAR_LOAD_STATUS.arrive;
-        truckDispatchDAO.updateTruckDispatch(params,function(error,result){
+        truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {
-                logger.error(' updateTruckDispatch ' + error.message);
+                logger.error(' updateTruckDispatchCarCount ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.affectedRows>0){
-                    logger.info(' updateTruckDispatch ' + 'success');
+                    logger.info(' updateTruckDispatchCarCount ' + 'success');
                 }else{
-                    logger.warn(' updateTruckDispatch ' + 'failed');
+                    logger.warn(' updateTruckDispatchCarCount ' + 'failed');
                 }
                 that();
             }

@@ -73,7 +73,7 @@ function getTruckDispatch(params,callback) {
     });
 }
 
-function updateTruckDispatch(params,callback){
+function updateTruckDispatchCarCount(params,callback){
     if(params.carLoadStatus==2){
         var query = " update truck_dispatch set car_count = car_count - 1 where truck_id = ? " ;
     }else{
@@ -82,12 +82,12 @@ function updateTruckDispatch(params,callback){
     var paramsArray=[],i=0;
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateTruckDispatch ');
+        logger.debug(' updateTruckDispatchCarCount ');
         return callback(error,rows);
     });
 }
 
 module.exports = {
     getTruckDispatch : getTruckDispatch,
-    updateTruckDispatch : updateTruckDispatch
+    updateTruckDispatchCarCount : updateTruckDispatchCarCount
 }
