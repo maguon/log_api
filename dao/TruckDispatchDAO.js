@@ -87,7 +87,21 @@ function updateTruckDispatchCarCount(params,callback){
     });
 }
 
+function updateTruckDispatch(params,callback){
+    var query = " update truck_dispatch set current_city = ? , task_start = ? , task_end = ? where truck_id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.currentCity;
+    paramsArray[i++]=params.taskStart;
+    paramsArray[i++]=params.taskEnd;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckDispatch ');
+        return callback(error,rows);
+    });
+}
+
 module.exports = {
     getTruckDispatch : getTruckDispatch,
-    updateTruckDispatchCarCount : updateTruckDispatchCarCount
+    updateTruckDispatchCarCount : updateTruckDispatchCarCount,
+    updateTruckDispatch : updateTruckDispatch
 }

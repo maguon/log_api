@@ -11,6 +11,7 @@ var sysConst = require('../util/SysConst.js');
 var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
+var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -116,9 +117,30 @@ function queryTaskStatusCount(req,res,next){
 
 function updateDpRouteTaskStatus(req,res,next){
     var params = req.params;
+    var parkObj = {};
     var carCount = 0;
     var newCompletedFlag  = false;
     Seq().seq(function() {
+        var that = this;
+        dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
+                if (error) {
+                    logger.error(' getDpRouteTask ' + error.message);
+                    resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    return next();
+                } else {
+                    if (rows && rows.length > 0) {
+                        parkObj.routeStartId=rows[0].route_start_id;
+                        parkObj.routeEndId=rows[0].route_end_id;
+                        parkObj.truckId=rows[0].truck_id;
+                        that();
+                    } else {
+                        logger.warn(' getDpRouteTask ' + 'failed');
+                        resUtil.resetFailedRes(res, " 指令路线已被删除 ");
+                        return next();
+                    }
+                }
+            })
+    }).seq(function() {
         var that = this;
         if (params.taskStatus == sysConst.TASK_STATUS.on_road) {
             params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.no_load;
@@ -187,6 +209,51 @@ function updateDpRouteTaskStatus(req,res,next){
                         logger.info(' updateDpRouteTaskCarCount ' + 'success');
                     } else {
                         logger.warn(' updateDpRouteTaskCarCount ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function() {
+        var that = this;
+        if (params.taskStatus == sysConst.TASK_STATUS.on_road) {
+            var subParams ={
+                currentCity:0,
+                taskStart:parkObj.routeStartId,
+                taskEnd:parkObj.routeEndId,
+                truckId:parkObj.truckId
+            }
+            truckDispatchDAO.updateTruckDispatch(subParams, function (error, result) {
+                if (error) {
+                    logger.error(' updateTruckDispatch ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateTruckDispatch ' + 'success');
+                    } else {
+                        logger.warn(' updateTruckDispatch ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else if (params.taskStatus == sysConst.TASK_STATUS.completed) {
+            var subParams ={
+                currentCity:parkObj.routeEndId,
+                taskStart:0,
+                taskEnd:0,
+                truckId:parkObj.truckId
+            }
+            truckDispatchDAO.updateTruckDispatch(subParams, function (error, result) {
+                if (error) {
+                    logger.error(' updateTruckDispatch ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateTruckDispatch ' + 'success');
+                    } else {
+                        logger.warn(' updateTruckDispatch ' + 'failed');
                     }
                     that();
                 }
