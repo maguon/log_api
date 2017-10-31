@@ -65,6 +65,10 @@
       "description":"Dispatch of log api"
     },
     {
+      "name":"quality",
+      "description":"Quality of log api"
+    },
+    {
       "name":"msgPush",
       "description":"MsgPush of log api"
     },
@@ -9477,6 +9481,135 @@
         }
       }
     },
+    "/quality": {
+      "get": {
+        "tags": [
+          "quality"
+        ],
+        "summary": "query  quality list",
+        "description": "query quality",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "qualityId",
+            "in": "query",
+            "description": "quality id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "qualityStatus",
+            "in": "query",
+            "description": "quality status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/quality"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid quality id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/quality": {
+      "post": {
+        "tags": [
+          "quality"
+        ],
+        "summary": "user create quality",
+        "description": "user create quality",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "quality",
+            "in": "body",
+            "description": "quality info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quality"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid quality id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
@@ -10480,6 +10613,33 @@
       },
       "xml": {
         "name": "dpRouteLoadTaskDetail"
+      }
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "truckNum": {
+          "type": "string"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "driveName": {
+          "type": "string"
+        },
+        "qualityExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "quality"
       }
     }
   },

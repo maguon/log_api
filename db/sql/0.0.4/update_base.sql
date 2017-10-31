@@ -71,3 +71,22 @@ ALTER TABLE `dp_demand_info`
 ADD COLUMN `plan_count`  int(10) NULL DEFAULT 0 COMMENT '计划派发商品车数量' AFTER `pre_count`;
 ADD COLUMN `not_plan_count`  int(10) NULL DEFAULT 0 COMMENT '未派发台数' AFTER `plan_count`,
 ADD COLUMN `load_count`  int(10) NULL DEFAULT 0 COMMENT '装车数量' AFTER `not_plan_count`;
+-- ----------------------------
+-- Table structure for quality_info
+-- ----------------------------
+DROP TABLE IF EXISTS `quality_info`;
+CREATE TABLE `quality_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `declare_user_id` int(10) NOT NULL COMMENT '质损申报人',
+  `car_id` int(10) NOT NULL COMMENT '商品车ID',
+  `truck_id` int(10) DEFAULT NULL COMMENT '货车ID',
+  `truck_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '货车牌号',
+  `drive_id` int(10) DEFAULT NULL COMMENT '司机ID',
+  `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
+  `date_id` int(4) NOT NULL COMMENT '质损申报统计时间',
+  `quality_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '质损状态(1-待处理,2-处理中,3-已处理)',
+  `quality_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '质损说明',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '质损申报时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
