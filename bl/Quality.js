@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var qualityDAO = require('../dao/QualityDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -45,8 +46,42 @@ function queryQuality(req,res,next){
     })
 }
 
+function updateQuality(req,res,next){
+    var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        qualityDAO.getQuality({qualityId:params.qualityId},function(error,rows){
+            if (error) {
+                logger.error(' getQuality ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].quality_status == sysConst.QUALITY_STATUS.ready_process){
+                    that();
+                }else{
+                    logger.warn(' getQuality ' + 'failed');
+                    resUtil.resetFailedRes(res," 非待处理状态，不能进行修改 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        qualityDAO.updateQuality(params,function(error,result){
+            if (error) {
+                logger.error(' updateQuality ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateQuality ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createQuality : createQuality,
-    queryQuality : queryQuality
+    queryQuality : queryQuality,
+    updateQuality : updateQuality
 }

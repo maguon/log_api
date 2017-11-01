@@ -440,6 +440,7 @@ function createServer() {
      */
     server.get('/api/quality',quality.queryQuality);
     server.post({path:'/api/user/:userId/quality',contentType: 'application/json'},quality.createQuality);
+    server.put({path:'/api/user/:userId/quality/:qualityId',contentType: 'application/json'} ,quality.updateQuality);
 
     /**
      * MsgPush Module

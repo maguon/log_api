@@ -63,8 +63,24 @@ function getQuality(params,callback) {
     });
 }
 
+function updateQuality(params,callback){
+    var query = " update quality_info set truck_id = ? , truck_num = ? , drive_id = ? , drive_name = ? , quality_explain = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.truckNum;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.driveName;
+    paramsArray[i++]=params.qualityExplain;
+    paramsArray[i]=params.qualityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateQuality ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addQuality : addQuality,
-    getQuality : getQuality
+    getQuality : getQuality,
+    updateQuality : updateQuality
 }
