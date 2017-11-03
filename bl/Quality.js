@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var qualityDAO = require('../dao/QualityDAO.js');
+var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -17,18 +18,43 @@ var logger = serverLogger.createLogger('Quality.js');
 
 function createQuality(req,res,next){
     var params = req.params;
-    var myDate = new Date();
-    var strDate = moment(myDate).format('YYYYMMDD');
-    params.dateId = parseInt(strDate);
-    qualityDAO.addQuality(params,function(error,result){
-        if (error) {
-            logger.error(' createQuality ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createQuality ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
+    Seq().seq(function(){
+        var that = this;
+        if(params.carId>0){
+            carDAO.getCarList({carId:params.carId},function(error,rows){
+                if (error) {
+                    logger.error(' getCarList ' + error.message);
+                    resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    return next();
+                } else {
+                    if(rows && rows.length>0){
+                        that();
+                    }else{
+                        logger.warn(' getCarList ' + 'failed');
+                        resUtil.resetFailedRes(res," VIN码不存在，不能进行下一步 ");
+                        return next();
+                    }
+                }
+            })
+        }else{
+            logger.warn(' getCarList ' + 'failed');
+            resUtil.resetFailedRes(res," VIN码不能为空 ");
             return next();
         }
+    }).seq(function(){
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
+        qualityDAO.addQuality(params,function(error,result){
+            if (error) {
+                logger.error(' createQuality ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createQuality ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
