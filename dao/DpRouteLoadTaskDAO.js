@@ -136,6 +136,26 @@ function getDpRouteLoadTaskBase(params,callback) {
     });
 }
 
+function getDpRouteLoadTaskCount(params,callback) {
+    var query = " select count(dprl.id) as load_number,sum(dprl.real_count) as load_count from dp_route_load_task dprl where dprl.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.loadDateStart){
+        paramsArray[i++] = params.loadDateStart +" 00:00:00";
+        query = query + " and dprl.load_date >= ? ";
+    }
+    if(params.loadDateEnd){
+        paramsArray[i++] = params.loadDateEnd +" 23:59:59";
+        query = query + " and dprl.load_date <= ? ";
+    }
+    if(params.loadTaskStatusArr){
+        query = query + " and dprl.load_task_status in ("+params.loadTaskStatusArr+ ") "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteLoadTaskStatus(params,callback){
     if(params.loadTaskStatus == 3){
         var query = " update dp_route_load_task set field_op_id = ? , load_date = ? , real_count = ? , load_task_status = ? where  id = ? ";
@@ -162,5 +182,6 @@ module.exports ={
     addDpRouteLoadTask : addDpRouteLoadTask,
     getDpRouteLoadTask : getDpRouteLoadTask,
     getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
+    getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
     updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
 }

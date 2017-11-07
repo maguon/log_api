@@ -9046,6 +9046,59 @@
         }
       }
     },
+    "/dpRouteLoadTaskCount": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteLoadTask count",
+        "description": "query dpRouteLoadTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "loadDateStart",
+            "in": "query",
+            "description": "loadDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loadDateEnd",
+            "in": "query",
+            "description": "loadDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loadTaskStatusArr",
+            "in": "query",
+            "description": "loadTaskStatus arr",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteLoadTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteLoadTask": {
       "post": {
         "tags": [
