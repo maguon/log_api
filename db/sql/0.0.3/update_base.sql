@@ -207,3 +207,31 @@ ALTER TABLE `truck_info`
 DROP COLUMN `copilot`,
 ADD COLUMN `vice_drive_id`  int(10) NULL DEFAULT 0 COMMENT '副驾ID' AFTER `drive_id`;
 
+
+-- ----------------------------
+--  Triggers structure for table dp_route_load_task
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_new_load_task`;
+delimiter $$
+CREATE TRIGGER `trg_new_load_task` AFTER INSERT ON `dp_route_load_task` FOR EACH ROW
+BEGIN
+
+UPDATE dp_demand_info set plan_count=plan_count+new.plan_count where id= new.demand_id ;
+UPDATE dp_task_stat set plan_count = plan_count+new.plan_count where route_start_id=new.route_start_id
+and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+
+END $$
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_cancel_load_task`;
+delimiter $$
+CREATE TRIGGER `trg_cancel_load_task` AFTER UPDATE ON `dp_route_load_task` FOR EACH ROW
+BEGIN
+IF(new.load_task_status=8 && old.load_task_status<>8) THEN
+UPDATE dp_demand_info set plan_count=plan_count-old.plan_count where id= new.demand_id ;
+UPDATE dp_task_stat set plan_count = plan_count-old.plan_count where route_start_id=new.route_start_id
+and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+END IF;
+END $$
+delimiter ;
+
