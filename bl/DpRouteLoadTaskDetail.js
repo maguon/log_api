@@ -201,10 +201,12 @@ function removeDpRouteLoadTaskDetail(req,res,next){
             } else {
                 if(result&&result.affectedRows>0){
                     logger.info(' removeDpRouteLoadTaskDetail ' + 'success');
+                    that();
                 }else{
                     logger.warn(' removeDpRouteLoadTaskDetail ' + 'failed');
+                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
+                    return next();
                 }
-                that();
             }
         })
     }).seq(function () {

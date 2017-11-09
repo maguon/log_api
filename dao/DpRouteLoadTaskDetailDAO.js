@@ -96,9 +96,10 @@ function updateDpRouteLoadTaskDetailStatus(params,callback){
 }
 
 function deleteDpRouteLoadTaskDetail(params,callback){
-    var query = " delete from dp_route_load_task_detail where id = ? ";
+    var query = " delete from dp_route_load_task_detail where id = ? and car_id = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i] = params.dpRouteTaskDetailId;
+    paramsArray[i++] = params.dpRouteTaskDetailId;
+    paramsArray[i] = params.carId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' deleteDpRouteLoadTaskDetail ');
         return callback(error,rows);
