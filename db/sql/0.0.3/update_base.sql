@@ -156,7 +156,7 @@ DROP TRIGGER IF EXISTS `trg_new_demand_stat`;
 delimiter $$
 CREATE TRIGGER `trg_new_demand_stat` AFTER INSERT ON `dp_demand_info` FOR EACH ROW INSERT INTO dp_task_stat(route_start_id,base_addr_id,route_end_id,receive_id,date_id,pre_count)
 VALUES (new.route_start_id,new.base_addr_id,new.route_end_id,new.receive_id,new.date_id,new.pre_count)
-ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count;
+ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,task_stat_status=1;
 END $$
 delimiter ;
 
@@ -168,6 +168,12 @@ IF (new.demand_status=0 && old.demand_status=1)THEN
 UPDATE dp_task_stat set pre_count = pre_count- new.pre_count
 where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
 and route_end_id=new.route_end_id and receive_id = new.receive_id and date_id = new.date_id;
+END IF;
+IF (new.demand_status=2)THEN
+UPDATE dp_task_stat set  task_stat_status = 2
+where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
+and route_end_id=old.route_end_id and receive_id = old.receive_id and date_id = old.date_id
+and (select count(id) from dp_demand_info where date_id =old.date_id)=0 ;
 END IF;
 IF(new.user_id=0) THEN
 UPDATE dp_task_stat set pre_count = pre_count + (new.pre_count - old.pre_count)
