@@ -8,15 +8,15 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
-var qualityDAO = require('../dao/QualityDAO.js');
+var damageDAO = require('../dao/DamageDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
-var logger = serverLogger.createLogger('Quality.js');
+var logger = serverLogger.createLogger('Damage.js');
 
-function createQuality(req,res,next){
+function createDamage(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
@@ -45,12 +45,12 @@ function createQuality(req,res,next){
         var myDate = new Date();
         var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
-        qualityDAO.addQuality(params,function(error,result){
+        damageDAO.addDamage(params,function(error,result){
             if (error) {
-                logger.error(' createQuality ' + error.message);
+                logger.error(' createDamage ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' createQuality ' + 'success');
+                logger.info(' createDamage ' + 'success');
                 resUtil.resetCreateRes(res,result,null);
                 return next();
             }
@@ -58,46 +58,46 @@ function createQuality(req,res,next){
     })
 }
 
-function queryQuality(req,res,next){
+function queryDamage(req,res,next){
     var params = req.params;
-    qualityDAO.getQuality(params,function(error,result){
+    damageDAO.getDamage(params,function(error,result){
         if (error) {
-            logger.error(' queryQuality ' + error.message);
+            logger.error(' queryDamage ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryQuality ' + 'success');
+            logger.info(' queryDamage ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function updateQuality(req,res,next){
+function updateDamage(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
-        qualityDAO.getQuality({qualityId:params.qualityId},function(error,rows){
+        damageDAO.getDamage({damageId:params.damageId},function(error,rows){
             if (error) {
-                logger.error(' getQuality ' + error.message);
+                logger.error(' getDamage ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
                 return next();
             } else {
-                if(rows && rows.length>0&&rows[0].quality_status == sysConst.QUALITY_STATUS.ready_process){
+                if(rows && rows.length>0&&rows[0].damage_status == sysConst.DAMAGE_STATUS.ready_process){
                     that();
                 }else{
-                    logger.warn(' getQuality ' + 'failed');
+                    logger.warn(' getDamage ' + 'failed');
                     resUtil.resetFailedRes(res," 非待处理状态，不能进行修改 ");
                     return next();
                 }
             }
         })
     }).seq(function(){
-        qualityDAO.updateQuality(params,function(error,result){
+        damageDAO.updateDamage(params,function(error,result){
             if (error) {
-                logger.error(' updateQuality ' + error.message);
+                logger.error(' updateDamage ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateQuality ' + 'success');
+                logger.info(' updateDamage ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -107,7 +107,7 @@ function updateQuality(req,res,next){
 
 
 module.exports = {
-    createQuality : createQuality,
-    queryQuality : queryQuality,
-    updateQuality : updateQuality
+    createDamage : createDamage,
+    queryDamage : queryDamage,
+    updateDamage : updateDamage
 }

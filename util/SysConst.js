@@ -60,7 +60,7 @@ var USER_LOGIN_APP_TYPE  ={
     dispatch : 3,
     drive : 4
 };
-var QUALITY_STATUS  ={
+var DAMAGE_STATUS  ={
     ready_process : 1,
     in_process : 2,
     completed : 3
@@ -76,5 +76,5 @@ module.exports = {
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,
     USER_LOGIN_APP_TYPE : USER_LOGIN_APP_TYPE,
-    QUALITY_STATUS : QUALITY_STATUS
+    DAMAGE_STATUS : DAMAGE_STATUS
 }

@@ -42,7 +42,7 @@ var dpTaskStat = require('./bl/DpTaskStat.js');
 var dpRouteTask = require('./bl/DpRouteTask.js');
 var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
 var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
-var quality = require('./bl/Quality.js');
+var damage = require('./bl/Damage.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -437,11 +437,11 @@ function createServer() {
     server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail);
 
     /**
-     * Quality Module
+     * Damage Module
      */
-    server.get('/api/quality',quality.queryQuality);
-    server.post({path:'/api/user/:userId/quality',contentType: 'application/json'},quality.createQuality);
-    server.put({path:'/api/user/:userId/quality/:qualityId',contentType: 'application/json'} ,quality.updateQuality);
+    server.get('/api/damage',damage.queryDamage);
+    server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage);
+    server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
 
     /**
      * MsgPush Module

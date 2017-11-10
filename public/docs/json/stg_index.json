@@ -65,8 +65,8 @@
       "description":"Dispatch of log api"
     },
     {
-      "name":"quality",
-      "description":"Quality of log api"
+      "name":"damage",
+      "description":"Damage of log api"
     },
     {
       "name":"msgPush",
@@ -9534,21 +9534,21 @@
         }
       }
     },
-    "/quality": {
+    "/damage": {
       "get": {
         "tags": [
-          "quality"
+          "damage"
         ],
-        "summary": "query  quality list",
-        "description": "query quality",
+        "summary": "query  damage list",
+        "description": "query damage",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "qualityId",
+            "name": "damageId",
             "in": "query",
-            "description": "quality id",
+            "description": "damage id",
             "required": false,
             "type": "integer"
 
@@ -9578,9 +9578,9 @@
 
           },
           {
-            "name": "qualityStatus",
+            "name": "damageStatus",
             "in": "query",
-            "description": "quality status",
+            "description": "damage status",
             "required": false,
             "type": "integer"
 
@@ -9608,23 +9608,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/quality"
+                "$ref": "#/definitions/damage"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid quality id"
+            "description": "Invalid token value or invalid damage id"
           }
         }
       }
     },
-    "/user/{userId}/quality": {
+    "/user/{userId}/damage": {
       "post": {
         "tags": [
-          "quality"
+          "damage"
         ],
-        "summary": "user create quality",
-        "description": "user create quality",
+        "summary": "user create damage",
+        "description": "user create damage",
         "produces": [
           "application/json"
         ],
@@ -9638,12 +9638,12 @@
 
           },
           {
-            "name": "quality",
+            "name": "damage",
             "in": "body",
-            "description": "quality info",
+            "description": "damage info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/quality"
+              "$ref": "#/definitions/damage"
             }
           }
         ],
@@ -9658,18 +9658,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid quality id"
+            "description": "Invalid token value or invalid damage id"
           }
         }
       }
     },
-    "/user/{userId}/quality/{qualityId}": {
+    "/user/{userId}/damage/{damageId}": {
       "put": {
         "tags": [
-          "quality"
+          "damage"
         ],
-        "summary": "update quality info",
-        "description": "update quality info",
+        "summary": "update damage info",
+        "description": "update damage info",
         "produces": [
           "application/json"
         ],
@@ -9683,20 +9683,20 @@
 
           },
           {
-            "name": "qualityId",
+            "name": "damageId",
             "in": "path",
-            "description": "quality id",
+            "description": "damage id",
             "required": true,
             "type": "integer"
 
           },
           {
-            "name": "quality",
+            "name": "damage",
             "in": "body",
-            "description": "quality info",
+            "description": "damage info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/quality"
+              "$ref": "#/definitions/damage"
             }
 
           }
@@ -9712,7 +9712,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid quality id"
+            "description": "Invalid token value or invalid damage id"
           }
         }
       }
@@ -10722,7 +10722,7 @@
         "name": "dpRouteLoadTaskDetail"
       }
     },
-    "quality": {
+    "damage": {
       "type": "object",
       "properties": {
 
@@ -10741,12 +10741,12 @@
         "driveName": {
           "type": "string"
         },
-        "qualityExplain": {
+        "damageExplain": {
           "type": "string"
         }
       },
       "xml": {
-        "name": "quality"
+        "name": "damage"
       }
     }
   },
