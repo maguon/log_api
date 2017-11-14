@@ -43,6 +43,7 @@ var dpRouteTask = require('./bl/DpRouteTask.js');
 var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
 var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
 var damage = require('./bl/Damage.js');
+var damageCheck = require('./bl/DamageCheck.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -442,6 +443,11 @@ function createServer() {
     server.get('/api/damage',damage.queryDamage);
     server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
+
+    /**
+     * DamageCheck Module
+     */
+    server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
 
     /**
      * MsgPush Module

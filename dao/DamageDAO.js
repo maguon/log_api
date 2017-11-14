@@ -115,9 +115,21 @@ function updateDamage(params,callback){
     });
 }
 
+function updateDamageStatus(params,callback){
+    var query = " update damage_info set damage_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.damageStatus;
+    paramsArray[i]=params.damageId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamage : addDamage,
     getDamage : getDamage,
-    updateDamage : updateDamage
+    updateDamage : updateDamage,
+    updateDamageStatus : updateDamageStatus
 }

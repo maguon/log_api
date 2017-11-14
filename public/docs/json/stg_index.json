@@ -9781,6 +9781,67 @@
         }
       }
     },
+    "/user/{userId}/damageCheck": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create damageCheck",
+        "description": "user create damageCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "checkButton",
+            "in": "query",
+            "description": "check button",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheck",
+            "in": "body",
+            "description": "damageCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
@@ -10811,6 +10872,54 @@
       },
       "xml": {
         "name": "damage"
+      }
+    },
+    "damageCheck": {
+      "type": "object",
+      "properties": {
+
+        "underUserId": {
+          "type": "integer"
+        },
+        "damageType": {
+          "type": "integer"
+        },
+        "damageLinkType": {
+          "type": "integer"
+        },
+        "refundUserId": {
+          "type": "integer"
+        },
+        "reductionCost": {
+          "type": "integer"
+        },
+        "penaltyCost": {
+          "type": "integer"
+        },
+        "profit": {
+          "type": "integer"
+        },
+        "repairId": {
+          "type": "integer"
+        },
+        "repairCost": {
+          "type": "integer"
+        },
+        "transportCost": {
+          "type": "integer"
+        },
+        "underCost": {
+          "type": "integer"
+        },
+        "companyCost": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "damageCheck"
       }
     }
   },
