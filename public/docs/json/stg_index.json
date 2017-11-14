@@ -8416,6 +8416,14 @@
 
           },
           {
+            "name": "routeOpName",
+            "in": "query",
+            "description": "routeOp name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
@@ -9575,6 +9583,62 @@
             "description": "car vin",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "declareUserId",
+            "in": "query",
+            "description": "declareUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "declareUserName",
+            "in": "query",
+            "description": "declareUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "underUserId",
+            "in": "query",
+            "description": "underUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "underUserName",
+            "in": "query",
+            "description": "underUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
 
           },
           {

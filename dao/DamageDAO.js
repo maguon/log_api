@@ -25,7 +25,7 @@ function addDamage(params,callback){
 }
 
 function getDamage(params,callback) {
-    var query = " select da.*,u.real_name,u.type,c.vin,c.make_name,r.short_name as re_short_name,e.short_name as en_short_name, " +
+    var query = " select da.*,u.real_name as declare_user_name,u.type,c.vin,c.make_id,c.make_name,c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name, " +
         " dc.under_user_id,u1.real_name as under_user_name,dc.damage_type,dc.damage_link_type,dc.refund_user_id,u2.real_name as refund_user_name, " +
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id, " +
         " u3.real_name as op_user_name,dc.end_date,dc.remark,dc.created_on as check_start_date " +
@@ -55,6 +55,34 @@ function getDamage(params,callback) {
     if(params.vin){
         paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.declareUserId){
+        paramsArray[i++] = params.declareUserId;
+        query = query + " and da.declare_user_id = ? ";
+    }
+    if(params.declareUserName){
+        paramsArray[i++] = params.declareUserName;
+        query = query + " and u.real_name = ? ";
+    }
+    if(params.underUserId){
+        paramsArray[i++] = params.underUserId;
+        query = query + " and dc.under_user_id = ? ";
+    }
+    if(params.underUserName){
+        paramsArray[i++] = params.underUserName;
+        query = query + " and u1.real_name = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
     }
     if(params.damageStatus){
         paramsArray[i++] = params.damageStatus;
