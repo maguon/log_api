@@ -448,6 +448,7 @@ function createServer() {
      * DamageCheck Module
      */
     server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
+    server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
 
     /**
      * MsgPush Module

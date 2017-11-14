@@ -9804,7 +9804,7 @@
             "name": "damageId",
             "in": "query",
             "description": "damage id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
@@ -9812,7 +9812,7 @@
             "name": "checkButton",
             "in": "query",
             "description": "check button",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
@@ -9824,6 +9824,76 @@
             "schema": {
               "$ref": "#/definitions/damageCheck"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageCheck/{damageCheckId}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageCheck info",
+        "description": "update damageCheck info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheckId",
+            "in": "path",
+            "description": "damageCheck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "checkButton",
+            "in": "query",
+            "description": "check button",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheck",
+            "in": "body",
+            "description": "damageCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheck"
+            }
+
           }
         ],
         "responses": {
