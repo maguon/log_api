@@ -123,6 +123,24 @@ function getDamageCheckCount(params,callback) {
     });
 }
 
+function getDamageNotCheckCount(params,callback) {
+    var query = " select count(da.id) as damage_count,da.damage_status from damage_info da where da.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and da.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and da.created_on <= ? ";
+    }
+    query = query + " group by da.damage_status ";
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageNotCheckCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDamage(params,callback){
     var query = " update damage_info set truck_id = ? , truck_num = ? , drive_id = ? , drive_name = ? , damage_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -154,6 +172,7 @@ module.exports ={
     addDamage : addDamage,
     getDamage : getDamage,
     getDamageCheckCount : getDamageCheckCount,
+    getDamageNotCheckCount : getDamageNotCheckCount,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus
 }
