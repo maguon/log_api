@@ -28,7 +28,7 @@ function getDamage(params,callback) {
     var query = " select da.*,u.real_name as declare_user_name,u.type,c.vin,c.make_id,c.make_name,c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name, " +
         " dc.under_user_id,u1.real_name as under_user_name,dc.damage_type,dc.damage_link_type,dc.refund_user_id,u2.real_name as refund_user_name, " +
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id, " +
-        " u3.real_name as op_user_name,dc.date_id,dc.remark,dc.created_on as check_start_date " +
+        " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date " +
         " from damage_info da " +
         " left join user_info u on da.declare_user_id = u.uid " +
         " left join car_info c on da.car_id = c.id " +
@@ -104,6 +104,14 @@ function getDamageCheckCount(params,callback) {
     var query = " select count(da.id) as damage_count,dc.damage_type from damage_info da" +
         " left join damage_check dc on da.id = dc.damage_id where da.id is not null ";
     var paramsArray=[],i=0;
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dc.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dc.date_id <= ? ";
+    }
     if(params.damageStatus){
         paramsArray[i++] = params.damageStatus;
         query = query + " and da.damage_status = ? ";

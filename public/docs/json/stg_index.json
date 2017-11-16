@@ -9694,6 +9694,22 @@
         ],
         "parameters": [
           {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "damageStatus",
             "in": "query",
             "description": "damage status",
