@@ -33,6 +33,28 @@ function addDamageCheck(params,callback){
     });
 }
 
+function getDamageCheck(params,callback) {
+    var query = " select dc.* from damage_check dc " +
+        " left join damage_info da on dc.damage_id = da.id " +
+        " left join user_info u1 on dc.under_user_id = u1.uid " +
+        " left join user_info u2 on dc.refund_user_id = u2.uid " +
+        " left join user_info u3 on dc.op_user_id = u3.uid " +
+        " where dc.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.damageCheckId){
+        paramsArray[i++] = params.damageCheckId;
+        query = query + " and dc.id = ? ";
+    }
+    if(params.damageId){
+        paramsArray[i++] = params.damageId;
+        query = query + " and dc.damage_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageCheck ');
+        return callback(error,rows);
+    });
+}
+
 function updateDamageCheck(params,callback){
     var query = " update damage_check set under_user_id = ? , damage_type = ? , damage_link_type = ? , refund_user_id = ? , " +
         "reduction_cost = ?, penalty_cost = ? , profit = ? , repair_id = ? , repair_cost = ? , transport_cost = ? , under_cost = ? , " +
@@ -64,5 +86,6 @@ function updateDamageCheck(params,callback){
 
 module.exports ={
     addDamageCheck : addDamageCheck,
+    getDamageCheck : getDamageCheck,
     updateDamageCheck : updateDamageCheck
 }

@@ -9781,6 +9781,50 @@
         }
       }
     },
+    "/damageCheck": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheck list",
+        "description": "query damageCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageCheckId",
+            "in": "query",
+            "description": "damageCheck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageCheck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageCheck": {
       "post": {
         "tags": [

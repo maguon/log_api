@@ -447,6 +447,7 @@ function createServer() {
     /**
      * DamageCheck Module
      */
+    server.get('/api/damageCheck',damageCheck.queryDamageCheck);
     server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
     server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
 

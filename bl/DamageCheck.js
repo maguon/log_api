@@ -68,6 +68,20 @@ function createDamageCheck(req,res,next){
     })
 }
 
+function queryDamageCheck(req,res,next){
+    var params = req.params;
+    damageCheckDAO.getDamageCheck(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageCheck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageCheck ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDamageCheck(req,res,next){
     var params = req.params;
     var checkFlag = false;
@@ -125,5 +139,6 @@ function updateDamageCheck(req,res,next){
 
 module.exports = {
     createDamageCheck : createDamageCheck,
+    queryDamageCheck : queryDamageCheck,
     updateDamageCheck : updateDamageCheck
 }
