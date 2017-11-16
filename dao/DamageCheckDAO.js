@@ -34,7 +34,7 @@ function addDamageCheck(params,callback){
 }
 
 function getDamageCheck(params,callback) {
-    var query = " select dc.* from damage_check dc " +
+    var query = " select dc.*,u1.real_name as under_user_name,u2.real_name as refund_user_name,u3.real_name as op_user_name from damage_check dc " +
         " left join damage_info da on dc.damage_id = da.id " +
         " left join user_info u1 on dc.under_user_id = u1.uid " +
         " left join user_info u2 on dc.refund_user_id = u2.uid " +

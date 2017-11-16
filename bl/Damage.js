@@ -119,10 +119,25 @@ function updateDamage(req,res,next){
     })
 }
 
+function updateDamageStatus(req,res,next){
+    var params = req.params;
+    damageDAO.updateDamageStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDamage : createDamage,
     queryDamage : queryDamage,
     queryDamageCheckCount : queryDamageCheckCount,
-    updateDamage : updateDamage
+    updateDamage : updateDamage,
+    updateDamageStatus : updateDamageStatus
 }
