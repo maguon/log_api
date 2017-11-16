@@ -10001,14 +10001,6 @@
 
           },
           {
-            "name": "checkButton",
-            "in": "query",
-            "description": "check button",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
             "name": "damageCheck",
             "in": "body",
             "description": "damageCheck info",

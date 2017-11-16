@@ -20,38 +20,22 @@ function createDamageCheck(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        if(params.checkButton==2){
-            damageCheckDAO.addDamageCheck(params,function(error, result) {
-                if (error) {
-                    logger.error(' createDamageCheck ' + error.message);
-                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
+        damageCheckDAO.addDamageCheck(params,function(error, result) {
+            if (error) {
+                logger.error(' createDamageCheck ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
                     logger.info(' createDamageCheck ' + 'success');
-                    resUtil.resetCreateRes(res,result,null);
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res," 质损处理操作失败 ");
                     return next();
                 }
-            })
-        }else{
-            var myDate = new Date();
-            var strDate = moment(myDate).format('YYYYMMDD');
-            params.dateId = parseInt(strDate);
-            damageCheckDAO.addDamageCheck(params,function(error, result) {
-                if (error) {
-                    logger.error(' createDamageCheck ' + error.message);
-                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if(result&&result.insertId>0){
-                        logger.info(' createDamageCheck ' + 'success');
-                        that();
-                    }else{
-                        resUtil.resetFailedRes(res," 质损处理操作失败 ");
-                        return next();
-                    }
-                }
-            })
-        }
+            }
+        })
     }).seq(function () {
-        params.damageStatus = sysConst.DAMAGE_STATUS.completed;
+        params.damageStatus = sysConst.DAMAGE_STATUS.in_process;
         damageDAO.updateDamageStatus(params,function(error,result){
             if (error) {
                 logger.error(' updateDamageStatus ' + error.message);
