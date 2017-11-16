@@ -13,6 +13,7 @@ var damageDAO = require('../dao/DamageDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DamageCheck.js');
 
 function createDamageCheck(req,res,next){
@@ -22,7 +23,8 @@ function createDamageCheck(req,res,next){
         var that = this;
         if(params.checkButton==3){
             var myDate = new Date();
-            params.endDate = myDate;
+            var strDate = moment(myDate).format('YYYYMMDD');
+            params.dateId = parseInt(strDate);
             checkFlag = true;
         }
         damageCheckDAO.addDamageCheck(params,function(error, result) {
@@ -89,7 +91,8 @@ function updateDamageCheck(req,res,next){
         var that = this;
         if(params.checkButton==3){
             var myDate = new Date();
-            params.endDate = myDate;
+            var strDate = moment(myDate).format('YYYYMMDD');
+            params.dateId = parseInt(strDate);
             checkFlag = true;
         }
         damageCheckDAO.updateDamageCheck(params,function(error,result){

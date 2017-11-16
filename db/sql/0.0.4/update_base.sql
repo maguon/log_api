@@ -111,7 +111,7 @@ CREATE TABLE `damage_check` (
   `under_cost` decimal(10,2) DEFAULT NULL COMMENT '责任人承担费用',
   `company_cost` decimal(10,2) DEFAULT NULL COMMENT '公司承担费用',
   `op_user_id` int(10) DEFAULT NULL COMMENT '处理人用户ID',
-  `end_date` datetime DEFAULT NULL COMMENT '处理结束时间',
+  `date_id` int(4) DEFAULT NULL COMMENT '处理结束时间',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '质损处理时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

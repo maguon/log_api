@@ -72,6 +72,20 @@ function queryDamage(req,res,next){
     })
 }
 
+function queryDamageCheckCount(req,res,next){
+    var params = req.params;
+    damageDAO.getDamageCheckCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageCheckCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageCheckCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDamage(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
@@ -109,5 +123,6 @@ function updateDamage(req,res,next){
 module.exports = {
     createDamage : createDamage,
     queryDamage : queryDamage,
+    queryDamageCheckCount : queryDamageCheckCount,
     updateDamage : updateDamage
 }

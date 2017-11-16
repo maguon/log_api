@@ -441,6 +441,7 @@ function createServer() {
      * Damage Module
      */
     server.get('/api/damage',damage.queryDamage);
+    server.get('/api/damageCheckCount',damage.queryDamageCheckCount);
     server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
 

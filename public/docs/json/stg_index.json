@@ -9682,6 +9682,42 @@
         }
       }
     },
+    "/damageCheckCount": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheckCount count",
+        "description": "query damageCheckCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damage": {
       "post": {
         "tags": [

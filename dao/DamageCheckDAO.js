@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DamageCheckDAO.js');
 
 function addDamageCheck(params,callback){
     var query = " insert into damage_check (damage_id,under_user_id,damage_type,damage_link_type,refund_user_id," +
-        " reduction_cost,penalty_cost,profit,repair_id,repair_cost,transport_cost,under_cost,company_cost,op_user_id,end_date,remark) " +
+        " reduction_cost,penalty_cost,profit,repair_id,repair_cost,transport_cost,under_cost,company_cost,op_user_id,date_id,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.damageId;
@@ -25,7 +25,7 @@ function addDamageCheck(params,callback){
     paramsArray[i++]=params.underCost;
     paramsArray[i++]=params.companyCost;
     paramsArray[i++]=params.userId;
-    paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDamageCheck ');
@@ -58,7 +58,7 @@ function getDamageCheck(params,callback) {
 function updateDamageCheck(params,callback){
     var query = " update damage_check set under_user_id = ? , damage_type = ? , damage_link_type = ? , refund_user_id = ? , " +
         "reduction_cost = ?, penalty_cost = ? , profit = ? , repair_id = ? , repair_cost = ? , transport_cost = ? , under_cost = ? , " +
-        " company_cost = ? , op_user_id = ? , end_date = ? , remark = ? where id = ? and damage_id = ? " ;
+        " company_cost = ? , op_user_id = ? , date_id = ? , remark = ? where id = ? and damage_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.underUserId;
     paramsArray[i++]=params.damageType;
@@ -73,7 +73,7 @@ function updateDamageCheck(params,callback){
     paramsArray[i++]=params.underCost;
     paramsArray[i++]=params.companyCost;
     paramsArray[i++]=params.userId;
-    paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.remark;
     paramsArray[i++]=params.damageCheckId;
     paramsArray[i]=params.damageId;
