@@ -11135,6 +11135,9 @@
         "underUserId": {
           "type": "integer"
         },
+        "underUserName": {
+          "type": "string"
+        },
         "damageType": {
           "type": "integer"
         },
@@ -11143,6 +11146,9 @@
         },
         "refundUserId": {
           "type": "integer"
+        },
+        "refundUserName": {
+          "type": "string"
         },
         "reductionCost": {
           "type": "integer"

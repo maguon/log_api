@@ -26,7 +26,7 @@ function addDamage(params,callback){
 
 function getDamage(params,callback) {
     var query = " select da.*,u.real_name as declare_user_name,u.type,c.vin,c.make_id,c.make_name,c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name, " +
-        " dc.under_user_id,u1.real_name as under_user_name,dc.damage_type,dc.damage_link_type,dc.refund_user_id,u2.real_name as refund_user_name, " +
+        " dc.under_user_id,dc.under_user_name,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name, " +
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id, " +
         " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date " +
         " from damage_info da " +
@@ -35,8 +35,6 @@ function getDamage(params,callback) {
         " left join receive_info r on c.receive_id = r.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join damage_check dc on da.id = dc.damage_id " +
-        " left join user_info u1 on dc.under_user_id = u1.uid " +
-        " left join user_info u2 on dc.refund_user_id = u2.uid " +
         " left join user_info u3 on dc.op_user_id = u3.uid " +
         " where da.id is not null ";
     var paramsArray=[],i=0;

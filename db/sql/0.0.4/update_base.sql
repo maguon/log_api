@@ -99,9 +99,11 @@ CREATE TABLE `damage_check` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `damage_id` int(10) NOT NULL COMMENT '质损编号ID',
   `under_user_id` int(10) DEFAULT NULL COMMENT '责任人用户ID',
+  `under_user_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `damage_type` tinyint(1) DEFAULT NULL COMMENT '质损类型(1-一般质损,2-严重质损)',
   `damage_link_type` tinyint(1) DEFAULT NULL COMMENT '质损环节类别(1-短驳移库,2-公路运输,3-公司运输,4-驾驶员漏检,5-交通事故)',
   `refund_user_id` int(10) DEFAULT NULL COMMENT '报销人用户ID',
+  `refund_user_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `reduction_cost` decimal(10,2) DEFAULT NULL COMMENT '降价费',
   `penalty_cost` decimal(10,2) DEFAULT NULL COMMENT '罚款',
   `profit` decimal(10,2) DEFAULT NULL COMMENT '盈亏',
@@ -115,7 +117,8 @@ CREATE TABLE `damage_check` (
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '质损处理时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `damage_id` (`damage_id`) USING BTREE COMMENT '唯一质损编号'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- Table structure for damage_insure
