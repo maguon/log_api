@@ -18,55 +18,50 @@ var logger = serverLogger.createLogger('DamageCheck.js');
 
 function createDamageCheck(req,res,next){
     var params = req.params;
-    var checkFlag = false;
     Seq().seq(function(){
         var that = this;
-        if(params.checkButton==3){
-            var myDate = new Date();
-            var strDate = moment(myDate).format('YYYYMMDD');
-            params.dateId = parseInt(strDate);
-            checkFlag = true;
-        }
-        damageCheckDAO.addDamageCheck(params,function(error, result) {
-            if (error) {
-                logger.error(' createDamageCheck ' + error.message);
-                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    logger.info(' createDamageCheck ' + 'success');
-                    that();
-                }else{
-                    resUtil.resetFailedRes(res," 质损处理操作失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        if(checkFlag){
-            params.damageStatus = sysConst.DAMAGE_STATUS.completed;
-            damageDAO.updateDamageStatus(params,function(error,result){
+        if(params.checkButton==2){
+            damageCheckDAO.addDamageCheck(params,function(error, result) {
                 if (error) {
-                    logger.error(' updateDamageStatus ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    logger.error(' createDamageCheck ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
-                    logger.info(' updateDamageStatus ' + 'success');
-                    resUtil.resetUpdateRes(res,result,null);
+                    logger.info(' createDamageCheck ' + 'success');
+                    resUtil.resetCreateRes(res,result,null);
                     return next();
                 }
             })
         }else{
-            params.damageStatus = sysConst.DAMAGE_STATUS.in_process;
-            damageDAO.updateDamageStatus(params,function(error,result){
+            var myDate = new Date();
+            var strDate = moment(myDate).format('YYYYMMDD');
+            params.dateId = parseInt(strDate);
+            damageCheckDAO.addDamageCheck(params,function(error, result) {
                 if (error) {
-                    logger.error(' updateDamageStatus ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    logger.error(' createDamageCheck ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
-                    logger.info(' updateDamageStatus ' + 'success');
-                    resUtil.resetUpdateRes(res,result,null);
-                    return next();
+                    if(result&&result.insertId>0){
+                        logger.info(' createDamageCheck ' + 'success');
+                        that();
+                    }else{
+                        resUtil.resetFailedRes(res," 质损处理操作失败 ");
+                        return next();
+                    }
                 }
             })
         }
+    }).seq(function () {
+        params.damageStatus = sysConst.DAMAGE_STATUS.completed;
+        damageDAO.updateDamageStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDamageStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDamageStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
@@ -86,56 +81,51 @@ function queryDamageCheck(req,res,next){
 
 function updateDamageCheck(req,res,next){
     var params = req.params;
-    var checkFlag = false;
     Seq().seq(function(){
         var that = this;
-        if(params.checkButton==3){
-            var myDate = new Date();
-            var strDate = moment(myDate).format('YYYYMMDD');
-            params.dateId = parseInt(strDate);
-            checkFlag = true;
-        }
-        damageCheckDAO.updateDamageCheck(params,function(error,result){
-            if (error) {
-                logger.error(' updateDamageCheck ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if (result && result.affectedRows > 0) {
-                    logger.info(' updateDamageCheck ' + 'success');
-                    that();
-                } else {
-                    logger.warn(' updateDamageCheck ' + 'failed');
-                    resUtil.resetFailedRes(res," 质损处理操作失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        if(checkFlag){
-            params.damageStatus = sysConst.DAMAGE_STATUS.completed;
-            damageDAO.updateDamageStatus(params,function(error,result){
+        if(params.checkButton==2){
+            damageCheckDAO.updateDamageCheck(params,function(error,result){
                 if (error) {
-                    logger.error(' updateDamageStatus ' + error.message);
+                    logger.error(' updateDamageCheck ' + error.message);
                     throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
-                    logger.info(' updateDamageStatus ' + 'success');
+                    logger.info(' updateDamageCheck ' + 'success');
                     resUtil.resetUpdateRes(res,result,null);
                     return next();
                 }
             })
         }else{
-            params.damageStatus = sysConst.DAMAGE_STATUS.in_process;
-            damageDAO.updateDamageStatus(params,function(error,result){
+            var myDate = new Date();
+            var strDate = moment(myDate).format('YYYYMMDD');
+            params.dateId = parseInt(strDate);
+            damageCheckDAO.updateDamageCheck(params,function(error,result){
                 if (error) {
-                    logger.error(' updateDamageStatus ' + error.message);
+                    logger.error(' updateDamageCheck ' + error.message);
                     throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
-                    logger.info(' updateDamageStatus ' + 'success');
-                    resUtil.resetUpdateRes(res,result,null);
-                    return next();
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDamageCheck ' + 'success');
+                        that();
+                    } else {
+                        logger.warn(' updateDamageCheck ' + 'failed');
+                        resUtil.resetFailedRes(res," 质损处理操作失败 ");
+                        return next();
+                    }
                 }
             })
         }
+    }).seq(function () {
+        params.damageStatus = sysConst.DAMAGE_STATUS.completed;
+        damageDAO.updateDamageStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDamageStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDamageStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
