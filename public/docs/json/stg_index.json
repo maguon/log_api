@@ -9746,17 +9746,17 @@
         ],
         "parameters": [
           {
-            "name": "createdOnStart",
+            "name": "dateIdStart",
             "in": "query",
-            "description": "createdOn start",
+            "description": "dateId start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "createdOnEnd",
+            "name": "dateIdEnd",
             "in": "query",
-            "description": "createdOn end",
+            "description": "dateId end",
             "required": false,
             "type": "string"
 

@@ -126,7 +126,7 @@ CREATE TABLE `damage_check` (
 DROP TABLE IF EXISTS `damage_insure`;
 CREATE TABLE `damage_insure` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `insure_id` int(10) NOT NULL COMMENT '保险公司ID',
+  `damage_insure_id` int(10) NOT NULL COMMENT '保险赔付ID',
   `insure_user_id` int(10) NOT NULL COMMENT '经办人',
   `insure_plan` decimal(10,2) DEFAULT NULL COMMENT '保险计划待赔',
   `insure_actual` decimal(10,2) DEFAULT NULL COMMENT '保险实际赔付',

@@ -104,11 +104,11 @@ function getDamageCheckCount(params,callback) {
     var paramsArray=[],i=0;
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
-        query = query + " and dc.date_id >= ? ";
+        query = query + " and date_format(dc.date_id,'%Y%m') >= ? ";
     }
     if(params.dateIdEnd){
         paramsArray[i++] = params.dateIdEnd;
-        query = query + " and dc.date_id <= ? ";
+        query = query + " and date_format(dc.date_id,'%Y%m') <= ? ";
     }
     if(params.damageStatus){
         paramsArray[i++] = params.damageStatus;
@@ -124,13 +124,13 @@ function getDamageCheckCount(params,callback) {
 function getDamageNotCheckCount(params,callback) {
     var query = " select count(da.id) as damage_count,da.damage_status from damage_info da where da.id is not null ";
     var paramsArray=[],i=0;
-    if(params.createdOnStart){
-        paramsArray[i++] = params.createdOnStart +" 00:00:00";
-        query = query + " and da.created_on >= ? ";
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and date_format(da.date_id,'%Y%m') >= ? ";
     }
-    if(params.createdOnEnd){
-        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
-        query = query + " and da.created_on <= ? ";
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and date_format(da.date_id,'%Y%m') <= ? ";
     }
     query = query + " group by da.damage_status ";
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -145,11 +145,11 @@ function getDamageTotalCost(params,callback) {
     var paramsArray=[],i=0;
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
-        query = query + " and dc.date_id >= ? ";
+        query = query + " and date_format(dc.date_id,'%Y%m') >= ? ";
     }
     if(params.dateIdEnd){
         paramsArray[i++] = params.dateIdEnd;
-        query = query + " and dc.date_id <= ? ";
+        query = query + " and date_format(dc.date_id,'%Y%m') <= ? ";
     }
     if(params.damageStatus){
         paramsArray[i++] = params.damageStatus;
