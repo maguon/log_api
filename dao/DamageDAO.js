@@ -139,6 +139,28 @@ function getDamageNotCheckCount(params,callback) {
     });
 }
 
+function getDamageTotalCost(params,callback) {
+    var query = " select sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost from damage_info da " +
+        " left join damage_check dc on da.id = dc.damage_id where da.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dc.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dc.date_id <= ? ";
+    }
+    if(params.damageStatus){
+        paramsArray[i++] = params.damageStatus;
+        query = query + " and da.damage_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageTotalCost ');
+        return callback(error,rows);
+    });
+}
+
 function updateDamage(params,callback){
     var query = " update damage_info set truck_id = ? , truck_num = ? , drive_id = ? , drive_name = ? , damage_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -171,6 +193,7 @@ module.exports ={
     getDamage : getDamage,
     getDamageCheckCount : getDamageCheckCount,
     getDamageNotCheckCount : getDamageNotCheckCount,
+    getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus
 }

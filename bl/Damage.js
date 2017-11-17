@@ -112,6 +112,32 @@ function queryDamageNotCheckCount(req,res,next){
     })
 }
 
+function queryDamageTotalCost(req,res,next){
+    var params = req.params;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
+    damageDAO.getDamageTotalCost(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageTotalCost ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageTotalCost ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDamage(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
@@ -165,6 +191,7 @@ module.exports = {
     queryDamage : queryDamage,
     queryDamageCheckCount : queryDamageCheckCount,
     queryDamageNotCheckCount : queryDamageNotCheckCount,
+    queryDamageTotalCost : queryDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus
 }

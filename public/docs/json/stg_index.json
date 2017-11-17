@@ -9778,6 +9778,58 @@
         }
       }
     },
+    "/damageTotalCost": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageTotal cost",
+        "description": "query damageTotalCost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damage": {
       "post": {
         "tags": [
