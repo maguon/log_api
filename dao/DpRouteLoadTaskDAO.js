@@ -139,6 +139,10 @@ function getDpRouteLoadTaskBase(params,callback) {
 function getDpRouteLoadTaskCount(params,callback) {
     var query = " select count(dprl.id) as load_number,sum(dprl.real_count) as load_count from dp_route_load_task dprl where dprl.id is not null ";
     var paramsArray=[],i=0;
+    if(params.fieldOpId){
+        paramsArray[i++] = params.fieldOpId;
+        query = query + " and dprl.field_op_id = ? ";
+    }
     if(params.loadDateStart){
         paramsArray[i++] = params.loadDateStart +" 00:00:00";
         query = query + " and dprl.load_date >= ? ";

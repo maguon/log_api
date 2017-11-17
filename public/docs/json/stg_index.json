@@ -9067,6 +9067,14 @@
         "parameters": [
 
           {
+            "name": "fieldOpId",
+            "in": "query",
+            "description": "fieldOp id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "loadDateStart",
             "in": "query",
             "description": "loadDate start",
