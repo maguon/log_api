@@ -43,6 +43,8 @@ var dpRouteTask = require('./bl/DpRouteTask.js');
 var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
 var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
 var damage = require('./bl/Damage.js');
+var damageCheck = require('./bl/DamageCheck.js');
+var damageInsure = require('./bl/DamageInsure.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -440,8 +442,24 @@ function createServer() {
      * Damage Module
      */
     server.get('/api/damage',damage.queryDamage);
+    server.get('/api/damageCheckCount',damage.queryDamageCheckCount);
+    server.get('/api/damageNotCheckCount',damage.queryDamageNotCheckCount);
+    server.get('/api/damageTotalCost',damage.queryDamageTotalCost);
     server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
+    server.put({path:'/api/user/:userId/damage/:damageId/damageStatus/:damageStatus',contentType: 'application/json'} ,damage.updateDamageStatus);
+
+    /**
+     * DamageCheck Module
+     */
+    server.get('/api/damageCheck',damageCheck.queryDamageCheck);
+    server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
+    server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
+
+    /**
+     * DamageInsure Module
+     */
+    server.post({path:'/api/user/:userId/damageInsure',contentType: 'application/json'},damageInsure.createDamageInsure);
 
     /**
      * MsgPush Module

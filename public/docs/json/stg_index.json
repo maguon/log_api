@@ -8416,6 +8416,14 @@
 
           },
           {
+            "name": "routeOpName",
+            "in": "query",
+            "description": "routeOp name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
@@ -9067,6 +9075,14 @@
         "parameters": [
 
           {
+            "name": "fieldOpId",
+            "in": "query",
+            "description": "fieldOp id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "loadDateStart",
             "in": "query",
             "description": "loadDate start",
@@ -9586,6 +9602,62 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "declareUserId",
+            "in": "query",
+            "description": "declareUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "declareUserName",
+            "in": "query",
+            "description": "declareUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "underUserId",
+            "in": "query",
+            "description": "underUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "underUserName",
+            "in": "query",
+            "description": "underUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "damageStatus",
             "in": "query",
             "description": "damage status",
@@ -9605,6 +9677,154 @@
             "name": "size",
             "in": "query",
             "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
+    "/damageCheckCount": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheckCount count",
+        "description": "query damageCheckCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
+    "/damageNotCheckCount": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageNotCheck count",
+        "description": "query damageNotCheckCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
+    "/damageTotalCost": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageTotal cost",
+        "description": "query damageTotalCost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
             "required": false,
             "type": "integer"
 
@@ -9721,6 +9941,270 @@
           },
           "400": {
             "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damage/{damageId}/damageStatus/{damageStatus}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damage status",
+        "description": "update damage status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "path",
+            "description": "damage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageStatus",
+            "in": "path",
+            "description": "damage status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
+    "/damageCheck": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheck list",
+        "description": "query damageCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageCheckId",
+            "in": "query",
+            "description": "damageCheck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageCheck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageCheck": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create damageCheck",
+        "description": "user create damageCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheck",
+            "in": "body",
+            "description": "damageCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageCheck/{damageCheckId}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageCheck info",
+        "description": "update damageCheck info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheckId",
+            "in": "path",
+            "description": "damageCheck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "checkButton",
+            "in": "query",
+            "description": "check button",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheck",
+            "in": "body",
+            "description": "damageCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheck"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageInsure": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create damageInsure",
+        "description": "user create damageInsure",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsure",
+            "in": "body",
+            "description": "damageInsure info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageInsure"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsure id"
           }
         }
       }
@@ -10755,6 +11239,78 @@
       },
       "xml": {
         "name": "damage"
+      }
+    },
+    "damageCheck": {
+      "type": "object",
+      "properties": {
+
+        "underUserId": {
+          "type": "integer"
+        },
+        "underUserName": {
+          "type": "string"
+        },
+        "damageType": {
+          "type": "integer"
+        },
+        "damageLinkType": {
+          "type": "integer"
+        },
+        "refundUserId": {
+          "type": "integer"
+        },
+        "refundUserName": {
+          "type": "string"
+        },
+        "reductionCost": {
+          "type": "integer"
+        },
+        "penaltyCost": {
+          "type": "integer"
+        },
+        "profit": {
+          "type": "integer"
+        },
+        "repairId": {
+          "type": "integer"
+        },
+        "repairCost": {
+          "type": "integer"
+        },
+        "transportCost": {
+          "type": "integer"
+        },
+        "underCost": {
+          "type": "integer"
+        },
+        "companyCost": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "damageCheck"
+      }
+    },
+    "damageInsure": {
+      "type": "object",
+      "properties": {
+
+        "insureId": {
+          "type": "integer"
+        },
+        "insurePlan": {
+          "type": "integer"
+        },
+        "insureActual": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "damageInsure"
       }
     }
   },

@@ -55,6 +55,10 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
         query = query + " and dpr.task_plan_date <= ? ";
     }
+    if(params.routeOpName){
+        paramsArray[i++] = params.routeOpName;
+        query = query + " and u.real_name = ? ";
+    }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and dpr.truck_id = ? ";
