@@ -57,6 +57,10 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.dpRouteLoadTaskId;
         query = query + " and dprl.id = ? ";
     }
+    if(params.fieldOpId){
+        paramsArray[i++] = params.fieldOpId;
+        query = query + " and dprl.field_op_id = ? ";
+    }
     if(params.loadDateStart){
         paramsArray[i++] = params.loadDateStart +" 00:00:00";
         query = query + " and dprl.load_date >= ? ";

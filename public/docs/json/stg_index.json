@@ -8926,6 +8926,14 @@
 
           },
           {
+            "name": "fieldOpId",
+            "in": "query",
+            "description": "field operator id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "loadDateStart",
             "in": "query",
             "description": "loadDate start",
