@@ -8520,6 +8520,14 @@
 
           },
           {
+            "name": "loadTaskStatus",
+            "in": "query",
+            "description": "load task status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "loadDistance",
             "in": "query",
             "description": "load distance",
