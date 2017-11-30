@@ -37,7 +37,7 @@ function initTruckDispatchCity(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' initTruckDispatchCity ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
+            resUtil.resetUpdateRes(res,result,null);
             return next();
         }
     })
