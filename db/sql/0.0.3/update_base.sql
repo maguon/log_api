@@ -238,6 +238,11 @@ UPDATE dp_demand_info set plan_count=plan_count-old.plan_count where id= new.dem
 UPDATE dp_task_stat set plan_count = plan_count-old.plan_count where route_start_id=new.route_start_id
 and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
 END IF;
+IF(new.load_task_status=3 && old.load_task_status<>3) THEN
+UPDATE dp_route_task set task_status=4,car_count = (select sum(real_count)
+from dp_route_load_task where dp_route_task_id = old.dp_route_task_id)
+where (select count(*) from dp_route_load_task where load_task_status =3 and dp_route_task_id = old.dp_route_task_id ) >0 and id= old.dp_route_task_id;
+END IF;
 END $$
 delimiter ;
 
