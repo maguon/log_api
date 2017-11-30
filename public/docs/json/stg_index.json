@@ -3158,6 +3158,59 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/dispatch": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "updae  truckDispatch",
+        "description": "update truckDispatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckDispatch",
+            "in": "body",
+            "description": "truck dispatch",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckDispatch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDispatch id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -11314,6 +11367,30 @@
           "type": "integer"
         },
         "insureActual": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "damageInsure"
+      }
+    },
+    "truckDispatch": {
+      "type": "object",
+      "properties": {
+
+        "currentCity": {
+          "type": "integer"
+        },
+        "taskStart": {
+          "type": "integer"
+        },
+        "taskEnd": {
+          "type": "integer"
+        },
+        "carCount": {
+          "type": "integer"
+        },
+        "dispatchFlag": {
           "type": "integer"
         }
       },

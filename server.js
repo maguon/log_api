@@ -232,6 +232,7 @@ function createServer() {
      * TruckDispatch Module
      */
     server.get('/api/truckDispatch' , truckDispatch.queryTruckDispatch);
+    server.put({path:'/api/user/:userId/truck/:truckId/dispatch',contentType: 'application/json'} , truckDispatch.initTruckDispatchCity);
 
     /**
      * Brand Module
