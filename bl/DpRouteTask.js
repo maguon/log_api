@@ -245,6 +245,18 @@ function updateDpRouteTaskStatus(req,res,next){
                 taskEnd:0,
                 truckId:parkObj.truckId
             }
+            dpRouteTaskDAO.finishDpRouteTask(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateTruckDispatch ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateTruckDispatch ' + 'success');
+                    } else {
+                        logger.warn(' updateTruckDispatch ' + 'failed');
+                    }
+                }
+            });
             truckDispatchDAO.updateTruckDispatch(subParams, function (error, result) {
                 if (error) {
                     logger.error(' updateTruckDispatch ' + error.message);
@@ -257,7 +269,7 @@ function updateDpRouteTaskStatus(req,res,next){
                     }
                     that();
                 }
-            })
+            });
         }else{
             that();
         }

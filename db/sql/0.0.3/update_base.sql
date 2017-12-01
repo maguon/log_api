@@ -247,7 +247,7 @@ END IF;
 
 IF(new.load_task_status=7 && old.load_task_status<>7) THEN
 UPDATE dp_route_task set task_status=10
-where dp_route_task_id = old.dp_route_task_id and id= old.dp_route_task_id and
+where id = old.dp_route_task_id and task_status =9 and
 (select count(*) from dp_route_load_task where load_task_status <>7 and load_task_status<>8 and dp_route_task_id = old.dp_route_task_id ) =0 ;
 END IF;
 END $$

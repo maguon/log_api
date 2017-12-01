@@ -4,6 +4,7 @@
 
 var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
+var sysConst = require('../util/SysConst.js');
 var logger = serverLogger.createLogger('DpRouteTaskDAO.js');
 
 function addDpRouteTask(params,callback){
@@ -244,6 +245,20 @@ function updateDpRouteTaskCarCount(params,callback){
     });
 }
 
+function finishDpRouteTask (params,callback){
+    var query = "UPDATE dp_route_task set task_status= "+ sysConst.TASK_STATUS.all_completed +
+        " where id =   ? " +
+        " (select count(*) from dp_route_load_task where load_task_status <>"+ sysConst.LOAD_TASK_STATUS.arrive+
+        " and load_task_status<>"+sysConst.LOAD_TASK_STATUS.cancel+" and dp_route_task_id = ? ) =0 ;"
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.dpRouteTaskId;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' finishDpRouteTask ');
+        return callback(error,rows);
+    });
+
+}
 
 module.exports ={
     addDpRouteTask : addDpRouteTask,
@@ -252,5 +267,6 @@ module.exports ={
     getDriveDistanceCount : getDriveDistanceCount,
     getTaskStatusCount : getTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,
-    updateDpRouteTaskCarCount : updateDpRouteTaskCarCount
+    updateDpRouteTaskCarCount : updateDpRouteTaskCarCount ,
+    finishDpRouteTask : finishDpRouteTask
 }
