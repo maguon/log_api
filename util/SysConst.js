@@ -41,7 +41,9 @@ var TASK_STATUS  ={
     doing : 3,
     on_road : 4,
     cancel : 8,
-    completed : 9
+    completed : 9,
+    all_completed : 10
+
 };
 var LOAD_TASK_STATUS  ={
     no_load : 1,

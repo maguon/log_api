@@ -230,8 +230,9 @@ END $$
 delimiter ;
 
 DROP TRIGGER IF EXISTS `trg_cancel_load_task`;
+DROP TRIGGER IF EXISTS `trg_update_load_task`;
 delimiter $$
-CREATE TRIGGER `trg_cancel_load_task` AFTER UPDATE ON `dp_route_load_task` FOR EACH ROW
+CREATE TRIGGER `trg_update_load_task` AFTER UPDATE ON `dp_route_load_task` FOR EACH ROW
 BEGIN
 IF(new.load_task_status=8 && old.load_task_status<>8) THEN
 UPDATE dp_demand_info set plan_count=plan_count-old.plan_count where id= new.demand_id ;
@@ -241,8 +242,25 @@ END IF;
 IF(new.load_task_status=3 && old.load_task_status<>3) THEN
 UPDATE dp_route_task set task_status=4,car_count = (select sum(real_count)
 from dp_route_load_task where dp_route_task_id = old.dp_route_task_id)
-where (select count(*) from dp_route_load_task where load_task_status =3 and dp_route_task_id = old.dp_route_task_id ) >0 and id= old.dp_route_task_id;
+where (select count(*) from dp_route_load_task where load_task_status <>3 and load_task_status<>8 and dp_route_task_id = old.dp_route_task_id ) =0 and id= old.dp_route_task_id;
+END IF;
+
+IF(new.load_task_status=7 && old.load_task_status<>7) THEN
+UPDATE dp_route_task set task_status=10
+where dp_route_task_id = old.dp_route_task_id and id= old.dp_route_task_id and
+(select count(*) from dp_route_load_task where load_task_status <>7 and load_task_status<>8 and dp_route_task_id = old.dp_route_task_id ) =0 ;
 END IF;
 END $$
+delimiter ;
+
+
+delimiter $$
+CREATE TRIGGER `trg_update_route_task` AFTER UPDATE ON `dp_route_task` FOR EACH ROW
+BEGIN
+IF(new.task_status=4 && old.task_status<>4) THEN
+UPDATE truck_dispatch set current_city= 0 , task_start = old.route_start_id ,task_end=old.route_end_id,car_count=new.car_count
+where truck_id=old.truck_id ;
+END IF;
+END $$;
 delimiter ;
 
