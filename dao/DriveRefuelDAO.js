@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveRefuelDAO.js');
 
 function addDriveRefuel(params,callback){
-    var query = " insert into drive_refuel (drive_id,truck_id,date_id,refuel_date,refuel_volume,dp_demand_id, " +
+    var query = " insert into drive_refuel (drive_id,truck_id,date_id,refuel_date,refuel_volume,dp_route_task_id, " +
         "refuel_address_type,refuel_address,lng,lat,refuel_money) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
@@ -15,7 +15,7 @@ function addDriveRefuel(params,callback){
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.refuelDate;
     paramsArray[i++]=params.refuelVolume;
-    paramsArray[i++]=params.dpDemandId;
+    paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.refuelAddressType;
     paramsArray[i++]=params.refuelAddress;
     paramsArray[i++]=params.lng;
@@ -28,11 +28,14 @@ function addDriveRefuel(params,callback){
 }
 
 function getDriveRefuel(params,callback) {
-    var query = " select dr.*,d.drive_name,t.truck_num,dpd.route_start,dpd.route_end,u.real_name as check_user_name " +
+    var query = " select dr.*,d.drive_name,t.truck_num," +
+        " dpt.route_start_id,dpt.route_end_id,c.city_name route_start,ce.city_name route_end,u.real_name as check_user_name " +
         " from drive_refuel dr " +
         " left join drive_info d on dr.drive_id = d.id " +
         " left join truck_info t on dr.truck_id = t.id " +
-        " left join dp_demand_info dpd on dr.dp_demand_id = dpd.id " +
+        " left join dp_route_task dpt on dr.dp_route_task_id = dpt.id " +
+        " left join city_info c on dpt.route_start_id = c.id " +
+        " left join city_info ce on dpt.route_end_id = ce.id " +
         " left join user_info u on dr.check_user_id = u.uid where dr.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveRefuelId){
@@ -54,6 +57,10 @@ function getDriveRefuel(params,callback) {
     if(params.driveName){
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dr.dp_route_task_i = ? ";
     }
     if(params.refuelAddressType){
         paramsArray[i++] = params.refuelAddressType;

@@ -3843,6 +3843,14 @@
 
           },
           {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "route task id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
@@ -10706,7 +10714,7 @@
         "refuelVolume": {
           "type": "integer"
         },
-        "dpDemandId": {
+        "dpRouteTaskId": {
           "type": "integer"
         },
         "refuelAddressType": {
