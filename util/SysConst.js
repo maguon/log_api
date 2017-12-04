@@ -32,6 +32,7 @@ var LICENSE_TYPE  ={
     C3 : 8
 };
 var DEMAND_STATUS  ={
+    cancel : 0,
     not_completed : 1,
     completed : 2
 };
