@@ -67,25 +67,27 @@ function createDpRouteLoadTask(req,res,next){
             } else {
                 if(result&&result.insertId>0){
                     logger.info(' createDpRouteLoadTask ' + 'success');
-                    that();
+                    resUtil.resetCreateRes(res,result,null);
+                    return next();
                 }else{
                     resUtil.resetFailedRes(res," 创建任务失败 ");
                     return next();
                 }
             }
         })
-    }).seq(function () {
-        dpDemandDAO.updateDpDemandPlanCount(params,function(error,result){
-            if (error) {
-                logger.error(' updateDpDemandPlanCount ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' updateDpDemandPlanCount ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
-                return next();
-            }
-        })
     })
+        /*.seq(function () {//db端执行
+            dpDemandDAO.updateDpDemandPlanCount(params,function(error,result){
+                if (error) {
+                    logger.error(' updateDpDemandPlanCount ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    logger.info(' updateDpDemandPlanCount ' + 'success');
+                    resUtil.resetUpdateRes(res,result,null);
+                    return next();
+                }
+            })
+        })*/
 }
 
 function queryDpRouteLoadTask(req,res,next){
