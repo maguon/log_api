@@ -4,6 +4,7 @@
 
 var sysMsg = require('../util/SystemMsg.js');
 var sysError = require('../util/SystemError.js');
+var sysConst = require('../util/SysConst.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
@@ -101,7 +102,7 @@ function updateDpDemandStatus(req,res,next){
                 logger.error(' getDpRouteLoadTask ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length>0){
+                if(rows&&rows.length>0&&params.demandStatus == sysConst.DEMAND_STATUS.cancel){
                     logger.warn(' getDpRouteLoadTask ' + 'failed');
                     resUtil.resetFailedRes(res," 需求已经指派了任务，请先取消任务 ");
                     return next();
