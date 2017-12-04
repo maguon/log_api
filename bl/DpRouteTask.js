@@ -298,23 +298,23 @@ function updateDpRouteTaskStatus(req,res,next){
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.completed;
                 }
 
-
+                dpRouteTaskDAO.finishDpRouteTask(params, function (error, result) {
+                    if (error) {
+                        logger.error(' updateTruckDispatch ' + error.message);
+                        throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else {
+                        if (result && result.affectedRows > 0) {
+                            logger.info(' updateTruckDispatch ' + 'success');
+                        } else {
+                            logger.warn(' updateTruckDispatch ' + 'failed');
+                        }
+                    }
+                });
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
         });
-        dpRouteTaskDAO.finishDpRouteTask(params, function (error, result) {
-            if (error) {
-                logger.error(' updateTruckDispatch ' + error.message);
-                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if (result && result.affectedRows > 0) {
-                    logger.info(' updateTruckDispatch ' + 'success');
-                } else {
-                    logger.warn(' updateTruckDispatch ' + 'failed');
-                }
-            }
-        });
+
     })
 }
 
