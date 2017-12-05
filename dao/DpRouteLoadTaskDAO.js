@@ -28,7 +28,7 @@ function addDpRouteLoadTask(params,callback){
 
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,c.city_name as city_start_name,c1.city_name,r.short_name,dpd.pre_count, " +
-        " dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,d.tel,count(dpdtl.id) as car_count, " +
+        " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,d.tel,count(dpdtl.id) as car_count, " +
         " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
@@ -184,6 +184,18 @@ function updateDpRouteLoadTaskStatus(params,callback){
     });
 }
 
+function resetLoadTaskTruckCount(params,callback){
+    var query = " update truck_dispatch set car_count = " +
+        "GREATEST((car_count-(select real_count from dp_route_load_task where id= ? ))  ,0) where truck_id= ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.dpRouteLoadTaskId;
+    paramsArray[i] = params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' resetLoadTaskTruckCount ');
+        return callback(error,rows);
+    });
+}
+
 
 
 module.exports ={
@@ -191,5 +203,6 @@ module.exports ={
     getDpRouteLoadTask : getDpRouteLoadTask,
     getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
     getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
-    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
+    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus ,
+    resetLoadTaskTruckCount : resetLoadTaskTruckCount
 }
