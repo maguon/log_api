@@ -8197,6 +8197,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "dpTaskStatStatus",
+            "in": "query",
+            "description": "dpTaskStat status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

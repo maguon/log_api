@@ -32,6 +32,10 @@ function getDpTaskStat(params,callback) {
         paramsArray[i++] = params.dpTaskStatId;
         query = query + " and dpt.id = ? ";
     }
+    if(params.dpTaskStatStatus){
+        paramsArray[i++] = params.dpTaskStatStatus;
+        query = query + " and dpt.task_stat_status = ? ";
+    }
     query = query + ' group by dpt.route_start_id,c.city_name,dpt.route_end_id,ce.city_name,dpt.date_id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
