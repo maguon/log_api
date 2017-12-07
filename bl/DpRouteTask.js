@@ -160,7 +160,7 @@ function updateDpRouteTaskStatus(req,res,next){
                 }
             })
         }else if (params.taskStatus == sysConst.TASK_STATUS.completed) {
-            params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load;
+            /*params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load;
             dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params, function (error, rows) {
                 if (error) {
                     logger.error(' getDpRouteLoadTaskBase ' + error.message);
@@ -176,7 +176,9 @@ function updateDpRouteTaskStatus(req,res,next){
                         that();
                     }
                 }
-            })
+            })*/
+            newCompletedFlag = true;
+            that();
         }else{
             that();
         }
