@@ -108,7 +108,7 @@ function updateStorageParkingOut(params,callback){
 }
 
 function getStorageMakeStat (params,callback){
-    var query = " select count(car_id) ,cm.id,cm.make_name " +
+    var query = " select count(car_id) car_count ,cm.id,cm.make_name " +
         " from storage_parking sp left join car_info ci on sp.car_id = ci.id  " +
         " left join car_make cm on ci.make_id = cm.id " +
         " where storage_id = ? group by cm.id " ;
