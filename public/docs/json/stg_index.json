@@ -4039,6 +4039,126 @@
         }
       }
     },
+    "/refuelMonthStat": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  refuel month stat",
+        "description": "query refuel month stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month stat start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month stat end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "split page start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "page size",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveRefuel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveRefuel id"
+          }
+        }
+      }
+    },
+    "/refuelWeekStat": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  refuel week stat",
+        "description": "query refuel week stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "weekStart",
+            "in": "query",
+            "description": "week stat start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "weekEnd",
+            "in": "query",
+            "description": "week stat end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "split page start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "page size",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveRefuel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveRefuel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveRefuel": {
       "post": {
         "tags": [

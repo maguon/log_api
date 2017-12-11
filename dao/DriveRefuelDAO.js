@@ -152,10 +152,62 @@ function updateDriveRefuelStatus(params,callback){
     });
 }
 
+function getRefuelMonthStat(params,callback) {
+    var query = "select sum(dr.refuel_volume) total_vol ,sum(dr.refuel_money) total_money , dr.refuel_address_type ,db.y_month " +
+        " from date_base db left join drive_refuel dr on db.id = dr.date_id " +
+        " where dr.refuel_address_type is not null and  dr.check_status=2 " ;
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + ' and db.y_month >= ? '
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + ' and db.y_month <= ? '
+    }
+    query = query + " group by db.month,dr.refuel_address_type " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getRefuelMonthStat ');
+        return callback(error,rows);
+    });
+}
+
+function getRefuelWeekStat(params,callback) {
+    var query = "select sum(dr.refuel_volume) total_vol ,sum(dr.refuel_money) total_money , dr.refuel_address_type ,db.y_week " +
+        " from date_base db left join drive_refuel dr on db.id = dr.date_id " +
+        " where dr.refuel_address_type is not null and  dr.check_status=2 " ;
+    var paramsArray=[],i=0;
+    if(params.weekStart){
+        paramsArray[i++] = params.weekStart;
+        query = query + ' and db.y_week >= ? '
+    }
+    if(params.weekEnd){
+        paramsArray[i++] = params.weekEnd;
+        query = query + ' and db.y_week <= ? '
+    }
+    query = query + " group by db.y_week,dr.refuel_address_type " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getRefuelWeekStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDriveRefuel: addDriveRefuel,
     getDriveRefuel : getDriveRefuel,
     getRefuelVolumeMoneyTotal : getRefuelVolumeMoneyTotal,
-    updateDriveRefuelStatus : updateDriveRefuelStatus
+    updateDriveRefuelStatus : updateDriveRefuelStatus ,
+    getRefuelMonthStat  : getRefuelMonthStat ,
+    getRefuelWeekStat : getRefuelWeekStat
 }

@@ -258,6 +258,8 @@ function createServer() {
      */
     server.get('/api/driveRefuel' , driveRefuel.queryDriveRefuel);
     server.get('/api/refuelVolumeMoneyTotal' , driveRefuel.queryRefuelVolumeMoneyTotal);
+    server.get('/api/refuelWeekStat' , driveRefuel.queryRefuelWeekStat);
+    server.get('/api/refuelMonthStat' , driveRefuel.queryRefuelMonthStat);
     server.post({path:'/api/user/:userId/driveRefuel',contentType: 'application/json'},driveRefuel.createDriveRefuel);
     server.put({path:'/api/user/:userId/driveRefuel/:driveRefuelId/checkStatus/:checkStatus',contentType: 'application/json'} ,driveRefuel.updateDriveRefuelStatus);
 

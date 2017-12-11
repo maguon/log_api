@@ -69,6 +69,11 @@ var DAMAGE_STATUS  ={
     completed : 3
 };
 
+var REFUEL_STATUS  ={
+    rejected : 3,
+    checked : 2 ,
+    no_check : 1
+};
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -79,5 +84,6 @@ module.exports = {
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,
     USER_LOGIN_APP_TYPE : USER_LOGIN_APP_TYPE,
-    DAMAGE_STATUS : DAMAGE_STATUS
+    DAMAGE_STATUS : DAMAGE_STATUS ,
+    REFUEL_STATUS : REFUEL_STATUS
 }

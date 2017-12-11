@@ -73,10 +73,37 @@ function updateDriveRefuelStatus(req,res,next){
     })
 }
 
-
+function queryRefuelMonthStat(req,res,next){
+    var params = req.params ;
+    driveRefuelDAO.getRefuelMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryRefuelMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryRefuelMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+function queryRefuelWeekStat(req,res,next){
+    var params = req.params ;
+    driveRefuelDAO.getRefuelWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryRefuelWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryRefuelWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
 module.exports = {
     createDriveRefuel : createDriveRefuel,
     queryDriveRefuel : queryDriveRefuel,
     queryRefuelVolumeMoneyTotal : queryRefuelVolumeMoneyTotal,
-    updateDriveRefuelStatus : updateDriveRefuelStatus
+    updateDriveRefuelStatus : updateDriveRefuelStatus ,
+    queryRefuelMonthStat  : queryRefuelMonthStat ,
+    queryRefuelWeekStat : queryRefuelWeekStat
 }
