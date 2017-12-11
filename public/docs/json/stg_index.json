@@ -6448,7 +6448,7 @@
         "parameters": [
           {
             "name": "storageId",
-            "in": "query",
+            "in": "path",
             "description": "storage id",
             "required": false,
             "type": "integer"
