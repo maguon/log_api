@@ -165,7 +165,7 @@ function getRefuelMonthStat(params,callback) {
         paramsArray[i++] = params.monthEnd;
         query = query + ' and db.y_month <= ? '
     }
-    query = query + " group by db.y_month,dr.refuel_address_type " ;
+    query = query + " group by db.y_month,dr.refuel_address_type  order by db.y_month desc " ;
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
@@ -190,7 +190,7 @@ function getRefuelWeekStat(params,callback) {
         paramsArray[i++] = params.weekEnd;
         query = query + ' and db.y_week <= ? '
     }
-    query = query + " group by db.y_week,dr.refuel_address_type " ;
+    query = query + " group by db.y_week,dr.refuel_address_type  order by db.y_week desc " ;
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
