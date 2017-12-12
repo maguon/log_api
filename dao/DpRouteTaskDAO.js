@@ -260,6 +260,82 @@ function finishDpRouteTask (params,callback){
 
 }
 
+function getRouteTaskMonthStat(params,callback){
+    var query = "select sum(case when drt.car_count >= "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as load_distance ," +
+        " sum(case when drt.car_count < "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as no_load_distance ,db.y_month " +
+        " from date_base db left join dp_route_task drt on db.id=drt.date_id " +
+        " where  drt.task_status= " + sysConst.TASK_STATUS.all_completed ;
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + ' and db.y_month >= ? '
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + ' and db.y_month <= ? '
+    }
+    query = query + " group by db.y_month " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getRouteTaskMonthStat ');
+        return callback(error,rows);
+    });
+}
+
+function getRouteTaskWeekStat(params,callback){
+    var query = "select sum(case when drt.car_count >= "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as load_distance ," +
+        " sum(case when drt.car_count < "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as no_load_distance ,db.y_week " +
+        " from date_base db left join dp_route_task drt on db.id=drt.date_id " +
+        " where  drt.task_status= " + sysConst.TASK_STATUS.all_completed ;
+    var paramsArray=[],i=0;
+    if(params.weekStart){
+        paramsArray[i++] = params.weekStart;
+        query = query + ' and db.y_week >= ? '
+    }
+    if(params.weekEnd){
+        paramsArray[i++] = params.weekEnd;
+        query = query + ' and db.y_week <= ? '
+    }
+    query = query + " group by db.y_week " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getRouteTaskWeekStat ');
+        return callback(error,rows);
+    });
+}
+function getRouteTaskDayStat(params,callback){
+    var query = "select sum(case when drt.car_count >= "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as load_distance ," +
+        " sum(case when drt.car_count < "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as no_load_distance ,db.id " +
+        " from date_base db left join dp_route_task drt on db.id=drt.date_id " +
+        " where  drt.task_status= " + sysConst.TASK_STATUS.all_completed ;
+    var paramsArray=[],i=0;
+    if(params.dayStart){
+        paramsArray[i++] = params.dayStart;
+        query = query + ' and db.id >= ? '
+    }
+    if(params.dayEnd){
+        paramsArray[i++] = params.dayEnd;
+        query = query + ' and db.id <= ? '
+    }
+    query = query + " group by db.id " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getRouteTaskDayStat ');
+        return callback(error,rows);
+    });
+}
 module.exports ={
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
@@ -268,5 +344,8 @@ module.exports ={
     getTaskStatusCount : getTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,
     updateDpRouteTaskCarCount : updateDpRouteTaskCarCount ,
-    finishDpRouteTask : finishDpRouteTask
+    finishDpRouteTask : finishDpRouteTask ,
+    getRouteTaskMonthStat : getRouteTaskMonthStat ,
+    getRouteTaskWeekStat : getRouteTaskWeekStat ,
+    getRouteTaskDayStat : getRouteTaskDayStat
 }

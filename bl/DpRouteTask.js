@@ -358,6 +358,49 @@ function removeDpRouteTask(req,res,next){
 }
 
 
+function queryRouteTaskWeekStat(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getRouteTaskWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryRouteTaskWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryRouteTaskWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryRouteTaskMonthStat(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getRouteTaskMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryRouteTaskMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryRouteTaskMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryRouteTaskDayStat(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getRouteTaskDayStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryRouteTaskDayStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryRouteTaskDayStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+
 module.exports = {
     createDpRouteTask : createDpRouteTask,
     queryDpRouteTask : queryDpRouteTask,
@@ -365,5 +408,8 @@ module.exports = {
     queryNotCompletedTaskStatusCount : queryNotCompletedTaskStatusCount,
     queryTaskStatusCount : queryTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,
-    removeDpRouteTask : removeDpRouteTask
+    removeDpRouteTask : removeDpRouteTask ,
+    queryRouteTaskDayStat : queryRouteTaskDayStat ,
+    queryRouteTaskWeekStat : queryRouteTaskWeekStat ,
+    queryRouteTaskMonthStat : queryRouteTaskMonthStat
 }

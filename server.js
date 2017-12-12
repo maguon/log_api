@@ -418,6 +418,9 @@ function createServer() {
      */
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
     server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
+    server.get('/api/distanceMonthStat' , dpRouteTask.queryRouteTaskMonthStat);
+    server.get('/api/distanceWeekStat' , dpRouteTask.queryRouteTaskWeekStat);
+    server.get('/api/distanceDayStat' , dpRouteTask.queryRouteTaskDayStat);
     server.get('/api/notCompletedTaskStatusCount' , dpRouteTask.queryNotCompletedTaskStatusCount);
     server.get('/api/taskStatusCount' , dpRouteTask.queryTaskStatusCount);
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
