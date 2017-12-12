@@ -274,7 +274,7 @@ function getRouteTaskMonthStat(params,callback){
         paramsArray[i++] = params.monthEnd;
         query = query + ' and db.y_month <= ? '
     }
-    query = query + " group by db.y_month " ;
+    query = query + " group by db.y_month  order by db.y_month desc " ;
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
@@ -300,7 +300,7 @@ function getRouteTaskWeekStat(params,callback){
         paramsArray[i++] = params.weekEnd;
         query = query + ' and db.y_week <= ? '
     }
-    query = query + " group by db.y_week " ;
+    query = query + " group by db.y_week  order by db.y_week desc " ;
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
@@ -325,7 +325,7 @@ function getRouteTaskDayStat(params,callback){
         paramsArray[i++] = params.dayEnd;
         query = query + ' and db.id <= ? '
     }
-    query = query + " group by db.id " ;
+    query = query + " group by db.id  order by db.id desc " ;
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
