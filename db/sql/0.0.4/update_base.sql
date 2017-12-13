@@ -2,20 +2,25 @@ ALTER TABLE `drive_info`
 ADD UNIQUE INDEX `tel` (`tel`) ;
 ALTER TABLE `dp_route_load_task_detail`
 ADD COLUMN `arrive_date`  datetime NULL COMMENT '送达时间' AFTER `vin`;
+ALTER TABLE `dp_route_load_task_detail`
 ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '送达统计时间' AFTER `arrive_date`;
 ALTER TABLE `user_info`
 ADD COLUMN `avatar_image`  varchar(100) NULL COMMENT '用户头像' AFTER `gender`;
 ALTER TABLE `dp_task_stat`
 ADD COLUMN `not_plan_count`  int(10) NULL DEFAULT 0 COMMENT '未派发台数' AFTER `plan_count`;
+ALTER TABLE `dp_task_stat`
 ADD COLUMN `task_stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '需求统计状态(1-未完成,2-已完成)' AFTER `date_id`;
 ALTER TABLE `dp_route_load_task`
 ADD COLUMN `field_op_id`  int(10) NULL COMMENT '现场调度员ID' AFTER `user_id`;
+ALTER TABLE `dp_route_load_task`
 ADD COLUMN `plan_date`  datetime NULL COMMENT '计划装车时间' AFTER `date_id`;
+ALTER TABLE `dp_route_load_task`
 ADD COLUMN `real_count`  int(10) NULL DEFAULT 0 COMMENT '实际装车数量' AFTER `plan_count`;
 ALTER TABLE `dp_route_load_task_detail`
 ADD COLUMN `dp_route_task_id`  int(10) NULL COMMENT '路线ID' AFTER `id`;
 ALTER TABLE `dp_demand_info`
 ADD COLUMN `plan_count`  int(10) NULL DEFAULT 0 COMMENT '计划派发商品车数量' AFTER `pre_count`;
+ALTER TABLE `dp_demand_info`
 ADD COLUMN `not_plan_count`  int(10) NULL DEFAULT 0 COMMENT '未派发台数' AFTER `plan_count`,
 ADD COLUMN `load_count`  int(10) NULL DEFAULT 0 COMMENT '装车数量' AFTER `not_plan_count`;
 ALTER TABLE `receive_info`
