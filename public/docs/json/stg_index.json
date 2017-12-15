@@ -10889,13 +10889,11 @@
     "backPassword": {
       "type": "object",
       "properties": {
-        "mobile": {
-          "type": "integer"
-        },
-        "newPassword": {
+
+        "captcha": {
           "type": "string"
         },
-        "confirmNewPassword": {
+        "password": {
           "type": "string"
         }
       },

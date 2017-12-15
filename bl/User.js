@@ -318,7 +318,7 @@ function resetPassword(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        userDAO.getUser(params,function(error,rows){
+        /*userDAO.getUser(params,function(error,rows){
             if (error) {
                 logger.error(' resetPassword ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
@@ -331,7 +331,8 @@ function resetPassword(req,res,next){
                     that();
                 }
             }
-        })
+        })*/
+        that();
     }).seq(function(){
         //check phone captcha
         var that = this;
@@ -339,7 +340,7 @@ function resetPassword(req,res,next){
             if (error) {
                 logger.error(' resetPassword ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else if(params.captcha != result){
+            } else if(result == null || result.result== null || params.captcha != result.result.code){
                 logger.warn(' resetPassword ' + 'failed');
                 resUtil.resetFailedRes(res,sysMsg.CUST_SMS_CAPTCHA_ERROR,null);
                 return next();

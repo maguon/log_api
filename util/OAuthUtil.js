@@ -169,7 +169,7 @@ function savePasswordCode(params,callback) {
 }
 
 function getPasswordCode(params,callback) {
-    httpUtil.httpPost(systemConfig.hosts.auth,'/api/'+params.phone+"/passwordCode",{},{},function(error,result){
+    httpUtil.httpGet(systemConfig.hosts.auth,'/api/'+params.phone+"/passwordCode",{},{},function(error,result){
         callback(error,result)
     })
 }
