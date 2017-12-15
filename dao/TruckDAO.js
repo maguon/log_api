@@ -28,10 +28,11 @@ function addTruckFirst(params,callback){
 }
 
 function addTruckTrailer(params,callback){
-    var query = "insert into truck_info (truck_num,the_code,company_id,truck_type,number,driving_date,license_date,two_date,remark) " +
+    var query = "insert into truck_info (truck_num,brand_id,the_code,company_id,truck_type,number,driving_date,license_date,two_date,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
+    paramsArray[i++]=params.brandId;
     paramsArray[i++]=params.theCode;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.truckType;
@@ -48,7 +49,7 @@ function addTruckTrailer(params,callback){
 
 function getTruckFirst(params,callback) {
     var query = " select h.*,t.id as trail_id,t.truck_num as trail_num,t.number as trail_number," +
-        " b.brand_name,h.hp,d.drive_name,d1.drive_name as vice_drive_name,c.company_name,c.operate_type " +
+        " b.brand_name,d.drive_name,d1.drive_name as vice_drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
         " left join truck_brand b on h.brand_id = b.id  " +
         " left join drive_info d on h.drive_id = d.id  " +
@@ -124,8 +125,9 @@ function getTruckFirst(params,callback) {
 }
 
 function getTruckTrailer(params,callback) {
-    var query = " select h.*,t.id as first_id,t.truck_num as first_num,d.id as driveId,d.drive_name,c.company_name,c.operate_type " +
+    var query = " select h.*,t.id as first_id,t.truck_num as first_num,d.id as driveId,d.drive_name,c.company_name,c.operate_type,b.brand_name " +
         " from truck_info h left join truck_info t on h.id = t.rel_id " +
+        " left join truck_brand b on h.brand_id = b.id  " +
         " left join drive_info d on t.drive_id = d.id  " +
         " left join company_info c on h.company_id = c.id where h.id is not null ";
     var paramsArray=[],i=0;
@@ -136,6 +138,10 @@ function getTruckTrailer(params,callback) {
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
         query = query + " and h.truck_num = ? ";
+    }
+    if(params.brandId){
+        paramsArray[i++] = params.brandId;
+        query = query + " and h.brand_id = ? ";
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;

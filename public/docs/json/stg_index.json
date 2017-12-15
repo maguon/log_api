@@ -1050,6 +1050,14 @@
 
           },
           {
+            "name": "brandId",
+            "in": "query",
+            "description": "brand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "companyId",
             "in": "query",
             "description": "company id",
