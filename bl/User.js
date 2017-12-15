@@ -314,17 +314,17 @@ function changeUserPassword(req,res,next){
     })
 }
 
-function updateUserPassword(req,res,next){
+function resetPassword(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
         userDAO.getUser(params,function(error,rows){
             if (error) {
-                logger.error(' getUser ' + error.message);
+                logger.error(' resetPassword ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(rows && rows.length<1){
-                    logger.warn(' getUser ' + sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    logger.warn(' resetPassword ' + sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
                     resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
                     return next();
                 }else{
@@ -333,17 +333,28 @@ function updateUserPassword(req,res,next){
             }
         })
     }).seq(function(){
-        if(params.newPassword != params.confirmNewPassword){
-            resUtil.resetFailedRes(res,' 新密码不一致 ');
-            return next();
-        }
-        params.password = encrypt.encryptByMd5(params.newPassword);
+        //check phone captcha
+        var that = this;
+        oAuthUtil.getPasswordCode({phone:params.mobile},function (error,result) {
+            if (error) {
+                logger.error(' resetPassword ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else if(params.captcha != result){
+                logger.warn(' resetPassword ' + 'failed');
+                resUtil.resetFailedRes(res,sysMsg.CUST_SMS_CAPTCHA_ERROR,null);
+                return next();
+            }else{
+                that();
+            }
+        })
+    }).seq(function(){
+        params.password = encrypt.encryptByMd5(params.password);
         userDAO.updateUserPassword(params,function(error,result){
             if (error) {
-                logger.error(' updateUserPassword ' + error.message);
+                logger.error(' resetPassword ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateUserPassword ' + 'success');
+                logger.info(' resetPassword ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -429,7 +440,7 @@ module.exports = {
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,
     changeUserPassword : changeUserPassword,
-    updateUserPassword : updateUserPassword,
+    resetPassword : resetPassword,
     changeUserToken : changeUserToken,
     updateUserAvatarImage : updateUserAvatarImage
 }

@@ -396,16 +396,6 @@
             "required": true,
             "type": "string"
 
-          },
-          {
-            "name": "user",
-            "in": "body",
-            "description": "user info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/user"
-            }
-
           }
         ],
         "responses": {
@@ -593,19 +583,27 @@
         }
       }
     },
-    "/backPassword": {
+    "/phone/{mobile}/password": {
       "put": {
         "tags": [
           "user"
         ],
-        "summary": "back user password",
-        "description": "back user password",
+        "summary": "reset user password",
+        "description": "reset user password",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "backPassword",
+            "name": "mobile",
+            "in": "path",
+            "description": "user unique mobile",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "reset",
             "in": "body",
             "description": "user info",
             "required": true,
@@ -10917,7 +10915,7 @@
         },
         "hp" : {
           "type": "integer"
-        }
+        },
         "truckTel": {
           "type": "string"
         },
