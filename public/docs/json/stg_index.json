@@ -10860,6 +10860,9 @@
         "brandId": {
           "type": "integer"
         },
+        "hp" : {
+          "type": "integer"
+        }
         "truckTel": {
           "type": "string"
         },

@@ -7,11 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckDAO.js');
 
 function addTruckFirst(params,callback){
-    var query = "insert into truck_info (truck_num,brand_id,truck_tel,the_code,company_id, " +
-        " truck_type,driving_date,license_date,two_date,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = "insert into truck_info (truck_num,brand_id,hp,truck_tel,the_code,company_id, " +
+        " truck_type,driving_date,license_date,two_date,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
+    paramsArray[i++]=params.hp;
     paramsArray[i++]=params.truckTel;
     paramsArray[i++]=params.theCode;
     paramsArray[i++]=params.companyId;
@@ -47,7 +48,7 @@ function addTruckTrailer(params,callback){
 
 function getTruckFirst(params,callback) {
     var query = " select h.*,t.id as trail_id,t.truck_num as trail_num,t.number as trail_number," +
-        " b.brand_name,d.drive_name,d1.drive_name as vice_drive_name,c.company_name,c.operate_type " +
+        " b.brand_name,h.hp,d.drive_name,d1.drive_name as vice_drive_name,c.company_name,c.operate_type " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
         " left join truck_brand b on h.brand_id = b.id  " +
         " left join drive_info d on h.drive_id = d.id  " +
@@ -338,11 +339,12 @@ function getTruckOperateTypeCountTotal(params,callback) {
 }
 
 function updateTruck(params,callback){
-    var query = " update truck_info set truck_num = ? , brand_id = ? , truck_tel = ? ,the_code = ? , company_id = ? , " +
+    var query = " update truck_info set truck_num = ? , brand_id = ? , hp= ? , truck_tel = ? ,the_code = ? , company_id = ? , " +
         " truck_type = ? , number = ? , driving_date = ? , license_date = ? , two_date = ? , remark = ?  where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
+    paramsArray[i++]=params.hp;
     paramsArray[i++]=params.truckTel;
     paramsArray[i++]=params.theCode;
     paramsArray[i++]=params.companyId;

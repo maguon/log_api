@@ -172,3 +172,5 @@ CREATE TABLE `dp_route_load_task_clean_rel` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `log_base`.`truck_info` ADD COLUMN `hp` int(4) DEFAULT 0 AFTER `brand_id`;
