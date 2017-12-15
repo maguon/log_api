@@ -29,7 +29,7 @@ function addTruckFirst(params,callback){
 
 function addTruckTrailer(params,callback){
     var query = "insert into truck_info (truck_num,brand_id,the_code,company_id,truck_type,number,driving_date,license_date,two_date,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
