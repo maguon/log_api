@@ -49,6 +49,7 @@ var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
 var msgPush = require('./bl/MsgPush.js');
+var sms = require('./bl/Sms.js');
 
 ///--- API
 
@@ -472,7 +473,10 @@ function createServer() {
      * MsgPush Module
      */
     server.get('/api/user/:userId/pushMsg' ,msgPush.pushMsg);
-
+    /**
+     * SMS Module
+     */
+    server.post({path:'/api/phone/:mobile/passwordSms',contentType: 'application/json'},sms.sendPswdSms);
     /**
      * App Module
      */
