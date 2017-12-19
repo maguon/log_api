@@ -56,7 +56,7 @@ function getReceive(params,callback) {
 }
 
 function updateReceive(params,callback){
-    var query = " update receive_info set short_name = ?, receive_name = ?,address = ?,clean_fee , lng = ?,lat = ?,city_id = ?,remark = ? where id = ? " ;
+    var query = " update receive_info set short_name = ?, receive_name = ?,address = ?,clean_fee = ? , lng = ?,lat = ?,city_id = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.receiveName;
