@@ -24,7 +24,7 @@ ALTER TABLE `dp_demand_info`
 ADD COLUMN `not_plan_count`  int(10) NULL DEFAULT 0 COMMENT '未派发台数' AFTER `plan_count`,
 ADD COLUMN `load_count`  int(10) NULL DEFAULT 0 COMMENT '装车数量' AFTER `not_plan_count`;
 ALTER TABLE `receive_info`
-ADD COLUMN `clean_fee`  decimal(10,2) NULL COMMENT '洗车费' AFTER `city_id`;
+ADD COLUMN `clean_fee`  decimal(10,2) DEFAULT 0 COMMENT '洗车费' AFTER `city_id`;
 -- ----------------------------
 -- Table structure for drive_refuel
 -- ----------------------------

@@ -11250,6 +11250,9 @@
         "address": {
           "type": "string"
         },
+        "cleanFee": {
+          "type": "float"
+        },
         "lng": {
           "type": "integer"
         },
