@@ -453,7 +453,8 @@ function createServer() {
     server.get('/api/damageCheckCount',damage.queryDamageCheckCount);
     server.get('/api/damageNotCheckCount',damage.queryDamageNotCheckCount);
     server.get('/api/damageTotalCost',damage.queryDamageTotalCost);
-    server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage);
+    server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},damage.createQualityAssurance,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
     server.put({path:'/api/user/:userId/damage/:damageId/damageStatus/:damageStatus',contentType: 'application/json'} ,damage.updateDamageStatus);
 

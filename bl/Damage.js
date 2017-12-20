@@ -51,6 +51,8 @@ function createDamage(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' createDamage ' + 'success');
+                req.params.op = sysConst.CAR_OP_TYPE.QUALITY;
+                req.params.carContent = " 增加质损记录 " + result.insertId;
                 resUtil.resetCreateRes(res,result,null);
                 return next();
             }
@@ -161,6 +163,14 @@ function updateDamageStatus(req,res,next){
     })
 }
 
+function createQualityAssurance(req,res,next){
+    var params = req.params;
+    req.params.carContent =" 质检 ";
+    req.params.op =sysConst.CAR_OP_TYPE.QUALITY;
+    logger.info(' createQualityAssurance ' + params.vin)
+    resUtil.resetCreateRes(res,{insertId:1},null);
+    return next();
+}
 
 module.exports = {
     createDamage : createDamage,
@@ -169,5 +179,6 @@ module.exports = {
     queryDamageNotCheckCount : queryDamageNotCheckCount,
     queryDamageTotalCost : queryDamageTotalCost,
     updateDamage : updateDamage,
-    updateDamageStatus : updateDamageStatus
+    updateDamageStatus : updateDamageStatus ,
+    createQualityAssurance : createQualityAssurance
 }

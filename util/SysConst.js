@@ -75,7 +75,31 @@ var REFUEL_STATUS  ={
     no_check : 1
 };
 
+var DAMAGE_TYPE = {
+    a : 1 ,
+    b : 2 ,
+    c : 3 ,
+    d : 4 ,
+    f : 6
+};
+
+var DAMAGE_STEP_TYPE = {
+    SYS_OUT : 1, //委托方质损
+    PARK_DAMAGE :2 ,//短驳质损
+    STORAGE_DAMAGE : 3, //仓储质损
+    LOAD_DAMAGE : 4 ,//装车质损
+    TRANS_DAMAGE : 5 //运输质损
+};
 var UNLOAD_CAR_COUNT = 3;
+
+var CAR_OP_TYPE = {
+    QUALITY : 10,
+    IMPORT : 11,
+    MOVING : 12,
+    EXPORT : 13,
+    LOAD :14 ,
+    ARRIVED : 15
+}
 module.exports = {
     USER_TYPE : USER_TYPE,
     RECORD_OP_TYPE : RECORD_OP_TYPE,
@@ -87,5 +111,8 @@ module.exports = {
     USER_LOGIN_APP_TYPE : USER_LOGIN_APP_TYPE,
     DAMAGE_STATUS : DAMAGE_STATUS ,
     REFUEL_STATUS : REFUEL_STATUS ,
-    UNLOAD_CAR_COUNT  : UNLOAD_CAR_COUNT
+    UNLOAD_CAR_COUNT  : UNLOAD_CAR_COUNT ,
+    DAMAGE_TYPE : DAMAGE_TYPE ,
+    DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
+    CAR_OP_TYPE : CAR_OP_TYPE
 }
