@@ -58,6 +58,14 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.makeId;
         query = query + " and c.make_id = ? ";
     }
+    if(params.damageType){
+        paramsArray[i++] = params.damageType;
+        query = query + " and dc.damage_type = ? ";
+    }
+    if(params.damageLinkType){
+        paramsArray[i++] = params.damageLinkType;
+        query = query + " and dc.damage_link_type = ? ";
+    }
     if(params.declareUserId){
         paramsArray[i++] = params.declareUserId;
         query = query + " and da.declare_user_id = ? ";

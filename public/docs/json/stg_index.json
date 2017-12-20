@@ -10076,6 +10076,22 @@
 
           },
           {
+            "name": "damageType",
+            "in": "query",
+            "description": "damage type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageLinkType",
+            "in": "query",
+            "description": "damage link type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "declareUserId",
             "in": "query",
             "description": "declareUser id",
@@ -11690,6 +11706,9 @@
 
         "carId": {
           "type": "integer"
+        },
+        "vin": {
+          "type": "string"
         },
         "truckId": {
           "type": "integer"
