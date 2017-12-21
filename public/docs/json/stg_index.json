@@ -10328,6 +10328,51 @@
         }
       }
     },
+    "/user/{userId}/qualityAssurance": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user add quality record",
+        "description": "user add a quality assurance",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "quality",
+            "in": "body",
+            "description": "quality info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quality"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid parameter id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damage": {
       "post": {
         "tags": [
@@ -11824,6 +11869,21 @@
       },
       "xml": {
         "name": "damageInsure"
+      }
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        },
+        "vin": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "quality"
       }
     }
   },
