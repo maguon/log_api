@@ -172,6 +172,20 @@ function createQualityAssurance(req,res,next){
     return next();
 }
 
+function queryDamageMonthStat(req,res,next){
+    var params = req.params;
+    damageDAO.getDamageMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 module.exports = {
     createDamage : createDamage,
     queryDamage : queryDamage,
@@ -180,5 +194,6 @@ module.exports = {
     queryDamageTotalCost : queryDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus ,
-    createQualityAssurance : createQualityAssurance
+    createQualityAssurance : createQualityAssurance ,
+    queryDamageMonthStat : queryDamageMonthStat
 }

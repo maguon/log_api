@@ -453,6 +453,7 @@ function createServer() {
     server.get('/api/damageCheckCount',damage.queryDamageCheckCount);
     server.get('/api/damageNotCheckCount',damage.queryDamageNotCheckCount);
     server.get('/api/damageTotalCost',damage.queryDamageTotalCost);
+    server.get('/api/damageMonthStat',damage.queryDamageMonthStat);
     server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},damage.createQualityAssurance,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
@@ -462,6 +463,7 @@ function createServer() {
      * DamageCheck Module
      */
     server.get('/api/damageCheck',damageCheck.queryDamageCheck);
+    server.get('/api/damageCheckMonthStat',damageCheck.queryDamageCheckMonthStat);
     server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
     server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
 

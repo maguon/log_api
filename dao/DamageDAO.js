@@ -195,6 +195,29 @@ function updateDamageStatus(params,callback){
     });
 }
 
+function getDamageMonthStat(params,callback){
+    var query = " select count(di.id) ,db.y_month from damage_info di left join date_base db on di.date_id = db.id " +
+        "where di.id is not null " +
+        "group by db.y_month " ;
+    var paramsArray=[],i=0;
+    if(params.declareUserId){
+        paramsArray[i++] = params.declareUserId;
+        query = query + " and di.declare_user_id = ? ";
+    }
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageMonthStat ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
     addDamage : addDamage,
@@ -203,5 +226,6 @@ module.exports ={
     getDamageNotCheckCount : getDamageNotCheckCount,
     getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
-    updateDamageStatus : updateDamageStatus
+    updateDamageStatus : updateDamageStatus ,
+    getDamageMonthStat : getDamageMonthStat
 }

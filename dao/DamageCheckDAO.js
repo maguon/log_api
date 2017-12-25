@@ -85,9 +85,35 @@ function updateDamageCheck(params,callback){
     });
 }
 
+function getDamageCheckMonthStat(params,callback){
+    var query = " select count(dc.id),sum(dc.reduction_cost) total_reduce_cost, " +
+        " sum(dc.penalty_cost) total_penalty_cost ,sum(dc.profit) total_profit,sum(dc.repair_cost) total_repair_cost, " +
+        " sum(dc.transport_cost) total_trans_cost,sum(dc.under_cost) total_under_cost,sum(dc.company_cost) total_com_cost,db.y_month " +
+        " from damage_check dc left join date_base db on dc.date_id = db.id " ;
+    var paramsArray=[],i=0;
+    if(params.underUserId){
+        paramsArray[i++] = params.underUserId;
+        query = query + " and dc.under_user_id = ? ";
+    }
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageCheckMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageCheck : addDamageCheck,
     getDamageCheck : getDamageCheck,
-    updateDamageCheck : updateDamageCheck
+    updateDamageCheck : updateDamageCheck ,
+    getDamageCheckMonthStat  : getDamageCheckMonthStat
 }
