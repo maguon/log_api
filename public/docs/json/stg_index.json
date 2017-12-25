@@ -10192,6 +10192,22 @@
         ],
         "parameters": [
           {
+            "name": "damageType",
+            "in": "query",
+            "description": "damage type stat ,val=1",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageLinkType",
+            "in": "query",
+            "description": "damage link type stat ,val=1",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "dateIdStart",
             "in": "query",
             "description": "dateId start",

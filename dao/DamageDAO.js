@@ -107,9 +107,15 @@ function getDamage(params,callback) {
 }
 
 function getDamageCheckCount(params,callback) {
-    var query = " select count(da.id) as damage_count,dc.damage_type from damage_info da" +
-        " left join damage_check dc on da.id = dc.damage_id where da.id is not null ";
+    var query = " select count(da.id) as damage_count" ;
+
     var paramsArray=[],i=0;
+    if(params.damageType){
+        query = query + " ,dc.damage_type " +"from damage_info da left join damage_check dc on da.id = dc.damage_id where da.id is not null ";
+    }
+    if(params.damageLinkType){
+        query = query + " ,dc.damage_link_type " +"from damage_info da left join damage_check dc on da.id = dc.damage_id where da.id is not null ";
+    }
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
         query = query + " and date_format(dc.date_id,'%Y%m') >= ? ";
@@ -122,7 +128,13 @@ function getDamageCheckCount(params,callback) {
         paramsArray[i++] = params.damageStatus;
         query = query + " and da.damage_status = ? ";
     }
-    query = query + " group by dc.damage_type ";
+    if(params.damageType){
+        query = query + " group by dc.damage_type ";
+    }
+    if(params.damageLinkType){
+        query = query + " group by dc.damage_link_type ";
+    }
+
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageCheckCount ');
         return callback(error,rows);

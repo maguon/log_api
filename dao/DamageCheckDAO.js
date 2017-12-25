@@ -110,6 +110,20 @@ function getDamageCheckMonthStat(params,callback){
     });
 }
 
+function getDamageCheckStat(params,callback){
+    var query = "select count(dc.id),sum(dc.reduction_cost) total_reduce_cost, " +
+        " sum(dc.penalty_cost) total_penalty_cost ,sum(dc.profit) total_profit,sum(dc.repair_cost) total_repair_cost, " +
+        " sum(dc.transport_cost) total_trans_cost,sum(dc.under_cost) total_under_cost,sum(dc.company_cost) total_com_cost " ;
+    if(params.damageType){
+        query = query + " , dc.damage_type "
+    }
+    if(params.damageLinkeType){
+        query = query + " , dc.damage_link_type "
+    }
+        " from damage_check dc left join date_base db on dc.date_id = db.id " +
+        " group by dc.damage_type"
+}
+
 
 module.exports ={
     addDamageCheck : addDamageCheck,
