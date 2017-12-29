@@ -86,7 +86,7 @@ function updateDamageCheck(params,callback){
 }
 
 function getDamageCheckMonthStat(params,callback){
-    var query = " select count(dc.id),sum(dc.reduction_cost) total_reduce_cost, " +
+    var query = " select count(dc.id) check_count,sum(dc.reduction_cost) total_reduce_cost, " +
         " sum(dc.penalty_cost) total_penalty_cost ,sum(dc.profit) total_profit,sum(dc.repair_cost) total_repair_cost, " +
         " sum(dc.transport_cost) total_trans_cost,sum(dc.under_cost) total_under_cost,sum(dc.company_cost) total_com_cost,db.y_month " +
         " from damage_check dc left join date_base db on dc.date_id = db.id " ;
