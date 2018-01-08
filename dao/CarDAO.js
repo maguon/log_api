@@ -115,6 +115,10 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and c.receive_id = ? ";
     }
+    if(params.uploadId){
+        paramsArray[i++] = params.uploadId;
+        query = query + " and c.upload_id = ? ";
+    }
     if(params.orderStart){
         paramsArray[i++] = params.orderStart;
         query = query + " and c.order_date >= ? ";

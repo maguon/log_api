@@ -7084,6 +7084,14 @@
 
           },
           {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "routeStartId",
             "in": "query",
             "description": "routeStart id",
