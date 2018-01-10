@@ -7000,6 +7000,14 @@
 
           },
           {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -7081,14 +7089,6 @@
             "description": "model id",
             "required": false,
             "type": "integer"
-
-          },
-          {
-            "name": "uploadId",
-            "in": "query",
-            "description": "upload id",
-            "required": false,
-            "type": "string"
 
           },
           {
