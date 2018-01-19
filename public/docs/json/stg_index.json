@@ -11510,7 +11510,7 @@
           "type": "string"
         },
         "cleanFee": {
-          "type": "float"
+          "type": "number"
         },
         "lng": {
           "type": "integer"
