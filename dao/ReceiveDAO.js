@@ -7,12 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('ReceiveDAO.js');
 
 function addReceive(params,callback){
-    var query = " insert into receive_info (short_name,receive_name,address,clean_fee,lng,lat,city_id,remark) values (? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into receive_info (short_name,receive_name,address,lng,lat,city_id,remark) values (? , ? ,  ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.receiveName;
     paramsArray[i++]=params.address;
-    paramsArray[i++]=params.cleanFee;
     paramsArray[i++]=params.lng;
     paramsArray[i++]=params.lat;
     paramsArray[i++]=params.cityId;
@@ -56,12 +55,11 @@ function getReceive(params,callback) {
 }
 
 function updateReceive(params,callback){
-    var query = " update receive_info set short_name = ?, receive_name = ?,address = ?,clean_fee = ? , lng = ?,lat = ?,city_id = ?,remark = ? where id = ? " ;
+    var query = " update receive_info set short_name = ?, receive_name = ?,address = ?, lng = ?,lat = ?,city_id = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.receiveName;
     paramsArray[i++]=params.address;
-    paramsArray[i++]=params.cleanFee;
     paramsArray[i++]=params.lng;
     paramsArray[i++]=params.lat;
     paramsArray[i++]=params.cityId;
@@ -73,9 +71,21 @@ function updateReceive(params,callback){
     });
 }
 
+function updateReceiveCleanFee(params,callback){
+    var query = " update receive_info set clean_fee = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.cleanFee;
+    paramsArray[i]=params.receiveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateReceiveCleanFee ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addReceive: addReceive,
     getReceive : getReceive,
-    updateReceive : updateReceive
+    updateReceive : updateReceive ,
+    updateReceiveCleanFee : updateReceiveCleanFee
 }

@@ -5507,6 +5507,60 @@
         }
       }
     },
+    "/user/{userId}/receive/{receiveId}/cleanFee": {
+      "put": {
+        "tags": [
+          "receive"
+        ],
+        "summary": "update receive clean fee",
+        "description": "update receive clean fee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "path",
+            "description": "receive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "receive",
+            "in": "body",
+            "description": "receive clean fee property",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/receive"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid receive id"
+          }
+        }
+      }
+    },
     "/receive/{receiveId}/contacts": {
       "get": {
         "tags": [

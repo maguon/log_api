@@ -303,6 +303,7 @@ function createServer() {
     server.get('/api/receive',receive.queryReceive);
     server.post({path:'/api/user/:userId/receive',contentType: 'application/json'},receive.createReceive);
     server.put({path:'/api/user/:userId/receive/:receiveId',contentType: 'application/json'} ,receive.updateReceive);
+    server.put({path:'/api/user/:userId/receive/:receiveId/cleanFee',contentType: 'application/json'} ,receive.updateReceiveCleanFee);
 
     /**
      * ReceiveContacts Module

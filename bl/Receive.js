@@ -54,10 +54,24 @@ function updateReceive(req,res,next){
         }
     })
 }
+function updateReceiveCleanFee(req,res,next){
+    var params = req.params ;
+    receiveDAO.updateReceiveCleanFee(params,function(error,result){
+        if (error) {
+            logger.error(' updateReceiveCleanFee ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateReceiveCleanFee ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
 
 
 module.exports = {
     createReceive : createReceive,
     queryReceive : queryReceive,
-    updateReceive : updateReceive
+    updateReceive : updateReceive ,
+    updateReceiveCleanFee : updateReceiveCleanFee
 }
