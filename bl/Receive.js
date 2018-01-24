@@ -65,7 +65,6 @@ function updateReceiveCleanFee(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             req.params.receiverContent ="调整洗车费单价("+params.cleanFee+")";
-            req.params.receiverId = req.params.receiveId;
             logger.info(' updateReceiveCleanFee ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();

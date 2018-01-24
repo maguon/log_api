@@ -112,6 +112,7 @@ function saveReceiverRecord(req,res,next){
         recordParams.userId = params._uid;
         recordParams.userType = params._utype || 99;
         recordParams.username = params._uname || 'admin';
+        recordParams.receiverId = params.receiveId;
         recordParams.content = params.receiverContent;
         sysRecordDAO.addReceiverRecord(req,recordParams,function(error,result){
             if(error){
