@@ -21,6 +21,9 @@ function createReceive(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' createReceive ' + 'success');
+            req.params.receiverContent =" 经销商信息录入 ";
+            ;
+            req.params.receiverId = result.insertId;
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
@@ -61,6 +64,7 @@ function updateReceiveCleanFee(req,res,next){
             logger.error(' updateReceiveCleanFee ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
+            req.params.receiverContent =" 调整洗车费单价( "+params.cleanFee+")";
             logger.info(' updateReceiveCleanFee ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
