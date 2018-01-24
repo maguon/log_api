@@ -21,7 +21,7 @@ function createReceive(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' createReceive ' + 'success');
-            req.params.receiverContent =" ¾­ÏúÉÌĞÅÏ¢Â¼Èë ";
+            req.params.receiverContent =" ç»é”€å•†ä¿¡æ¯å½•å…¥ ";
             ;
             req.params.receiverId = result.insertId;
             resUtil.resetCreateRes(res,result,null);
@@ -64,7 +64,8 @@ function updateReceiveCleanFee(req,res,next){
             logger.error(' updateReceiveCleanFee ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            req.params.receiverContent =" µ÷ÕûÏ´³µ·Ñµ¥¼Û( "+params.cleanFee+")";
+            req.params.receiverContent ="è°ƒæ•´æ´—è½¦è´¹å•ä»·("+params.cleanFee+")";
+            req.params.receiverId = req.params.receiveId;
             logger.info(' updateReceiveCleanFee ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
