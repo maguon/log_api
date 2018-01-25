@@ -11,6 +11,7 @@ var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('Car.js');
 
 function createUploadCar(req,res,next){
@@ -48,20 +49,25 @@ function createCar(req,res,next){
             }
         })
     }).seq(function(){
-            carDAO.addCar(params,function(error,result){
-                if (error) {
-                    logger.error(' createCar ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    logger.info(' createCar ' + 'success');
-                    req.params.carContent =" 商品车信息录入 ";
-                    carId = result.insertId;
-                    req.params.carId = carId;
-                    req.params.op =10;
-                    resUtil.resetCreateRes(res,result,null);
-                    return next();
-                }
-            })
+        if(params.orderDate!=null || params.orderDate!=""){
+            var myDate = new Date();
+            var strDate = moment(myDate).format('YYYYMMDD');
+            params.orderDateId = parseInt(strDate);
+        }
+        carDAO.addCar(params,function(error,result){
+            if (error) {
+                logger.error(' createCar ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createCar ' + 'success');
+                req.params.carContent =" 商品车信息录入 ";
+                carId = result.insertId;
+                req.params.carId = carId;
+                req.params.op =10;
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
@@ -137,6 +143,13 @@ function queryCarReceiveCount(req,res,next){
 
 function updateCar(req,res,next){
     var params = req.params ;
+    if(params.orderDate!=null || params.orderDate!=""){
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.orderDateId = parseInt(strDate);
+    }else{
+        params.orderDateId = null;
+    }
     carDAO.updateCar(params,function(error,result){
         if (error) {
             logger.error(' updateCar ' + error.message);

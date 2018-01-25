@@ -49,8 +49,8 @@ function addCarTmp(params,callback){
 
 function addCar(params,callback){
     var query = " insert into car_info (vin,make_id,make_name,model_id,model_name," +
-        " route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,entrust_id,order_date,colour,engine_num,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,entrust_id,order_date,order_date_id,colour,engine_num,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -65,6 +65,7 @@ function addCar(params,callback){
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.orderDate;
+    paramsArray[i++]=params.orderDateId;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
     paramsArray[i]=params.remark;
@@ -345,7 +346,7 @@ function getCarReceiveCount(params,callback) {
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
         " route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , receive_id = ? , " +
-        " entrust_id = ? , order_date = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
+        " entrust_id = ? , order_date = ? , order_date_id = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
@@ -360,6 +361,7 @@ function updateCar(params,callback){
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.orderDate;
+    paramsArray[i++]=params.orderDateId;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
     paramsArray[i++]=params.remark;
