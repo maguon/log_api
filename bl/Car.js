@@ -50,8 +50,8 @@ function createCar(req,res,next){
         })
     }).seq(function(){
         if(params.orderDate!=null || params.orderDate!=""){
-            var myDate = new Date();
-            var strDate = moment(myDate).format('YYYYMMDD');
+            var orderDate = params.orderDate;
+            var strDate = moment(orderDate).format('YYYYMMDD');
             params.orderDateId = parseInt(strDate);
         }
         carDAO.addCar(params,function(error,result){
@@ -143,12 +143,12 @@ function queryCarReceiveCount(req,res,next){
 
 function updateCar(req,res,next){
     var params = req.params ;
-    if(params.orderDate!=null || params.orderDate!="" || params.orderDate!=0){
-        var myDate = new Date();
-        var strDate = moment(myDate).format('YYYYMMDD');
-        params.orderDateId = parseInt(strDate);
-    }else{
+    if(params.orderDate==null || params.orderDate==""){
         params.orderDateId = null;
+    }else{
+        var orderDate = params.orderDate;
+        var strDate = moment(orderDate).format('YYYYMMDD');
+        params.orderDateId = parseInt(strDate);
     }
     carDAO.updateCar(params,function(error,result){
         if (error) {
