@@ -343,9 +343,9 @@ function getCarReceiveCount(params,callback) {
     });
 }
 
-function getCarStat(params,callback) {
-    var query = " select db.y_month,count(c.id) as car_count from date_base db " +
-        " left join car_info c on db.id = c.order_date_id where c.id is not null ";
+function getCarMonthStat(params,callback) {
+    var query = " select DISTINCT(db.y_month),count(c.id) as car_count from date_base db " +
+        " left join car_info c on db.id = c.order_date_id where db.id is not null ";
     var paramsArray=[],i=0;
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
@@ -368,8 +368,33 @@ function getCarStat(params,callback) {
         query = query + " and c.base_addr_id = ? ";
     }
     query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc limit 0,10 ';
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getCarStat ');
+        logger.debug(' getCarMonthStat ');
+        return callback(error,rows);
+    });
+}
+
+function getCarDayStat(params,callback) {
+    var query = " select DISTINCT(db.day),count(c.id) as car_count from date_base db " +
+        " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    query = query + ' group by db.day ';
+    query = query + ' order by db.day desc limit 0,30 ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarDayStat ');
         return callback(error,rows);
     });
 }
@@ -451,7 +476,8 @@ module.exports ={
     getCarRouteEndCount : getCarRouteEndCount,
     getCarOrderDateCount : getCarOrderDateCount,
     getCarReceiveCount : getCarReceiveCount,
-    getCarStat : getCarStat,
+    getCarMonthStat : getCarMonthStat,
+    getCarDayStat : getCarDayStat,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,

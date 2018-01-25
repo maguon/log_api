@@ -7422,13 +7422,13 @@
         }
       }
     },
-    "/carStat": {
+    "/carMonthStat": {
       "get": {
         "tags": [
           "car"
         ],
-        "summary": "query  car stat",
-        "description": "query carStat",
+        "summary": "query  car monthStat",
+        "description": "query carMonthStat",
         "produces": [
           "application/json"
         ],
@@ -7449,6 +7449,58 @@
             "type": "integer"
 
           },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust Id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make Id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr Id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/carDayStat": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car DayStat",
+        "description": "query carDayStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
           {
             "name": "entrustId",
             "in": "query",

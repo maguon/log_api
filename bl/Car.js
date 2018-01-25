@@ -141,14 +141,28 @@ function queryCarReceiveCount(req,res,next){
     })
 }
 
-function queryCarStat(req,res,next){
+function queryCarMonthStat(req,res,next){
     var params = req.params ;
-    carDAO.getCarStat(params,function(error,result){
+    carDAO.getCarMonthStat(params,function(error,result){
         if (error) {
-            logger.error(' queryCarStat ' + error.message);
+            logger.error(' queryCarMonthStat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryCarStat ' + 'success');
+            logger.info(' queryCarMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryCarDayStat(req,res,next){
+    var params = req.params ;
+    carDAO.getCarDayStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarDayStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarDayStat ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -255,7 +269,8 @@ module.exports = {
     queryCarRouteEndCount : queryCarRouteEndCount,
     queryCarOrderDateCount : queryCarOrderDateCount,
     queryCarReceiveCount : queryCarReceiveCount,
-    queryCarStat : queryCarStat,
+    queryCarMonthStat : queryCarMonthStat,
+    queryCarDayStat : queryCarDayStat,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus
