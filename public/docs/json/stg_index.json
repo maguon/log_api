@@ -7422,6 +7422,74 @@
         }
       }
     },
+    "/carStat": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car stat",
+        "description": "query carStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust Id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make Id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr Id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
     "/user/{userId}/uploadCar": {
       "post": {
         "tags": [

@@ -141,6 +141,20 @@ function queryCarReceiveCount(req,res,next){
     })
 }
 
+function queryCarStat(req,res,next){
+    var params = req.params ;
+    carDAO.getCarStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCar(req,res,next){
     var params = req.params ;
     if(params.orderDate==null){
@@ -241,6 +255,7 @@ module.exports = {
     queryCarRouteEndCount : queryCarRouteEndCount,
     queryCarOrderDateCount : queryCarOrderDateCount,
     queryCarReceiveCount : queryCarReceiveCount,
+    queryCarStat : queryCarStat,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus

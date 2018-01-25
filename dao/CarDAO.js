@@ -343,6 +343,37 @@ function getCarReceiveCount(params,callback) {
     });
 }
 
+function getCarStat(params,callback) {
+    var query = " select db.y_month,count(c.id) as car_count from date_base db " +
+        " left join car_info c on db.id = c.order_date_id where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    query = query + ' group by db.y_month ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarStat ');
+        return callback(error,rows);
+    });
+}
+
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
         " route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , receive_id = ? , " +
@@ -420,6 +451,7 @@ module.exports ={
     getCarRouteEndCount : getCarRouteEndCount,
     getCarOrderDateCount : getCarOrderDateCount,
     getCarReceiveCount : getCarReceiveCount,
+    getCarStat : getCarStat,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
