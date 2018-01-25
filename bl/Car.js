@@ -143,7 +143,7 @@ function queryCarReceiveCount(req,res,next){
 
 function updateCar(req,res,next){
     var params = req.params ;
-    if(params.orderDate!=null || params.orderDate!=""){
+    if(params.orderDate!=null || params.orderDate!="" || params.orderDate!=0){
         var myDate = new Date();
         var strDate = moment(myDate).format('YYYYMMDD');
         params.orderDateId = parseInt(strDate);
