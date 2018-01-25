@@ -49,7 +49,7 @@ function createCar(req,res,next){
             }
         })
     }).seq(function(){
-        if(params.orderDate!=null || params.orderDate!=""){
+        if(params.orderDate!=null){
             var orderDate = params.orderDate;
             var strDate = moment(orderDate).format('YYYYMMDD');
             params.orderDateId = parseInt(strDate);
@@ -143,7 +143,7 @@ function queryCarReceiveCount(req,res,next){
 
 function updateCar(req,res,next){
     var params = req.params ;
-    if(params.orderDate==null || params.orderDate==""){
+    if(params.orderDate==null){
         params.orderDateId = null;
     }else{
         var orderDate = params.orderDate;

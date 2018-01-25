@@ -11,9 +11,11 @@ var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
+var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteLoadTask.js');
 
 function createDpRouteLoadTask(req,res,next){
@@ -137,6 +139,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.truckNum = rows[0].truck_num;
                         parkObj.truckId = rows[0].truck_id;
                         parkObj.dpRouteTaskId = rows[0].dp_route_task_id;
+                        parkObj.dateId = rows[0].date_id;
                         that();
                     } else {
                         logger.warn(' getDpRouteLoadTask ' + 'failed');
@@ -145,6 +148,24 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     }
                 }
             })
+    }).seq(function() {
+        var that = this;
+        var orderDate = parkObj.dateId.toString();
+        params.orderDate = moment(orderDate).format('YYYY-MM-DD');
+        params.orderDateId = parkObj.dateId;
+        carDAO.updateCarOrderDate(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarOrderDate ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCarOrderDate ' + 'success');
+                }else{
+                    logger.warn(' updateCarOrderDate ' + 'failed');
+                }
+                that();
+            }
+        })
     }).seq(function () {
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load){
             var myDate = new Date();

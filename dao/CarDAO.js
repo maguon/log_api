@@ -394,6 +394,21 @@ function updateCarStatus(params,callback){
     });
 }
 
+function updateCarOrderDate(params,callback){
+    var query = " update car_info left join dp_route_load_task_detail on car_info.id = dp_route_load_task_detail.car_id " +
+        " left join dp_route_load_task on dp_route_load_task.id = dp_route_load_task_detail.dp_route_load_task_id " +
+        " set car_info.order_date = ? , car_info.order_date_id =  ? " +
+        " where car_info.order_date is  null and dp_route_load_task_detail.dp_route_load_task_id = ? "  ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.orderDate;
+    paramsArray[i++]=params.orderDateId;
+    paramsArray[i]=params.dpRouteLoadTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarOrderDate ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUploadCar : addUploadCar,
@@ -407,5 +422,6 @@ module.exports ={
     getCarReceiveCount : getCarReceiveCount,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
-    updateCarStatus : updateCarStatus
+    updateCarStatus : updateCarStatus,
+    updateCarOrderDate : updateCarOrderDate
 }
