@@ -12,6 +12,7 @@ var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var carDAO = require('../dao/CarDAO.js');
+var dpRouteLoadTaskCleanRelDAO = require('../dao/DpRouteLoadTaskCleanRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -133,7 +134,9 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                 } else {
                     if (rows && rows.length > 0) {
                         parkObj.addrName = rows[0].addr_name;
+                        parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
+                        parkObj.cleanFee = rows[0].clean_fee;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.carExceptionCount = rows[0].car_exception_count;
                         parkObj.truckNum = rows[0].truck_num;
@@ -162,6 +165,26 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     logger.info(' updateCarOrderDate ' + 'success');
                 }else{
                     logger.warn(' updateCarOrderDate ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        params.dpRouteTaskId = parkObj.dpRouteTaskId;
+        params.truckId  = parkObj.truckId;
+        params.receiveId = parkObj.receiveId;
+        params.singlePrice = parkObj.cleanFee;
+        params.totalPrice = parkObj.cleanFee*parkObj.carCount;
+        dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params,function(error,result){
+            if (error) {
+                logger.error(' addDpRouteLoadTaskCleanRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' addDpRouteLoadTaskCleanRel ' + 'success');
+                }else{
+                    logger.warn(' addDpRouteLoadTaskCleanRel ' + 'failed');
                 }
                 that();
             }
