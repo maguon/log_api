@@ -344,8 +344,19 @@ function getCarReceiveCount(params,callback) {
 }
 
 function getCarMonthStat(params,callback) {
-    var query = " select DISTINCT(db.y_month),count(c.id) as car_count from date_base db " +
-        " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    if(params.entrustId>0){
+        var query = " select DISTINCT(db.y_month),count(case when c.entrust_id = "+ params.entrustId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else if(params.makeId>0){
+        var query = " select DISTINCT(db.y_month),count(case when c.make_id = "+ params.makeId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else if(params.baseAddrId>0){
+        var query = " select DISTINCT(db.y_month),count(case when c.base_addr_id = "+ params.baseAddrId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else{
+        var query = " select DISTINCT(db.y_month),count(c.id) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }
     var paramsArray=[],i=0;
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
@@ -354,18 +365,6 @@ function getCarMonthStat(params,callback) {
     if(params.monthEnd){
         paramsArray[i++] = params.monthEnd;
         query = query + " and db.y_month <= ? ";
-    }
-    if(params.entrustId){
-        paramsArray[i++] = params.entrustId;
-        query = query + " and c.entrust_id = ? ";
-    }
-    if(params.makeId){
-        paramsArray[i++] = params.makeId;
-        query = query + " and c.make_id = ? ";
-    }
-    if(params.baseAddrId){
-        paramsArray[i++] = params.baseAddrId;
-        query = query + " and c.base_addr_id = ? ";
     }
     query = query + ' group by db.y_month ';
     query = query + ' order by db.y_month desc ';
@@ -381,21 +380,20 @@ function getCarMonthStat(params,callback) {
 }
 
 function getCarDayStat(params,callback) {
-    var query = " select db.id,count(c.id) as car_count from date_base db " +
-        " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    if(params.entrustId>0){
+        var query = " select db.id,count(case when c.entrust_id = "+ params.entrustId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else if(params.makeId>0){
+        var query = " select db.id,count(case when c.make_id = "+ params.makeId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else if(params.baseAddrId>0){
+        var query = " select db.id,count(case when c.base_addr_id = "+ params.baseAddrId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else{
+        var query = " select db.id,count(c.id) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }
     var paramsArray=[],i=0;
-    if(params.entrustId){
-        paramsArray[i++] = params.entrustId;
-        query = query + " and c.entrust_id = ? ";
-    }
-    if(params.makeId){
-        paramsArray[i++] = params.makeId;
-        query = query + " and c.make_id = ? ";
-    }
-    if(params.baseAddrId){
-        paramsArray[i++] = params.baseAddrId;
-        query = query + " and c.base_addr_id = ? ";
-    }
     query = query + ' group by db.id ';
     query = query + ' order by db.id desc ';
     if (params.start && params.size) {
