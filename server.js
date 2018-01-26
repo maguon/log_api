@@ -473,6 +473,7 @@ function createServer() {
     /**
      * DamageInsure Module
      */
+    server.get('/api/damageInsure',damageInsure.queryDamageInsure);
     server.post({path:'/api/user/:userId/damageInsure',contentType: 'application/json'},damageInsure.createDamageInsure);
 
     /**

@@ -11009,6 +11009,90 @@
         }
       }
     },
+    "/damageInsure": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageInsure list",
+        "description": "query damageInsure",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageInsureId",
+            "in": "query",
+            "description": "damageInsure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureStatus",
+            "in": "query",
+            "description": "insure status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureActualStart",
+            "in": "query",
+            "description": "insureActual start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureActualEnd",
+            "in": "query",
+            "description": "insureActual end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserId",
+            "in": "query",
+            "description": "insureUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserName",
+            "in": "query",
+            "description": "insureUser name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageInsure"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsure id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageInsure": {
       "post": {
         "tags": [
