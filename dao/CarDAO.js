@@ -368,7 +368,7 @@ function getCarMonthStat(params,callback) {
         query = query + " and c.base_addr_id = ? ";
     }
     query = query + ' group by db.y_month ';
-    query = query + ' order by db.y_month ';
+    query = query + ' order by db.y_month desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -397,7 +397,7 @@ function getCarDayStat(params,callback) {
         query = query + " and c.base_addr_id = ? ";
     }
     query = query + ' group by db.id ';
-    query = query + ' order by db.id ';
+    query = query + ' order by db.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
