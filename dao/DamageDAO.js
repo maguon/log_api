@@ -106,6 +106,26 @@ function getDamage(params,callback) {
     });
 }
 
+function getDamageBase(params,callback) {
+    var query = " select d.*,c.vin,c.make_name,damage_type,dc.under_user_name, " +
+        " e.short_name as e_short_name,r.short_name as r_short_name from damage_info d " +
+        " left join damage_insure_rel dir on d.id = dir.damage_id " +
+        " left join damage_insure di on dir.damage_id = di.id " +
+        " left join damage_check dc on d.id = dc.damage_id " +
+        " left join car_info c on d.car_id = c.id " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " left join receive_info r on c.receive_id = r.id where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.damageInsureId){
+        paramsArray[i++] = params.damageInsureId;
+        query = query + " and dir.damage_insure_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageBase ');
+        return callback(error,rows);
+    });
+}
+
 function getDamageCheckCount(params,callback) {
     var query = " select count(da.id) as damage_count" ;
 
@@ -234,6 +254,7 @@ function getDamageMonthStat(params,callback){
 module.exports ={
     addDamage : addDamage,
     getDamage : getDamage,
+    getDamageBase : getDamageBase,
     getDamageCheckCount : getDamageCheckCount,
     getDamageNotCheckCount : getDamageNotCheckCount,
     getDamageTotalCost : getDamageTotalCost,

@@ -10394,6 +10394,42 @@
         }
       }
     },
+    "/damageBase": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damage base",
+        "description": "query damageBase",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageInsureId",
+            "in": "query",
+            "description": "damageInsure id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/damageCheckCount": {
       "get": {
         "tags": [
@@ -11166,6 +11202,89 @@
           },
           "400": {
             "description": "Invalid token value or invalid damageInsure id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageInsureRel": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create damageInsureRel",
+        "description": "user create damageInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsureRel",
+            "in": "body",
+            "description": "damageInsureRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageInsureRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageInsureRel/{damageInsureRelId}": {
+      "delete": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "Deletes a damageInsureRel",
+        "description": "",
+        "operationId": "deleteDamageInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "damageInsureRelId",
+            "in": "path",
+            "description": "damageInsureRel id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
@@ -12279,6 +12398,21 @@
       },
       "xml": {
         "name": "damageInsure"
+      }
+    },
+    "damageInsureRel": {
+      "type": "object",
+      "properties": {
+
+        "damageInsureId": {
+          "type": "integer"
+        },
+        "damageId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "damageInsureRel"
       }
     },
     "truckDispatch": {

@@ -45,6 +45,7 @@ var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
 var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
 var damageInsure = require('./bl/DamageInsure.js');
+var damageInsureRel = require('./bl/DamageInsureRel.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -453,6 +454,7 @@ function createServer() {
      * Damage Module
      */
     server.get('/api/damage',damage.queryDamage);
+    server.get('/api/damageBase',damage.queryDamageBase);
     server.get('/api/damageCheckCount',damage.queryDamageCheckCount);
     server.get('/api/damageNotCheckCount',damage.queryDamageNotCheckCount);
     server.get('/api/damageTotalCost',damage.queryDamageTotalCost);
@@ -475,6 +477,12 @@ function createServer() {
      */
     server.get('/api/damageInsure',damageInsure.queryDamageInsure);
     server.post({path:'/api/user/:userId/damageInsure',contentType: 'application/json'},damageInsure.createDamageInsure);
+
+    /**
+     * DamageInsureRel Module
+     */
+    server.post({path:'/api/user/:userId/damageInsureRel',contentType: 'application/json'},damageInsureRel.createDamageInsureRel);
+    server.del('/api/user/:userId/damageInsureRel/:damageInsureRelId' , damageInsureRel.removeDamageInsureRel);
 
     /**
      * MsgPush Module

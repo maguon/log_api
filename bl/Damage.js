@@ -74,6 +74,20 @@ function queryDamage(req,res,next){
     })
 }
 
+function queryDamageBase(req,res,next){
+    var params = req.params;
+    damageDAO.getDamageBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDamageCheckCount(req,res,next){
     var params = req.params;
     damageDAO.getDamageCheckCount(params,function(error,result){
@@ -189,6 +203,7 @@ function queryDamageMonthStat(req,res,next){
 module.exports = {
     createDamage : createDamage,
     queryDamage : queryDamage,
+    queryDamageBase : queryDamageBase,
     queryDamageCheckCount : queryDamageCheckCount,
     queryDamageNotCheckCount : queryDamageNotCheckCount,
     queryDamageTotalCost : queryDamageTotalCost,
