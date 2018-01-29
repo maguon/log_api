@@ -10306,17 +10306,17 @@
 
           },
           {
-            "name": "createdOnStart",
+            "name": "cleanDateStart",
             "in": "query",
-            "description": "createdOn start",
+            "description": "cleanDate start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "createdOnEnd",
+            "name": "cleanDateEnd",
             "in": "query",
-            "description": "createdOn end",
+            "description": "cleanDate end",
             "required": false,
             "type": "string"
           }
@@ -10328,6 +10328,58 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/dpRouteLoadTaskCleanRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTaskCleanRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/loadTaskCleanRel/{loadTaskCleanRelId}/status/{status}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteLoadTaskCleanRel status",
+        "description": "update dpRouteLoadTaskCleanRel status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadTaskCleanRelId",
+            "in": "path",
+            "description": "loadTaskCleanRel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
               }
             }
           },

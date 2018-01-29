@@ -455,6 +455,7 @@ function createServer() {
      * DpRouteLoadTaskCleanRel Module
      */
     server.get('/api/dpRouteLoadTaskCleanRel',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRel);
+    server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId/status/:status',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRelStatus);
 
     /**
      * Damage Module

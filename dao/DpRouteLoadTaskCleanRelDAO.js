@@ -26,13 +26,14 @@ function addDpRouteLoadTaskCleanRel(params,callback){
 
 function getDpRouteLoadTaskCleanRel(params,callback) {
     var query = " select dpcr.*,d.drive_name,t.truck_num,u.real_name as field_op_name,dprl.load_date,ci.city_name as route_end_name, " +
-        " r.short_name,u1.real_name as grant_user_name from dp_route_load_task_clean_rel dpcr " +
+        " r.short_name,u1.real_name as grant_user_name,u2.real_name as drive_user_name from dp_route_load_task_clean_rel dpcr " +
         " left join drive_info d on dpcr.drive_id = d.id " +
         " left join truck_info t on dpcr.truck_id = t.id " +
         " left join receive_info r on dpcr.receive_id = r.id " +
         " left join dp_route_load_task dprl on dpcr.dp_route_load_task_id = dprl.id " +
         " left join user_info u on dprl.field_op_id = u.uid " +
         " left join user_info u1 on dpcr.grant_user_id = u1.uid " +
+        " left join user_info u2 on dpcr.drive_user_id = u2.uid " +
         " left join city_info ci on dprl.route_end_id = ci.id where dpcr.id is not null ";
     var paramsArray=[],i=0;
     if(params.loadTaskCleanRelId){
@@ -63,13 +64,13 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
         paramsArray[i++] = params.status;
         query = query + " and dpcr.status = ? ";
     }
-    if(params.createdOnStart){
-        paramsArray[i++] = params.createdOnStart +" 00:00:00";
-        query = query + " and dpcr.created_on >= ? ";
+    if(params.cleanDateStart){
+        paramsArray[i++] = params.cleanDateStart +" 00:00:00";
+        query = query + " and dpcr.clean_date >= ? ";
     }
-    if(params.createdOnEnd){
-        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
-        query = query + " and dpcr.created_on <= ? ";
+    if(params.cleanDateEnd){
+        paramsArray[i++] = params.cleanDateEnd +" 23:59:59";
+        query = query + " and dpcr.clean_date <= ? ";
     }
     query = query + ' group by dpcr.id ';
     if (params.start && params.size) {
@@ -83,8 +84,23 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
     });
 }
 
+function updateDpRouteLoadTaskCleanRelStatus(params,callback){
+    var query = " update dp_route_load_task_clean_rel set drive_user_id = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.cleanDate;
+    paramsArray[i++] = params.dateId;
+    paramsArray[i++] = params.status;
+    paramsArray[i] = params.loadTaskCleanRelId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteLoadTaskCleanRelStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteLoadTaskCleanRel : addDpRouteLoadTaskCleanRel,
-    getDpRouteLoadTaskCleanRel : getDpRouteLoadTaskCleanRel
+    getDpRouteLoadTaskCleanRel : getDpRouteLoadTaskCleanRel,
+    updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
 }

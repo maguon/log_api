@@ -11,6 +11,7 @@ var dpRouteLoadTaskCleanRelDAO = require('../dao/DpRouteLoadTaskCleanRelDAO.js')
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskCleanRel.js');
 
 function queryDpRouteLoadTaskCleanRel(req,res,next){
@@ -27,7 +28,26 @@ function queryDpRouteLoadTaskCleanRel(req,res,next){
     })
 }
 
+function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
+    params.cleanDate = myDate;
+    dpRouteLoadTaskCleanRelDAO.updateDpRouteLoadTaskCleanRelStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteLoadTaskCleanRelStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteLoadTaskCleanRelStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    queryDpRouteLoadTaskCleanRel : queryDpRouteLoadTaskCleanRel
+    queryDpRouteLoadTaskCleanRel : queryDpRouteLoadTaskCleanRel,
+    updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
 }
