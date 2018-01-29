@@ -154,7 +154,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             })
     }).seq(function() {
         var that = this;
-        if(params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load){
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load){
             var orderDate = parkObj.dateId.toString();
             params.orderDate = moment(orderDate).format('YYYY-MM-DD');
             params.orderDateId = parkObj.dateId;
@@ -176,7 +176,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        if(params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load) {
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
