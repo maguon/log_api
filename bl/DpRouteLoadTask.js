@@ -141,6 +141,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.carExceptionCount = rows[0].car_exception_count;
                         parkObj.truckNum = rows[0].truck_num;
                         parkObj.truckId = rows[0].truck_id;
+                        parkObj.driveId = rows[0].drive_id;
                         parkObj.dpRouteTaskId = rows[0].dp_route_task_id;
                         parkObj.dateId = rows[0].date_id;
                         that();
@@ -153,42 +154,52 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             })
     }).seq(function() {
         var that = this;
-        var orderDate = parkObj.dateId.toString();
-        params.orderDate = moment(orderDate).format('YYYY-MM-DD');
-        params.orderDateId = parkObj.dateId;
-        carDAO.updateCarOrderDate(params,function(error,result){
-            if (error) {
-                logger.error(' updateCarOrderDate ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' updateCarOrderDate ' + 'success');
-                }else{
-                    logger.warn(' updateCarOrderDate ' + 'failed');
+        if(params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load){
+            var orderDate = parkObj.dateId.toString();
+            params.orderDate = moment(orderDate).format('YYYY-MM-DD');
+            params.orderDateId = parkObj.dateId;
+            carDAO.updateCarOrderDate(params,function(error,result){
+                if (error) {
+                    logger.error(' updateCarOrderDate ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' updateCarOrderDate ' + 'success');
+                    }else{
+                        logger.warn(' updateCarOrderDate ' + 'failed');
+                    }
+                    that();
                 }
-                that();
-            }
-        })
+            })
+        }else{
+            that();
+        }
     }).seq(function() {
         var that = this;
-        params.dpRouteTaskId = parkObj.dpRouteTaskId;
-        params.truckId  = parkObj.truckId;
-        params.receiveId = parkObj.receiveId;
-        params.singlePrice = parkObj.cleanFee;
-        params.totalPrice = parkObj.cleanFee*parkObj.carCount;
-        dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params,function(error,result){
-            if (error) {
-                logger.error(' addDpRouteLoadTaskCleanRel ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    logger.info(' addDpRouteLoadTaskCleanRel ' + 'success');
-                }else{
-                    logger.warn(' addDpRouteLoadTaskCleanRel ' + 'failed');
+        if(params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load) {
+            params.dpRouteTaskId = parkObj.dpRouteTaskId;
+            params.driveId = parkObj.driveId;
+            params.truckId = parkObj.truckId;
+            params.receiveId = parkObj.receiveId;
+            params.singlePrice = parkObj.cleanFee;
+            params.totalPrice = parkObj.cleanFee * parkObj.carCount;
+            params.carCount = parkObj.carCount;
+            dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params, function (error, result) {
+                if (error) {
+                    logger.error(' addDpRouteLoadTaskCleanRel ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.insertId > 0) {
+                        logger.info(' addDpRouteLoadTaskCleanRel ' + 'success');
+                    } else {
+                        logger.warn(' addDpRouteLoadTaskCleanRel ' + 'failed');
+                    }
+                    that();
                 }
-                that();
-            }
-        })
+            })
+        }else{
+            that();
+        }
     }).seq(function () {
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load){
             var myDate = new Date();
