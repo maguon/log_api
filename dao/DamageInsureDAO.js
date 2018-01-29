@@ -64,8 +64,21 @@ function getDamageInsure(params,callback) {
     });
 }
 
+function updateDamageInsure(params,callback){
+    var query = " update damage_insure set insure_plan = ?,insure_actual = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.insurePlan;
+    paramsArray[i++]=params.insureActual;
+    paramsArray[i]=params.damageInsureId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageInsure ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageInsure : addDamageInsure,
-    getDamageInsure : getDamageInsure
+    getDamageInsure : getDamageInsure,
+    updateDamageInsure : updateDamageInsure
 }

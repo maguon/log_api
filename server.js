@@ -488,11 +488,11 @@ function createServer() {
      */
     server.get('/api/damageInsure',damageInsure.queryDamageInsure);
     server.post({path:'/api/user/:userId/damageInsure',contentType: 'application/json'},damageInsure.createDamageInsure);
+    server.put({path:'/api/user/:userId/damageInsure/:damageInsureId',contentType: 'application/json'} ,damageInsure.updateDamageInsure);
 
     /**
      * DamageInsureRel Module
      */
-    server.post({path:'/api/user/:userId/damageInsureRel',contentType: 'application/json'},damageInsureRel.createDamageInsureRel);
     server.del('/api/user/:userId/damageInsureRel/:damageInsureRelId' , damageInsureRel.removeDamageInsureRel);
 
     /**

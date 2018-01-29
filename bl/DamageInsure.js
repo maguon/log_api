@@ -83,8 +83,23 @@ function queryDamageInsure(req,res,next){
     })
 }
 
+function updateDamageInsure(req,res,next){
+    var params = req.params;
+    damageInsureDAO.updateDamageInsure(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageInsure ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageInsure ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDamageInsure : createDamageInsure,
-    queryDamageInsure : queryDamageInsure
+    queryDamageInsure : queryDamageInsure,
+    updateDamageInsure : updateDamageInsure
 }

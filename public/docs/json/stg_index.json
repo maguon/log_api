@@ -11581,13 +11581,13 @@
         }
       }
     },
-    "/user/{userId}/damageInsureRel": {
-      "post": {
+    "/user/{userId}/damageInsure/{damageInsureId}": {
+      "put": {
         "tags": [
           "damage"
         ],
-        "summary": "user create damageInsureRel",
-        "description": "user create damageInsureRel",
+        "summary": "update damageInsure info",
+        "description": "update damageInsure info",
         "produces": [
           "application/json"
         ],
@@ -11601,13 +11601,22 @@
 
           },
           {
-            "name": "damageInsureRel",
+            "name": "damageInsureId",
+            "in": "path",
+            "description": "damageInsure id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsure",
             "in": "body",
-            "description": "damageInsureRel info",
+            "description": "damageInsure info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/damageInsureRel"
+              "$ref": "#/definitions/damageInsure"
             }
+
           }
         ],
         "responses": {
@@ -11621,7 +11630,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid damageInsureRel id"
+            "description": "Invalid token value or invalid damageInsure id"
           }
         }
       }
