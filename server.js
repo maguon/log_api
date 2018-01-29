@@ -42,6 +42,7 @@ var dpTaskStat = require('./bl/DpTaskStat.js');
 var dpRouteTask = require('./bl/DpRouteTask.js');
 var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
 var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
+var dpRouteLoadTaskCleanRel = require('./bl/DpRouteLoadTaskCleanRel.js');
 var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
 var damageInsure = require('./bl/DamageInsure.js');
@@ -449,6 +450,11 @@ function createServer() {
     server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail);
     server.put({path:'/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId/carLoadStatus/:carLoadStatus',contentType: 'application/json'} ,dpRouteLoadTaskDetail.updateDpRouteLoadTaskDetailStatus);
     server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail);
+
+    /**
+     * DpRouteLoadTaskCleanRel Module
+     */
+    server.get('/api/dpRouteLoadTaskCleanRel',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRel);
 
     /**
      * Damage Module
