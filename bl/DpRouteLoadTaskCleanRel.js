@@ -28,6 +28,62 @@ function queryDpRouteLoadTaskCleanRel(req,res,next){
     })
 }
 
+function queryDpRouteLoadTaskCleanRelMonthStat(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRelMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTaskCleanRelMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTaskCleanRelMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDpRouteLoadTaskCleanRelReceiveMonthStat(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRelReceiveMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTaskCleanRelReceiveMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTaskCleanRelReceiveMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDpRouteLoadTaskCleanRelWeekStat(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRelWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTaskCleanRelWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTaskCleanRelWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDpRouteLoadTaskCleanRelReceiveWeekStat(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRelReceiveWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTaskCleanRelReceiveWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTaskCleanRelReceiveWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
     var params = req.params;
     var myDate = new Date();
@@ -49,5 +105,9 @@ function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
 
 module.exports = {
     queryDpRouteLoadTaskCleanRel : queryDpRouteLoadTaskCleanRel,
+    queryDpRouteLoadTaskCleanRelMonthStat : queryDpRouteLoadTaskCleanRelMonthStat,
+    queryDpRouteLoadTaskCleanRelReceiveMonthStat : queryDpRouteLoadTaskCleanRelReceiveMonthStat,
+    queryDpRouteLoadTaskCleanRelWeekStat : queryDpRouteLoadTaskCleanRelWeekStat,
+    queryDpRouteLoadTaskCleanRelReceiveWeekStat : queryDpRouteLoadTaskCleanRelReceiveWeekStat,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
 }

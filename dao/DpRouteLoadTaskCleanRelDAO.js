@@ -84,6 +84,100 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
     });
 }
 
+function getDpRouteLoadTaskCleanRelMonthStat(params,callback) {
+        var query = " select DISTINCT(db.y_month),sum(dpcr.total_price) as total_price from date_base db " +
+            " left join dp_route_load_task_clean_rel dpcr on db.id = dpcr.date_id where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskCleanRelMonthStat ');
+        return callback(error,rows);
+    });
+}
+
+function getDpRouteLoadTaskCleanRelReceiveMonthStat(params,callback) {
+    var query = " select r.short_name,sum(dpcr.total_price) as total_price from dp_route_load_task_clean_rel dpcr " +
+        " left join date_base db on dpcr.date_id = db.id " +
+        " left join receive_info r on dpcr.receive_id = r.id where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by r.short_name ';
+    query = query + ' order by r.short_name desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskCleanRelReceiveMonthStat ');
+        return callback(error,rows);
+    });
+}
+
+function getDpRouteLoadTaskCleanRelWeekStat(params,callback) {
+    var query = " select db.y_week,sum(dpcr.total_price) as total_price from date_base db " +
+        " left join dp_route_load_task_clean_rel dpcr on db.id = dpcr.date_id where db.id is not null ";
+    var paramsArray=[],i=0;
+    query = query + ' group by db.y_week ';
+    query = query + ' order by db.y_week desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskCleanRelWeekStat ');
+        return callback(error,rows);
+    });
+}
+
+function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
+    var query = " select r.short_name,sum(dpcr.total_price) as total_price from dp_route_load_task_clean_rel dpcr " +
+        " left join date_base db on dpcr.date_id = db.id " +
+        " left join receive_info r on dpcr.receive_id = r.id where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.weekStart){
+        paramsArray[i++] = params.weekStart;
+        query = query + " and db.y_week >= ? ";
+    }
+    if(params.weekEnd){
+        paramsArray[i++] = params.weekEnd;
+        query = query + " and db.y_week <= ? ";
+    }
+    query = query + ' group by r.short_name ';
+    query = query + ' order by r.short_name desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskCleanRelReceiveWeekStat ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteLoadTaskCleanRelStatus(params,callback){
     var query = " update dp_route_load_task_clean_rel set drive_user_id = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -102,5 +196,9 @@ function updateDpRouteLoadTaskCleanRelStatus(params,callback){
 module.exports ={
     addDpRouteLoadTaskCleanRel : addDpRouteLoadTaskCleanRel,
     getDpRouteLoadTaskCleanRel : getDpRouteLoadTaskCleanRel,
+    getDpRouteLoadTaskCleanRelMonthStat : getDpRouteLoadTaskCleanRelMonthStat,
+    getDpRouteLoadTaskCleanRelReceiveMonthStat : getDpRouteLoadTaskCleanRelReceiveMonthStat,
+    getDpRouteLoadTaskCleanRelWeekStat  : getDpRouteLoadTaskCleanRelWeekStat,
+    getDpRouteLoadTaskCleanRelReceiveWeekStat : getDpRouteLoadTaskCleanRelReceiveWeekStat,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
 }
