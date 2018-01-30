@@ -489,6 +489,7 @@ function createServer() {
      * DamageInsure Module
      */
     server.get('/api/damageInsure',damageInsure.queryDamageInsure);
+    server.get('/api/damageInsureMonthStat',damageInsure.queryDamageInsureMonthStat);
     server.post({path:'/api/user/:userId/insure',contentType: 'application/json'},damageInsure.createInsure);
     server.post({path:'/api/user/:userId/damageInsure',contentType: 'application/json'},damageInsure.createDamageInsure);
     server.put({path:'/api/user/:userId/damageInsure/:damageInsureId',contentType: 'application/json'} ,damageInsure.updateDamageInsure);
