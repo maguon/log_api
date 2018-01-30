@@ -117,11 +117,30 @@ function getDamageInsureMonthStat(params,callback){
     });
 }
 
+function getDamageInsureWeekStat(params,callback) {
+    var query = " select db.y_week,count(case when di.insure_status = "+params.insureStatus+" then di.id end) as damage_insure_count, " +
+        " sum(case when di.insure_status = "+params.insureStatus+" then di.insure_actual end) as damage_insure from date_base db " +
+        " left join damage_insure di  on db.id = di.date_id where  db.id is not null " ;
+    var paramsArray=[],i=0;
+    query = query + ' group by db.y_week ';
+    query = query + ' order by db.y_week desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageInsureWeekStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addInsure : addInsure,
     addDamageInsure : addDamageInsure,
     getDamageInsure : getDamageInsure,
     updateDamageInsure : updateDamageInsure,
-    getDamageInsureMonthStat : getDamageInsureMonthStat
+    getDamageInsureMonthStat : getDamageInsureMonthStat,
+    getDamageInsureWeekStat : getDamageInsureWeekStat
 }

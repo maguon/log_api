@@ -490,6 +490,7 @@ function createServer() {
      */
     server.get('/api/damageInsure',damageInsure.queryDamageInsure);
     server.get('/api/damageInsureMonthStat',damageInsure.queryDamageInsureMonthStat);
+    server.get('/api/damageInsureWeekStat',damageInsure.queryDamageInsureWeekStat);
     server.post({path:'/api/user/:userId/insure',contentType: 'application/json'},damageInsure.createInsure);
     server.post({path:'/api/user/:userId/damageInsure',contentType: 'application/json'},damageInsure.createDamageInsure);
     server.put({path:'/api/user/:userId/damageInsure/:damageInsureId',contentType: 'application/json'} ,damageInsure.updateDamageInsure);

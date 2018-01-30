@@ -154,11 +154,26 @@ function queryDamageInsureMonthStat(req,res,next){
     })
 }
 
+function queryDamageInsureWeekStat(req,res,next){
+    var params = req.params ;
+    damageInsureDAO.getDamageInsureWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageInsureWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageInsureWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createInsure : createInsure,
     createDamageInsure : createDamageInsure,
     queryDamageInsure : queryDamageInsure,
     updateDamageInsure : updateDamageInsure,
-    queryDamageInsureMonthStat : queryDamageInsureMonthStat
+    queryDamageInsureMonthStat : queryDamageInsureMonthStat,
+    queryDamageInsureWeekStat : queryDamageInsureWeekStat
 }
