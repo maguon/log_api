@@ -114,6 +114,23 @@ function getDamageCheckMonthStat(params,callback){
     });
 }
 
+function getDamageCheckWeekStat(params,callback) {
+    var query = " select db.y_week,sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost from date_base db " +
+        " left join damage_check dc on db.id = dc.date_id where db.id is not null ";
+    var paramsArray=[],i=0;
+    query = query + ' group by db.y_week ';
+    query = query + ' order by db.y_week desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageCheckWeekStat ');
+        return callback(error,rows);
+    });
+}
+
 function getDamageCheckStat(params,callback){
     var query = "select count(dc.id),sum(dc.reduction_cost) total_reduce_cost, " +
         " sum(dc.penalty_cost) total_penalty_cost ,sum(dc.profit) total_profit,sum(dc.repair_cost) total_repair_cost, " +
@@ -133,5 +150,6 @@ module.exports ={
     addDamageCheck : addDamageCheck,
     getDamageCheck : getDamageCheck,
     updateDamageCheck : updateDamageCheck ,
-    getDamageCheckMonthStat  : getDamageCheckMonthStat
+    getDamageCheckMonthStat  : getDamageCheckMonthStat,
+    getDamageCheckWeekStat : getDamageCheckWeekStat
 }

@@ -11477,6 +11477,50 @@
         }
       }
     },
+    "/damageCheckWeekStat": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheckWeekStat",
+        "description": "query damageCheckWeekStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dispatch"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageCheck": {
       "post": {
         "tags": [

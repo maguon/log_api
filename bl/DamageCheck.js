@@ -127,9 +127,24 @@ function queryDamageCheckMonthStat(req,res,next){
     })
 }
 
+function queryDamageCheckWeekStat(req,res,next){
+    var params = req.params;
+    damageCheckDAO.getDamageCheckWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageCheckWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageCheckWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 module.exports = {
     createDamageCheck : createDamageCheck,
     queryDamageCheck : queryDamageCheck,
     updateDamageCheck : updateDamageCheck ,
-    queryDamageCheckMonthStat : queryDamageCheckMonthStat
+    queryDamageCheckMonthStat : queryDamageCheckMonthStat,
+    queryDamageCheckWeekStat : queryDamageCheckWeekStat
 }

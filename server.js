@@ -481,6 +481,7 @@ function createServer() {
      */
     server.get('/api/damageCheck',damageCheck.queryDamageCheck);
     server.get('/api/damageCheckMonthStat',damageCheck.queryDamageCheckMonthStat);
+    server.get('/api/damageCheckWeekStat',damageCheck.queryDamageCheckWeekStat);
     server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
     server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
 
