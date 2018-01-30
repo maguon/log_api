@@ -10513,17 +10513,9 @@
         ],
         "parameters": [
           {
-            "name": "weekStart",
+            "name": "yWeek",
             "in": "query",
-            "description": "week start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "weekEnd",
-            "in": "query",
-            "description": "week end",
+            "description": "yWeek",
             "required": false,
             "type": "integer"
 
