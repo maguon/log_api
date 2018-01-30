@@ -11521,6 +11521,66 @@
         }
       }
     },
+    "/damageCheckUnderMonthStat": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheckUnderMonth stat",
+        "description": "query damageCheckUnderMonth stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageCheck": {
       "post": {
         "tags": [
