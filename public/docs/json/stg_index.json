@@ -11089,6 +11089,146 @@
         }
       }
     },
+    "/damage.csv": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damage.csv list",
+        "description": "query damage.csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageType",
+            "in": "query",
+            "description": "damage type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageLinkType",
+            "in": "query",
+            "description": "damage link type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "declareUserId",
+            "in": "query",
+            "description": "declareUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "declareUserName",
+            "in": "query",
+            "description": "declareUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "underUserId",
+            "in": "query",
+            "description": "underUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "underUserName",
+            "in": "query",
+            "description": "underUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage.csv"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/qualityAssurance": {
       "post": {
         "tags": [

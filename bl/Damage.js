@@ -200,6 +200,48 @@ function queryDamageMonthStat(req,res,next){
     })
 }
 
+function getDamageCsv(req,res,next){
+    var csvString = "";
+    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "负责人" + ','+ "处理状态" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    damageDAO.getDamage(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDamage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                parkObj.vin = rows[i].vin;
+                parkObj.makeName = rows[i].make_name;
+                parkObj.damageExplain = rows[i].damage_explain;
+                parkObj.declareUserName = rows[i].declare_user_name;
+                parkObj.underUserName = rows[i].under_user_name;
+                if(rows[i].damage_status == 1){
+                    parkObj.damageStatus = "待处理";
+                }else if(rows[i].damage_status == 2){
+                    parkObj.damageStatus = "处理中";
+                }else{
+                    parkObj.damageStatus = "已处理";
+                }
+                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+","
+                    +parkObj.makeName+","+parkObj.damageExplain+","+parkObj.declareUserName+","
+                    +parkObj.underUserName+","+parkObj.damageStatus+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 module.exports = {
     createDamage : createDamage,
     queryDamage : queryDamage,
@@ -210,5 +252,6 @@ module.exports = {
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus ,
     createQualityAssurance : createQualityAssurance ,
-    queryDamageMonthStat : queryDamageMonthStat
+    queryDamageMonthStat : queryDamageMonthStat,
+    getDamageCsv : getDamageCsv
 }
