@@ -112,7 +112,7 @@ function getDpRouteLoadTaskCleanRelMonthStat(params,callback) {
 function getDpRouteLoadTaskCleanRelReceiveMonthStat(params,callback) {
     var query = " select r.short_name,sum(dpcr.total_price) as total_price from dp_route_load_task_clean_rel dpcr " +
         " left join date_base db on dpcr.date_id = db.id " +
-        " left join receive_info r on dpcr.receive_id = r.id where db.id is not null ";
+        " left join receive_info r on dpcr.receive_id = r.id where dpcr.id is not null ";
     var paramsArray=[],i=0;
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;

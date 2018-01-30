@@ -10933,66 +10933,6 @@
         }
       }
     },
-    "/damageCheckMonthStat": {
-      "get": {
-        "tags": [
-          "damage"
-        ],
-        "summary": "query  damage check month stat",
-        "description": "query damage check month stat",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "underUserId",
-            "in": "query",
-            "description": "under user id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "yearMonth",
-            "in": "query",
-            "description": "dateId yeah month eg.201709",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "description": "record start position for paging",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "record size  for paging",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/damage"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid damage id"
-          }
-        }
-      }
-    },
     "/damageNotCheckCount": {
       "get": {
         "tags": [
@@ -11465,6 +11405,74 @@
           },
           "400": {
             "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
+    "/damageCheckMonthStat": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damage check month stat",
+        "description": "query damage check month stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "yearMonth",
+            "in": "query",
+            "description": "dateId yeah month eg.201709",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
           }
         }
       }

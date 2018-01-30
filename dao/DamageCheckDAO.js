@@ -86,21 +86,23 @@ function updateDamageCheck(params,callback){
 }
 
 function getDamageCheckMonthStat(params,callback){
-    var query = " select count(dc.id) check_count,sum(dc.reduction_cost) total_reduce_cost, " +
-        " sum(dc.penalty_cost) total_penalty_cost ,sum(dc.profit) total_profit,sum(dc.repair_cost) total_repair_cost, " +
-        " sum(dc.transport_cost) total_trans_cost,sum(dc.under_cost) total_under_cost,sum(dc.company_cost) total_com_cost,db.y_month " +
-        " from damage_check dc left join date_base db on dc.date_id = db.id " +
-        " where  dc.id is not null " ;
+    var query = " select db.y_month,sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost from date_base db " +
+        " left join damage_check dc  on db.id = dc.date_id where  db.id is not null " ;
     var paramsArray=[],i=0;
-    if(params.underUserId){
-        paramsArray[i++] = params.underUserId;
-        query = query + " and dc.under_user_id = ? ";
-    }
     if(params.yearMonth){
         paramsArray[i++] = params.yearMonth;
         query = query + " and db.y_month = ? ";
     }
-    query = query + " group by db.y_month " ;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
