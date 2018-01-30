@@ -12096,6 +12096,58 @@
         }
       }
     },
+    "/user/{userId}/damageInsure/{damageInsureId}/insureStatus/{insureStatus}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageInsure status",
+        "description": "update damageInsure status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsureId",
+            "in": "path",
+            "description": "damageInsure id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureStatus",
+            "in": "path",
+            "description": "insure status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsure id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageInsureRel": {
       "post": {
         "tags": [

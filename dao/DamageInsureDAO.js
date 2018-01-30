@@ -91,6 +91,17 @@ function updateDamageInsure(params,callback){
     });
 }
 
+function updateDamageInsureStatus(params,callback){
+    var query = " update damage_insure set insure_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureStatus;
+    paramsArray[i]=params.damageInsureId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageInsureStatus ');
+        return callback(error,rows);
+    });
+}
+
 function getDamageInsureMonthStat(params,callback){
     var query = " select db.y_month,count(case when di.insure_status = "+params.insureStatus+" then di.id end) as damage_insure_count, " +
         " sum(case when di.insure_status = "+params.insureStatus+" then di.insure_actual end) as damage_insure from date_base db " +
@@ -141,6 +152,7 @@ module.exports ={
     addDamageInsure : addDamageInsure,
     getDamageInsure : getDamageInsure,
     updateDamageInsure : updateDamageInsure,
+    updateDamageInsureStatus : updateDamageInsureStatus,
     getDamageInsureMonthStat : getDamageInsureMonthStat,
     getDamageInsureWeekStat : getDamageInsureWeekStat
 }

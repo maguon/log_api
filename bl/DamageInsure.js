@@ -12,6 +12,7 @@ var damageInsureRelDAO = require('../dao/DamageInsureRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DamageInsure.js');
 
 function createInsure(req,res,next){
@@ -19,6 +20,9 @@ function createInsure(req,res,next){
     var damageInsureId = 0;
     Seq().seq(function(){
         var that = this;
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
         damageInsureDAO.addInsure(params,function(error,result){
             if (error) {
                 logger.error(' createInsure ' + error.message);
@@ -62,6 +66,9 @@ function createDamageInsure(req,res,next){
     var damageInsureId = 0;
     Seq().seq(function(){
         var that = this;
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
         damageInsureDAO.addDamageInsure(params,function(error,result){
             if (error) {
                 logger.error(' createDamageInsure ' + error.message);
@@ -140,6 +147,20 @@ function updateDamageInsure(req,res,next){
     })
 }
 
+function updateDamageInsureStatus(req,res,next){
+    var params = req.params;
+    damageInsureDAO.updateDamageInsureStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageInsureStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageInsureStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDamageInsureMonthStat(req,res,next){
     var params = req.params ;
     damageInsureDAO.getDamageInsureMonthStat(params,function(error,result){
@@ -174,6 +195,7 @@ module.exports = {
     createDamageInsure : createDamageInsure,
     queryDamageInsure : queryDamageInsure,
     updateDamageInsure : updateDamageInsure,
+    updateDamageInsureStatus : updateDamageInsureStatus,
     queryDamageInsureMonthStat : queryDamageInsureMonthStat,
     queryDamageInsureWeekStat : queryDamageInsureWeekStat
 }
