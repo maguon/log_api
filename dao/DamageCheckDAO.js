@@ -132,7 +132,7 @@ function getDamageCheckWeekStat(params,callback) {
 }
 
 function getDamageCheckUnderMonthStat(params,callback){
-    var query = " select dc.under_user_id,dc.under_user_name,sum(dc.under_cost) as total_under_cost from damage_check dc " +
+    var query = " select db.y_month,dc.under_user_id,dc.under_user_name,sum(dc.under_cost) as total_under_cost from damage_check dc " +
         " left join date_base db on dc.date_id = db.id where  dc.id is not null " ;
     var paramsArray=[],i=0;
     if(params.monthStart){
@@ -143,7 +143,7 @@ function getDamageCheckUnderMonthStat(params,callback){
         paramsArray[i++] = params.monthEnd;
         query = query + " and db.y_month <= ? ";
     }
-    query = query + ' group by dc.under_user_id,dc.under_user_name ';
+    query = query + ' group by db.y_month,dc.under_user_id,dc.under_user_name ';
     query = query + ' order by total_under_cost desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -152,6 +152,27 @@ function getDamageCheckUnderMonthStat(params,callback){
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageCheckUnderMonthStat ');
+        return callback(error,rows);
+    });
+}
+
+function getDamageCheckUnderWeekStat(params,callback){
+    var query = " select db.y_week,dc.under_user_id,dc.under_user_name,sum(dc.under_cost) total_under_cost from damage_check dc " +
+        " left join date_base db on dc.date_id = db.id where  dc.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.yWeek){
+        paramsArray[i++] = params.yWeek;
+        query = query + " and db.y_week = ? ";
+    }
+    query = query + ' group by db.y_week,dc.under_user_id,dc.under_user_name ';
+    query = query + ' order by total_under_cost desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageCheckUnderWeekStat ');
         return callback(error,rows);
     });
 }
@@ -177,5 +198,6 @@ module.exports ={
     updateDamageCheck : updateDamageCheck ,
     getDamageCheckMonthStat  : getDamageCheckMonthStat,
     getDamageCheckWeekStat : getDamageCheckWeekStat,
-    getDamageCheckUnderMonthStat : getDamageCheckUnderMonthStat
+    getDamageCheckUnderMonthStat : getDamageCheckUnderMonthStat,
+    getDamageCheckUnderWeekStat : getDamageCheckUnderWeekStat
 }

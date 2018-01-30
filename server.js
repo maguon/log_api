@@ -483,6 +483,7 @@ function createServer() {
     server.get('/api/damageCheckMonthStat',damageCheck.queryDamageCheckMonthStat);
     server.get('/api/damageCheckWeekStat',damageCheck.queryDamageCheckWeekStat);
     server.get('/api/damageCheckUnderMonthStat',damageCheck.queryDamageCheckUnderMonthStat);
+    server.get('/api/damageCheckUnderWeekStat',damageCheck.queryDamageCheckUnderWeekStat);
     server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
     server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
 
