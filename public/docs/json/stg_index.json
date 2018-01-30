@@ -3216,7 +3216,7 @@
         "tags": [
           "truck"
         ],
-        "summary": "updae  truckDispatch",
+        "summary": "update  truckDispatch",
         "description": "update truckDispatch",
         "produces": [
           "application/json"
@@ -11536,6 +11536,51 @@
         }
       }
     },
+    "/user/{userId}/insure": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create insure",
+        "description": "user create insure",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "insure",
+            "in": "body",
+            "description": "insure info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/insure"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid insure id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageInsure": {
       "post": {
         "tags": [
@@ -12766,6 +12811,27 @@
         "name": "damageCheck"
       }
     },
+    "insure": {
+      "type": "object",
+      "properties": {
+
+        "insureId": {
+          "type": "integer"
+        },
+        "insurePlan": {
+          "type": "integer"
+        },
+        "insureActual": {
+          "type": "integer"
+        },
+        "damageId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "insure"
+      }
+    },
     "damageInsure": {
       "type": "object",
       "properties": {
@@ -12823,7 +12889,7 @@
         }
       },
       "xml": {
-        "name": "damageInsure"
+        "name": "truckDispatch"
       }
     },
     "quality": {

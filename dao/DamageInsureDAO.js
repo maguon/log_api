@@ -6,6 +6,21 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageInsureDAO.js');
 
+function addInsure(params,callback){
+    var query = " insert into damage_insure (insure_id,insure_user_id,insure_plan,insure_actual,date_id) " +
+        " values ( ? , ? , ? , ? , ? ) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureId;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.insurePlan;
+    paramsArray[i++]=params.insureActual;
+    paramsArray[i]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addInsure ');
+        return callback(error,rows);
+    });
+}
+
 function addDamageInsure(params,callback){
     var query = " insert into damage_insure (insure_id,insure_user_id,insure_plan,insure_actual,date_id) " +
         " values ( ? , ? , ? , ? , ? ) ";
@@ -78,6 +93,7 @@ function updateDamageInsure(params,callback){
 
 
 module.exports ={
+    addInsure : addInsure,
     addDamageInsure : addDamageInsure,
     getDamageInsure : getDamageInsure,
     updateDamageInsure : updateDamageInsure

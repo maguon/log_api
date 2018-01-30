@@ -14,6 +14,49 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageInsure.js');
 
+function createInsure(req,res,next){
+    var params = req.params ;
+    var damageInsureId = 0;
+    Seq().seq(function(){
+        var that = this;
+        damageInsureDAO.addInsure(params,function(error,result){
+            if (error) {
+                logger.error(' createInsure ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createInsure ' + 'success');
+                    damageInsureId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create Insure failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.damageInsureId = damageInsureId;
+        damageInsureRelDAO.addDamageInsureRel(params,function(err,result){
+            if (err) {
+                logger.error(' createDamageInsureRel ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDamageInsureRel ' + 'success');
+                }else{
+                    logger.warn(' createDamageInsureRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        logger.info(' createInsure ' + 'success');
+        resUtil.resetCreateRes(res,{insertId:damageInsureId},null);
+        return next();
+    })
+}
+
 function createDamageInsure(req,res,next){
     var params = req.params ;
     var damageInsureId = 0;
@@ -99,6 +142,7 @@ function updateDamageInsure(req,res,next){
 
 
 module.exports = {
+    createInsure : createInsure,
     createDamageInsure : createDamageInsure,
     queryDamageInsure : queryDamageInsure,
     updateDamageInsure : updateDamageInsure
