@@ -13,6 +13,20 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageInsureRel.js');
 
+function createDamageInsureRel(req,res,next){
+    var params = req.params ;
+    damageInsureRelDAO.addDamageInsureRel(params,function(error,result){
+        if (error) {
+            logger.error(' createDamageInsureRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createDamageInsureRel ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function removeDamageInsureRel(req,res,next){
     var params = req.params;
     damageInsureRelDAO.deleteDamageInsureRel(params,function(error,result){
@@ -29,5 +43,6 @@ function removeDamageInsureRel(req,res,next){
 
 
 module.exports = {
-    removeDamageInsureRel : removeDamageInsureRel
+    removeDamageInsureRel : removeDamageInsureRel,
+    createDamageInsureRel : createDamageInsureRel
 }

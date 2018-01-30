@@ -495,6 +495,7 @@ function createServer() {
     /**
      * DamageInsureRel Module
      */
+    server.post({path:'/api/user/:userId/damageInsureRel',contentType: 'application/json'},damageInsureRel.createDamageInsureRel);
     server.del('/api/user/:userId/damageInsureRel/:damageInsureRelId' , damageInsureRel.removeDamageInsureRel);
 
     /**

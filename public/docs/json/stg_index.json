@@ -11820,6 +11820,51 @@
         }
       }
     },
+    "/user/{userId}/damageInsureRel": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create damageInsureRel",
+        "description": "user create damageInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsureRel",
+            "in": "body",
+            "description": "damageInsureRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageInsureRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageInsureRel/{damageInsureRelId}": {
       "delete": {
         "tags": [
