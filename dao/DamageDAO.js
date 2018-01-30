@@ -94,7 +94,7 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.damageStatus;
         query = query + " and da.damage_status = ? ";
     }
-    query = query + " order by da.id ";
+    query = query + " order by da.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
