@@ -12,6 +12,8 @@ var USER_TYPE  ={
     dispatch_admin : 39,//调度部管理员
     qa_op : 41, //质量部操作员
     qa_manager : 49//质量部管理员
+    //51, //财务部操作员
+    //59//财务部管理员
 };
 var RECORD_OP_TYPE  ={
     truckOp : 20,
