@@ -248,6 +248,25 @@ function getDamageTypeMonthStat(params,callback){
     });
 }
 
+function getDamageTypeWeekStat(params,callback){
+    var query = " select db.y_week,dt.id,count(case when di.damage_status = "+params.damageStatus+" then db.id end) as damage_count from date_base db " +
+        " inner join damage_type dt " +
+        " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
+        " left join damage_info di on dc.damage_id = di.id where db.id is not null ";
+    var paramsArray=[],i=0;
+    query = query + ' group by db.y_week,dt.id ';
+    query = query + ' order by db.y_week desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageTypeWeekStat ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addDamage : addDamage,
     getDamage : getDamage,
@@ -257,5 +276,6 @@ module.exports ={
     getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus ,
-    getDamageTypeMonthStat : getDamageTypeMonthStat
+    getDamageTypeMonthStat : getDamageTypeMonthStat,
+    getDamageTypeWeekStat : getDamageTypeWeekStat
 }
