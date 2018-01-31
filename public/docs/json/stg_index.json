@@ -10890,45 +10890,37 @@
         }
       }
     },
-    "/damageMonthStat": {
+    "/damageTypeMonthStat": {
       "get": {
         "tags": [
           "damage"
         ],
-        "summary": "query  damage month stat",
-        "description": "query damage month stat",
+        "summary": "query  damageType month stat",
+        "description": "query damageType month stat",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "declareUserId",
+            "name": "damageStatus",
             "in": "query",
-            "description": "declare user id",
+            "description": "damage status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
             "required": false,
             "type": "integer"
 
           },
           {
-            "name": "yearMonth",
+            "name": "monthEnd",
             "in": "query",
-            "description": "dateId yeah month eg.201709",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "description": "record start position for paging",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "record size  for paging",
+            "description": "month end",
             "required": false,
             "type": "integer"
 

@@ -61,6 +61,11 @@ var CAR_LOAD_STATUS  ={
     load : 1,
     arrive : 2
 };
+var CLEAN_STATUS  ={    //洗车费
+    cancel : 0,
+    not_completed : 1,
+    completed : 2
+};
 var USER_LOGIN_APP_TYPE  ={
     storage : 1,
     truck : 2,
@@ -112,6 +117,7 @@ module.exports = {
     TASK_STATUS : TASK_STATUS,
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,
+    CLEAN_STATUS : CLEAN_STATUS,
     USER_LOGIN_APP_TYPE : USER_LOGIN_APP_TYPE,
     DAMAGE_STATUS : DAMAGE_STATUS ,
     REFUEL_STATUS : REFUEL_STATUS ,

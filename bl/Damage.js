@@ -186,14 +186,14 @@ function createQualityAssurance(req,res,next){
     return next();
 }
 
-function queryDamageMonthStat(req,res,next){
+function queryDamageTypeMonthStat(req,res,next){
     var params = req.params;
-    damageDAO.getDamageMonthStat(params,function(error,result){
+    damageDAO.getDamageTypeMonthStat(params,function(error,result){
         if (error) {
-            logger.error(' queryDamageMonthStat ' + error.message);
+            logger.error(' queryDamageTypeMonthStat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDamageMonthStat ' + 'success');
+            logger.info(' queryDamageTypeMonthStat ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -252,6 +252,6 @@ module.exports = {
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus ,
     createQualityAssurance : createQualityAssurance ,
-    queryDamageMonthStat : queryDamageMonthStat,
+    queryDamageTypeMonthStat : queryDamageTypeMonthStat,
     getDamageCsv : getDamageCsv
 }

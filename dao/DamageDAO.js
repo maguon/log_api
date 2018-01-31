@@ -227,26 +227,23 @@ function updateDamageStatus(params,callback){
     });
 }
 
-function getDamageMonthStat(params,callback){
-    var query = " select count(di.id) d_count ,db.y_month from damage_info di left join date_base db on di.date_id = db.id " +
-        "where di.id is not null " ;
+function getDamageTypeMonthStat(params,callback){
+    var query = " select db.y_month,dt.id,count(case when di.damage_status = "+params.damageStatus+" then db.id end) as damage_count from date_base db " +
+        " inner join damage_type dt " +
+        " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
+        " left join damage_info di on dc.damage_id = di.id where db.id is not null ";
     var paramsArray=[],i=0;
-    if(params.declareUserId){
-        paramsArray[i++] = params.declareUserId;
-        query = query + " and di.declare_user_id = ? ";
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
     }
-    if(params.yearMonth){
-        paramsArray[i++] = params.yearMonth;
-        query = query + " and db.y_month = ? ";
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
     }
-    query = query + " group by db.y_month " ;
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
-    }
+    query = query + ' group by db.y_month,dt.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDamageMonthStat ');
+        logger.debug(' getDamageTypeMonthStat ');
         return callback(error,rows);
     });
 }
@@ -260,5 +257,5 @@ module.exports ={
     getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus ,
-    getDamageMonthStat : getDamageMonthStat
+    getDamageTypeMonthStat : getDamageTypeMonthStat
 }
