@@ -86,7 +86,8 @@ function updateDamageCheck(params,callback){
 }
 
 function getDamageCheckMonthStat(params,callback){
-    var query = " select db.y_month,sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost from date_base db " +
+    var query = " select db.y_month,sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost," +
+        " sum(dc.repair_cost) as repair_cost from date_base db " +
         " left join damage_check dc  on db.id = dc.date_id where  db.id is not null " ;
     var paramsArray=[],i=0;
     if(params.yearMonth){
@@ -115,7 +116,8 @@ function getDamageCheckMonthStat(params,callback){
 }
 
 function getDamageCheckWeekStat(params,callback) {
-    var query = " select db.y_week,sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost from date_base db " +
+    var query = " select db.y_week,sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost, " +
+        " sum(dc.repair_cost) as repair_cost from date_base db " +
         " left join damage_check dc on db.id = dc.date_id where db.id is not null ";
     var paramsArray=[],i=0;
     query = query + ' group by db.y_week ';
