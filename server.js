@@ -47,6 +47,7 @@ var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
 var damageInsure = require('./bl/DamageInsure.js');
 var damageInsureRel = require('./bl/DamageInsureRel.js');
+var repair = require('./bl/Repair.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -505,6 +506,12 @@ function createServer() {
     server.get('/api/damageInsureRel.csv', damageInsureRel.getDamageInsureRelCsv);
     server.post({path:'/api/user/:userId/damageInsureRel',contentType: 'application/json'},damageInsureRel.createDamageInsureRel);
     server.del('/api/user/:userId/damageInsureRel/:damageInsureRelId' , damageInsureRel.removeDamageInsureRel);
+
+    /**
+     * Repair Module
+     */
+    server.get('/api/repair', repair.queryRepair);
+    server.post({path:'/api/user/:userId/repair',contentType: 'application/json'},repair.createRepair);
 
     /**
      * MsgPush Module

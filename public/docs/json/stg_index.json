@@ -69,6 +69,10 @@
       "description":"Damage of log api"
     },
     {
+      "name":"repair",
+      "description":"Repair of log api"
+    },
+    {
       "name":"msgPush",
       "description":"MsgPush of log api"
     },
@@ -12400,6 +12404,111 @@
         }
       }
     },
+    "/repair": {
+      "get": {
+        "tags": [
+          "repair"
+        ],
+        "summary": "query repair list",
+        "description": "query repair",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repairId",
+            "in": "query",
+            "description": "repair id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairName",
+            "in": "query",
+            "description": "repair name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/repair"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid repair id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/repair": {
+      "post": {
+        "tags": [
+          "repair"
+        ],
+        "summary": "user create repair",
+        "description": "user create repair",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "repair",
+            "in": "body",
+            "description": "repair info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/repair"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid repair id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
@@ -13599,6 +13708,30 @@
       },
       "xml": {
         "name": "quality"
+      }
+    },
+    "repair": {
+      "type": "object",
+      "properties": {
+
+        "repairName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "lng": {
+          "type": "integer"
+        },
+        "lat": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "repair"
       }
     }
   },

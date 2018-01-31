@@ -22,7 +22,6 @@ function createReceive(req,res,next){
         } else {
             logger.info(' createReceive ' + 'success');
             req.params.receiverContent =" 经销商信息录入 ";
-            ;
             req.params.receiverId = result.insertId;
             resUtil.resetCreateRes(res,result,null);
             return next();
