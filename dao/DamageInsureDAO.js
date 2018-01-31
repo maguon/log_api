@@ -73,6 +73,12 @@ function getDamageInsure(params,callback) {
         query = query + " and u.real_name = ? ";
     }
     query = query + " group by di.id ";
+    query = query + " order by di.id desc";
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageInsure ');
         return callback(error,rows);

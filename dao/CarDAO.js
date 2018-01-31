@@ -461,11 +461,14 @@ function updateCarStatus(params,callback){
 function updateCarOrderDate(params,callback){
     var query = " update car_info left join dp_route_load_task_detail on car_info.id = dp_route_load_task_detail.car_id " +
         " left join dp_route_load_task on dp_route_load_task.id = dp_route_load_task_detail.dp_route_load_task_id " +
-        " set car_info.order_date = ? , car_info.order_date_id =  ? " +
+        " set car_info.order_date = ? , car_info.order_date_id =  ? , car_info.route_end_id = ? , car_info.route_end =  ? , car_info.receive_id =  ? " +
         " where car_info.order_date is  null and dp_route_load_task_detail.dp_route_load_task_id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.orderDate;
     paramsArray[i++]=params.orderDateId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.routeEnd;
+    paramsArray[i++]=params.receiveId;
     paramsArray[i]=params.dpRouteLoadTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCarOrderDate ');

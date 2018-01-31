@@ -134,6 +134,8 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                 } else {
                     if (rows && rows.length > 0) {
                         parkObj.addrName = rows[0].addr_name;
+                        parkObj.routeEndId = rows[0].route_end_id;
+                        parkObj.cityName = rows[0].city_name;
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
                         parkObj.cleanFee = rows[0].clean_fee;
@@ -158,6 +160,9 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             var orderDate = parkObj.dateId.toString();
             params.orderDate = moment(orderDate).format('YYYY-MM-DD');
             params.orderDateId = parkObj.dateId;
+            params.routeEndId = parkObj.routeEndId;
+            params.routeEnd = parkObj.cityName;
+            params.receiveId = parkObj.receiveId;
             carDAO.updateCarOrderDate(params,function(error,result){
                 if (error) {
                     logger.error(' updateCarOrderDate ' + error.message);

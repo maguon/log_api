@@ -175,9 +175,10 @@ function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
 }
 
 function updateDpRouteLoadTaskCleanRelStatus(params,callback){
-    var query = " update dp_route_load_task_clean_rel set drive_user_id = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
+    var query = " update dp_route_load_task_clean_rel set drive_user_id = ? , actual_price = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.actualPrice;
     paramsArray[i++] = params.cleanDate;
     paramsArray[i++] = params.dateId;
     paramsArray[i++] = params.status;

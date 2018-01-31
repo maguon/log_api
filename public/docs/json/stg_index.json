@@ -10587,6 +10587,15 @@
             "required": true,
             "type": "integer"
 
+          },
+          {
+            "name": "loadTaskCleanRel",
+            "in": "body",
+            "description": "loadTaskCleanRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loadTaskCleanRel"
+            }
           }
         ],
         "responses": {
@@ -11813,6 +11822,22 @@
             "description": "insureUser name",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
 
           }
         ],
@@ -13322,6 +13347,18 @@
       },
       "xml": {
         "name": "dpRouteLoadTaskDetail"
+      }
+    },
+    "loadTaskCleanRel": {
+      "type": "object",
+      "properties": {
+
+        "actualPrice": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "loadTaskCleanRel"
       }
     },
     "damage": {
