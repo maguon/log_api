@@ -113,6 +113,10 @@ function getDamageInsureMonthStat(params,callback){
         " sum(case when di.insure_status = "+params.insureStatus+" then di.insure_actual end) as damage_insure from date_base db " +
         " left join damage_insure di  on db.id = di.date_id where  db.id is not null " ;
     var paramsArray=[],i=0;
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
+    }
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";

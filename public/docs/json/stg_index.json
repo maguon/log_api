@@ -11014,7 +11014,7 @@
             "in": "query",
             "description": "yearMonth",
             "required": false,
-            "type": "string"
+            "type": "integer"
 
           }
         ],
@@ -11046,26 +11046,18 @@
         ],
         "parameters": [
           {
-            "name": "dateIdStart",
+            "name": "yearMonth",
             "in": "query",
-            "description": "dateId start",
+            "description": "yearMonth",
             "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "dateIdEnd",
-            "in": "query",
-            "description": "dateId end",
-            "required": false,
-            "type": "string"
+            "type": "integer"
 
           },
           {
             "name": "damageStatus",
             "in": "query",
             "description": "damage status",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           }
@@ -11924,6 +11916,14 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "yearMonth",
+            "in": "query",
+            "description": "yearMonth",
+            "required": false,
+            "type": "integer"
+
+          },
           {
             "name": "insureStatus",
             "in": "query",

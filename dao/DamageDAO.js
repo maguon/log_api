@@ -177,21 +177,18 @@ function getDamageNotCheckCount(params,callback) {
 }
 
 function getDamageTotalCost(params,callback) {
-    var query = " select sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost from damage_info da " +
-        " left join damage_check dc on da.id = dc.damage_id where da.id is not null ";
+    var query = " select db.y_month,sum(dc.company_cost) as company_cost,sum(dc.under_cost) as under_cost from damage_info da " +
+        " left join damage_check dc on da.id = dc.damage_id left join date_base db on dc.date_id = db.id where da.id is not null  ";
     var paramsArray=[],i=0;
-    if(params.dateIdStart){
-        paramsArray[i++] = params.dateIdStart;
-        query = query + " and date_format(dc.date_id,'%Y%m') >= ? ";
-    }
-    if(params.dateIdEnd){
-        paramsArray[i++] = params.dateIdEnd;
-        query = query + " and date_format(dc.date_id,'%Y%m') <= ? ";
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
     }
     if(params.damageStatus){
         paramsArray[i++] = params.damageStatus;
         query = query + " and da.damage_status = ? ";
     }
+    query = query + " group by db.y_month ";
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageTotalCost ');
         return callback(error,rows);
