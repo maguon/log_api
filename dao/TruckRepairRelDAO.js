@@ -47,6 +47,10 @@ function getTruckRepairRel(params,callback) {
         paramsArray[i++] = params.repairStatus;
         query = query + " and trr.repair_status = ? ";
     }
+    if(params.repairType){
+        paramsArray[i++] = params.repairType;
+        query = query + " and trr.repair_type = ? ";
+    }
     if(params.repairDateStart){
         paramsArray[i++] = params.repairDateStart +" 00:00:00";
         query = query + " and trr.repair_date >= ? ";

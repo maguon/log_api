@@ -2696,6 +2696,14 @@
 
           },
           {
+            "name": "repairType",
+            "in": "query",
+            "description": "repair type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "repairDateStart",
             "in": "query",
             "description": "repairDate start",
