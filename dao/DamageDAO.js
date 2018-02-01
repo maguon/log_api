@@ -162,17 +162,14 @@ function getDamageCheckCount(params,callback) {
 }
 
 function getDamageNotCheckCount(params,callback) {
-    var query = " select count(da.id) as damage_count,da.damage_status from damage_info da where da.id is not null ";
+    var query = " select db.y_month,count(da.id) as damage_count,da.damage_status from damage_info da " +
+        " left join date_base db on da.date_id = db.id where da.id is not null ";
     var paramsArray=[],i=0;
-    if(params.dateIdStart){
-        paramsArray[i++] = params.dateIdStart;
-        query = query + " and date_format(da.date_id,'%Y%m') >= ? ";
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
     }
-    if(params.dateIdEnd){
-        paramsArray[i++] = params.dateIdEnd;
-        query = query + " and date_format(da.date_id,'%Y%m') <= ? ";
-    }
-    query = query + " group by da.damage_status ";
+    query = query + " group by da.damage_status,db.y_month ";
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageNotCheckCount ');
         return callback(error,rows);
