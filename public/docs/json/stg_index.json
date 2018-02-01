@@ -10369,6 +10369,14 @@
         ],
         "parameters": [
           {
+            "name": "yearMonth",
+            "in": "query",
+            "description": "yearMonth",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "monthStart",
             "in": "query",
             "description": "month start",

@@ -85,9 +85,13 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
 }
 
 function getDpRouteLoadTaskCleanRelMonthStat(params,callback) {
-        var query = " select DISTINCT(db.y_month),sum(dpcr.actual_price) as actual_price from date_base db " +
+        var query = " select DISTINCT(db.y_month),sum(dpcr.actual_price) as actual_price,count(dpcr.id) as clean_count from date_base db " +
             " left join dp_route_load_task_clean_rel dpcr on db.id = dpcr.date_id where db.id is not null ";
     var paramsArray=[],i=0;
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
+    }
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";
