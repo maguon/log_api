@@ -42,8 +42,36 @@ function getRepair(params,callback) {
     });
 }
 
+function updateRepair(params,callback){
+    var query = " update repair_info set repair_name = ?,address = ?, lng = ?,lat = ?,remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.repairName;
+    paramsArray[i++]=params.address;
+    paramsArray[i++]=params.lng;
+    paramsArray[i++]=params.lat;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.repairId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateRepair ');
+        return callback(error,rows);
+    });
+}
+
+function updateRepairStatus(params,callback){
+    var query = " update repair_info set repair_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.repairStatus;
+    paramsArray[i]=params.repairId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateRepairStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addRepair: addRepair,
-    getRepair : getRepair
+    getRepair : getRepair,
+    updateRepair : updateRepair,
+    updateRepairStatus : updateRepairStatus
 }

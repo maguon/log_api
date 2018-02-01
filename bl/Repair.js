@@ -41,8 +41,38 @@ function queryRepair(req,res,next){
     })
 }
 
+function updateRepair(req,res,next){
+    var params = req.params ;
+    repairDAO.updateRepair(params,function(error,result){
+        if (error) {
+            logger.error(' updateRepair ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateRepair ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateRepairStatus(req,res,next){
+    var params = req.params ;
+    repairDAO.updateRepairStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateRepairStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateRepairStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createRepair : createRepair,
-    queryRepair : queryRepair
+    queryRepair : queryRepair,
+    updateRepair : updateRepair,
+    updateRepairStatus : updateRepairStatus
 }

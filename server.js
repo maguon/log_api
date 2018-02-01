@@ -512,6 +512,8 @@ function createServer() {
      */
     server.get('/api/repair', repair.queryRepair);
     server.post({path:'/api/user/:userId/repair',contentType: 'application/json'},repair.createRepair);
+    server.put({path:'/api/user/:userId/repair/:repairId',contentType: 'application/json'} ,repair.updateRepair);
+    server.put({path:'/api/user/:userId/repair/:repairId/repairStatus/:repairStatus',contentType: 'application/json'} ,repair.updateRepairStatus);
 
     /**
      * MsgPush Module

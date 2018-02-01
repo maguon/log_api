@@ -11010,17 +11010,9 @@
         ],
         "parameters": [
           {
-            "name": "dateIdStart",
+            "name": "yearMonth",
             "in": "query",
-            "description": "dateId start",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "dateIdEnd",
-            "in": "query",
-            "description": "dateId end",
+            "description": "yearMonth",
             "required": false,
             "type": "string"
 
@@ -12491,6 +12483,112 @@
             "schema": {
               "$ref": "#/definitions/repair"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid repair id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/repair/{repairId}": {
+      "put": {
+        "tags": [
+          "repair"
+        ],
+        "summary": "update repair info",
+        "description": "update repair info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairId",
+            "in": "path",
+            "description": "repair id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "repair",
+            "in": "body",
+            "description": "repair info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/repair"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid repair id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/repair/{repairId}/repairStatus/{repairStatus}": {
+      "put": {
+        "tags": [
+          "repair"
+        ],
+        "summary": "update repair status",
+        "description": "update repair status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairId",
+            "in": "path",
+            "description": "repair id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairStatus",
+            "in": "path",
+            "description": "repair status",
+            "required": true,
+            "type": "integer"
+
           }
         ],
         "responses": {
