@@ -68,20 +68,10 @@ function getDamageInsureRel(params,callback) {
 }
 
 function deleteDamageInsureRel(params,callback){
-    var query = " delete from damage_insure_rel where id is not null ";
+    var query = " delete from damage_insure_rel where damage_insure_id = ? and damage_id = ? ";
     var paramsArray=[],i=0;
-    if(params.damageInsureRelId){
-        paramsArray[i++] = params.damageInsureRelId;
-        query = query + " and id = ? ";
-    }
-    if(params.damageInsureId){
-        paramsArray[i++] = params.damageInsureId;
-        query = query + " and damage_insure_id = ? ";
-    }
-    if(params.damageId){
-        paramsArray[i++] = params.damageId;
-        query = query + " and damage_id = ? ";
-    }
+    paramsArray[i++] = params.damageInsureId;
+    paramsArray[i++] = params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' deleteDamageInsureRel ');
         return callback(error,rows);

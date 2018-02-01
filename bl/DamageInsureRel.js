@@ -92,7 +92,7 @@ function getDamageInsureRelCsv(req,res,next){
 
 
 module.exports = {
-    removeDamageInsureRel : removeDamageInsureRel,
     createDamageInsureRel : createDamageInsureRel,
+    removeDamageInsureRel : removeDamageInsureRel,
     getDamageInsureRelCsv : getDamageInsureRelCsv
 }

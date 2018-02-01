@@ -12356,7 +12356,9 @@
             "description": "Invalid token value or invalid damageInsureRel id"
           }
         }
-      },
+      }
+    },
+    "/user/{userId}/damageInsure/{damageInsureId}/damage/{damageId}": {
       "delete": {
         "tags": [
           "damage"
@@ -12376,26 +12378,18 @@
             "type": "integer"
           },
           {
-            "name": "damageInsureRelId",
-            "in": "query",
-            "description": "damageInsureRel id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "damageInsureId",
-            "in": "query",
+            "in": "path",
             "description": "damageInsure id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
           {
             "name": "damageId",
-            "in": "query",
+            "in": "path",
             "description": "damage id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           }

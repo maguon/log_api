@@ -505,7 +505,7 @@ function createServer() {
      */
     server.get('/api/damageInsureRel.csv', damageInsureRel.getDamageInsureRelCsv);
     server.post({path:'/api/user/:userId/damageInsureRel',contentType: 'application/json'},damageInsureRel.createDamageInsureRel);
-    server.del('/api/user/:userId/damageInsureRel' , damageInsureRel.removeDamageInsureRel);
+    server.del('/api/user/:userId/damageInsure/:damageInsureId/damage/:damageId' , damageInsureRel.removeDamageInsureRel);
 
     /**
      * Repair Module
