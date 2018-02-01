@@ -17,6 +17,10 @@ DROP PRIMARY KEY,
 ADD PRIMARY KEY (`damage_insure_id`, `damage_id`),
 ADD UNIQUE INDEX `id` (`id`) ;
 
+ALTER TABLE `truck_repair_rel`
+ADD COLUMN `repair_id`  int(10) NULL DEFAULT NULL COMMENT '维修站ID' AFTER `repair_date`,
+ADD COLUMN `repair_type`  tinyint(1) NULL DEFAULT NULL COMMENT '维修类型(1-事故,2-非事故)' AFTER `repair_id`;
+
 -- ----------------------------
 -- Table structure for damage_type
 -- ----------------------------

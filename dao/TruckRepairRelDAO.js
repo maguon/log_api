@@ -23,8 +23,9 @@ function addTruckRepairRel(params,callback){
 }
 
 function getTruckRepairRel(params,callback) {
-    var query = " select trr.*,ti.truck_num,ti.truck_type from truck_repair_rel trr" +
-        " left join truck_info ti on trr.truck_id = ti.id where trr.id is not null ";
+    var query = " select trr.*,ti.truck_num,ti.truck_type,ri.repair_name from truck_repair_rel trr" +
+        " left join truck_info ti on trr.truck_id = ti.id " +
+        " left join repair_info ri on trr.repair_id = ri.id where trr.id is not null ";
     var paramsArray=[],i=0;
     if(params.relId){
         paramsArray[i++] = params.relId;
