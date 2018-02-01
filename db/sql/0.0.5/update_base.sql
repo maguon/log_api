@@ -12,6 +12,11 @@ ADD COLUMN `car_count`  int(10) NULL DEFAULT 0 COMMENT '装车台数' AFTER `act
 CHANGE COLUMN `collect_status` `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '领取状态(0-未通过 ,1-未审核,2-已通过)' AFTER `date_id`;
 ADD COLUMN `clean_date`  datetime NULL COMMENT '领取时间' AFTER `drive_user_id`;
 
+ALTER TABLE `damage_insure_rel`
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`damage_insure_id`, `damage_id`),
+ADD UNIQUE INDEX `id` (`id`) ;
+
 -- ----------------------------
 -- Table structure for damage_type
 -- ----------------------------
