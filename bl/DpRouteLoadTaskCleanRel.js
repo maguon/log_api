@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskCleanRelDAO = require('../dao/DpRouteLoadTaskCleanRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -86,10 +87,12 @@ function queryDpRouteLoadTaskCleanRelReceiveWeekStat(req,res,next){
 
 function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
     var params = req.params;
+    if(params.status==sysConst.CLEAN_STATUS.completed){
     var myDate = new Date();
     var strDate = moment(myDate).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
     params.cleanDate = myDate;
+    }
     dpRouteLoadTaskCleanRelDAO.updateDpRouteLoadTaskCleanRelStatus(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteLoadTaskCleanRelStatus ' + error.message);
