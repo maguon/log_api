@@ -36,9 +36,10 @@ function addDamageCheck(params,callback){
 }
 
 function getDamageCheck(params,callback) {
-    var query = " select dc.*,u3.real_name as op_user_name from damage_check dc " +
+    var query = " select dc.*,ri.repair_name,u3.real_name as op_user_name from damage_check dc " +
         " left join damage_info da on dc.damage_id = da.id " +
         " left join user_info u3 on dc.op_user_id = u3.uid " +
+        " left join repair_info ri on dc.repair_id = ri.id " +
         " where dc.id is not null ";
     var paramsArray=[],i=0;
     if(params.damageCheckId){
