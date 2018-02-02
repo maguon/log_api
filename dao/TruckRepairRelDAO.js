@@ -7,12 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckRepairRelDAO.js');
 
 function addTruckRepairRel(params,callback){
-    var query = " insert into truck_repair_rel (truck_id,drive_id,drive_name,repair_date,date_id,repair_reason) " +
+    var query = " insert into truck_repair_rel (truck_id,repair_type,accident_id,repair_date,date_id,repair_reason) " +
         " values ( ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
-    paramsArray[i++]=params.driveId;
-    paramsArray[i++]=params.driveName;
+    paramsArray[i++]=params.repairType;
+    paramsArray[i++]=params.accidentId;
     paramsArray[i++]=params.repairDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i]=params.repairReason;

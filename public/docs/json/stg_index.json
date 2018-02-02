@@ -12963,11 +12963,11 @@
       "type": "object",
       "properties": {
 
-        "driveId": {
+        "repairType": {
           "type": "integer"
         },
-        "driveName": {
-          "type": "string"
+        "accidentId": {
+          "type": "integer"
         },
         "repairReason": {
           "type": "string"
