@@ -12972,6 +12972,9 @@
         "repairReason": {
           "type": "string"
         },
+        "repairStationId": {
+          "type": "integer"
+        },
         "repairUser": {
           "type": "string"
         },

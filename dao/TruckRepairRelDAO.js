@@ -25,7 +25,7 @@ function addTruckRepairRel(params,callback){
 function getTruckRepairRel(params,callback) {
     var query = " select trr.*,ti.truck_num,ti.truck_type,ri.repair_name from truck_repair_rel trr" +
         " left join truck_info ti on trr.truck_id = ti.id " +
-        " left join repair_info ri on trr.repair_id = ri.id where trr.id is not null ";
+        " left join repair_info ri on trr.repair_station_id = ri.id where trr.id is not null ";
     var paramsArray=[],i=0;
     if(params.relId){
         paramsArray[i++] = params.relId;
@@ -145,8 +145,9 @@ function getTruckRepairMoneyTotal(params,callback) {
 }
 
 function updateTruckRepairRel(params,callback){
-    var query = " update truck_repair_rel set repair_user = ? , repair_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
+    var query = " update truck_repair_rel set repair_station_id = ? , repair_user = ? , repair_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.repairStationId;
     paramsArray[i++]=params.repairUser;
     paramsArray[i++]=params.repairMoney;
     paramsArray[i++]=params.endDate;
