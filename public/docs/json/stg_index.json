@@ -69,8 +69,8 @@
       "description":"Damage of log api"
     },
     {
-      "name":"repair",
-      "description":"Repair of log api"
+      "name":"repairStation",
+      "description":"repairStation of log api"
     },
     {
       "name":"msgPush",
@@ -12420,29 +12420,29 @@
         }
       }
     },
-    "/repair": {
+    "/repairStation": {
       "get": {
         "tags": [
-          "repair"
+          "repairStation"
         ],
-        "summary": "query repair list",
-        "description": "query repair",
+        "summary": "query repairStation list",
+        "description": "query repairStation",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "repairId",
+            "name": "repairStationId",
             "in": "query",
-            "description": "repair id",
+            "description": "repairStation id",
             "required": false,
             "type": "integer"
 
           },
           {
-            "name": "repairName",
+            "name": "repairStationName",
             "in": "query",
-            "description": "repair name",
+            "description": "repairStation name",
             "required": false,
             "type": "string"
 
@@ -12470,23 +12470,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/repair"
+                "$ref": "#/definitions/repairStation"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid repair id"
+            "description": "Invalid token value or invalid repairStation id"
           }
         }
       }
     },
-    "/user/{userId}/repair": {
+    "/user/{userId}/repairStation": {
       "post": {
         "tags": [
-          "repair"
+          "repairStation"
         ],
-        "summary": "user create repair",
-        "description": "user create repair",
+        "summary": "user create repairStation",
+        "description": "user create repairStation",
         "produces": [
           "application/json"
         ],
@@ -12500,12 +12500,12 @@
 
           },
           {
-            "name": "repair",
+            "name": "repairStation",
             "in": "body",
-            "description": "repair info",
+            "description": "repairStation info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/repair"
+              "$ref": "#/definitions/repairStation"
             }
           }
         ],
@@ -12520,18 +12520,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid repair id"
+            "description": "Invalid token value or invalid repairStation id"
           }
         }
       }
     },
-    "/user/{userId}/repair/{repairId}": {
+    "/user/{userId}/repairStation/{repairStationId}": {
       "put": {
         "tags": [
-          "repair"
+          "repairStation"
         ],
-        "summary": "update repair info",
-        "description": "update repair info",
+        "summary": "update repairStation info",
+        "description": "update repairStation info",
         "produces": [
           "application/json"
         ],
@@ -12545,20 +12545,20 @@
 
           },
           {
-            "name": "repairId",
+            "name": "repairStationId",
             "in": "path",
-            "description": "repair id",
+            "description": "repairStation id",
             "required": true,
             "type": "integer"
 
           },
           {
-            "name": "repair",
+            "name": "repairStation",
             "in": "body",
-            "description": "repair info",
+            "description": "repairStation info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/repair"
+              "$ref": "#/definitions/repairStation"
             }
 
           }
@@ -12574,18 +12574,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid repair id"
+            "description": "Invalid token value or invalid repairStation id"
           }
         }
       }
     },
-    "/user/{userId}/repair/{repairId}/repairStatus/{repairStatus}": {
+    "/user/{userId}/repairStation/{repairStationId}/repairStationStatus/{repairStationStatus}": {
       "put": {
         "tags": [
-          "repair"
+          "repairStation"
         ],
-        "summary": "update repair status",
-        "description": "update repair status",
+        "summary": "update repairStation status",
+        "description": "update repairStation status",
         "produces": [
           "application/json"
         ],
@@ -12599,17 +12599,17 @@
 
           },
           {
-            "name": "repairId",
+            "name": "repairStationId",
             "in": "path",
-            "description": "repair id",
+            "description": "repairStation id",
             "required": true,
             "type": "integer"
 
           },
           {
-            "name": "repairStatus",
+            "name": "repairStationStatus",
             "in": "path",
-            "description": "repair status",
+            "description": "repairStation status",
             "required": true,
             "type": "integer"
 
@@ -12626,7 +12626,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid repair id"
+            "description": "Invalid token value or invalid repairStation id"
           }
         }
       }
@@ -13835,11 +13835,11 @@
         "name": "quality"
       }
     },
-    "repair": {
+    "repairStation": {
       "type": "object",
       "properties": {
 
-        "repairName": {
+        "repairStationName": {
           "type": "string"
         },
         "address": {
@@ -13856,7 +13856,7 @@
         }
       },
       "xml": {
-        "name": "repair"
+        "name": "repairStation"
       }
     }
   },

@@ -47,7 +47,7 @@ var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
 var damageInsure = require('./bl/DamageInsure.js');
 var damageInsureRel = require('./bl/DamageInsureRel.js');
-var repair = require('./bl/Repair.js');
+var repairStation = require('./bl/repairStation.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -508,12 +508,12 @@ function createServer() {
     server.del('/api/user/:userId/damageInsure/:damageInsureId/damage/:damageId' , damageInsureRel.removeDamageInsureRel);
 
     /**
-     * Repair Module
+     * RepairStation Module
      */
-    server.get('/api/repair', repair.queryRepair);
-    server.post({path:'/api/user/:userId/repair',contentType: 'application/json'},repair.createRepair);
-    server.put({path:'/api/user/:userId/repair/:repairId',contentType: 'application/json'} ,repair.updateRepair);
-    server.put({path:'/api/user/:userId/repair/:repairId/repairStatus/:repairStatus',contentType: 'application/json'} ,repair.updateRepairStatus);
+    server.get('/api/repairStation', repairStation.queryRepairStation);
+    server.post({path:'/api/user/:userId/repairStation',contentType: 'application/json'},repairStation.createRepairStation);
+    server.put({path:'/api/user/:userId/repairStation/:repairStationId',contentType: 'application/json'} ,repairStation.updateRepairStation);
+    server.put({path:'/api/user/:userId/repairStation/:repairStationId/repairStationStatus/:repairStationStatus',contentType: 'application/json'} ,repairStation.updateRepairStationStatus);
 
     /**
      * MsgPush Module

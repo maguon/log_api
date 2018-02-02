@@ -7,62 +7,62 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var repairDAO = require('../dao/RepairDAO.js');
+var repairStationDAO = require('../dao/repairStationDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('Repair.js');
+var logger = serverLogger.createLogger('repairStation.js');
 
-function createRepair(req,res,next){
+function createRepairStation(req,res,next){
     var params = req.params ;
-    repairDAO.addRepair(params,function(error,result){
+    repairStationDAO.addRepairStation(params,function(error,result){
         if (error) {
-            logger.error(' createRepair ' + error.message);
+            logger.error(' createRepairStation ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createRepair ' + 'success');
+            logger.info(' createRepairStation ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryRepair(req,res,next){
+function queryRepairStation(req,res,next){
     var params = req.params ;
-    repairDAO.getRepair(params,function(error,result){
+    repairStationDAO.getRepairStation(params,function(error,result){
         if (error) {
-            logger.error(' queryRepair ' + error.message);
+            logger.error(' queryRepairStation ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryRepair ' + 'success');
+            logger.info(' queryRepairStation ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function updateRepair(req,res,next){
+function updateRepairStation(req,res,next){
     var params = req.params ;
-    repairDAO.updateRepair(params,function(error,result){
+    repairStationDAO.updateRepairStation(params,function(error,result){
         if (error) {
-            logger.error(' updateRepair ' + error.message);
+            logger.error(' updateRepairStation ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' updateRepair ' + 'success');
+            logger.info(' updateRepairStation ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
     })
 }
 
-function updateRepairStatus(req,res,next){
+function updateRepairStationStatus(req,res,next){
     var params = req.params ;
-    repairDAO.updateRepairStatus(params,function(error,result){
+    repairStationDAO.updateRepairStationStatus(params,function(error,result){
         if (error) {
-            logger.error(' updateRepairStatus ' + error.message);
+            logger.error(' updateRepairStationStatus ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' updateRepairStatus ' + 'success');
+            logger.info(' updateRepairStationStatus ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
@@ -71,8 +71,8 @@ function updateRepairStatus(req,res,next){
 
 
 module.exports = {
-    createRepair : createRepair,
-    queryRepair : queryRepair,
-    updateRepair : updateRepair,
-    updateRepairStatus : updateRepairStatus
+    createRepairStation : createRepairStation,
+    queryRepairStation : queryRepairStation,
+    updateRepairStation : updateRepairStation,
+    updateRepairStationStatus : updateRepairStationStatus
 }
