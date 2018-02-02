@@ -3276,6 +3276,103 @@
         }
       }
     },
+    "/truckAccident": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckAccident list",
+        "description": "query truckAccident",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckAccidentId",
+            "in": "query",
+            "description": "truckAccident id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckAccident"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccident id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckAccident": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckAccident",
+        "description": "user create truckAccident",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccident",
+            "in": "body",
+            "description": "truckAccident info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccident"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccident id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -12987,6 +13084,33 @@
       },
       "xml": {
         "name": "truckRepairRel"
+      }
+    },
+    "truckAccident": {
+      "type": "object",
+      "properties": {
+
+        "truckId": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "dpRouteTaskId": {
+          "type": "integer"
+        },
+        "accidentDate": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "accidentExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckAccident"
       }
     },
     "brand": {

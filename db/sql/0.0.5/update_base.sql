@@ -49,18 +49,22 @@ CREATE TABLE `repair_station_info` (
   UNIQUE KEY `repair_station_name` (`repair_station_name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
--- Table structure for truck_accident_rel
+-- Table structure for truck_accident_info
 -- ----------------------------
-DROP TABLE IF EXISTS `truck_accident_rel`;
-CREATE TABLE `truck_accident_rel` (
+DROP TABLE IF EXISTS `truck_accident_info`;
+CREATE TABLE `truck_accident_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `accident_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '事故名称',
+  `truck_id` int(10) NOT NULL COMMENT '货车ID',
+  `drive_id` int(10) NOT NULL COMMENT '司机ID',
+  `dp_route_task_id` int(10) NOT NULL COMMENT '任务路线ID',
+  `accident_date` datetime DEFAULT NULL COMMENT '事故时间',
   `address` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '事故地点',
   `lng` decimal(10,5) DEFAULT NULL COMMENT '经度',
   `lat` decimal(10,5) DEFAULT NULL COMMENT '纬度',
-  `accident_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '事故状态(1-未完结,2-完结)',
-  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `date_id` int(4) DEFAULT NULL COMMENT '事故申报统计时间',
+  `accident_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '事故描述',
+  `accident_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '事故状态(1-待处理,2-处理中,3-已处理)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '事故申报时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

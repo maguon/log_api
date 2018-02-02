@@ -7,11 +7,11 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var repairStationDAO = require('../dao/repairStationDAO.js');
+var repairStationDAO = require('../dao/RepairStationDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('repairStation.js');
+var logger = serverLogger.createLogger('RepairStation.js');
 
 function createRepairStation(req,res,next){
     var params = req.params ;

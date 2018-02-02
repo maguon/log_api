@@ -4,7 +4,7 @@
 
 var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('repairStationDAO.js');
+var logger = serverLogger.createLogger('RepairStationDAO.js');
 
 function addRepairStation(params,callback){
     var query = " insert into repair_station_info (repair_station_name,address,lng,lat,remark) values ( ? , ? , ? , ? , ? ) ";

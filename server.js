@@ -18,6 +18,7 @@ var truckInsureRel = require('./bl/TruckInsureRel.js');
 var truckInsure = require('./bl/TruckInsure.js');
 var truckRepairRel = require('./bl/TruckRepairRel.js');
 var truckDispatch = require('./bl/TruckDispatch.js');
+var truckAccident = require('./bl/TruckAccident.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
@@ -47,7 +48,7 @@ var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
 var damageInsure = require('./bl/DamageInsure.js');
 var damageInsureRel = require('./bl/DamageInsureRel.js');
-var repairStation = require('./bl/repairStation.js');
+var repairStation = require('./bl/RepairStation.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -237,6 +238,12 @@ function createServer() {
      */
     server.get('/api/truckDispatch' , truckDispatch.queryTruckDispatch);
     server.put({path:'/api/user/:userId/truck/:truckId/dispatch',contentType: 'application/json'} , truckDispatch.initTruckDispatchCity);
+
+    /**
+     * TruckAccident Module
+     */
+    server.get('/api/truckAccident' , truckAccident.queryTruckAccident);
+    server.post({path:'/api/user/:userId/truckAccident',contentType: 'application/json'},truckAccident.createTruckAccident);
 
     /**
      * Brand Module
