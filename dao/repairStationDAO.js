@@ -27,8 +27,8 @@ function getRepairStation(params,callback) {
         paramsArray[i++] = params.repairStationId;
         query = query + " and id = ? ";
     }
-    if(params.repairName){
-        paramsArray[i++] = params.repairName;
+    if(params.repairStationName){
+        paramsArray[i++] = params.repairStationName;
         query = query + " and repair_station_name = ? ";
     }
     if (params.start && params.size) {
