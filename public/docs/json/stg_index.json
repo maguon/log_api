@@ -3073,6 +3073,14 @@
 
           },
           {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
             "name": "truckRepairRel",
             "in": "body",
             "description": "truckRepairRel info",

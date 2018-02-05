@@ -149,8 +149,13 @@ function updateTruckRepairRel(req,res,next){
     }).seq(function(){
         var that = this;
         var myDate = new Date();
-        params.endDate = myDate;
-        params.repairStatus = listOfValue.REPAIR_STATUS_ACTIVE;
+        if(params.repairStatus==1){
+            params.endDate = null;
+            params.repairStatus = listOfValue.REPAIR_STATUS_NOT_ACTIVE;
+        }else{
+            params.endDate = myDate;
+            params.repairStatus = listOfValue.REPAIR_STATUS_ACTIVE;
+        }
         truckRepairRelDAO.updateTruckRepairRel(params,function(error,result){
             if (error) {
                 logger.error(' updateTruckRepairRel ' + error.message);
