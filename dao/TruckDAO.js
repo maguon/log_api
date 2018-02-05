@@ -226,6 +226,14 @@ function getTruckBase(params,callback) {
         paramsArray[i++] = params.truckType;
         query = query + " and t.truck_type = ? ";
     }
+    if(params.repairStatus){
+        paramsArray[i++] = params.repairStatus;
+        query = query + " and t.repair_status = ? ";
+    }
+    if(params.truckStatus){
+        paramsArray[i++] = params.truckStatus;
+        query = query + " and t.ruck_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckBase ');
         return callback(error,rows);

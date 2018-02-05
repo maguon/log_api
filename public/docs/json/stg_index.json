@@ -1261,6 +1261,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "repairStatus",
+            "in": "query",
+            "description": "repair status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckStatus",
+            "in": "query",
+            "description": "truck status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
