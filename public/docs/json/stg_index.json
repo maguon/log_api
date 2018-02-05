@@ -3418,6 +3418,22 @@
 
           },
           {
+            "name": "accidentStatus",
+            "in": "query",
+            "description": "accident status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
