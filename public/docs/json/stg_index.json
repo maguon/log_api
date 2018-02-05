@@ -1227,6 +1227,58 @@
         }
       }
     },
+    "/truckBase": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query truck base",
+        "description": "query truck base",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/operateTypeCount": {
       "get": {
         "tags": [

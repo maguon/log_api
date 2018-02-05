@@ -184,6 +184,7 @@ function createServer() {
      */
     server.get('/api/truckFirst' , truck.queryTruckFirst);
     server.get('/api/truckTrailer' , truck.queryTruckTrailer);
+    server.get('/api/truckBase' , truck.queryTruckBase);
     server.get('/api/operateTypeCount' , truck.queryOperateTypeCount);
     server.get('/api/truckCount' , truck.queryTruckCount);
     server.get('/api/drivingCount' , truck.queryDrivingCount);

@@ -115,6 +115,20 @@ function queryTruckTrailer(req,res,next){
     })
 }
 
+function queryTruckBase(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryOperateTypeCount(req,res,next){
     var params = req.params ;
     truckDAO.getOperateTypeCount(params,function(error,result){
@@ -719,6 +733,7 @@ module.exports = {
     createTruckTrailer : createTruckTrailer,
     queryTruckFirst : queryTruckFirst,
     queryTruckTrailer : queryTruckTrailer,
+    queryTruckBase : queryTruckBase,
     queryOperateTypeCount : queryOperateTypeCount,
     queryTruckCount : queryTruckCount,
     queryDrivingCount : queryDrivingCount,
