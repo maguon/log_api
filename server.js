@@ -232,6 +232,7 @@ function createServer() {
     server.get('/api/truckRepair.csv', truckRepairRel.getTruckRepairCsv);
     server.post({path:'/api/user/:userId/truck/:truckId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
+    server.put({path:'/api/user/:userId/truckRepairRelBase/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRelBase);
 
     /**
      * TruckDispatch Module

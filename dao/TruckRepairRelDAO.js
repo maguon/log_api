@@ -160,6 +160,19 @@ function updateTruckRepairRel(params,callback){
     });
 }
 
+function updateTruckRepairRelBase(params,callback){
+    var query = " update truck_repair_rel set repair_type = ? , accident_id = ? , repair_reason = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.repairType;
+    paramsArray[i++]=params.accidentId;
+    paramsArray[i++]=params.repairReason;
+    paramsArray[i]=params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckRepairRelBase ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckRepairRel : addTruckRepairRel,
@@ -167,5 +180,6 @@ module.exports ={
     getTruckRepairRelCount : getTruckRepairRelCount,
     getTruckRepairCountTotal : getTruckRepairCountTotal,
     getTruckRepairMoneyTotal : getTruckRepairMoneyTotal,
-    updateTruckRepairRel : updateTruckRepairRel
+    updateTruckRepairRel : updateTruckRepairRel,
+    updateTruckRepairRelBase : updateTruckRepairRelBase
 }

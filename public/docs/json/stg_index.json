@@ -3073,9 +3073,55 @@
 
           },
           {
-            "name": "repairStatus",
-            "in": "query",
-            "description": "repair status",
+            "name": "truckRepairRel",
+            "in": "body",
+            "description": "truckRepairRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckRepairRel"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckRepairRelBase/{relId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckRepairRel info",
+        "description": "update truckRepairRel info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
             "required": true,
             "type": "integer"
 

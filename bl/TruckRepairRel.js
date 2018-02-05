@@ -149,13 +149,8 @@ function updateTruckRepairRel(req,res,next){
     }).seq(function(){
         var that = this;
         var myDate = new Date();
-        if(params.repairStatus==1){
-            params.endDate = null;
-            params.repairStatus = listOfValue.REPAIR_STATUS_NOT_ACTIVE;
-        }else{
             params.endDate = myDate;
             params.repairStatus = listOfValue.REPAIR_STATUS_ACTIVE;
-        }
         truckRepairRelDAO.updateTruckRepairRel(params,function(error,result){
             if (error) {
                 logger.error(' updateTruckRepairRel ' + error.message);
@@ -184,6 +179,21 @@ function updateTruckRepairRel(req,res,next){
         })
     })
 }
+
+function updateTruckRepairRelBase(req,res,next){
+    var params = req.params ;
+    truckRepairRelDAO.updateTruckRepairRelBase(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckRepairRelBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckRepairRelBase ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 function getTruckRepairCsv(req,res,next){
     var csvString = "";
@@ -255,5 +265,6 @@ module.exports = {
     queryTruckRepairCountTotal : queryTruckRepairCountTotal,
     queryTruckRepairMoneyTotal : queryTruckRepairMoneyTotal,
     updateTruckRepairRel : updateTruckRepairRel,
+    updateTruckRepairRelBase : updateTruckRepairRelBase,
     getTruckRepairCsv : getTruckRepairCsv
 }
