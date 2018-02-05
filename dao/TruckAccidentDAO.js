@@ -41,7 +41,7 @@ function getTruckAccident(params,callback) {
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and dpr.truck_id = ? ";
+        query = query + " and ta.truck_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
