@@ -3418,6 +3418,14 @@
 
           },
           {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
