@@ -95,8 +95,24 @@ function getTruckAccident(params,callback) {
     });
 }
 
+function updateTruckAccident(params,callback){
+    var query = " update truck_accident_info set accident_date = ? , dp_route_task_id = ? , address = ? , lng = ? , lat = ? , accident_explain = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.accidentDate;
+    paramsArray[i++]=params.dpRouteTaskId;
+    paramsArray[i++]=params.address;
+    paramsArray[i++]=params.lng;
+    paramsArray[i++]=params.lat;
+    paramsArray[i++]=params.accidentExplain;
+    paramsArray[i] = params.truckAccidentId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccident ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
     addTruckAccident : addTruckAccident,
-    getTruckAccident : getTruckAccident
+    getTruckAccident : getTruckAccident,
+    updateTruckAccident : updateTruckAccident
 }

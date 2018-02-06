@@ -246,6 +246,7 @@ function createServer() {
      */
     server.get('/api/truckAccident' , truckAccident.queryTruckAccident);
     server.post({path:'/api/user/:userId/truckAccident',contentType: 'application/json'},truckAccident.createTruckAccident);
+    server.put({path:'/api/user/:userId/truckAccident/:truckAccidentId',contentType: 'application/json'} ,truckAccident.updateTruckAccident);
 
     /**
      * Brand Module

@@ -3583,6 +3583,59 @@
         }
       }
     },
+    "/user/{userId}/truckAccident/{truckAccidentId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update  truckAccident",
+        "description": "update truckAccident",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentId",
+            "in": "path",
+            "description": "truckAccident id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccident",
+            "in": "body",
+            "description": "truckAccident info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccident"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccident id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [

@@ -45,8 +45,23 @@ function queryTruckAccident(req,res,next){
     })
 }
 
+function updateTruckAccident(req,res,next){
+    var params = req.params ;
+    truckAccidentDAO.updateTruckAccident(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckAccident ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckAccident ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckAccident : createTruckAccident,
-    queryTruckAccident : queryTruckAccident
+    queryTruckAccident : queryTruckAccident,
+    updateTruckAccident : updateTruckAccident
 }
