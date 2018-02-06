@@ -109,6 +109,16 @@ var CAR_OP_TYPE = {
     LOAD :14 ,
     ARRIVED : 15
 }
+var ACCIDENT_STATUS  ={ //事故状态
+    ready_process : 1,  //待处理
+    in_process : 2, //处理中
+    completed : 3   //已处理
+};
+var ACCIDENT__TYPE = {  //事故类型
+    commonly : 1 ,  //一般
+    serious : 2 //严重
+};
+
 module.exports = {
     USER_TYPE : USER_TYPE,
     RECORD_OP_TYPE : RECORD_OP_TYPE,
@@ -124,5 +134,7 @@ module.exports = {
     UNLOAD_CAR_COUNT  : UNLOAD_CAR_COUNT ,
     DAMAGE_TYPE : DAMAGE_TYPE ,
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
-    CAR_OP_TYPE : CAR_OP_TYPE
+    CAR_OP_TYPE : CAR_OP_TYPE,
+    ACCIDENT_STATUS : ACCIDENT_STATUS,
+    ACCIDENT__TYPE : ACCIDENT__TYPE
 }

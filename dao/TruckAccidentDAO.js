@@ -80,10 +80,11 @@ function getTruckAccident(params,callback) {
         paramsArray[i++] = params.underUserName;
         query = query + " and tac.under_user_name = ? ";
     }
-    if(params.accidentStatus){
+    if(params.accidensStatus){
         paramsArray[i++] = params.accidentStatus;
         query = query + " and ta.accident_status = ? ";
     }
+    query = query + " order by ta.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
