@@ -3418,17 +3418,81 @@
 
           },
           {
-            "name": "accidentStatus",
+            "name": "truckId",
             "in": "query",
-            "description": "accident status",
+            "description": "truck id",
             "required": false,
             "type": "integer"
 
           },
           {
-            "name": "truckId",
+            "name": "truckType",
             "in": "query",
-            "description": "truck id",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "accidentDateStart",
+            "in": "query",
+            "description": "accidentDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "accidentDateEnd",
+            "in": "query",
+            "description": "accidentDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id ",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentType",
+            "in": "query",
+            "description": "truckAccident type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "underUserId",
+            "in": "query",
+            "description": "underUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "underUserName",
+            "in": "query",
+            "description": "underUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "accidentStatus",
+            "in": "query",
+            "description": "accident status",
             "required": false,
             "type": "integer"
 
@@ -13242,6 +13306,12 @@
         },
         "address": {
           "type": "string"
+        },
+        "lng": {
+          "type": "integer"
+        },
+        "lat": {
+          "type": "integer"
         },
         "accidentExplain": {
           "type": "string"
