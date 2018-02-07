@@ -7,14 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageInsureDAO.js');
 
 function addInsure(params,callback){
-    var query = " insert into damage_insure (insure_id,insure_user_id,insure_plan,insure_actual,date_id) " +
-        " values ( ? , ? , ? , ? , ? ) ";
+    var query = " insert into damage_insure (insure_id,insure_user_id,insure_plan,insure_actual) " +
+        " values ( ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.insurePlan;
-    paramsArray[i++]=params.insureActual;
-    paramsArray[i]=params.dateId;
+    paramsArray[i]=params.insureActual;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addInsure ');
         return callback(error,rows);
@@ -98,9 +97,10 @@ function updateDamageInsure(params,callback){
 }
 
 function updateDamageInsureStatus(params,callback){
-    var query = " update damage_insure set insure_status = ? where id = ? " ;
+    var query = " update damage_insure set insure_status = ? , date_id = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureStatus;
+    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.damageInsureId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageInsureStatus ');
