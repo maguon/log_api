@@ -26,12 +26,12 @@ function addTruckAccident(params,callback){
 }
 
 function getTruckAccident(params,callback) {
-    var query = " select ta.*,c.city_name as city_route_start,c1.city_name as city_route_end,t.truck_num,t.truck_type,d.drive_name, " +
+    var query = " select ta.*,c.city_name as city_route_start,c1.city_name as city_route_end,t.truck_num,d.drive_name, " +
         " tac.truck_accident_type,tac.under_user_id,tac.under_user_name from truck_accident_info ta " +
         " left join dp_route_task dpr on ta.dp_route_task_id = dpr.id " +
         " left join city_info c on dpr.route_start_id = c.id " +
         " left join city_info c1 on dpr.route_end_id = c1.id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join truck_info t on ta.truck_id = t.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_accident_check tac on ta.id = tac.truck_accident_id " +
         " where ta.id is not null ";
@@ -50,7 +50,7 @@ function getTruckAccident(params,callback) {
     }
     if(params.truckType){
         paramsArray[i++] = params.truckType;
-        query = query + " and t.truck_type = ? ";
+        query = query + " and ta.truck_type = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
@@ -84,7 +84,7 @@ function getTruckAccident(params,callback) {
         paramsArray[i++] = params.underUserName;
         query = query + " and tac.under_user_name = ? ";
     }
-    if(params.accidentStatus){
+    if(params.accidensStatus){
         paramsArray[i++] = params.accidentStatus;
         query = query + " and ta.accident_status = ? ";
     }
