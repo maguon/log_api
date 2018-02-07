@@ -26,7 +26,7 @@ function addTruckAccident(params,callback){
 }
 
 function getTruckAccident(params,callback) {
-    var query = " select ta.*,c.city_name as city_route_start,c1.city_name as city_route_end,t.truck_num,d.drive_name, " +
+    var query = " select ta.*,c.city_name as city_route_start,c1.city_name as city_route_end,t.truck_num,t.truck_type,d.drive_name, " +
         " tac.truck_accident_type,tac.under_user_id,tac.under_user_name from truck_accident_info ta " +
         " left join dp_route_task dpr on ta.dp_route_task_id = dpr.id " +
         " left join city_info c on dpr.route_start_id = c.id " +
@@ -50,7 +50,7 @@ function getTruckAccident(params,callback) {
     }
     if(params.truckType){
         paramsArray[i++] = params.truckType;
-        query = query + " and ta.truck_type = ? ";
+        query = query + " and t.truck_type = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;

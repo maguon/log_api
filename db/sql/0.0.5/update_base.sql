@@ -55,7 +55,6 @@ DROP TABLE IF EXISTS `truck_accident_info`;
 CREATE TABLE `truck_accident_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `truck_id` int(10) NOT NULL COMMENT '货车ID',
-  `truck_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '车辆类型(1-车头,2-挂车)',
   `drive_id` int(10) NOT NULL COMMENT '司机ID',
   `dp_route_task_id` int(10) NOT NULL COMMENT '任务路线ID',
   `accident_date` datetime DEFAULT NULL COMMENT '事故时间',
