@@ -3821,6 +3821,111 @@
         }
       }
     },
+    "/user/{userId}/truckAccidentInsure/{accidentInsureId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update  truckAccidentInsure",
+        "description": "update truckAccidentInsure",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "accidentInsureId",
+            "in": "path",
+            "description": "accidentInsure id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentInsure",
+            "in": "body",
+            "description": "truckAccidentInsure info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentInsure"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsure id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckAccidentInsure/{accidentInsureId}/insureStatus/{insureStatus}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckAccidentInsure status",
+        "description": "update truckAccidentInsure status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "accidentInsureId",
+            "in": "path",
+            "description": "accidentInsure id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureStatus",
+            "in": "path",
+            "description": "insure status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsure id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [

@@ -84,8 +84,42 @@ function queryTruckAccidentInsure(req,res,next){
     })
 }
 
+function updateTruckAccidentInsure(req,res,next){
+    var params = req.params;
+    truckAccidentInsureDAO.updateTruckAccidentInsure(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckAccidentInsure ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckAccidentInsure ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateTruckAccidentInsureStatus(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
+    params.completedDate = myDate;
+    truckAccidentInsureDAO.updateTruckAccidentInsureStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckAccidentInsureStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckAccidentInsureStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckAccidentInsure : createTruckAccidentInsure,
-    queryTruckAccidentInsure : queryTruckAccidentInsure
+    queryTruckAccidentInsure : queryTruckAccidentInsure,
+    updateTruckAccidentInsure : updateTruckAccidentInsure,
+    updateTruckAccidentInsureStatus : updateTruckAccidentInsureStatus
 }

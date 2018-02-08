@@ -83,9 +83,36 @@ function getTruckAccidentInsure(params,callback) {
     });
 }
 
+function updateTruckAccidentInsure(params,callback){
+    var query = " update truck_accident_insure set insure_actual = ?,check_explain = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureActual;
+    paramsArray[i++]=params.checkExplain;
+    paramsArray[i]=params.accidentInsureId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentInsure ');
+        return callback(error,rows);
+    });
+}
+
+function updateTruckAccidentInsureStatus(params,callback){
+    var query = " update truck_accident_insure set insure_status = ? , completed_date = ? , date_id = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureStatus;
+    paramsArray[i++]=params.completedDate;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i]=params.accidentInsureId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentInsureStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckAccidentInsure : addTruckAccidentInsure,
-    getTruckAccidentInsure : getTruckAccidentInsure
+    getTruckAccidentInsure : getTruckAccidentInsure,
+    updateTruckAccidentInsure : updateTruckAccidentInsure,
+    updateTruckAccidentInsureStatus : updateTruckAccidentInsureStatus
 }
 
