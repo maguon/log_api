@@ -3644,6 +3644,51 @@
         }
       }
     },
+    "/user/{userId}/truckAccidentCheck": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckAccidentCheck",
+        "description": "user create truckAccidentCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentCheck",
+            "in": "body",
+            "description": "truckAccidentCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentCheck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentCheck id"
+          }
+        }
+      }
+    },
     "/truckAccidentInsure": {
       "get": {
         "tags": [
@@ -13769,6 +13814,39 @@
       },
       "xml": {
         "name": "truckAccident"
+      }
+    },
+    "truckAccidentCheck": {
+      "type": "object",
+      "properties": {
+
+        "truckAccidentId": {
+          "type": "integer"
+        },
+        "truckAccidentType": {
+          "type": "integer"
+        },
+        "underUserId": {
+          "type": "integer"
+        },
+        "underUserName": {
+          "type": "string"
+        },
+        "underCost": {
+          "type": "integer"
+        },
+        "companyCost": {
+          "type": "integer"
+        },
+        "profit": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckAccidentCheck"
       }
     },
     "truckAccidentInsure": {

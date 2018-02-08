@@ -116,8 +116,20 @@ function updateTruckAccident(params,callback){
     });
 }
 
+function updateTruckAccidentStatus(params,callback){
+    var query = " update truck_accident_info set accident_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.accidentStatus;
+    paramsArray[i]=params.truckAccidentId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentStatus ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addTruckAccident : addTruckAccident,
     getTruckAccident : getTruckAccident,
-    updateTruckAccident : updateTruckAccident
+    updateTruckAccident : updateTruckAccident,
+    updateTruckAccidentStatus : updateTruckAccidentStatus
 }

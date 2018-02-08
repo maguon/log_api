@@ -19,6 +19,7 @@ var truckInsure = require('./bl/TruckInsure.js');
 var truckRepairRel = require('./bl/TruckRepairRel.js');
 var truckDispatch = require('./bl/TruckDispatch.js');
 var truckAccident = require('./bl/TruckAccident.js');
+var truckAccidentCheck = require('./bl/TruckAccidentCheck.js');
 var truckAccidentInsure = require('./bl/TruckAccidentInsure.js');
 var truckAccidentInsureRel = require('./bl/TruckAccidentInsureRel.js');
 var brand = require('./bl/Brand.js');
@@ -249,6 +250,11 @@ function createServer() {
     server.get('/api/truckAccident' , truckAccident.queryTruckAccident);
     server.post({path:'/api/user/:userId/truckAccident',contentType: 'application/json'},truckAccident.createTruckAccident);
     server.put({path:'/api/user/:userId/truckAccident/:truckAccidentId',contentType: 'application/json'} ,truckAccident.updateTruckAccident);
+
+    /**
+     * TruckAccidentCheck Module
+     */
+    server.post({path:'/api/user/:userId/truckAccidentCheck',contentType: 'application/json'},truckAccidentCheck.createTruckAccidentCheck);
 
     /**
      * TruckAccidentInsure Module
