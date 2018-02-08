@@ -69,6 +69,27 @@ CREATE TABLE `truck_accident_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
+-- Table structure for truck_accident_check
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_accident_check`;
+CREATE TABLE `truck_accident_check` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `truck_accident_id` int(10) NOT NULL COMMENT '事故编号ID',
+  `truck_accident_type` tinyint(1) DEFAULT NULL COMMENT '事故类型(1-一般,2-严重)',
+  `under_user_id` int(10) DEFAULT NULL COMMENT '责任人用户ID',
+  `under_user_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '责任人用户名称',
+  `under_cost` decimal(10,2) DEFAULT NULL COMMENT '责任人承担费用',
+  `company_cost` decimal(10,2) DEFAULT NULL COMMENT '公司承担费用',
+  `profit` decimal(10,2) DEFAULT NULL COMMENT '盈亏',
+  `op_user_id` int(10) DEFAULT NULL COMMENT '处理人用户ID',
+  `end_date` datetime DEFAULT NULL COMMENT '处理结束时间',
+  `date_id` int(4) DEFAULT NULL COMMENT '处理结束统计时间',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '事故处理时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
 -- Table structure for truck_accident_insure
 -- ----------------------------
 DROP TABLE IF EXISTS `truck_accident_insure`;
