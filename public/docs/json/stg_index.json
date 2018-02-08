@@ -3926,6 +3926,97 @@
         }
       }
     },
+    "/user/{userId}/truckAccidentInsureRel": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckAccidentInsureRel",
+        "description": "user create truckAccidentInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentInsureRel",
+            "in": "body",
+            "description": "truckAccidentInsureRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentInsureRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsureRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/accidentInsure/{accidentInsureId}/accident/{accidentId}": {
+      "delete": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "Deletes a truckAccidentInsureRel",
+        "description": "",
+        "operationId": "deleteTruckAccidentInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accidentInsureId",
+            "in": "path",
+            "description": "accidentInsure id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "accidentId",
+            "in": "path",
+            "description": "accident id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -13714,6 +13805,21 @@
       },
       "xml": {
         "name": "truckAccidentInsure"
+      }
+    },
+    "truckAccidentInsureRel": {
+      "type": "object",
+      "properties": {
+
+        "accidentInsureId": {
+          "type": "integer"
+        },
+        "accidentId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "truckAccidentInsureRel"
       }
     },
     "brand": {

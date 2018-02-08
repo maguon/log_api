@@ -68,3 +68,37 @@ CREATE TABLE `truck_accident_info` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for truck_accident_insure
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_accident_insure`;
+CREATE TABLE `truck_accident_insure` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `insure_id` int(10) NOT NULL COMMENT '保险公司ID',
+  `insure_type` tinyint(1) NOT NULL COMMENT '保险类型(1-交强险,2-商业险,3-货运险)',
+  `insure_plan` decimal(10,2) DEFAULT '0.00' COMMENT '保险计划待赔',
+  `financial_loan_status` tinyint(1) DEFAULT '0' COMMENT '财务借款状态(0-无,1-有)',
+  `financial_loan` decimal(10,2) DEFAULT '0.00' COMMENT '财务借款',
+  `insure_actual` decimal(10,2) DEFAULT '0.00' COMMENT '保险实际赔付',
+  `payment_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '赔付说明',
+  `insure_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '事故保险状态(1-处理中,2-已处理)',
+  `completed_date` datetime DEFAULT NULL COMMENT '赔付结束时间',
+  `date_id` int(4) DEFAULT NULL COMMENT '赔付结束统计时间',
+  `check_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '处理说明',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '保险赔付生成时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for truck_accident_insure_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_accident_insure_rel`;
+CREATE TABLE `truck_accident_insure_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `accident_insure_id` int(10) NOT NULL COMMENT '保险赔付ID',
+  `accident_id` int(10) NOT NULL COMMENT '事故编号ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`accident_insure_id`,`accident_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

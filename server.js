@@ -20,6 +20,7 @@ var truckRepairRel = require('./bl/TruckRepairRel.js');
 var truckDispatch = require('./bl/TruckDispatch.js');
 var truckAccident = require('./bl/TruckAccident.js');
 var truckAccidentInsure = require('./bl/TruckAccidentInsure.js');
+var truckAccidentInsureRel = require('./bl/TruckAccidentInsureRel.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
@@ -256,6 +257,12 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckAccidentInsure',contentType: 'application/json'},truckAccidentInsure.createTruckAccidentInsure);
     server.put({path:'/api/user/:userId/truckAccidentInsure/:accidentInsureId',contentType: 'application/json'} ,truckAccidentInsure.updateTruckAccidentInsure);
     server.put({path:'/api/user/:userId/truckAccidentInsure/:accidentInsureId/insureStatus/:insureStatus',contentType: 'application/json'} ,truckAccidentInsure.updateTruckAccidentInsureStatus);
+
+    /**
+     * TruckAccidentInsureRel Module
+     */
+    server.post({path:'/api/user/:userId/truckAccidentInsureRel',contentType: 'application/json'},truckAccidentInsureRel.createTruckAccidentInsureRel);
+    server.del('/api/user/:userId/accidentInsure/:accidentInsureId/accident/:accidentId' , truckAccidentInsureRel.removeTruckAccidentInsureRel);
 
     /**
      * Brand Module

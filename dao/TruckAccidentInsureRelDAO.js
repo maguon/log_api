@@ -17,7 +17,19 @@ function addTruckAccidentInsureRel(params,callback){
     });
 }
 
+function deleteTruckAccidentInsureRel(params,callback){
+    var query = " delete from truck_accident_insure_rel where accident_insure_id = ? and accident_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.accidentInsureId;
+    paramsArray[i++] = params.accidentId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteTruckAccidentInsureRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addTruckAccidentInsureRel : addTruckAccidentInsureRel
+    addTruckAccidentInsureRel : addTruckAccidentInsureRel,
+    deleteTruckAccidentInsureRel : deleteTruckAccidentInsureRel
 }
