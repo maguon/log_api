@@ -6,6 +6,23 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckAccidentInsureDAO.js');
 
+function addTruckAccidentInsure(params,callback){
+    var query = " insert into truck_accident_insure ( insure_id , insure_type , insure_plan , " +
+        " financial_loan_status , financial_loan , insure_actual , payment_explain ) values ( ? , ? , ? , ? , ? , ? , ? ) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureId;
+    paramsArray[i++]=params.insureType;
+    paramsArray[i++]=params.insurePlan;
+    paramsArray[i++]=params.financialLoanStatus;
+    paramsArray[i++]=params.financialLoan;
+    paramsArray[i++]=params.insureActual;
+    paramsArray[i]=params.paymentExplain;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addTruckAccidentInsure ');
+        return callback(error,rows);
+    });
+}
+
 function getTruckAccidentInsure(params,callback) {
     var query = " select tai.*,ti.insure_name from truck_accident_insure tai " +
         " left join truck_insure ti on tai.insure_id = ti.id where tai.id is not null ";
@@ -68,6 +85,7 @@ function getTruckAccidentInsure(params,callback) {
 
 
 module.exports ={
+    addTruckAccidentInsure : addTruckAccidentInsure,
     getTruckAccidentInsure : getTruckAccidentInsure
 }
 

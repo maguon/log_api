@@ -253,6 +253,7 @@ function createServer() {
      * TruckAccidentInsure Module
      */
     server.get('/api/truckAccidentInsure' ,truckAccidentInsure.queryTruckAccidentInsure);
+    server.post({path:'/api/user/:userId/truckAccidentInsure',contentType: 'application/json'},truckAccidentInsure.createTruckAccidentInsure);
 
     /**
      * Brand Module

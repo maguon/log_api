@@ -3776,6 +3776,51 @@
         }
       }
     },
+    "/user/{userId}/truckAccidentInsure": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckAccidentInsure",
+        "description": "user create truckAccidentInsure",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentInsure",
+            "in": "body",
+            "description": "truckAccidentInsure info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentInsure"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsure id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -13528,6 +13573,42 @@
       },
       "xml": {
         "name": "truckAccident"
+      }
+    },
+    "truckAccidentInsure": {
+      "type": "object",
+      "properties": {
+
+        "insureId": {
+          "type": "integer"
+        },
+        "insureType": {
+          "type": "integer"
+        },
+        "insurePlan": {
+          "type": "integer"
+        },
+        "financialLoanStatus": {
+          "type": "integer"
+        },
+        "financialLoan": {
+          "type": "integer"
+        },
+        "insureActual": {
+          "type": "integer"
+        },
+        "paymentExplain": {
+          "type": "string"
+        },
+        "checkExplain": {
+          "type": "string"
+        },
+        "accidentIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "truckAccidentInsure"
       }
     },
     "brand": {
