@@ -25,6 +25,26 @@ function addTruckAccidentCheck(params,callback){
     });
 }
 
+function getTruckAccidentCheck(params,callback) {
+    var query = " select tac.*,u.real_name as op_user_name from truck_accident_check tac " +
+        " left join truck_accident_info ta on tac.truck_accident_id = ta.id " +
+        " left join user_info u on tac.op_user_id = u.uid " +
+        " where tac.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckAccidentCheckId){
+        paramsArray[i++] = params.truckAccidentCheckId;
+        query = query + " and tac.id = ? ";
+    }
+    if(params.truckAccidentId){
+        paramsArray[i++] = params.truckAccidentId;
+        query = query + " and tac.truck_accident_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckAccidentCheck ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruckAccidentCheck(params,callback){
     var query = " update truck_accident_check set truck_accident_type = ? , under_user_id = ? , under_user_name = ? , under_cost = ? , " +
         " company_cost = ? , profit = ? , remark = ? where id = ? " ;
@@ -46,6 +66,7 @@ function updateTruckAccidentCheck(params,callback){
 
 module.exports ={
     addTruckAccidentCheck : addTruckAccidentCheck,
+    getTruckAccidentCheck : getTruckAccidentCheck,
     updateTruckAccidentCheck : updateTruckAccidentCheck
 }
 

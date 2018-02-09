@@ -256,6 +256,7 @@ function createServer() {
     /**
      * TruckAccidentCheck Module
      */
+    server.get('/api/truckAccidentCheck' , truckAccidentCheck.queryTruckAccidentCheck);
     server.post({path:'/api/user/:userId/truckAccidentCheck',contentType: 'application/json'},truckAccidentCheck.createTruckAccidentCheck);
     server.put({path:'/api/user/:userId/truckAccidentCheck/:truckAccidentCheckId',contentType: 'application/json'} ,truckAccidentCheck.updateTruckAccidentCheck);
 

@@ -49,6 +49,20 @@ function createTruckAccidentCheck(req,res,next){
     })
 }
 
+function queryTruckAccidentCheck(req,res,next){
+    var params = req.params ;
+    truckAccidentCheckDAO.getTruckAccidentCheck(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckAccidentCheck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckAccidentCheck ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruckAccidentCheck(req,res,next){
     var params = req.params ;
     truckAccidentCheckDAO.updateTruckAccidentCheck(params,function(error,result){
@@ -66,5 +80,6 @@ function updateTruckAccidentCheck(req,res,next){
 
 module.exports = {
     createTruckAccidentCheck : createTruckAccidentCheck,
+    queryTruckAccidentCheck : queryTruckAccidentCheck,
     updateTruckAccidentCheck : updateTruckAccidentCheck
 }
