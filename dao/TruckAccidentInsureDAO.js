@@ -83,8 +83,12 @@ function getTruckAccidentInsure(params,callback) {
 }
 
 function updateTruckAccidentInsure(params,callback){
-    var query = " update truck_accident_insure set insure_actual = ?,check_explain = ? where id = ? " ;
+    var query = " update truck_accident_insure set insure_id = ? , insure_type = ? , insure_plan = ? , payment_explain = ? , insure_actual = ? , check_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureId;
+    paramsArray[i++]=params.insureType;
+    paramsArray[i++]=params.insurePlan;
+    paramsArray[i++]=params.paymentExplain;
     paramsArray[i++]=params.insureActual;
     paramsArray[i++]=params.checkExplain;
     paramsArray[i]=params.accidentInsureId;
