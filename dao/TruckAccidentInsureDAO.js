@@ -107,11 +107,25 @@ function updateTruckAccidentInsureStatus(params,callback){
     });
 }
 
+function getTruckAccidentInsurePlanTotal(params,callback) {
+    var query = " select count(ta.id) as insure_plan_count,sum(ta.insure_plan) as insure_plan from truck_accident_insure ta where ta.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.insureStatus){
+        paramsArray[i++] = params.insureStatus;
+        query = query + " and ta.insure_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckAccidentInsurePlanTotal ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckAccidentInsure : addTruckAccidentInsure,
     getTruckAccidentInsure : getTruckAccidentInsure,
     updateTruckAccidentInsure : updateTruckAccidentInsure,
-    updateTruckAccidentInsureStatus : updateTruckAccidentInsureStatus
+    updateTruckAccidentInsureStatus : updateTruckAccidentInsureStatus,
+    getTruckAccidentInsurePlanTotal : getTruckAccidentInsurePlanTotal
 }
 

@@ -265,6 +265,7 @@ function createServer() {
      * TruckAccidentInsure Module
      */
     server.get('/api/truckAccidentInsure' ,truckAccidentInsure.queryTruckAccidentInsure);
+    server.get('/api/truckAccidentInsurePlanTotal' ,truckAccidentInsure.queryTruckAccidentInsurePlanTotal);
     server.post({path:'/api/user/:userId/truckAccidentInsureBase',contentType: 'application/json'},truckAccidentInsure.createTruckAccidentInsureBase);
     server.post({path:'/api/user/:userId/truckAccidentInsure',contentType: 'application/json'},truckAccidentInsure.createTruckAccidentInsure);
     server.put({path:'/api/user/:userId/truckAccidentInsure/:accidentInsureId',contentType: 'application/json'} ,truckAccidentInsure.updateTruckAccidentInsure);

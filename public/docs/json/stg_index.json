@@ -4059,6 +4059,42 @@
         }
       }
     },
+    "/truckAccidentInsurePlanTotal": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckAccidentInsurePlanTotal",
+        "description": "query truckAccidentInsurePlanTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "insureStatus",
+            "in": "query",
+            "description": "insure status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckAccidentInsure"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsure id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckAccidentInsureBase": {
       "post": {
         "tags": [
