@@ -15,6 +15,49 @@ var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('TruckAccidentInsure.js');
 
+function createTruckAccidentInsureBase(req,res,next){
+    var params = req.params ;
+    var accidentInsureId = 0;
+    Seq().seq(function(){
+        var that = this;
+        truckAccidentInsureDAO.addTruckAccidentInsure(params,function(error,result){
+            if (error) {
+                logger.error(' createTruckAccidentInsureBase ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createTruckAccidentInsureBase ' + 'success');
+                    accidentInsureId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create truckAccidentInsureBase failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.accidentInsureId = accidentInsureId;
+        truckAccidentInsureRelDAO.addTruckAccidentInsureRel(params,function(err,result){
+            if (err) {
+                logger.error(' createTruckAccidentInsureRel ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createTruckAccidentInsureRel ' + 'success');
+                }else{
+                    logger.warn(' createTruckAccidentInsureRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        logger.info(' createInsure ' + 'success');
+        resUtil.resetCreateRes(res,{insertId:accidentInsureId},null);
+        return next();
+    })
+}
+
 function createTruckAccidentInsure(req,res,next){
     var params = req.params ;
     var accidentInsureId = 0;
@@ -118,6 +161,7 @@ function updateTruckAccidentInsureStatus(req,res,next){
 
 
 module.exports = {
+    createTruckAccidentInsureBase : createTruckAccidentInsureBase,
     createTruckAccidentInsure : createTruckAccidentInsure,
     queryTruckAccidentInsure : queryTruckAccidentInsure,
     updateTruckAccidentInsure : updateTruckAccidentInsure,
