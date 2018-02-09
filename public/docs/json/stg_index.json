@@ -2804,6 +2804,14 @@
 
           },
           {
+            "name": "accidentId",
+            "in": "query",
+            "description": "accident id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -3644,6 +3652,58 @@
         }
       }
     },
+    "/user/{userId}/truckAccident/{truckAccidentId}/accidentStatus/{accidentStatus}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckAccident status",
+        "description": "update truckAccident status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentId",
+            "in": "path",
+            "description": "truckAccident id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "accidentStatus",
+            "in": "path",
+            "description": "accident status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccident id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckAccidentCheck": {
       "post": {
         "tags": [
@@ -3680,6 +3740,59 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentCheck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckAccidentCheck/{truckAccidentCheckId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update  truckAccidentCheck",
+        "description": "update truckAccidentCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentCheckId",
+            "in": "path",
+            "description": "truckAccidentCheck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentCheck",
+            "in": "body",
+            "description": "truckAccidentCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentCheck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
               }
             }
           },
@@ -3812,6 +3925,51 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/truckAccidentInsure"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsure id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckAccidentInsureBase": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckAccidentInsureBase",
+        "description": "user create truckAccidentInsureBase",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentInsureBase",
+            "in": "body",
+            "description": "truckAccidentInsureBase info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentInsureBase"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
               }
             }
           },
@@ -13847,6 +14005,42 @@
       },
       "xml": {
         "name": "truckAccidentCheck"
+      }
+    },
+    "truckAccidentInsureBase": {
+      "type": "object",
+      "properties": {
+
+        "insureId": {
+          "type": "integer"
+        },
+        "insureType": {
+          "type": "integer"
+        },
+        "insurePlan": {
+          "type": "integer"
+        },
+        "financialLoanStatus": {
+          "type": "integer"
+        },
+        "financialLoan": {
+          "type": "integer"
+        },
+        "insureActual": {
+          "type": "integer"
+        },
+        "paymentExplain": {
+          "type": "string"
+        },
+        "checkExplain": {
+          "type": "string"
+        },
+        "accidentId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "truckAccidentInsureBase"
       }
     },
     "truckAccidentInsure": {
