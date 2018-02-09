@@ -8,14 +8,13 @@ var logger = serverLogger.createLogger('TruckAccidentInsureDAO.js');
 
 function addTruckAccidentInsure(params,callback){
     var query = " insert into truck_accident_insure ( insure_id , insure_type , insure_plan , " +
-        " financial_loan_status , financial_loan , insure_actual , payment_explain ) values ( ? , ? , ? , ? , ? , ? , ? ) ";
+        " financial_loan_status , financial_loan , payment_explain ) values ( ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.insurePlan;
     paramsArray[i++]=params.financialLoanStatus;
     paramsArray[i++]=params.financialLoan;
-    paramsArray[i++]=params.insureActual;
     paramsArray[i]=params.paymentExplain;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addTruckAccidentInsure ');
