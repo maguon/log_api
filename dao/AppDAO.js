@@ -20,6 +20,38 @@ function queryApp(params,callback){
     });
 }
 
+function addAppVersion(params,callback){
+    var query = " insert into app_version (app,type,version,force_update,url,remark)  values (? , ? , ? , ? , ? , ?)";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.app;
+    paramsArray[i++]=params.appType;
+    paramsArray[i++]=params.version;
+    paramsArray[i++]=params.forceUpdate;
+    paramsArray[i++]=params.url;
+    paramsArray[i]=params.remark;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addAppVersion ');
+        return callback(error,rows);
+    });
+}
+
+function updateAppVersion(params,callback){
+    var query = " update app_version set app = ? ,type = ?  ,version = ?  force_update = ? ,url = ?  ,remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.app;
+    paramsArray[i++]=params.appType;
+    paramsArray[i++]=params.version;
+    paramsArray[i++]=params.forceUpdate;
+    paramsArray[i++]=params.url;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.appId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateAppVersion ');
+        return callback(error,rows);
+    });
+}
 module.exports ={
-    queryApp : queryApp
+    queryApp : queryApp ,
+    updateAppVersion : updateAppVersion ,
+    addAppVersion : addAppVersion
 }
