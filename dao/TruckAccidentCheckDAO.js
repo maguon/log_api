@@ -25,8 +25,27 @@ function addTruckAccidentCheck(params,callback){
     });
 }
 
+function updateTruckAccidentCheck(params,callback){
+    var query = " update truck_accident_check set truck_accident_type = ? , under_user_id = ? , under_user_name = ? , under_cost = ? , " +
+        " company_cost = ? , profit = ? , remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckAccidentType;
+    paramsArray[i++]=params.underUserId;
+    paramsArray[i++]=params.underUserName;
+    paramsArray[i++]=params.underCost;
+    paramsArray[i++]=params.companyCost;
+    paramsArray[i++]=params.profit;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.truckAccidentCheckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentCheck ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addTruckAccidentCheck : addTruckAccidentCheck
+    addTruckAccidentCheck : addTruckAccidentCheck,
+    updateTruckAccidentCheck : updateTruckAccidentCheck
 }
 
