@@ -73,10 +73,25 @@ function updateTruckAccidentStatus(req,res,next){
     })
 }
 
+function queryTruckAccidentNotCheckCount(req,res,next){
+    var params = req.params ;
+    truckAccidentDAO.getTruckAccidentNotCheckCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckAccidentNotCheckCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckAccidentNotCheckCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckAccident : createTruckAccident,
     queryTruckAccident : queryTruckAccident,
     updateTruckAccident : updateTruckAccident,
-    updateTruckAccidentStatus : updateTruckAccidentStatus
+    updateTruckAccidentStatus : updateTruckAccidentStatus,
+    queryTruckAccidentNotCheckCount : queryTruckAccidentNotCheckCount
 }

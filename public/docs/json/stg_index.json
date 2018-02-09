@@ -3554,6 +3554,35 @@
         }
       }
     },
+    "/truckAccidentNotCheckCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckAccidentNotCheckCount list",
+        "description": "query truckAccidentNotCheckCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckAccident"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccident id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckAccident": {
       "post": {
         "tags": [

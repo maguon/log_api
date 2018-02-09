@@ -251,6 +251,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckAccident',contentType: 'application/json'},truckAccident.createTruckAccident);
     server.put({path:'/api/user/:userId/truckAccident/:truckAccidentId',contentType: 'application/json'} ,truckAccident.updateTruckAccident);
     server.put({path:'/api/user/:userId/truckAccident/:truckAccidentId/accidentStatus/:accidentStatus',contentType: 'application/json'} ,truckAccident.updateTruckAccidentStatus);
+    server.get('/api/truckAccidentNotCheckCount' , truckAccident.queryTruckAccidentNotCheckCount);
 
     /**
      * TruckAccidentCheck Module

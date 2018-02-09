@@ -127,9 +127,20 @@ function updateTruckAccidentStatus(params,callback){
     });
 }
 
+function getTruckAccidentNotCheckCount(params,callback) {
+    var query = " select count(ta.id) as truck_accident_count,ta.accident_status from truck_accident_info ta where ta.id is not null ";
+    var paramsArray=[],i=0;
+    query = query + " group by ta.accident_status ";
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckAccidentNotCheckCount ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addTruckAccident : addTruckAccident,
     getTruckAccident : getTruckAccident,
     updateTruckAccident : updateTruckAccident,
-    updateTruckAccidentStatus : updateTruckAccidentStatus
+    updateTruckAccidentStatus : updateTruckAccidentStatus,
+    getTruckAccidentNotCheckCount : getTruckAccidentNotCheckCount
 }
