@@ -34,6 +34,7 @@ function getTruckAccident(params,callback) {
         " left join truck_info t on ta.truck_id = t.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_accident_check tac on ta.id = tac.truck_accident_id " +
+        " left join truck_accident_insure_rel tar on ta.id = tar.accident_id " +
         " where ta.id is not null ";
     var paramsArray=[],i=0;
     if(params.truckAccidentId){
@@ -87,6 +88,10 @@ function getTruckAccident(params,callback) {
     if(params.accidensStatus){
         paramsArray[i++] = params.accidentStatus;
         query = query + " and ta.accident_status = ? ";
+    }
+    if(params.accidentInsureId){
+        paramsArray[i++] = params.accidentInsureId;
+        query = query + " and tar.accident_insure_id = ? ";
     }
     query = query + " order by ta.id desc";
     if (params.start && params.size) {

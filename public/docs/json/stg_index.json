@@ -3522,6 +3522,14 @@
 
           },
           {
+            "name": "accidentInsureId",
+            "in": "query",
+            "description": "accidentInsure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -3566,6 +3574,50 @@
         ],
         "parameters": [
 
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckAccident"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccident id"
+          }
+        }
+      }
+    },
+    "/truckAccidentTotalCost": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckAccidentTotalCost total",
+        "description": "query truckAccidentTotalCost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "yearMonth",
+            "in": "query",
+            "description": "yearMonth",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "accidentStatus",
+            "in": "query",
+            "description": "accident status",
+            "required": true,
+            "type": "integer"
+
+          }
         ],
         "responses": {
           "200": {
