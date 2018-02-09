@@ -87,11 +87,26 @@ function queryTruckAccidentNotCheckCount(req,res,next){
     })
 }
 
+function queryTruckAccidentTotalCost(req,res,next){
+    var params = req.params ;
+    truckAccidentDAO.getTruckAccidentTotalCost(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckAccidentTotalCost ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckAccidentTotalCost ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckAccident : createTruckAccident,
     queryTruckAccident : queryTruckAccident,
     updateTruckAccident : updateTruckAccident,
     updateTruckAccidentStatus : updateTruckAccidentStatus,
-    queryTruckAccidentNotCheckCount : queryTruckAccidentNotCheckCount
+    queryTruckAccidentNotCheckCount : queryTruckAccidentNotCheckCount,
+    queryTruckAccidentTotalCost : queryTruckAccidentTotalCost
 }
