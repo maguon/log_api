@@ -4231,6 +4231,74 @@
         }
       }
     },
+    "/truckAccidentInsureMonthStat": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckAccidentInsureMonth stat",
+        "description": "query truckAccidentInsureMonthStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "insureStatus",
+            "in": "query",
+            "description": "insure status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start ",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckAccidentInsure"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsure id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckAccidentInsureBase": {
       "post": {
         "tags": [

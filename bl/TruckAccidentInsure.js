@@ -173,6 +173,20 @@ function queryTruckAccidentInsurePlanTotal(req,res,next){
     })
 }
 
+function queryTruckAccidentInsureMonthStat(req,res,next){
+    var params = req.params ;
+    truckAccidentInsureDAO.getTruckAccidentInsureMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckAccidentInsureMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckAccidentInsureMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckAccidentInsureBase : createTruckAccidentInsureBase,
@@ -180,5 +194,6 @@ module.exports = {
     queryTruckAccidentInsure : queryTruckAccidentInsure,
     updateTruckAccidentInsure : updateTruckAccidentInsure,
     updateTruckAccidentInsureStatus : updateTruckAccidentInsureStatus,
-    queryTruckAccidentInsurePlanTotal : queryTruckAccidentInsurePlanTotal
+    queryTruckAccidentInsurePlanTotal : queryTruckAccidentInsurePlanTotal,
+    queryTruckAccidentInsureMonthStat : queryTruckAccidentInsureMonthStat
 }

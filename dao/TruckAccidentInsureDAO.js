@@ -124,12 +124,39 @@ function getTruckAccidentInsurePlanTotal(params,callback) {
     });
 }
 
+function getTruckAccidentInsureMonthStat(params,callback){
+    var query = " select db.y_month,tit.id,count(case when tai.insure_status = "+params.insureStatus+" then tai.id end) as accident_insure_count, " +
+        " sum(case when tai.insure_status = "+params.insureStatus+" then tai.insure_actual end) as accident_insure_actual from date_base db " +
+        " inner join truck_insure_type tit " +
+        " left join truck_accident_insure tai on db.id = tai.date_id and tit.id = tai.insure_type where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month,tit.id ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckAccidentInsureMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckAccidentInsure : addTruckAccidentInsure,
     getTruckAccidentInsure : getTruckAccidentInsure,
     updateTruckAccidentInsure : updateTruckAccidentInsure,
     updateTruckAccidentInsureStatus : updateTruckAccidentInsureStatus,
-    getTruckAccidentInsurePlanTotal : getTruckAccidentInsurePlanTotal
+    getTruckAccidentInsurePlanTotal : getTruckAccidentInsurePlanTotal,
+    getTruckAccidentInsureMonthStat : getTruckAccidentInsureMonthStat
 }
 
