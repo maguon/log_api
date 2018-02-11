@@ -22,6 +22,8 @@ ADD COLUMN `repair_station_id`  int(10) NULL DEFAULT NULL COMMENT '维修站ID' 
 ADD COLUMN `repair_type`  tinyint(1) NULL DEFAULT NULL COMMENT '维修类型(1-事故,2-非事故)' AFTER `repair_id`;
 ADD COLUMN `accident_id`  int(10) NULL COMMENT '事故ID' AFTER `repair_type`;
 
+update car_info set order_date_id = DATE_FORMAT(order_date,'%Y%m%d') where order_date is not null
+
 -- ----------------------------
 -- Table structure for damage_type
 -- ----------------------------
@@ -122,4 +124,13 @@ CREATE TABLE `truck_accident_insure_rel` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`accident_insure_id`,`accident_id`),
   UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for truck_accident_type
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_accident_type`;
+CREATE TABLE `truck_accident_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

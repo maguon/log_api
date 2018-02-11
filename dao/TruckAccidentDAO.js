@@ -162,11 +162,38 @@ function getTruckAccidentTotalCost(params,callback) {
     });
 }
 
+function getTruckAccidentTypeMonthStat(params,callback){
+    var query = " select db.y_month,tat.id,count(case when ta.accident_status = "+params.accidentStatus+" then db.id end) as accident_count from date_base db " +
+        " inner join truck_accident_type tat " +
+        " left join truck_accident_check tac on db.id = tac.date_id and tat.id = tac.truck_accident_type " +
+        " left join truck_accident_info ta on tac.truck_accident_id = ta.id where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month,tat.id ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckAccidentTypeMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addTruckAccident : addTruckAccident,
     getTruckAccident : getTruckAccident,
     updateTruckAccident : updateTruckAccident,
     updateTruckAccidentStatus : updateTruckAccidentStatus,
     getTruckAccidentNotCheckCount : getTruckAccidentNotCheckCount,
-    getTruckAccidentTotalCost : getTruckAccidentTotalCost
+    getTruckAccidentTotalCost : getTruckAccidentTotalCost,
+    getTruckAccidentTypeMonthStat : getTruckAccidentTypeMonthStat
 }

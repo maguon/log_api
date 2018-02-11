@@ -101,6 +101,20 @@ function queryTruckAccidentTotalCost(req,res,next){
     })
 }
 
+function queryTruckAccidentTypeMonthStat(req,res,next){
+    var params = req.params ;
+    truckAccidentDAO.getTruckAccidentTypeMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckAccidentTypeMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckAccidentTypeMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckAccident : createTruckAccident,
@@ -108,5 +122,6 @@ module.exports = {
     updateTruckAccident : updateTruckAccident,
     updateTruckAccidentStatus : updateTruckAccidentStatus,
     queryTruckAccidentNotCheckCount : queryTruckAccidentNotCheckCount,
-    queryTruckAccidentTotalCost : queryTruckAccidentTotalCost
+    queryTruckAccidentTotalCost : queryTruckAccidentTotalCost,
+    queryTruckAccidentTypeMonthStat : queryTruckAccidentTypeMonthStat
 }
