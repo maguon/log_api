@@ -188,6 +188,32 @@ function getTruckAccidentTypeMonthStat(params,callback){
     });
 }
 
+function getTruckAccidentCostMonthStat(params,callback){
+    var query = " select db.y_month,sum(case when ta.accident_status = "+params.accidentStatus+" then tac.company_cost end) as company_cost, " +
+        " sum(case when ta.accident_status = "+params.accidentStatus+" then tac.under_cost end) as under_cost from date_base db " +
+        " left join truck_accident_check tac on db.id = tac.date_id " +
+        " left join truck_accident_info ta on tac.truck_accident_id = ta.id where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckAccidentCostMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addTruckAccident : addTruckAccident,
     getTruckAccident : getTruckAccident,
@@ -195,5 +221,6 @@ module.exports ={
     updateTruckAccidentStatus : updateTruckAccidentStatus,
     getTruckAccidentNotCheckCount : getTruckAccidentNotCheckCount,
     getTruckAccidentTotalCost : getTruckAccidentTotalCost,
-    getTruckAccidentTypeMonthStat : getTruckAccidentTypeMonthStat
+    getTruckAccidentTypeMonthStat : getTruckAccidentTypeMonthStat,
+    getTruckAccidentCostMonthStat : getTruckAccidentCostMonthStat
 }
