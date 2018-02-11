@@ -163,7 +163,7 @@ function getTruckAccidentTotalCost(params,callback) {
 }
 
 function getTruckAccidentTypeMonthStat(params,callback){
-    var query = " select db.y_month,tat.id,count(case when ta.accident_status = "+params.accidentStatus+" then db.id end) as accident_count from date_base db " +
+    var query = " select db.y_month,tat.id,count(case when ta.accident_status = "+params.accidentStatus+" then ta.id end) as accident_count from date_base db " +
         " inner join truck_accident_type tat " +
         " left join truck_accident_check tac on db.id = tac.date_id and tat.id = tac.truck_accident_type " +
         " left join truck_accident_info ta on tac.truck_accident_id = ta.id where db.id is not null ";
