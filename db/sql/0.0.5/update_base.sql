@@ -135,3 +135,5 @@ CREATE TABLE `truck_accident_type` (
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE `truck_accident_info`
+ADD COLUMN `declare_user_id`  int(10) NOT NULL COMMENT '事故申报人' AFTER `id`;

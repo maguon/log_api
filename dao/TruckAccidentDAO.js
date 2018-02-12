@@ -7,9 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckAccidentDAO.js');
 
 function addTruckAccident(params,callback){
-    var query = " insert into truck_accident_info ( truck_id , drive_id , dp_route_task_id , " +
-        " accident_date , address , lng , lat , date_id , accident_explain ) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into truck_accident_info ( declare_user_id , truck_id , drive_id , dp_route_task_id , " +
+        " accident_date , address , lng , lat , date_id , accident_explain ) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.dpRouteTaskId;
@@ -26,8 +27,9 @@ function addTruckAccident(params,callback){
 }
 
 function getTruckAccident(params,callback) {
-    var query = " select ta.*,c.city_name as city_route_start,c1.city_name as city_route_end,t.truck_num,t.truck_type,d.drive_name, " +
+    var query = " select ta.*,u.real_name as declare_user_name,c.city_name as city_route_start,c1.city_name as city_route_end,t.truck_num,t.truck_type,d.drive_name, " +
         " tac.truck_accident_type,tac.under_user_id,tac.under_user_name,tac.end_date from truck_accident_info ta " +
+        " left join user_info u on ta.declare_user_id = u.uid " +
         " left join dp_route_task dpr on ta.dp_route_task_id = dpr.id " +
         " left join city_info c on dpr.route_start_id = c.id " +
         " left join city_info c1 on dpr.route_end_id = c1.id " +
