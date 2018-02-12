@@ -43,6 +43,14 @@ function getTruckAccident(params,callback) {
         paramsArray[i++] = params.truckAccidentId;
         query = query + " and ta.id = ? ";
     }
+    if(params.declareUserId){
+        paramsArray[i++] = params.declareUserId;
+        query = query + " and ta.declare_user_id = ? ";
+    }
+    if(params.declareUserName){
+        paramsArray[i++] = params.declareUserName;
+        query = query + " and u.real_name = ? ";
+    }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and ta.truck_id = ? ";
@@ -95,6 +103,7 @@ function getTruckAccident(params,callback) {
         paramsArray[i++] = params.accidentInsureId;
         query = query + " and tar.accident_insure_id = ? ";
     }
+    query = query + " group by ta.id";
     query = query + " order by ta.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

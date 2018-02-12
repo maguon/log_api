@@ -3426,6 +3426,22 @@
 
           },
           {
+            "name": "declareUserId",
+            "in": "query",
+            "description": "declareUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "declareUserName",
+            "in": "query",
+            "description": "declareUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
