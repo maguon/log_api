@@ -24,11 +24,16 @@ function addTruckAccidentInsure(params,callback){
 
 function getTruckAccidentInsure(params,callback) {
     var query = " select tai.*,ti.insure_name from truck_accident_insure tai " +
-        " left join truck_insure ti on tai.insure_id = ti.id where tai.id is not null ";
+        " left join truck_insure ti on tai.insure_id = ti.id " +
+        " left join truck_accident_insure_rel tar on tai.id = tar.accident_insure_id where tai.id is not null ";
     var paramsArray=[],i=0;
     if(params.accidentInsureId){
         paramsArray[i++] = params.accidentInsureId;
         query = query + " and tai.id = ? ";
+    }
+    if(params.accidentId){
+        paramsArray[i++] = params.accidentId;
+        query = query + " and tar.accident_id = ? ";
     }
     if(params.insureType){
         paramsArray[i++] = params.insureType;

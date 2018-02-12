@@ -4099,6 +4099,14 @@
 
           },
           {
+            "name": "accidentId",
+            "in": "query",
+            "description": "accident id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "insureType",
             "in": "query",
             "description": "insure type",
