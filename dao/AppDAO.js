@@ -6,12 +6,16 @@ function queryApp(params,callback){
     var query = " select id,app,type,version,force_update,url,remark,created_on,updated_on from app_version where id is not null ";
     var paramsArray=[],i=0;
     if(params.type){
-        query = query + " and type = ? "
+        query = query + " and type = ? ";
         paramsArray[i++]=params.type;
     }
     if(params.app){
-        query = query + " and app = ? "
+        query = query + " and app = ? ";
         paramsArray[i++]=params.app;
+    }
+    if(params.forceUpdate){
+        query = query + " and force_update = ? ";
+        paramsArray[i++]=params.forceUpdate;
     }
     query = query + '  order by id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
