@@ -3618,14 +3618,7 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "yearMonth",
-            "in": "query",
-            "description": "yearMonth",
-            "required": true,
-            "type": "integer"
 
-          },
           {
             "name": "accidentStatus",
             "in": "query",

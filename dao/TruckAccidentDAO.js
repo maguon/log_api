@@ -154,19 +154,13 @@ function getTruckAccidentNotCheckCount(params,callback) {
 }
 
 function getTruckAccidentTotalCost(params,callback) {
-    var query = " select db.y_month,sum(tac.company_cost) as company_cost,sum(tac.under_cost) as under_cost from truck_accident_info ta " +
-        " left join truck_accident_check tac on ta.id = tac.truck_accident_id " +
-        "left join date_base db on tac.date_id = db.id where ta.id is not null ";
+    var query = " select sum(tac.company_cost) as company_cost,sum(tac.under_cost) as under_cost from truck_accident_info ta " +
+        " left join truck_accident_check tac on ta.id = tac.truck_accident_id where ta.id is not null ";
     var paramsArray=[],i=0;
-    if(params.yearMonth){
-        paramsArray[i++] = params.yearMonth;
-        query = query + " and db.y_month = ? ";
-    }
     if(params.accidentStatus){
         paramsArray[i++] = params.accidentStatus;
         query = query + " and ta.accident_status = ? ";
     }
-    query = query + " group by db.y_month ";
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckAccidentTotalCost ');
         return callback(error,rows);
