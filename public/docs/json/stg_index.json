@@ -3963,6 +3963,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "underUserId",
+            "in": "query",
+            "description": "underUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "underUserName",
+            "in": "query",
+            "description": "underUser name",
+            "required": false,
+            "type": "string"
+
           }
         ],
         "responses": {
