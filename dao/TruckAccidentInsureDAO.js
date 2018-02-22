@@ -7,14 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckAccidentInsureDAO.js');
 
 function addTruckAccidentInsure(params,callback){
-    var query = " insert into truck_accident_insure ( insure_id , insure_type , insure_plan , insure_user_id , insure_user_name , " +
-        " financial_loan_status , financial_loan , payment_explain ) values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into truck_accident_insure ( insure_id , insure_type , insure_plan , insure_user_id , " +
+        " financial_loan_status , financial_loan , payment_explain ) values ( ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.insurePlan;
     paramsArray[i++]=params.userId;
-    paramsArray[i++]=params.userName;
     paramsArray[i++]=params.financialLoanStatus;
     paramsArray[i++]=params.financialLoan;
     paramsArray[i]=params.paymentExplain;
@@ -25,9 +24,10 @@ function addTruckAccidentInsure(params,callback){
 }
 
 function getTruckAccidentInsure(params,callback) {
-    var query = " select tai.*,ti.insure_name from truck_accident_insure tai " +
+    var query = " select tai.*,ti.insure_name,u.real_name as insure_user_name from truck_accident_insure tai " +
         " left join truck_insure ti on tai.insure_id = ti.id " +
-        " left join truck_accident_insure_rel tar on tai.id = tar.accident_insure_id where tai.id is not null ";
+        " left join truck_accident_insure_rel tar on tai.id = tar.accident_insure_id " +
+        " left join user_info u on tai.insure_user_id = u.uid where tai.id is not null ";
     var paramsArray=[],i=0;
     if(params.accidentInsureId){
         paramsArray[i++] = params.accidentInsureId;

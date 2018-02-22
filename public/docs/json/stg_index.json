@@ -14524,9 +14524,6 @@
         "insurePlan": {
           "type": "integer"
         },
-        "userName": {
-          "type": "string"
-        },
         "financialLoanStatus": {
           "type": "integer"
         },
@@ -14562,9 +14559,6 @@
         },
         "insurePlan": {
           "type": "integer"
-        },
-        "userName": {
-          "type": "string"
         },
         "financialLoanStatus": {
           "type": "integer"
