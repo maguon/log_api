@@ -118,6 +118,11 @@ var ACCIDENT__TYPE = {  //事故类型
     commonly : 1 ,  //一般
     serious : 2 //严重
 };
+var LOAN__STATUS = {  //财务借款状态
+    no : 0 ,  //否
+    yes : 1 //是
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -136,5 +141,6 @@ module.exports = {
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
     CAR_OP_TYPE : CAR_OP_TYPE,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
-    ACCIDENT__TYPE : ACCIDENT__TYPE
+    ACCIDENT__TYPE : ACCIDENT__TYPE,
+    LOAN__STATUS : LOAN__STATUS
 }

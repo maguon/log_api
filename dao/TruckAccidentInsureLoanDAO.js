@@ -6,6 +6,16 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckAccidentInsureLoanDAO.js');
 
+function addTruckAccidentInsureLoan(params,callback){
+    var query = " insert into truck_accident_insure_loan ( accident_insure_id ) values ( ? ) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.accidentInsureId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addTruckAccidentInsureLoan ');
+        return callback(error,rows);
+    });
+}
+
 function getTruckAccidentInsureLoan(params,callback) {
     var query = " select tail.*,tai.insure_type,ti.insure_name,tai.insure_plan," +
         " u.real_name as insure_user_name,tai.payment_explain,tai.created_on as accident_insure_date, " +
@@ -92,6 +102,7 @@ function updateTruckAccidentInsureLoanStatus(params,callback){
 
 
 module.exports ={
+    addTruckAccidentInsureLoan : addTruckAccidentInsureLoan,
     getTruckAccidentInsureLoan : getTruckAccidentInsureLoan,
     updateTruckAccidentInsureLoan : updateTruckAccidentInsureLoan,
     updateTruckAccidentInsureRepayment : updateTruckAccidentInsureRepayment,
