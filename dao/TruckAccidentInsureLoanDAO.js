@@ -51,7 +51,19 @@ function getTruckAccidentInsureLoan(params,callback) {
     });
 }
 
+function updateTruckAccidentInsureLoanStatus(params,callback){
+    var query = " update truck_accident_insure_loan set loan_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.loanStatus;
+    paramsArray[i]=params.loanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentInsureLoanStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    getTruckAccidentInsureLoan : getTruckAccidentInsureLoan
+    getTruckAccidentInsureLoan : getTruckAccidentInsureLoan,
+    updateTruckAccidentInsureLoanStatus : updateTruckAccidentInsureLoanStatus
 }

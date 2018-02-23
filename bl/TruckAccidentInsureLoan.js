@@ -28,7 +28,22 @@ function queryTruckAccidentInsureLoan(req,res,next){
     })
 }
 
+function updateTruckAccidentInsureLoanStatus(req,res,next){
+    var params = req.params;
+    truckAccidentInsureLoanDAO.updateTruckAccidentInsureLoanStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckAccidentInsureLoanStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckAccidentInsureLoanStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    queryTruckAccidentInsureLoan : queryTruckAccidentInsureLoan
+    queryTruckAccidentInsureLoan : queryTruckAccidentInsureLoan,
+    updateTruckAccidentInsureLoanStatus : updateTruckAccidentInsureLoanStatus
 }
