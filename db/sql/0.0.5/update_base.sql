@@ -139,3 +139,23 @@ ALTER TABLE `truck_accident_info`
 ADD COLUMN `declare_user_id`  int(10) NOT NULL COMMENT '事故申报人' AFTER `id`;
 ALTER TABLE `truck_accident_insure`
 ADD COLUMN `insure_user_id`  int(10) NULL COMMENT '经办人ID' AFTER `insure_plan`;
+-- ----------------------------
+-- Table structure for truck_accident_insure_loan
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_accident_insure_loan`;
+CREATE TABLE `truck_accident_insure_loan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `accident_insure_id` int(10) NOT NULL COMMENT '理赔编号ID',
+  `loan_user_id` int(10) DEFAULT NULL COMMENT '财务借款人ID',
+  `loan_money` decimal(10,2) DEFAULT NULL COMMENT '借款金额',
+  `loan_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '借款说明',
+  `loan_date` datetime DEFAULT NULL COMMENT '借款时间',
+  `repayment_user_id` int(10) DEFAULT NULL COMMENT '财务还款人ID',
+  `repayment_money` decimal(10,2) DEFAULT NULL COMMENT '还款金额',
+  `repayment_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '还款说明',
+  `repayment_date` datetime DEFAULT NULL COMMENT '还款时间',
+  `loan_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '借款状态(0-拒绝,1-未借,2-已借,3-已还)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
