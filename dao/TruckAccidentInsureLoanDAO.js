@@ -51,6 +51,34 @@ function getTruckAccidentInsureLoan(params,callback) {
     });
 }
 
+function updateTruckAccidentInsureLoan(params,callback){
+    var query = " update truck_accident_insure_loan set loan_user_id = ? , loan_money = ? , loan_explain = ? , loan_date = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.loanMoney;
+    paramsArray[i++]=params.loanExplain;
+    paramsArray[i++]=params.loanDate;
+    paramsArray[i]=params.loanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentInsureLoan ');
+        return callback(error,rows);
+    });
+}
+
+function updateTruckAccidentInsureRepayment(params,callback){
+    var query = " update truck_accident_insure_loan set repayment_user_id = ? , repayment_money = ? , repayment_explain = ? , repayment_date = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.repaymentMoney;
+    paramsArray[i++]=params.repaymentExplain;
+    paramsArray[i++]=params.repaymentDate;
+    paramsArray[i]=params.loanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentInsureRepayment ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruckAccidentInsureLoanStatus(params,callback){
     var query = " update truck_accident_insure_loan set loan_status = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -65,5 +93,7 @@ function updateTruckAccidentInsureLoanStatus(params,callback){
 
 module.exports ={
     getTruckAccidentInsureLoan : getTruckAccidentInsureLoan,
+    updateTruckAccidentInsureLoan : updateTruckAccidentInsureLoan,
+    updateTruckAccidentInsureRepayment : updateTruckAccidentInsureRepayment,
     updateTruckAccidentInsureLoanStatus : updateTruckAccidentInsureLoanStatus
 }

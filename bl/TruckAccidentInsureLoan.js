@@ -28,6 +28,38 @@ function queryTruckAccidentInsureLoan(req,res,next){
     })
 }
 
+function updateTruckAccidentInsureLoan(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    params.loanDate = myDate;
+    truckAccidentInsureLoanDAO.updateTruckAccidentInsureLoan(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckAccidentInsureLoan ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckAccidentInsureLoan ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateTruckAccidentInsureRepayment(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    params.repaymentDate = myDate;
+    truckAccidentInsureLoanDAO.updateTruckAccidentInsureRepayment(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckAccidentInsureRepayment ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckAccidentInsureRepayment ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruckAccidentInsureLoanStatus(req,res,next){
     var params = req.params;
     truckAccidentInsureLoanDAO.updateTruckAccidentInsureLoanStatus(params,function(error,result){
@@ -45,5 +77,7 @@ function updateTruckAccidentInsureLoanStatus(req,res,next){
 
 module.exports = {
     queryTruckAccidentInsureLoan : queryTruckAccidentInsureLoan,
+    updateTruckAccidentInsureLoan : updateTruckAccidentInsureLoan,
+    updateTruckAccidentInsureRepayment : updateTruckAccidentInsureRepayment,
     updateTruckAccidentInsureLoanStatus : updateTruckAccidentInsureLoanStatus
 }

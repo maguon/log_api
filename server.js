@@ -285,6 +285,8 @@ function createServer() {
      * TruckAccidentInsureLoan Module
      */
     server.get('/api/truckAccidentInsureLoan' ,truckAccidentInsureLoan.queryTruckAccidentInsureLoan);
+    server.put({path:'/api/user/:userId/truckAccidentInsureLoan/:loanId',contentType: 'application/json'} ,truckAccidentInsureLoan.updateTruckAccidentInsureLoan);
+    server.put({path:'/api/user/:userId/truckAccidentInsureRepayment/:loanId',contentType: 'application/json'} ,truckAccidentInsureLoan.updateTruckAccidentInsureRepayment);
     server.put({path:'/api/user/:userId/truckAccidentInsureLoan/:loanId/loanStatus/:loanStatus',contentType: 'application/json'} ,truckAccidentInsureLoan.updateTruckAccidentInsureLoanStatus);
 
     /**

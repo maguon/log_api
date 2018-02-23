@@ -140,7 +140,7 @@ function updateDamage(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
                 return next();
             } else {
-                if(rows && rows.length>0&&rows[0].damage_status == sysConst.DAMAGE_STATUS.ready_process){
+                if(rows && rows.length>0&&rows[0].damage_status != sysConst.DAMAGE_STATUS.completed){
                     that();
                 }else{
                     logger.warn(' getDamage ' + 'failed');

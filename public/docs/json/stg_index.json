@@ -4710,6 +4710,164 @@
         }
       }
     },
+    "/user/{userId}/truckAccidentInsureLoan/{loanId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update  truckAccidentInsureLoan",
+        "description": "update truckAccidentInsureLoan",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "loan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentInsureLoan",
+            "in": "body",
+            "description": "truckAccidentInsureLoan info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentInsureLoan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsureLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckAccidentInsureRepayment/{loanId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update  truckAccidentInsureRepayment",
+        "description": "update truckAccidentInsureRepayment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "loan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentInsureRepayment",
+            "in": "body",
+            "description": "truckAccidentInsureRepayment info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentInsureRepayment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsureLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckAccidentInsureLoan/{loanId}/loanStatus/{loanStatus}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckAccidentInsureLoan status",
+        "description": "update truckAccidentInsureLoan status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "loan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanStatus",
+            "in": "path",
+            "description": "loan status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsureLoan id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -14688,6 +14846,36 @@
       },
       "xml": {
         "name": "truckAccidentInsureRel"
+      }
+    },
+    "truckAccidentInsureLoan": {
+      "type": "object",
+      "properties": {
+
+        "loanMoney": {
+          "type": "integer"
+        },
+        "loanExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckAccidentInsureLoan"
+      }
+    },
+    "truckAccidentInsureRepayment": {
+      "type": "object",
+      "properties": {
+
+        "repaymentMoney": {
+          "type": "integer"
+        },
+        "repaymentExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckAccidentInsureRepayment"
       }
     },
     "brand": {
