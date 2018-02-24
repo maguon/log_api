@@ -135,9 +135,18 @@ function getDamageCheckWeekStat(params,callback) {
 }
 
 function getDamageCheckUnderMonthStat(params,callback){
-    var query = " select db.y_month,dc.under_user_id,dc.under_user_name,sum(dc.under_cost) as total_under_cost from damage_check dc " +
+    var query = " select db.y_month,dc.under_user_id,dc.under_user_name,sum(dc.under_cost) as total_under_cost, " +
+        " count(dc.id) as under_count from damage_check dc " +
         " left join date_base db on dc.date_id = db.id where  dc.id is not null " ;
     var paramsArray=[],i=0;
+    if(params.underUserId){
+        paramsArray[i++] = params.underUserId;
+        query = query + " and dc.under_user_id = ? ";
+    }
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
+    }
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";

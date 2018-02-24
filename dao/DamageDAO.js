@@ -165,6 +165,10 @@ function getDamageNotCheckCount(params,callback) {
     var query = " select db.y_month,count(da.id) as damage_count,da.damage_status from damage_info da " +
         " left join date_base db on da.date_id = db.id where da.id is not null ";
     var paramsArray=[],i=0;
+    if(params.declareUserId){
+        paramsArray[i++] = params.declareUserId;
+        query = query + " and da.declare_user_id = ? ";
+    }
     if(params.yearMonth){
         paramsArray[i++] = params.yearMonth;
         query = query + " and db.y_month = ? ";

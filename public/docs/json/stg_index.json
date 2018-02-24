@@ -12618,6 +12618,14 @@
         ],
         "parameters": [
           {
+            "name": "declareUserId",
+            "in": "query",
+            "description": "declareUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "yearMonth",
             "in": "query",
             "description": "yearMonth",
@@ -13189,6 +13197,22 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "underUserId",
+            "in": "query",
+            "description": "underUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yearMonth",
+            "in": "query",
+            "description": "year month",
+            "required": false,
+            "type": "integer"
+
+          },
           {
             "name": "monthStart",
             "in": "query",
