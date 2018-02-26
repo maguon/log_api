@@ -26,6 +26,10 @@ function getTruckAccidentInsureLoan(params,callback) {
         " left join user_info u1 on tail.loan_user_id = u1.uid " +
         " left join user_info u2 on tail.repayment_user_id = u2.uid where tail.id is not null ";
     var paramsArray=[],i=0;
+    if(params.accidentInsureLoanId){
+        paramsArray[i++] = params.accidentInsureLoanId;
+        query = query + " and tail.id = ? ";
+    }
     if(params.accidentInsureId){
         paramsArray[i++] = params.accidentInsureId;
         query = query + " and tai.id = ? ";

@@ -4630,6 +4630,14 @@
         ],
         "parameters": [
           {
+            "name": "accidentInsureLoanId",
+            "in": "query",
+            "description": "accidentInsureLoan id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "accidentInsureId",
             "in": "query",
             "description": "accidentInsure id",
