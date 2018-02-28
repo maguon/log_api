@@ -14614,6 +14614,14 @@
         ],
         "parameters": [
           {
+            "name": "appId",
+            "in": "query",
+            "description": "app id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "app",
             "in": "query",
             "description": "app name :1-storage 2-tm 3-driver 4-op 5-qa",
