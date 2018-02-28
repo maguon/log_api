@@ -20,7 +20,7 @@ function createInsure(req,res,next){
     var damageInsureId = 0;
     Seq().seq(function(){
         var that = this;
-        damageInsureDAO.addInsure(params,function(error,result){
+        damageInsureDAO.addDamageInsure(params,function(error,result){
             if (error) {
                 logger.error(' createInsure ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
