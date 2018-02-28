@@ -16035,11 +16035,26 @@
         "insureId": {
           "type": "integer"
         },
+        "insureType": {
+          "type": "integer"
+        },
         "insurePlan": {
+          "type": "integer"
+        },
+        "financialLoanStatus": {
+          "type": "integer"
+        },
+        "financialLoan": {
           "type": "integer"
         },
         "insureActual": {
           "type": "integer"
+        },
+        "paymentExplain": {
+          "type": "string"
+        },
+        "checkExplain": {
+          "type": "string"
         },
         "damageId": {
           "type": "integer"
@@ -16056,11 +16071,26 @@
         "insureId": {
           "type": "integer"
         },
+        "insureType": {
+          "type": "integer"
+        },
         "insurePlan": {
+          "type": "integer"
+        },
+        "financialLoanStatus": {
+          "type": "integer"
+        },
+        "financialLoan": {
           "type": "integer"
         },
         "insureActual": {
           "type": "integer"
+        },
+        "paymentExplain": {
+          "type": "string"
+        },
+        "checkExplain": {
+          "type": "string"
         },
         "damageIds": {
           "type": "integer"

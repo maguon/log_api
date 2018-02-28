@@ -146,6 +146,7 @@ function updateDamageInsureStatus(req,res,next){
     var myDate = new Date();
     var strDate = moment(myDate).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
+    params.completedDate = myDate;
     damageInsureDAO.updateDamageInsureStatus(params,function(error,result){
         if (error) {
             logger.error(' updateDamageInsureStatus ' + error.message);

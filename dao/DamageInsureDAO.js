@@ -7,13 +7,16 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageInsureDAO.js');
 
 function addDamageInsure(params,callback){
-    var query = " insert into damage_insure (insure_id,insure_user_id,insure_plan,insure_actual) " +
-        " values ( ? , ? , ? , ? ) ";
+    var query = " insert into damage_insure ( insure_id , insure_type , insure_user_id , insure_plan , " +
+        " financial_loan_status , financial_loan , payment_explain ) values ( ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
+    paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.insurePlan;
-    paramsArray[i]=params.insureActual;
+    paramsArray[i++]=params.financialLoanStatus;
+    paramsArray[i++]=params.financialLoan;
+    paramsArray[i]=params.paymentExplain;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDamageInsure ');
         return callback(error,rows);
@@ -70,10 +73,14 @@ function getDamageInsure(params,callback) {
 }
 
 function updateDamageInsure(params,callback){
-    var query = " update damage_insure set insure_plan = ?,insure_actual = ? where id = ? " ;
+    var query = " update damage_insure set insure_id = ? , insure_type = ? , insure_plan = ? , payment_explain = ? , insure_actual = ? , check_explain = ?where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureId;
+    paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.insurePlan;
+    paramsArray[i++]=params.paymentExplain;
     paramsArray[i++]=params.insureActual;
+    paramsArray[i++]=params.checkExplain;
     paramsArray[i]=params.damageInsureId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageInsure ');
@@ -82,9 +89,10 @@ function updateDamageInsure(params,callback){
 }
 
 function updateDamageInsureStatus(params,callback){
-    var query = " update damage_insure set insure_status = ? , date_id = ? where id = ? " ;
+    var query = " update damage_insure set insure_status = ? , completed_date = ? , date_id = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureStatus;
+    paramsArray[i++]=params.completedDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i]=params.damageInsureId;
     db.dbQuery(query,paramsArray,function(error,rows){

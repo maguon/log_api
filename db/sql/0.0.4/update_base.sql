@@ -135,7 +135,7 @@ CREATE TABLE `damage_insure` (
   `insure_user_id` int(10) NOT NULL COMMENT '经办人',
   `insure_plan` decimal(10,2) DEFAULT NULL COMMENT '保险计划待赔',
   `insure_actual` decimal(10,2) DEFAULT NULL COMMENT '保险实际赔付',
-  `insure_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '质损保险状态(1-未完结,2-已完结)',
+  `insure_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '质损保险状态(1-处理中,2-已处理)',
   `date_id` int(4) DEFAULT NULL COMMENT '办理保险赔付统计时间',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '办理保险赔付时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

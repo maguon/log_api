@@ -190,3 +190,14 @@ CREATE TABLE `dp_route_task_loan` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-02-28 更新
+-- ----------------------------
+ALTER TABLE `damage_insure`
+ADD COLUMN `insure_type`  tinyint(1) NOT NULL COMMENT '保险类型(1-交强险,2-商业险,3-货运险)' AFTER `insure_id`,
+ADD COLUMN `financial_loan_status`  tinyint(1) NULL DEFAULT 0 COMMENT '财务借款状态(0-无,1-有)' AFTER `insure_plan`,
+ADD COLUMN `financial_loan`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '财务借款' AFTER `financial_loan_status`,
+ADD COLUMN `payment_explain`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '赔付说明' AFTER `financial_loan`,
+ADD COLUMN `completed_date`  datetime NULL DEFAULT NULL COMMENT '赔付结束时间' AFTER `insure_status`,
+ADD COLUMN `check_explain`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '处理说明' AFTER `date_id`;
+
