@@ -159,3 +159,34 @@ CREATE TABLE `truck_accident_insure_loan` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for dp_route_task_loan
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_route_task_loan`;
+CREATE TABLE `dp_route_task_loan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_route_task_id` int(10) NOT NULL COMMENT '调度编号ID',
+  `apply_user_id` int(10) NOT NULL COMMENT '出车款申请人ID',
+  `apply_date` datetime DEFAULT NULL COMMENT '出车款申请时间',
+  `apply_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '申请备注',
+  `passing_cost` decimal(10,2) DEFAULT NULL COMMENT '过路费',
+  `fuel_cost` decimal(10,2) DEFAULT NULL COMMENT '燃料费',
+  `protect_cost` decimal(10,2) DEFAULT NULL COMMENT '保道费',
+  `penalty_cost` decimal(10,2) DEFAULT NULL COMMENT '罚款费',
+  `parking_cost` decimal(10,2) DEFAULT NULL COMMENT '停车费',
+  `taxi_cost` decimal(10,2) DEFAULT NULL COMMENT '打车费',
+  `plan_money` decimal(10,2) DEFAULT NULL COMMENT '应付金额',
+  `actual_money` decimal(10,2) DEFAULT NULL COMMENT '实际支付金额',
+  `grant_user_id` int(10) DEFAULT NULL COMMENT '发放人ID',
+  `grant_date` datetime DEFAULT NULL COMMENT '发放时间',
+  `grant_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发放说明',
+  `repayment_money` decimal(10,2) DEFAULT NULL COMMENT '还款金额',
+  `refund_money` decimal(10,2) DEFAULT NULL COMMENT '报销金额',
+  `refund_user_id` int(10) DEFAULT NULL COMMENT '报销人ID',
+  `refund_date` datetime DEFAULT NULL COMMENT '报销时间',
+  `refund_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报销说明',
+  `loan_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '借款状态(1-未发放,2-已发放,3-已报销)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

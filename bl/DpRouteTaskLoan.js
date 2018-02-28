@@ -27,7 +27,22 @@ function queryDpRouteTaskLoan(req,res,next){
     })
 }
 
+function updateDpRouteTaskLoanStatus (req,res,next){
+    var params = req.params;
+    dpRouteTaskLoanDAO.updateDpRouteTaskLoanStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteTaskLoanStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteTaskLoanStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    queryDpRouteTaskLoan : queryDpRouteTaskLoan
+    queryDpRouteTaskLoan : queryDpRouteTaskLoan,
+    updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus
 }

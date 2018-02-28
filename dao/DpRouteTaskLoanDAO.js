@@ -43,9 +43,9 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.truckNum;
         query = query + " and t.truck_num = ? ";
     }
-    if(params.loanStatus){
-        paramsArray[i++] = params.loanStatus;
-        query = query + " and dploan.loan_status = ? ";
+    if(params.taskLoanStatus){
+        paramsArray[i++] = params.taskLoanStatus;
+        query = query + " and dploan.task_loan_status = ? ";
     }
     if(params.grantDateStart){
         paramsArray[i++] = params.grantDateStart +" 00:00:00";
@@ -74,7 +74,19 @@ function getDpRouteTaskLoan(params,callback) {
     });
 }
 
+function updateDpRouteTaskLoanStatus(params,callback){
+    var query = " update dp_route_task_loan set task_loan_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.taskLoanStatus;
+    paramsArray[i] = params.dpRouteTaskLoanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskLoanStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    getDpRouteTaskLoan : getDpRouteTaskLoan
+    getDpRouteTaskLoan : getDpRouteTaskLoan,
+    updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus
 }

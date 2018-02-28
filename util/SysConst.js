@@ -122,6 +122,11 @@ var LOAN__STATUS = {  //财务借款状态
     no : 0 ,  //否
     yes : 1 //是
 };
+var TASK_LOAN__STATUS = {  //出车任务借款状态
+    not_grant : 1 ,  //未发放
+    grant : 2, //已发放
+    refund : 3  //已报销
+};
 
 
 module.exports = {
@@ -142,5 +147,6 @@ module.exports = {
     CAR_OP_TYPE : CAR_OP_TYPE,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
     ACCIDENT__TYPE : ACCIDENT__TYPE,
-    LOAN__STATUS : LOAN__STATUS
+    LOAN__STATUS : LOAN__STATUS,
+    TASK_LOAN__STATUS : TASK_LOAN__STATUS
 }
