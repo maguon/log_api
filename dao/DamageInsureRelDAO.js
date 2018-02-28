@@ -36,21 +36,37 @@ function getDamageInsureRel(params,callback) {
         paramsArray[i++] = params.damageInsureId;
         query = query + " and di.id = ? ";
     }
+    if(params.insureId){
+        paramsArray[i++] = params.insureId;
+        query = query + " and di.insure_id = ? ";
+    }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and di.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and di.created_on <= ? ";
+    }
     if(params.damageId){
         paramsArray[i++] = params.damageId;
         query = query + " and d.id = ? ";
     }
+    if(params.financialLoanStatus){
+        paramsArray[i++] = params.financialLoanStatus;
+        query = query + " and di.financial_loan_status = ? ";
+    }
+    if(params.insurePlanStart){
+        paramsArray[i++] = params.insurePlanStart;
+        query = query + " and di.insure_plan >= ? ";
+    }
+    if(params.insurePlanEnd){
+        paramsArray[i++] = params.insurePlanEnd;
+        query = query + " and di.insure_plan <= ? ";
+    }
     if(params.insureStatus){
         paramsArray[i++] = params.insureStatus;
         query = query + " and di.insure_status = ? ";
-    }
-    if(params.insureActualStart){
-        paramsArray[i++] = params.insureActualStart;
-        query = query + " and di.insure_actual >= ? ";
-    }
-    if(params.insureActualEnd){
-        paramsArray[i++] = params.insureActualEnd;
-        query = query + " and di.insure_actual <= ? ";
     }
     if(params.insureUserId){
         paramsArray[i++] = params.insureUserId;
