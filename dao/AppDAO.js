@@ -22,6 +22,11 @@ function queryApp(params,callback){
         paramsArray[i++]=params.forceUpdate;
     }
     query = query + '  order by id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' queryApp ');
         return callback(error,rows);
