@@ -44,7 +44,7 @@ function addAppVersion(params,callback){
 }
 
 function updateAppVersion(params,callback){
-    var query = " update app_version set app = ? ,type = ?  ,version = ?  force_update = ? ,url = ?  ,remark = ? where id = ? " ;
+    var query = " update app_version set app = ? ,type = ?  ,version = ?,  force_update = ? ,url = ?  ,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.app;
     paramsArray[i++]=params.appType;
