@@ -12310,9 +12310,9 @@
 
           },
           {
-            "name": "loanStatus",
+            "name": "taskLoanStatus",
             "in": "query",
-            "description": "loan status",
+            "description": "taskLoan status",
             "required": false,
             "type": "integer"
 
@@ -12373,6 +12373,164 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/dpRouteTaskLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskLoanGrant/{dpRouteTaskLoanId}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTaskLoanGrant",
+        "description": "update dpRouteTaskLoanGrant",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "path",
+            "description": "dpRouteTaskLoan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanGrant",
+            "in": "body",
+            "description": "dpRouteTaskLoanGrant info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskLoanGrant"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskLoanRepayment/{dpRouteTaskLoanId}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTaskLoanRepayment",
+        "description": "update dpRouteTaskLoanRepayment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "path",
+            "description": "dpRouteTaskLoan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanRepayment",
+            "in": "body",
+            "description": "dpRouteTaskLoanRepayment info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskLoanRepayment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskLoan/{dpRouteTaskLoanId}/taskLoanStatus/{taskLoanStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTaskLoan status",
+        "description": "update dpRouteTaskLoan status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "path",
+            "description": "dpRouteTaskLoan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskLoanStatus",
+            "in": "path",
+            "description": "taskLoanStatus",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
               }
             }
           },
@@ -15706,6 +15864,60 @@
       },
       "xml": {
         "name": "loadTaskCleanRel"
+      }
+    },
+    "dpRouteTaskLoanGrant": {
+      "type": "object",
+      "properties": {
+
+        "passingCost": {
+          "type": "integer"
+        },
+        "fuelCost": {
+          "type": "integer"
+        },
+        "protectCost": {
+          "type": "integer"
+        },
+        "penaltyCost": {
+          "type": "integer"
+        },
+        "parkingCost": {
+          "type": "integer"
+        },
+        "taxiCost": {
+          "type": "integer"
+        },
+        "planMoney": {
+          "type": "integer"
+        },
+        "actualMoney": {
+          "type": "integer"
+        },
+        "grantExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTaskLoanGrant"
+      }
+    },
+    "dpRouteTaskLoanRepayment": {
+      "type": "object",
+      "properties": {
+
+        "repaymentMoney": {
+          "type": "integer"
+        },
+        "refundMoney": {
+          "type": "integer"
+        },
+        "refundExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTaskLoanRepayment"
       }
     },
     "damage": {

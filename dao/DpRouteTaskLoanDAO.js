@@ -74,6 +74,43 @@ function getDpRouteTaskLoan(params,callback) {
     });
 }
 
+function updateDpRouteTaskLoanGrant(params,callback){
+    var query = " update dp_route_task_loan set passing_cost = ? , fuel_cost = ? , protect_cost = ? , penalty_cost = ? , parking_cost = ? , taxi_cost = ? , " +
+        " plan_money = ? , actual_money = ? , grant_user_id = ? , grant_date = ? , grant_explain = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.passingCost;
+    paramsArray[i++] = params.fuelCost;
+    paramsArray[i++] = params.protectCost;
+    paramsArray[i++] = params.penaltyCost;
+    paramsArray[i++] = params.parkingCost;
+    paramsArray[i++] = params.taxiCost;
+    paramsArray[i++] = params.planMoney;
+    paramsArray[i++] = params.actualMoney;
+    paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.grantDate;
+    paramsArray[i++] = params.grantExplain;
+    paramsArray[i] = params.dpRouteTaskLoanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskLoanGrant ');
+        return callback(error,rows);
+    });
+}
+
+function updateDpRouteTaskLoanRepayment(params,callback){
+    var query = " update dp_route_task_loan set repayment_money = ? , refund_money = ? , refund_user_id = ? , refund_date = ? , refund_explain = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.repaymentMoney;
+    paramsArray[i++] = params.refundMoney;
+    paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.refundDate;
+    paramsArray[i++] = params.refundExplain;
+    paramsArray[i] = params.dpRouteTaskLoanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskLoanRepayment ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskLoanStatus(params,callback){
     var query = " update dp_route_task_loan set task_loan_status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -88,5 +125,7 @@ function updateDpRouteTaskLoanStatus(params,callback){
 
 module.exports ={
     getDpRouteTaskLoan : getDpRouteTaskLoan,
+    updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
+    updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus
 }

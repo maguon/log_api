@@ -11,6 +11,7 @@ var dpRouteTaskLoanDAO = require('../dao/DpRouteTaskLoanDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteTaskLoan.js');
 
 function queryDpRouteTaskLoan(req,res,next){
@@ -22,6 +23,38 @@ function queryDpRouteTaskLoan(req,res,next){
         } else {
             logger.info(' queryDpRouteTaskLoan ' + 'success');
             resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDpRouteTaskLoanGrant (req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    params.grantDate = myDate;
+    dpRouteTaskLoanDAO.updateDpRouteTaskLoanGrant(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteTaskLoanGrant ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteTaskLoanGrant ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDpRouteTaskLoanRepayment (req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    params.refundDate = myDate;
+    dpRouteTaskLoanDAO.updateDpRouteTaskLoanRepayment(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteTaskLoanRepayment ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteTaskLoanRepayment ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
             return next();
         }
     })
@@ -44,5 +77,7 @@ function updateDpRouteTaskLoanStatus (req,res,next){
 
 module.exports = {
     queryDpRouteTaskLoan : queryDpRouteTaskLoan,
+    updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
+    updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus
 }
