@@ -13763,25 +13763,57 @@
 
           },
           {
+            "name": "insureId",
+            "in": "query",
+            "description": "insure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "financialLoanStatus",
+            "in": "query",
+            "description": "financialLoan status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insurePlanStart",
+            "in": "query",
+            "description": "insurePlan start ",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insurePlanEnd",
+            "in": "query",
+            "description": "insurePlan end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "insureStatus",
             "in": "query",
             "description": "insure status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "insureActualStart",
-            "in": "query",
-            "description": "insureActual start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "insureActualEnd",
-            "in": "query",
-            "description": "insureActual end",
             "required": false,
             "type": "integer"
 
@@ -16035,9 +16067,6 @@
         "insureId": {
           "type": "integer"
         },
-        "insureType": {
-          "type": "integer"
-        },
         "insurePlan": {
           "type": "integer"
         },
@@ -16069,9 +16098,6 @@
       "properties": {
 
         "insureId": {
-          "type": "integer"
-        },
-        "insureType": {
           "type": "integer"
         },
         "insurePlan": {
