@@ -88,10 +88,11 @@ function getDamageInsure(params,callback) {
 }
 
 function updateDamageInsure(params,callback){
-    var query = " update damage_insure set insure_id = ? , insure_plan = ? , payment_explain = ? , insure_actual = ? , check_explain = ?where id = ? " ;
+    var query = " update damage_insure set insure_id = ? , insure_plan = ? , financial_loan = ? , payment_explain = ? , insure_actual = ? , check_explain = ?where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insurePlan;
+    paramsArray[i++]=params.financialLoan;
     paramsArray[i++]=params.paymentExplain;
     paramsArray[i++]=params.insureActual;
     paramsArray[i++]=params.checkExplain;
