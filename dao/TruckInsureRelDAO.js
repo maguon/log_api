@@ -67,11 +67,11 @@ function getTruckInsureRel(params,callback) {
         query = query + " and t.truck_num = ? ";
     }
     if(params.endDateStart){
-        paramsArray[i++] = params.endDateStart +" 00:00:00";
+        paramsArray[i++] = params.endDateStart;
         query = query + " and r.end_date >= ? ";
     }
     if(params.endDateEnd){
-        paramsArray[i++] = params.endDateEnd +" 23:59:59";
+        paramsArray[i++] = params.endDateEnd;
         query = query + " and r.end_date <= ? ";
     }
     if(params.active){

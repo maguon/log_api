@@ -2258,6 +2258,46 @@
 
           },
           {
+            "name": "insureNum",
+            "in": "query",
+            "description": "insure num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "insureId",
+            "in": "query",
+            "description": "insure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureType",
+            "in": "query",
+            "description": "insure type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserId",
+            "in": "query",
+            "description": "insureUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserName",
+            "in": "query",
+            "description": "insureUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
@@ -2266,9 +2306,49 @@
 
           },
           {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateStart",
+            "in": "query",
+            "description": "endDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "active",
             "in": "query",
             "description": "rel active",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
             "required": false,
             "type": "integer"
 
@@ -2461,6 +2541,114 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/truckInsureRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckInsureRel id"
+          }
+        }
+      }
+    },
+    "/truckInsureRel.csv": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckInsureRel.csv list",
+        "description": "query truckInsureRel.csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "insureNum",
+            "in": "query",
+            "description": "insure num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "insureId",
+            "in": "query",
+            "description": "insure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureType",
+            "in": "query",
+            "description": "insure type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserId",
+            "in": "query",
+            "description": "insureUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserName",
+            "in": "query",
+            "description": "insureUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateStart",
+            "in": "query",
+            "description": "endDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "rel active",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckInsureRel.csv"
               }
             }
           },
@@ -15056,6 +15244,9 @@
           "type": "string"
         },
         "endDate": {
+          "type": "string"
+        },
+        "insureExplain": {
           "type": "string"
         }
       },

@@ -121,6 +121,56 @@ function updateTruckInsureRel(req,res,next){
     })
 }
 
+function getTruckInsureRelCsv(req,res,next){
+    var csvString = "";
+    var header = "保单编号" + ',' + "保险公司" + ',' + "险种" + ','+ "保险金额" + ','+ "货车牌号"+ ','+ "货车类型" + ','+ "经办人" + ','+ "生效日期" + ','+ "终止日期" + ','+ "保险描述";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    truckInsureRelDAO.getTruckInsureRel(params,function(error,rows){
+        if (error) {
+            logger.error(' queryTruckInsureRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.insureNum = rows[i].insure_num;
+                parkObj.insureName = rows[i].insure_name;
+                if(rows[i].insure_type == 1){
+                    parkObj.insureType = "交强险";
+                }else if(rows[i].insure_type == 2){
+                    parkObj.insureType = "商业险";
+                }else{
+                    parkObj.insureType = "货运险";
+                }
+                parkObj.insureMoney = rows[i].insure_money;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].truck_type == 1){
+                    parkObj.truckType = "车头";
+                }else{
+                    parkObj.truckType = "挂车";
+                }
+                parkObj.insureUserName = rows[i].insure_user_name;
+                parkObj.startDate = new Date(rows[i].start_date).toLocaleDateString();
+                parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
+                parkObj.insureExplain = rows[i].insure_explain;
+
+
+                csvString = csvString+parkObj.insureNum+","+parkObj.insureName+","+parkObj.insureType+","
+                    +parkObj.insureMoney+"," +parkObj.truckNum+","+parkObj.truckType+","
+                    +parkObj.insureUserName+","+parkObj.startDate+","+parkObj.endDate+","+parkObj.insureExplain+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createTruckInsureRel : createTruckInsureRel,
@@ -128,5 +178,6 @@ module.exports = {
     queryTruckInsureTypeTotal : queryTruckInsureTypeTotal,
     queryTruckInsureMoneyTotal : queryTruckInsureMoneyTotal,
     queryTruckInsureCountTotal : queryTruckInsureCountTotal,
-    updateTruckInsureRel : updateTruckInsureRel
+    updateTruckInsureRel : updateTruckInsureRel,
+    getTruckInsureRelCsv : getTruckInsureRelCsv
 }
