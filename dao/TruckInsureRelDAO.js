@@ -66,6 +66,10 @@ function getTruckInsureRel(params,callback) {
         paramsArray[i++] = params.truckNum;
         query = query + " and t.truck_num = ? ";
     }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and t.truck_type = ? ";
+    }
     if(params.endDateStart){
         paramsArray[i++] = params.endDateStart;
         query = query + " and r.end_date >= ? ";

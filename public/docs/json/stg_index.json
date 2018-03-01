@@ -2314,6 +2314,14 @@
 
           },
           {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "endDateStart",
             "in": "query",
             "description": "endDate start",
@@ -2615,6 +2623,14 @@
             "description": "truck num",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
 
           },
           {
