@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('TruckInsureRelDAO.js');
 
 function addTruckInsureRel(params,callback){
     var query = " insert into truck_insure_rel (truck_id,insure_id,insure_type,insure_num,insure_money," +
-        " insure_date,start_date,end_date,date_id)  values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " insure_date,start_date,end_date,date_id,insure_explain,insure_user_id)  values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.insureId;
@@ -18,7 +18,9 @@ function addTruckInsureRel(params,callback){
     paramsArray[i++]=params.insureDate;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
-    paramsArray[i]=params.dateId;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i++]=params.insureExplain;
+    paramsArray[i]=params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addTruckInsureRel ');
         return callback(error,rows);
@@ -26,7 +28,11 @@ function addTruckInsureRel(params,callback){
 }
 
 function getTruckInsureRel(params,callback) {
-    var query = " select r.*,i.insure_name from truck_insure_rel r left join truck_insure i on r.insure_id = i.id where r.id is not null ";
+    var query = " select r.*,i.insure_name,t.truck_num,t.truck_type,u.real_name as insure_user_name from truck_insure_rel r " +
+        " left join truck_insure i on r.insure_id = i.id " +
+        " left join truck_info t on r.truck_id = t.id " +
+        " left join user_info u on r.insure_user_id = u.uid " +
+        " where r.id is not null ";
     var paramsArray=[],i=0;
     if(params.relId){
         paramsArray[i++] = params.relId;
@@ -36,14 +42,43 @@ function getTruckInsureRel(params,callback) {
         paramsArray[i++] = params.insureNum;
         query = query + " and r.insure_num = ? ";
     }
+    if(params.insureId){
+        paramsArray[i++] = params.insureId;
+        query = query + " and r.insure_id = ? ";
+    }
+    if(params.insureType){
+        paramsArray[i++] = params.insureType;
+        query = query + " and r.insure_type = ? ";
+    }
+    if(params.insureUserId){
+        paramsArray[i++] = params.insureUserId;
+        query = query + " and r.insure_user_id = ? ";
+    }
+    if(params.insureUserName){
+        paramsArray[i++] = params.insureUserName;
+        query = query + " and u.real_name = ? ";
+    }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and r.truck_id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
+    if(params.endDateStart){
+        paramsArray[i++] = params.endDateStart +" 00:00:00";
+        query = query + " and r.end_date >= ? ";
+    }
+    if(params.endDateEnd){
+        paramsArray[i++] = params.endDateEnd +" 23:59:59";
+        query = query + " and r.end_date <= ? ";
     }
     if(params.active){
         paramsArray[i++] = params.active;
         query = query + " and r.active = ? ";
     }
+    query = query + " group by r.id ";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -146,7 +181,7 @@ function getTruckInsureCountTotal(params,callback) {
 
 function updateTruckInsureRel(params,callback){
     var query = " update truck_insure_rel set insure_id = ? , insure_type = ? , insure_num = ? , insure_money = ? ," +
-        " start_date = ? , end_date = ? where id = ? " ;
+        " start_date = ? , end_date = ? , insure_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
@@ -154,6 +189,7 @@ function updateTruckInsureRel(params,callback){
     paramsArray[i++]=params.insureMoney;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.insureExplain;
     paramsArray[i]=params.relId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckInsureRel ');
