@@ -65,9 +65,15 @@ function getDamageInsureRelCsv(req,res,next){
                 parkObj.eShortName = rows[i].e_short_name;
                 parkObj.rShortName = rows[i].r_short_name;
                 if(rows[i].damage_type == 1){
-                    parkObj.damageType = "一般质损";
+                    parkObj.damageType = "A级";
+                }else if(rows[i].damage_type == 2){
+                    parkObj.damageType = "B级";
+                }else if(rows[i].damage_type == 3){
+                    parkObj.damageType = "C级";
+                }else if(rows[i].damage_type == 4){
+                    parkObj.damageType = "D级";
                 }else{
-                    parkObj.damageType = "严重质损";
+                    parkObj.damageType = "F级";
                 }
                 parkObj.underUserName = rows[i].under_user_name;
                 parkObj.driveName = rows[i].drive_name;
