@@ -217,7 +217,7 @@ function queryDamageTypeWeekStat(req,res,next){
 function getDamageCsv(req,res,next){
     var csvString = "";
     var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+ "司机"
-        + ','+ "经销商" + ','+ "委托方" + ','+ "责任人" + ','+ "处理状态" ;
+        + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型" + ','+ "责任人" + ','+ "处理状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -237,6 +237,17 @@ function getDamageCsv(req,res,next){
                 parkObj.driveName = rows[i].drive_name;
                 parkObj.reShortName = rows[i].re_short_name;
                 parkObj.enShortName = rows[i].en_short_name;
+                if(rows[i].damage_type == 1){
+                    parkObj.damageType = "A级";
+                }else if(rows[i].damage_type == 2){
+                    parkObj.damageType = "B级";
+                }else if(rows[i].damage_type == 3){
+                    parkObj.damageType = "C级";
+                }else if(rows[i].damage_type == 4){
+                    parkObj.damageType = "D级";
+                }else{
+                    parkObj.damageType = "F级";
+                }
                 parkObj.underUserName = rows[i].under_user_name;
                 if(rows[i].damage_status == 1){
                     parkObj.damageStatus = "待处理";
@@ -247,7 +258,7 @@ function getDamageCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.damageExplain+","
                     +parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","
-                    +parkObj.underUserName+","+parkObj.damageStatus+ '\r\n';
+                    +parkObj.damageType+","+parkObj.underUserName+","+parkObj.damageStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
