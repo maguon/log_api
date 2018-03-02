@@ -51,6 +51,7 @@ var dpRouteLoadTaskCleanRel = require('./bl/DpRouteLoadTaskCleanRel.js');
 var dpRouteTaskLoan = require('./bl/DpRouteTaskLoan.js');
 var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
+var damageCheckIndemnity = require('./bl/DamageCheckIndemnity.js');
 var damageInsure = require('./bl/DamageInsure.js');
 var damageInsureRel = require('./bl/DamageInsureRel.js');
 var repairStation = require('./bl/RepairStation.js');
@@ -549,6 +550,11 @@ function createServer() {
     server.get('/api/damageCheckUnderWeekStat',damageCheck.queryDamageCheckUnderWeekStat);
     server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
     server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
+
+    /**
+     * DamageCheckIndemnity Module
+     */
+    server.post({path:'/api/user/:userId/damageCheckIndemnity',contentType: 'application/json'},damageCheckIndemnity.createDamageCheckIndemnity);
 
     /**
      * DamageInsure Module

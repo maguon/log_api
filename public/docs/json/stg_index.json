@@ -13939,6 +13939,51 @@
         }
       }
     },
+    "/user/{userId}/damageCheckIndemnity": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create damageCheckIndemnity",
+        "description": "user create damageCheckIndemnity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheckIndemnity",
+            "in": "body",
+            "description": "damageCheckIndemnity info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheckIndemnity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheckIndemnity id"
+          }
+        }
+      }
+    },
     "/damageInsure": {
       "get": {
         "tags": [
@@ -16297,6 +16342,36 @@
       },
       "xml": {
         "name": "damageCheck"
+      }
+    },
+    "damageCheckIndemnity": {
+      "type": "object",
+      "properties": {
+
+        "damageCheckId": {
+          "type": "integer"
+        },
+        "bankNumber": {
+          "type": "string"
+        },
+        "bankUserName": {
+          "type": "string"
+        },
+        "bankName": {
+          "type": "string"
+        },
+        "cityId": {
+          "type": "integer"
+        },
+        "receiveId": {
+          "type": "integer"
+        },
+        "planMoney": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "damageCheckIndemnity"
       }
     },
     "insure": {
