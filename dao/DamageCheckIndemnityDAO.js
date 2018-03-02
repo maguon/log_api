@@ -23,7 +23,28 @@ function addDamageCheckIndemnity(params,callback){
     });
 }
 
+function getDamageCheckIndemnity(params,callback) {
+    var query = " select dci.*,c.city_name,r.short_name from damage_check_indemnity dci " +
+        " left join damage_check dc on dci.damage_check_id = dc.id " +
+        " left join city_info c on dci.city_id = c.id " +
+        " left join receive_info r on dci.receive_id = r.id where dci.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.indemnityId){
+        paramsArray[i++] = params.indemnityId;
+        query = query + " and dci.id = ? ";
+    }
+    if(params.damageCheckId){
+        paramsArray[i++] = params.damageCheckId;
+        query = query + " and dci.damage_check_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageCheckIndemnity ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDamageCheckIndemnity : addDamageCheckIndemnity
+    addDamageCheckIndemnity : addDamageCheckIndemnity,
+    getDamageCheckIndemnity : getDamageCheckIndemnity
 }

@@ -13939,6 +13939,50 @@
         }
       }
     },
+    "/damageCheckIndemnity": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheckIndemnity list",
+        "description": "query damageCheckIndemnity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "indemnityId",
+            "in": "query",
+            "description": "indemnity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheckId",
+            "in": "query",
+            "description": "damageCheck id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageCheckIndemnity"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheckIndemnity id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageCheckIndemnity": {
       "post": {
         "tags": [

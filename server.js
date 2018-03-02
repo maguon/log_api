@@ -554,6 +554,7 @@ function createServer() {
     /**
      * DamageCheckIndemnity Module
      */
+    server.get('/api/damageCheckIndemnity',damageCheckIndemnity.queryDamageCheckIndemnity);
     server.post({path:'/api/user/:userId/damageCheckIndemnity',contentType: 'application/json'},damageCheckIndemnity.createDamageCheckIndemnity);
 
     /**
