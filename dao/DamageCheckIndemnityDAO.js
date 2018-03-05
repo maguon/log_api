@@ -43,8 +43,38 @@ function getDamageCheckIndemnity(params,callback) {
     });
 }
 
+function updateDamageCheckIndemnity(params,callback){
+    var query = " update damage_check_indemnity set bank_number = ? , bank_user_name = ? , bank_name = ? , " +
+        " city_id = ? , receive_id = ? , plan_money = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.bankNumber;
+    paramsArray[i++]=params.bankUserName;
+    paramsArray[i++]=params.bankName;
+    paramsArray[i++]=params.cityId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.planMoney;
+    paramsArray[i]=params.indemnityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageCheckIndemnity ');
+        return callback(error,rows);
+    });
+}
+
+function updateDamageCheckIndemnityImage(params,callback){
+    var query = " update damage_check_indemnity set voucher_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.voucherImage;
+    paramsArray[i]=params.indemnityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageCheckIndemnityImage ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageCheckIndemnity : addDamageCheckIndemnity,
-    getDamageCheckIndemnity : getDamageCheckIndemnity
+    getDamageCheckIndemnity : getDamageCheckIndemnity,
+    updateDamageCheckIndemnity : updateDamageCheckIndemnity,
+    updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage
 }

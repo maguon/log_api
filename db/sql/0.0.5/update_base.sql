@@ -205,4 +205,31 @@ ADD COLUMN `check_explain`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_u
 ALTER TABLE `truck_insure_rel`
 ADD COLUMN `insure_explain`  varchar(200) NULL COMMENT '保单说明' AFTER `end_date`,
 ADD COLUMN `insure_user_id`  int(10) NULL DEFAULT NULL COMMENT '经办人ID' AFTER `insure_explain`;
+-- ----------------------------
+-- 2018-03-05 更新
+-- ----------------------------
+ALTER TABLE `damage_check`
+ADD COLUMN `indemnity_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '赔款状态1-无需赔款,2-需要赔款)' AFTER `remark`;
+
+-- ----------------------------
+-- Table structure for damage_check_indemnity
+-- ----------------------------
+DROP TABLE IF EXISTS `damage_check_indemnity`;
+CREATE TABLE `damage_check_indemnity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `damage_check_id` int(10) NOT NULL COMMENT '质损处理ID',
+  `bank_number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行号码',
+  `bank_user_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '户名',
+  `bank_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '开户行',
+  `city_id` int(10) NOT NULL COMMENT '所在城市ID',
+  `receive_id` int(10) NOT NULL COMMENT '经销商ID',
+  `plan_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '计划赔款金额',
+  `actual_money` decimal(10,2) DEFAULT '0.00' COMMENT '实际打款金额',
+  `indemnity_date` datetime DEFAULT NULL COMMENT '打款时间',
+  `indemnity_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '赔款状态(1-未打款,2-已打款)',
+  `voucher_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '打款凭证照片',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

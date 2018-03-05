@@ -14028,6 +14028,114 @@
         }
       }
     },
+    "/user/{userId}/damageCheckIndemnity/{indemnityId}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageCheckIndemnity info",
+        "description": "update damageCheckIndemnity info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityId",
+            "in": "path",
+            "description": "indemnity id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheckIndemnity",
+            "in": "body",
+            "description": "damageCheckIndemnity info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheckIndemnity"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheckIndemnity id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageCheckIndemnity/{indemnityId}/image": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageCheckIndemnity image",
+        "description": "update damageCheckIndemnity image",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityId",
+            "in": "path",
+            "description": "indemnity id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "image",
+            "in": "body",
+            "description": "image url",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheckIndemnityImage"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheckIndemnity id"
+          }
+        }
+      }
+    },
     "/damageInsure": {
       "get": {
         "tags": [
@@ -16416,6 +16524,18 @@
       },
       "xml": {
         "name": "damageCheckIndemnity"
+      }
+    },
+    "damageCheckIndemnityImage": {
+      "type": "object",
+      "properties": {
+
+        "voucherImage": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "damageCheckIndemnityImage"
       }
     },
     "insure": {

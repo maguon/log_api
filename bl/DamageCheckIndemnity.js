@@ -41,8 +41,37 @@ function queryDamageCheckIndemnity(req,res,next){
     })
 }
 
+function updateDamageCheckIndemnity(req,res,next){
+    var params = req.params ;
+    damageCheckIndemnityDAO.updateDamageCheckIndemnity(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageCheckIndemnity ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageCheckIndemnity ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDamageCheckIndemnityImage(req,res,next){
+    var params = req.params ;
+    damageCheckIndemnityDAO.updateDamageCheckIndemnityImage(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageCheckIndemnityImage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageCheckIndemnityImage ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
 
 module.exports = {
     createDamageCheckIndemnity : createDamageCheckIndemnity,
-    queryDamageCheckIndemnity : queryDamageCheckIndemnity
+    queryDamageCheckIndemnity : queryDamageCheckIndemnity,
+    updateDamageCheckIndemnity : updateDamageCheckIndemnity,
+    updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage
 }
