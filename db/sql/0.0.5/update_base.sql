@@ -227,6 +227,7 @@ CREATE TABLE `damage_check_indemnity` (
   `actual_money` decimal(10,2) DEFAULT '0.00' COMMENT '实际打款金额',
   `indemnity_date` datetime DEFAULT NULL COMMENT '打款时间',
   `indemnity_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '赔款状态(1-未打款,2-已打款)',
+  `indemnity_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '打款说明',
   `voucher_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '打款凭证照片',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

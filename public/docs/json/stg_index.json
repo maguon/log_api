@@ -16802,6 +16802,9 @@
         },
         "planMoney": {
           "type": "integer"
+        },
+        "indemnityExplain": {
+          "type": "string"
         }
       },
       "xml": {
