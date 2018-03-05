@@ -222,7 +222,7 @@ CREATE TABLE `damage_check_indemnity` (
   `bank_user_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '户名',
   `bank_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '开户行',
   `city_id` int(10) NOT NULL COMMENT '所在城市ID',
-  `receive_id` int(10) NOT NULL COMMENT '经销商ID',
+  `receive_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经销商名称',
   `plan_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '计划赔款金额',
   `actual_money` decimal(10,2) DEFAULT '0.00' COMMENT '实际打款金额',
   `indemnity_date` datetime DEFAULT NULL COMMENT '打款时间',

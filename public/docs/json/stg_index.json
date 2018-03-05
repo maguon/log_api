@@ -16797,8 +16797,8 @@
         "cityId": {
           "type": "integer"
         },
-        "receiveId": {
-          "type": "integer"
+        "receiveName": {
+          "type": "string"
         },
         "planMoney": {
           "type": "integer"
