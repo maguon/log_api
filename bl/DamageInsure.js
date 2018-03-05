@@ -7,8 +7,10 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var damageInsureDAO = require('../dao/DamageInsureDAO.js');
 var damageInsureRelDAO = require('../dao/DamageInsureRelDAO.js');
+var damageInsureLoanDAO = require('../dao/DamageInsureLoanDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -51,6 +53,26 @@ function createInsure(req,res,next){
                 that();
             }
         })
+    }).seq(function(){
+        var that = this;
+        if(params.financialLoanStatus==sysConst.LOAN__STATUS.yes){
+            params.damageInsureId = damageInsureId;
+            damageInsureLoanDAO.addDamageInsureLoan(params,function(error,result){
+                if (error) {
+                    logger.error(' createDamageInsureLoan ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' createDamageInsureLoan ' + 'success');
+                    }else{
+                        resUtil.resetFailedRes(res,"create DamageInsureLoan failed");
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
     }).seq(function(){
         logger.info(' createInsure ' + 'success');
         resUtil.resetCreateRes(res,{insertId:damageInsureId},null);
@@ -106,6 +128,26 @@ function createDamageInsure(req,res,next){
         }).seq(function(){
             that();
         })
+    }).seq(function(){
+        var that = this;
+        if(params.financialLoanStatus==sysConst.LOAN__STATUS.yes){
+            params.damageInsureId = damageInsureId;
+            damageInsureLoanDAO.addDamageInsureLoan(params,function(error,result){
+                if (error) {
+                    logger.error(' createDamageInsureLoan ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' createDamageInsureLoan ' + 'success');
+                    }else{
+                        resUtil.resetFailedRes(res,"create DamageInsureLoan failed");
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
     }).seq(function(){
         logger.info(' createDamageInsure ' + 'success');
         resUtil.resetCreateRes(res,{insertId:damageInsureId},null);

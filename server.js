@@ -54,6 +54,7 @@ var damageCheck = require('./bl/DamageCheck.js');
 var damageCheckIndemnity = require('./bl/DamageCheckIndemnity.js');
 var damageInsure = require('./bl/DamageInsure.js');
 var damageInsureRel = require('./bl/DamageInsureRel.js');
+var damageInsureLoan = require('./bl/DamageInsureLoan.js');
 var repairStation = require('./bl/RepairStation.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
@@ -576,6 +577,14 @@ function createServer() {
     server.get('/api/damageInsureRel.csv', damageInsureRel.getDamageInsureRelCsv);
     server.post({path:'/api/user/:userId/damageInsureRel',contentType: 'application/json'},damageInsureRel.createDamageInsureRel);
     server.del('/api/user/:userId/damageInsure/:damageInsureId/damage/:damageId' , damageInsureRel.removeDamageInsureRel);
+
+    /**
+     * DamageInsureLoan Module
+     */
+    server.get('/api/damageInsureLoan' ,damageInsureLoan.queryDamageInsureLoan);
+    server.put({path:'/api/user/:userId/damageInsureLoan/:loanId',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureLoan);
+    server.put({path:'/api/user/:userId/damageInsureRepayment/:loanId',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureRepayment);
+    server.put({path:'/api/user/:userId/damageInsureLoan/:loanId/loanStatus/:loanStatus',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureLoanStatus);
 
     /**
      * RepairStation Module

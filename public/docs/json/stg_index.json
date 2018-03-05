@@ -14799,6 +14799,288 @@
         }
       }
     },
+    "/damageInsureLoan": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageInsureLoan list",
+        "description": "query damageInsureLoan",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageInsureLoanId",
+            "in": "query",
+            "description": "damageInsureLoan id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsureId",
+            "in": "query",
+            "description": "damageInsure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureId",
+            "in": "query",
+            "description": "insure id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserId",
+            "in": "query",
+            "description": "insureUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "insureUserName",
+            "in": "query",
+            "description": "insureUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loanMoneyStart",
+            "in": "query",
+            "description": "loanMoney start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanMoneyEnd",
+            "in": "query",
+            "description": "loanMoney end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loanDateStart",
+            "in": "query",
+            "description": "loanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loanDateEnd",
+            "in": "query",
+            "description": "loanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loanStatus",
+            "in": "query",
+            "description": "loan status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageInsureLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageInsureLoan/{loanId}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update  damageInsureLoan",
+        "description": "update damageInsureLoan",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "loan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsureLoan",
+            "in": "body",
+            "description": "damageInsureLoan info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageInsureLoan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageInsureRepayment/{loanId}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update  damageInsureRepayment",
+        "description": "update damageInsureRepayment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "operator user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "loan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsureRepayment",
+            "in": "body",
+            "description": "damageInsureRepayment info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageInsureRepayment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureRepayment id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageInsureLoan/{loanId}/loanStatus/{loanStatus}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageInsureLoan status",
+        "description": "update damageInsureLoan status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "loan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loanStatus",
+            "in": "path",
+            "description": "loan status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureLoan id"
+          }
+        }
+      }
+    },
     "/repairStation": {
       "get": {
         "tags": [
@@ -16617,6 +16899,36 @@
       },
       "xml": {
         "name": "damageInsureRel"
+      }
+    },
+    "damageInsureLoan": {
+      "type": "object",
+      "properties": {
+
+        "loanMoney": {
+          "type": "integer"
+        },
+        "loanExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "damageInsureLoan"
+      }
+    },
+    "damageInsureRepayment": {
+      "type": "object",
+      "properties": {
+
+        "repaymentMoney": {
+          "type": "integer"
+        },
+        "repaymentExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "damageInsureRepayment"
       }
     },
     "truckDispatch": {
