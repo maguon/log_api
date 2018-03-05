@@ -37,7 +37,7 @@ function addDamageCheck(params,callback){
 
 function getDamageCheck(params,callback) {
     var query = " select dc.*,rs.repair_station_name,u3.real_name as op_user_name, " +
-        " c.receive_id,r.short_name as re_short_name from damage_check dc " +
+        " c.route_end_id,c.route_end,c.receive_id,r.short_name as re_short_name from damage_check dc " +
         " left join damage_info da on dc.damage_id = da.id " +
         " left join user_info u3 on dc.op_user_id = u3.uid " +
         " left join repair_station_info rs on dc.repair_id = rs.id " +
@@ -85,6 +85,17 @@ function updateDamageCheck(params,callback){
     paramsArray[i]=params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageCheck ');
+        return callback(error,rows);
+    });
+}
+
+function updateDamageCheckIndemnityStatus(params,callback){
+    var query = " update damage_check set indemnity_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.indemnityStatus;
+    paramsArray[i]=params.damageCheckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageCheckIndemnityStatus ');
         return callback(error,rows);
     });
 }
@@ -210,7 +221,8 @@ function getDamageCheckStat(params,callback){
 module.exports ={
     addDamageCheck : addDamageCheck,
     getDamageCheck : getDamageCheck,
-    updateDamageCheck : updateDamageCheck ,
+    updateDamageCheck : updateDamageCheck,
+    updateDamageCheckIndemnityStatus : updateDamageCheckIndemnityStatus,
     getDamageCheckMonthStat  : getDamageCheckMonthStat,
     getDamageCheckWeekStat : getDamageCheckWeekStat,
     getDamageCheckUnderMonthStat : getDamageCheckUnderMonthStat,

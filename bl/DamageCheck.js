@@ -113,6 +113,20 @@ function updateDamageCheck(req,res,next){
     })
 }
 
+function updateDamageCheckIndemnityStatus(req,res,next){
+    var params = req.params;
+    damageCheckDAO.updateDamageCheckIndemnityStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageCheckIndemnityStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageCheckIndemnityStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDamageCheckMonthStat(req,res,next){
     var params = req.params;
     damageCheckDAO.getDamageCheckMonthStat(params,function(error,result){
@@ -172,7 +186,8 @@ function queryDamageCheckUnderWeekStat(req,res,next){
 module.exports = {
     createDamageCheck : createDamageCheck,
     queryDamageCheck : queryDamageCheck,
-    updateDamageCheck : updateDamageCheck ,
+    updateDamageCheck : updateDamageCheck,
+    updateDamageCheckIndemnityStatus : updateDamageCheckIndemnityStatus,
     queryDamageCheckMonthStat : queryDamageCheckMonthStat,
     queryDamageCheckWeekStat : queryDamageCheckWeekStat,
     queryDamageCheckUnderMonthStat : queryDamageCheckUnderMonthStat,

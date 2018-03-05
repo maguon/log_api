@@ -13939,6 +13939,58 @@
         }
       }
     },
+    "/user/{userId}/damageCheck/{damageCheckId}/indemnityStatus/{indemnityStatus}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageCheckIndemnity status",
+        "description": "update damageCheckIndemnity status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheckId",
+            "in": "path",
+            "description": "damageCheck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityStatus",
+            "in": "path",
+            "description": "indemnity status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
     "/damageCheckIndemnity": {
       "get": {
         "tags": [
