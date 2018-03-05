@@ -17,7 +17,7 @@ function addTruckAccidentInsureLoan(params,callback){
 }
 
 function getTruckAccidentInsureLoan(params,callback) {
-    var query = " select tail.*,tai.insure_type,ti.insure_name,tai.insure_plan," +
+    var query = " select tail.*,tai.insure_type,ti.insure_name,tai.insure_plan,tai.financial_loan," +
         " u.real_name as insure_user_name,tai.payment_explain,tai.created_on as accident_insure_date, " +
         " u1.real_name as loan_user_name,u2.real_name as repayment_user_name from truck_accident_insure_loan tail " +
         " left join truck_accident_insure tai on tail.accident_insure_id = tai.id " +
