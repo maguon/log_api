@@ -16833,7 +16833,9 @@
     "damageCheckIndemnity": {
       "type": "object",
       "properties": {
-
+        "damageId": {
+          "type": "integer"
+        },
         "damageCheckId": {
           "type": "integer"
         },
@@ -16855,7 +16857,7 @@
         "planMoney": {
           "type": "integer"
         },
-        "indemnityExplain": {
+        "applyExplain": {
           "type": "string"
         }
       },

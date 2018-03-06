@@ -217,6 +217,7 @@ ADD COLUMN `indemnity_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '赔款状�
 DROP TABLE IF EXISTS `damage_check_indemnity`;
 CREATE TABLE `damage_check_indemnity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `damage_id` int(10) NOT NULL COMMENT '质损编号ID',
   `damage_check_id` int(10) NOT NULL COMMENT '质损处理ID',
   `bank_number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行号码',
   `bank_user_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '户名',
@@ -224,6 +225,8 @@ CREATE TABLE `damage_check_indemnity` (
   `city_id` int(10) NOT NULL COMMENT '所在城市ID',
   `receive_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经销商名称',
   `plan_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '计划赔款金额',
+  `apply_user_id` int(10) NOT NULL COMMENT '打款申请人ID',
+  `apply_explain` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '申请打款说明',
   `actual_money` decimal(10,2) DEFAULT '0.00' COMMENT '实际打款金额',
   `indemnity_date` datetime DEFAULT NULL COMMENT '打款时间',
   `indemnity_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '赔款状态(1-未打款,2-已打款)',
