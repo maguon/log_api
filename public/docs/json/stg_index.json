@@ -14284,6 +14284,112 @@
         }
       }
     },
+    "/user/{userId}/indemnity/{indemnityId}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update indemnity info",
+        "description": "update indemnity info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityId",
+            "in": "path",
+            "description": "indemnity id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnity",
+            "in": "body",
+            "description": "indemnity info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/indemnity"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid indemnity id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/indemnity/{indemnityId}/indemnityStatus/{indemnityStatus}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update indemnity status",
+        "description": "update indemnity status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityId",
+            "in": "path",
+            "description": "indemnity id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityStatus",
+            "in": "path",
+            "description": "indemnity status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid indemnity id"
+          }
+        }
+      }
+    },
     "/damageInsure": {
       "get": {
         "tags": [
@@ -16971,6 +17077,21 @@
       },
       "xml": {
         "name": "damageCheckIndemnityImage"
+      }
+    },
+    "indemnity": {
+      "type": "object",
+      "properties": {
+
+        "actualMoney": {
+          "type": "integer"
+        },
+        "indemnityExplain": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "indemnity"
       }
     },
     "insure": {

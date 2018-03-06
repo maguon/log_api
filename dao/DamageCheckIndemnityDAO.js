@@ -121,10 +121,36 @@ function updateDamageCheckIndemnityImage(params,callback){
     });
 }
 
+function updateIndemnity(params,callback){
+    var query = " update damage_check_indemnity set actual_money = ? , indemnity_date = ? , indemnity_explain = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.actualMoney;
+    paramsArray[i++]=params.indemnityDate;
+    paramsArray[i++]=params.indemnityExplain;
+    paramsArray[i]=params.indemnityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateIndemnity ');
+        return callback(error,rows);
+    });
+}
+
+function updateIndemnityStatus(params,callback){
+    var query = " update damage_check_indemnity set indemnity_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.indemnityStatus;
+    paramsArray[i]=params.indemnityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateIndemnityStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageCheckIndemnity : addDamageCheckIndemnity,
     getDamageCheckIndemnity : getDamageCheckIndemnity,
     updateDamageCheckIndemnity : updateDamageCheckIndemnity,
-    updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage
+    updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage,
+    updateIndemnity : updateIndemnity,
+    updateIndemnityStatus : updateIndemnityStatus
 }

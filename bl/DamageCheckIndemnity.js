@@ -69,9 +69,42 @@ function updateDamageCheckIndemnityImage(req,res,next){
     })
 }
 
+function updateIndemnity(req,res,next){
+    var params = req.params ;
+    var myDate = new Date();
+    params.indemnityDate = myDate;
+    damageCheckIndemnityDAO.updateIndemnity(params,function(error,result){
+        if (error) {
+            logger.error(' updateIndemnity ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateIndemnity ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateIndemnityStatus(req,res,next){
+    var params = req.params ;
+    damageCheckIndemnityDAO.updateIndemnityStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateIndemnityStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateIndemnityStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+
 module.exports = {
     createDamageCheckIndemnity : createDamageCheckIndemnity,
     queryDamageCheckIndemnity : queryDamageCheckIndemnity,
     updateDamageCheckIndemnity : updateDamageCheckIndemnity,
-    updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage
+    updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage,
+    updateIndemnity : updateIndemnity,
+    updateIndemnityStatus : updateIndemnityStatus
 }
