@@ -27,10 +27,11 @@ function addDamageCheckIndemnity(params,callback){
 }
 
 function getDamageCheckIndemnity(params,callback) {
-    var query = " select dci.*,d.created_on as declare_date,c.city_name from damage_check_indemnity dci " +
+    var query = " select dci.*,d.created_on as declare_date,u.real_name as apply_user_name,c.city_name from damage_check_indemnity dci " +
         " left join damage_check dc on dci.damage_check_id = dc.id " +
         " left join damage_info d on dci.damage_id = d.id " +
-        " left join city_info c on dci.city_id = c.id where dci.id is not null ";
+        " left join city_info c on dci.city_id = c.id " +
+        " left join user_info u on dci.apply_user_id = u.uid where dci.id is not null ";
     var paramsArray=[],i=0;
     if(params.indemnityId){
         paramsArray[i++] = params.indemnityId;
@@ -39,6 +40,51 @@ function getDamageCheckIndemnity(params,callback) {
     if(params.damageCheckId){
         paramsArray[i++] = params.damageCheckId;
         query = query + " and dci.damage_check_id = ? ";
+    }
+    if(params.damageId){
+        paramsArray[i++] = params.damageId;
+        query = query + " and dci.damage_id = ? ";
+    }
+    if(params.indemnityStatus){
+        paramsArray[i++] = params.indemnityStatus;
+        query = query + " and dci.indemnity_status = ? ";
+    }
+    if(params.applyUserName){
+        paramsArray[i++] = params.applyUserName;
+        query = query + " and u.real_name = ? ";
+    }
+    if(params.planMoneyStart){
+        paramsArray[i++] = params.planMoneyStart;
+        query = query + " and dci.plan_money >= ? ";
+    }
+    if(params.planMoneyEnd){
+        paramsArray[i++] = params.planMoneyEnd;
+        query = query + " and dci.plan_money <= ? ";
+    }
+    if(params.receiveName){
+        paramsArray[i++] = params.receiveName;
+        query = query + " and dci.receive_name = ? ";
+    }
+    if(params.applyDateStart){
+        paramsArray[i++] = params.applyDateStart +" 00:00:00";
+        query = query + " and dci.created_on >= ? ";
+    }
+    if(params.applyDateEnd){
+        paramsArray[i++] = params.applyDateEnd +" 23:59:59";
+        query = query + " and dci.created_on <= ? ";
+    }
+    if(params.indemnityDateStart){
+        paramsArray[i++] = params.indemnityDateStart +" 00:00:00";
+        query = query + " and dci.indemnity_date >= ? ";
+    }
+    if(params.indemnityDateEnd){
+        paramsArray[i++] = params.indemnityDateEnd +" 23:59:59";
+        query = query + " and dci.indemnity_date <= ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageCheckIndemnity ');

@@ -13939,7 +13939,7 @@
         }
       }
     },
-    "/user/{userId}/damageCheck/{damageCheckId}/indemnityStatus/{indemnityStatus}": {
+    "/user/{userId}/damageCheck/{damageCheckId}/damageIndemnityStatus/{damageIndemnityStatus}": {
       "put": {
         "tags": [
           "damage"
@@ -13967,9 +13967,9 @@
 
           },
           {
-            "name": "indemnityStatus",
+            "name": "damageIndemnityStatus",
             "in": "path",
-            "description": "indemnity status",
+            "description": "damageIndemnity status",
             "required": true,
             "type": "integer"
 
@@ -14014,6 +14014,102 @@
             "name": "damageCheckId",
             "in": "query",
             "description": "damageCheck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityStatus",
+            "in": "query",
+            "description": "indemnity status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyUserName",
+            "in": "query",
+            "description": "applyUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "planMoneyStart",
+            "in": "query",
+            "description": "planMoney start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "planMoneyEnd",
+            "in": "query",
+            "description": "planMoney end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveName",
+            "in": "query",
+            "description": "receive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyDateStart",
+            "in": "query",
+            "description": "applyDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyDateEnd",
+            "in": "query",
+            "description": "applyDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "indemnityDateStart",
+            "in": "query",
+            "description": "indemnityDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "indemnityDateEnd",
+            "in": "query",
+            "description": "indemnityDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
             "required": false,
             "type": "integer"
 

@@ -90,9 +90,9 @@ function updateDamageCheck(params,callback){
 }
 
 function updateDamageCheckIndemnityStatus(params,callback){
-    var query = " update damage_check set indemnity_status = ? where id = ? " ;
+    var query = " update damage_check set damage_indemnity_status = ? where id = ? " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.indemnityStatus;
+    paramsArray[i++]=params.damageIndemnityStatus;
     paramsArray[i]=params.damageCheckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageCheckIndemnityStatus ');
