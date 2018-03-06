@@ -18,6 +18,7 @@ var logger = serverLogger.createLogger('Drive.js');
 function createDrive(req,res,next){
     var params = req.params;
     var userId = 0;
+    var driveId = 0;
     Seq().seq(function(){
         var that = this;
         params.mobile = params.tel;
@@ -59,7 +60,6 @@ function createDrive(req,res,next){
                     }
                     user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
                     userId = result.insertId
-                    resUtil.resetQueryRes(res,user,null);
                     that();
                 }else{
                     logger.warn(' createUser ' + 'false');
@@ -79,7 +79,7 @@ function createDrive(req,res,next){
                 req.params.driverContent =" 新增司机 ";
                 req.params.tid = result.insertId;
                 req.params.driverOp =30;
-                resUtil.resetCreateRes(res,result,null);
+                resUtil.resetQueryRes(res,{userId:userId,driveId:result.insertId},null);
                 return next();
             }
         })
