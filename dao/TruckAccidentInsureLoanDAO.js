@@ -54,6 +54,7 @@ function getTruckAccidentInsureLoan(params,callback) {
         paramsArray[i++] = params.loanStatus;
         query = query + " and tail.loan_status = ? ";
     }
+    query = query + " order by tail.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
