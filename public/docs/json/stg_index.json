@@ -4124,15 +4124,6 @@
             "required": true,
             "type": "integer"
 
-          },
-          {
-            "name": "truckAccidentCheck",
-            "in": "body",
-            "description": "truckAccidentCheck info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/truckAccidentCheck"
-            }
           }
         ],
         "responses": {
@@ -13539,15 +13530,6 @@
             "required": true,
             "type": "integer"
 
-          },
-          {
-            "name": "damageCheck",
-            "in": "body",
-            "description": "damageCheck info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/damageCheck"
-            }
           }
         ],
         "responses": {

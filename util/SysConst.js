@@ -127,6 +127,10 @@ var TASK_LOAN__STATUS = {  //出车任务借款状态
     grant : 2, //已发放
     refund : 3  //已报销
 };
+var DAMAGE_INDEMNITY__STATUS = {  //申请质损赔款状态
+    no : 1 ,  //不需赔款
+    yes : 2 //需要赔款
+};
 
 
 module.exports = {
@@ -148,5 +152,6 @@ module.exports = {
     ACCIDENT_STATUS : ACCIDENT_STATUS,
     ACCIDENT__TYPE : ACCIDENT__TYPE,
     LOAN__STATUS : LOAN__STATUS,
-    TASK_LOAN__STATUS : TASK_LOAN__STATUS
+    TASK_LOAN__STATUS : TASK_LOAN__STATUS,
+    DAMAGE_INDEMNITY__STATUS : DAMAGE_INDEMNITY__STATUS
 }

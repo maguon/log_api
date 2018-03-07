@@ -84,12 +84,12 @@ function updateTruckAccidentStatus(req,res,next){
         var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
         params.endDate = myDate;
-        truckAccidentCheckDAO.updateTruckAccidentCheck(params,function(error,result){
+        truckAccidentCheckDAO.updateTruckAccidentCheckFinishTime(params,function(error,result){
             if (error) {
-                logger.error(' updateTruckAccidentCheck ' + error.message);
+                logger.error(' updateTruckAccidentCheckFinishTime ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateTruckAccidentCheck ' + 'success');
+                logger.info(' updateTruckAccidentCheckFinishTime ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

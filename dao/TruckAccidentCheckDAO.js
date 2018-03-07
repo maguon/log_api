@@ -55,7 +55,7 @@ function getTruckAccidentCheck(params,callback) {
 
 function updateTruckAccidentCheck(params,callback){
     var query = " update truck_accident_check set truck_accident_type = ? , under_user_id = ? , under_user_name = ? , under_cost = ? , " +
-        " company_cost = ? , profit = ? , op_user_id = ? , end_date = ? , date_id = ? , remark = ? where id = ? " ;
+        " company_cost = ? , profit = ? , op_user_id = ? remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckAccidentType;
     paramsArray[i++]=params.underUserId;
@@ -64,8 +64,6 @@ function updateTruckAccidentCheck(params,callback){
     paramsArray[i++]=params.companyCost;
     paramsArray[i++]=params.profit;
     paramsArray[i++]=params.userId;
-    paramsArray[i++]=params.endDate;
-    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.truckAccidentCheckId;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -74,10 +72,24 @@ function updateTruckAccidentCheck(params,callback){
     });
 }
 
+function updateTruckAccidentCheckFinishTime(params,callback){
+    var query = " update truck_accident_check set op_user_id = ? , end_date = ? , date_id = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i]=params.truckAccidentCheckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentCheckFinishTime ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckAccidentCheck : addTruckAccidentCheck,
     getTruckAccidentCheck : getTruckAccidentCheck,
-    updateTruckAccidentCheck : updateTruckAccidentCheck
+    updateTruckAccidentCheck : updateTruckAccidentCheck,
+    updateTruckAccidentCheckFinishTime : updateTruckAccidentCheckFinishTime
 }
 

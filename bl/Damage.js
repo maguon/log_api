@@ -187,12 +187,12 @@ function updateDamageStatus(req,res,next){
         var myDate = new Date();
         var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
-        damageCheckDAO.updateDamageCheck(params,function(error,result){
+        damageCheckDAO.updateDamageCheckFinishTime(params,function(error,result){
             if (error) {
-                logger.error(' updateDamageCheck ' + error.message);
+                logger.error(' updateDamageCheckFinishTime ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateDamageCheck ' + 'success');
+                logger.info(' updateDamageCheckFinishTime ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

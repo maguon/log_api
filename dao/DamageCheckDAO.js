@@ -62,7 +62,7 @@ function getDamageCheck(params,callback) {
 function updateDamageCheck(params,callback){
     var query = " update damage_check set under_user_id = ? , under_user_name = ? , damage_type = ? , damage_link_type = ? , " +
         " refund_user_id = ? , refund_user_name = ? , reduction_cost = ?, penalty_cost = ? , profit = ? , repair_id = ? , repair_cost = ? , " +
-        " transport_cost = ? , under_cost = ? , company_cost = ? , op_user_id = ? , date_id = ? , remark = ? where id = ? and damage_id = ? " ;
+        " transport_cost = ? , under_cost = ? , company_cost = ? , op_user_id = ? , remark = ? where id = ? and damage_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.underUserId;
     paramsArray[i++]=params.underUserName;
@@ -79,12 +79,24 @@ function updateDamageCheck(params,callback){
     paramsArray[i++]=params.underCost;
     paramsArray[i++]=params.companyCost;
     paramsArray[i++]=params.userId;
-    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.remark;
     paramsArray[i++]=params.damageCheckId;
     paramsArray[i]=params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageCheck ');
+        return callback(error,rows);
+    });
+}
+
+function updateDamageCheckFinishTime(params,callback){
+    var query = " update damage_check set op_user_id = ? , date_id = ? where id = ? and damage_id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i++]=params.damageCheckId;
+    paramsArray[i]=params.damageId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageCheckFinishTime ');
         return callback(error,rows);
     });
 }
@@ -222,6 +234,7 @@ module.exports ={
     addDamageCheck : addDamageCheck,
     getDamageCheck : getDamageCheck,
     updateDamageCheck : updateDamageCheck,
+    updateDamageCheckFinishTime : updateDamageCheckFinishTime,
     updateDamageCheckIndemnityStatus : updateDamageCheckIndemnityStatus,
     getDamageCheckMonthStat  : getDamageCheckMonthStat,
     getDamageCheckWeekStat : getDamageCheckWeekStat,
