@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var truckAccidentDAO = require('../dao/TruckAccidentDAO.js');
+var truckAccidentCheckDAO = require('../dao/TruckAccidentCheckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -61,15 +62,38 @@ function updateTruckAccident(req,res,next){
 
 function updateTruckAccidentStatus(req,res,next){
     var params = req.params ;
-    truckAccidentDAO.updateTruckAccidentStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckAccidentStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckAccidentStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        truckAccidentDAO.updateTruckAccidentStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckAccidentStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateTruckAccidentStatus ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' updateTruckAccidentStatus ' + 'failed');
+                    resUtil.resetFailedRes(res," 事故处理完成失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
+        params.endDate = myDate;
+        truckAccidentCheckDAO.updateTruckAccidentCheck(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckAccidentCheck ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckAccidentCheck ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

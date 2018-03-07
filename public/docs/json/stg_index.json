@@ -4116,6 +4116,23 @@
             "required": true,
             "type": "integer"
 
+          },
+          {
+            "name": "truckAccidentCheckId",
+            "in": "query",
+            "description": "truckAccidentCheck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckAccidentCheck",
+            "in": "body",
+            "description": "truckAccidentCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckAccidentCheck"
+            }
           }
         ],
         "responses": {
