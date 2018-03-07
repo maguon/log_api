@@ -55,7 +55,7 @@ function getTruckAccidentCheck(params,callback) {
 
 function updateTruckAccidentCheck(params,callback){
     var query = " update truck_accident_check set truck_accident_type = ? , under_user_id = ? , under_user_name = ? , under_cost = ? , " +
-        " company_cost = ? , profit = ? , op_user_id = ? remark = ? where id = ? " ;
+        " company_cost = ? , profit = ? , op_user_id = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckAccidentType;
     paramsArray[i++]=params.underUserId;
