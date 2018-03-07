@@ -7,7 +7,9 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var damageCheckIndemnityDAO = require('../dao/DamageCheckIndemnityDAO.js');
+var damageCheckDAO = require('../dao/DamageCheckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -15,15 +17,44 @@ var logger = serverLogger.createLogger('DamageCheckIndemnity.js');
 
 function createDamageCheckIndemnity(req,res,next){
     var params = req.params ;
-    damageCheckIndemnityDAO.addDamageCheckIndemnity(params,function(error,result){
-        if (error) {
-            logger.error(' createDamageCheckIndemnity ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createDamageCheckIndemnity ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    var indemnityId = 0;
+    Seq().seq(function(){
+        var that = this;
+        damageCheckIndemnityDAO.addDamageCheckIndemnity(params,function(error,result){
+            if (error) {
+                logger.error(' createDamageCheckIndemnity ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDamageCheckIndemnity ' + 'success');
+                    indemnityId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create damageCheckIndemnity failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.damageIndemnityStatus = sysConst.DAMAGE_INDEMNITY__STATUS.yes;
+        damageCheckDAO.updateDamageCheckIndemnityStatus(params,function(err,result){
+            if (err) {
+                logger.error(' updateDamageCheckIndemnityStatus ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateDamageCheckIndemnityStatus ' + 'success');
+                }else{
+                    logger.warn(' updateDamageCheckIndemnityStatus ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        logger.info(' createDamageCheckIndemnity ' + 'success');
+        resUtil.resetCreateRes(res,{insertId:indemnityId},null);
+        return next();
     })
 }
 
