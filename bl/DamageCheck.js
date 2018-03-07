@@ -65,51 +65,15 @@ function queryDamageCheck(req,res,next){
 
 function updateDamageCheck(req,res,next){
     var params = req.params;
-    Seq().seq(function(){
-        var that = this;
-        if(params.checkButton==2){
-            damageCheckDAO.updateDamageCheck(params,function(error,result){
-                if (error) {
-                    logger.error(' updateDamageCheck ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    logger.info(' updateDamageCheck ' + 'success');
-                    resUtil.resetUpdateRes(res,result,null);
-                    return next();
-                }
-            })
-        }else{
-            var myDate = new Date();
-            var strDate = moment(myDate).format('YYYYMMDD');
-            params.dateId = parseInt(strDate);
-            damageCheckDAO.updateDamageCheck(params,function(error,result){
-                if (error) {
-                    logger.error(' updateDamageCheck ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if (result && result.affectedRows > 0) {
-                        logger.info(' updateDamageCheck ' + 'success');
-                        that();
-                    } else {
-                        logger.warn(' updateDamageCheck ' + 'failed');
-                        resUtil.resetFailedRes(res," 质损处理操作失败 ");
-                        return next();
-                    }
-                }
-            })
+    damageCheckDAO.updateDamageCheck(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageCheck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageCheck ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
         }
-    }).seq(function () {
-        params.damageStatus = sysConst.DAMAGE_STATUS.completed;
-        damageDAO.updateDamageStatus(params,function(error,result){
-            if (error) {
-                logger.error(' updateDamageStatus ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' updateDamageStatus ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
-                return next();
-            }
-        })
     })
 }
 

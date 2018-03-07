@@ -13514,6 +13514,23 @@
             "required": true,
             "type": "integer"
 
+          },
+          {
+            "name": "damageCheckId",
+            "in": "query",
+            "description": "damageCheck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheck",
+            "in": "body",
+            "description": "damageCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheck"
+            }
           }
         ],
         "responses": {
@@ -13900,14 +13917,6 @@
             "name": "damageId",
             "in": "query",
             "description": "damage id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "checkButton",
-            "in": "query",
-            "description": "check button",
             "required": true,
             "type": "integer"
 

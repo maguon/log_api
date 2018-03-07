@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var damageDAO = require('../dao/DamageDAO.js');
+var damageCheckDAO = require('../dao/DamageCheckDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -165,15 +166,37 @@ function updateDamage(req,res,next){
 
 function updateDamageStatus(req,res,next){
     var params = req.params;
-    damageDAO.updateDamageStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateDamageStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDamageStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        damageDAO.updateDamageStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDamageStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateDamageStatus ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' updateDamageStatus ' + 'failed');
+                    resUtil.resetFailedRes(res," 质损处理完成失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
+        damageCheckDAO.updateDamageCheck(params,function(error,result){
+            if (error) {
+                logger.error(' updateDamageCheck ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDamageCheck ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
