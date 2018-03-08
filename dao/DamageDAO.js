@@ -107,7 +107,7 @@ function getDamage(params,callback) {
 }
 
 function getDamageBase(params,callback) {
-    var query = " select d.*,c.vin,c.make_name,damage_type,dc.under_user_name, " +
+    var query = " select d.*,c.vin,c.make_name,damage_type,dc.under_user_name,dc.under_cost,dc.company_cost, " +
         " e.short_name as e_short_name,r.short_name as r_short_name from damage_info d " +
         " left join damage_insure_rel dir on d.id = dir.damage_id " +
         " left join damage_insure di on dir.damage_id = di.id " +
