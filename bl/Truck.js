@@ -727,6 +727,55 @@ function updateRepairStatus(req,res,next){
     })
 }
 
+function getTruckFirstCsv(req,res,next){
+    var csvString = "";
+    var header = "货车牌号" + ',' + "品牌" + ',' + "关联挂车号" + ',' + "挂车货位" + ','+ "联系电话" + ','+ "主驾司机"+ ','+ "副驾司机" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    truckDAO.getTruckFirst(params,function(error,rows){
+        if (error) {
+            logger.error(' queryTruckFirst ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.truckNum = rows[i].truck_num;
+                parkObj.brandName = rows[i].brand_name;
+                parkObj.trailNum = rows[i].trail_num;
+                parkObj.trailNumber = rows[i].trail_number;
+                parkObj.truckTel = rows[i].truck_tel;
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.viceDriveName = rows[i].vice_drive_name;
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else if(rows[i].operate_type == 2){
+                    parkObj.operateType = "外协";
+                }else if(rows[i].operate_type == 3){
+                    parkObj.operateType = "供方";
+                }else{
+                    parkObj.operateType = "承包";
+                }
+                parkObj.companyName = rows[i].company_name;
+                if(rows[i].truck_status == 1){
+                    parkObj.truckStatus = "可用";
+                }else{
+                    parkObj.truckStatus = "停用";
+                }
+                csvString = csvString+parkObj.truckNum+","+parkObj.brandName+","+parkObj.trailNum+"," +parkObj.trailNumber+"," +parkObj.truckTel+","
+                    +parkObj.driveName+"," +parkObj.viceDriveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckStatus+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createTruckFirst : createTruckFirst,
@@ -751,5 +800,6 @@ module.exports = {
     updateTruckViceDriveRelUnBind :updateTruckViceDriveRelUnBind,
     updateTruckStatusFirst : updateTruckStatusFirst,
     updateTruckStatusTrailer : updateTruckStatusTrailer,
-    updateRepairStatus : updateRepairStatus
+    updateRepairStatus : updateRepairStatus,
+    getTruckFirstCsv : getTruckFirstCsv
 }
