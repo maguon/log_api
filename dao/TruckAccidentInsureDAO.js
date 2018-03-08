@@ -77,6 +77,7 @@ function getTruckAccidentInsure(params,callback) {
         paramsArray[i++] = params.completedDateEnd +" 23:59:59";
         query = query + " and tai.completed_date <= ? ";
     }
+    query = query + " group by tai.id";
     query = query + " order by tai.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
