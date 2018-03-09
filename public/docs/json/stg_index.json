@@ -13060,6 +13060,14 @@
         ],
         "parameters": [
           {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "damageInsureId",
             "in": "query",
             "description": "damageInsure id",
