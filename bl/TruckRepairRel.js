@@ -182,6 +182,9 @@ function updateTruckRepairRel(req,res,next){
 
 function updateTruckRepairRelBase(req,res,next){
     var params = req.params ;
+    if(params.repairType==2){
+        params.accidentId = null;
+    }
     truckRepairRelDAO.updateTruckRepairRelBase(params,function(error,result){
         if (error) {
             logger.error(' updateTruckRepairRelBase ' + error.message);
