@@ -117,11 +117,26 @@ function updateDamageInsureLoanStatus(params,callback){
     });
 }
 
+function getDamageInsureLoanStatusCount(params,callback) {
+    var query = " select dil.loan_status,count(dil.id) as loan_status_count from damage_insure_loan dil where dil.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.loanStatus){
+        paramsArray[i++] = params.loanStatus;
+        query = query + " and dil.loan_status = ? ";
+    }
+    query = query + " group by dil.loan_status";
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageInsureLoanStatusCount ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageInsureLoan : addDamageInsureLoan,
     getDamageInsureLoan : getDamageInsureLoan,
     updateDamageInsureLoan : updateDamageInsureLoan,
     updateDamageInsureRepayment : updateDamageInsureRepayment,
-    updateDamageInsureLoanStatus : updateDamageInsureLoanStatus
+    updateDamageInsureLoanStatus : updateDamageInsureLoanStatus,
+    getDamageInsureLoanStatusCount : getDamageInsureLoanStatusCount
 }

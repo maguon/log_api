@@ -146,6 +146,20 @@ function updateIndemnityStatus(params,callback){
     });
 }
 
+function getIndemnityStatusCount(params,callback) {
+    var query = " select dci.indemnity_status,count(dci.id) as indemnity_status_count from damage_check_indemnity dci where dci.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.indemnityStatus){
+        paramsArray[i++] = params.indemnityStatus;
+        query = query + " and dci.indemnity_status = ? ";
+    }
+    query = query + " group by dci.indemnity_status";
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getIndemnityStatusCount ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageCheckIndemnity : addDamageCheckIndemnity,
@@ -153,5 +167,6 @@ module.exports ={
     updateDamageCheckIndemnity : updateDamageCheckIndemnity,
     updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage,
     updateIndemnity : updateIndemnity,
-    updateIndemnityStatus : updateIndemnityStatus
+    updateIndemnityStatus : updateIndemnityStatus,
+    getIndemnityStatusCount : getIndemnityStatusCount
 }

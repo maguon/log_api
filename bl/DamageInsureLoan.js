@@ -74,10 +74,25 @@ function updateDamageInsureLoanStatus(req,res,next){
     })
 }
 
+function queryDamageInsureLoanStatusCount(req,res,next){
+    var params = req.params ;
+    damageInsureLoanDAO.getDamageInsureLoanStatusCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageInsureLoanStatusCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageInsureLoanStatusCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     queryDamageInsureLoan : queryDamageInsureLoan,
     updateDamageInsureLoan : updateDamageInsureLoan,
     updateDamageInsureRepayment : updateDamageInsureRepayment,
-    updateDamageInsureLoanStatus : updateDamageInsureLoanStatus
+    updateDamageInsureLoanStatus : updateDamageInsureLoanStatus,
+    queryDamageInsureLoanStatusCount : queryDamageInsureLoanStatusCount
 }

@@ -293,6 +293,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/truckAccidentInsureLoan/:loanId',contentType: 'application/json'} ,truckAccidentInsureLoan.updateTruckAccidentInsureLoan);
     server.put({path:'/api/user/:userId/truckAccidentInsureRepayment/:loanId',contentType: 'application/json'} ,truckAccidentInsureLoan.updateTruckAccidentInsureRepayment);
     server.put({path:'/api/user/:userId/truckAccidentInsureLoan/:loanId/loanStatus/:loanStatus',contentType: 'application/json'} ,truckAccidentInsureLoan.updateTruckAccidentInsureLoanStatus);
+    server.get('/api/truckAccidentInsureLoanStatusCount' ,truckAccidentInsureLoan.queryTruckAccidentInsureLoanStatusCount);
 
     /**
      * Brand Module
@@ -563,6 +564,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/damageCheckIndemnity/:indemnityId/image',contentType: 'application/json'} ,damageCheckIndemnity.updateDamageCheckIndemnityImage);
     server.put({path:'/api/user/:userId/indemnity/:indemnityId',contentType: 'application/json'} ,damageCheckIndemnity.updateIndemnity);
     server.put({path:'/api/user/:userId/indemnity/:indemnityId/indemnityStatus/:indemnityStatus',contentType: 'application/json'} ,damageCheckIndemnity.updateIndemnityStatus);
+    server.get('/api/indemnityStatusCount' ,damageCheckIndemnity.queryIndemnityStatusCount);
 
     /**
      * DamageInsure Module
@@ -589,6 +591,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/damageInsureLoan/:loanId',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureLoan);
     server.put({path:'/api/user/:userId/damageInsureRepayment/:loanId',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureRepayment);
     server.put({path:'/api/user/:userId/damageInsureLoan/:loanId/loanStatus/:loanStatus',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureLoanStatus);
+    server.get('/api/damageInsureLoanStatusCount' ,damageInsureLoan.queryDamageInsureLoanStatusCount);
 
     /**
      * RepairStation Module

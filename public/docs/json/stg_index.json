@@ -5070,6 +5070,42 @@
         }
       }
     },
+    "/truckAccidentInsureLoanStatusCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckAccidentInsureLoanStatus count",
+        "description": "query truckAccidentInsureLoanStatusCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "loanStatus",
+            "in": "query",
+            "description": "loan status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckAccidentInsureLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsureLoan id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckAccidentInsureLoan/{loanId}": {
       "put": {
         "tags": [
@@ -14287,6 +14323,42 @@
         }
       }
     },
+    "/indemnityStatusCount": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  indemnityStatus count",
+        "description": "query indemnityStatusCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "indemnityStatus",
+            "in": "query",
+            "description": "indemnity status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/indemnity"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid indemnity id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageCheckIndemnity": {
       "post": {
         "tags": [
@@ -15312,6 +15384,42 @@
             "name": "size",
             "in": "query",
             "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageInsureLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureLoan id"
+          }
+        }
+      }
+    },
+    "/damageInsureLoanStatusCount": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageInsureLoanStatus count",
+        "description": "query damageInsureLoanStatusCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "loanStatus",
+            "in": "query",
+            "description": "loan status",
             "required": false,
             "type": "integer"
 

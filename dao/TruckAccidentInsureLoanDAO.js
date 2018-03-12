@@ -105,11 +105,26 @@ function updateTruckAccidentInsureLoanStatus(params,callback){
     });
 }
 
+function getTruckAccidentInsureLoanStatusCount(params,callback) {
+    var query = " select tail.loan_status,count(tail.id) as loan_status_count from truck_accident_insure_loan tail where tail.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.loanStatus){
+        paramsArray[i++] = params.loanStatus;
+        query = query + " and tail.loan_status = ? ";
+    }
+    query = query + " group by tail.loan_status";
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckAccidentInsureLoanStatusCount ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckAccidentInsureLoan : addTruckAccidentInsureLoan,
     getTruckAccidentInsureLoan : getTruckAccidentInsureLoan,
     updateTruckAccidentInsureLoan : updateTruckAccidentInsureLoan,
     updateTruckAccidentInsureRepayment : updateTruckAccidentInsureRepayment,
-    updateTruckAccidentInsureLoanStatus : updateTruckAccidentInsureLoanStatus
+    updateTruckAccidentInsureLoanStatus : updateTruckAccidentInsureLoanStatus,
+    getTruckAccidentInsureLoanStatusCount : getTruckAccidentInsureLoanStatusCount
 }
