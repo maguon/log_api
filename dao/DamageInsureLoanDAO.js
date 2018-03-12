@@ -66,6 +66,7 @@ function getDamageInsureLoan(params,callback) {
         paramsArray[i++] = params.loanStatus;
         query = query + " and dil.loan_status = ? ";
     }
+    query = query + " order by dil.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
