@@ -81,6 +81,7 @@ function getDamageCheckIndemnity(params,callback) {
         paramsArray[i++] = params.indemnityDateEnd +" 23:59:59";
         query = query + " and dci.indemnity_date <= ? ";
     }
+    query = query + " order by dci.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
