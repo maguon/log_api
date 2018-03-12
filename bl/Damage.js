@@ -240,7 +240,7 @@ function queryDamageTypeWeekStat(req,res,next){
 function getDamageCsv(req,res,next){
     var csvString = "";
     var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+ "司机"
-        + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型" + ','+ "责任人" + ','+ "处理状态" ;
+        + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "处理状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -271,6 +271,17 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.damageType = "F级";
                 }
+                if(rows[i].damage_link_type == 1){
+                    parkObj.damageLinkType = "短驳移库";
+                }else if(rows[i].damage_link_type == 2){
+                    parkObj.damageLinkType = "公路运输";
+                }else if(rows[i].damage_link_type == 3){
+                    parkObj.damageLinkType = "公司运输";
+                }else if(rows[i].damage_link_type == 4){
+                    parkObj.damageLinkType = "驾驶员漏检";
+                }else{
+                    parkObj.damageLinkType = "交通事故";
+                }
                 parkObj.underUserName = rows[i].under_user_name;
                 if(rows[i].damage_status == 1){
                     parkObj.damageStatus = "待处理";
@@ -281,7 +292,7 @@ function getDamageCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.damageExplain+","
                     +parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","
-                    +parkObj.damageType+","+parkObj.underUserName+","+parkObj.damageStatus+ '\r\n';
+                    +parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.damageStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
