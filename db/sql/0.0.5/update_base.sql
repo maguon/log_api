@@ -256,3 +256,8 @@ CREATE TABLE `damage_insure_loan` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-03-13 更新
+-- ----------------------------
+ALTER TABLE `damage_info` AUTO_INCREMENT =10000
+ALTER TABLE `damage_insure` AUTO_INCREMENT =10000
