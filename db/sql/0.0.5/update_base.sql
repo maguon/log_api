@@ -7,9 +7,9 @@ ALTER TABLE `log_base`.`dp_route_load_task_clean_rel` ADD COLUMN `dp_route_task_
 ALTER TABLE `log_base`.`dp_route_load_task_clean_rel` ADD COLUMN `actual_price` decimal(10,2) UNSIGNED COMMENT '实际费用' AFTER `total_price`;
 
 ALTER TABLE `dp_route_load_task_clean_rel`
-ADD COLUMN `drive_id`  int(10) NOT NULL COMMENT '司机ID' AFTER `dp_route_load_task_id`;
-ADD COLUMN `car_count`  int(10) NULL DEFAULT 0 COMMENT '装车台数' AFTER `actual_price`;
-CHANGE COLUMN `collect_status` `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '领取状态(0-未通过 ,1-未审核,2-已通过)' AFTER `date_id`;
+ADD COLUMN `drive_id`  int(10) NOT NULL COMMENT '司机ID' AFTER `dp_route_load_task_id`,
+ADD COLUMN `car_count`  int(10) NULL DEFAULT 0 COMMENT '装车台数' AFTER `actual_price`,
+CHANGE COLUMN `collect_status` `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '领取状态(0-未通过 ,1-未审核,2-已通过)' AFTER `date_id`,
 ADD COLUMN `clean_date`  datetime NULL COMMENT '领取时间' AFTER `drive_user_id`;
 
 ALTER TABLE `damage_insure_rel`
@@ -19,7 +19,7 @@ ADD UNIQUE INDEX `id` (`id`) ;
 
 ALTER TABLE `truck_repair_rel`
 ADD COLUMN `repair_station_id`  int(10) NULL DEFAULT NULL COMMENT '维修站ID' AFTER `repair_date`,
-ADD COLUMN `repair_type`  tinyint(1) NULL DEFAULT NULL COMMENT '维修类型(1-事故,2-非事故)' AFTER `repair_id`;
+ADD COLUMN `repair_type`  tinyint(1) NULL DEFAULT NULL COMMENT '维修类型(1-事故,2-非事故)' AFTER `repair_id`,
 ADD COLUMN `accident_id`  int(10) NULL COMMENT '事故ID' AFTER `repair_type`;
 
 update car_info set order_date_id = DATE_FORMAT(order_date,'%Y%m%d') where order_date is not null
