@@ -118,7 +118,10 @@ function updateDamageInsureLoanStatus(params,callback){
 }
 
 function getDamageInsureLoanStatusCount(params,callback) {
-    var query = " select dil.loan_status,count(dil.id) as loan_status_count from damage_insure_loan dil where dil.id is not null ";
+    var query = " select dil.loan_status,count(dil.id) as loan_status_count, " +
+        " sum(di.financial_loan) as not_loan_money,sum(dil.loan_money) as not_repayment_money " +
+        " from damage_insure_loan dil " +
+        " left join damage_insure di on dil.damage_insure_id = di.id where dil.id is not null ";
     var paramsArray=[],i=0;
     if(params.loanStatus){
         paramsArray[i++] = params.loanStatus;

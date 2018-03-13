@@ -106,7 +106,10 @@ function updateTruckAccidentInsureLoanStatus(params,callback){
 }
 
 function getTruckAccidentInsureLoanStatusCount(params,callback) {
-    var query = " select tail.loan_status,count(tail.id) as loan_status_count from truck_accident_insure_loan tail where tail.id is not null ";
+    var query = " select tail.loan_status,count(tail.id) as loan_status_count, " +
+        "sum(tai.financial_loan) as not_loan_money,sum(tail.loan_money) as not_repayment_money " +
+        " from truck_accident_insure_loan tail " +
+        " left join truck_accident_insure tai on tail.accident_insure_id = tai.id where tail.id is not null ";
     var paramsArray=[],i=0;
     if(params.loanStatus){
         paramsArray[i++] = params.loanStatus;
