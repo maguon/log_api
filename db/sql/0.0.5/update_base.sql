@@ -209,7 +209,7 @@ ADD COLUMN `insure_user_id`  int(10) NULL DEFAULT NULL COMMENT '经办人ID' AFT
 -- 2018-03-05 更新
 -- ----------------------------
 ALTER TABLE `damage_check`
-ADD COLUMN `indemnity_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '赔款状态1-无需赔款,2-需要赔款)' AFTER `remark`;
+ADD COLUMN `indemnity_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '赔款状态(1-无需赔款,2-需要赔款)' AFTER `remark`;
 
 -- ----------------------------
 -- Table structure for damage_check_indemnity
