@@ -63,6 +63,7 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.refundDateEnd +" 23:59:59";
         query = query + " and dploan.refund_date <= ? ";
     }
+    query = query + ' group by dploan.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

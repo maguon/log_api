@@ -9,11 +9,11 @@ var USER_TYPE  ={
     storage_op : 21, //仓储部操作员
     storage_admin : 21,//仓储部管理员
     dispatch_op : 31, //调度部操作员
-    dispatch_admin : 39,//调度部管理员
+    dispatch_admin : 39, //调度部管理员
     qa_op : 41, //质量部操作员
-    qa_manager : 49//质量部管理员
-    //finance_op : 51, //财务部操作员
-    //finance_admin : 59 //财务部管理员
+    qa_manager : 49, //质量部管理员
+    finance_op : 51, //财务部操作员
+    finance_admin : 59 //财务部管理员
 };
 var RECORD_OP_TYPE  ={
     truckOp : 20,
