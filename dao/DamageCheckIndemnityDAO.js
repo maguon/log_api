@@ -147,7 +147,8 @@ function updateIndemnityStatus(params,callback){
 }
 
 function getIndemnityStatusCount(params,callback) {
-    var query = " select dci.indemnity_status,count(dci.id) as indemnity_status_count from damage_check_indemnity dci where dci.id is not null ";
+    var query = " select dci.indemnity_status,count(dci.id) as indemnity_status_count, " +
+        " sum(dci.plan_money) as indemnity_money from damage_check_indemnity dci where dci.id is not null ";
     var paramsArray=[],i=0;
     if(params.indemnityStatus){
         paramsArray[i++] = params.indemnityStatus;
