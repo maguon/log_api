@@ -19,7 +19,7 @@ ADD UNIQUE INDEX `id` (`id`) ;
 
 ALTER TABLE `truck_repair_rel`
 ADD COLUMN `repair_station_id`  int(10) NULL DEFAULT NULL COMMENT '维修站ID' AFTER `repair_date`,
-ADD COLUMN `repair_type`  tinyint(1) NULL DEFAULT NULL COMMENT '维修类型(1-事故,2-非事故)' AFTER `repair_id`,
+ADD COLUMN `repair_type`  tinyint(1) NULL DEFAULT NULL COMMENT '维修类型(1-事故,2-非事故)' AFTER `repair_station_id`,
 ADD COLUMN `accident_id`  int(10) NULL COMMENT '事故ID' AFTER `repair_type`;
 
 update car_info set order_date_id = DATE_FORMAT(order_date,'%Y%m%d') where order_date is not null
