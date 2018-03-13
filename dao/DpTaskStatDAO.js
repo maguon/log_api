@@ -37,6 +37,7 @@ function getDpTaskStat(params,callback) {
         query = query + " and dpt.task_stat_status = ? ";
     }
     query = query + ' group by dpt.route_start_id,c.city_name,dpt.route_end_id,ce.city_name,dpt.date_id ';
+    query = query + ' order by dpt.date_id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
