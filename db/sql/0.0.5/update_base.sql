@@ -261,3 +261,6 @@ CREATE TABLE `damage_insure_loan` (
 -- ----------------------------
 ALTER TABLE `damage_info` AUTO_INCREMENT =10000;
 ALTER TABLE `damage_insure` AUTO_INCREMENT =10000;
+
+ALTER TABLE `damage_insure`
+CHANGE COLUMN `insure_id` `damage_insure_id`  int(10) NOT NULL COMMENT '保险公司ID' AFTER `id`;
