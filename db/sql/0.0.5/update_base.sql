@@ -259,5 +259,5 @@ CREATE TABLE `damage_insure_loan` (
 -- ----------------------------
 -- 2018-03-13 更新
 -- ----------------------------
-ALTER TABLE `damage_info` AUTO_INCREMENT =10000
-ALTER TABLE `damage_insure` AUTO_INCREMENT =10000
+ALTER TABLE `damage_info` AUTO_INCREMENT =10000;
+ALTER TABLE `damage_insure` AUTO_INCREMENT =10000;
