@@ -264,3 +264,7 @@ ALTER TABLE `damage_insure` AUTO_INCREMENT =10000;
 
 ALTER TABLE `damage_insure`
 CHANGE COLUMN `insure_id` `damage_insure_id`  int(10) NOT NULL COMMENT '保险公司ID' AFTER `id`;
+
+insert into truck_insure_type (id,name ) values ( 1,'交强险' );
+insert into truck_insure_type (id,name ) values ( 2,'商业险' );
+insert into truck_insure_type (id,name ) values ( 3,'货运险' );
