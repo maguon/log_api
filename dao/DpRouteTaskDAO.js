@@ -120,6 +120,7 @@ function getDpRouteTask(params,callback) {
         query = query + " and dprl.load_task_status = ? ";
     }
     query = query + ' group by dpr.id ';
+    query = query + " order by dpr.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
