@@ -268,3 +268,6 @@ CHANGE COLUMN `insure_id` `damage_insure_id`  int(10) NOT NULL COMMENT '保险�
 insert into truck_insure_type (id,name ) values ( 1,'交强险' );
 insert into truck_insure_type (id,name ) values ( 2,'商业险' );
 insert into truck_insure_type (id,name ) values ( 3,'货运险' );
+
+insert into truck_accident_type (id,name ) values ( 1,'一般' );
+insert into truck_accident_type (id,name ) values ( 2,'严重' );
