@@ -271,3 +271,9 @@ insert into truck_insure_type (id,name ) values ( 3,'货运险' );
 
 insert into truck_accident_type (id,name ) values ( 1,'一般' );
 insert into truck_accident_type (id,name ) values ( 2,'严重' );
+
+insert into damage_type (id,name ) values ( 1,'A' );
+insert into damage_type (id,name ) values ( 2,'B' );
+insert into damage_type (id,name ) values ( 3,'C' );
+insert into damage_type (id,name ) values ( 4,'D' );
+insert into damage_type (id,name ) values ( 6,'F' );
