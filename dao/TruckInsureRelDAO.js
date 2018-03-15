@@ -147,6 +147,12 @@ function getTruckInsureMoneyTotal(params,callback) {
         query = query + " and db.y_month <= ? ";
     }
     query = query + ' group by db.y_month,tit.id ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckInsureMoneyTotal ');
         return callback(error,rows);
@@ -177,6 +183,12 @@ function getTruckInsureCountTotal(params,callback) {
         query = query + " and db.y_month <= ? ";
     }
     query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckInsureCountTotal ');
         return callback(error,rows);
