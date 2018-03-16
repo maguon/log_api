@@ -3290,6 +3290,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -3339,6 +3355,22 @@
             "name": "truckType",
             "in": "query",
             "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
             "required": false,
             "type": "integer"
 
@@ -13259,6 +13291,22 @@
             "name": "monthEnd",
             "in": "query",
             "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
             "required": false,
             "type": "integer"
 

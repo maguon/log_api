@@ -117,6 +117,12 @@ function getTruckRepairCountTotal(params,callback) {
         query = query + " and db.y_month <= ? ";
     }
     query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairCountTotal ');
         return callback(error,rows);
@@ -143,6 +149,12 @@ function getTruckRepairMoneyTotal(params,callback) {
         query = query + " and db.y_month <= ? ";
     }
     query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairMoneyTotal ');
         return callback(error,rows);
