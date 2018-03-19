@@ -224,6 +224,7 @@ function createServer() {
     server.get('/api/truckInsureRel.csv', truckInsureRel.getTruckInsureRelCsv);
     server.post({path:'/api/user/:userId/truckInsureRel',contentType: 'application/json'},truckInsureRel.createTruckInsureRel);
     server.put({path:'/api/user/:userId/truckInsureRel/:relId',contentType: 'application/json'} ,truckInsureRel.updateTruckInsureRel);
+    server.del('/api/user/:userId/truckInsureRel/:relId' , truckInsureRel.removeTruckInsureRel);
 
     /**
      * TruckInsure Module

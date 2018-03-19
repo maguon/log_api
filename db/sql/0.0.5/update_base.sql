@@ -277,3 +277,8 @@ insert into damage_type (id,name ) values ( 2,'B' );
 insert into damage_type (id,name ) values ( 3,'C' );
 insert into damage_type (id,name ) values ( 4,'D' );
 insert into damage_type (id,name ) values ( 6,'F' );
+-- ----------------------------
+-- 2018-03-19 更新
+-- ----------------------------
+ALTER TABLE `truck_insure_rel`
+ADD COLUMN `delete_user_id`  int(10) NULL COMMENT '删除人' AFTER `insure_status`;

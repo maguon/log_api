@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var truckInsureRelDAO = require('../dao/TruckInsureRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -102,6 +103,21 @@ function updateTruckInsureRel(req,res,next){
     })
 }
 
+function removeTruckInsureRel(req,res,next){
+    var params = req.params;
+    params.insureStatus = sysConst.TRUCK_INSURE__STATUS.cancel;
+    truckInsureRelDAO.updateTruckInsureStatus(params,function(error,result){
+        if (error) {
+            logger.error(' removeTruckInsureRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeTruckInsureRel ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getTruckInsureRelCsv(req,res,next){
     var csvString = "";
     var header = "保单编号" + ',' + "保险公司" + ',' + "险种" + ','+ "保险金额" + ','+ "货车牌号"+ ','+ "货车类型" + ','+ "经办人" + ','+ "生效日期" + ','+ "终止日期" + ','+ "保险描述";
@@ -158,5 +174,6 @@ module.exports = {
     queryTruckInsureMoneyTotal : queryTruckInsureMoneyTotal,
     queryTruckInsureCountTotal : queryTruckInsureCountTotal,
     updateTruckInsureRel : updateTruckInsureRel,
+    removeTruckInsureRel : removeTruckInsureRel,
     getTruckInsureRelCsv : getTruckInsureRelCsv
 }

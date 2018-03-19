@@ -132,6 +132,11 @@ var DAMAGE_INDEMNITY__STATUS = {  //申请质损赔款状态
     yes : 2 //需要赔款
 };
 
+var TRUCK_INSURE__STATUS = {  //货车保险状态
+    cancel : -1 ,  //取消删除
+    normal : 1 //正常
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -153,5 +158,6 @@ module.exports = {
     ACCIDENT__TYPE : ACCIDENT__TYPE,
     LOAN__STATUS : LOAN__STATUS,
     TASK_LOAN__STATUS : TASK_LOAN__STATUS,
-    DAMAGE_INDEMNITY__STATUS : DAMAGE_INDEMNITY__STATUS
+    DAMAGE_INDEMNITY__STATUS : DAMAGE_INDEMNITY__STATUS,
+    TRUCK_INSURE__STATUS : TRUCK_INSURE__STATUS
 }

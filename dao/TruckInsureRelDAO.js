@@ -28,11 +28,13 @@ function addTruckInsureRel(params,callback){
 }
 
 function getTruckInsureRel(params,callback) {
-    var query = " select r.*,i.insure_name,t.truck_num,t.truck_type,u.real_name as insure_user_name from truck_insure_rel r " +
+    var query = " select r.*,i.insure_name,t.truck_num,t.truck_type,u.real_name as insure_user_name," +
+        " u1.real_name as delete_user_name from truck_insure_rel r " +
         " left join truck_insure i on r.insure_id = i.id " +
         " left join truck_info t on r.truck_id = t.id " +
         " left join user_info u on r.insure_user_id = u.uid " +
-        " where r.id is not null ";
+        " left join user_info u1 on r.delete_user_id = u1.uid " +
+        " where r.insure_status >=0 and r.id is not null ";
     var paramsArray=[],i=0;
     if(params.relId){
         paramsArray[i++] = params.relId;
@@ -214,6 +216,17 @@ function updateTruckInsureRel(params,callback){
     });
 }
 
+function updateTruckInsureStatus(params,callback){
+    var query = " update truck_insure_rel set insure_status = ? , delete_user_id = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureStatus;
+    paramsArray[i++]=params.userId;
+    paramsArray[i]=params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckInsureStatus ');
+        return callback(error,rows);
+    });
+}
 
 
 module.exports ={
@@ -222,5 +235,6 @@ module.exports ={
     getTruckInsureTypeTotal : getTruckInsureTypeTotal,
     getTruckInsureMoneyTotal : getTruckInsureMoneyTotal,
     getTruckInsureCountTotal : getTruckInsureCountTotal,
-    updateTruckInsureRel : updateTruckInsureRel
+    updateTruckInsureRel : updateTruckInsureRel,
+    updateTruckInsureStatus : updateTruckInsureStatus
 }

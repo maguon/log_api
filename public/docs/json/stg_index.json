@@ -2943,6 +2943,42 @@
             "description": "Invalid token value or invalid truckInsureRel id"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "Deletes a truckInsureRel",
+        "description": "",
+        "operationId": "deleteTruckInsureRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
       }
     },
     "/truckInsure": {
