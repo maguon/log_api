@@ -282,3 +282,5 @@ insert into damage_type (id,name ) values ( 6,'F' );
 -- ----------------------------
 ALTER TABLE `truck_insure_rel`
 ADD COLUMN `delete_user_id`  int(10) NULL COMMENT '删除人' AFTER `insure_status`;
+ALTER TABLE `truck_insure_rel`
+MODIFY COLUMN `delete_user_id`  int(10) NULL DEFAULT 0 COMMENT '删除人' AFTER `insure_status`;
