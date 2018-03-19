@@ -16,38 +16,19 @@ var logger = serverLogger.createLogger('TruckInsureRel.js');
 
 function createTruckInsureRel(req,res,next){
     var params = req.params ;
-    Seq().seq(function(){
-        var that = this;
-        truckInsureRelDAO.getTruckInsureRel({insureNum:params.insureNum},function(error,rows){
-            if (error) {
-                logger.error(' getTruckInsureRel ' + error.message);
-                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                if(rows && rows.length>0){
-                    logger.warn(' getTruckInsureRel ' +params.insureNum+ sysMsg.CUST_CREATE_EXISTING);
-                    resUtil.resetFailedRes(res,"保单编号已经存在");
-                    return next();
-                }else{
-                    that();
-                }
-            }
-        })
-    }).seq(function(){
-        var myDate = new Date();
-        var strDate = moment(myDate).format('YYYYMMDD');
-        params.dateId = parseInt(strDate);
-        params.insureDate = myDate;
-        truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
-            if (error) {
-                logger.error(' createTruckInsureRel ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' createTruckInsureRel ' + 'success');
-                resUtil.resetCreateRes(res,result,null);
-                return next();
-            }
-        })
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
+    params.insureDate = myDate;
+    truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
+        if (error) {
+            logger.error(' createTruckInsureRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createTruckInsureRel ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
     })
 }
 
