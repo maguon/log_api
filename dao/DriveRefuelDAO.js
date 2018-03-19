@@ -94,7 +94,7 @@ function getRefuelVolumeMoneyTotal(params,callback) {
     var query = " select sum(dr.refuel_volume) as refuel_volume,sum(dr.refuel_money) as refuel_money " +
         " from drive_refuel dr " +
         " left join drive_info d on dr.drive_id = d.id " +
-        " left join truck_info t on dr.truck_id = t.id "
+        " left join truck_info t on dr.truck_id = t.id " +
         " left join user_info u on dr.check_user_id = u.uid where dr.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveRefuelId){
