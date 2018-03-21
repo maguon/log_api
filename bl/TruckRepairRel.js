@@ -17,6 +17,7 @@ var logger = serverLogger.createLogger('TruckRepairRel.js');
 
 function createTruckRepairRel(req,res,next){
     var params = req.params ;
+    var truckRepairRelId = 0;
     Seq().seq(function(){
         var that = this;
         truckDAO.getTruckBase({truckId:params.truckId},function(error,rows){
@@ -47,6 +48,7 @@ function createTruckRepairRel(req,res,next){
             } else {
                 if(result&&result.insertId>0){
                     logger.info(' createTruckRepairRel ' + 'success');
+                    truckRepairRelId = result.insertId;
                     that();
                 }else{
                     logger.warn(' createTruckRepairRel ' + 'failed');
@@ -62,7 +64,7 @@ function createTruckRepairRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateRepairStatus ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
+                resUtil.resetQueryRes(res,{truckRepairRelId:truckRepairRelId},null);
                 return next();
             }
         })
