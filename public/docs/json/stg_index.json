@@ -12806,6 +12806,46 @@
 
           },
           {
+            "name": "applyDateStart",
+            "in": "query",
+            "description": "applyDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyDateEnd",
+            "in": "query",
+            "description": "applyDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyPlanMoneyStart",
+            "in": "query",
+            "description": "applyPlanMoney start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyPlanMoneyEnd",
+            "in": "query",
+            "description": "applyPlanMoney end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyUserId",
+            "in": "query",
+            "description": "applyUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "grantDateStart",
             "in": "query",
             "description": "grantDate start",
@@ -12817,22 +12857,6 @@
             "name": "grantDateEnd",
             "in": "query",
             "description": "grantDate end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "refundDateStart",
-            "in": "query",
-            "description": "refundDate start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "refundDateEnd",
-            "in": "query",
-            "description": "refundDate end",
             "required": false,
             "type": "string"
 

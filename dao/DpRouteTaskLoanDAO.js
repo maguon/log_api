@@ -28,16 +28,14 @@ function addDpRouteTaskLoan(params,callback){
 }
 
 function getDpRouteTaskLoan(params,callback) {
-    var query = " select dploan.*,u1.real_name as appl_user_name,u2.real_name as grant_user_name, " +
-        " dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,dpr.route_start_id,c1.city_name as route_start_name, " +
-        " dpr.route_end_id,c2.city_name as route_end_name,dpr.distance,dpr.task_plan_date from dp_route_task_loan dploan " +
-        " left join dp_route_task dpr on dploan.dp_route_task_id = dpr.id " +
-        " left join drive_info d on dpr.drive_id = d.id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
-        " left join city_info c1 on dpr.route_start_id = c1.id " +
-        " left join city_info c2 on dpr.route_end_id = c2.id " +
+    var query = " select dploan.* ,d.drive_name,t.id as truck_id,t.truck_num,u1.real_name as appl_user_name, " +
+        " u2.real_name as grant_user_name,u3.real_name as refund_user_name from dp_route_task_loan dploan " +
+        " left join drive_info d on dploan.drive_id = d.id " +
+        " left join truck_info t on d.id = t.drive_id " +
         " left join user_info u1 on dploan.apply_user_id = u1.uid " +
         " left join user_info u2 on dploan.grant_user_id = u2.uid " +
+        " left join user_info u3 on dploan.refund_user_id = u3.uid " +
+        " left join dp_route_task_loan_rel dprel on dploan.id = dprel.dp_route_task_loan_id " +
         " where dploan.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskLoanId){
@@ -46,11 +44,11 @@ function getDpRouteTaskLoan(params,callback) {
     }
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
-        query = query + " and dploan.dp_route_task_id = ? ";
+        query = query + " and dprel.dp_route_task_id = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and dpr.drive_id = ? ";
+        query = query + " and dploan.drive_id = ? ";
     }
     if(params.driveName){
         paramsArray[i++] = params.driveName;
@@ -58,7 +56,7 @@ function getDpRouteTaskLoan(params,callback) {
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and dpr.truck_id = ? ";
+        query = query + " and t.id = ? ";
     }
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
@@ -68,6 +66,26 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.taskLoanStatus;
         query = query + " and dploan.task_loan_status = ? ";
     }
+    if(params.applyDateStart){
+        paramsArray[i++] = params.applyDateStart +" 00:00:00";
+        query = query + " and dploan.apply_date >= ? ";
+    }
+    if(params.applyDateEnd){
+        paramsArray[i++] = params.applyDateEnd +" 23:59:59";
+        query = query + " and dploan.apply_date <= ? ";
+    }
+    if(params.applyPlanMoneyStart){
+        paramsArray[i++] = params.applyPlanMoneyStart;
+        query = query + " and dploan.apply_plan_money >= ? ";
+    }
+    if(params.applyPlanMoneyEnd){
+        paramsArray[i++] = params.applyPlanMoneyEnd;
+        query = query + " and dploan.apply_plan_money <= ? ";
+    }
+    if(params.applyUserId){
+        paramsArray[i++] = params.applyUserId;
+        query = query + " and dploan.apply_user_id = ? ";
+    }
     if(params.grantDateStart){
         paramsArray[i++] = params.grantDateStart +" 00:00:00";
         query = query + " and dploan.grant_date >= ? ";
@@ -76,15 +94,7 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.grantDateEnd +" 23:59:59";
         query = query + " and dploan.grant_date <= ? ";
     }
-    if(params.refundDateStart){
-        paramsArray[i++] = params.refundDateStart +" 00:00:00";
-        query = query + " and dploan.refund_date >= ? ";
-    }
-    if(params.refundDateEnd){
-        paramsArray[i++] = params.refundDateEnd +" 23:59:59";
-        query = query + " and dploan.refund_date <= ? ";
-    }
-    query = query + ' group by dploan.id ';
+    query = query + ' group by dploan.id,t.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
