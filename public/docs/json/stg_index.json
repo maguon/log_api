@@ -12846,6 +12846,14 @@
 
           },
           {
+            "name": "applyUserName",
+            "in": "query",
+            "description": "applyUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "grantDateStart",
             "in": "query",
             "description": "grantDate start",

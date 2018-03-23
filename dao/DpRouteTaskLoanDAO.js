@@ -86,6 +86,10 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.applyUserId;
         query = query + " and dploan.apply_user_id = ? ";
     }
+    if(params.applyUserName){
+        paramsArray[i++] = params.applyUserName;
+        query = query + " and u1.real_name = ? ";
+    }
     if(params.grantDateStart){
         paramsArray[i++] = params.grantDateStart +" 00:00:00";
         query = query + " and dploan.grant_date >= ? ";
