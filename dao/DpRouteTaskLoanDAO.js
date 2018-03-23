@@ -6,6 +6,27 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteTaskLoanDAO.js');
 
+function addDpRouteTaskLoan(params,callback){
+    var query = " insert into dp_route_task_loan(drive_id,apply_passing_cost,apply_fuel_cost,apply_protect_cost,apply_penalty_cost," +
+        "apply_parking_cost,apply_taxi_cost,apply_explain,apply_plan_money,apply_user_id,apply_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.applyPassingCost;
+    paramsArray[i++]=params.applyFuelCost;
+    paramsArray[i++]=params.applyProtectCost;
+    paramsArray[i++]=params.applyPenaltyCost;
+    paramsArray[i++]=params.applyParkingCost;
+    paramsArray[i++]=params.applyTaxiCost;
+    paramsArray[i++]=params.applyExplain;
+    paramsArray[i++]=params.applyPlanMoney;
+    paramsArray[i++]=params.userId;
+    paramsArray[i]=params.applyDate;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDpRouteTaskLoan ');
+        return callback(error,rows);
+    });
+}
+
 function getDpRouteTaskLoan(params,callback) {
     var query = " select dploan.*,u1.real_name as appl_user_name,u2.real_name as grant_user_name, " +
         " dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,dpr.route_start_id,c1.city_name as route_start_name, " +
@@ -125,6 +146,7 @@ function updateDpRouteTaskLoanStatus(params,callback){
 
 
 module.exports ={
+    addDpRouteTaskLoan : addDpRouteTaskLoan,
     getDpRouteTaskLoan : getDpRouteTaskLoan,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,

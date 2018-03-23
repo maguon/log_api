@@ -12870,6 +12870,51 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTaskLoan": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteTaskLoan",
+        "description": "user create dpRouteTaskLoan",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanApply",
+            "in": "body",
+            "description": "dpRouteTaskLoanApply info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskLoanApply"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTaskLoanGrant/{dpRouteTaskLoanId}": {
       "put": {
         "tags": [
@@ -13024,6 +13069,52 @@
           },
           "400": {
             "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskLoan/{dpRouteTaskLoanId}/dpRouteTask/{dpRouteTaskId}": {
+      "delete": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "Deletes a dpRouteTaskLoanRel",
+        "description": "",
+        "operationId": "deleteDpRouteTaskLoanRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "path",
+            "description": "dpRouteTaskLoan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
           }
         }
       }
@@ -17272,6 +17363,45 @@
       },
       "xml": {
         "name": "loadTaskCleanRel"
+      }
+    },
+    "dpRouteTaskLoanApply": {
+      "type": "object",
+      "properties": {
+
+        "driveId": {
+          "type": "integer"
+        },
+        "applyPassingCost": {
+          "type": "integer"
+        },
+        "applyFuelCost": {
+          "type": "integer"
+        },
+        "applyProtectCost": {
+          "type": "integer"
+        },
+        "applyPenaltyCost": {
+          "type": "integer"
+        },
+        "applyParkingCost": {
+          "type": "integer"
+        },
+        "applyTaxiCost": {
+          "type": "integer"
+        },
+        "applyExplain": {
+          "type": "string"
+        },
+        "applyPlanMoney": {
+          "type": "integer"
+        },
+        "dpRouteTaskIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTaskLoanApply"
       }
     },
     "dpRouteTaskLoanGrant": {

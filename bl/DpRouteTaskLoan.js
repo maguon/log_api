@@ -8,11 +8,69 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var dpRouteTaskLoanDAO = require('../dao/DpRouteTaskLoanDAO.js');
+var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteTaskLoan.js');
+
+function createDpRouteTaskLoan(req,res,next){
+    var params = req.params ;
+    var dpRouteTaskLoanId = 0;
+    Seq().seq(function(){
+        var that = this;
+        var myDate = new Date();
+        params.applyDate = myDate;
+        dpRouteTaskLoanDAO.addDpRouteTaskLoan(params,function(error,result){
+            if (error) {
+                logger.error(' createDpRouteTaskLoan ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteTaskLoan ' + 'success');
+                    dpRouteTaskLoanId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create dpRouteTaskLoan failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        var dpRouteTaskIds = params.dpRouteTaskIds;
+        var rowArray = [] ;
+        rowArray.length= dpRouteTaskIds.length;
+        Seq(rowArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                dpRouteTaskLoanId : dpRouteTaskLoanId,
+                dpRouteTaskId : dpRouteTaskIds[i],
+                row : i+1,
+            }
+            dpRouteTaskLoanRelDAO.addDpRouteTaskLoanRel(subParams,function(err,result){
+                if (err) {
+                    logger.error(' createTruckAccidentInsureRel ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' createTruckAccidentInsureRel ' + 'success');
+                    }else{
+                        logger.warn(' createTruckAccidentInsureRel ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+        }).seq(function(){
+            that();
+        })
+    }).seq(function(){
+        logger.info(' createDpRouteTaskLoan ' + 'success');
+        resUtil.resetCreateRes(res,{insertId:dpRouteTaskLoanId},null);
+        return next();
+    })
+}
 
 function queryDpRouteTaskLoan(req,res,next){
     var params = req.params ;
@@ -76,6 +134,7 @@ function updateDpRouteTaskLoanStatus (req,res,next){
 
 
 module.exports = {
+    createDpRouteTaskLoan : createDpRouteTaskLoan,
     queryDpRouteTaskLoan : queryDpRouteTaskLoan,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
