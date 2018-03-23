@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var dpRouteTaskLoanDAO = require('../dao/DpRouteTaskLoanDAO.js');
 var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -132,11 +133,45 @@ function updateDpRouteTaskLoanStatus (req,res,next){
     })
 }
 
+function removeDpRouteTaskLoan(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        dpRouteTaskLoanDAO.getDpRouteTaskLoan(params,function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteTaskLoan ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0&&rows[0].task_loan_status == sysConst.TASK_LOAN__STATUS.not_grant){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteTaskLoan ' + 'failed');
+                    resUtil.resetFailedRes(res," 不是未发放状态，不能完成删除操作。");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.taskLoanStatus = sysConst.TASK_LOAN__STATUS.cancel;
+        dpRouteTaskLoanDAO.updateDpRouteTaskLoanStatus(params,function(error,result){
+            if (error) {
+                logger.error(' removeDpRouteTaskLoan ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' removeDpRouteTaskLoan ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createDpRouteTaskLoan : createDpRouteTaskLoan,
     queryDpRouteTaskLoan : queryDpRouteTaskLoan,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
-    updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus
+    updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
+    removeDpRouteTaskLoan : removeDpRouteTaskLoan
 }
