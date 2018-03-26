@@ -106,6 +106,8 @@ function updateDpRouteTaskLoanGrant (req,res,next){
 function updateDpRouteTaskLoanRepayment (req,res,next){
     var params = req.params;
     var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
     params.refundDate = myDate;
     dpRouteTaskLoanDAO.updateDpRouteTaskLoanRepayment(params,function(error,result){
         if (error) {
@@ -166,6 +168,20 @@ function removeDpRouteTaskLoan(req,res,next){
     })
 }
 
+function queryDpRouteTaskLoanMonthStat(req,res,next){
+    var params = req.params ;
+    dpRouteTaskLoanDAO.getDpRouteTaskLoanMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskLoanMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskLoanMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTaskLoan : createDpRouteTaskLoan,
@@ -173,5 +189,6 @@ module.exports = {
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
-    removeDpRouteTaskLoan : removeDpRouteTaskLoan
+    removeDpRouteTaskLoan : removeDpRouteTaskLoan,
+    queryDpRouteTaskLoanMonthStat : queryDpRouteTaskLoanMonthStat
 }

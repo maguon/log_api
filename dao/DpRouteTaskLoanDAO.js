@@ -143,7 +143,7 @@ function updateDpRouteTaskLoanGrant(params,callback){
 function updateDpRouteTaskLoanRepayment(params,callback){
     var query = " update dp_route_task_loan set refund_passing_cost = ? , refund_fuel_cost = ? , refund_protect_cost = ? , " +
         "refund_penalty_cost = ? , refund_parking_cost = ? , refund_taxi_cost = ? , repayment_money = ? , refund_actual_money = ? , " +
-        " profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ?  where id = ? ";
+        " profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ? , date_id = ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.refundPassingCost;
     paramsArray[i++] = params.refundFuelCost;
@@ -157,6 +157,7 @@ function updateDpRouteTaskLoanRepayment(params,callback){
     paramsArray[i++] = params.refundExplain;
     paramsArray[i++] = params.userId;
     paramsArray[i++] = params.refundDate;
+    paramsArray[i++] = params.dateId;
     paramsArray[i] = params.dpRouteTaskLoanId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskLoanRepayment ');
@@ -175,11 +176,45 @@ function updateDpRouteTaskLoanStatus(params,callback){
     });
 }
 
+function getDpRouteTaskLoanMonthStat(params,callback){
+    var query = " select db.y_month,sum(dploan.apply_plan_money) as apply_plan_money, " +
+        " sum(dploan.grant_actual_money) as grant_actual_money, " +
+        " sum(dploan.refund_actual_money) as refund_actual_money, " +
+        " sum(dploan.repayment_money) as repayment_money, " +
+        " sum(dploan.profit) as profit from date_base db " +
+        " left join dp_route_task_loan dploan on db.id = dploan.date_id where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
+    }
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskLoanMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTaskLoan : addDpRouteTaskLoan,
     getDpRouteTaskLoan : getDpRouteTaskLoan,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
-    updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus
+    updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
+    getDpRouteTaskLoanMonthStat : getDpRouteTaskLoanMonthStat
 }
