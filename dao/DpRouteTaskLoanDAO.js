@@ -107,6 +107,7 @@ function getDpRouteTaskLoan(params,callback) {
         query = query + " and dploan.refund_date <= ? ";
     }
     query = query + ' group by dploan.id,t.id ';
+    query = query + " order by dploan.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
