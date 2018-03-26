@@ -48,11 +48,9 @@ CREATE TABLE `dp_route_task_loan` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_route_task_loan_rel`;
 CREATE TABLE `dp_route_task_loan_rel` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dp_route_task_loan_id` int(10) NOT NULL COMMENT '出车款ID',
   `dp_route_task_id` int(10) NOT NULL COMMENT '调度编号ID',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`dp_route_task_loan_id`,`dp_route_task_id`),
-  UNIQUE KEY `id` (`id`)
+  PRIMARY KEY (`dp_route_task_loan_id`,`dp_route_task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

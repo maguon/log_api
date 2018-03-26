@@ -28,8 +28,19 @@ function deleteDpRouteTaskLoanRel(params,callback){
     });
 }
 
+function deleteDpRouteTaskLoanRelAll(params,callback){
+    var query = " delete from dp_route_task_loan_rel where dp_route_task_loan_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.dpRouteTaskLoanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteDpRouteTaskLoanRelAll ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTaskLoanRel : addDpRouteTaskLoanRel,
-    deleteDpRouteTaskLoanRel : deleteDpRouteTaskLoanRel
+    deleteDpRouteTaskLoanRel : deleteDpRouteTaskLoanRel,
+    deleteDpRouteTaskLoanRelAll : deleteDpRouteTaskLoanRelAll
 }

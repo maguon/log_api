@@ -154,13 +154,29 @@ function removeDpRouteTaskLoan(req,res,next){
             }
         })
     }).seq(function () {
-        params.taskLoanStatus = sysConst.TASK_LOAN__STATUS.cancel;
-        dpRouteTaskLoanDAO.updateDpRouteTaskLoanStatus(params,function(error,result){
+        var that = this;
+        dpRouteTaskLoanDAO.deleteDpRouteTaskLoan(params,function(error,result){
             if (error) {
                 logger.error(' removeDpRouteTaskLoan ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' removeDpRouteTaskLoan ' + 'success');
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeDpRouteTaskLoan ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' removeDpRouteTaskLoan ' + 'failed');
+                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        dpRouteTaskLoanRelDAO.deleteDpRouteTaskLoanRelAll(params,function(error,result){
+            if (error) {
+                logger.error(' removeDpRouteTaskLoanRelAll ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' removeDpRouteTaskLoanRelAll ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
