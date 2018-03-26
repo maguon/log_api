@@ -535,6 +535,7 @@ function createServer() {
     /**
      * DpRouteTaskLoanRel Module
      */
+    server.post({path:'/api/user/:userId/dpRouteTaskLoanRel',contentType: 'application/json'},dpRouteTaskLoanRel.createDpRouteTaskLoanRel);
     server.del('/api/user/:userId/dpRouteTaskLoan/:dpRouteTaskLoanId/dpRouteTask/:dpRouteTaskId' , dpRouteTaskLoanRel.removeDpRouteTaskLoanRel);
 
     /**

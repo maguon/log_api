@@ -13,6 +13,19 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteTaskLoanRel.js');
 
+function createDpRouteTaskLoanRel(req,res,next){
+    var params = req.params ;
+    dpRouteTaskLoanRelDAO.addDpRouteTaskLoanRel(params,function(error,result){
+        if (error) {
+            logger.error(' createDpRouteTaskLoanRel( ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createDpRouteTaskLoanRel ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
 
 function removeDpRouteTaskLoanRel(req,res,next){
     var params = req.params;
@@ -30,5 +43,6 @@ function removeDpRouteTaskLoanRel(req,res,next){
 
 
 module.exports = {
+    createDpRouteTaskLoanRel : createDpRouteTaskLoanRel,
     removeDpRouteTaskLoanRel : removeDpRouteTaskLoanRel
 }

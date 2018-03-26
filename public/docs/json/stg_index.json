@@ -13227,6 +13227,51 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTaskLoanRel": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteTaskLoanRel",
+        "description": "user create dpRouteTaskLoanRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanRel",
+            "in": "body",
+            "description": "dpRouteTaskLoanRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskLoanRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoanRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTaskLoan/{dpRouteTaskLoanId}/dpRouteTask/{dpRouteTaskId}": {
       "delete": {
         "tags": [
@@ -17628,6 +17673,21 @@
       },
       "xml": {
         "name": "dpRouteTaskLoanRepayment"
+      }
+    },
+    "dpRouteTaskLoanRel": {
+      "type": "object",
+      "properties": {
+
+        "dpRouteTaskLoanId": {
+          "type": "integer"
+        },
+        "dpRouteTaskId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTaskLoanRel"
       }
     },
     "damage": {
