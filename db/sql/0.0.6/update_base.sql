@@ -35,9 +35,10 @@ CREATE TABLE `dp_route_task_loan` (
   `refund_actual_money` decimal(10,2) DEFAULT '0.00' COMMENT '报销实际金额',
   `refund_user_id` int(10) DEFAULT '0' COMMENT '报销人ID',
   `refund_date` datetime DEFAULT NULL COMMENT '报销时间',
+  `date_id` int(4) DEFAULT NULL COMMENT '报销统计时间',
   `repayment_money` decimal(10,2) DEFAULT '0.00' COMMENT '还款金额',
   `profit` decimal(10,2) DEFAULT '0.00' COMMENT '盈亏',
-  `task_loan_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '借款状态(0-取消,1-未发放,2-已发放,3-已报销)',
+  `task_loan_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '发放状态(0-取消,1-未发放,2-已发放,3-已报销)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
