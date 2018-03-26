@@ -13227,6 +13227,42 @@
         }
       }
     },
+    "/dpRouteTaskLoanRel": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskLoanRel list",
+        "description": "query dpRouteTaskLoanRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "query",
+            "description": "dpRouteTaskLoan id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskLoanRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoanRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTaskLoanRel": {
       "post": {
         "tags": [

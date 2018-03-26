@@ -27,6 +27,20 @@ function createDpRouteTaskLoanRel(req,res,next){
     })
 }
 
+function queryDpRouteTaskLoanRel(req,res,next){
+    var params = req.params ;
+    dpRouteTaskLoanRelDAO.getDpRouteTaskLoanRel(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskLoanRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskLoanRel ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function removeDpRouteTaskLoanRel(req,res,next){
     var params = req.params;
     dpRouteTaskLoanRelDAO.deleteDpRouteTaskLoanRel(params,function(error,result){
@@ -44,5 +58,6 @@ function removeDpRouteTaskLoanRel(req,res,next){
 
 module.exports = {
     createDpRouteTaskLoanRel : createDpRouteTaskLoanRel,
+    queryDpRouteTaskLoanRel : queryDpRouteTaskLoanRel,
     removeDpRouteTaskLoanRel : removeDpRouteTaskLoanRel
 }
