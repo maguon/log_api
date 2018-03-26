@@ -30,11 +30,6 @@ function getDpRouteTaskLoanRel(params,callback) {
         paramsArray[i++] = params.dpRouteTaskLoanId;
         query = query + " and dprel.dp_route_task_loan_id = ? ";
     }
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
-    }
     query = query + ' group by dprel.dp_route_task_id,dprel.dp_route_task_loan_id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteTaskLoanRel ');
