@@ -12870,6 +12870,22 @@
 
           },
           {
+            "name": "refundDateStart",
+            "in": "query",
+            "description": "refundDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "refundDateEnd",
+            "in": "query",
+            "description": "refundDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -17478,32 +17494,29 @@
       "type": "object",
       "properties": {
 
-        "passingCost": {
+        "grantPassingCost": {
           "type": "integer"
         },
-        "fuelCost": {
+        "grantFuelCost": {
           "type": "integer"
         },
-        "protectCost": {
+        "grantProtectCost": {
           "type": "integer"
         },
-        "penaltyCost": {
+        "grantPenaltyCost": {
           "type": "integer"
         },
-        "parkingCost": {
+        "grantParkingCost": {
           "type": "integer"
         },
-        "taxiCost": {
-          "type": "integer"
-        },
-        "planMoney": {
-          "type": "integer"
-        },
-        "actualMoney": {
+        "grantTaxiCost": {
           "type": "integer"
         },
         "grantExplain": {
           "type": "string"
+        },
+        "grantActualMoney": {
+          "type": "integer"
         }
       },
       "xml": {
@@ -17514,10 +17527,31 @@
       "type": "object",
       "properties": {
 
+        "refundPassingCost": {
+          "type": "integer"
+        },
+        "refundFuelCost": {
+          "type": "integer"
+        },
+        "refundProtectCost": {
+          "type": "integer"
+        },
+        "refundPenaltyCost": {
+          "type": "integer"
+        },
+        "refundParkingCost": {
+          "type": "integer"
+        },
+        "refundTaxiCost": {
+          "type": "integer"
+        },
         "repaymentMoney": {
           "type": "integer"
         },
-        "refundMoney": {
+        "refundActualMoney": {
+          "type": "integer"
+        },
+        "profit": {
           "type": "integer"
         },
         "refundExplain": {

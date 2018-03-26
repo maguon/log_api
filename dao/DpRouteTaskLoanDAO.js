@@ -98,6 +98,14 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.grantDateEnd +" 23:59:59";
         query = query + " and dploan.grant_date <= ? ";
     }
+    if(params.refundDateStart){
+        paramsArray[i++] = params.refundDateStart +" 00:00:00";
+        query = query + " and dploan.refund_date >= ? ";
+    }
+    if(params.refundDateEnd){
+        paramsArray[i++] = params.refundDateEnd +" 23:59:59";
+        query = query + " and dploan.refund_date <= ? ";
+    }
     query = query + ' group by dploan.id,t.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -111,20 +119,19 @@ function getDpRouteTaskLoan(params,callback) {
 }
 
 function updateDpRouteTaskLoanGrant(params,callback){
-    var query = " update dp_route_task_loan set passing_cost = ? , fuel_cost = ? , protect_cost = ? , penalty_cost = ? , parking_cost = ? , taxi_cost = ? , " +
-        " plan_money = ? , actual_money = ? , grant_user_id = ? , grant_date = ? , grant_explain = ? where id = ? ";
+    var query = " update dp_route_task_loan set grant_passing_cost = ? , grant_fuel_cost = ? , grant_protect_cost = ? , grant_penalty_cost = ? , " +
+        " grant_parking_cost = ? , grant_taxi_cost = ? , grant_explain = ? , grant_actual_money = ? , grant_user_id = ? , grant_date = ? where id = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.passingCost;
-    paramsArray[i++] = params.fuelCost;
-    paramsArray[i++] = params.protectCost;
-    paramsArray[i++] = params.penaltyCost;
-    paramsArray[i++] = params.parkingCost;
-    paramsArray[i++] = params.taxiCost;
-    paramsArray[i++] = params.planMoney;
-    paramsArray[i++] = params.actualMoney;
+    paramsArray[i++] = params.grantPassingCost;
+    paramsArray[i++] = params.grantFuelCost;
+    paramsArray[i++] = params.grantProtectCost;
+    paramsArray[i++] = params.grantPenaltyCost;
+    paramsArray[i++] = params.grantParkingCost;
+    paramsArray[i++] = params.grantTaxiCost;
+    paramsArray[i++] = params.grantExplain;
+    paramsArray[i++] = params.grantActualMoney;
     paramsArray[i++] = params.userId;
     paramsArray[i++] = params.grantDate;
-    paramsArray[i++] = params.grantExplain;
     paramsArray[i] = params.dpRouteTaskLoanId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskLoanGrant ');
@@ -133,13 +140,22 @@ function updateDpRouteTaskLoanGrant(params,callback){
 }
 
 function updateDpRouteTaskLoanRepayment(params,callback){
-    var query = " update dp_route_task_loan set repayment_money = ? , refund_money = ? , refund_user_id = ? , refund_date = ? , refund_explain = ? where id = ? ";
+    var query = " update dp_route_task_loan set refund_passing_cost = ? , refund_fuel_cost = ? , refund_protect_cost = ? , " +
+        "refund_penalty_cost = ? , refund_parking_cost = ? , refund_taxi_cost = ? , repayment_money = ? , refund_actual_money = ? , " +
+        " profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ?  where id = ? ";
     var paramsArray=[],i=0;
+    paramsArray[i++] = params.refundPassingCost;
+    paramsArray[i++] = params.refundFuelCost;
+    paramsArray[i++] = params.refundProtectCost;
+    paramsArray[i++] = params.refundPenaltyCost;
+    paramsArray[i++] = params.refundParkingCost;
+    paramsArray[i++] = params.refundTaxiCost;
     paramsArray[i++] = params.repaymentMoney;
-    paramsArray[i++] = params.refundMoney;
+    paramsArray[i++] = params.refundActualMoney;
+    paramsArray[i++] = params.profit;
+    paramsArray[i++] = params.refundExplain;
     paramsArray[i++] = params.userId;
     paramsArray[i++] = params.refundDate;
-    paramsArray[i++] = params.refundExplain;
     paramsArray[i] = params.dpRouteTaskLoanId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskLoanRepayment ');
