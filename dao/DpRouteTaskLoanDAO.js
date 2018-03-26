@@ -36,7 +36,7 @@ function getDpRouteTaskLoan(params,callback) {
         " left join user_info u2 on dploan.grant_user_id = u2.uid " +
         " left join user_info u3 on dploan.refund_user_id = u3.uid " +
         " left join dp_route_task_loan_rel dprel on dploan.id = dprel.dp_route_task_loan_id " +
-        " where dploan.id is not null ";
+        " where dploan.task_loan_status >0 and dploan.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskLoanId){
         paramsArray[i++] = params.dpRouteTaskLoanId;
