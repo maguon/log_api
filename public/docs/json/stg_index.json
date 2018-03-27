@@ -13031,6 +13031,59 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTaskLoanApply/{dpRouteTaskLoanId}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTaskLoanApply",
+        "description": "update dpRouteTaskLoanApply",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "path",
+            "description": "dpRouteTaskLoan id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanApply",
+            "in": "body",
+            "description": "dpRouteTaskLoanApply info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskLoanApply"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTaskLoanGrant/{dpRouteTaskLoanId}": {
       "put": {
         "tags": [
@@ -13242,6 +13295,102 @@
             "name": "dpRouteTaskLoanId",
             "in": "query",
             "description": "dpRouteTaskLoan id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyDateStart",
+            "in": "query",
+            "description": "applyDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyDateEnd",
+            "in": "query",
+            "description": "applyDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyUserName",
+            "in": "query",
+            "description": "applyUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "grantDateStart",
+            "in": "query",
+            "description": "grantDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateEnd",
+            "in": "query",
+            "description": "grantDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "refundDateStart",
+            "in": "query",
+            "description": "refundDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "refundDateEnd",
+            "in": "query",
+            "description": "refundDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskLoanStatus",
+            "in": "query",
+            "description": "taskLoan status",
             "required": false,
             "type": "integer"
 

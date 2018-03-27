@@ -87,6 +87,22 @@ function queryDpRouteTaskLoan(req,res,next){
     })
 }
 
+function updateDpRouteTaskLoanApply (req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    params.applyDate = myDate;
+    dpRouteTaskLoanDAO.updateDpRouteTaskLoanApply(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteTaskLoanApply ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteTaskLoanApply ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDpRouteTaskLoanGrant (req,res,next){
     var params = req.params;
     var myDate = new Date();
@@ -198,10 +214,74 @@ function queryDpRouteTaskLoanMonthStat(req,res,next){
     })
 }
 
+function getDpRouteTaskLoanCsv(req,res,next){
+    var csvString = "";
+    var header = "出车款编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "申请金额" + ','+ "申请时间"+ ','+ "发放金额" + ','+ "发放时间" + ','+ "报销金额"
+        + ','+ "报销时间"+ ','+ "发放金额" + ','+ "发放时间" + ','+ "报销金额"+ ','+ "申请时间"+ ','+ "发放金额" + ','+ "发放时间" + ','+ "报销金额"  ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskLoanDAO.getDpRouteTaskLoan(params,function(error,rows){
+        if (error) {
+            logger.error(' getDpRouteTaskLoanCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].repair_date == null){
+                    parkObj.repairDate = "";
+                }else{
+                    parkObj.repairDate = new Date(rows[i].repair_date).toLocaleDateString();
+                }
+                if(rows[i].end_date == null){
+                    parkObj.endDate = "";
+                }else{
+                    parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
+                }
+                if(rows[i].truck_type == 1){
+                    parkObj.truckType = "头车";
+                }else{
+                    parkObj.truckType = "挂车";
+                }
+                if(rows[i].repair_reason == null){
+                    parkObj.repairReason = "";
+                }else{
+                    parkObj.repairReason = rows[i].repair_reason;
+                }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
+                if(rows[i].repair_money == null){
+                    parkObj.repairMoney = "";
+                }else{
+                    parkObj.repairMoney = rows[i].repair_money;
+                }
+                if(rows[i].repair_user == null){
+                    parkObj.repairUser = "";
+                }else{
+                    parkObj.repairUser = rows[i].repair_user;
+                }
+                csvString = csvString+parkObj.truckNum+","+parkObj.repairDate+","+parkObj.endDate+","+parkObj.truckType+","+parkObj.repairReason+","+parkObj.remark+","+parkObj.repairMoney+","+parkObj.repairUser+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTaskLoan : createDpRouteTaskLoan,
     queryDpRouteTaskLoan : queryDpRouteTaskLoan,
+    updateDpRouteTaskLoanApply : updateDpRouteTaskLoanApply,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,

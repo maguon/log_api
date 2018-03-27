@@ -119,6 +119,27 @@ function getDpRouteTaskLoan(params,callback) {
     });
 }
 
+function updateDpRouteTaskLoanApply(params,callback){
+    var query = " update dp_route_task_loan set apply_passing_cost = ? , apply_fuel_cost = ? , apply_protect_cost = ? , apply_penalty_cost = ? , " +
+        " apply_parking_cost = ? , apply_taxi_cost = ? , apply_explain = ? , apply_plan_money = ? , apply_user_id = ? , apply_date = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.applyPassingCost;
+    paramsArray[i++] = params.applyFuelCost;
+    paramsArray[i++] = params.applyProtectCost;
+    paramsArray[i++] = params.applyPenaltyCost;
+    paramsArray[i++] = params.applyParkingCost;
+    paramsArray[i++] = params.applyTaxiCost;
+    paramsArray[i++] = params.applyExplain;
+    paramsArray[i++] = params.applyPlanMoney;
+    paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.applyDate;
+    paramsArray[i] = params.dpRouteTaskLoanId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskLoanApply ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskLoanGrant(params,callback){
     var query = " update dp_route_task_loan set grant_passing_cost = ? , grant_fuel_cost = ? , grant_protect_cost = ? , grant_penalty_cost = ? , " +
         " grant_parking_cost = ? , grant_taxi_cost = ? , grant_explain = ? , grant_actual_money = ? , grant_user_id = ? , grant_date = ? where id = ? ";
@@ -223,6 +244,7 @@ function getDpRouteTaskLoanMonthStat(params,callback){
 module.exports ={
     addDpRouteTaskLoan : addDpRouteTaskLoan,
     getDpRouteTaskLoan : getDpRouteTaskLoan,
+    updateDpRouteTaskLoanApply : updateDpRouteTaskLoanApply,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
