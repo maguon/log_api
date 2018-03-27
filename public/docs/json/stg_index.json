@@ -12986,6 +12986,186 @@
         }
       }
     },
+    "/dpRouteTaskLoan.csv": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskLoan csv",
+        "description": "query dpRouteTaskLoan.csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "query",
+            "description": "dpRouteTaskLoan id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskLoanStatus",
+            "in": "query",
+            "description": "taskLoan status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyDateStart",
+            "in": "query",
+            "description": "applyDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyDateEnd",
+            "in": "query",
+            "description": "applyDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyPlanMoneyStart",
+            "in": "query",
+            "description": "applyPlanMoney start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyPlanMoneyEnd",
+            "in": "query",
+            "description": "applyPlanMoney end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyUserId",
+            "in": "query",
+            "description": "applyUser id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyUserName",
+            "in": "query",
+            "description": "applyUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "grantDateStart",
+            "in": "query",
+            "description": "grantDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateEnd",
+            "in": "query",
+            "description": "grantDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "refundDateStart",
+            "in": "query",
+            "description": "refundDate start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "refundDateEnd",
+            "in": "query",
+            "description": "refundDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTaskLoan": {
       "post": {
         "tags": [

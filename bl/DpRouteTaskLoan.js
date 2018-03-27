@@ -216,8 +216,9 @@ function queryDpRouteTaskLoanMonthStat(req,res,next){
 
 function getDpRouteTaskLoanCsv(req,res,next){
     var csvString = "";
-    var header = "出车款编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "申请金额" + ','+ "申请时间"+ ','+ "发放金额" + ','+ "发放时间" + ','+ "报销金额"
-        + ','+ "报销时间"+ ','+ "发放金额" + ','+ "发放时间" + ','+ "报销金额"+ ','+ "申请时间"+ ','+ "发放金额" + ','+ "发放时间" + ','+ "报销金额"  ;
+    var header = "出车款编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "申请金额" + ','+ "申请时间"+ ','+ "申请人"+ ','+ "申请备注"
+        + ','+ "发放金额" + ','+ "发放时间" + ','+ "发放人"+ ','+ "发放备注"
+        + ','+ "报销金额" + ','+ "报销时间"+ ','+ "报销人" + ','+ "报销备注"+ ','+ "发放状态"   ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -227,43 +228,75 @@ function getDpRouteTaskLoanCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                parkObj.dpRouteTaskLoanId = rows[i].id;
+                parkObj.driveName = rows[i].drive_name;
                 parkObj.truckNum = rows[i].truck_num;
-                if(rows[i].repair_date == null){
-                    parkObj.repairDate = "";
+                parkObj.applyPlanMoney = rows[i].apply_plan_money;
+                if(rows[i].apply_date == null){
+                    parkObj.applyDate = "";
                 }else{
-                    parkObj.repairDate = new Date(rows[i].repair_date).toLocaleDateString();
+                    parkObj.applyDate = new Date(rows[i].apply_date).toLocaleDateString();
                 }
-                if(rows[i].end_date == null){
-                    parkObj.endDate = "";
+                parkObj.applUserName = rows[i].appl_user_name;
+                if(rows[i].apply_explain == null){
+                    parkObj.applyExplain = "";
                 }else{
-                    parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
+                    parkObj.applyExplain = rows[i].apply_explain;
                 }
-                if(rows[i].truck_type == 1){
-                    parkObj.truckType = "头车";
+                if(rows[i].grant_plan_money == null){
+                    parkObj.grantPlanMoney = "";
                 }else{
-                    parkObj.truckType = "挂车";
+                    parkObj.grantPlanMoney = rows[i].grant_plan_money;
                 }
-                if(rows[i].repair_reason == null){
-                    parkObj.repairReason = "";
+                if(rows[i].grant_date == null){
+                    parkObj.grantDate = "";
                 }else{
-                    parkObj.repairReason = rows[i].repair_reason;
+                    parkObj.grantDate = new Date(rows[i].grant_date).toLocaleDateString();
                 }
-                if(rows[i].remark == null){
-                    parkObj.remark = "";
+                if(rows[i].grant_user_name == null){
+                    parkObj.grantUserName = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.grantUserName = rows[i].grant_user_name;
                 }
-                if(rows[i].repair_money == null){
-                    parkObj.repairMoney = "";
+                if(rows[i].grant_explain == null){
+                    parkObj.grantExplain = "";
                 }else{
-                    parkObj.repairMoney = rows[i].repair_money;
+                    parkObj.grantExplain = rows[i].grant_explain;
                 }
-                if(rows[i].repair_user == null){
-                    parkObj.repairUser = "";
+                if(rows[i].refund_plan_money == null){
+                    parkObj.refundPlanMoney = "";
                 }else{
-                    parkObj.repairUser = rows[i].repair_user;
+                    parkObj.refundPlanMoney = rows[i].refund_plan_money;
                 }
-                csvString = csvString+parkObj.truckNum+","+parkObj.repairDate+","+parkObj.endDate+","+parkObj.truckType+","+parkObj.repairReason+","+parkObj.remark+","+parkObj.repairMoney+","+parkObj.repairUser+ '\r\n';
+                if(rows[i].refund_date == null){
+                    parkObj.refundDate = "";
+                }else{
+                    parkObj.refundDate = new Date(rows[i].refund_date).toLocaleDateString();
+                }
+                if(rows[i].refund_user_name == null){
+                    parkObj.refundUserName = "";
+                }else{
+                    parkObj.refundUserName = rows[i].refund_user_name;
+                }
+                if(rows[i].refund_explain == null){
+                    parkObj.refundExplain = "";
+                }else{
+                    parkObj.refundExplain = rows[i].refund_explain;
+                }
+                if(rows[i].task_loan_status == 1){
+                    parkObj.taskLoanStatus = "未发放";
+                }else if(rows[i].task_loan_status == 2){
+                    parkObj.taskLoanStatus = "已发放";
+                }else if(rows[i].task_loan_status == 3){
+                    parkObj.taskLoanStatus = "已报销";
+                }else{
+                    parkObj.taskLoanStatus = "已取消";
+                }
+                csvString = csvString+parkObj.dpRouteTaskLoanId+","+parkObj.driveName+","+parkObj.truckNum+","
+                    +parkObj.applyPlanMoney+","+parkObj.applyDate+","+parkObj.applUserName+","+parkObj.applyExplain+","
+                    +parkObj.grantPlanMoney+","+parkObj.grantDate+","+parkObj.grantUserName+","+parkObj.grantExplain+","
+                    +parkObj.refundPlanMoney+","+parkObj.refundDate+","+parkObj.refundUserName+","+parkObj.refundExplain+","
+                    +parkObj.taskLoanStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
@@ -286,5 +319,6 @@ module.exports = {
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
     removeDpRouteTaskLoan : removeDpRouteTaskLoan,
-    queryDpRouteTaskLoanMonthStat : queryDpRouteTaskLoanMonthStat
+    queryDpRouteTaskLoanMonthStat : queryDpRouteTaskLoanMonthStat,
+    getDpRouteTaskLoanCsv : getDpRouteTaskLoanCsv
 }
