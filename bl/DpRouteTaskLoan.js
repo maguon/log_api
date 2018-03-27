@@ -218,7 +218,8 @@ function getDpRouteTaskLoanCsv(req,res,next){
     var csvString = "";
     var header = "出车款编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "申请金额" + ','+ "申请时间"+ ','+ "申请人"+ ','+ "申请备注"
         + ','+ "发放金额" + ','+ "发放时间" + ','+ "发放人"+ ','+ "发放备注"
-        + ','+ "报销金额" + ','+ "报销时间"+ ','+ "报销人" + ','+ "报销备注"+ ','+ "发放状态"   ;
+        + ','+ "报销金额" + ','+ "报销时间"+ ','+ "报销人" + ','+ "报销备注"
+        + ','+ "还款金额"+ ','+ "盈亏"+ ','+ "发放状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -243,11 +244,7 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 }else{
                     parkObj.applyExplain = rows[i].apply_explain;
                 }
-                if(rows[i].grant_plan_money == null){
-                    parkObj.grantPlanMoney = "";
-                }else{
-                    parkObj.grantPlanMoney = rows[i].grant_plan_money;
-                }
+                parkObj.grantActualMoney = rows[i].grant_actual_money;
                 if(rows[i].grant_date == null){
                     parkObj.grantDate = "";
                 }else{
@@ -263,11 +260,7 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 }else{
                     parkObj.grantExplain = rows[i].grant_explain;
                 }
-                if(rows[i].refund_plan_money == null){
-                    parkObj.refundPlanMoney = "";
-                }else{
-                    parkObj.refundPlanMoney = rows[i].refund_plan_money;
-                }
+                parkObj.refundActualMoney = rows[i].refund_actual_money;
                 if(rows[i].refund_date == null){
                     parkObj.refundDate = "";
                 }else{
@@ -283,6 +276,8 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 }else{
                     parkObj.refundExplain = rows[i].refund_explain;
                 }
+                parkObj.repaymentMoney = rows[i].repayment_money;
+                parkObj.profit = rows[i].profit;
                 if(rows[i].task_loan_status == 1){
                     parkObj.taskLoanStatus = "未发放";
                 }else if(rows[i].task_loan_status == 2){
@@ -294,9 +289,9 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.dpRouteTaskLoanId+","+parkObj.driveName+","+parkObj.truckNum+","
                     +parkObj.applyPlanMoney+","+parkObj.applyDate+","+parkObj.applUserName+","+parkObj.applyExplain+","
-                    +parkObj.grantPlanMoney+","+parkObj.grantDate+","+parkObj.grantUserName+","+parkObj.grantExplain+","
-                    +parkObj.refundPlanMoney+","+parkObj.refundDate+","+parkObj.refundUserName+","+parkObj.refundExplain+","
-                    +parkObj.taskLoanStatus+ '\r\n';
+                    +parkObj.grantActualMoney+","+parkObj.grantDate+","+parkObj.grantUserName+","+parkObj.grantExplain+","
+                    +parkObj.refundActualMoney+","+parkObj.refundDate+","+parkObj.refundUserName+","+parkObj.refundExplain+","
+                    +parkObj.repaymentMoney+","+parkObj.profit+","+parkObj.taskLoanStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
