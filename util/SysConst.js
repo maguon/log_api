@@ -108,7 +108,7 @@ var CAR_OP_TYPE = {
     EXPORT : 13,
     LOAD :14 ,
     ARRIVED : 15
-}
+};
 var ACCIDENT_STATUS  ={ //事故状态
     ready_process : 1,  //待处理
     in_process : 2, //处理中
