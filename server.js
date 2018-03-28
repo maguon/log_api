@@ -540,6 +540,7 @@ function createServer() {
     server.get('/api/dpRouteTaskLoanRel',dpRouteTaskLoanRel.queryDpRouteTaskLoanRel);
     server.post({path:'/api/user/:userId/dpRouteTaskLoanRel',contentType: 'application/json'},dpRouteTaskLoanRel.createDpRouteTaskLoanRel);
     server.del('/api/user/:userId/dpRouteTaskLoan/:dpRouteTaskLoanId/dpRouteTask/:dpRouteTaskId' , dpRouteTaskLoanRel.removeDpRouteTaskLoanRel);
+    server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteTaskLoanRel' , dpRouteTaskLoanRel.removeDpRouteTaskLoanRelAll);
 
     /**
      * Damage Module

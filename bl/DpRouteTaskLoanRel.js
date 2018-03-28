@@ -55,9 +55,24 @@ function removeDpRouteTaskLoanRel(req,res,next){
     })
 }
 
+function removeDpRouteTaskLoanRelAll(req,res,next){
+    var params = req.params;
+    dpRouteTaskLoanRelDAO.deleteDpRouteTaskLoanRelAll(params,function(error,result){
+        if (error) {
+            logger.error(' removeDpRouteTaskLoanRelAll ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeDpRouteTaskLoanRelAll ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTaskLoanRel : createDpRouteTaskLoanRel,
     queryDpRouteTaskLoanRel : queryDpRouteTaskLoanRel,
-    removeDpRouteTaskLoanRel : removeDpRouteTaskLoanRel
+    removeDpRouteTaskLoanRel : removeDpRouteTaskLoanRel,
+    removeDpRouteTaskLoanRelAll : removeDpRouteTaskLoanRelAll
 }

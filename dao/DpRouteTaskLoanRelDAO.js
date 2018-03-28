@@ -101,9 +101,16 @@ function deleteDpRouteTaskLoanRel(params,callback){
 }
 
 function deleteDpRouteTaskLoanRelAll(params,callback){
-    var query = " delete from dp_route_task_loan_rel where dp_route_task_loan_id = ? ";
+    var query = " delete from dp_route_task_loan_rel where dp_route_task_loan_id is not null ";
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.dpRouteTaskLoanId;
+    if(params.dpRouteTaskLoanId){
+        paramsArray[i++] = params.dpRouteTaskLoanId;
+        query = query + " and dp_route_task_loan_id = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dp_route_task_id = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' deleteDpRouteTaskLoanRelAll ');
         return callback(error,rows);
