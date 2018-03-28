@@ -107,6 +107,7 @@ function updateDpRouteTaskLoanGrant (req,res,next){
     var params = req.params;
     var myDate = new Date();
     params.grantDate = myDate;
+    params.taskLoanStatus = sysConst.TASK_LOAN__STATUS.grant;
     dpRouteTaskLoanDAO.updateDpRouteTaskLoanGrant(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteTaskLoanGrant ' + error.message);
