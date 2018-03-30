@@ -56,3 +56,9 @@ CREATE TABLE `dp_route_task_loan_rel` (
   PRIMARY KEY (`dp_route_task_loan_id`,`dp_route_task_id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-03-30 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_loan_rel`
+DROP PRIMARY KEY,
+ADD UNIQUE INDEX `dp_route_task_id` (`dp_route_task_id`) USING BTREE ;
