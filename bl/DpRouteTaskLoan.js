@@ -52,12 +52,13 @@ function createDpRouteTaskLoan(req,res,next){
             }
             dpRouteTaskLoanRelDAO.addDpRouteTaskLoanRel(subParams,function(err,result){
                 if (err) {
-                        resUtil.resetFailedRes(res,"调度编号已经被关联，操作失败");
+                    if(err.message.indexOf("Duplicate") > 0) {
+                        resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
                         return next();
-/*                    }else{
+                    } else{
                         logger.error(' createTruckAccidentInsureRel ' + err.message);
                         throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    }*/
+                    }
                 } else {
                     if(result&&result.insertId>0){
                         logger.info(' createTruckAccidentInsureRel ' + 'success');
