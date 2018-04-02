@@ -17,8 +17,13 @@ function createDpRouteTaskLoanRel(req,res,next){
     var params = req.params ;
     dpRouteTaskLoanRelDAO.addDpRouteTaskLoanRel(params,function(error,result){
         if (error) {
-            logger.error(' createDpRouteTaskLoanRel( ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            if(error.message.indexOf("Duplicate") > 0) {
+                resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
+                return next();
+            } else{
+                logger.error(' createDpRouteTaskLoanRel ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            }
         } else {
             logger.info(' createDpRouteTaskLoanRel ' + 'success');
             resUtil.resetCreateRes(res,result,null);
