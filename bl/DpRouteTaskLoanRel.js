@@ -7,7 +7,9 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
+var dpRouteTaskLoanDAO = require('../dao/DpRouteTaskLoanDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -48,15 +50,33 @@ function queryDpRouteTaskLoanRel(req,res,next){
 
 function removeDpRouteTaskLoanRel(req,res,next){
     var params = req.params;
-    dpRouteTaskLoanRelDAO.deleteDpRouteTaskLoanRel(params,function(error,result){
-        if (error) {
-            logger.error(' removeDpRouteTaskLoanRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' removeDpRouteTaskLoanRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        dpRouteTaskLoanDAO.getDpRouteTaskLoan(params,function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteTaskLoan ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0&&rows[0].task_loan_status == sysConst.TASK_LOAN__STATUS.refund){
+                    logger.warn(' getDpRouteTaskLoan ' + 'failed');
+                    resUtil.resetFailedRes(res," 出车款已报销，不能删除调度关联 ");
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        dpRouteTaskLoanRelDAO.deleteDpRouteTaskLoanRel(params,function(error,result){
+             if (error) {
+                 logger.error(' removeDpRouteTaskLoanRel ' + error.message);
+                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+             } else {
+                 logger.info(' removeDpRouteTaskLoanRel ' + 'success');
+                 resUtil.resetUpdateRes(res,result,null);
+                 return next();
+             }
+        })
     })
 }
 
