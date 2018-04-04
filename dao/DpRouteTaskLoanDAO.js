@@ -224,11 +224,8 @@ function getDpRouteTaskLoanCount(params,callback){
 }
 
 function getDpRouteTaskLoanMonthStat(params,callback){
-    var query = " select db.y_month,sum(dploan.apply_plan_money) as apply_plan_money, " +
-        " sum(dploan.grant_actual_money) as grant_actual_money, " +
-        " sum(dploan.refund_actual_money) as refund_actual_money, " +
-        " sum(dploan.repayment_money) as repayment_money, " +
-        " sum(dploan.profit) as profit from date_base db " +
+    var query = " select db.y_month,count(dploan.id) as refund_count, " +
+        " sum(dploan.refund_actual_money) as refund_actual_money from date_base db " +
         " left join dp_route_task_loan dploan on db.id = dploan.date_id where db.id is not null " ;
     var paramsArray=[],i=0;
     if(params.yearMonth){
@@ -256,6 +253,24 @@ function getDpRouteTaskLoanMonthStat(params,callback){
     });
 }
 
+function getDpRouteTaskLoanDayStat(params,callback){
+    var query = " select db.id,count(dploan.id) as refund_count, " +
+        " sum(dploan.refund_actual_money) as refund_actual_money from date_base db " +
+        " left join dp_route_task_loan dploan on db.id = dploan.date_id where db.id is not null " ;
+    var paramsArray=[],i=0;
+    query = query + ' group by db.id ';
+    query = query + ' order by db.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskLoanDayStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTaskLoan : addDpRouteTaskLoan,
@@ -266,5 +281,6 @@ module.exports ={
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
     deleteDpRouteTaskLoan : deleteDpRouteTaskLoan,
     getDpRouteTaskLoanCount : getDpRouteTaskLoanCount,
-    getDpRouteTaskLoanMonthStat : getDpRouteTaskLoanMonthStat
+    getDpRouteTaskLoanMonthStat : getDpRouteTaskLoanMonthStat,
+    getDpRouteTaskLoanDayStat : getDpRouteTaskLoanDayStat
 }

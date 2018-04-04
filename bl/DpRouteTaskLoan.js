@@ -234,6 +234,20 @@ function queryDpRouteTaskLoanMonthStat(req,res,next){
     })
 }
 
+function queryDpRouteTaskLoanDayStat(req,res,next){
+    var params = req.params ;
+    dpRouteTaskLoanDAO.getDpRouteTaskLoanDayStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskLoanDayStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskLoanDayStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDpRouteTaskLoanCsv(req,res,next){
     var csvString = "";
     var header = "出车款编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "申请金额" + ','+ "申请时间"+ ','+ "申请人"+ ','+ "申请备注"
@@ -336,5 +350,6 @@ module.exports = {
     removeDpRouteTaskLoan : removeDpRouteTaskLoan,
     queryDpRouteTaskLoanCount : queryDpRouteTaskLoanCount,
     queryDpRouteTaskLoanMonthStat : queryDpRouteTaskLoanMonthStat,
+    queryDpRouteTaskLoanDayStat : queryDpRouteTaskLoanDayStat,
     getDpRouteTaskLoanCsv : getDpRouteTaskLoanCsv
 }
