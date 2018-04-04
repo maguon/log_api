@@ -206,6 +206,20 @@ function removeDpRouteTaskLoan(req,res,next){
     })
 }
 
+function queryDpRouteTaskLoanCount(req,res,next){
+    var params = req.params ;
+    dpRouteTaskLoanDAO.getDpRouteTaskLoanCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskLoanCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskLoanCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDpRouteTaskLoanMonthStat(req,res,next){
     var params = req.params ;
     dpRouteTaskLoanDAO.getDpRouteTaskLoanMonthStat(params,function(error,result){
@@ -320,6 +334,7 @@ module.exports = {
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
     removeDpRouteTaskLoan : removeDpRouteTaskLoan,
+    queryDpRouteTaskLoanCount : queryDpRouteTaskLoanCount,
     queryDpRouteTaskLoanMonthStat : queryDpRouteTaskLoanMonthStat,
     getDpRouteTaskLoanCsv : getDpRouteTaskLoanCsv
 }
