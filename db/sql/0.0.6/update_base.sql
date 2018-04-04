@@ -62,3 +62,8 @@ CREATE TABLE `dp_route_task_loan_rel` (
 ALTER TABLE `dp_route_task_loan_rel`
 DROP PRIMARY KEY,
 ADD UNIQUE INDEX `dp_route_task_id` (`dp_route_task_id`) USING BTREE ;
+-- ----------------------------
+-- 2018-04-04 更新
+-- ----------------------------
+ALTER TABLE `damage_check_indemnity`
+ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '打款统计时间' AFTER `indemnity_date`;

@@ -102,8 +102,6 @@ function updateDamageCheckIndemnityImage(req,res,next){
 
 function updateIndemnity(req,res,next){
     var params = req.params ;
-    var myDate = new Date();
-    params.indemnityDate = myDate;
     damageCheckIndemnityDAO.updateIndemnity(params,function(error,result){
         if (error) {
             logger.error(' updateIndemnity ' + error.message);
@@ -118,15 +116,38 @@ function updateIndemnity(req,res,next){
 
 function updateIndemnityStatus(req,res,next){
     var params = req.params ;
-    damageCheckIndemnityDAO.updateIndemnityStatus(params,function(error,result){
-        if (error) {
-            logger.error(' updateIndemnityStatus ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateIndemnityStatus ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        damageCheckIndemnityDAO.updateIndemnityStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateIndemnityStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateIndemnityStatus ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' updateIndemnityStatus ' + 'failed');
+                    resUtil.resetFailedRes(res," 处理结束失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
+        params.indemnityDate = myDate;
+        damageCheckIndemnityDAO.updateIndemnityFinishTime(params,function(error,result){
+            if (error) {
+                logger.error(' updateIndemnityDate ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateIndemnityDate ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

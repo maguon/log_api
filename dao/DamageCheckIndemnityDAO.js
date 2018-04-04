@@ -123,14 +123,25 @@ function updateDamageCheckIndemnityImage(params,callback){
 }
 
 function updateIndemnity(params,callback){
-    var query = " update damage_check_indemnity set actual_money = ? , indemnity_date = ? , indemnity_explain = ? where id = ? " ;
+    var query = " update damage_check_indemnity set actual_money = ? , indemnity_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.actualMoney;
-    paramsArray[i++]=params.indemnityDate;
     paramsArray[i++]=params.indemnityExplain;
     paramsArray[i]=params.indemnityId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateIndemnity ');
+        return callback(error,rows);
+    });
+}
+
+function updateIndemnityFinishTime(params,callback){
+    var query = " update damage_check_indemnity set indemnity_date = ? , date_id = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.indemnityDate;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i]=params.indemnityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateIndemnityFinishTime ');
         return callback(error,rows);
     });
 }
@@ -168,6 +179,7 @@ module.exports ={
     updateDamageCheckIndemnity : updateDamageCheckIndemnity,
     updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage,
     updateIndemnity : updateIndemnity,
+    updateIndemnityFinishTime : updateIndemnityFinishTime,
     updateIndemnityStatus : updateIndemnityStatus,
     getIndemnityStatusCount : getIndemnityStatusCount
 }
