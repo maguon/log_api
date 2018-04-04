@@ -12918,6 +12918,42 @@
         }
       }
     },
+    "/dpRouteTaskLoanCount": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskLoan count",
+        "description": "query dpRouteTaskLoanCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "taskLoanStatus",
+            "in": "query",
+            "description": "taskLoan status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
     "/dpRouteTaskLoanMonthStat": {
       "get": {
         "tags": [
@@ -12953,6 +12989,50 @@
             "type": "integer"
 
           },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskLoan id"
+          }
+        }
+      }
+    },
+    "/dpRouteTaskLoanDayStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskLoanDay stat",
+        "description": "query dpRouteTaskLoanDay stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
           {
             "name": "start",
             "in": "query",
