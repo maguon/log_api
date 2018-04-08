@@ -31,6 +31,8 @@ function queryTruckAccidentInsureLoan(req,res,next){
 function updateTruckAccidentInsureLoan(req,res,next){
     var params = req.params;
     var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
     params.loanDate = myDate;
     truckAccidentInsureLoanDAO.updateTruckAccidentInsureLoan(params,function(error,result){
         if (error) {
@@ -88,11 +90,26 @@ function queryTruckAccidentInsureLoanStatusCount(req,res,next){
     })
 }
 
+function queryTruckAccidentInsureLoanMonthStat(req,res,next){
+    var params = req.params ;
+    truckAccidentInsureLoanDAO.getTruckAccidentInsureLoanMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckAccidentInsureLoanMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckAccidentInsureLoanMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     queryTruckAccidentInsureLoan : queryTruckAccidentInsureLoan,
     updateTruckAccidentInsureLoan : updateTruckAccidentInsureLoan,
     updateTruckAccidentInsureRepayment : updateTruckAccidentInsureRepayment,
     updateTruckAccidentInsureLoanStatus : updateTruckAccidentInsureLoanStatus,
-    queryTruckAccidentInsureLoanStatusCount : queryTruckAccidentInsureLoanStatusCount
+    queryTruckAccidentInsureLoanStatusCount : queryTruckAccidentInsureLoanStatusCount,
+    queryTruckAccidentInsureLoanMonthStat : queryTruckAccidentInsureLoanMonthStat
 }

@@ -67,3 +67,10 @@ ADD UNIQUE INDEX `dp_route_task_id` (`dp_route_task_id`) USING BTREE ;
 -- ----------------------------
 ALTER TABLE `damage_check_indemnity`
 ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '打款统计时间' AFTER `indemnity_date`;
+-- ----------------------------
+-- 2018-04-08 更新
+-- ----------------------------
+ALTER TABLE `damage_insure_loan`
+ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '商品车借款统计时间' AFTER `loan_date`;
+ALTER TABLE `truck_accident_insure_loan`
+ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '货车借款统计时间' AFTER `loan_date`;

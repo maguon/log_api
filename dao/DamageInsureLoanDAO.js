@@ -79,12 +79,13 @@ function getDamageInsureLoan(params,callback) {
 }
 
 function updateDamageInsureLoan(params,callback){
-    var query = " update damage_insure_loan set loan_user_id = ? , loan_money = ? , loan_explain = ? , loan_date = ? where id = ? " ;
+    var query = " update damage_insure_loan set loan_user_id = ? , loan_money = ? , loan_explain = ? , loan_date = ? , date_id = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.loanMoney;
     paramsArray[i++]=params.loanExplain;
     paramsArray[i++]=params.loanDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.loanId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageInsureLoan ');
@@ -134,6 +135,31 @@ function getDamageInsureLoanStatusCount(params,callback) {
     });
 }
 
+function getDamageInsureLoanMonthStat(params,callback){
+    var query = " select db.y_month,count(dil.id) as loan_count,sum(dil.loan_money) as loan_money from date_base db " +
+        " left join damage_insure_loan dil on db.id = dil.date_id where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageInsureLoanMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageInsureLoan : addDamageInsureLoan,
@@ -141,5 +167,6 @@ module.exports ={
     updateDamageInsureLoan : updateDamageInsureLoan,
     updateDamageInsureRepayment : updateDamageInsureRepayment,
     updateDamageInsureLoanStatus : updateDamageInsureLoanStatus,
-    getDamageInsureLoanStatusCount : getDamageInsureLoanStatusCount
+    getDamageInsureLoanStatusCount : getDamageInsureLoanStatusCount,
+    getDamageInsureLoanMonthStat : getDamageInsureLoanMonthStat
 }

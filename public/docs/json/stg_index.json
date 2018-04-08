@@ -5206,6 +5206,66 @@
         }
       }
     },
+    "/truckAccidentInsureLoanMonthStat": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckAccidentInsureLoanMonth stat",
+        "description": "query truckAccidentInsureLoanMonth stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckAccidentInsureLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckAccidentInsureLoan id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckAccidentInsureLoan/{loanId}": {
       "put": {
         "tags": [
@@ -15254,7 +15314,7 @@
           "damage"
         ],
         "summary": "query  indemnityMonth stat",
-        "description": "query indemnityMonthStat stat",
+        "description": "query indemnityMonth stat",
         "produces": [
           "application/json"
         ],
@@ -15298,12 +15358,12 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/damageInsure"
+                "$ref": "#/definitions/damageIndemnity"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid damageInsure id"
+            "description": "Invalid token value or invalid damageIndemnity id"
           }
         }
       }
@@ -16369,6 +16429,66 @@
             "name": "loanStatus",
             "in": "query",
             "description": "loan status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageInsureLoan"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageInsureLoan id"
+          }
+        }
+      }
+    },
+    "/damageInsureLoanMonthStat": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageInsureLoanMonth stat",
+        "description": "query damageInsureLoanMonth stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
             "required": false,
             "type": "integer"
 

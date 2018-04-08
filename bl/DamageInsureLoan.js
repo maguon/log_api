@@ -31,6 +31,8 @@ function queryDamageInsureLoan(req,res,next){
 function updateDamageInsureLoan(req,res,next){
     var params = req.params;
     var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
     params.loanDate = myDate;
     damageInsureLoanDAO.updateDamageInsureLoan(params,function(error,result){
         if (error) {
@@ -88,11 +90,26 @@ function queryDamageInsureLoanStatusCount(req,res,next){
     })
 }
 
+function queryDamageInsureLoanMonthStat(req,res,next){
+    var params = req.params ;
+    damageInsureLoanDAO.getDamageInsureLoanMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageInsureLoanMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageInsureLoanMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     queryDamageInsureLoan : queryDamageInsureLoan,
     updateDamageInsureLoan : updateDamageInsureLoan,
     updateDamageInsureRepayment : updateDamageInsureRepayment,
     updateDamageInsureLoanStatus : updateDamageInsureLoanStatus,
-    queryDamageInsureLoanStatusCount : queryDamageInsureLoanStatusCount
+    queryDamageInsureLoanStatusCount : queryDamageInsureLoanStatusCount,
+    queryDamageInsureLoanMonthStat : queryDamageInsureLoanMonthStat
 }
