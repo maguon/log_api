@@ -7,7 +7,7 @@ var USER_TYPE  ={
     truck_op : 11,//车管部操作员
     truck_admin : 19,//车管部管理员
     storage_op : 21, //仓储部操作员
-    storage_admin : 21,//仓储部管理员
+    storage_admin : 29,//仓储部管理员
     dispatch_op : 31, //调度部操作员
     dispatch_admin : 39, //调度部管理员
     qa_op : 41, //质量部操作员
