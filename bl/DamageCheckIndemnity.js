@@ -166,6 +166,20 @@ function queryIndemnityStatusCount(req,res,next){
     })
 }
 
+function queryIndemnityMonthStat(req,res,next){
+    var params = req.params ;
+    damageCheckIndemnityDAO.getIndemnityMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryIndemnityMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryIndemnityMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDamageCheckIndemnity : createDamageCheckIndemnity,
@@ -174,5 +188,6 @@ module.exports = {
     updateDamageCheckIndemnityImage : updateDamageCheckIndemnityImage,
     updateIndemnity : updateIndemnity,
     updateIndemnityStatus : updateIndemnityStatus,
-    queryIndemnityStatusCount : queryIndemnityStatusCount
+    queryIndemnityStatusCount : queryIndemnityStatusCount,
+    queryIndemnityMonthStat : queryIndemnityMonthStat
 }

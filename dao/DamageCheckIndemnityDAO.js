@@ -172,6 +172,31 @@ function getIndemnityStatusCount(params,callback) {
     });
 }
 
+function getIndemnityMonthStat(params,callback){
+    var query = " select db.y_month,count(dci.id) as indemnity_count,sum(dci.actual_money) as indemnity_money from date_base db " +
+        " left join damage_check_indemnity dci on db.id = dci.date_id where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getIndemnityMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamageCheckIndemnity : addDamageCheckIndemnity,
@@ -181,5 +206,6 @@ module.exports ={
     updateIndemnity : updateIndemnity,
     updateIndemnityFinishTime : updateIndemnityFinishTime,
     updateIndemnityStatus : updateIndemnityStatus,
-    getIndemnityStatusCount : getIndemnityStatusCount
+    getIndemnityStatusCount : getIndemnityStatusCount,
+    getIndemnityMonthStat : getIndemnityMonthStat
 }
