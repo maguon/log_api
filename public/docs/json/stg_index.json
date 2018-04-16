@@ -6658,6 +6658,114 @@
         }
       }
     },
+    "/drivePay": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  drivePay list",
+        "description": "query drivePay",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthDateId",
+            "in": "query",
+            "description": "monthDate id",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckBrandId",
+            "in": "query",
+            "description": "truckBrand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "payStatus",
+            "in": "query",
+            "description": "pay status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drivePay"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drivePay id"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [

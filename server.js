@@ -26,6 +26,7 @@ var truckAccidentInsureLoan = require('./bl/TruckAccidentInsureLoan.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
+var drivePay = require('./bl/DrivePay.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -326,6 +327,11 @@ function createServer() {
     server.get('/api/refuelMonthStat' , driveRefuel.queryRefuelMonthStat);
     server.post({path:'/api/user/:userId/driveRefuel',contentType: 'application/json'},driveRefuel.createDriveRefuel);
     server.put({path:'/api/user/:userId/driveRefuel/:driveRefuelId/checkStatus/:checkStatus',contentType: 'application/json'} ,driveRefuel.updateDriveRefuelStatus);
+
+    /**
+     * DrivePay Module
+     */
+    server.get('/api/drivePay' , drivePay.queryDrivePay);
 
     /**
      * Company Module
