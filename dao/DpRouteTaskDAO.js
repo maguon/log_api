@@ -133,6 +133,50 @@ function getDpRouteTask(params,callback) {
     });
 }
 
+function getDpRouteTaskBase(params,callback) {
+    var query = " select dpr.*,t.truck_num,tb.brand_name,c.city_name as city_route_start,ce.city_name as city_route_end, " +
+        " sum(case when dpr.car_count >= " + params.loadDistance + " then dpr.distance end) as load_distance, " +
+        " sum(case when dpr.car_count < " + params.noLoadDistance + " then dpr.distance end) as no_load_distance " +
+        " from dp_route_task dpr " +
+        " left join city_info c on dpr.route_start_id = c.id " +
+        " left join city_info ce on dpr.route_end_id = ce.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join truck_brand tb on t.brand_id = tb.id " +
+        " where dpr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dpr.id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
+    if(params.taskStatusArr){
+        query = query + " and dpr.task_status in ("+params.taskStatusArr + ") "
+    }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status = ? ";
+    }
+    if(params.statStatus){
+        paramsArray[i++] = params.statStatus;
+        query = query + " and dpr.stat_status = ? ";
+    }
+    query = query + ' group by dpr.id ';
+    query = query + " order by dpr.id desc";
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskBase ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveDistanceCount(params,callback) {
     var query = " select d.id as drive_id,d.drive_name,d.tel,dpr.truck_id,t.truck_num, " +
         " count(case when dpr.task_status = " + params.taskStatus + " then dpr.id end) as complete_count, " +
@@ -341,6 +385,7 @@ function getRouteTaskDayStat(params,callback){
 module.exports ={
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
+    getDpRouteTaskBase : getDpRouteTaskBase,
     getNotCompletedTaskStatusCount : getNotCompletedTaskStatusCount,
     getDriveDistanceCount : getDriveDistanceCount,
     getTaskStatusCount : getTaskStatusCount,

@@ -11524,6 +11524,106 @@
         }
       }
     },
+    "/dpRouteTaskBase": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskBase list",
+        "description": "query dpRouteTaskBase",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskStatusArr",
+            "in": "query",
+            "description": "task statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadDistance",
+            "in": "query",
+            "description": "load distance",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "noLoadDistance",
+            "in": "query",
+            "description": "noLoad distance",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/driveDistanceCount": {
       "get": {
         "tags": [
