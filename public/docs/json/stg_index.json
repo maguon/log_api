@@ -6658,13 +6658,13 @@
         }
       }
     },
-    "/drivePay": {
+    "/driveSalary": {
       "get": {
         "tags": [
           "drive"
         ],
-        "summary": "query  drivePay list",
-        "description": "query drivePay",
+        "summary": "query  driveSalary list",
+        "description": "query driveSalary",
         "produces": [
           "application/json"
         ],
@@ -6726,9 +6726,9 @@
 
           },
           {
-            "name": "payStatus",
+            "name": "grantStatus",
             "in": "query",
-            "description": "pay status",
+            "description": "grant status",
             "required": false,
             "type": "integer"
 
@@ -6756,12 +6756,12 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/drivePay"
+                "$ref": "#/definitions/driveSalary"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid drivePay id"
+            "description": "Invalid token value or invalid driveSalary id"
           }
         }
       }
@@ -11479,6 +11479,14 @@
             "name": "noLoadDistance",
             "in": "query",
             "description": "noLoad distance",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
             "required": false,
             "type": "integer"
 
