@@ -26,7 +26,7 @@ var truckAccidentInsureLoan = require('./bl/TruckAccidentInsureLoan.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
-var drivePay = require('./bl/DrivePay.js');
+var driveSalary = require('./bl/DriveSalary.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -331,7 +331,7 @@ function createServer() {
     /**
      * DrivePay Module
      */
-    server.get('/api/drivePay' , drivePay.queryDrivePay);
+    server.get('/api/driveSalary' , driveSalary.queryDriveSalary);
 
     /**
      * Company Module
