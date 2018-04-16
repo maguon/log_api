@@ -74,3 +74,8 @@ ALTER TABLE `damage_insure_loan`
 ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '商品车借款统计时间' AFTER `loan_date`;
 ALTER TABLE `truck_accident_insure_loan`
 ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '货车借款统计时间' AFTER `loan_date`;
+-- ----------------------------
+-- 2018-04-16 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `task_status`;
