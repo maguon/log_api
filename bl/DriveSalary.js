@@ -30,7 +30,22 @@ function queryDriveSalary(req,res,next){
     })
 }
 
+function updateDrivePlanSalary(req,res,next){
+    var params = req.params;
+    driveSalaryDAO.updateDrivePlanSalary(params,function(error,result){
+        if (error) {
+            logger.error(' updateDrivePlanSalary ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDrivePlanSalary ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    queryDriveSalary : queryDriveSalary
+    queryDriveSalary : queryDriveSalary,
+    updateDrivePlanSalary : updateDrivePlanSalary
 }

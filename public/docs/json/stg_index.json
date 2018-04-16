@@ -6670,6 +6670,14 @@
         ],
         "parameters": [
           {
+            "name": "driveSalaryId",
+            "in": "query",
+            "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "monthDateId",
             "in": "query",
             "description": "monthDate id",
@@ -6757,6 +6765,60 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/driveSalary"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalary id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalary/{driveSalaryId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveSalary info",
+        "description": "update driveSalary info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryId",
+            "in": "path",
+            "description": "driveSalary id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalary",
+            "in": "body",
+            "description": "driveSalary info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalary"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
               }
             }
           },
@@ -17880,6 +17942,18 @@
       },
       "xml": {
         "name": "driveRefuel"
+      }
+    },
+    "driveSalary": {
+      "type": "object",
+      "properties": {
+
+        "planSalary": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSalary"
       }
     },
     "checkReason": {

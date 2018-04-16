@@ -17,6 +17,10 @@ function getDriveSalary(params,callback) {
         " left join entrust_info e on ds.entrust_id = e.id" +
         " where ds.id is not null ";
     var paramsArray=[],i=0;
+    if(params.driveSalaryId){
+        paramsArray[i++] = params.driveSalaryId;
+        query = query + " and ds.id = ? ";
+    }
     if(params.monthDateId){
         paramsArray[i++] = params.monthDateId;
         query = query + " and ds.month_date_id = ? ";
@@ -61,7 +65,19 @@ function getDriveSalary(params,callback) {
     });
 }
 
+function updateDrivePlanSalary(params,callback){
+    var query = " update drive_salary set plan_salary = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.planSalary;
+    paramsArray[i] = params.driveSalaryId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDrivePlanSalary ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    getDriveSalary : getDriveSalary
+    getDriveSalary : getDriveSalary,
+    updateDrivePlanSalary : updateDrivePlanSalary
 }

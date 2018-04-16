@@ -332,6 +332,7 @@ function createServer() {
      * DrivePay Module
      */
     server.get('/api/driveSalary' , driveSalary.queryDriveSalary);
+    server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId',contentType: 'application/json'} ,driveSalary.updateDrivePlanSalary);
 
     /**
      * Company Module
