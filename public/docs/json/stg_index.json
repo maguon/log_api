@@ -6828,6 +6828,118 @@
         }
       }
     },
+    "/driveSalaryTaskRel": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveSalaryTaskRel list",
+        "description": "query driveSalaryTaskRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSalaryId",
+            "in": "query",
+            "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadDistance",
+            "in": "query",
+            "description": "load distance",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "noLoadDistance",
+            "in": "query",
+            "description": "noLoad distance",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSalaryTaskRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryTaskRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalary/{driveSalaryId}/dpRouteTask/{dpRouteTaskId}": {
+      "delete": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "Deletes a driveSalaryTaskRel",
+        "description": "",
+        "operationId": "driveSalaryTaskRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSalaryId",
+            "in": "path",
+            "description": "driveSalary id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [

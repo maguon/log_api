@@ -27,6 +27,7 @@ var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
 var driveSalary = require('./bl/DriveSalary.js');
+var driveSalaryTaskRel = require('./bl/DriveSalaryTaskRel.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -333,6 +334,12 @@ function createServer() {
      */
     server.get('/api/driveSalary' , driveSalary.queryDriveSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId',contentType: 'application/json'} ,driveSalary.updateDrivePlanSalary);
+
+    /**
+     * DriveSalaryTaskRel Module
+     */
+    server.get('/api/driveSalaryTaskRel' , driveSalaryTaskRel.queryDriveSalaryTaskRel);
+    server.del('/api/user/:userId/driveSalary/:driveSalaryId/dpRouteTask/:dpRouteTaskId' , driveSalaryTaskRel.removeDriveSalaryTaskRel);
 
     /**
      * Company Module
