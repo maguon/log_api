@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "stg.myxxjs.com:9001",
+  "host": "stg.myxxjs.com:8001",
   "basePath": "/api",
   "tags": [
     {
@@ -14544,6 +14544,14 @@
             "description": "refundDate end",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "taskLoanStatusArr",
+            "in": "query",
+            "description": "taskLoan statusArr",
+            "required": false,
+            "type": "integer"
 
           },
           {

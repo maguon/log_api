@@ -78,6 +78,9 @@ function getDpRouteTaskLoanRel(params,callback) {
         paramsArray[i++] = params.refundDateEnd +" 23:59:59";
         query = query + " and dploan.refund_date <= ? ";
     }
+    if(params.taskLoanStatusArr){
+        query = query + " and dploan.task_loan_status in ("+params.taskLoanStatusArr + ") "
+    }
     if(params.taskLoanStatus){
         paramsArray[i++] = params.taskLoanStatus;
         query = query + " and dploan.task_loan_status = ? ";
