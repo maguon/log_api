@@ -81,3 +81,5 @@ ALTER TABLE `dp_route_task`
 ADD COLUMN `stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `task_status`;
 ALTER TABLE `damage_info`
 ADD COLUMN `stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `damage_explain`;
+ALTER TABLE `truck_accident_info`
+ADD COLUMN `stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `accident_status`;
