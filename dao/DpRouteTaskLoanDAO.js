@@ -62,6 +62,9 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.truckNum;
         query = query + " and t.truck_num = ? ";
     }
+    if(params.taskLoanStatusArr){
+        query = query + " and dploan.task_loan_status in ("+params.taskLoanStatusArr + ") "
+    }
     if(params.taskLoanStatus){
         paramsArray[i++] = params.taskLoanStatus;
         query = query + " and dploan.task_loan_status = ? ";
