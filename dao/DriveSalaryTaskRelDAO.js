@@ -6,6 +6,17 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryTaskRelDAO.js');
 
+function addDriveSalaryTaskRel(params,callback){
+    var query = " insert into drive_salary_task_rel (drive_salary_id,dp_route_task_id) values ( ? , ? ) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveSalaryId;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDriveSalaryTaskRel ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveSalaryTaskRel(params,callback) {
     var query = " select datl.*,c.city_name as city_route_start,ce.city_name as city_route_end, " +
         "dpr.distance,dpr.car_count,t.truck_num,tb.brand_name, " +
@@ -50,6 +61,7 @@ function deleteDriveSalaryTaskRel(params,callback){
 
 
 module.exports ={
+    addDriveSalaryTaskRel : addDriveSalaryTaskRel,
     getDriveSalaryTaskRel : getDriveSalaryTaskRel,
     deleteDriveSalaryTaskRel : deleteDriveSalaryTaskRel
 }

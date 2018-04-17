@@ -7,53 +7,53 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
-var driveSalaryTaskRelDAO = require('../dao/DriveSalaryTaskRelDAO.js');
+var driveSalaryDamageRelDAO = require('../dao/DriveSalaryDamageRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('DriveSalaryTaskRel.js');
+var logger = serverLogger.createLogger('DriveSalaryDamageRel.js');
 
-function createDriveSalaryTaskRel(req,res,next){
+function createDriveSalaryDamageRel(req,res,next){
     var params = req.params ;
-    driveSalaryTaskRelDAO.addDriveSalaryTaskRel(params,function(error,result){
+    driveSalaryDamageRelDAO.addDriveSalaryDamageRel(params,function(error,result){
         if (error) {
             if(error.message.indexOf("Duplicate") > 0) {
-                resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
+                resUtil.resetFailedRes(res, "质损编号已经被关联，操作失败");
                 return next();
             } else{
-                logger.error(' createDriveSalaryTaskRel ' + err.message);
+                logger.error(' createDriveSalaryDamageRel ' + err.message);
                 throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             }
         } else {
-            logger.info(' createDriveSalaryTaskRel ' + 'success');
+            logger.info(' createDriveSalaryDamageRel ' + 'success');
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
     })
 }
 
-function queryDriveSalaryTaskRel(req,res,next){
+function queryDriveSalaryDamageRel(req,res,next){
     var params = req.params ;
-    driveSalaryTaskRelDAO.getDriveSalaryTaskRel(params,function(error,result){
+    driveSalaryDamageRelDAO.getDriveSalaryDamageRel(params,function(error,result){
         if (error) {
-            logger.error(' queryDriveSalaryTaskRel ' + error.message);
+            logger.error(' queryDriveSalaryDamageRel ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDriveSalaryTaskRel ' + 'success');
+            logger.info(' queryDriveSalaryDamageRel ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
-function removeDriveSalaryTaskRel(req,res,next){
+function removeDriveSalaryDamageRel(req,res,next){
     var params = req.params;
-    driveSalaryTaskRelDAO.deleteDriveSalaryTaskRel(params,function(error,result){
+    driveSalaryDamageRelDAO.deleteDriveSalaryDamageRel(params,function(error,result){
         if (error) {
-            logger.error(' removeDriveSalaryTaskRel ' + error.message);
+            logger.error(' removeDriveSalaryDamageRel ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' removeDriveSalaryTaskRel ' + 'success');
+            logger.info(' removeDriveSalaryDamageRel ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
@@ -62,7 +62,7 @@ function removeDriveSalaryTaskRel(req,res,next){
 
 
 module.exports = {
-    createDriveSalaryTaskRel : createDriveSalaryTaskRel,
-    queryDriveSalaryTaskRel : queryDriveSalaryTaskRel,
-    removeDriveSalaryTaskRel : removeDriveSalaryTaskRel
+    createDriveSalaryDamageRel : createDriveSalaryDamageRel,
+    queryDriveSalaryDamageRel : queryDriveSalaryDamageRel,
+    removeDriveSalaryDamageRel : removeDriveSalaryDamageRel
 }

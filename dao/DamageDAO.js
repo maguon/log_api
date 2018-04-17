@@ -94,6 +94,14 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.damageStatus;
         query = query + " and da.damage_status = ? ";
     }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and da.drive_id = ? ";
+    }
+    if(params.statStatus){
+        paramsArray[i++] = params.statStatus;
+        query = query + " and da.stat_status = ? ";
+    }
     query = query + " order by da.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

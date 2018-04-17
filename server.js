@@ -28,6 +28,7 @@ var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
 var driveSalary = require('./bl/DriveSalary.js');
 var driveSalaryTaskRel = require('./bl/DriveSalaryTaskRel.js');
+var driveSalaryDamageRel = require('./bl/DriveSalaryDamageRel.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -330,7 +331,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/driveRefuel/:driveRefuelId/checkStatus/:checkStatus',contentType: 'application/json'} ,driveRefuel.updateDriveRefuelStatus);
 
     /**
-     * DrivePay Module
+     * DriveSalary Module
      */
     server.get('/api/driveSalary' , driveSalary.queryDriveSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId',contentType: 'application/json'} ,driveSalary.updateDrivePlanSalary);
@@ -339,7 +340,15 @@ function createServer() {
      * DriveSalaryTaskRel Module
      */
     server.get('/api/driveSalaryTaskRel' , driveSalaryTaskRel.queryDriveSalaryTaskRel);
+    server.post({path:'/api/user/:userId/driveSalaryTaskRel',contentType: 'application/json'},driveSalaryTaskRel.createDriveSalaryTaskRel);
     server.del('/api/user/:userId/driveSalary/:driveSalaryId/dpRouteTask/:dpRouteTaskId' , driveSalaryTaskRel.removeDriveSalaryTaskRel);
+
+    /**
+     * DriveSalaryDamageRel Module
+     */
+    server.get('/api/driveSalaryDamageRel' , driveSalaryDamageRel.queryDriveSalaryDamageRel);
+    server.post({path:'/api/user/:userId/driveSalaryDamageRel',contentType: 'application/json'},driveSalaryDamageRel.createDriveSalaryDamageRel);
+    server.del('/api/user/:userId/driveSalary/:driveSalaryId/damage/:damageId' , driveSalaryDamageRel.removeDriveSalaryDamageRel);
 
     /**
      * Company Module
