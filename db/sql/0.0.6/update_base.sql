@@ -83,3 +83,64 @@ ALTER TABLE `damage_info`
 ADD COLUMN `stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `damage_explain`;
 ALTER TABLE `truck_accident_info`
 ADD COLUMN `stat_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `accident_status`;
+-- ----------------------------
+-- Table structure for drive_salary
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_salary`;
+CREATE TABLE `drive_salary` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `month_date_id` int(4) NOT NULL COMMENT '月份',
+  `drive_id` int(10) NOT NULL DEFAULT '0' COMMENT '司机ID',
+  `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
+  `entrust_id` int(10) DEFAULT NULL COMMENT '委托方ID',
+  `load_distance` int(10) DEFAULT NULL COMMENT '重载',
+  `no_load_distance` int(10) DEFAULT NULL COMMENT '空载',
+  `plan_salary` decimal(10,2) DEFAULT '0.00' COMMENT '应发工资',
+  `actual_salary` decimal(10,2) DEFAULT '0.00' COMMENT '实发工资',
+  `grant_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '工资状态(1-未结算,2-未发放,3-已发放)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for drive_salary_accident_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_salary_accident_rel`;
+CREATE TABLE `drive_salary_accident_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_salary_id` int(10) NOT NULL COMMENT '司机工资ID',
+  `accident_id` int(10) NOT NULL COMMENT '事故编号ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `accident_id` (`accident_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for drive_salary_damage_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_salary_damage_rel`;
+CREATE TABLE `drive_salary_damage_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_salary_id` int(10) NOT NULL COMMENT '司机工资ID',
+  `damage_id` int(10) NOT NULL COMMENT '质损编号ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `damage_id` (`damage_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for drive_salary_task_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_salary_task_rel`;
+CREATE TABLE `drive_salary_task_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_salary_id` int(10) NOT NULL COMMENT '司机工资ID',
+  `dp_route_task_id` int(10) NOT NULL COMMENT '调度编号ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `dp_route_task_id` (`dp_route_task_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
