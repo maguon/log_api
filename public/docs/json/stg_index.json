@@ -3990,6 +3990,14 @@
 
           },
           {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -6896,6 +6904,51 @@
         }
       }
     },
+    "/user/{userId}/driveSalaryTaskRel": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSalaryTaskRel",
+        "description": "user create driveSalaryTaskRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryTaskRel",
+            "in": "body",
+            "description": "driveSalaryTaskRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalaryTaskRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryTaskRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSalary/{driveSalaryId}/dpRouteTask/{dpRouteTaskId}": {
       "delete": {
         "tags": [
@@ -6926,6 +6979,147 @@
             "name": "dpRouteTaskId",
             "in": "path",
             "description": "dpRouteTask id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
+    "/driveSalaryDamageRel": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveSalaryDamageRel list",
+        "description": "query driveSalaryDamageRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSalaryId",
+            "in": "query",
+            "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSalaryDamageRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryDamageRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalaryDamageRel": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSalaryDamageRel",
+        "description": "user create driveSalaryDamageRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryDamageRel",
+            "in": "body",
+            "description": "driveSalaryDamageRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalaryDamageRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryDamageRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalary/{driveSalaryId}/damage/{damageId}": {
+      "delete": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "Deletes a driveSalaryDamageRel",
+        "description": "",
+        "operationId": "driveSalaryDamageRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSalaryId",
+            "in": "path",
+            "description": "driveSalary id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "damageId",
+            "in": "path",
+            "description": "damage id to delete",
             "required": true,
             "type": "integer"
           }
@@ -14375,6 +14569,22 @@
 
           },
           {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -18066,6 +18276,36 @@
       },
       "xml": {
         "name": "driveSalary"
+      }
+    },
+    "driveSalaryTaskRel": {
+      "type": "object",
+      "properties": {
+
+        "driveSalaryId": {
+          "type": "integer"
+        },
+        "dpRouteTaskId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSalaryTaskRel"
+      }
+    },
+    "driveSalaryDamageRel": {
+      "type": "object",
+      "properties": {
+
+        "driveSalaryId": {
+          "type": "integer"
+        },
+        "damageId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSalaryDamageRel"
       }
     },
     "checkReason": {
