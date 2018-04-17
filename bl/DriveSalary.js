@@ -44,8 +44,38 @@ function updateDrivePlanSalary(req,res,next){
     })
 }
 
+function updateDriveActualSalary(req,res,next){
+    var params = req.params;
+    driveSalaryDAO.updateDriveActualSalary(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveActualSalary ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveActualSalary ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDriveSalaryStatus(req,res,next){
+    var params = req.params;
+    driveSalaryDAO.updateDriveSalaryStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveSalaryStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveSalaryStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     queryDriveSalary : queryDriveSalary,
-    updateDrivePlanSalary : updateDrivePlanSalary
+    updateDrivePlanSalary : updateDrivePlanSalary,
+    updateDriveActualSalary : updateDriveActualSalary,
+    updateDriveSalaryStatus : updateDriveSalaryStatus
 }

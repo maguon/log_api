@@ -6836,6 +6836,112 @@
         }
       }
     },
+    "/user/{userId}/driveSalary/{driveSalaryId}/driveActualSalary": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveSalary info",
+        "description": "update driveSalary info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryId",
+            "in": "path",
+            "description": "driveSalary id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveActualSalary",
+            "in": "body",
+            "description": "driveActualSalary info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveActualSalary"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalary id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalary/{driveSalaryId}/grantStatus/{grantStatus}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user update driveSalaryStatus",
+        "description": "user update driveSalaryStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryId",
+            "in": "path",
+            "description": "driveSalary id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantStatus",
+            "in": "path",
+            "description": "grant status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalary id"
+          }
+        }
+      }
+    },
     "/driveSalaryTaskRel": {
       "get": {
         "tags": [
@@ -18417,6 +18523,18 @@
       },
       "xml": {
         "name": "driveSalary"
+      }
+    },
+    "driveActualSalary": {
+      "type": "object",
+      "properties": {
+
+        "actualSalary": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveActualSalary"
       }
     },
     "driveSalaryTaskRel": {

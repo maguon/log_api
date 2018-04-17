@@ -76,8 +76,32 @@ function updateDrivePlanSalary(params,callback){
     });
 }
 
+function updateDriveActualSalary(params,callback){
+    var query = " update drive_salary set actual_salary = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.actualSalary;
+    paramsArray[i] = params.driveSalaryId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveActualSalary ');
+        return callback(error,rows);
+    });
+}
+
+function updateDriveSalaryStatus(params,callback){
+    var query = " update drive_salary set grant_status = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.grantStatus;
+    paramsArray[i] = params.driveSalaryId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveSalaryStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     getDriveSalary : getDriveSalary,
-    updateDrivePlanSalary : updateDrivePlanSalary
+    updateDrivePlanSalary : updateDrivePlanSalary,
+    updateDriveActualSalary : updateDriveActualSalary,
+    updateDriveSalaryStatus : updateDriveSalaryStatus
 }
