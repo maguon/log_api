@@ -29,6 +29,7 @@ var driveRefuel = require('./bl/DriveRefuel.js');
 var driveSalary = require('./bl/DriveSalary.js');
 var driveSalaryTaskRel = require('./bl/DriveSalaryTaskRel.js');
 var driveSalaryDamageRel = require('./bl/DriveSalaryDamageRel.js');
+var driveSalaryAccidentRel = require('./bl/DriveSalaryAccidentRel.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -349,6 +350,13 @@ function createServer() {
     server.get('/api/driveSalaryDamageRel' , driveSalaryDamageRel.queryDriveSalaryDamageRel);
     server.post({path:'/api/user/:userId/driveSalaryDamageRel',contentType: 'application/json'},driveSalaryDamageRel.createDriveSalaryDamageRel);
     server.del('/api/user/:userId/driveSalary/:driveSalaryId/damage/:damageId' , driveSalaryDamageRel.removeDriveSalaryDamageRel);
+
+    /**
+     * DriveSalaryAccidentRel Module
+     */
+    server.get('/api/driveSalaryAccidentRel' , driveSalaryAccidentRel.queryDriveSalaryAccidentRel);
+    server.post({path:'/api/user/:userId/driveSalaryAccidentRel',contentType: 'application/json'},driveSalaryAccidentRel.createDriveSalaryAccidentRel);
+    server.del('/api/user/:userId/driveSalary/:driveSalaryId/accident/:accidentId' , driveSalaryAccidentRel.removeDriveSalaryAccidentRel);
 
     /**
      * Company Module
