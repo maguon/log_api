@@ -239,6 +239,17 @@ function updateDamageStatus(params,callback){
     });
 }
 
+function updateDamageStatStatus(params,callback){
+    var query = " update damage_info set stat_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.statStatus;
+    paramsArray[i]=params.damageId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageStatStatus ');
+        return callback(error,rows);
+    });
+}
+
 function getDamageTypeMonthStat(params,callback){
     var query = " select db.y_month,dt.id,count(case when di.damage_status = "+params.damageStatus+" then di.id end) as damage_count from date_base db " +
         " inner join damage_type dt " +
@@ -293,7 +304,8 @@ module.exports ={
     getDamageNotCheckCount : getDamageNotCheckCount,
     getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
-    updateDamageStatus : updateDamageStatus ,
+    updateDamageStatus : updateDamageStatus,
+    updateDamageStatStatus : updateDamageStatStatus,
     getDamageTypeMonthStat : getDamageTypeMonthStat,
     getDamageTypeWeekStat : getDamageTypeWeekStat
 }
