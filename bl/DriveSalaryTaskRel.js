@@ -121,15 +121,35 @@ function queryDriveSalaryTaskRel(req,res,next){
 
 function removeDriveSalaryTaskRel(req,res,next){
     var params = req.params;
-    driveSalaryTaskRelDAO.deleteDriveSalaryTaskRel(params,function(error,result){
-        if (error) {
-            logger.error(' removeDriveSalaryTaskRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' removeDriveSalaryTaskRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        driveSalaryTaskRelDAO.deleteDriveSalaryTaskRel(params,function(error,result){
+            if (error) {
+                logger.error(' removeDriveSalaryTaskRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeDriveSalaryTaskRel ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' removeDriveSalaryTaskRel ' + 'failed');
+                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.statStatus = sysConst.STAT_STATUS.not_stat;
+        dpRouteTaskDAO.updateDpRouteStatStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteStatStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpRouteStatStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
