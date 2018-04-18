@@ -19,7 +19,7 @@ function addDriveSalaryTaskRel(params,callback){
 
 function getDriveSalaryTaskRel(params,callback) {
     var query = " select datl.*,c.city_name as city_route_start,ce.city_name as city_route_end, " +
-        "dpr.distance,dpr.car_count,t.truck_num,t.truck_type,tb.brand_name, " +
+        "dpr.distance,dpr.car_count,dpr.task_end_date,t.truck_num,t.truck_type,tb.brand_name, " +
         " sum(case when dpr.car_count >= " + params.loadDistance + " then dpr.distance end) as load_distance, " +
         " sum(case when dpr.car_count < " + params.noLoadDistance + " then dpr.distance end) as no_load_distance " +
         " from drive_salary_task_rel datl " +
