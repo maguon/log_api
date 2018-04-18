@@ -150,6 +150,17 @@ function updateTruckAccidentStatus(params,callback){
     });
 }
 
+function updateTruckAccidentStatStatus(params,callback){
+    var query = " update truck_accident_info set stat_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.statStatus;
+    paramsArray[i]=params.accidentId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckAccidentStatStatus ');
+        return callback(error,rows);
+    });
+}
+
 function getTruckAccidentNotCheckCount(params,callback) {
     var query = " select count(ta.id) as truck_accident_count,ta.accident_status from truck_accident_info ta where ta.id is not null ";
     var paramsArray=[],i=0;
@@ -231,6 +242,7 @@ module.exports ={
     getTruckAccident : getTruckAccident,
     updateTruckAccident : updateTruckAccident,
     updateTruckAccidentStatus : updateTruckAccidentStatus,
+    updateTruckAccidentStatStatus : updateTruckAccidentStatStatus,
     getTruckAccidentNotCheckCount : getTruckAccidentNotCheckCount,
     getTruckAccidentTotalCost : getTruckAccidentTotalCost,
     getTruckAccidentTypeMonthStat : getTruckAccidentTypeMonthStat,
