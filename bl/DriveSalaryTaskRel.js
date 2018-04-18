@@ -59,25 +59,6 @@ function createDriveSalaryTaskRelAll(req,res,next){
 
 function createDriveSalaryTaskRel(req,res,next){
     var params = req.params ;
-    driveSalaryTaskRelDAO.addDriveSalaryTaskRel(params,function(error,result){
-        if (error) {
-            if(error.message.indexOf("Duplicate") > 0) {
-                resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
-                return next();
-            } else{
-                logger.error(' createDriveSalaryTaskRel ' + err.message);
-                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            }
-        } else {
-            logger.info(' createDriveSalaryTaskRel ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
-    })
-}
-
-function createDriveSalaryTaskRel(req,res,next){
-    var params = req.params ;
     var driveSalaryTaskRelId = 0;
     Seq().seq(function(){
         var that = this;
