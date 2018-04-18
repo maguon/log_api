@@ -280,6 +280,17 @@ function updateDpRouteTaskStatus(params,callback){
     });
 }
 
+function updateDpRouteStatStatus(params,callback){
+    var query = " update dp_route_task set stat_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.statStatus;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteStatStatus ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskCarCount(params,callback){
     var query = " update dp_route_task set car_count = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -390,6 +401,7 @@ module.exports ={
     getDriveDistanceCount : getDriveDistanceCount,
     getTaskStatusCount : getTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,
+    updateDpRouteStatStatus : updateDpRouteStatStatus,
     updateDpRouteTaskCarCount : updateDpRouteTaskCarCount ,
     finishDpRouteTask : finishDpRouteTask ,
     getRouteTaskMonthStat : getRouteTaskMonthStat ,

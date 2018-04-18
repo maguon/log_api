@@ -138,6 +138,11 @@ var TRUCK_INSURE__STATUS = {  //货车保险状态
     normal : 1 //正常
 };
 
+var STAT_STATUS = {  //工资结算状态
+    not_stat : 1 ,  //未结算
+    stat : 2 //已结算
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -160,5 +165,6 @@ module.exports = {
     LOAN__STATUS : LOAN__STATUS,
     TASK_LOAN__STATUS : TASK_LOAN__STATUS,
     DAMAGE_INDEMNITY__STATUS : DAMAGE_INDEMNITY__STATUS,
-    TRUCK_INSURE__STATUS : TRUCK_INSURE__STATUS
+    TRUCK_INSURE__STATUS : TRUCK_INSURE__STATUS,
+    STAT_STATUS : STAT_STATUS
 }
