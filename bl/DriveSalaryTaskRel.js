@@ -25,6 +25,7 @@ function createDriveSalaryTaskRelAll(req,res,next){
         Seq(rowArray).seqEach(function(rowObj,i){
             var that = this;
             var subParams ={
+                statStatus : sysConst.STAT_STATUS.stat,
                 driveSalaryId : params.driveSalaryId,
                 dpRouteTaskId : dpRouteTaskIds[i],
                 row : i+1,
@@ -43,6 +44,19 @@ function createDriveSalaryTaskRelAll(req,res,next){
                         logger.info(' createDriveSalaryTaskRelAll ' + 'success');
                     }else{
                         logger.warn(' createDriveSalaryTaskRelAll ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+            dpRouteTaskDAO.updateDpRouteStatStatus(subParams,function(error,result){
+                if (error) {
+                    logger.error(' updateDpRouteTaskStatus ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' updateDpRouteTaskStatus ' + 'success');
+                    }else{
+                        logger.warn(' updateDpRouteTaskStatus ' + 'failed');
                     }
                     that(null,i);
                 }
