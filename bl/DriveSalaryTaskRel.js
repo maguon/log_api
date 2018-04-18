@@ -13,6 +13,48 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryTaskRel.js');
 
+function createDriveSalaryTaskRelAll(req,res,next){
+    var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        var dpRouteTaskIds = params.dpRouteTaskIds;
+        var rowArray = [] ;
+        rowArray.length= dpRouteTaskIds.length;
+        Seq(rowArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                driveSalaryId : params.driveSalaryId,
+                dpRouteTaskId : dpRouteTaskIds[i],
+                row : i+1,
+            }
+            driveSalaryTaskRelDAO.addDriveSalaryTaskRel(subParams,function(err,result){
+                if (err) {
+                    if(err.message.indexOf("Duplicate") > 0) {
+                        resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
+                        return next();
+                    } else{
+                        logger.error(' createDriveSalaryTaskRelAll ' + err.message);
+                        throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    }
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' createDriveSalaryTaskRelAll ' + 'success');
+                    }else{
+                        logger.warn(' createDriveSalaryTaskRelAll ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+        }).seq(function(){
+            that();
+        })
+    }).seq(function(){
+        logger.info(' createDriveSalaryTaskRelAll ' + 'success');
+        resUtil.resetQueryRes(res,{driveSalaryId:params.driveSalaryId},null);
+        return next();
+    })
+}
+
 function createDriveSalaryTaskRel(req,res,next){
     var params = req.params ;
     driveSalaryTaskRelDAO.addDriveSalaryTaskRel(params,function(error,result){
@@ -62,6 +104,7 @@ function removeDriveSalaryTaskRel(req,res,next){
 
 
 module.exports = {
+    createDriveSalaryTaskRelAll : createDriveSalaryTaskRelAll,
     createDriveSalaryTaskRel : createDriveSalaryTaskRel,
     queryDriveSalaryTaskRel : queryDriveSalaryTaskRel,
     removeDriveSalaryTaskRel : removeDriveSalaryTaskRel

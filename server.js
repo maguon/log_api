@@ -343,6 +343,7 @@ function createServer() {
      * DriveSalaryTaskRel Module
      */
     server.get('/api/driveSalaryTaskRel' , driveSalaryTaskRel.queryDriveSalaryTaskRel);
+    server.post({path:'/api/user/:userId/driveSalaryTaskRelAll',contentType: 'application/json'},driveSalaryTaskRel.createDriveSalaryTaskRelAll);
     server.post({path:'/api/user/:userId/driveSalaryTaskRel',contentType: 'application/json'},driveSalaryTaskRel.createDriveSalaryTaskRel);
     server.del('/api/user/:userId/driveSalary/:driveSalaryId/dpRouteTask/:dpRouteTaskId' , driveSalaryTaskRel.removeDriveSalaryTaskRel);
 

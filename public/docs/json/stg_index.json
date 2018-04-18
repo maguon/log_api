@@ -7010,6 +7010,51 @@
         }
       }
     },
+    "/user/{userId}/driveSalaryTaskRelAll": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSalaryTaskRelAll",
+        "description": "user create driveSalaryTaskRelAll",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryTaskRelAll",
+            "in": "body",
+            "description": "driveSalaryTaskRelAll info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalaryTaskRelAll"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryTaskRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSalaryTaskRel": {
       "post": {
         "tags": [
@@ -18551,6 +18596,21 @@
       },
       "xml": {
         "name": "driveActualSalary"
+      }
+    },
+    "driveSalaryTaskRelAll": {
+      "type": "object",
+      "properties": {
+
+        "driveSalaryId": {
+          "type": "integer"
+        },
+        "dpRouteTaskIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSalaryTaskRelAll"
       }
     },
     "driveSalaryTaskRel": {
