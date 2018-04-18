@@ -20,10 +20,11 @@ function addDpRouteLoadTaskDetail(params,callback){
 }
 
 function getDpRouteLoadTaskDetail(params,callback) {
-    var query = " select dpdtl.*,c.make_id,c.make_name,dprl.load_task_status,cer.exception_status " +
+    var query = " select dpdtl.*,c.make_id,c.make_name,e.short_name,dprl.load_task_status,cer.exception_status " +
         " from dp_route_load_task_detail dpdtl " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
         " left join car_info c on dpdtl.car_id = c.id " +
+        " left join entrust_info e on c.entrust_id = e.id " +
         " left join car_exception_rel cer on dpdtl.car_id = cer.car_id where dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskDetailId){
