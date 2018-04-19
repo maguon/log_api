@@ -18,7 +18,6 @@ var logger = serverLogger.createLogger('DriveSalaryTaskRel.js');
 function createDriveSalaryTaskRelAll(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
-        var that = this;
         var dpRouteTaskIds = params.dpRouteTaskIds;
         var rowArray = [] ;
         rowArray.length= dpRouteTaskIds.length;
@@ -62,12 +61,10 @@ function createDriveSalaryTaskRelAll(req,res,next){
                 }
             })
         }).seq(function(){
-            that();
+            logger.info(' createDriveSalaryTaskRelAll ' + 'success');
+            resUtil.resetQueryRes(res,{driveSalaryId:params.driveSalaryId},null);
+            return next();
         })
-    }).seq(function(){
-        logger.info(' createDriveSalaryTaskRelAll ' + 'success');
-        resUtil.resetQueryRes(res,{driveSalaryId:params.driveSalaryId},null);
-        return next();
     })
 }
 
