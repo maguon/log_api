@@ -33,7 +33,7 @@ function getDriveSalaryAccidentRel(params,callback) {
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;
-        query = query + " and dsdr.drive_salary_id = ? ";
+        query = query + " and daar.drive_salary_id = ? ";
     }
     query = query + ' group by daar.id ';
     if (params.start && params.size) {
