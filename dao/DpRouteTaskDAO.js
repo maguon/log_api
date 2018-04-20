@@ -134,7 +134,7 @@ function getDpRouteTask(params,callback) {
 }
 
 function getDpRouteTaskBase(params,callback) {
-    var query = " select dpr.*,t.truck_num,tb.brand_name,c.city_name as city_route_start,ce.city_name as city_route_end, " +
+    var query = " select dpr.*,u.real_name as route_op_name,t.truck_num,tb.brand_name,c.city_name as city_route_start,ce.city_name as city_route_end, " +
         " sum(case when dpr.car_count >= " + params.loadDistance + " then dpr.distance end) as load_distance, " +
         " sum(case when dpr.car_count < " + params.noLoadDistance + " then dpr.distance end) as no_load_distance " +
         " from dp_route_task dpr " +
@@ -143,6 +143,7 @@ function getDpRouteTaskBase(params,callback) {
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
+        " left join user_info u on dpr.user_id = u.uid " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskId){
