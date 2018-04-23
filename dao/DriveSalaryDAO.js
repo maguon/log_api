@@ -8,14 +8,14 @@ var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 
 function getDriveSalary(params,callback) {
     var query = " select ds.*,d.drive_name,d.tel,c.company_name,c.operate_type,t.truck_num,t.truck_type,tb.brand_name, " +
-        " h.number,e.short_name from drive_salary ds " +
-        " left join drive_info d on ds.drive_id = d.id " +
+        " h.number,e.short_name from drive_info d " +
+        " left join  drive_salary ds on ds.drive_id = d.id " +
         " left join company_info c on d.company_id = c.id " +
         " left join truck_info t on ds.truck_id = t.id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join truck_info h on t.rel_id = h.id " +
         " left join entrust_info e on ds.entrust_id = e.id" +
-        " where ds.id is not null ";
+        " where ds.month_date_id is null ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;
@@ -23,7 +23,7 @@ function getDriveSalary(params,callback) {
     }
     if(params.monthDateId){
         paramsArray[i++] = params.monthDateId;
-        query = query + " and ds.month_date_id = ? ";
+        query = query + " or ds.month_date_id = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
@@ -53,7 +53,7 @@ function getDriveSalary(params,callback) {
         paramsArray[i++] = params.grantStatus;
         query = query + " and ds.grant_status = ? ";
     }
-    query = query + ' group by ds.id ';
+
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
