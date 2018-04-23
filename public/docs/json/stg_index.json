@@ -18589,7 +18589,9 @@
     "driveActualSalary": {
       "type": "object",
       "properties": {
-
+        "otherFee": {
+          "type": "integer"
+        },
         "actualSalary": {
           "type": "integer"
         }

@@ -96,6 +96,7 @@ CREATE TABLE `drive_salary` (
   `load_distance` int(10) DEFAULT NULL COMMENT '重载',
   `no_load_distance` int(10) DEFAULT NULL COMMENT '空载',
   `plan_salary` decimal(10,2) DEFAULT '0.00' COMMENT '应发工资',
+  `other_fee` decimal(10,2) DEFAULT NULL COMMENT '其他费用',
   `actual_salary` decimal(10,2) DEFAULT '0.00' COMMENT '实发工资',
   `grant_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '工资状态(1-未结算,2-未发放,3-已发放)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

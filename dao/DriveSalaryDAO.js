@@ -77,8 +77,9 @@ function updateDrivePlanSalary(params,callback){
 }
 
 function updateDriveActualSalary(params,callback){
-    var query = " update drive_salary set actual_salary = ? where id = ? ";
+    var query = " update drive_salary set other_fee = ? , actual_salary = ? where id = ? ";
     var paramsArray=[],i=0;
+    paramsArray[i++] = params.otherFee;
     paramsArray[i++] = params.actualSalary;
     paramsArray[i] = params.driveSalaryId;
     db.dbQuery(query,paramsArray,function(error,rows){
