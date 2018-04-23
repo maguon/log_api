@@ -15,7 +15,7 @@ function getDriveSalary(params,callback) {
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join truck_info h on t.rel_id = h.id " +
         " left join entrust_info e on ds.entrust_id = e.id" +
-        " where ds.month_date_id = 201804 or ds.month_date_id is null  ";
+        " where ds.month_date_id = "+params.monthDateId+" or ds.month_date_id is null  ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;

@@ -16,8 +16,6 @@ var logger = serverLogger.createLogger('DriveSalary.js');
 
 function queryDriveSalary(req,res,next){
     var params = req.params;
-    var strDate = moment(params.monthDateId).format('YYYYMM');
-    params.monthDateId = parseInt(strDate);
     driveSalaryDAO.getDriveSalary(params,function(error,result){
         if (error) {
             logger.error(' queryDriveSalary ' + error.message);
