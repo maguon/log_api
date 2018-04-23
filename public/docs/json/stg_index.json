@@ -18578,6 +18578,12 @@
       "type": "object",
       "properties": {
 
+        "loadDistance": {
+          "type": "integer"
+        },
+        "noLoadDistance": {
+          "type": "integer"
+        },
         "planSalary": {
           "type": "integer"
         }

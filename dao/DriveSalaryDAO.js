@@ -66,8 +66,10 @@ function getDriveSalary(params,callback) {
 }
 
 function updateDrivePlanSalary(params,callback){
-    var query = " update drive_salary set plan_salary = ? where id = ? ";
+    var query = " update drive_salary set load_distance = ? , no_load_distance = ? , plan_salary = ? where id = ? ";
     var paramsArray=[],i=0;
+    paramsArray[i++] = params.loadDistance;
+    paramsArray[i++] = params.noLoadDistance;
     paramsArray[i++] = params.planSalary;
     paramsArray[i] = params.driveSalaryId;
     db.dbQuery(query,paramsArray,function(error,rows){
