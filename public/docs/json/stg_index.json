@@ -6782,6 +6782,51 @@
         }
       }
     },
+    "/user/{userId}/driveSalary": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSalary",
+        "description": "user create driveSalary",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalary",
+            "in": "body",
+            "description": "driveSalary info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalary"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalary id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSalary/{driveSalaryId}": {
       "put": {
         "tags": [
@@ -18578,6 +18623,12 @@
       "type": "object",
       "properties": {
 
+        "driveId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        },
         "loadDistance": {
           "type": "integer"
         },
@@ -18585,6 +18636,9 @@
           "type": "integer"
         },
         "planSalary": {
+          "type": "integer"
+        },
+        "dpRouteTaskIds": {
           "type": "integer"
         }
       },

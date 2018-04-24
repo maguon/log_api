@@ -6,16 +6,31 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 
+function addDriveSalary(params,callback){
+    var query = " insert into drive_salary (month_date_id,drive_id,truck_id,load_distance,no_load_distance,plan_salary)  " +
+        " values ( ? , ? , ? , ? , ? , ? )";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.monthDateId;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.loadDistance;
+    paramsArray[i++]=params.noLoadDistance;
+    paramsArray[i++]=params.planSalary;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDriveSalary ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveSalary(params,callback) {
-    var query = " select ds.month_date_id,ds.truck_id,ds.entrust_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.other_fee,ds.actual_salary,ds.grant_status, " +
-        " d.id as drive_id,d.drive_name,d.tel,c.company_name,c.operate_type,t.truck_num,t.truck_type,tb.brand_name, " +
-        " h.number,e.short_name from drive_info d " +
-        " left join  drive_salary ds on ds.drive_id = d.id " +
+    var query = " select ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.other_fee,ds.actual_salary,ds.grant_status, " +
+        " d.id as drive_id,d.drive_name,d.tel,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
+        " from drive_info d " +
+        " left join drive_salary ds on d.id = ds.drive_id " +
         " left join company_info c on d.company_id = c.id " +
-        " left join truck_info t on ds.truck_id = t.id " +
+        " left join truck_info t on d.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join truck_info h on t.rel_id = h.id " +
-        " left join entrust_info e on ds.entrust_id = e.id" +
         " where ds.month_date_id is null  ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
@@ -28,7 +43,7 @@ function getDriveSalary(params,callback) {
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and ds.drive_id = ? ";
+        query = query + " and d.id = ? ";
     }
     if(params.driveName){
         paramsArray[i++] = params.driveName;
@@ -54,7 +69,7 @@ function getDriveSalary(params,callback) {
         paramsArray[i++] = params.grantStatus;
         query = query + " and ds.grant_status = ? ";
     }
-
+    query = query + ' order by ds.month_date_id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -104,6 +119,7 @@ function updateDriveSalaryStatus(params,callback){
 
 
 module.exports ={
+    addDriveSalary : addDriveSalary,
     getDriveSalary : getDriveSalary,
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
