@@ -31,7 +31,7 @@ function getDriveSalary(params,callback) {
         " left join truck_info t on d.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join truck_info h on t.rel_id = h.id " +
-        " where ds.month_date_id is null  ";
+        " where d.id is not null  ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;
@@ -39,7 +39,9 @@ function getDriveSalary(params,callback) {
     }
     if(params.monthDateId){
         paramsArray[i++] = params.monthDateId;
-        query = query + " or ds.month_date_id = ? ";
+        query = query + " and (ds.month_date_id is null or ds.month_date_id = ? )";
+    }else{
+        query = query + " and ds.month_date_id is not  null ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
