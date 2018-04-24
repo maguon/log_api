@@ -7,7 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 
 function getDriveSalary(params,callback) {
-    var query = " select ds.*,d.drive_name,d.tel,c.company_name,c.operate_type,t.truck_num,t.truck_type,tb.brand_name, " +
+    var query = " select ds.month_date_id,ds.truck_id,ds.entrust_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.other_fee,ds.actual_salary,ds.grant_status, " +
+        " d.id as drive_id,d.drive_name,d.tel,c.company_name,c.operate_type,t.truck_num,t.truck_type,tb.brand_name, " +
         " h.number,e.short_name from drive_info d " +
         " left join  drive_salary ds on ds.drive_id = d.id " +
         " left join company_info c on d.company_id = c.id " +
