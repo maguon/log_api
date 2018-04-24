@@ -27,8 +27,13 @@ function createDriveSalaryTask(req,res,next){
         params.monthDateId = parseInt(strDate);
         driveSalaryDAO.addDriveSalary(params,function(error,result){
             if (error) {
-                logger.error(' createDriveSalaryTask ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "本月司机已经存在，操作失败");
+                    return next();
+                } else{
+                    logger.error(' createDriveSalaryTask ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
             } else {
                 if(result&&result.insertId>0){
                     logger.info(' createDriveSalaryTask ' + 'success');

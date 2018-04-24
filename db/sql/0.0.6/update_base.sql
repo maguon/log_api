@@ -145,3 +145,10 @@ CREATE TABLE `drive_salary_task_rel` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `dp_route_task_id` (`dp_route_task_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-04-24 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`month_date_id`, `drive_id`),
+ADD UNIQUE INDEX `id` (`id`) USING BTREE ;
