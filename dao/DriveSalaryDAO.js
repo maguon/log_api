@@ -86,7 +86,7 @@ function getDriveSalary(params,callback) {
         query = query + " and t.brand_id = ? ";
     }
 
-    query = query + ' order by ds.month_date_id desc ';
+    query = query + ' order by d.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
