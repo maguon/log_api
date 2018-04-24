@@ -52,7 +52,14 @@ function getDriveSalary(params,callback) {
         }
 
     }else{
-        query = query + " and ds.month_date_id is not  null ";
+        if(params.grantStatus ==1){
+            query = query + " and ds.month_date_id is null ";
+        }else if(params.grantStatus){
+            paramsArray[i++] = params.grantStatus;
+            query = query + " and  ds.grant_status = ? ";
+        }else{
+            query = query + " and ds.month_date_id is  null ";
+        }
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
