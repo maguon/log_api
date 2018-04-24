@@ -37,9 +37,20 @@ function getDriveSalary(params,callback) {
         paramsArray[i++] = params.driveSalaryId;
         query = query + " and ds.id = ? ";
     }
+
     if(params.monthDateId){
-        paramsArray[i++] = params.monthDateId;
-        query = query + " and (ds.month_date_id is null or ds.month_date_id = ? )";
+        if(params.grantStatus ==1){
+            paramsArray[i++] = params.monthDateId;
+            query = query + " and (ds.month_date_id is null or ds.month_date_id = ? ) and ds.month_date_id is null ";
+        }else if(params.grantStatus){
+            paramsArray[i++] = params.monthDateId;
+            paramsArray[i++] = params.grantStatus;
+            query = query + " and (ds.month_date_id is null or ds.month_date_id = ? )  and ds.grant_status = ? ";
+        }else{
+            paramsArray[i++] = params.monthDateId;
+            query = query + " and (ds.month_date_id is null or ds.month_date_id = ? )  ";
+        }
+
     }else{
         query = query + " and ds.month_date_id is not  null ";
     }
@@ -67,10 +78,7 @@ function getDriveSalary(params,callback) {
         paramsArray[i++] = params.truckBrandId;
         query = query + " and t.brand_id = ? ";
     }
-    if(params.grantStatus){
-        paramsArray[i++] = params.grantStatus;
-        query = query + " and ds.grant_status = ? ";
-    }
+
     query = query + ' order by ds.month_date_id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
