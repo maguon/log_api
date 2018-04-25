@@ -5619,6 +5619,14 @@
 
           },
           {
+            "name": "trailNum",
+            "in": "query",
+            "description": "trail num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "gender",
             "in": "query",
             "description": "gender",
