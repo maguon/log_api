@@ -29,7 +29,7 @@ function addDrive(params,callback){
 
 function getDrive(params,callback) {
     var query = " select d.*,ti1.id as truck_id,ti1.truck_num,ti2.id as vice_truck_id,ti2.truck_num as vice,c.company_name,c.operate_type, " +
-        " h.truck_num as trail_num from drive_info d " +
+        " h.truck_num as trail_num,h.number from drive_info d " +
         " left join truck_info ti1 on d.id=ti1.drive_id " +
         " left join truck_info ti2 on d.id = ti2.vice_drive_id " +
         " left join truck_info h on ti1.rel_id = h.id " +
