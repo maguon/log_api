@@ -152,3 +152,8 @@ ALTER TABLE `drive_salary`
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (`month_date_id`, `drive_id`),
 ADD UNIQUE INDEX `id` (`id`) USING BTREE ;
+-- ----------------------------
+-- 2018-05-07 更新
+-- ----------------------------
+update receive_info set lng = (SQRT((lng-0.0065)*(lng-0.0065)+(lat-0.006)*(lat-0.006))-0.00002*SIN((lat-0.006)*(3.14159265358979324*3000.0/180.0)))*(COS(ATAN2(lat-0.006,lng-0.0065)-0.000003*COS((lng-0.0065)*(3.14159265358979324*3000.0/180.0))));
+update receive_info set lat = (SQRT((lng-0.0065)*(lng-0.0065)+(lat-0.006)*(lat-0.006))-0.00002*SIN((lat-0.006)*(3.14159265358979324*3000.0/180.0)))*(SIN(ATAN2(lat-0.006,lng-0.0065)-0.000003*COS((lng-0.0065)*(3.14159265358979324*3000.0/180.0))));
