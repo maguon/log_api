@@ -228,6 +228,18 @@ function updateTruckInsureStatus(params,callback){
     });
 }
 
+function updateTruckInsureRelActive(params,callback){
+    var query = " update truck_insure_rel set active = 0 where truck_id = ? and insure_type = ? and id != ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.truckId;
+    paramsArray[i++] = params.insureType;
+    paramsArray[i] = params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckInsureRelActive ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckInsureRel : addTruckInsureRel,
@@ -236,5 +248,6 @@ module.exports ={
     getTruckInsureMoneyTotal : getTruckInsureMoneyTotal,
     getTruckInsureCountTotal : getTruckInsureCountTotal,
     updateTruckInsureRel : updateTruckInsureRel,
-    updateTruckInsureStatus : updateTruckInsureStatus
+    updateTruckInsureStatus : updateTruckInsureStatus,
+    updateTruckInsureRelActive : updateTruckInsureRelActive
 }

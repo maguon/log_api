@@ -17,20 +17,50 @@ var logger = serverLogger.createLogger('TruckInsureRel.js');
 
 function createTruckInsureRel(req,res,next){
     var params = req.params ;
-    var myDate = new Date();
-    var strDate = moment(myDate).format('YYYYMMDD');
-    params.dateId = parseInt(strDate);
-    params.insureDate = myDate;
-    truckInsureRelDAO.addTruckInsureRel(params,function(error,result){
-        if (error) {
-            logger.error(' createTruckInsureRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createTruckInsureRel ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    var relId = 0;
+    Seq().seq(function(){
+        var that = this;
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
+        params.insureDate = myDate;
+        truckInsureRelDAO.addTruckInsureRel(params,function(err,result){
+            if (err) {
+                logger.error(' createTruckInsureRel ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createTruckInsureRel ' + 'success');
+                    relId = result.insertId;
+                }else{
+                    logger.warn(' createTruckInsureRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.relId = relId;
+        truckInsureRelDAO.updateTruckInsureRelActive(params, function (err, result) {
+                if (err) {
+                    logger.error(' updateTruckInsureRelActive ' + err.message);
+                    throw sysError.InternalError(err.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateTruckInsureRelActive ' + 'success');
+                    } else {
+                        logger.warn(' updateTruckInsureRelActive ' + 'failed');
+                    }
+                    that();
+                }
+            })
+    }).seq(function(){
+        logger.info(' createTruckInsureRel ' + 'success');
+        resUtil.resetQueryRes(res,{relId:relId},null);
+        return next();
     })
+
+
 }
 
 function queryTruckInsureRel(req,res,next){
