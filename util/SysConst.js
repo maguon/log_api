@@ -93,11 +93,12 @@ var DAMAGE_TYPE = {
 };
 
 var DAMAGE_STEP_TYPE = {
-    SYS_OUT : 1, //委托方质损
-    PARK_DAMAGE :2 ,//短驳质损
-    STORAGE_DAMAGE : 3, //仓储质损
-    LOAD_DAMAGE : 4 ,//装车质损
-    TRANS_DAMAGE : 5 //运输质损
+    SYS_OUT : 1, //短驳移库
+    PARK_DAMAGE :2 ,//公路运输
+    STORAGE_DAMAGE : 3, //公司运输
+    LOAD_DAMAGE : 4 ,//驾驶员漏检
+    TRANS_DAMAGE : 5, //交通事故
+    FRONT_DUTY : 6    //前端责任
 };
 var UNLOAD_CAR_COUNT = 3;
 
