@@ -181,7 +181,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load) {
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&parkObj.cleanFee>0) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
