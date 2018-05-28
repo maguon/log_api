@@ -9,7 +9,7 @@ var logger = serverLogger.createLogger('TruckDispatchDAO.js');
 function getTruckDispatch(params,callback) {
     var query = " select td.*,ci.city_name,cs.city_name as task_start_name,ce.city_name as task_end_name," +
         " h.truck_num,h.hp,h.truck_tel,h.drive_id,h.company_id,h.truck_type,t.number as trail_number, " +
-        " d.drive_name,d.tel,c.company_name,c.operate_type from truck_dispatch td " +
+        " d.drive_name,u.mobile,c.company_name,c.operate_type from truck_dispatch td " +
         " left join city_info ci on td.current_city = ci.id " +
         " left join city_info cs on td.task_start = cs.id " +
         " left join city_info ce on td.task_end = ce.id " +
@@ -19,6 +19,7 @@ function getTruckDispatch(params,callback) {
         " left join company_info c on h.company_id = c.id " +
         " left join dp_route_task dpr on td.truck_id = dpr.truck_id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id" +
+        " left join user_info u on d.user_id = u.uid " +
         " where td.truck_id is not null ";
     var paramsArray=[],i=0;
     if(params.dispatchFlag){

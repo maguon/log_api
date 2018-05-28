@@ -34,7 +34,8 @@ function getDrive(params,callback) {
         " left join truck_info ti2 on d.id = ti2.vice_drive_id " +
         " left join truck_info h on ti1.rel_id = h.id " +
         " left join company_info c on d.company_id = c.id " +
-        " left join user_info u on d.user_id = u.uid where d.id is not null";
+        " left join user_info u on d.user_id = u.uid " +
+        " where d.id is not null";
     var paramsArray=[],i=0;
     if(params.driveId){
         paramsArray[i++] = params.driveId;

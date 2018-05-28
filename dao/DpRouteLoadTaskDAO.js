@@ -28,7 +28,7 @@ function addDpRouteLoadTask(params,callback){
 
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,c.city_name as city_start_name,c1.city_name,r.short_name,r.clean_fee,dpd.pre_count, " +
-        " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,d.tel,count(dpdtl.id) as car_count, " +
+        " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
         " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
@@ -43,6 +43,7 @@ function getDpRouteLoadTask(params,callback) {
         " left join city_info c on dprl.route_start_id = c.id " +
         " left join city_info c1 on dprl.route_end_id = c1.id " +
         " left join receive_info r on dprl.receive_id = r.id " +
+        " left join user_info u2 on d.user_id = u2.uid " +
         " where dprl.load_task_status !=8 and dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskId){
