@@ -5659,9 +5659,9 @@
 
           },
           {
-            "name": "tel",
+            "name": "mobile",
             "in": "query",
-            "description": "drive tel",
+            "description": "drive mobile",
             "required": false,
             "type": "string"
 
@@ -12400,7 +12400,7 @@
             "name": "dateIdStart",
             "in": "query",
             "description": "dateId start",
-            "required": true,
+            "required": false,
             "type": "string"
 
           },
@@ -12408,7 +12408,7 @@
             "name": "dateIdEnd",
             "in": "query",
             "description": "dateId end",
-            "required": true,
+            "required": false,
             "type": "string"
 
           }

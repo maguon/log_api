@@ -76,9 +76,9 @@ function getDrive(params,callback) {
         paramsArray[i++] = params.driveStatus;
         query = query + " and d.drive_status = ? ";
     }
-    if(params.tel){
-        paramsArray[i++] = params.tel;
-        query = query + " and d.tel = ? ";
+    if(params.mobile){
+        paramsArray[i++] = params.mobile;
+        query = query + " and u.mobile = ? ";
     }
     if(params.licenseType){
         paramsArray[i++] = params.licenseType;
