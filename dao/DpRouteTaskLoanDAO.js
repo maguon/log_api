@@ -274,6 +274,39 @@ function getDpRouteTaskLoanDayStat(params,callback){
     });
 }
 
+function getDpRouteTaskNotLoan(params,callback) {
+    var query = " select dpr.* from dp_route_task dpr " +
+        " left join dp_route_task_loan_rel rel on dpr.id = rel.dp_route_task_id " +
+        " where rel.dp_route_task_id is null ";
+    var paramsArray=[],i=0;
+    if(params.taskStatusArr){
+        query = query + " and dpr.task_status not in ("+params.taskStatusArr + ") "
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskNotLoan ');
+        return callback(error,rows);
+    });
+}
+
+function getDpRouteTaskNotLoanCount(params,callback) {
+    var query = " select count(dpr.id) as not_loan_count from dp_route_task dpr " +
+        " left join dp_route_task_loan_rel rel on dpr.id = rel.dp_route_task_id " +
+        " where rel.dp_route_task_id is null ";
+    var paramsArray=[],i=0;
+    if(params.taskStatusArr){
+        query = query + " and dpr.task_status not in ("+params.taskStatusArr + ") "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskNotLoanCount ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTaskLoan : addDpRouteTaskLoan,
@@ -285,5 +318,7 @@ module.exports ={
     deleteDpRouteTaskLoan : deleteDpRouteTaskLoan,
     getDpRouteTaskLoanCount : getDpRouteTaskLoanCount,
     getDpRouteTaskLoanMonthStat : getDpRouteTaskLoanMonthStat,
-    getDpRouteTaskLoanDayStat : getDpRouteTaskLoanDayStat
+    getDpRouteTaskLoanDayStat : getDpRouteTaskLoanDayStat,
+    getDpRouteTaskNotLoan : getDpRouteTaskNotLoan,
+    getDpRouteTaskNotLoanCount : getDpRouteTaskNotLoanCount
 }
