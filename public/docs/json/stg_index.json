@@ -14255,6 +14255,46 @@
         ],
         "parameters": [
           {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "taskStatusArr",
             "in": "query",
             "description": "taskStatus Arr",
