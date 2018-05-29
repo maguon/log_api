@@ -213,7 +213,7 @@ function deleteDpRouteTaskLoan(params,callback){
 }
 
 function getDpRouteTaskLoanCount(params,callback){
-    var query = " select count(dploan.id) as apply_count,sum(dploan.apply_plan_money) as apply_plan_money, " +
+    var query = " select count(dploan.id) as task_loan_count,sum(dploan.apply_plan_money) as apply_plan_money, " +
         " sum(dploan.grant_actual_money) as grant_actual_money from dp_route_task_loan dploan where dploan.id is not null " ;
     var paramsArray=[],i=0;
     if(params.taskLoanStatus){
