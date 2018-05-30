@@ -25,7 +25,7 @@ function addDpRouteTask(params,callback){
 }
 
 function getDpRouteTask(params,callback) {
-    var query = " select dpr.*,u.real_name as route_op_name,t.truck_num,tl.id as trail_id,tl.truck_num as trail_num,tl.number as trail_number,d.drive_name,u.mobile," +
+    var query = " select dpr.*,u.real_name as route_op_name,t.truck_num,tl.id as trail_id,tl.truck_num as trail_num,tl.number as trail_number,d.drive_name,u1.mobile," +
         " c.city_name as city_route_start,ce.city_name as city_route_end,sum(dprl.plan_count) as plan_count,sum(dprl.real_count) as real_count " +
         " from dp_route_task dpr " +
         " left join user_info u on dpr.user_id = u.uid " +
