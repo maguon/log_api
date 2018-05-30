@@ -28,7 +28,7 @@ function addTruckAccident(params,callback){
 
 function getTruckAccident(params,callback) {
     var query = " select ta.*,u.real_name as declare_user_name,c.city_name as city_route_start,c1.city_name as city_route_end,t.truck_num,t.truck_type,tb.brand_name, " +
-        " d.drive_name,u.mobile,t.company_id,cp.company_name,cp.operate_type,tac.truck_accident_type,tac.profit,tac.under_user_id,tac.under_user_name,tac.under_cost, " +
+        " d.drive_name,u2.mobile,t.company_id,cp.company_name,cp.operate_type,tac.truck_accident_type,tac.profit,tac.under_user_id,tac.under_user_name,tac.under_cost, " +
         " tac.company_cost,tac.end_date,tac.remark from truck_accident_info ta " +
         " left join user_info u on ta.declare_user_id = u.uid " +
         " left join dp_route_task dpr on ta.dp_route_task_id = dpr.id " +
