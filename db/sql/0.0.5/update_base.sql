@@ -205,11 +205,7 @@ ADD COLUMN `check_explain`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_u
 ALTER TABLE `truck_insure_rel`
 ADD COLUMN `insure_explain`  varchar(200) NULL COMMENT '保单说明' AFTER `end_date`,
 ADD COLUMN `insure_user_id`  int(10) NULL DEFAULT NULL COMMENT '经办人ID' AFTER `insure_explain`;
--- ----------------------------
--- 2018-03-05 更新
--- ----------------------------
-ALTER TABLE `damage_check`
-ADD COLUMN `indemnity_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '赔款状态(1-无需赔款,2-需要赔款)' AFTER `remark`;
+
 
 -- ----------------------------
 -- Table structure for damage_check_indemnity

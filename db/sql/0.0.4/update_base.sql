@@ -120,6 +120,7 @@ CREATE TABLE `damage_check` (
   `op_user_id` int(10) DEFAULT NULL COMMENT '处理人用户ID',
   `date_id` int(4) DEFAULT NULL COMMENT '处理结束时间',
   `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `damage_indemnity_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '赔款状态(1-无需赔款,2-需要赔款)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '质损处理时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
