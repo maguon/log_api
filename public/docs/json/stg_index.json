@@ -10035,6 +10035,14 @@
 
           },
           {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "uploadId",
             "in": "query",
             "description": "upload id",
