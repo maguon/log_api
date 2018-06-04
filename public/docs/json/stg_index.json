@@ -15486,6 +15486,14 @@
 
           },
           {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "makeId",
             "in": "query",
             "description": "make id",
