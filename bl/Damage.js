@@ -64,7 +64,7 @@ function createDamage(req,res,next){
 function queryDamage(req,res,next){
     var params = req.params;
     if(params.vinCode!=null&&params.vinCode.length<6){
-        resUtil.resetFailedRes(res, "输入vin码必须大于6位");
+        resUtil.resetFailedRes(res,null);
         return next();
     }
     damageDAO.getDamage(params,function(error,result){
