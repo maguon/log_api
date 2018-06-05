@@ -98,7 +98,8 @@ var DAMAGE_STEP_TYPE = {
     STORAGE_DAMAGE : 3, //公司运输
     LOAD_DAMAGE : 4 ,//驾驶员漏检
     TRANS_DAMAGE : 5, //交通事故
-    FRONT_DUTY : 6    //前端责任
+    FRONT_DUTY : 6,   //前端责任
+    SHIP_DUTY : 7    //安盛船务责任
 };
 var UNLOAD_CAR_COUNT = 3;
 
