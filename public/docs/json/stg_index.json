@@ -18093,6 +18093,133 @@
         }
       }
     },
+    "/settleHandoverCarRel": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleHandoverCarRel list",
+        "description": "query settleHandoverCarRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "settleHandoverId",
+            "in": "query",
+            "description": "settleHandover id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleHandoverCarRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandoverCarRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/settleHandoverCarRel": {
+      "post": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "user create settleHandoverCarRel",
+        "description": "user create settleHandoverCarRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleHandoverCarRel",
+            "in": "body",
+            "description": "settleHandoverCarRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleHandoverCarRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandoverCarRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/settleHandover/{settleHandoverId}/car/{carId}": {
+      "delete": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "Deletes a settleHandoverCarRel",
+        "description": "",
+        "operationId": "deleteSettleHandoverCarRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "settleHandoverId",
+            "in": "path",
+            "description": "settleHandover id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
@@ -19996,6 +20123,21 @@
       },
       "xml": {
         "name": "settleHandover"
+      }
+    },
+    "settleHandoverCarRel": {
+      "type": "object",
+      "properties": {
+
+        "settleHandoverId": {
+          "type": "integer"
+        },
+        "carId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "settleHandoverCarRel"
       }
     }
   },

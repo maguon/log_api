@@ -62,6 +62,7 @@ var damageInsureRel = require('./bl/DamageInsureRel.js');
 var damageInsureLoan = require('./bl/DamageInsureLoan.js');
 var repairStation = require('./bl/RepairStation.js');
 var settleHandover = require('./bl/SettleHandover.js');
+var settleHandoverCarRel = require('./bl/SettleHandoverCarRel.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -667,6 +668,13 @@ function createServer() {
      */
     server.get('/api/settleHandover', settleHandover.querySettleHandover);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
+
+    /**
+     * SettleHandoverCarRel Module
+     */
+    server.get('/api/settleHandoverCarRel', settleHandoverCarRel.querySettleHandoverCarRel);
+    server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},settleHandoverCarRel.createSettleHandoverCarRel);
+    server.del('/api/user/:userId/settleHandover/:settleHandoverId/car/:carId' , settleHandoverCarRel.removeSettleHandoverCarRel);
 
     /**
      * MsgPush Module
