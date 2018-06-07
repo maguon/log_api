@@ -42,27 +42,15 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        carDAO.getCarBase({carId:params.carId},function(error,rows){
-            if (error) {
-                logger.error(' getCarBase ' + error.message);
-                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                    if(rows && rows.length>0){
-                        logger.warn(' getCarBase ' +params.vin+ sysMsg.CUST_CREATE_EXISTING);
-                        resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
-                        return next();
-                    }else{
-                        that();
-                    }
-            }
-        })
-    }).seq(function(){
-        var that = this;
             carDAO.addCar(params,function(error,result){
                 if (error) {
-                    logger.error(' createCar ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    if(error.message.indexOf("Duplicate") > 0) {
+                        resUtil.resetFailedRes(res, "商品车数据已经存在，请核对后在入库");
+                        return next();
+                    } else{
+                        logger.error(' createCar ' + err.message);
+                        throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    }
                 } else {
                     if(result&&result.insertId>0){
                         logger.info(' createCar ' + 'success');
