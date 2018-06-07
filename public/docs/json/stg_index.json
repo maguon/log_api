@@ -73,6 +73,10 @@
       "description":"repairStation of log api"
     },
     {
+      "name":"settle",
+      "description":"settle of log api"
+    },
+    {
       "name":"msgPush",
       "description":"MsgPush of log api"
     },
@@ -18000,6 +18004,95 @@
         }
       }
     },
+    "/settleHandover": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleHandover list",
+        "description": "query settleHandover",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "settleHandoverId",
+            "in": "query",
+            "description": "settleHandover id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "number",
+            "in": "query",
+            "description": "number",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleHandover"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/settleHandover": {
+      "post": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "user create settleHandover",
+        "description": "user create settleHandover",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleHandover",
+            "in": "body",
+            "description": "settleHandover info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleHandover"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
@@ -19885,6 +19978,24 @@
       },
       "xml": {
         "name": "repairStation"
+      }
+    },
+    "settleHandover": {
+      "type": "object",
+      "properties": {
+
+        "number": {
+          "type": "integer"
+        },
+        "entrustId": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "settleHandover"
       }
     }
   },

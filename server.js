@@ -61,11 +61,13 @@ var damageInsure = require('./bl/DamageInsure.js');
 var damageInsureRel = require('./bl/DamageInsureRel.js');
 var damageInsureLoan = require('./bl/DamageInsureLoan.js');
 var repairStation = require('./bl/RepairStation.js');
+var settleHandover = require('./bl/SettleHandover.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
 var msgPush = require('./bl/MsgPush.js');
 var sms = require('./bl/Sms.js');
+
 
 ///--- API
 
@@ -659,6 +661,12 @@ function createServer() {
     server.post({path:'/api/user/:userId/repairStation',contentType: 'application/json'},repairStation.createRepairStation);
     server.put({path:'/api/user/:userId/repairStation/:repairStationId',contentType: 'application/json'} ,repairStation.updateRepairStation);
     server.put({path:'/api/user/:userId/repairStation/:repairStationId/repairStationStatus/:repairStationStatus',contentType: 'application/json'} ,repairStation.updateRepairStationStatus);
+
+    /**
+     * SettleHandover Module
+     */
+    server.get('/api/settleHandover', settleHandover.querySettleHandover);
+    server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
 
     /**
      * MsgPush Module
