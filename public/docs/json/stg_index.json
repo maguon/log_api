@@ -19380,9 +19380,6 @@
       "type": "object",
       "properties": {
 
-        "carId": {
-          "type": "integer"
-        },
         "vin": {
           "type": "string"
         },
