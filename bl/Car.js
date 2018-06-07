@@ -31,43 +31,29 @@ function createUploadCar(req,res,next){
 function createCar(req,res,next){
     var params = req.params ;
     var carId = 0;
-    Seq().seq(function(){
-        var that = this;
-        carDAO.getCarList({vin:params.vin},function(error,rows){
-            if (error) {
-                logger.error(' getCarList ' + error.message);
-                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+    if(params.orderDate!=null){
+        var orderDate = params.orderDate;
+        var strDate = moment(orderDate).format('YYYYMMDD');
+        params.orderDateId = parseInt(strDate);
+    }
+    carDAO.addCar(params,function(error,result){
+        if (error) {
+            if(error.message.indexOf("Duplicate") > 0) {
+                resUtil.resetFailedRes(res, "本条数据已经存在，请核对后重新录入");
                 return next();
-            } else {
-                if(rows && rows.length>0){
-                    logger.warn(' getCarList ' +params.vin+ sysMsg.CUST_CREATE_EXISTING);
-                    resUtil.resetFailedRes(res,sysMsg.CUST_CREATE_EXISTING);
-                    return next();
-                }else{
-                    that();
-                }
+            } else{
+                logger.error(' createCar ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             }
-        })
-    }).seq(function(){
-        if(params.orderDate!=null){
-            var orderDate = params.orderDate;
-            var strDate = moment(orderDate).format('YYYYMMDD');
-            params.orderDateId = parseInt(strDate);
+        } else {
+            logger.info(' createCar ' + 'success');
+            req.params.carContent =" 商品车信息录入 ";
+            carId = result.insertId;
+            req.params.carId = carId;
+            req.params.op =10;
+            resUtil.resetCreateRes(res,result,null);
+            return next();
         }
-        carDAO.addCar(params,function(error,result){
-            if (error) {
-                logger.error(' createCar ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' createCar ' + 'success');
-                req.params.carContent =" 商品车信息录入 ";
-                carId = result.insertId;
-                req.params.carId = carId;
-                req.params.op =10;
-                resUtil.resetCreateRes(res,result,null);
-                return next();
-            }
-        })
     })
 }
 

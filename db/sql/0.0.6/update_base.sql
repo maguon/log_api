@@ -165,3 +165,16 @@ update truck_accident_info set lat = (SQRT((lng-0.0065)*(lng-0.0065)+(lat-0.006)
 
 update base_addr set lng = (SQRT((lng-0.0065)*(lng-0.0065)+(lat-0.006)*(lat-0.006))-0.00002*SIN((lat-0.006)*(3.14159265358979324*3000.0/180.0)))*(COS(ATAN2(lat-0.006,lng-0.0065)-0.000003*COS((lng-0.0065)*(3.14159265358979324*3000.0/180.0))));
 update base_addr set lat = (SQRT((lng-0.0065)*(lng-0.0065)+(lat-0.006)*(lat-0.006))-0.00002*SIN((lat-0.006)*(3.14159265358979324*3000.0/180.0)))*(SIN(ATAN2(lat-0.006,lng-0.0065)-0.000003*COS((lng-0.0065)*(3.14159265358979324*3000.0/180.0))));
+-- ----------------------------
+-- 2018-06-07 更新
+-- ----------------------------
+ALTER TABLE `car_info`
+MODIFY COLUMN `route_start_id`  int(10) NOT NULL COMMENT '起始地ID' AFTER `model_name`,
+MODIFY COLUMN `base_addr_id`  int(10) NOT NULL COMMENT '起始地发货地址ID' AFTER `route_start`,
+MODIFY COLUMN `route_end_id`  int(10) NOT NULL COMMENT '目的地ID' AFTER `base_addr_id`,
+MODIFY COLUMN `receive_id`  int(10) NOT NULL DEFAULT 0 COMMENT '经销商ID' AFTER `route_end`,
+MODIFY COLUMN `entrust_id`  int(10) NOT NULL DEFAULT 0 COMMENT '委托方ID' AFTER `receive_id`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`vin`, `route_start_id`, `base_addr_id`,`entrust_id`),
+DROP INDEX `vin` ,
+ADD UNIQUE INDEX `id` (`id`) USING BTREE COMMENT '唯一VIN';
