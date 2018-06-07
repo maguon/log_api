@@ -42,7 +42,7 @@ function createCarStorageRel(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        carDAO.getCarBase({vin:params.vin},function(error,rows){
+        carDAO.getCarBase({carId:params.carId},function(error,rows){
             if (error) {
                 logger.error(' getCarBase ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);

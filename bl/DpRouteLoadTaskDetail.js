@@ -40,7 +40,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        carDAO.getCarList({vin:params.vin},function(error,rows){
+        carDAO.getCarList({carId:params.carId},function(error,rows){
             if (error) {
                 logger.error(' getCarList ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
