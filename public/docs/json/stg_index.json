@@ -13134,9 +13134,17 @@
 
           },
           {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "carLoadStatus",
             "in": "query",
-            "description": "carLoadStatus",
+            "description": "carLoad status",
             "required": false,
             "type": "integer"
 
