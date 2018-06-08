@@ -96,8 +96,23 @@ function querySettleHandover(req,res,next){
     })
 }
 
+function updateSettleHandover(req,res,next){
+    var params = req.params ;
+    settleHandoverDAO.updateSettleHandover(params,function(error,result){
+        if (error) {
+            logger.error(' updateSettleHandover ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateSettleHandover ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createSettleHandover : createSettleHandover,
-    querySettleHandover : querySettleHandover
+    querySettleHandover : querySettleHandover,
+    updateSettleHandover : updateSettleHandover
 }

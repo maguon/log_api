@@ -7,11 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageInsureDAO.js');
 
 function addDamageInsure(params,callback){
-    var query = " insert into damage_insure ( insure_id , insure_user_id , insure_plan , " +
-        " financial_loan_status , financial_loan , payment_explain ) values ( ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into damage_insure ( insure_id , insure_user_id , damage_money , insure_plan , " +
+        " financial_loan_status , financial_loan , payment_explain ) values ( ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.damageMoney;
     paramsArray[i++]=params.insurePlan;
     paramsArray[i++]=params.financialLoanStatus;
     paramsArray[i++]=params.financialLoan;
@@ -88,9 +89,10 @@ function getDamageInsure(params,callback) {
 }
 
 function updateDamageInsure(params,callback){
-    var query = " update damage_insure set insure_id = ? , insure_plan = ? , financial_loan = ? , payment_explain = ? , insure_actual = ? , check_explain = ? where id = ? " ;
+    var query = " update damage_insure set insure_id = ? , damage_money = ? , insure_plan = ? , financial_loan = ? , payment_explain = ? , insure_actual = ? , check_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
+    paramsArray[i++]=params.damageMoney;
     paramsArray[i++]=params.insurePlan;
     paramsArray[i++]=params.financialLoan;
     paramsArray[i++]=params.paymentExplain;

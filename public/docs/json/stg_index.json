@@ -20064,6 +20064,9 @@
         "insureId": {
           "type": "integer"
         },
+        "damageMoney": {
+          "type": "integer"
+        },
         "insurePlan": {
           "type": "integer"
         },
@@ -20095,6 +20098,9 @@
       "properties": {
 
         "insureId": {
+          "type": "integer"
+        },
+        "damageMoney": {
           "type": "integer"
         },
         "insurePlan": {

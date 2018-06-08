@@ -68,6 +68,31 @@ function getSettleHandover(params,callback) {
     });
 }
 
+function updateSettleHandover(params,callback){
+    var query = " update settle_handover_info set received_date = ?,remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.receivedDate;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.settleHandoverId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateSettleHandover ');
+        return callback(error,rows);
+    });
+}
+
+function updateSettleHandoverRoute(params,callback){
+    var query = " update settle_handover_info set route_start_id = ?,route_end_id = ?,receive_id = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i]=params.settleHandoverId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateSettleHandoverRoute ');
+        return callback(error,rows);
+    });
+}
+
 function updateCarCountPlus(params,callback){
     var query = " update settle_handover_info set car_count = car_count +1 where id = ? " ;
     var paramsArray=[],i=0;
@@ -92,6 +117,8 @@ function updateCarCountMinus(params,callback){
 module.exports ={
     addSettleHandover : addSettleHandover,
     getSettleHandover : getSettleHandover,
+    updateSettleHandover : updateSettleHandover,
+    updateSettleHandoverRoute : updateSettleHandoverRoute,
     updateCarCountPlus : updateCarCountPlus,
     updateCarCountMinus : updateCarCountMinus
 }
