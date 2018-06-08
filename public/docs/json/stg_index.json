@@ -13098,6 +13098,66 @@
         }
       }
     },
+    "/dpRouteLoadTaskDetailBase": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteLoadTaskDetail list",
+        "description": "query dpRouteLoadTaskDetail",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskDetailId",
+            "in": "query",
+            "description": "dpRouteTaskDetail id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "carLoadStatus",
+            "in": "query",
+            "description": "carLoadStatus",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteLoadTaskDetail"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTaskDetail id"
+          }
+        }
+      }
+    },
     "/carLoadStatusCount": {
       "get": {
         "tags": [

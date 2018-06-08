@@ -25,7 +25,7 @@ function getDpRouteLoadTaskDetail(params,callback) {
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
         " left join car_info c on dpdtl.car_id = c.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
-        " left join car_exception_rel cer on dpdtl.car_id = cer.car_id where dprl.id is not null ";
+        " left join car_exception_rel cer on dpdtl.car_id = cer.car_id where dpdtl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskDetailId){
         paramsArray[i++] = params.dpRouteTaskDetailId;
@@ -46,6 +46,30 @@ function getDpRouteLoadTaskDetail(params,callback) {
     query = query + ' order by dpdtl.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTaskDetail ');
+        return callback(error,rows);
+    });
+}
+
+function getDpRouteLoadTaskDetailBase(params,callback) {
+    var query = " select dpdtl.* from dp_route_load_task_detail dpdtl where dpdtl.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskDetailId){
+        paramsArray[i++] = params.dpRouteTaskDetailId;
+        query = query + " and dpdtl.id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and dpdtl.vin = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and dpdtl.vin like '%"+params.vinCode+"%'";
+    }
+    if(params.carLoadStatus){
+        paramsArray[i++] = params.carLoadStatus;
+        query = query + " and dpdtl.car_load_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskDetailBase ');
         return callback(error,rows);
     });
 }
@@ -111,6 +135,7 @@ function deleteDpRouteLoadTaskDetail(params,callback){
 module.exports ={
     addDpRouteLoadTaskDetail : addDpRouteLoadTaskDetail,
     getDpRouteLoadTaskDetail : getDpRouteLoadTaskDetail,
+    getDpRouteLoadTaskDetailBase : getDpRouteLoadTaskDetailBase,
     getCarLoadStatusCount : getCarLoadStatusCount,
     updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus,
     deleteDpRouteLoadTaskDetail : deleteDpRouteLoadTaskDetail

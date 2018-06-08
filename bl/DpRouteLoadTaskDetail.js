@@ -124,6 +124,20 @@ function queryDpRouteLoadTaskDetail(req,res,next){
     })
 }
 
+function queryDpRouteLoadTaskDetailBase(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskDetailDAO.getDpRouteLoadTaskDetailBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTaskDetailBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTaskDetailBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryCarLoadStatusCount(req,res,next){
     var params = req.params ;
     dpRouteLoadTaskDetailDAO.getCarLoadStatusCount(params,function(error,result){
@@ -244,6 +258,7 @@ function removeDpRouteLoadTaskDetail(req,res,next){
 module.exports = {
     createDpRouteLoadTaskDetail : createDpRouteLoadTaskDetail,
     queryDpRouteLoadTaskDetail : queryDpRouteLoadTaskDetail,
+    queryDpRouteLoadTaskDetailBase : queryDpRouteLoadTaskDetailBase,
     queryCarLoadStatusCount : queryCarLoadStatusCount,
     updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus,
     removeDpRouteLoadTaskDetail : removeDpRouteLoadTaskDetail
