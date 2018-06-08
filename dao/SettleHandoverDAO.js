@@ -24,6 +24,8 @@ function getSettleHandover(params,callback) {
     var query = " select sh.*,e.short_name,u.real_name as op_user_name from settle_handover_info sh" +
         " left join entrust_info e on sh.entrust_id = e.id " +
         " left join user_info u on sh.op_user_id = u.uid " +
+        " left join settle_handover_car_rel shcr on sh.id = shcr.settle_handover_id " +
+        " left join car_info c on shcr.car_id = c.id " +
         " where sh.id is not null ";
     var paramsArray=[],i=0;
     if(params.settleHandoverId){
@@ -33,6 +35,13 @@ function getSettleHandover(params,callback) {
     if(params.number){
         paramsArray[i++] = params.number;
         query = query + " and sh.number = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and c.vin like '%"+params.vinCode+"%'";
     }
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;

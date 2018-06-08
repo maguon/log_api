@@ -18032,6 +18032,22 @@
 
           },
           {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",
