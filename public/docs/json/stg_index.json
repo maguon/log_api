@@ -18030,6 +18030,46 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receivedDateStart",
+            "in": "query",
+            "description": "receivedDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "receivedDateEnd",
+            "in": "query",
+            "description": "receivedDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -20116,6 +20156,9 @@
         },
         "entrustId": {
           "type": "integer"
+        },
+        "receivedDate": {
+          "type": "string"
         },
         "remark": {
           "type": "string"
