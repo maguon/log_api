@@ -67,8 +67,30 @@ function getSettleHandover(params,callback) {
     });
 }
 
+function updateCarCountPlus(params,callback){
+    var query = " update settle_handover_info set car_count = car_count +1 where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i]=params.settleHandoverId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarCountPlus ');
+        return callback(error,rows);
+    });
+}
+
+function updateCarCountMinus(params,callback){
+    var query = " update settle_handover_info set car_count = car_count -1 where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i]=params.settleHandoverId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarCountMinus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addSettleHandover : addSettleHandover,
-    getSettleHandover : getSettleHandover
+    getSettleHandover : getSettleHandover,
+    updateCarCountPlus : updateCarCountPlus,
+    updateCarCountMinus : updateCarCountMinus
 }
