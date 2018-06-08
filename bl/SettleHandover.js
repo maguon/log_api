@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var settleHandoverDAO = require('../dao/SettleHandoverDAO.js');
+var settleSeqDAO = require('../dao/SettleSeqDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -19,23 +20,46 @@ function createSettleHandover(req,res,next){
     var settleHandoverId = 0;
     var myDate = new Date();
     var strDate = moment(myDate).format('YYYYMM');
+    var yMonth = 0;
+    var seqId = 0;
     Seq().seq(function(){
         var that = this;
-        settleHandoverDAO.getSettleHandover(params,function(error,rows){
+        settleSeqDAO.getSettleSeq(params,function(error,rows){
             if (error) {
-                logger.error(' getSettleHandover ' + error.message);
+                logger.error(' getSettleSeq ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length>0&&rows[0].number.toString().substr(0,6) == strDate){
-                    params.number = rows[0].number +1;
+                if(rows&&rows.length>0&&rows[0].y_month == strDate){
+                    yMonth = rows[0].y_month;
+                    seqId = rows[0].seq_id +1;
                 }else{
-                    params.number = parseInt(strDate +"0001");
+                    yMonth = parseInt(strDate);
+                    seqId =parseInt(strDate +"00001");
                 }
                 that();
             }
         })
     }).seq(function(){
         var that = this;
+        params.yMonth =yMonth;
+        params.seqId =seqId;
+        settleSeqDAO.addSettleSeq(params,function(error,result){
+            if (error) {
+                logger.error(' createSettleSeq ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createSettleSeq ' + 'success');
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res," 序列生成失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.number = seqId;
         settleHandoverDAO.addSettleHandover(params,function(error,result){
             if (error) {
                 logger.error(' createSettleHandover ' + error.message);

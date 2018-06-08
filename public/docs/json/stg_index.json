@@ -20227,9 +20227,6 @@
       "type": "object",
       "properties": {
 
-        "number": {
-          "type": "integer"
-        },
         "entrustId": {
           "type": "integer"
         },
