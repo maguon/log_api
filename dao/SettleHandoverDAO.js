@@ -55,6 +55,7 @@ function getSettleHandover(params,callback) {
         paramsArray[i++] = params.receivedDateEnd +" 23:59:59";
         query = query + " and sh.received_date <= ? ";
     }
+    query = query + ' group by sh.id ';
     query = query + ' order by sh.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
