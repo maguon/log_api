@@ -669,6 +669,7 @@ function createServer() {
      */
     server.get('/api/settleHandover', settleHandover.querySettleHandover);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
+    server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId',contentType: 'application/json'} ,settleHandover.updateSettleHandover);
 
     /**
      * SettleHandoverCarRel Module
