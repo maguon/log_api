@@ -20,7 +20,7 @@ function addSettleSeq(params,callback){
 function getSettleSeq(params,callback) {
     var query = " select * from settle_seq where y_month is not null ";
     var paramsArray=[],i=0;
-    query = query + ' order by y_month desc ';
+    query = query + ' order by seq_id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getSettleSeq ');
         return callback(error,rows);
