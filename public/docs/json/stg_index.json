@@ -7483,6 +7483,51 @@
         }
       }
     },
+    "/user/{userId}/drivePeccancy": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create drivePeccancy",
+        "description": "user create drivePeccancy",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "drivePeccancy",
+            "in": "body",
+            "description": "drivePeccancy info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/drivePeccancy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drivePeccancy id"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [
@@ -19416,6 +19461,36 @@
       },
       "xml": {
         "name": "driveSalaryAccidentRel"
+      }
+    },
+    "drivePeccancy": {
+      "type": "object",
+      "properties": {
+
+        "driveId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "fineScore": {
+          "type": "integer"
+        },
+        "fineMoney": {
+          "type": "integer"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "checkReason"
       }
     },
     "checkReason": {
