@@ -110,6 +110,20 @@ function updateSettleHandover(req,res,next){
     })
 }
 
+function updateHandoveImage(req,res,next){
+    var params = req.params ;
+    settleHandoverDAO.updateHandoveImage(params,function(error,result){
+        if (error) {
+            logger.error(' updateHandoveImage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateHandoveImage ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getSettleHandoverCsv(req,res,next){
     var csvString = "";
     var header = "交接单编号" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "经销商"+ ','+ "交接车辆" + ','+ "交接单收到日期" + ','+ "提交人"+','+ "备注" ;
@@ -175,5 +189,6 @@ module.exports = {
     createSettleHandover : createSettleHandover,
     querySettleHandover : querySettleHandover,
     updateSettleHandover : updateSettleHandover,
+    updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv
 }

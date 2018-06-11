@@ -130,6 +130,17 @@ function updateCarCountMinus(params,callback){
     });
 }
 
+function updateHandoveImage(params,callback){
+    var query = " update settle_handover_info set handove_image = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.handoveImage;
+    paramsArray[i]=params.settleHandoverId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateHandoveImage ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addSettleHandover : addSettleHandover,
@@ -137,5 +148,6 @@ module.exports ={
     updateSettleHandover : updateSettleHandover,
     updateSettleHandoverRoute : updateSettleHandoverRoute,
     updateCarCountPlus : updateCarCountPlus,
-    updateCarCountMinus : updateCarCountMinus
+    updateCarCountMinus : updateCarCountMinus,
+    updateHandoveImage : updateHandoveImage
 }

@@ -18456,6 +18456,60 @@
         }
       }
     },
+    "/user/{userId}/settleHandover/{settleHandoverId}/image": {
+      "put": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "update settleHandover image",
+        "description": "update settleHandover image",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleHandoverId",
+            "in": "path",
+            "description": "settleHandover id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "image",
+            "in": "body",
+            "description": "image url",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleHandoverImage"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
+          }
+        }
+      }
+    },
     "/settleHandoverCarRel": {
       "get": {
         "tags": [
@@ -20522,6 +20576,18 @@
       },
       "xml": {
         "name": "settleHandover"
+      }
+    },
+    "settleHandoverImage": {
+      "type": "object",
+      "properties": {
+
+        "handoveImage": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "settleHandoverImage"
       }
     },
     "settleHandoverCarRel": {
