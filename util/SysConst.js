@@ -93,13 +93,16 @@ var DAMAGE_TYPE = {
 };
 
 var DAMAGE_STEP_TYPE = {
-    SYS_OUT : 1, //短驳移库
-    PARK_DAMAGE :2 ,//公路运输
-    STORAGE_DAMAGE : 3, //公司运输
-    LOAD_DAMAGE : 4 ,//驾驶员漏检
-    TRANS_DAMAGE : 5, //交通事故
-    FRONT_DUTY : 6,   //前端责任
-    SHIP_DUTY : 7    //安盛船务责任
+    CHANGCHUN : 1, //长春办收发车
+    PARK_DAMAGE :2 ,//运输途中遭人为破坏
+    SHENYANG : 3,   //沈阳办收发车
+    LOAD_DAMAGE : 4 ,//驾驶员违规操作
+    TIANJIN : 5,   //天津办收发车
+    FRONT_DUTY : 6,   //通用判定
+    SHIP_DUTY : 7,    //安盛判定
+    PDI : 8,   //PDI漏检
+    DALIAN : 9 //大连现场收发车
+
 };
 var UNLOAD_CAR_COUNT = 3;
 
@@ -170,3 +173,5 @@ module.exports = {
     TRUCK_INSURE__STATUS : TRUCK_INSURE__STATUS,
     STAT_STATUS : STAT_STATUS
 }
+
+
