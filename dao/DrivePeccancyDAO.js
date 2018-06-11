@@ -52,8 +52,26 @@ function getDrivePeccancy(params,callback) {
     });
 }
 
+function updateDrivePeccancy(params,callback){
+    var query = " update drive_peccancy set drive_id = ? , truck_id = ? , fine_score = ? , fine_money = ? , start_date = ? , end_date = ? , remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.fineScore;
+    paramsArray[i++]=params.fineMoney;
+    paramsArray[i++]=params.startDate;
+    paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.peccancyId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDrivePeccancy ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDrivePeccancy : addDrivePeccancy,
-    getDrivePeccancy : getDrivePeccancy
+    getDrivePeccancy : getDrivePeccancy,
+    updateDrivePeccancy : updateDrivePeccancy
 }
