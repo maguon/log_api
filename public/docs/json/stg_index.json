@@ -18204,6 +18204,114 @@
         }
       }
     },
+    "/settleHandover.csv": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleHandover csv",
+        "description": "query settleHandoverCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "settleHandoverId",
+            "in": "query",
+            "description": "settleHandover id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "number",
+            "in": "query",
+            "description": "number",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receivedDateStart",
+            "in": "query",
+            "description": "receivedDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "receivedDateEnd",
+            "in": "query",
+            "description": "receivedDate end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleHandover"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
+          }
+        }
+      }
+    },
     "/user/{userId}/settleHandover": {
       "post": {
         "tags": [

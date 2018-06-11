@@ -110,9 +110,70 @@ function updateSettleHandover(req,res,next){
     })
 }
 
+function getSettleHandoverCsv(req,res,next){
+    var csvString = "";
+    var header = "交接单编号" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "经销商"+ ','+ "交接车辆" + ','+ "交接单收到日期" + ','+ "提交人"+','+ "备注" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    settleHandoverDAO.getSettleHandover(params,function(error,rows){
+        if (error) {
+            logger.error(' getTruckRepairRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.number = rows[i].number;
+                parkObj.shortName = rows[i].short_name;
+                if(rows[i].city_route_start == null){
+                    parkObj.cityRouteStart = "";
+                }else{
+                    parkObj.cityRouteStart = rows[i].city_route_start;
+                }
+                if(rows[i].city_route_end == null){
+                    parkObj.cityRouteEnd = "";
+                }else{
+                    parkObj.cityRouteEnd = rows[i].city_route_end;
+                }
+                if(rows[i].r_short_name == null){
+                    parkObj.rShortName = "";
+                }else{
+                    parkObj.rShortName = rows[i].r_short_name;
+                }
+                parkObj.carCount = rows[i].car_count;
+                if(rows[i].received_date == null){
+                    parkObj.receivedDate = "";
+                }else{
+                    parkObj.receivedDate = new Date(rows[i].received_date).toLocaleDateString();
+                }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
+                if(rows[i].op_user_name == null){
+                    parkObj.opUserName = "";
+                }else{
+                    parkObj.opUserName = rows[i].op_user_name;
+                }
+                csvString = csvString+parkObj.number+","+parkObj.shortName+","+parkObj.cityRouteStart+","+parkObj.cityRouteEnd
+                    +","+parkObj.rShortName+","+parkObj.carCount+","+parkObj.receivedDate+","+parkObj.remark+","+parkObj.opUserName+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createSettleHandover : createSettleHandover,
     querySettleHandover : querySettleHandover,
-    updateSettleHandover : updateSettleHandover
+    updateSettleHandover : updateSettleHandover,
+    getSettleHandoverCsv : getSettleHandoverCsv
 }
