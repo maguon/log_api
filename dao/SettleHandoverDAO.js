@@ -21,11 +21,16 @@ function addSettleHandover(params,callback){
 }
 
 function getSettleHandover(params,callback) {
-    var query = " select sh.*,e.short_name,u.real_name as op_user_name from settle_handover_info sh" +
+    var query = " select sh.*,e.short_name,u.real_name as op_user_name," +
+        " c1.city_name as city_route_start,c2.city_name as city_route_end,r.short_name as r_short_name " +
+        " from settle_handover_info sh " +
         " left join entrust_info e on sh.entrust_id = e.id " +
         " left join user_info u on sh.op_user_id = u.uid " +
         " left join settle_handover_car_rel shcr on sh.id = shcr.settle_handover_id " +
         " left join car_info c on shcr.car_id = c.id " +
+        " left join city_info c1 on sh.route_start_id = c1.id " +
+        " left join city_info c2 on sh.route_end_id = c2.id "+
+        " left join receive_info r on sh.receive_id = r.id "+
         " where sh.id is not null ";
     var paramsArray=[],i=0;
     if(params.settleHandoverId){
@@ -46,6 +51,18 @@ function getSettleHandover(params,callback) {
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
         query = query + " and sh.entrust_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and sh.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and sh.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and sh.receive_id = ? ";
     }
     if(params.receivedDateStart){
         paramsArray[i++] = params.receivedDateStart +" 00:00:00";

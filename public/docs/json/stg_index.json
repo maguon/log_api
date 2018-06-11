@@ -18132,6 +18132,30 @@
 
           },
           {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "receivedDateStart",
             "in": "query",
             "description": "receivedDate start",
