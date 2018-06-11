@@ -369,6 +369,7 @@ function createServer() {
     /**
      * DrivePeccancy Module
      */
+    server.get('/api/drivePeccancy' , drivePeccancy.queryDrivePeccancy);
     server.post({path:'/api/user/:userId/drivePeccancy',contentType: 'application/json'},drivePeccancy.createDrivePeccancy);
 
     /**

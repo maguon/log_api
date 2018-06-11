@@ -27,7 +27,22 @@ function createDrivePeccancy(req,res,next){
     })
 }
 
+function queryDrivePeccancy(req,res,next){
+    var params = req.params ;
+    drivePeccancyDAO.getDrivePeccancy(params,function(error,result){
+        if (error) {
+            logger.error(' queryDrivePeccancy ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDrivePeccancy ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createDrivePeccancy : createDrivePeccancy
+    createDrivePeccancy : createDrivePeccancy,
+    queryDrivePeccancy : queryDrivePeccancy
 }

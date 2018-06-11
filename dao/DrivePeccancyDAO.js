@@ -23,7 +23,37 @@ function addDrivePeccancy(params,callback){
     });
 }
 
+function getDrivePeccancy(params,callback) {
+    var query = " select dp.*,d.drive_name,t.truck_num from drive_peccancy dp " +
+        " left join drive_info d on dp.drive_id = d.id " +
+        " left join truck_info t on dp.truck_id = t.id " +
+        " where dp.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.peccancyId){
+        paramsArray[i++] = params.peccancyId;
+        query = query + " and dp.id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dp.drive_id = ? ";
+    }
+    if(params.fineStatus){
+        paramsArray[i++] = params.fineStatus;
+        query = query + " and dp.fine_status = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDrivePeccancy ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDrivePeccancy : addDrivePeccancy
+    addDrivePeccancy : addDrivePeccancy,
+    getDrivePeccancy : getDrivePeccancy
 }

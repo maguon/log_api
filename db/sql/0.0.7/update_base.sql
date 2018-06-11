@@ -32,6 +32,7 @@ CREATE TABLE `settle_handover_info` (
   `car_count` int(10) DEFAULT '0' COMMENT '交接商品车数量',
   `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `date_id` int(4) DEFAULT NULL COMMENT '提交时间统计',
+  `handove_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '交接单照片',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
