@@ -51,8 +51,10 @@ function getDpRouteLoadTaskDetail(params,callback) {
 }
 
 function getDpRouteLoadTaskDetailBase(params,callback) {
-    var query = " select dpdtl.* from dp_route_load_task_detail dpdtl " +
+    var query = " select dpdtl.*,dprl.route_start_id,dprl.route_end_id,dprl.receive_id " +
+        " from dp_route_load_task_detail dpdtl " +
         " left join car_info c on dpdtl.car_id = c.id " +
+        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
         " where dpdtl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskDetailId){
@@ -65,6 +67,10 @@ function getDpRouteLoadTaskDetailBase(params,callback) {
     }
     if(params.vinCode){
         query = query + " and dpdtl.vin like '%"+params.vinCode+"%'";
+    }
+    if(params.carId){
+        paramsArray[i++] = params.carId;
+        query = query + " and dpdtl.car_id = ? ";
     }
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;

@@ -13134,6 +13134,14 @@
 
           },
           {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",

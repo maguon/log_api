@@ -178,8 +178,3 @@ DROP PRIMARY KEY,
 ADD PRIMARY KEY (`vin`, `route_start_id`, `base_addr_id`,`entrust_id`),
 DROP INDEX `vin` ,
 ADD UNIQUE INDEX `id` (`id`) USING BTREE COMMENT '唯一VIN';
--- ----------------------------
--- 2018-06-08 更新
--- ----------------------------
-ALTER TABLE `damage_insure`
-ADD COLUMN `damage_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '定损金额' AFTER `insure_user_id`;
