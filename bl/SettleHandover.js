@@ -145,18 +145,18 @@ function getSettleHandoverCsv(req,res,next){
                 }else{
                     parkObj.receivedDate = new Date(rows[i].received_date).toLocaleDateString();
                 }
-                if(rows[i].remark == null){
-                    parkObj.remark = "";
-                }else{
-                    parkObj.remark = rows[i].remark;
-                }
                 if(rows[i].op_user_name == null){
                     parkObj.opUserName = "";
                 }else{
                     parkObj.opUserName = rows[i].op_user_name;
                 }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
                 csvString = csvString+parkObj.number+","+parkObj.shortName+","+parkObj.cityRouteStart+","+parkObj.cityRouteEnd
-                    +","+parkObj.rShortName+","+parkObj.carCount+","+parkObj.receivedDate+","+parkObj.remark+","+parkObj.opUserName+ '\r\n';
+                    +","+parkObj.rShortName+","+parkObj.carCount+","+parkObj.receivedDate+","+parkObj.opUserName+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
