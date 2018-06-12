@@ -47,3 +47,22 @@ CREATE TABLE `settle_seq` (
   `seq_id` bigint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for drive_peccancy
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_peccancy`;
+CREATE TABLE `drive_peccancy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_id` int(10) NOT NULL DEFAULT '0' COMMENT '司机ID',
+  `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
+  `fine_score` int(4) NOT NULL DEFAULT '0' COMMENT '扣分',
+  `fine_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '罚款金额',
+  `start_date` date DEFAULT NULL COMMENT '起始时间',
+  `end_date` date DEFAULT NULL COMMENT '结束时间',
+  `fine_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '扣款状态(1-未扣,2-已扣)',
+  `settle_user_id` int(10) NOT NULL COMMENT '结算人ID',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '事故处理时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
