@@ -7702,6 +7702,197 @@
         }
       }
     },
+    "/driveExceedOil": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOil list",
+        "description": "query driveExceedOil",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "exceedOilId",
+            "in": "query",
+            "description": "exceedOil id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "fineStatus",
+            "in": "query",
+            "description": "fine status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOil"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOil id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveExceedOil": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveExceedOil",
+        "description": "user create driveExceedOil",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveExceedOil",
+            "in": "body",
+            "description": "driveExceedOil info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveExceedOil"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOil id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/exceedOil/{exceedOilId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update drivePeccancy info",
+        "description": "update drivePeccancy info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "exceedOilId",
+            "in": "path",
+            "description": "exceedOil id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveExceedOil",
+            "in": "body",
+            "description": "driveExceedOil info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveExceedOil"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOil id"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [
@@ -19719,6 +19910,27 @@
       },
       "xml": {
         "name": "checkReason"
+      }
+    },
+    "driveExceedOil": {
+      "type": "object",
+      "properties": {
+
+        "dpRouteTaskId": {
+          "type": "integer"
+        },
+        "exceedOilQuantity": {
+          "type": "integer"
+        },
+        "exceedOilMoney": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "driveExceedOil"
       }
     },
     "checkReason": {
