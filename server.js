@@ -379,6 +379,7 @@ function createServer() {
      * DriveExceedOil Module
      */
     server.get('/api/driveExceedOil' , driveExceedOil.queryDriveExceedOil);
+    server.get('/api/driveExceedOil.csv' , driveExceedOil.getDriveExceedOilCsv);
     server.post({path:'/api/user/:userId/driveExceedOil',contentType: 'application/json'},driveExceedOil.createDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);
 

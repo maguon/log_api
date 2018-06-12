@@ -66,3 +66,19 @@ CREATE TABLE `drive_peccancy` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for drive_exceed_oil
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_exceed_oil`;
+CREATE TABLE `drive_exceed_oil` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_route_task_id` int(10) NOT NULL DEFAULT '0' COMMENT '调度编号ID',
+  `exceed_oil_quantity` decimal(10,2) NOT NULL DEFAULT '0' COMMENT '超油量',
+  `exceed_oil_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '超油金额',
+  `fine_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '扣款状态(1-未扣,2-已扣)',
+  `settle_user_id` int(10) NOT NULL DEFAULT '0' COMMENT '结算人ID',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
