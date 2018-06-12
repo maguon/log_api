@@ -7551,6 +7551,58 @@
         }
       }
     },
+    "/drivePeccancy.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  drivePeccancy csv",
+        "description": "query drivePeccancyCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "peccancyId",
+            "in": "query",
+            "description": "peccancy id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "fineStatus",
+            "in": "query",
+            "description": "fine status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drivePeccancy"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drivePeccancy id"
+          }
+        }
+      }
+    },
     "/user/{userId}/drivePeccancy": {
       "post": {
         "tags": [

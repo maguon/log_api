@@ -7,8 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DrivePeccancyDAO.js');
 
 function addDrivePeccancy(params,callback){
-    var query = " insert into drive_peccancy (drive_id,truck_id,fine_score,fine_money,start_date,end_date,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into drive_peccancy (drive_id,truck_id,fine_score,fine_money,start_date,end_date,settle_user_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
@@ -16,6 +16,7 @@ function addDrivePeccancy(params,callback){
     paramsArray[i++]=params.fineMoney;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.userId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDrivePeccancy ');
@@ -24,9 +25,10 @@ function addDrivePeccancy(params,callback){
 }
 
 function getDrivePeccancy(params,callback) {
-    var query = " select dp.*,d.drive_name,t.truck_num from drive_peccancy dp " +
+    var query = " select dp.*,d.drive_name,t.truck_num,u.real_name as settle_user_name from drive_peccancy dp " +
         " left join drive_info d on dp.drive_id = d.id " +
         " left join truck_info t on dp.truck_id = t.id " +
+        " left join user_info u on dp.settle_user_id = u.uid" +
         " where dp.id is not null ";
     var paramsArray=[],i=0;
     if(params.peccancyId){

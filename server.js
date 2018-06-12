@@ -370,6 +370,7 @@ function createServer() {
      * DrivePeccancy Module
      */
     server.get('/api/drivePeccancy' , drivePeccancy.queryDrivePeccancy);
+    server.get('/api/drivePeccancy.csv' , drivePeccancy.getDrivePeccancyCsv);
     server.post({path:'/api/user/:userId/drivePeccancy',contentType: 'application/json'},drivePeccancy.createDrivePeccancy);
     server.put({path:'/api/user/:userId/peccancy/:peccancyId',contentType: 'application/json'} ,drivePeccancy.updateDrivePeccancy);
 
