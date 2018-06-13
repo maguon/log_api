@@ -7483,6 +7483,147 @@
         }
       }
     },
+    "/driveSalaryPeccancyRel": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveSalaryPeccancyRel list",
+        "description": "query driveSalaryPeccancyRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSalaryId",
+            "in": "query",
+            "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSalaryPeccancyRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryPeccancyRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalaryPeccancyRel": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSalaryPeccancyRel",
+        "description": "user create driveSalaryPeccancyRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryPeccancyRel",
+            "in": "body",
+            "description": "driveSalaryPeccancyRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalaryPeccancyRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryPeccancyRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalary/{driveSalaryId}/peccancy/{peccancyId}": {
+      "delete": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "Deletes a driveSalaryPeccancyRel",
+        "description": "",
+        "operationId": "driveSalaryPeccancyRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSalaryId",
+            "in": "path",
+            "description": "driveSalary id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "peccancyId",
+            "in": "path",
+            "description": "peccancy id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/drivePeccancy": {
       "get": {
         "tags": [
@@ -19972,6 +20113,21 @@
       },
       "xml": {
         "name": "driveSalaryAccidentRel"
+      }
+    },
+    "driveSalaryPeccancyRel": {
+      "type": "object",
+      "properties": {
+
+        "driveSalaryId": {
+          "type": "integer"
+        },
+        "peccancyId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSalaryPeccancyRel"
       }
     },
     "drivePeccancy": {

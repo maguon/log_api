@@ -62,6 +62,7 @@ CREATE TABLE `drive_peccancy` (
   `fine_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '扣款状态(1-未扣,2-已扣)',
   `settle_user_id` int(10) NOT NULL DEFAULT '0' COMMENT '结算人ID',
   `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `stat_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '结算状态(1-未结算,2-已结算)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

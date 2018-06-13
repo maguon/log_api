@@ -79,9 +79,21 @@ function updateDrivePeccancy(params,callback){
     });
 }
 
+function updateDrivePeccancyStatStatus(params,callback){
+    var query = " update drive_peccancy set stat_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.statStatus;
+    paramsArray[i]=params.peccancyId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDrivePeccancyStatStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDrivePeccancy : addDrivePeccancy,
     getDrivePeccancy : getDrivePeccancy,
-    updateDrivePeccancy : updateDrivePeccancy
+    updateDrivePeccancy : updateDrivePeccancy,
+    updateDrivePeccancyStatStatus : updateDrivePeccancyStatStatus
 }
