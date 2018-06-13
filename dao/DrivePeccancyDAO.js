@@ -39,6 +39,14 @@ function getDrivePeccancy(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and dp.drive_id = ? ";
     }
+    if(params.startDateStart){
+        paramsArray[i++] = params.startDateStart;
+        query = query + " and dp.start_date >= ? ";
+    }
+    if(params.endDateEnd){
+        paramsArray[i++] = params.endDateEnd;
+        query = query + " and dp.end_date <= ? ";
+    }
     if(params.fineStatus){
         paramsArray[i++] = params.fineStatus;
         query = query + " and dp.fine_status = ? ";
