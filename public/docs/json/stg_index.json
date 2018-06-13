@@ -7676,6 +7676,14 @@
 
           },
           {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

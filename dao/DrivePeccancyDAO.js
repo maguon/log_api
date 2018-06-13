@@ -51,6 +51,10 @@ function getDrivePeccancy(params,callback) {
         paramsArray[i++] = params.fineStatus;
         query = query + " and dp.fine_status = ? ";
     }
+    if(params.statStatus){
+        paramsArray[i++] = params.statStatus;
+        query = query + " and dp.stat_status = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
