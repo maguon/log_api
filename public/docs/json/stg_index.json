@@ -7624,6 +7624,103 @@
         }
       }
     },
+    "/driveSalaryExceedOilRel": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveSalaryExceedOilRel list",
+        "description": "query driveSalaryExceedOilRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSalaryId",
+            "in": "query",
+            "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSalaryExceedOilRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryExceedOilRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSalaryExceedOilRel": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSalaryExceedOilRel",
+        "description": "user create driveSalaryExceedOilRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalaryExceedOilRel",
+            "in": "body",
+            "description": "driveSalaryExceedOilRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalaryExceedOilRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryExceedOilRel id"
+          }
+        }
+      }
+    },
     "/drivePeccancy": {
       "get": {
         "tags": [
@@ -7922,6 +8019,14 @@
             "name": "fineStatus",
             "in": "query",
             "description": "fine status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
             "required": false,
             "type": "integer"
 
@@ -20136,6 +20241,21 @@
       },
       "xml": {
         "name": "driveSalaryPeccancyRel"
+      }
+    },
+    "driveSalaryExceedOilRel": {
+      "type": "object",
+      "properties": {
+
+        "driveSalaryId": {
+          "type": "integer"
+        },
+        "exceedOilId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSalaryExceedOilRel"
       }
     },
     "drivePeccancy": {

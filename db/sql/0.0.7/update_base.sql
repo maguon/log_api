@@ -79,7 +79,35 @@ CREATE TABLE `drive_exceed_oil` (
   `fine_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '扣款状态(1-未扣,2-已扣)',
   `settle_user_id` int(10) NOT NULL DEFAULT '0' COMMENT '结算人ID',
   `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+    `stat_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '结算状态(1-未结算,2-已结算)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for drive_salary_exceed_oil_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_salary_exceed_oil_rel`;
+CREATE TABLE `drive_salary_exceed_oil_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_salary_id` int(10) NOT NULL COMMENT '司机工资ID',
+  `exceed_oil_id` int(10) NOT NULL COMMENT '超油编号ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `exceed_oil` (`exceed_oil_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for drive_salary_peccancy_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_salary_peccancy_rel`;
+CREATE TABLE `drive_salary_peccancy_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_salary_id` int(10) NOT NULL COMMENT '司机工资ID',
+  `peccancy_id` int(10) NOT NULL COMMENT '违章编号ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `peccancy_id` (`peccancy_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

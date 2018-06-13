@@ -31,6 +31,7 @@ var driveSalaryTaskRel = require('./bl/DriveSalaryTaskRel.js');
 var driveSalaryDamageRel = require('./bl/DriveSalaryDamageRel.js');
 var driveSalaryAccidentRel = require('./bl/DriveSalaryAccidentRel.js');
 var driveSalaryPeccancyRel = require('./bl/DriveSalaryPeccancyRel.js');
+var driveSalaryExceedOilRel = require('./bl/DriveSalaryExceedOilRel.js');
 var drivePeccancy = require('./bl/DrivePeccancy.js');
 var driveExceedOil = require('./bl/DriveExceedOil.js');
 var company = require('./bl/Company.js');
@@ -374,6 +375,12 @@ function createServer() {
     server.get('/api/driveSalaryPeccancyRel' , driveSalaryPeccancyRel.queryDriveSalaryPeccancyRel);
     server.post({path:'/api/user/:userId/driveSalaryPeccancyRel',contentType: 'application/json'},driveSalaryPeccancyRel.createDriveSalaryPeccancyRel);
     server.del('/api/user/:userId/driveSalary/:driveSalaryId/peccancy/:peccancyId' , driveSalaryPeccancyRel.removeDriveSalaryPeccancyRel);
+
+    /**
+     * DriveSalaryExceedOilRel Module
+     */
+    server.get('/api/driveSalaryExceedOilRel' , driveSalaryExceedOilRel.queryDriveSalaryExceedOilRel);
+    server.post({path:'/api/user/:userId/driveSalaryExceedOilRel',contentType: 'application/json'},driveSalaryExceedOilRel.createDriveSalaryExceedOilRel);
 
     /**
      * DrivePeccancy Module
