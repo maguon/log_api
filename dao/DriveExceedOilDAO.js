@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilDAO.js');
 
 function addDriveExceedOil(params,callback){
-    var query = " insert into drive_exceed_oil (dp_route_task_id,exceed_oil_quantity,exceed_oil_money,settle_user_id,remark) " +
+    var query = " insert into drive_exceed_oil (dp_route_task_id,exceed_oil_quantity,exceed_oil_money,op_user_id,remark) " +
         " values ( ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
@@ -22,11 +22,11 @@ function addDriveExceedOil(params,callback){
 }
 
 function getDriveExceedOil(params,callback) {
-    var query = " select deo.*,dpr.task_plan_date,dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,u.real_name as settle_user_name from drive_exceed_oil deo " +
+    var query = " select deo.*,dpr.task_plan_date,dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,u.real_name as op_user_name from drive_exceed_oil deo " +
         " left join dp_route_task dpr on deo.dp_route_task_id = dpr.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
-        " left join user_info u on deo.settle_user_id = u.uid " +
+        " left join user_info u on deo.op_user_id = u.uid " +
         " where deo.id is not null ";
     var paramsArray=[],i=0;
     if(params.exceedOilId){
