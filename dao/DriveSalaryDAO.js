@@ -23,7 +23,7 @@ function addDriveSalary(params,callback){
 }
 
 function getDriveSalary(params,callback) {
-    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.other_fee,ds.actual_salary,ds.grant_status, " +
+    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.other_fee,ds.actual_salary,ds.grant_status, " +
         " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
         " from drive_info d " +
         " left join drive_salary ds on d.id = ds.drive_id " +
