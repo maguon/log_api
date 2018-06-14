@@ -111,3 +111,8 @@ CREATE TABLE `drive_salary_peccancy_rel` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `peccancy_id` (`peccancy_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-06-14 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+ADD COLUMN `refund_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销费用' AFTER `plan_salary`;

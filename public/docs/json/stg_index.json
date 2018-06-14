@@ -20201,6 +20201,10 @@
     "driveActualSalary": {
       "type": "object",
       "properties": {
+
+        "refundFee": {
+          "type": "integer"
+        },
         "otherFee": {
           "type": "integer"
         },
