@@ -7721,6 +7721,50 @@
         }
       }
     },
+    "/user/{userId}/driveSalary/{driveSalaryId}/exceedOil/{exceedOilId}": {
+      "delete": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "Deletes a driveSalaryExceedOilRel",
+        "description": "",
+        "operationId": "driveSalaryExceedOilRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSalaryId",
+            "in": "path",
+            "description": "driveSalary id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "exceedOilId",
+            "in": "path",
+            "description": "exceedOil id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/drivePeccancy": {
       "get": {
         "tags": [

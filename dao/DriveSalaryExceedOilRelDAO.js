@@ -40,8 +40,20 @@ function getDriveSalaryExceedOilRel(params,callback) {
     });
 }
 
+function deleteDriveSalaryExceedOilRel(params,callback){
+    var query = " delete from drive_salary_exceed_oil_rel where drive_salary_id = ? and exceed_oil_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveSalaryId;
+    paramsArray[i]=params.exceedOilId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteDriveSalaryExceedOilRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDriveSalaryExceedOilRel : addDriveSalaryExceedOilRel,
-    getDriveSalaryExceedOilRel : getDriveSalaryExceedOilRel
+    getDriveSalaryExceedOilRel : getDriveSalaryExceedOilRel,
+    deleteDriveSalaryExceedOilRel : deleteDriveSalaryExceedOilRel
 }

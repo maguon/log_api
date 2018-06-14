@@ -77,8 +77,43 @@ function queryDriveSalaryExceedOilRel(req,res,next){
     })
 }
 
+function removeDriveSalaryExceedOilRel(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        driveSalaryExceedOilRelDAO.deleteDriveSalaryExceedOilRel(params,function(error,result){
+            if (error) {
+                logger.error(' removeDriveSalaryExceedOilRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeDriveSalaryExceedOilRel ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' removeDriveSalaryExceedOilRel ' + 'failed');
+                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.statStatus = sysConst.STAT_STATUS.not_stat;
+        driveExceedOilDAO.updateDriveExceedOilStatStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDriveExceedOilStatStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDriveExceedOilStatStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createDriveSalaryExceedOilRel : createDriveSalaryExceedOilRel,
-    queryDriveSalaryExceedOilRel : queryDriveSalaryExceedOilRel
+    queryDriveSalaryExceedOilRel : queryDriveSalaryExceedOilRel,
+    removeDriveSalaryExceedOilRel : removeDriveSalaryExceedOilRel
 }
