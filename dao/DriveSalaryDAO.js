@@ -25,8 +25,8 @@ function addDriveSalary(params,callback){
 function getDriveSalary(params,callback) {
     var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.other_fee,ds.actual_salary,ds.grant_status, " +
         " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
-        " from drive_info d " +
-        " left join drive_salary ds on d.id = ds.drive_id " +
+        " from drive_info d left join " +
+        " (select * from drive_salary where month_date_id ="+params.monthDateId+") as ds on d.id = ds.drive_id " +
         " left join company_info c on d.company_id = c.id " +
         " left join truck_info t on d.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
@@ -38,29 +38,11 @@ function getDriveSalary(params,callback) {
         paramsArray[i++] = params.driveSalaryId;
         query = query + " and ds.id = ? ";
     }
-
-    if(params.monthDateId){
-        if(params.grantStatus ==1){
-            paramsArray[i++] = params.monthDateId;
-            query = query + " and (ds.month_date_id is null or ds.month_date_id = ? ) and ds.month_date_id is null ";
-        }else if(params.grantStatus){
-            paramsArray[i++] = params.monthDateId;
-            paramsArray[i++] = params.grantStatus;
-            query = query + " and (ds.month_date_id is null or ds.month_date_id = ? )  and ds.grant_status = ? ";
-        }else{
-            paramsArray[i++] = params.monthDateId;
-            query = query + " and (ds.month_date_id is null or ds.month_date_id = ? )  ";
-        }
-
+    if(params.grantStatus ==1){
+        query = query + " and ds.grant_status is null ";
     }else{
-        if(params.grantStatus ==1){
-            query = query + " and ds.month_date_id is null ";
-        }else if(params.grantStatus){
-            paramsArray[i++] = params.grantStatus;
-            query = query + " and  ds.grant_status = ? ";
-        }else{
-            query = query + " and ds.month_date_id is not null ";
-        }
+        paramsArray[i++] = params.grantStatus;
+        query = query + " and ds.grant_status = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
