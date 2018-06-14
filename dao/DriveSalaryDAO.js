@@ -42,7 +42,7 @@ function getDriveSalary(params,callback) {
     if(params.monthDateId){
         if(params.grantStatus ==1){
             paramsArray[i++] = params.monthDateId;
-            query = query + " and (ds.month_date_id is null or ds.month_date_id != ? ) or ds.month_date_id is null ";
+            query = query + " and (ds.month_date_id is null or ds.month_date_id = ? ) and ds.month_date_id is null ";
         }else if(params.grantStatus){
             paramsArray[i++] = params.monthDateId;
             paramsArray[i++] = params.grantStatus;
