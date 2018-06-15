@@ -38,11 +38,13 @@ function getDriveSalary(params,callback) {
         paramsArray[i++] = params.driveSalaryId;
         query = query + " and ds.id = ? ";
     }
-    if(params.grantStatus ==1){
-        query = query + " and ds.grant_status is null ";
-    }else{
-        paramsArray[i++] = params.grantStatus;
-        query = query + " and ds.grant_status = ? ";
+    if(params.grantStatus){
+        if(params.grantStatus ==1){
+            query = query + " and ds.grant_status is null ";
+        }else{
+            paramsArray[i++] = params.grantStatus;
+            query = query + " and ds.grant_status = ? ";
+        }
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
