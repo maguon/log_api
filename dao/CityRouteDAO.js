@@ -7,13 +7,14 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
-    var query = " insert into city_route_info (route_start_id,route_start,route_end_id,route_end,distance) values ( ? , ? , ? , ? , ? )";
+    var query = " insert into city_route_info (route_start_id,route_start,route_end_id,route_end,distance,protect_fee) values ( ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
-    paramsArray[i]=params.distance;
+    paramsArray[i++]=params.distance;
+    paramsArray[i]=params.protectFee;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCityRoute ');
         return callback(error,rows);
@@ -46,10 +47,10 @@ function getCityRoute(params,callback) {
 }
 
 function getCityRouteBase(params,callback) {
-    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.distance from city_info ci left join " +
-        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.distance from city_route_info cri where cri.route_start_id = " + params.routeStartId +
+    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.distance,cd.protect_fee from city_info ci left join " +
+        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.distance,cri.protect_fee from city_route_info cri where cri.route_start_id = " + params.routeStartId +
         " union " +
-        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.distance from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
+        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.distance,cri2.protect_fee from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
         " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id ";
     var paramsArray=[],i=0;
     query = query + '  order by end_id  ';
@@ -70,10 +71,10 @@ function getCityRouteCheck(params,callback) {
 }
 
 function getCityRouteDispatch(params,callback) {
-    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.distance from city_info ci left join " +
-        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.distance from city_route_info cri where cri.route_start_id = " + params.routeStartId +
+    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.distance,cd.protect_fee from city_info ci left join " +
+        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.distance,cri.protect_fee from city_route_info cri where cri.route_start_id = " + params.routeStartId +
         " union " +
-        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.distance from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
+        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.distance,cri2.protect_fee from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
         " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id where  cd.distance > 0 ";
     var paramsArray=[],i=0;
     query = query + '  order by end_id  ';
@@ -84,9 +85,10 @@ function getCityRouteDispatch(params,callback) {
 }
 
 function updateCityRoute(params,callback){
-    var query = " update city_route_info set distance = ? where id = ? ";
+    var query = " update city_route_info set distance = ? , protect_fee = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
+    paramsArray[i++]=params.protectFee;
     paramsArray[i]=params.routeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCityRoute ');

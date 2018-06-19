@@ -116,3 +116,8 @@ CREATE TABLE `drive_salary_peccancy_rel` (
 -- ----------------------------
 ALTER TABLE `drive_salary`
 ADD COLUMN `refund_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销费用' AFTER `plan_salary`;
+-- ----------------------------
+-- 2018-06-19 更新
+-- ----------------------------
+ALTER TABLE `city_route_info`
+ADD COLUMN `protect_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '保道费' AFTER `distance`;

@@ -20426,6 +20426,9 @@
         },
         "distance": {
           "type": "integer"
+        },
+        "protectFee": {
+          "type": "integer"
         }
       },
       "xml": {
