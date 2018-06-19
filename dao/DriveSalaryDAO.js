@@ -23,16 +23,29 @@ function addDriveSalary(params,callback){
 }
 
 function getDriveSalary(params,callback) {
-    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.other_fee,ds.actual_salary,ds.grant_status, " +
-        " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
-        " from drive_info d left join " +
-        " (select * from drive_salary where month_date_id ="+params.monthDateId+") as ds on d.id = ds.drive_id " +
-        " left join company_info c on d.company_id = c.id " +
-        " left join truck_info t on d.id = t.drive_id " +
-        " left join truck_brand tb on t.brand_id = tb.id " +
-        " left join truck_info h on t.rel_id = h.id " +
-        " left join user_info u on d.user_id = u.uid " +
-        " where d.id is not null  ";
+    if(params.monthDateId){
+        var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.other_fee,ds.actual_salary,ds.grant_status, " +
+            " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
+            " from drive_info d left join " +
+            " (select * from drive_salary where month_date_id ="+params.monthDateId+") as ds on d.id = ds.drive_id " +
+            " left join company_info c on d.company_id = c.id " +
+            " left join truck_info t on d.id = t.drive_id " +
+            " left join truck_brand tb on t.brand_id = tb.id " +
+            " left join truck_info h on t.rel_id = h.id " +
+            " left join user_info u on d.user_id = u.uid " +
+            " where d.id is not null ";
+    }else{
+        var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.other_fee,ds.actual_salary,ds.grant_status, " +
+            " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
+            " from drive_info d left join " +
+            " (select * from drive_salary) as ds on d.id = ds.drive_id " +
+            " left join company_info c on d.company_id = c.id " +
+            " left join truck_info t on d.id = t.drive_id " +
+            " left join truck_brand tb on t.brand_id = tb.id " +
+            " left join truck_info h on t.rel_id = h.id " +
+            " left join user_info u on d.user_id = u.uid " +
+            " where d.id is not null ";
+    }
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;
