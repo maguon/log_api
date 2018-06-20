@@ -121,3 +121,8 @@ ADD COLUMN `refund_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销费用' AFT
 -- ----------------------------
 ALTER TABLE `city_route_info`
 ADD COLUMN `protect_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '保道费' AFTER `distance`;
+-- ----------------------------
+-- 2018-06-20 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `protect_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '保道费' AFTER `distance`;

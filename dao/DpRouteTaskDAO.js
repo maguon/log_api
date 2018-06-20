@@ -8,8 +8,8 @@ var sysConst = require('../util/SysConst.js');
 var logger = serverLogger.createLogger('DpRouteTaskDAO.js');
 
 function addDpRouteTask(params,callback){
-    var query = " insert into dp_route_task (user_id,truck_id,drive_id,route_start_id,route_end_id,distance,task_plan_date) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_task (user_id,truck_id,drive_id,route_start_id,route_end_id,distance,protect_fee,task_plan_date) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.truckId;
@@ -17,6 +17,7 @@ function addDpRouteTask(params,callback){
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.distance;
+    paramsArray[i++]=params.protectFee;
     paramsArray[i]=params.taskPlanDate;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTask ');

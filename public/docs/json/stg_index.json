@@ -20853,6 +20853,9 @@
         "distance": {
           "type": "integer"
         },
+        "protectFee": {
+          "type": "integer"
+        },
         "taskPlanDate": {
           "type": "string"
         }
