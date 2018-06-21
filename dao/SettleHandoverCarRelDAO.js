@@ -18,13 +18,12 @@ function addSettleHandoverCarRel(params,callback){
 }
 
 function getSettleHandoverCarRel(params,callback) {
-    var query = " select shcr.*,c.vin,c.make_name,c.receive_id,dpd.dp_route_task_id,dpl.date_id,dpd.arrive_date," +
+    var query = " select shcr.*,c.vin,c.make_name,c.receive_id,dpd.dp_route_task_id,dpd.arrive_date," +
         " dpr.route_start_id,c1.city_name as route_start_name,dpr.route_end_id,c2.city_name as route_end_name,d.drive_name,t.truck_num" +
         " from settle_handover_car_rel shcr" +
         " left join car_info c on shcr.car_id = c.id " +
         " left join dp_route_load_task_detail dpd on shcr.car_id = dpd.car_id " +
         " left join dp_route_task dpr on dpd.dp_route_task_id = dpr.id " +
-        " left join dp_route_load_task dpl on dpr.id = dpl.dp_route_task_id " +
         " left join city_info c1 on dpr.route_start_id = c1.id " +
         " left join city_info c2 on dpr.route_end_id = c2.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
