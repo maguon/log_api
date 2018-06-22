@@ -15366,44 +15366,6 @@
         }
       }
     },
-    "/user/{userId}/dpRouteTaskLoan/{dpRouteTaskLoanId}": {
-      "delete": {
-        "tags": [
-          "dispatch"
-        ],
-        "summary": "Deletes a dpRouteTaskLoan",
-        "description": "",
-        "operationId": "deleteDpRouteTaskLoan",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "dpRouteTaskLoanId",
-            "in": "path",
-            "description": "dpRouteTaskLoan id",
-            "required": true,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "contacts not found"
-          }
-        }
-      }
-    },
     "/dpRouteTaskLoanRel": {
       "get": {
         "tags": [

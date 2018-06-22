@@ -140,55 +140,6 @@ function updateDpRouteTaskLoanStatus (req,res,next){
     })
 }
 
-function removeDpRouteTaskLoan(req,res,next){
-    var params = req.params;
-    Seq().seq(function(){
-        var that = this;
-        dpRouteTaskLoanDAO.getDpRouteTaskLoan(params,function(error,rows){
-            if (error) {
-                logger.error(' getDpRouteTaskLoan ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else{
-                if(rows&&rows.length >0&&rows[0].task_loan_status == sysConst.TASK_LOAN__STATUS.not_grant){
-                    that();
-                }else{
-                    logger.warn(' getDpRouteTaskLoan ' + 'failed');
-                    resUtil.resetFailedRes(res," 不是未发放状态，不能完成删除操作。");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        var that = this;
-        dpRouteTaskLoanDAO.deleteDpRouteTaskLoan(params,function(error,result){
-            if (error) {
-                logger.error(' removeDpRouteTaskLoan ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' removeDpRouteTaskLoan ' + 'success');
-                    that();
-                }else{
-                    logger.warn(' removeDpRouteTaskLoan ' + 'failed');
-                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        dpRouteTaskLoanRelDAO.deleteDpRouteTaskLoanRelAll(params,function(error,result){
-            if (error) {
-                logger.error(' removeDpRouteTaskLoanRelAll ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' removeDpRouteTaskLoanRelAll ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
-                return next();
-            }
-        })
-    })
-}
-
 function queryDpRouteTaskLoanCount(req,res,next){
     var params = req.params ;
     dpRouteTaskLoanDAO.getDpRouteTaskLoanCount(params,function(error,result){
@@ -340,7 +291,6 @@ module.exports = {
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
-    removeDpRouteTaskLoan : removeDpRouteTaskLoan,
     queryDpRouteTaskLoanCount : queryDpRouteTaskLoanCount,
     queryDpRouteTaskLoanMonthStat : queryDpRouteTaskLoanMonthStat,
     queryDpRouteTaskLoanDayStat : queryDpRouteTaskLoanDayStat,
