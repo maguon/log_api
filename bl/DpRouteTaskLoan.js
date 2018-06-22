@@ -92,22 +92,6 @@ function queryDpRouteTaskLoan(req,res,next){
     })
 }
 
-function updateDpRouteTaskLoanApply (req,res,next){
-    var params = req.params;
-    var myDate = new Date();
-    params.applyDate = myDate;
-    dpRouteTaskLoanDAO.updateDpRouteTaskLoanApply(params,function(error,result){
-        if (error) {
-            logger.error(' updateDpRouteTaskLoanApply ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDpRouteTaskLoanApply ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function updateDpRouteTaskLoanGrant (req,res,next){
     var params = req.params;
     var myDate = new Date();
@@ -249,10 +233,8 @@ function queryDpRouteTaskLoanDayStat(req,res,next){
 
 function getDpRouteTaskLoanCsv(req,res,next){
     var csvString = "";
-    var header = "出车款编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "申请金额" + ','+ "申请时间"+ ','+ "申请人"+ ','+ "申请备注"
-        + ','+ "发放金额" + ','+ "发放时间" + ','+ "发放人"+ ','+ "发放备注"
-        + ','+ "报销金额" + ','+ "报销时间"+ ','+ "报销人" + ','+ "报销备注"
-        + ','+ "还款金额"+ ','+ "盈亏"+ ','+ "发放状态";
+    var header = "出车款编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "发放金额" + ','+ "发放时间" + ','+ "发放人"+ ','+ "发放备注"
+        + ','+ "报销金额" + ','+ "报销时间"+ ','+ "报销人" + ','+ "报销备注" + ','+ "还款金额"+ ','+ "盈亏"+ ','+ "发放状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -265,18 +247,6 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 parkObj.dpRouteTaskLoanId = rows[i].id;
                 parkObj.driveName = rows[i].drive_name;
                 parkObj.truckNum = rows[i].truck_num;
-                parkObj.applyPlanMoney = rows[i].apply_plan_money;
-                if(rows[i].apply_date == null){
-                    parkObj.applyDate = "";
-                }else{
-                    parkObj.applyDate = new Date(rows[i].apply_date).toLocaleDateString();
-                }
-                parkObj.applUserName = rows[i].appl_user_name;
-                if(rows[i].apply_explain == null){
-                    parkObj.applyExplain = "";
-                }else{
-                    parkObj.applyExplain = rows[i].apply_explain;
-                }
                 parkObj.grantActualMoney = rows[i].grant_actual_money;
                 if(rows[i].grant_date == null){
                     parkObj.grantDate = "";
@@ -321,7 +291,6 @@ function getDpRouteTaskLoanCsv(req,res,next){
                     parkObj.taskLoanStatus = "已取消";
                 }
                 csvString = csvString+parkObj.dpRouteTaskLoanId+","+parkObj.driveName+","+parkObj.truckNum+","
-                    +parkObj.applyPlanMoney+","+parkObj.applyDate+","+parkObj.applUserName+","+parkObj.applyExplain+","
                     +parkObj.grantActualMoney+","+parkObj.grantDate+","+parkObj.grantUserName+","+parkObj.grantExplain+","
                     +parkObj.refundActualMoney+","+parkObj.refundDate+","+parkObj.refundUserName+","+parkObj.refundExplain+","
                     +parkObj.repaymentMoney+","+parkObj.profit+","+parkObj.taskLoanStatus+ '\r\n';
@@ -370,7 +339,6 @@ function queryDpRouteTaskNotLoanCount(req,res,next){
 module.exports = {
     createDpRouteTaskLoan : createDpRouteTaskLoan,
     queryDpRouteTaskLoan : queryDpRouteTaskLoan,
-    updateDpRouteTaskLoanApply : updateDpRouteTaskLoanApply,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,

@@ -126,3 +126,17 @@ ADD COLUMN `protect_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '保道费' AF
 -- ----------------------------
 ALTER TABLE `dp_route_task`
 ADD COLUMN `protect_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '保道费' AFTER `distance`;
+-- ----------------------------
+-- 2018-06-22 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_loan`
+DROP COLUMN `apply_passing_cost`,
+DROP COLUMN `apply_fuel_cost`,
+DROP COLUMN `apply_protect_cost`,
+DROP COLUMN `apply_penalty_cost`,
+DROP COLUMN `apply_parking_cost`,
+DROP COLUMN `apply_taxi_cost`,
+DROP COLUMN `apply_explain`,
+DROP COLUMN `apply_plan_money`,
+DROP COLUMN `apply_user_id`,
+DROP COLUMN `apply_date`;

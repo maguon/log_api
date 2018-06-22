@@ -14691,54 +14691,6 @@
 
           },
           {
-            "name": "applyDateStart",
-            "in": "query",
-            "description": "applyDate start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "applyDateEnd",
-            "in": "query",
-            "description": "applyDate end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "applyPlanMoneyStart",
-            "in": "query",
-            "description": "applyPlanMoney start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "applyPlanMoneyEnd",
-            "in": "query",
-            "description": "applyPlanMoney end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "applyUserId",
-            "in": "query",
-            "description": "applyUser id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "applyUserName",
-            "in": "query",
-            "description": "applyUser name",
-            "required": false,
-            "type": "string"
-
-          },
-          {
             "name": "grantDateStart",
             "in": "query",
             "description": "grantDate start",
@@ -15019,54 +14971,6 @@
 
           },
           {
-            "name": "applyDateStart",
-            "in": "query",
-            "description": "applyDate start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "applyDateEnd",
-            "in": "query",
-            "description": "applyDate end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "applyPlanMoneyStart",
-            "in": "query",
-            "description": "applyPlanMoney start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "applyPlanMoneyEnd",
-            "in": "query",
-            "description": "applyPlanMoney end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "applyUserId",
-            "in": "query",
-            "description": "applyUser id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "applyUserName",
-            "in": "query",
-            "description": "applyUser name",
-            "required": false,
-            "type": "string"
-
-          },
-          {
             "name": "grantDateStart",
             "in": "query",
             "description": "grantDate start",
@@ -15285,59 +15189,6 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/dpRouteTaskLoanGrant"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid dpRouteTaskLoan id"
-          }
-        }
-      }
-    },
-    "/user/{userId}/dpRouteTaskLoanApply/{dpRouteTaskLoanId}": {
-      "put": {
-        "tags": [
-          "dispatch"
-        ],
-        "summary": "update dpRouteTaskLoanApply",
-        "description": "update dpRouteTaskLoanApply",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "dpRouteTaskLoanId",
-            "in": "path",
-            "description": "dpRouteTaskLoan id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "dpRouteTaskLoanApply",
-            "in": "body",
-            "description": "dpRouteTaskLoanApply info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dpRouteTaskLoanApply"
             }
           }
         ],
@@ -15600,30 +15451,6 @@
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "applyDateStart",
-            "in": "query",
-            "description": "applyDate start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "applyDateEnd",
-            "in": "query",
-            "description": "applyDate end",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "applyUserName",
-            "in": "query",
-            "description": "applyUser name",
             "required": false,
             "type": "string"
 
@@ -20922,45 +20749,6 @@
       },
       "xml": {
         "name": "loadTaskCleanRel"
-      }
-    },
-    "dpRouteTaskLoanApply": {
-      "type": "object",
-      "properties": {
-
-        "driveId": {
-          "type": "integer"
-        },
-        "applyPassingCost": {
-          "type": "integer"
-        },
-        "applyFuelCost": {
-          "type": "integer"
-        },
-        "applyProtectCost": {
-          "type": "integer"
-        },
-        "applyPenaltyCost": {
-          "type": "integer"
-        },
-        "applyParkingCost": {
-          "type": "integer"
-        },
-        "applyTaxiCost": {
-          "type": "integer"
-        },
-        "applyExplain": {
-          "type": "string"
-        },
-        "applyPlanMoney": {
-          "type": "integer"
-        },
-        "dpRouteTaskIds": {
-          "type": "integer"
-        }
-      },
-      "xml": {
-        "name": "dpRouteTaskLoanApply"
       }
     },
     "dpRouteTaskLoanGrant": {

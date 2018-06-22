@@ -28,11 +28,11 @@ function addDpRouteTaskLoan(params,callback){
 }
 
 function getDpRouteTaskLoan(params,callback) {
-    var query = " select dploan.* ,d.drive_name,t.id as truck_id,t.truck_num,u1.real_name as appl_user_name, " +
-        " u2.real_name as grant_user_name,u3.real_name as refund_user_name from dp_route_task_loan dploan " +
+    var query = " select dploan.* ,d.drive_name,t.id as truck_id,t.truck_num, " +
+        " u2.real_name as grant_user_name,u3.real_name as refund_user_name " +
+        " from dp_route_task_loan dploan " +
         " left join drive_info d on dploan.drive_id = d.id " +
         " left join truck_info t on d.id = t.drive_id " +
-        " left join user_info u1 on dploan.apply_user_id = u1.uid " +
         " left join user_info u2 on dploan.grant_user_id = u2.uid " +
         " left join user_info u3 on dploan.refund_user_id = u3.uid " +
         " left join dp_route_task_loan_rel dprel on dploan.id = dprel.dp_route_task_loan_id " +
@@ -69,30 +69,6 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.taskLoanStatus;
         query = query + " and dploan.task_loan_status = ? ";
     }
-    if(params.applyDateStart){
-        paramsArray[i++] = params.applyDateStart +" 00:00:00";
-        query = query + " and dploan.apply_date >= ? ";
-    }
-    if(params.applyDateEnd){
-        paramsArray[i++] = params.applyDateEnd +" 23:59:59";
-        query = query + " and dploan.apply_date <= ? ";
-    }
-    if(params.applyPlanMoneyStart){
-        paramsArray[i++] = params.applyPlanMoneyStart;
-        query = query + " and dploan.apply_plan_money >= ? ";
-    }
-    if(params.applyPlanMoneyEnd){
-        paramsArray[i++] = params.applyPlanMoneyEnd;
-        query = query + " and dploan.apply_plan_money <= ? ";
-    }
-    if(params.applyUserId){
-        paramsArray[i++] = params.applyUserId;
-        query = query + " and dploan.apply_user_id = ? ";
-    }
-    if(params.applyUserName){
-        paramsArray[i++] = params.applyUserName;
-        query = query + " and u1.real_name = ? ";
-    }
     if(params.grantDateStart){
         paramsArray[i++] = params.grantDateStart +" 00:00:00";
         query = query + " and dploan.grant_date >= ? ";
@@ -118,27 +94,6 @@ function getDpRouteTaskLoan(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteTaskLoan ');
-        return callback(error,rows);
-    });
-}
-
-function updateDpRouteTaskLoanApply(params,callback){
-    var query = " update dp_route_task_loan set apply_passing_cost = ? , apply_fuel_cost = ? , apply_protect_cost = ? , apply_penalty_cost = ? , " +
-        " apply_parking_cost = ? , apply_taxi_cost = ? , apply_explain = ? , apply_plan_money = ? , apply_user_id = ? , apply_date = ? where id = ? ";
-    var paramsArray=[],i=0;
-    paramsArray[i++] = params.applyPassingCost;
-    paramsArray[i++] = params.applyFuelCost;
-    paramsArray[i++] = params.applyProtectCost;
-    paramsArray[i++] = params.applyPenaltyCost;
-    paramsArray[i++] = params.applyParkingCost;
-    paramsArray[i++] = params.applyTaxiCost;
-    paramsArray[i++] = params.applyExplain;
-    paramsArray[i++] = params.applyPlanMoney;
-    paramsArray[i++] = params.userId;
-    paramsArray[i++] = params.applyDate;
-    paramsArray[i] = params.dpRouteTaskLoanId;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateDpRouteTaskLoanApply ');
         return callback(error,rows);
     });
 }
@@ -211,8 +166,9 @@ function deleteDpRouteTaskLoan(params,callback){
 }
 
 function getDpRouteTaskLoanCount(params,callback){
-    var query = " select count(dploan.id) as task_loan_count,sum(dploan.apply_plan_money) as apply_plan_money, " +
-        " sum(dploan.grant_actual_money) as grant_actual_money from dp_route_task_loan dploan where dploan.id is not null " ;
+    var query = " select count(dploan.id) as task_loan_count,sum(dploan.grant_actual_money) as grant_actual_money " +
+        " from dp_route_task_loan dploan " +
+        " where dploan.id is not null " ;
     var paramsArray=[],i=0;
     if(params.taskLoanStatus){
         paramsArray[i++] = params.taskLoanStatus;
@@ -337,7 +293,6 @@ function getDpRouteTaskNotLoanCount(params,callback) {
 module.exports ={
     addDpRouteTaskLoan : addDpRouteTaskLoan,
     getDpRouteTaskLoan : getDpRouteTaskLoan,
-    updateDpRouteTaskLoanApply : updateDpRouteTaskLoanApply,
     updateDpRouteTaskLoanGrant : updateDpRouteTaskLoanGrant,
     updateDpRouteTaskLoanRepayment : updateDpRouteTaskLoanRepayment,
     updateDpRouteTaskLoanStatus : updateDpRouteTaskLoanStatus,
