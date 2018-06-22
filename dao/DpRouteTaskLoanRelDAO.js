@@ -27,7 +27,6 @@ function getDpRouteTaskLoanRel(params,callback) {
         " left join dp_route_task_loan dploan on dprel.dp_route_task_loan_id = dploan.id " +
         " left join drive_info d on dploan.drive_id = d.id " +
         " left join truck_info t on d.id = t.drive_id " +
-        " left join user_info u1 on dploan.apply_user_id = u1.uid " +
         " where dprel.dp_route_task_loan_id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskLoanId){
@@ -49,18 +48,6 @@ function getDpRouteTaskLoanRel(params,callback) {
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
         query = query + " and t.truck_num = ? ";
-    }
-    if(params.applyUserName){
-        paramsArray[i++] = params.applyUserName;
-        query = query + " and u1.real_name = ? ";
-    }
-    if(params.applyDateStart){
-        paramsArray[i++] = params.applyDateStart +" 00:00:00";
-        query = query + " and dploan.apply_date >= ? ";
-    }
-    if(params.applyDateEnd){
-        paramsArray[i++] = params.applyDateEnd +" 23:59:59";
-        query = query + " and dploan.apply_date <= ? ";
     }
     if(params.grantDateStart){
         paramsArray[i++] = params.grantDateStart +" 00:00:00";

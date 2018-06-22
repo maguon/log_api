@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DpRouteTaskLoanDAO.js');
 
 function addDpRouteTaskLoan(params,callback){
     var query = " insert into dp_route_task_loan(drive_id,grant_passing_cost,grant_fuel_cost,grant_protect_cost,grant_penalty_cost," +
-        "grant_parking_cost,grant_taxi_cost,grant_explain,grant_plan_money,grant_user_id,grant_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        "grant_parking_cost,grant_taxi_cost,grant_explain,grant_user_id,grant_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.grantPassingCost;
@@ -18,7 +18,6 @@ function addDpRouteTaskLoan(params,callback){
     paramsArray[i++]=params.grantParkingCost;
     paramsArray[i++]=params.grantTaxiCost;
     paramsArray[i++]=params.grantExplain;
-    paramsArray[i++]=params.grantPlanMoney;
     paramsArray[i++]=params.userId;
     paramsArray[i]=params.grantDate;
     db.dbQuery(query,paramsArray,function(error,rows){

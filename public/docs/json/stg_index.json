@@ -20755,6 +20755,9 @@
       "type": "object",
       "properties": {
 
+        "driveId": {
+          "type": "integer"
+        },
         "grantPassingCost": {
           "type": "integer"
         },
@@ -20777,6 +20780,9 @@
           "type": "string"
         },
         "grantActualMoney": {
+          "type": "integer"
+        },
+        "dpRouteTaskIds": {
           "type": "integer"
         }
       },
