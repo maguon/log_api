@@ -136,9 +136,8 @@ var LOAN__STATUS = {  //财务借款状态
 };
 var TASK_LOAN__STATUS = {  //出车款状态
     cancel : 0, //取消
-    not_grant : 1 ,  //未发放
-    grant : 2, //已发放
-    refund : 3  //已报销
+    grant : 1, //已发放
+    refund : 2  //已报销
 };
 var DAMAGE_INDEMNITY__STATUS = {  //申请质损赔款状态
     no : 1 ,  //不需赔款

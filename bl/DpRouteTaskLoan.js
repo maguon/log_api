@@ -22,7 +22,7 @@ function createDpRouteTaskLoan(req,res,next){
     Seq().seq(function(){
         var that = this;
         var myDate = new Date();
-        params.applyDate = myDate;
+        params.grantDate = myDate;
         dpRouteTaskLoanDAO.addDpRouteTaskLoan(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteTaskLoan ' + error.message);
@@ -112,7 +112,6 @@ function updateDpRouteTaskLoanGrant (req,res,next){
     var params = req.params;
     var myDate = new Date();
     params.grantDate = myDate;
-    params.taskLoanStatus = sysConst.TASK_LOAN__STATUS.grant;
     dpRouteTaskLoanDAO.updateDpRouteTaskLoanGrant(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteTaskLoanGrant ' + error.message);

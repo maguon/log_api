@@ -7,20 +7,20 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteTaskLoanDAO.js');
 
 function addDpRouteTaskLoan(params,callback){
-    var query = " insert into dp_route_task_loan(drive_id,apply_passing_cost,apply_fuel_cost,apply_protect_cost,apply_penalty_cost," +
-        "apply_parking_cost,apply_taxi_cost,apply_explain,apply_plan_money,apply_user_id,apply_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_task_loan(drive_id,grant_passing_cost,grant_fuel_cost,grant_protect_cost,grant_penalty_cost," +
+        "grant_parking_cost,grant_taxi_cost,grant_explain,grant_plan_money,grant_user_id,grant_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
-    paramsArray[i++]=params.applyPassingCost;
-    paramsArray[i++]=params.applyFuelCost;
-    paramsArray[i++]=params.applyProtectCost;
-    paramsArray[i++]=params.applyPenaltyCost;
-    paramsArray[i++]=params.applyParkingCost;
-    paramsArray[i++]=params.applyTaxiCost;
-    paramsArray[i++]=params.applyExplain;
-    paramsArray[i++]=params.applyPlanMoney;
+    paramsArray[i++]=params.grantPassingCost;
+    paramsArray[i++]=params.grantFuelCost;
+    paramsArray[i++]=params.grantProtectCost;
+    paramsArray[i++]=params.grantPenaltyCost;
+    paramsArray[i++]=params.grantParkingCost;
+    paramsArray[i++]=params.grantTaxiCost;
+    paramsArray[i++]=params.grantExplain;
+    paramsArray[i++]=params.grantPlanMoney;
     paramsArray[i++]=params.userId;
-    paramsArray[i]=params.applyDate;
+    paramsArray[i]=params.grantDate;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTaskLoan ');
         return callback(error,rows);
@@ -145,8 +145,7 @@ function updateDpRouteTaskLoanApply(params,callback){
 
 function updateDpRouteTaskLoanGrant(params,callback){
     var query = " update dp_route_task_loan set grant_passing_cost = ? , grant_fuel_cost = ? , grant_protect_cost = ? , grant_penalty_cost = ? , " +
-        " grant_parking_cost = ? , grant_taxi_cost = ? , grant_explain = ? , grant_actual_money = ? , grant_user_id = ? , grant_date = ? , " +
-        "task_loan_status = ? where id = ? ";
+        " grant_parking_cost = ? , grant_taxi_cost = ? , grant_explain = ? , grant_actual_money = ? , grant_user_id = ? , grant_date = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.grantPassingCost;
     paramsArray[i++] = params.grantFuelCost;
@@ -158,7 +157,6 @@ function updateDpRouteTaskLoanGrant(params,callback){
     paramsArray[i++] = params.grantActualMoney;
     paramsArray[i++] = params.userId;
     paramsArray[i++] = params.grantDate;
-    paramsArray[i++] = params.taskLoanStatus;
     paramsArray[i] = params.dpRouteTaskLoanId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskLoanGrant ');
