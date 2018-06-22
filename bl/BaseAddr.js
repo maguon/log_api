@@ -17,8 +17,13 @@ function createBaseAddr(req,res,next){
     var params = req.params ;
     baseAddrDAO.addBaseAddr(params,function(error,result){
         if (error) {
-            logger.error(' createBaseAddr ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            if(error.message.indexOf("Duplicate") > 0) {
+                resUtil.resetFailedRes(res, "发运地已经存在，请重新录入");
+                return next();
+            } else{
+                logger.error(' createBaseAddr ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            }
         } else {
             logger.info(' createBaseAddr ' + 'success');
             resUtil.resetCreateRes(res,result,null);
