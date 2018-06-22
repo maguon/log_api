@@ -281,11 +281,9 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 }
                 parkObj.repaymentMoney = rows[i].repayment_money;
                 parkObj.profit = rows[i].profit;
-                if(rows[i].task_loan_status == 1){
-                    parkObj.taskLoanStatus = "未发放";
-                }else if(rows[i].task_loan_status == 2){
+                 if(rows[i].task_loan_status == 1){
                     parkObj.taskLoanStatus = "已发放";
-                }else if(rows[i].task_loan_status == 3){
+                }else if(rows[i].task_loan_status == 2){
                     parkObj.taskLoanStatus = "已报销";
                 }else{
                     parkObj.taskLoanStatus = "已取消";

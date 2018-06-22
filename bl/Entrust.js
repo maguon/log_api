@@ -17,8 +17,13 @@ function createEntrust(req,res,next){
     var params = req.params ;
     entrustDAO.addEntrust(params,function(error,result){
         if (error) {
-            logger.error(' createEntrust ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            if(error.message.indexOf("Duplicate") > 0) {
+                resUtil.resetFailedRes(res, "委托方已经存在，请重新录入");
+                return next();
+            } else{
+                logger.error(' createEntrust ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            }
         } else {
             logger.info(' createEntrust ' + 'success');
             resUtil.resetCreateRes(res,result,null);

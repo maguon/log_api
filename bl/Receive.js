@@ -17,8 +17,13 @@ function createReceive(req,res,next){
     var params = req.params ;
     receiveDAO.addReceive(params,function(error,result){
         if (error) {
-            logger.error(' createReceive ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            if(error.message.indexOf("Duplicate") > 0) {
+                resUtil.resetFailedRes(res, "经销商已经存在，请重新录入");
+                return next();
+            } else{
+                logger.error(' createReceive ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            }
         } else {
             logger.info(' createReceive ' + 'success');
             req.params.receiverContent =" 经销商信息录入 ";
