@@ -28,6 +28,7 @@ function addDpRouteTaskLoan(params,callback){
 
 function getDpRouteTaskLoan(params,callback) {
     var query = " select dploan.* ,d.drive_name,t.id as truck_id,t.truck_num, " +
+        " dprel.dp_route_task_id,c.city_name as city_route_start,ce.city_name as city_route_end, " +
         " u2.real_name as grant_user_name,u3.real_name as refund_user_name " +
         " from dp_route_task_loan dploan " +
         " left join drive_info d on dploan.drive_id = d.id " +
@@ -35,6 +36,9 @@ function getDpRouteTaskLoan(params,callback) {
         " left join user_info u2 on dploan.grant_user_id = u2.uid " +
         " left join user_info u3 on dploan.refund_user_id = u3.uid " +
         " left join dp_route_task_loan_rel dprel on dploan.id = dprel.dp_route_task_loan_id " +
+        " left join dp_route_task dpr on dprel.dp_route_task_id = dpr.id " +
+        " left join city_info c on dpr.route_start_id = c.id " +
+        " left join city_info ce on dpr.route_end_id = ce.id " +
         " where dploan.task_loan_status >0 and dploan.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskLoanId){
@@ -84,7 +88,6 @@ function getDpRouteTaskLoan(params,callback) {
         paramsArray[i++] = params.refundDateEnd +" 23:59:59";
         query = query + " and dploan.refund_date <= ? ";
     }
-    query = query + ' group by dploan.id,t.id ';
     query = query + " order by dploan.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
