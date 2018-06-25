@@ -85,6 +85,39 @@ function queryDpRouteLoadTaskCleanRelReceiveWeekStat(req,res,next){
     })
 }
 
+function updateDpRouteLoadTaskCleanRel(req,res,next){
+    var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel({loadTaskCleanRelId:params.loadTaskCleanRelId},function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTaskCleanRel ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].status != sysConst.CLEAN_STATUS.completed){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteLoadTaskCleanRel ' + 'failed');
+                    resUtil.resetFailedRes(res," 洗车费已领取，不能进行修改 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        dpRouteLoadTaskCleanRelDAO.updateDpRouteLoadTaskCleanRel(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteLoadTaskCleanRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpRouteLoadTaskCleanRel ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
     var params = req.params;
     if(params.status==sysConst.CLEAN_STATUS.completed){
@@ -112,5 +145,6 @@ module.exports = {
     queryDpRouteLoadTaskCleanRelReceiveMonthStat : queryDpRouteLoadTaskCleanRelReceiveMonthStat,
     queryDpRouteLoadTaskCleanRelWeekStat : queryDpRouteLoadTaskCleanRelWeekStat,
     queryDpRouteLoadTaskCleanRelReceiveWeekStat : queryDpRouteLoadTaskCleanRelReceiveWeekStat,
+    updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
 }

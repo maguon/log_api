@@ -67,6 +67,9 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
         paramsArray[i++] = params.status;
         query = query + " and dpcr.status = ? ";
     }
+    if(params.statusArr){
+        query = query + " and dpcr.status in ("+params.statusArr + ") "
+    }
     if(params.cleanDateStart){
         paramsArray[i++] = params.cleanDateStart +" 00:00:00";
         query = query + " and dpcr.clean_date >= ? ";
@@ -182,6 +185,17 @@ function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
     });
 }
 
+function updateDpRouteLoadTaskCleanRel(params,callback){
+    var query = " update dp_route_load_task_clean_rel set actual_price = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.actualPrice;
+    paramsArray[i] = params.loadTaskCleanRelId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteLoadTaskCleanRel ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteLoadTaskCleanRelStatus(params,callback){
     if(params.status==2){
         var query = " update dp_route_load_task_clean_rel set drive_user_id = ? , actual_price = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
@@ -211,5 +225,6 @@ module.exports ={
     getDpRouteLoadTaskCleanRelReceiveMonthStat : getDpRouteLoadTaskCleanRelReceiveMonthStat,
     getDpRouteLoadTaskCleanRelWeekStat  : getDpRouteLoadTaskCleanRelWeekStat,
     getDpRouteLoadTaskCleanRelReceiveWeekStat : getDpRouteLoadTaskCleanRelReceiveWeekStat,
+    updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
 }

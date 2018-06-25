@@ -14283,6 +14283,14 @@
 
           },
           {
+            "name": "statusArr",
+            "in": "query",
+            "description": "status arr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "cleanDateStart",
             "in": "query",
             "description": "cleanDate start",
@@ -14545,6 +14553,59 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/dispatch"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTaskCleanRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/loadTaskCleanRel/{loadTaskCleanRelId}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteLoadTaskCleanRel",
+        "description": "update dpRouteLoadTaskCleanRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadTaskCleanRelId",
+            "in": "path",
+            "description": "loadTaskCleanRel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadTaskCleanRel",
+            "in": "body",
+            "description": "loadTaskCleanRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loadTaskCleanRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
               }
             }
           },
