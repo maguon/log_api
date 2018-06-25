@@ -140,3 +140,8 @@ DROP COLUMN `apply_explain`,
 DROP COLUMN `apply_plan_money`,
 DROP COLUMN `apply_user_id`,
 DROP COLUMN `apply_date`;
+-- ----------------------------
+-- 2018-06-25 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_loan`
+ADD COLUMN `truck_id`  int(10) NOT NULL COMMENT '货车ID' AFTER `drive_id`;

@@ -20781,6 +20781,9 @@
         "driveId": {
           "type": "integer"
         },
+        "truckId": {
+          "type": "integer"
+        },
         "grantPassingCost": {
           "type": "integer"
         },

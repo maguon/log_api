@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteTaskLoanDAO.js');
 
 function addDpRouteTaskLoan(params,callback){
-    var query = " insert into dp_route_task_loan(drive_id,grant_passing_cost,grant_fuel_cost,grant_protect_cost,grant_penalty_cost," +
-        "grant_parking_cost,grant_taxi_cost,grant_explain,grant_user_id,grant_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_task_loan(drive_id,truck_id,grant_passing_cost,grant_fuel_cost,grant_protect_cost,grant_penalty_cost," +
+        "grant_parking_cost,grant_taxi_cost,grant_explain,grant_user_id,grant_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.grantPassingCost;
     paramsArray[i++]=params.grantFuelCost;
     paramsArray[i++]=params.grantProtectCost;
@@ -27,12 +28,12 @@ function addDpRouteTaskLoan(params,callback){
 }
 
 function getDpRouteTaskLoan(params,callback) {
-    var query = " select dploan.* ,d.drive_name,t.id as truck_id,t.truck_num, " +
+    var query = " select dploan.* ,d.drive_name,t.truck_num, " +
         " dprel.dp_route_task_id,c.city_name as city_route_start,ce.city_name as city_route_end, " +
         " u2.real_name as grant_user_name,u3.real_name as refund_user_name " +
         " from dp_route_task_loan dploan " +
         " left join drive_info d on dploan.drive_id = d.id " +
-        " left join truck_info t on d.id = t.drive_id " +
+        " left join truck_info t on dploan.truck_id = t.id " +
         " left join user_info u2 on dploan.grant_user_id = u2.uid " +
         " left join user_info u3 on dploan.refund_user_id = u3.uid " +
         " left join dp_route_task_loan_rel dprel on dploan.id = dprel.dp_route_task_loan_id " +
@@ -59,7 +60,7 @@ function getDpRouteTaskLoan(params,callback) {
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and t.id = ? ";
+        query = query + " and dploan.truck_id = ? ";
     }
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
