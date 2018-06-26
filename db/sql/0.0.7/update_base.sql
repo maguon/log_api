@@ -122,11 +122,6 @@ ADD COLUMN `refund_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销费用' AFT
 ALTER TABLE `city_route_info`
 ADD COLUMN `protect_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '保道费' AFTER `distance`;
 -- ----------------------------
--- 2018-06-20 更新
--- ----------------------------
-ALTER TABLE `dp_route_task`
-ADD COLUMN `protect_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '保道费' AFTER `distance`;
--- ----------------------------
 -- 2018-06-22 更新
 -- ----------------------------
 ALTER TABLE `dp_route_task_loan`
@@ -145,3 +140,16 @@ DROP COLUMN `apply_date`;
 -- ----------------------------
 ALTER TABLE `dp_route_task_loan`
 ADD COLUMN `truck_id`  int(10) NOT NULL COMMENT '货车ID' AFTER `drive_id`;
+-- ----------------------------
+-- Table structure for dp_route_task_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_route_task_rel`;
+CREATE TABLE `dp_route_task_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_route_task_id` int(10) NOT NULL COMMENT '调度编号ID',
+  `city_route_id` int(10) NOT NULL COMMENT '城市路线ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `dp_route_task_id` (`dp_route_task_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

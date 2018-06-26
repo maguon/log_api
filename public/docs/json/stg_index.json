@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "stg.myxxjs.com:9001",
+  "host": "localhost:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -20703,11 +20703,11 @@
         "distance": {
           "type": "integer"
         },
-        "protectFee": {
-          "type": "integer"
-        },
         "taskPlanDate": {
           "type": "string"
+        },
+        "cityRouteId": {
+          "type": "integer"
         }
       },
       "xml": {

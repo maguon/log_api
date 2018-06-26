@@ -13,6 +13,7 @@ var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
+var dpRouteTaskRelDAO = require('../dao/DpRouteTaskRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -21,18 +22,52 @@ var logger = serverLogger.createLogger('DpRouteTask.js');
 
 function createDpRouteTask(req,res,next){
     var params = req.params ;
-    dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
-        if (error) {
-            logger.error(' createDpRouteTask ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createDpRouteTask ' + 'success');
-            req.params.routeContent =" 生成路线 ";
-            req.params.routeId = result.insertId;
-            req.params.routeOp =sysConst.RECORD_OP_TYPE.create;
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    var dpRouteTaskId = 0;
+    Seq().seq(function(){
+        var that = this;
+        dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
+            if (error) {
+                logger.error(' createDpRouteTask ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteTask ' + 'success');
+                    dpRouteTaskId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create dpRouteTask failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.dpRouteTaskId = dpRouteTaskId;
+        dpRouteTaskRelDAO.addDpRouteTaskRel(params,function(error,result){
+            if (error) {
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
+                    return next();
+                } else{
+                    logger.error(' createDpRouteTaskRel ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteTaskRel ' + 'success');
+                }else{
+                    logger.warn(' createDpRouteTaskRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        logger.info(' createDpRouteTask ' + 'success');
+        req.params.routeContent =" 生成路线 ";
+        req.params.routeId = dpRouteTaskId;
+        req.params.routeOp =sysConst.RECORD_OP_TYPE.create;
+        resUtil.resetCreateRes(res,{insertId:dpRouteTaskId},null);
+        return next();
     })
 }
 
@@ -365,6 +400,21 @@ function removeDpRouteTask(req,res,next){
                     logger.info(' removeDpRouteTaskLoanRelAll ' + 'success');
                 }else{
                     logger.warn(' removeDpRouteTaskLoanRelAll ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        dpRouteTaskRelDAO.deleteDpRouteTaskRel(params,function(error,result){
+            if (error) {
+                logger.error(' removeDpRouteTaskRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeDpRouteTaskRel ' + 'success');
+                }else{
+                    logger.warn(' removeDpRouteTaskRel ' + 'failed');
                 }
                 that();
             }
