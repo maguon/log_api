@@ -72,7 +72,7 @@ function getDpRouteTaskLoanRel(params,callback) {
         paramsArray[i++] = params.taskLoanStatus;
         query = query + " and dploan.task_loan_status = ? ";
     }
-    query = query + ' group by dprel.dp_route_task_id,dprel.dp_route_task_loan_id ';
+    query = query + ' group by dprel.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteTaskLoanRel ');
         return callback(error,rows);
