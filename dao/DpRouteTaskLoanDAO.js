@@ -28,12 +28,13 @@ function addDpRouteTaskLoan(params,callback){
 }
 
 function getDpRouteTaskLoan(params,callback) {
-    var query = " select dploan.* ,d.drive_name,t.truck_num, " +
+    var query = " select dploan.* ,d.drive_name,t.truck_num,h.number, " +
         " dprel.dp_route_task_id,c.city_name as city_route_start,ce.city_name as city_route_end, " +
         " u2.real_name as grant_user_name,u3.real_name as refund_user_name " +
         " from dp_route_task_loan dploan " +
         " left join drive_info d on dploan.drive_id = d.id " +
         " left join truck_info t on dploan.truck_id = t.id " +
+        " left join truck_info h on t.rel_id = h.id " +
         " left join user_info u2 on dploan.grant_user_id = u2.uid " +
         " left join user_info u3 on dploan.refund_user_id = u3.uid " +
         " left join dp_route_task_loan_rel dprel on dploan.id = dprel.dp_route_task_loan_id " +
