@@ -126,7 +126,7 @@ function updateDpRouteTaskLoanGrant(params,callback){
 function updateDpRouteTaskLoanRepayment(params,callback){
     var query = " update dp_route_task_loan set refund_passing_cost = ? , refund_fuel_cost = ? , refund_protect_cost = ? , " +
         "refund_penalty_cost = ? , refund_parking_cost = ? , refund_taxi_cost = ? , repayment_money = ? , refund_actual_money = ? , " +
-        " profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ? , date_id = ?  where id = ? ";
+        " profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ? , date_id = ? , task_loan_status = ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.refundPassingCost;
     paramsArray[i++] = params.refundFuelCost;
@@ -141,6 +141,7 @@ function updateDpRouteTaskLoanRepayment(params,callback){
     paramsArray[i++] = params.userId;
     paramsArray[i++] = params.refundDate;
     paramsArray[i++] = params.dateId;
+    paramsArray[i++] = params.taskLoanStatus;
     paramsArray[i] = params.dpRouteTaskLoanId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskLoanRepayment ');
