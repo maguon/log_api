@@ -261,6 +261,7 @@ function getDpRouteTaskNotLoan(params,callback) {
         query = query + " and dpr.task_status not in ("+params.taskStatusArr + ") "
     }
     query = query + ' group by dpr.id ';
+    query = query + ' order by dpr.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
