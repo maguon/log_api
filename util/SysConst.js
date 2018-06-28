@@ -13,7 +13,9 @@ var USER_TYPE  ={
     qa_op : 41, //质量部操作员
     qa_manager : 49, //质量部管理员
     finance_op : 51, //财务部操作员
-    finance_admin : 59 //财务部管理员
+    finance_admin : 59, //财务部管理员
+    settle_op : 61, //结算部操作员
+    settle_admin : 69 //结算部管理员
 };
 var RECORD_OP_TYPE  ={
     truckOp : 20,
