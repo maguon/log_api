@@ -14696,14 +14696,6 @@
 
           },
           {
-            "name": "dpRouteTaskId",
-            "in": "query",
-            "description": "dpRouteTask id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "driveId",
             "in": "query",
             "description": "drive id",
