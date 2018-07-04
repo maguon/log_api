@@ -96,6 +96,20 @@ function querySettleHandover(req,res,next){
     })
 }
 
+function queryNotSettleHandover(req,res,next){
+    var params = req.params ;
+    settleHandoverDAO.getNotSettleHandover(params,function(error,result){
+        if (error) {
+            logger.error(' queryNotSettleHandover ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryNotSettleHandover ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateSettleHandover(req,res,next){
     var params = req.params ;
     settleHandoverDAO.updateSettleHandover(params,function(error,result){
@@ -188,6 +202,7 @@ function getSettleHandoverCsv(req,res,next){
 module.exports = {
     createSettleHandover : createSettleHandover,
     querySettleHandover : querySettleHandover,
+    queryNotSettleHandover : queryNotSettleHandover,
     updateSettleHandover : updateSettleHandover,
     updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv
