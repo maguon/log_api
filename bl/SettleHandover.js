@@ -140,6 +140,20 @@ function querySettleHandoverDayCount(req,res,next){
     })
 }
 
+function querySettleHandoverMonthCount(req,res,next){
+    var params = req.params ;
+    settleHandoverDAO.getSettleHandoverMonthCount(params,function(error,result){
+        if (error) {
+            logger.error(' querySettleHandoverMonthCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' querySettleHandoverMonthCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateSettleHandover(req,res,next){
     var params = req.params ;
     var receivedDate = moment(params.receivedDate).format('YYYYMMDD');
@@ -237,6 +251,7 @@ module.exports = {
     queryNotSettleHandover : queryNotSettleHandover,
     queryNotSettleHandoverCarCount : queryNotSettleHandoverCarCount,
     querySettleHandoverDayCount : querySettleHandoverDayCount,
+    querySettleHandoverMonthCount : querySettleHandoverMonthCount,
     updateSettleHandover : updateSettleHandover,
     updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv

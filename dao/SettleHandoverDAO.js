@@ -87,7 +87,7 @@ function getSettleHandover(params,callback) {
 }
 
 function getNotSettleHandover(params,callback) {
-    var query = " select dpdtl.*,c.make_name,c.model_name,e.short_name as e_short_name, " +
+    var query = " select dpdtl.*,c.make_name,e.short_name as e_short_name, " +
         " c1.city_name as city_route_start,c2.city_name as city_route_end,r.short_name as r_short_name, " +
         " d.drive_name,t.truck_num,dpr.task_plan_date " +
         " from dp_route_load_task_detail dpdtl " +
@@ -195,6 +195,24 @@ function getSettleHandoverDayCount(params,callback) {
     });
 }
 
+function getSettleHandoverMonthCount(params,callback) {
+    var query = " select db.y_month,count(sh.id) as settle_handover_count,if(isnull(sum(sh.car_count)),0,sum(sh.car_count)) as car_count " +
+        " from date_base db " +
+        " left join settle_handover_info sh on db.id = sh.date_id " +
+        " where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.yearMonth){
+        paramsArray[i++] = params.yearMonth;
+        query = query + " and db.y_month = ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getSettleHandoverMonthCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateSettleHandover(params,callback){
     var query = " update settle_handover_info set received_date = ? , date_id = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -259,6 +277,7 @@ module.exports ={
     getNotSettleHandover : getNotSettleHandover,
     getNotSettleHandoverCarCount : getNotSettleHandoverCarCount,
     getSettleHandoverDayCount : getSettleHandoverDayCount,
+    getSettleHandoverMonthCount : getSettleHandoverMonthCount,
     updateSettleHandover : updateSettleHandover,
     updateSettleHandoverRoute : updateSettleHandoverRoute,
     updateCarCountPlus : updateCarCountPlus,

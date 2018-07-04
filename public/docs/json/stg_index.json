@@ -19039,6 +19039,80 @@
         }
       }
     },
+    "/settleHandoverDayCount": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleHandoverDay count",
+        "description": "query settleHandoverDayCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "dateId",
+            "in": "query",
+            "description": "date id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleHandover"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
+          }
+        }
+      }
+    },
+    "/settleHandoverMonthCount": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleHandoverMonth count",
+        "description": "query settleHandoverMonthCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "yearMonth",
+            "in": "query",
+            "description": "yearMonth",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleHandover"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
+          }
+        }
+      }
+    },
     "/settleHandover.csv": {
       "get": {
         "tags": [
