@@ -18994,6 +18994,43 @@
         }
       }
     },
+    "/notSettleHandoverCarCount": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query notSettleHandoverCar count",
+        "description": "query notSettleHandoverCarCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "carLoadStatus",
+            "in": "query",
+            "description": "carLoad status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleHandover"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskDetail id"
+          }
+        }
+      }
+    },
     "/settleHandover.csv": {
       "get": {
         "tags": [

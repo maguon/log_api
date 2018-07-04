@@ -110,6 +110,20 @@ function queryNotSettleHandover(req,res,next){
     })
 }
 
+function queryNotSettleHandoverCarCount(req,res,next){
+    var params = req.params ;
+    settleHandoverDAO.getNotSettleHandoverCarCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryNotSettleHandoverCarCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryNotSettleHandoverCarCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateSettleHandover(req,res,next){
     var params = req.params ;
     settleHandoverDAO.updateSettleHandover(params,function(error,result){
@@ -203,6 +217,7 @@ module.exports = {
     createSettleHandover : createSettleHandover,
     querySettleHandover : querySettleHandover,
     queryNotSettleHandover : queryNotSettleHandover,
+    queryNotSettleHandoverCarCount : queryNotSettleHandoverCarCount,
     updateSettleHandover : updateSettleHandover,
     updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv
