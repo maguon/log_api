@@ -7,12 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SettleHandoverDAO.js');
 
 function addSettleHandover(params,callback){
-    var query = " insert into settle_handover_info (number,entrust_id,op_user_id,received_date,remark) values ( ? , ? , ? , ? , ? )";
+    var query = " insert into settle_handover_info (number,entrust_id,op_user_id,received_date,date_id,remark) values ( ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.number;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.receivedDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addSettleHandover ');
@@ -177,9 +178,10 @@ function getNotSettleHandoverCarCount(params,callback) {
 }
 
 function updateSettleHandover(params,callback){
-    var query = " update settle_handover_info set received_date = ?,remark = ? where id = ? " ;
+    var query = " update settle_handover_info set received_date = ? , date_id = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.receivedDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.settleHandoverId;
     db.dbQuery(query,paramsArray,function(error,rows){

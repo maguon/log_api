@@ -60,6 +60,8 @@ function createSettleHandover(req,res,next){
     }).seq(function(){
         var that = this;
         params.number = seqId;
+        var receivedDate = moment(params.receivedDate).format('YYYYMMDD');
+        params.dateId = parseInt(receivedDate);
         settleHandoverDAO.addSettleHandover(params,function(error,result){
             if (error) {
                 logger.error(' createSettleHandover ' + error.message);
@@ -126,6 +128,8 @@ function queryNotSettleHandoverCarCount(req,res,next){
 
 function updateSettleHandover(req,res,next){
     var params = req.params ;
+    var receivedDate = moment(params.receivedDate).format('YYYYMMDD');
+    params.dateId = parseInt(receivedDate);
     settleHandoverDAO.updateSettleHandover(params,function(error,result){
         if (error) {
             logger.error(' updateSettleHandover ' + error.message);
