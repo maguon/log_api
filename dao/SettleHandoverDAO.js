@@ -177,6 +177,24 @@ function getNotSettleHandoverCarCount(params,callback) {
     });
 }
 
+function getSettleHandoverDayCount(params,callback) {
+    var query = " select db.id,count(sh.id) as settle_handover_count,if(isnull(sum(sh.car_count)),0,sum(sh.car_count)) as car_count " +
+        " from date_base db " +
+        " left join settle_handover_info sh on db.id = sh.date_id " +
+        " where db.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and db.id = ? ";
+    }
+    query = query + ' group by db.id ';
+    query = query + ' order by db.id desc ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getSettleHandoverDayCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateSettleHandover(params,callback){
     var query = " update settle_handover_info set received_date = ? , date_id = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -240,6 +258,7 @@ module.exports ={
     getSettleHandover : getSettleHandover,
     getNotSettleHandover : getNotSettleHandover,
     getNotSettleHandoverCarCount : getNotSettleHandoverCarCount,
+    getSettleHandoverDayCount : getSettleHandoverDayCount,
     updateSettleHandover : updateSettleHandover,
     updateSettleHandoverRoute : updateSettleHandoverRoute,
     updateCarCountPlus : updateCarCountPlus,
