@@ -1860,13 +1860,13 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/updateTruckCompany": {
+    "/user/{userId}/truck/{truckId}/truckCompany": {
       "put": {
         "tags": [
           "truck"
         ],
-        "summary": "update updateTruckCompany info",
-        "description": "update updateTruckCompany info",
+        "summary": "update truckCompany info",
+        "description": "update truckCompany info",
         "produces": [
           "application/json"
         ],
@@ -5984,6 +5984,60 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/drive"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/drive/{driveId}/driveCompany": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveCompany info",
+        "description": "update driveCompany info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveCompany",
+            "in": "body",
+            "description": "driveCompany info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveCompany"
             }
 
           }
@@ -20277,9 +20331,6 @@
         "tel": {
           "type": "string"
         },
-        "companyId": {
-          "type": "integer"
-        },
         "licenseType": {
           "type": "string"
         },
@@ -20298,6 +20349,21 @@
       },
       "xml": {
         "name": "drive"
+      }
+    },
+    "driveCompany": {
+      "type": "object",
+      "properties": {
+
+        "companyId": {
+          "type": "integer"
+        },
+        "companyName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "driveCompany"
       }
     },
     "driveImage": {

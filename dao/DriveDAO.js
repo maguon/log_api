@@ -150,13 +150,12 @@ function getDriveOperateTypeCount(params,callback) {
 }
 
 function updateDrive(params,callback){
-    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , company_id = ? , license_type = ? , " +
+    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , license_type = ? , " +
         " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
     paramsArray[i++]=params.idNumber;
-    paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
@@ -165,6 +164,17 @@ function updateDrive(params,callback){
     paramsArray[i]=params.driveId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDrive ');
+        return callback(error,rows);
+    });
+}
+
+function updateDriveCompany(params,callback){
+    var query = " update drive_info set company_id = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.companyId;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveCompany ');
         return callback(error,rows);
     });
 }
@@ -243,6 +253,7 @@ module.exports ={
     getDriveCount : getDriveCount,
     getDriveOperateTypeCount : getDriveOperateTypeCount,
     updateDrive : updateDrive,
+    updateDriveCompany : updateDriveCompany,
     updateDriveImage : updateDriveImage,
     updateDriveImageRe : updateDriveImageRe,
     updateLicenseImage : updateLicenseImage,

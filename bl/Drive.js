@@ -156,6 +156,23 @@ function updateDrive(req,res,next){
     })
 }
 
+function updateDriveCompany(req,res,next){
+    var params = req.params ;
+    driveDAO.updateDriveCompany(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveCompany ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveCompany ' + 'success');
+            req.params.driverContent =" 修改所属公司为 "+params.companyName;
+            req.params.tid = params.driveId;
+            req.params.driverOp =30;
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDriveImage(req,res,next){
     var params = req.params ;
     if(params.imageType==1){
@@ -265,6 +282,7 @@ module.exports = {
     queryDriveCount : queryDriveCount,
     queryDriveOperateTypeCount : queryDriveOperateTypeCount,
     updateDrive : updateDrive,
+    updateDriveCompany : updateDriveCompany,
     updateDriveImage : updateDriveImage,
     updateDriveStatus : updateDriveStatus
 }
