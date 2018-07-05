@@ -8522,6 +8522,68 @@
         }
       }
     },
+    "/user/{userId}/company/{companyId}/truckCompany": {
+      "put": {
+        "tags": [
+          "company"
+        ],
+        "summary": "update company info",
+        "description": "update company info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "company id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "company",
+            "in": "body",
+            "description": "company info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/company"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid company id"
+          }
+        }
+      }
+    },
     "/city": {
       "get": {
         "tags": [

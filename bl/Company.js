@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var companyDAO = require('../dao/CompanyDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -69,7 +70,7 @@ function queryCompanyTruckCountTotal(req,res,next){
     })
 }
 
-function updateCompany (req,res,next){
+function updateCompany(req,res,next){
     var params = req.params ;
     companyDAO.updateCompany(params,function(error,result){
         if (error) {
@@ -83,10 +84,28 @@ function updateCompany (req,res,next){
     })
 }
 
+function updateTruckCompany(req,res,next){
+    var params = req.params ;
+    companyDAO.updateTruckCompany(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckCompany ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckCompany ' + 'success');
+            req.params.truckContent =" 修改货车所属公司 ";
+            req.params.vhe = params.truckNum;
+            req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 module.exports = {
     createCompany : createCompany,
     queryCompany : queryCompany,
     queryCompanyOperateTypeTotal : queryCompanyOperateTypeTotal,
     queryCompanyTruckCountTotal : queryCompanyTruckCountTotal,
-    updateCompany : updateCompany
+    updateCompany : updateCompany,
+    updateTruckCompany : updateTruckCompany
 }

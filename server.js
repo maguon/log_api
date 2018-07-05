@@ -407,6 +407,7 @@ function createServer() {
     server.get('/api/companyTruckCountTotal',company.queryCompanyTruckCountTotal);
     server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
     server.put({path:'/api/user/:userId/company/:companyId',contentType: 'application/json'} ,company.updateCompany);
+    server.put({path:'/api/user/:userId/company/:companyId/truckCompany',contentType: 'application/json'} ,company.updateTruckCompany,sysRecord.saveTruckRecord);
 
     /**
      * City Module
