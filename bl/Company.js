@@ -92,7 +92,7 @@ function updateTruckCompany(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' updateTruckCompany ' + 'success');
-            req.params.truckContent =" 修改货车所属公司 ";
+            req.params.truckContent =" 修改所属公司 " +params.companyName;
             req.params.vhe = params.truckNum;
             req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
             resUtil.resetUpdateRes(res,result,null);
