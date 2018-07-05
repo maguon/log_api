@@ -244,6 +244,23 @@ function updateTruck(req,res,next){
         })
 }
 
+function updateTruckCompany(req,res,next){
+    var params = req.params ;
+    truckDAO.updateTruckCompany(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckCompany ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckCompany ' + 'success');
+            req.params.truckContent =" 修改所属公司为 "+params.companyName;
+            req.params.vhe = params.truckNum;
+            req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruckImage(req,res,next){
     var params = req.params ;
     if(params.imageType==1){
@@ -791,6 +808,7 @@ module.exports = {
     queryTruckTypeCountTotal : queryTruckTypeCountTotal,
     queryTruckOperateTypeCountTotal : queryTruckOperateTypeCountTotal,
     updateTruck : updateTruck,
+    updateTruckCompany : updateTruckCompany,
     updateTruckImage : updateTruckImage,
     updateTruckRelBind : updateTruckRelBind,
     updateTruckRelUnBind : updateTruckRelUnBind,

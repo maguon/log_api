@@ -1860,6 +1860,68 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/updateTruckCompany": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update updateTruckCompany info",
+        "description": "update updateTruckCompany info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "truckCompany",
+            "in": "body",
+            "description": "truckCompany info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckCompany"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}/image": {
       "put": {
         "tags": [
@@ -8485,68 +8547,6 @@
             "description": "user id",
             "required": true,
             "type": "integer"
-
-          },
-          {
-            "name": "companyId",
-            "in": "path",
-            "description": "company id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "company",
-            "in": "body",
-            "description": "company info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/company"
-            }
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid company id"
-          }
-        }
-      }
-    },
-    "/user/{userId}/company/{companyId}/truckCompany": {
-      "put": {
-        "tags": [
-          "company"
-        ],
-        "summary": "update company info",
-        "description": "update company info",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckNum",
-            "in": "query",
-            "description": "truck num",
-            "required": true,
-            "type": "string"
 
           },
           {
@@ -19938,9 +19938,6 @@
         "theCode": {
           "type": "string"
         },
-        "companyId": {
-          "type": "integer"
-        },
         "truckType": {
           "type": "integer"
         },
@@ -19962,6 +19959,21 @@
       },
       "xml": {
         "name": "truck"
+      }
+    },
+    "truckCompany": {
+      "type": "object",
+      "properties": {
+
+        "companyId": {
+          "type": "integer"
+        },
+        "companyName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckCompany"
       }
     },
     "truckImage": {

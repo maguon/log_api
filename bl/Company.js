@@ -84,28 +84,11 @@ function updateCompany(req,res,next){
     })
 }
 
-function updateTruckCompany(req,res,next){
-    var params = req.params ;
-    companyDAO.updateTruckCompany(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckCompany ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckCompany ' + 'success');
-            req.params.truckContent =" 修改所属公司 " +params.companyName;
-            req.params.vhe = params.truckNum;
-            req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
-}
 
 module.exports = {
     createCompany : createCompany,
     queryCompany : queryCompany,
     queryCompanyOperateTypeTotal : queryCompanyOperateTypeTotal,
     queryCompanyTruckCountTotal : queryCompanyTruckCountTotal,
-    updateCompany : updateCompany,
-    updateTruckCompany : updateTruckCompany
+    updateCompany : updateCompany
 }

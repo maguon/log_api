@@ -215,6 +215,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.saveTruckRecord);
     server.post({path:'/api/user/:userId/truckTrailer',contentType: 'application/json'},truck.createTruckTrailer,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);
+    server.put({path:'/api/user/:userId/truck/:truckId/updateTruckCompany',contentType: 'application/json'} ,truck.updateTruckCompany,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId/image',contentType: 'application/json'} ,truck.updateTruckImage);
     server.put({path:'/api/user/:userId/truck/:truckId/trail/:trailId/bind',contentType: 'application/json'} ,truck.updateTruckRelBind,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId/trail/:trailId/unbind',contentType: 'application/json'} ,truck.updateTruckRelUnBind,sysRecord.saveTruckRecord);
@@ -407,7 +408,6 @@ function createServer() {
     server.get('/api/companyTruckCountTotal',company.queryCompanyTruckCountTotal);
     server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
     server.put({path:'/api/user/:userId/company/:companyId',contentType: 'application/json'} ,company.updateCompany);
-    server.put({path:'/api/user/:userId/company/:companyId/truckCompany',contentType: 'application/json'} ,company.updateTruckCompany,sysRecord.saveTruckRecord);
 
     /**
      * City Module

@@ -103,24 +103,11 @@ function updateCompany(params,callback){
     });
 }
 
-function updateTruckCompany(params,callback){
-    var query = " update company_info set company_name = ?,operate_type = ? where id = ? " ;
-    var paramsArray=[],i=0;
-    paramsArray[i++]=params.companyName;
-    paramsArray[i++]=params.operateType;
-    paramsArray[i]=params.companyId;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateTruckCompany ');
-        return callback(error,rows);
-    });
-}
-
 
 module.exports ={
     addCompany : addCompany,
     getCompany : getCompany,
     getCompanyOperateTypeTotal : getCompanyOperateTypeTotal,
     getCompanyTruckCountTotal : getCompanyTruckCountTotal,
-    updateCompany : updateCompany,
-    updateTruckCompany : updateTruckCompany
+    updateCompany : updateCompany
 }

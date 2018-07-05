@@ -356,7 +356,7 @@ function getTruckOperateTypeCountTotal(params,callback) {
 }
 
 function updateTruck(params,callback){
-    var query = " update truck_info set truck_num = ? , brand_id = ? , hp= ? , truck_tel = ? ,the_code = ? , company_id = ? , " +
+    var query = " update truck_info set truck_num = ? , brand_id = ? , hp= ? , truck_tel = ? ,the_code = ? , " +
         " truck_type = ? , number = ? , driving_date = ? , license_date = ? , two_date = ? , remark = ?  where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
@@ -364,7 +364,6 @@ function updateTruck(params,callback){
     paramsArray[i++]=params.hp;
     paramsArray[i++]=params.truckTel;
     paramsArray[i++]=params.theCode;
-    paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.truckType;
     paramsArray[i++]=params.number;
     paramsArray[i++]=params.drivingDate;
@@ -374,6 +373,17 @@ function updateTruck(params,callback){
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruck ');
+        return callback(error,rows);
+    });
+}
+
+function updateTruckCompany(params,callback){
+    var query = " update truck_info set company_id = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.companyId;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckCompany ');
         return callback(error,rows);
     });
 }
@@ -481,6 +491,7 @@ module.exports ={
     getTruckTypeCountTotal : getTruckTypeCountTotal,
     getTruckOperateTypeCountTotal : getTruckOperateTypeCountTotal,
     updateTruck : updateTruck,
+    updateTruckCompany : updateTruckCompany,
     updateTruckDrivingImage :updateTruckDrivingImage,
     updateTruckLicenseImage :updateTruckLicenseImage,
     updateTruckInspectImage :updateTruckInspectImage,
