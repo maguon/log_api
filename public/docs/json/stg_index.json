@@ -19174,6 +19174,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -19208,6 +19224,38 @@
             "name": "yearMonth",
             "in": "query",
             "description": "yearMonth",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
             "required": false,
             "type": "integer"
 

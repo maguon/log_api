@@ -189,6 +189,11 @@ function getSettleHandoverDayCount(params,callback) {
     }
     query = query + ' group by db.id ';
     query = query + ' order by db.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getSettleHandoverDayCount ');
         return callback(error,rows);
@@ -205,8 +210,21 @@ function getSettleHandoverMonthCount(params,callback) {
         paramsArray[i++] = params.yearMonth;
         query = query + " and db.y_month = ? ";
     }
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
     query = query + ' group by db.y_month ';
     query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getSettleHandoverMonthCount ');
         return callback(error,rows);
