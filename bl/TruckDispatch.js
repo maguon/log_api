@@ -27,6 +27,20 @@ function queryTruckDispatch(req,res,next){
     })
 }
 
+function queryTruckDispatchCount(req,res,next){
+    var params = req.params ;
+    truckDispatchDAO.getTruckDispatchCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckDispatchCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckDispatchCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function initTruckDispatchCity(req,res,next){
     var params = req.params ;
     params.taskStart = 0;
@@ -45,5 +59,6 @@ function initTruckDispatchCity(req,res,next){
 
 module.exports = {
     queryTruckDispatch: queryTruckDispatch ,
+    queryTruckDispatchCount : queryTruckDispatchCount,
     initTruckDispatchCity : initTruckDispatchCity
 }

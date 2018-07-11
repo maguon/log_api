@@ -74,6 +74,22 @@ function getTruckDispatch(params,callback) {
     });
 }
 
+function getTruckDispatchCount(params,callback) {
+    var query = " select count(case when td.current_city >0 then td.truck_id end) as ready_accept_count, " +
+        " count(case when td.task_start >0 and td.task_end>0 then td.truck_id end) as on_road_count " +
+        " from truck_dispatch td " +
+        " where td.truck_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dispatchFlag){
+        paramsArray[i++] = params.dispatchFlag;
+        query = query + " and td.dispatch_flag = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckDispatchCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruckDispatchCarCount(params,callback){
     if(params.carLoadStatus==2){
         var query = " update truck_dispatch set car_count = car_count - 1 where truck_id = ? " ;
@@ -103,6 +119,7 @@ function updateTruckDispatch(params,callback){
 
 module.exports = {
     getTruckDispatch : getTruckDispatch,
+    getTruckDispatchCount : getTruckDispatchCount,
     updateTruckDispatchCarCount : updateTruckDispatchCarCount,
     updateTruckDispatch : updateTruckDispatch
 }

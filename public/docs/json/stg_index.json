@@ -3863,6 +3863,42 @@
         }
       }
     },
+    "/truckDispatchCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckDispatch count",
+        "description": "query truckDispatchCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dispatchFlag",
+            "in": "query",
+            "description": "dispatch flag",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDispatch id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}/dispatch": {
       "put": {
         "tags": [
