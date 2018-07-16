@@ -83,6 +83,7 @@ function getDpDemand(params,callback) {
         paramsArray[i++] = params.demandStatus;
         query = query + " and dpd.demand_status = ? ";
     }
+    query = query + ' order by dpd.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
