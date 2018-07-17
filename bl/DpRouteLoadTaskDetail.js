@@ -105,6 +105,9 @@ function createDpRouteLoadTaskDetail(req,res,next){
         })
     }).seq(function(){
         logger.info(' createDpRouteLoadTaskDetail ' + 'success');
+        req.params.carContent =" 完成装车 ";
+        req.params.vin =params.vin;
+        req.params.op =sysConst.RECORD_OP_TYPE.on_road;
         resUtil.resetCreateRes(res,{insertId:dpRouteTaskDetailId},null);
         return next();
     })
@@ -154,7 +157,27 @@ function queryCarLoadStatusCount(req,res,next){
 
 function updateDpRouteLoadTaskDetailStatus(req,res,next){
     var params = req.params;
-    Seq().seq(function(){
+    var parkObj = {};
+    Seq().seq(function() {
+        var that = this;
+        dpRouteLoadTaskDetailDAO.getDpRouteLoadTaskDetail({dpRouteTaskDetailId:params.dpRouteTaskDetailId}, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteLoadTaskDetail ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length > 0) {
+                    parkObj.carId = rows[0].car_id;
+                    parkObj.vin = rows[0].vin;
+                    that();
+                } else {
+                    logger.warn(' getDpRouteLoadTaskDetail ' + 'failed');
+                    resUtil.resetFailedRes(res, " 数据不存在，或已取消装车 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
         var that = this;
         var myDate = new Date();
         var strDate = moment(myDate).format('YYYYMMDD');
@@ -180,6 +203,10 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateTruckDispatchCarCount ' + 'success');
+                req.params.carContent =" 完成送达 ";
+                req.params.carId =parkObj.carId;
+                req.params.vin =parkObj.vin;
+                req.params.op =sysConst.RECORD_OP_TYPE.completed;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -189,6 +216,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
 
 function removeDpRouteLoadTaskDetail(req,res,next){
     var params = req.params;
+    var parkObj = {};
     Seq().seq(function(){
         var that = this;
         dpRouteLoadTaskDetailDAO.getDpRouteLoadTaskDetail({dpRouteTaskDetailId:params.dpRouteTaskDetailId},function(error,rows){
@@ -198,6 +226,7 @@ function removeDpRouteLoadTaskDetail(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
+                    parkObj.vin = rows[0].vin;
                     that();
                 }else{
                     logger.warn(' getDpRouteLoadTaskDetail ' +' failed ');
@@ -247,6 +276,9 @@ function removeDpRouteLoadTaskDetail(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateCarStatus ' + 'success');
+                req.params.carContent =" 取消装车 ";
+                req.params.vin =params.vin;
+                req.params.op =sysConst.RECORD_OP_TYPE.cancel;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
