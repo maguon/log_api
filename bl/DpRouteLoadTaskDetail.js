@@ -277,7 +277,7 @@ function removeDpRouteLoadTaskDetail(req,res,next){
             } else {
                 logger.info(' updateCarStatus ' + 'success');
                 req.params.carContent =" 取消装车 ";
-                req.params.vin =params.vin;
+                req.params.vin =parkObj.vin;
                 req.params.op =sysConst.RECORD_OP_TYPE.cancel;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
