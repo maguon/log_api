@@ -105,7 +105,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
         })
     }).seq(function(){
         logger.info(' createDpRouteLoadTaskDetail ' + 'success');
-        req.params.carContent =" 完成装车 ";
+        req.params.carContent =" 完成装车  调度编号 "+params.dpRouteTaskId;
         req.params.vin =params.vin;
         req.params.op =sysConst.RECORD_OP_TYPE.on_road;
         resUtil.resetCreateRes(res,{insertId:dpRouteTaskDetailId},null);
