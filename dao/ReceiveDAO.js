@@ -54,6 +54,23 @@ function getReceive(params,callback) {
     });
 }
 
+function getReceiveCount(params,callback) {
+    var query = " select c.id,c.city_name,count(r.id) as receive_count " +
+        " from city_info c " +
+        " left join receive_info r on c.id = r.city_id" +
+        " where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.cityId){
+        paramsArray[i++] = params.cityId;
+        query = query + " and c.id = ? ";
+    }
+    query = query + ' group by c.id ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getReceiveCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateReceive(params,callback){
     var query = " update receive_info set short_name = ?, receive_name = ?,address = ?, lng = ?,lat = ?,city_id = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -86,6 +103,7 @@ function updateReceiveCleanFee(params,callback){
 module.exports ={
     addReceive: addReceive,
     getReceive : getReceive,
+    getReceiveCount : getReceiveCount,
     updateReceive : updateReceive ,
     updateReceiveCleanFee : updateReceiveCleanFee
 }

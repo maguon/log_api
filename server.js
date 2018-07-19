@@ -439,6 +439,7 @@ function createServer() {
      * Receive Module
      */
     server.get('/api/receive',receive.queryReceive);
+    server.get('/api/receiveCount',receive.queryReceiveCount);
     server.post({path:'/api/user/:userId/receive',contentType: 'application/json'},receive.createReceive,sysRecord.saveReceiverRecord);
     server.put({path:'/api/user/:userId/receive/:receiveId',contentType: 'application/json'} ,receive.updateReceive);
     server.put({path:'/api/user/:userId/receive/:receiveId/cleanFee',contentType: 'application/json'} ,receive.updateReceiveCleanFee,sysRecord.saveReceiverRecord);

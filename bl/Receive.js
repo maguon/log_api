@@ -48,6 +48,20 @@ function queryReceive(req,res,next){
     })
 }
 
+function queryReceiveCount(req,res,next){
+    var params = req.params ;
+    receiveDAO.getReceiveCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryReceiveCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryReceiveCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateReceive(req,res,next){
     var params = req.params ;
     receiveDAO.updateReceive(params,function(error,result){
@@ -80,6 +94,7 @@ function updateReceiveCleanFee(req,res,next){
 module.exports = {
     createReceive : createReceive,
     queryReceive : queryReceive,
+    queryReceiveCount : queryReceiveCount,
     updateReceive : updateReceive ,
     updateReceiveCleanFee : updateReceiveCleanFee
 }

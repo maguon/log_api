@@ -9345,6 +9345,42 @@
         }
       }
     },
+    "/receiveCount": {
+      "get": {
+        "tags": [
+          "receive"
+        ],
+        "summary": "query receive count",
+        "description": "query receiveCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "city id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/receive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid receive id"
+          }
+        }
+      }
+    },
     "/user/{userId}/receive": {
       "post": {
         "tags": [
