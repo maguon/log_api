@@ -156,6 +156,12 @@ var STAT_STATUS = {  //工资结算状态
     stat : 2 //已结算
 };
 
+var RECEIVE_TYPE = {  //经销商类型
+    sale : 1 ,  //4S店
+    customer : 2, //大客户
+    temporary : 3 //临时停放地
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -179,7 +185,8 @@ module.exports = {
     TASK_LOAN__STATUS : TASK_LOAN__STATUS,
     DAMAGE_INDEMNITY__STATUS : DAMAGE_INDEMNITY__STATUS,
     TRUCK_INSURE__STATUS : TRUCK_INSURE__STATUS,
-    STAT_STATUS : STAT_STATUS
+    STAT_STATUS : STAT_STATUS,
+    RECEIVE_TYPE : RECEIVE_TYPE
 }
 
 
