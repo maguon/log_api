@@ -20873,11 +20873,14 @@
         "receiveName": {
           "type": "string"
         },
+        "receiveType": {
+          "type": "integer"
+        },
         "address": {
           "type": "string"
         },
         "cleanFee": {
-          "type": "number"
+          "type": "integer"
         },
         "lng": {
           "type": "integer"
