@@ -186,13 +186,13 @@ function updateHandoveImage(req,res,next){
 
 function getSettleHandoverCsv(req,res,next){
     var csvString = "";
-    var header = "交接单编号" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "经销商"+ ','+ "交接车辆" + ','+ "交接单收到日期" + ','+ "提交人"+','+ "备注" ;
+    var header = "交接单编号" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "经销商"+ ','+ "交接车辆VIN" + ','+ "交接单收到日期" + ','+ "提交人"+','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    settleHandoverDAO.getSettleHandover(params,function(error,rows){
+    settleHandoverDAO.getSettleHandoverBase(params,function(error,rows){
         if (error) {
-            logger.error(' getTruckRepairRel ' + error.message);
+            logger.error(' getSettleHandoverBase ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
@@ -213,7 +213,11 @@ function getSettleHandoverCsv(req,res,next){
                 }else{
                     parkObj.rShortName = rows[i].r_short_name;
                 }
-                parkObj.carCount = rows[i].car_count;
+                if(rows[i].vin == null){
+                    parkObj.vin = "";
+                }else{
+                    parkObj.vin = rows[i].vin;
+                }
                 if(rows[i].received_date == null){
                     parkObj.receivedDate = "";
                 }else{
@@ -230,7 +234,7 @@ function getSettleHandoverCsv(req,res,next){
                     parkObj.remark = rows[i].remark;
                 }
                 csvString = csvString+parkObj.number+","+parkObj.shortName+","+parkObj.cityRouteStart+","+parkObj.cityRouteEnd
-                    +","+parkObj.rShortName+","+parkObj.carCount+","+parkObj.receivedDate+","+parkObj.opUserName+","+parkObj.remark+ '\r\n';
+                    +","+parkObj.rShortName+","+parkObj.vin+","+parkObj.receivedDate+","+parkObj.opUserName+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

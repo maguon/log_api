@@ -96,6 +96,69 @@ function getSettleHandover(params,callback) {
     });
 }
 
+function getSettleHandoverBase(params,callback) {
+    var query = " select sh.number,e.short_name,c1.city_name as city_route_start,c2.city_name as city_route_end, " +
+        " r.short_name as r_short_name,c.vin,sh.received_date,u.real_name as op_user_name,sh.remark " +
+        " from settle_handover_info sh " +
+        " left join settle_handover_car_rel shcr on sh.id = shcr.settle_handover_id " +
+        " left join entrust_info e on sh.entrust_id = e.id " +
+        " left join receive_info r on sh.receive_id = r.id " +
+        " left join user_info u on sh.op_user_id = u.uid " +
+        " left join car_info c on shcr.car_id = c.id " +
+        " left join city_info c1 on sh.route_start_id = c1.id " +
+        " left join city_info c2 on sh.route_end_id = c2.id " +
+        " where sh.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.serialNumber){
+        paramsArray[i++] = params.serialNumber;
+        query = query + " and sh.serial_number = ? ";
+    }
+    if(params.opUserName){
+        paramsArray[i++] = params.opUserName;
+        query = query + " and u.real_name = ? ";
+    }
+    if(params.number){
+        paramsArray[i++] = params.number;
+        query = query + " and sh.number = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and c.vin like '%"+params.vinCode+"%'";
+    }
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and sh.entrust_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and sh.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and sh.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and sh.receive_id = ? ";
+    }
+    if(params.receivedDateStart){
+        paramsArray[i++] = params.receivedDateStart +" 00:00:00";
+        query = query + " and sh.received_date >= ? ";
+    }
+    if(params.receivedDateEnd){
+        paramsArray[i++] = params.receivedDateEnd +" 23:59:59";
+        query = query + " and sh.received_date <= ? ";
+    }
+    query = query + ' order by sh.id ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getSettleHandoverBase ');
+        return callback(error,rows);
+    });
+}
+
 function getNotSettleHandover(params,callback) {
     var query = " select dpdtl.*,c.make_name,e.short_name as e_short_name, " +
         " c1.city_name as city_route_start,c2.city_name as city_route_end,r.short_name as r_short_name, " +
@@ -303,6 +366,7 @@ function updateHandoveImage(params,callback){
 module.exports ={
     addSettleHandover : addSettleHandover,
     getSettleHandover : getSettleHandover,
+    getSettleHandoverBase : getSettleHandoverBase,
     getNotSettleHandover : getNotSettleHandover,
     getNotSettleHandoverCarCount : getNotSettleHandoverCarCount,
     getSettleHandoverDayCount : getSettleHandoverDayCount,
