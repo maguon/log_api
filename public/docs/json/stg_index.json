@@ -18954,11 +18954,27 @@
 
           },
           {
-            "name": "opUserName",
+            "name": "type",
             "in": "query",
-            "description": "opUser name",
+            "description": "user type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "typeArr",
+            "in": "query",
+            "description": "user typeArr",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "opUserId",
+            "in": "query",
+            "description": "opUser id",
+            "required": false,
+            "type": "integer"
 
           },
           {
@@ -19377,9 +19393,33 @@
         ],
         "parameters": [
           {
-            "name": "settleHandoverId",
+            "name": "serialNumber",
             "in": "query",
-            "description": "settleHandover id",
+            "description": "serial number",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "user type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "typeArr",
+            "in": "query",
+            "description": "user typeArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "opUserId",
+            "in": "query",
+            "description": "opUser id",
             "required": false,
             "type": "integer"
 

@@ -44,9 +44,16 @@ function getSettleHandover(params,callback) {
         paramsArray[i++] = params.serialNumber;
         query = query + " and sh.serial_number = ? ";
     }
-    if(params.opUserName){
-        paramsArray[i++] = params.opUserName;
-        query = query + " and u.real_name = ? ";
+    if(params.type){
+        paramsArray[i++] = params.type;
+        query = query + " and u.type = ? ";
+    }
+    if(params.typeArr){
+        query = query + " and u.type in ("+params.typeArr + ") ";
+    }
+    if(params.opUserId){
+        paramsArray[i++] = params.opUserId;
+        query = query + " and sh.op_user_id = ? ";
     }
     if(params.number){
         paramsArray[i++] = params.number;
@@ -113,9 +120,16 @@ function getSettleHandoverBase(params,callback) {
         paramsArray[i++] = params.serialNumber;
         query = query + " and sh.serial_number = ? ";
     }
-    if(params.opUserName){
-        paramsArray[i++] = params.opUserName;
-        query = query + " and u.real_name = ? ";
+    if(params.type){
+        paramsArray[i++] = params.type;
+        query = query + " and u.type = ? ";
+    }
+    if(params.typeArr){
+        query = query + " and u.type in ("+params.typeArr + ") ";
+    }
+    if(params.opUserId){
+        paramsArray[i++] = params.opUserId;
+        query = query + " and sh.op_user_id = ? ";
     }
     if(params.number){
         paramsArray[i++] = params.number;
