@@ -97,7 +97,7 @@ function getSettleHandover(params,callback) {
 }
 
 function getSettleHandoverBase(params,callback) {
-    var query = " select sh.number,e.short_name,c1.city_name as city_route_start,c2.city_name as city_route_end, " +
+    var query = " select sh.number,sh.serial_number,e.short_name,c1.city_name as city_route_start,c2.city_name as city_route_end, " +
         " r.short_name as r_short_name,c.vin,sh.received_date,u.real_name as op_user_name,sh.remark " +
         " from settle_handover_info sh " +
         " left join settle_handover_car_rel shcr on sh.id = shcr.settle_handover_id " +
