@@ -7,9 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SettleHandoverDAO.js');
 
 function addSettleHandover(params,callback){
-    var query = " insert into settle_handover_info (number,entrust_id,op_user_id,received_date,date_id,remark) values ( ? , ? , ? , ? , ? , ? )";
+    var query = " insert into settle_handover_info (number,serial_number,entrust_id,op_user_id,received_date,date_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.number;
+    paramsArray[i++]=params.serialNumber;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.receivedDate;
@@ -37,6 +39,14 @@ function getSettleHandover(params,callback) {
     if(params.settleHandoverId){
         paramsArray[i++] = params.settleHandoverId;
         query = query + " and sh.id = ? ";
+    }
+    if(params.serialNumber){
+        paramsArray[i++] = params.serialNumber;
+        query = query + " and sh.serial_number = ? ";
+    }
+    if(params.opUserName){
+        paramsArray[i++] = params.opUserName;
+        query = query + " and u.real_name = ? ";
     }
     if(params.number){
         paramsArray[i++] = params.number;
@@ -232,8 +242,9 @@ function getSettleHandoverMonthCount(params,callback) {
 }
 
 function updateSettleHandover(params,callback){
-    var query = " update settle_handover_info set received_date = ? , date_id = ? , remark = ? where id = ? " ;
+    var query = " update settle_handover_info set serial_number = ? , received_date = ? , date_id = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.serialNumber;
     paramsArray[i++]=params.receivedDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.remark;

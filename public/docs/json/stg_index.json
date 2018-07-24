@@ -18946,6 +18946,22 @@
 
           },
           {
+            "name": "serialNumber",
+            "in": "query",
+            "description": "serial number",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "opUserName",
+            "in": "query",
+            "description": "opUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "number",
             "in": "query",
             "description": "number",
@@ -21719,6 +21735,9 @@
       "type": "object",
       "properties": {
 
+        "serialNumber": {
+          "type": "integer"
+        },
         "entrustId": {
           "type": "integer"
         },
