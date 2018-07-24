@@ -201,6 +201,14 @@
 
           },
           {
+            "name": "typeArr",
+            "in": "query",
+            "description": "user typeArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "status",
             "in": "query",
             "description": "user status",

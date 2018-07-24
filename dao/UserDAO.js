@@ -77,6 +77,9 @@ function getUserBase(params,callback){
         paramsArray[i++] = params.type;
         query = query + " and u.type = ? ";
     }
+    if(params.typeArr){
+        query = query + " and u.type in ("+params.typeArr + ") ";
+    }
     if(params.status){
         paramsArray[i++] = params.status;
         query = query + " and u.status = ? ";
