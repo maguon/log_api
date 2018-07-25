@@ -21303,6 +21303,15 @@
         },
         "planCount": {
           "type": "integer"
+        },
+        "transferFlag": {
+          "type": "integer"
+        },
+        "transferCityId": {
+          "type": "integer"
+        },
+        "transferAddrId": {
+          "type": "integer"
         }
       },
       "xml": {
