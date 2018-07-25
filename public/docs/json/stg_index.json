@@ -9289,6 +9289,14 @@
 
           },
           {
+            "name": "receiveType",
+            "in": "query",
+            "description": "receive type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "shortName",
             "in": "query",
             "description": "short name",
