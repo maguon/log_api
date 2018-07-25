@@ -294,7 +294,8 @@ function removeDpRouteLoadTask(req,res,next){
             } else {
                 if (result && result.affectedRows > 0) {
                     logger.info(' removeDpRouteLoadTask ' + 'success');
-                    that();
+                    resUtil.resetUpdateRes(res,result,null);
+                    return next();
                 } else {
                     logger.warn(' removeDpRouteLoadTask ' + 'failed');
                     resUtil.resetFailedRes(res," 删除任务失败 ");
@@ -302,7 +303,8 @@ function removeDpRouteLoadTask(req,res,next){
                 }
             }
         })
-    }).seq(function () {
+    })
+        /*.seq(function () {//db端执行
         params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
         params.dpDemandId = parkObj.demandId;
         params.planCount = parkObj.planCount;
@@ -316,7 +318,7 @@ function removeDpRouteLoadTask(req,res,next){
                 return next();
             }
         })
-    })
+    })*/
 }
 
 
