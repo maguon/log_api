@@ -23,7 +23,7 @@ function addDpTaskStat(params,callback){
 }
 
 function getDpTaskStat(params,callback) {
-    var query = " select sum(dpt.pre_count) as pre_count,sum(dpt.plan_count) as plan_count, " +
+    var query = " select sum(dpt.pre_count) as pre_count,sum(dpt.plan_count) as plan_count,sum(dpt.transfer_count) as transfer_count, " +
         " dpt.route_start_id,c.city_name as city_route_start,dpt.route_end_id,ce.city_name as city_route_end,dpt.date_id from dp_task_stat dpt " +
         " left join city_info c on dpt.route_start_id = c.id " +
         " left join city_info ce on dpt.route_end_id = ce.id where dpt.id is not null ";
