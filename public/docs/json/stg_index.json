@@ -13033,6 +13033,50 @@
         }
       }
     },
+    "/dpTransferDemand": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpTransferDemand list",
+        "description": "query dpTransferDemand",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "transferAddrId",
+            "in": "query",
+            "description": "transferAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "transferStatus",
+            "in": "query",
+            "description": "transfer status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpTransferDemand"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpTransferDemand id"
+          }
+        }
+      }
+    },
     "/dpRouteTask": {
       "get": {
         "tags": [

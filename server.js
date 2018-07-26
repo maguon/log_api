@@ -52,6 +52,7 @@ var carModel = require('./bl/CarModel.js');
 var carExceptionRel = require('./bl/CarExceptionRel.js');
 var dpDemand = require('./bl/DpDemand.js');
 var dpTaskStat = require('./bl/DpTaskStat.js');
+var dpTransferDemand = require('./bl/DpTransferDemand.js');
 var dpRouteTask = require('./bl/DpRouteTask.js');
 var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
 var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
@@ -555,6 +556,11 @@ function createServer() {
     server.get('/api/dpTaskStatCount' , dpTaskStat.queryDpTaskStatCount);
     server.post({path:'/api/user/:userId/dpTaskStat',contentType: 'application/json'},dpTaskStat.createDpTaskStat);
     server.put({path:'/api/user/:userId/taskStatStatus',contentType: 'application/json'} ,dpTaskStat.updateDpTaskStatStatus);
+
+    /**
+     * DpTransferDemand Module
+     */
+    server.get('/api/dpTransferDemand' , dpTransferDemand.queryDpTransferDemand);
 
     /**
      * DpRouteTask Module
