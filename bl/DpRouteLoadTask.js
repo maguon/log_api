@@ -11,6 +11,7 @@ var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
+var dpTransferDemandDAO = require('../dao/DpTransferDemandDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var dpRouteLoadTaskCleanRelDAO = require('../dao/DpRouteLoadTaskCleanRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -133,11 +134,18 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     return next();
                 } else {
                     if (rows && rows.length > 0) {
+                        parkObj.demandId = rows[0].demand_id;
+                        parkObj.routeStartId = rows[0].route_start_id;
+                        parkObj.baseAddrId = rows[0].base_addr_id;
                         parkObj.addrName = rows[0].addr_name;
                         parkObj.routeEndId = rows[0].route_end_id;
                         parkObj.cityName = rows[0].city_name;
+                        parkObj.transferFlag = rows[0].transfer_flag;
+                        parkObj.transferCityId = rows[0].transfer_city_id;
+                        parkObj.transferAddrId = rows[0].transfer_addr_id;
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
+                        parkObj.transferCount = rows[0].real_count;
                         parkObj.cleanFee = rows[0].clean_fee;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.carExceptionCount = rows[0].car_exception_count;
@@ -198,6 +206,34 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         logger.info(' addDpRouteLoadTaskCleanRel ' + 'success');
                     } else {
                         logger.warn(' addDpRouteLoadTaskCleanRel ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function() {
+        var that = this;
+        if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.arrive&&parkObj.transferFlag>0) {
+            params.demandId = parkObj.demandId;
+            params.routeStartId = parkObj.routeStartId;
+            params.baseAddrId = parkObj.baseAddrId;
+            params.routeEndId = parkObj.routeEndId;
+            params.transferCityId = parkObj.transferCityId;
+            params.transferAddrId = parkObj.transferAddrId;
+            params.receiveId = parkObj.receiveId;
+            params.transferCount = parkObj.transferCount;
+            params.dateId = parkObj.dateId;
+            dpTransferDemandDAO.addDpTransferDemand(params, function (error, result) {
+                if (error) {
+                    logger.error(' addDpTransferDemand ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.insertId > 0) {
+                        logger.info(' addDpTransferDemand ' + 'success');
+                    } else {
+                        logger.warn(' addDpTransferDemand ' + 'failed');
                     }
                     that();
                 }
