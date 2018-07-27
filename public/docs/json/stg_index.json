@@ -21363,6 +21363,9 @@
         "dpDemandId": {
           "type": "integer"
         },
+        "transferDemandId": {
+          "type": "integer"
+        },
         "routeStartId": {
           "type": "integer"
         },
