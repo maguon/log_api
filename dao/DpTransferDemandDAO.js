@@ -13,9 +13,9 @@ function addDpTransferDemand(params,callback){
     paramsArray[i++]=params.demandId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.baseAddrId;
-    paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.transferCityId;
     paramsArray[i++]=params.transferAddrId;
+    paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.transferCount;
     paramsArray[i]=params.dateId;
