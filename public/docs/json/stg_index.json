@@ -13077,6 +13077,50 @@
         }
       }
     },
+    "/dpTaskTransferStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpTaskTransferStat list",
+        "description": "query dpTaskTransferStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpTaskTransferStatId",
+            "in": "query",
+            "description": "dpTaskTransferStat id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "transferStatus",
+            "in": "query",
+            "description": "transfer status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpTaskTransferStat"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpTaskTransferStat id"
+          }
+        }
+      }
+    },
     "/dpRouteTask": {
       "get": {
         "tags": [
