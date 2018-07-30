@@ -13855,6 +13855,14 @@
 
           },
           {
+            "name": "dateId",
+            "in": "query",
+            "description": "date id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "vin",
             "in": "query",
             "description": "vin",
