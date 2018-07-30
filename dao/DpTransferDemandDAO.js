@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DpTransferDemandDAO.js');
 
 function addDpTransferDemand(params,callback){
     var query = " insert into dp_transfer_demand_info (demand_id,route_start_id,base_addr_id,transfer_city_id,transfer_addr_id,route_end_id, " +
-        " receive_id,transfer_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " receive_id,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.demandId;
     paramsArray[i++]=params.routeStartId;
@@ -17,7 +17,7 @@ function addDpTransferDemand(params,callback){
     paramsArray[i++]=params.transferAddrId;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.receiveId;
-    paramsArray[i++]=params.transferCount;
+    paramsArray[i++]=params.preCount;
     paramsArray[i]=params.dateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpTransferDemand ');

@@ -145,7 +145,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.transferAddrId = rows[0].transfer_addr_id;
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
-                        parkObj.transferCount = rows[0].real_count;
+                        parkObj.preCount = rows[0].real_count;
                         parkObj.cleanFee = rows[0].clean_fee;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.carExceptionCount = rows[0].car_exception_count;
@@ -215,7 +215,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.arrive&&parkObj.transferFlag>0) {
+        if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load&&parkObj.transferFlag>0) {
             params.demandId = parkObj.demandId;
             params.routeStartId = parkObj.routeStartId;
             params.baseAddrId = parkObj.baseAddrId;
@@ -223,7 +223,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.transferCityId = parkObj.transferCityId;
             params.transferAddrId = parkObj.transferAddrId;
             params.receiveId = parkObj.receiveId;
-            params.transferCount = parkObj.transferCount;
+            params.preCount = parkObj.preCount;
             params.dateId = parkObj.dateId;
             dpTransferDemandDAO.addDpTransferDemand(params, function (error, result) {
                 if (error) {
