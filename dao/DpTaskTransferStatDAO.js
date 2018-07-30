@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpTaskTransferStatDAO.js');
 
 function getDpTaskTransferStat(params,callback) {
-    var query = " select sum(dptts.transfer_count) as transfer_count,sum(dptts.plan_count) as plan_count, " +
+    var query = " select sum(dptts.pre_count) as pre_count,sum(dptts.transfer_count) as transfer_count,sum(dptts.plan_count) as plan_count, " +
         " dptts.route_start_id,c2.city_name as route_start_name, " +
         " dptts.transfer_city_id,c.city_name as transfer_city_name, " +
         " dptts.route_end_id,c1.city_name as route_end_name,dptts.date_id " +
