@@ -13871,6 +13871,14 @@
 
           },
           {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "vin",
             "in": "query",
             "description": "vin",

@@ -32,7 +32,7 @@ function addDpRouteLoadTask(params,callback){
 
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,c.city_name as city_start_name,c1.city_name,r.short_name,r.clean_fee,dpd.pre_count, " +
-        " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
+        " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.on_road_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
         " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count,c2.city_name as transfer_city_name,ba1.addr_name as transfer_addr_name " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
@@ -99,6 +99,10 @@ function getDpRouteLoadTask(params,callback) {
     if(params.loadTaskStatus){
         paramsArray[i++] = params.loadTaskStatus;
         query = query + " and dprl.load_task_status = ? ";
+    }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status = ? ";
     }
     if(params.vin){
         paramsArray[i++] = params.vin;

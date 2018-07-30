@@ -269,6 +269,10 @@ function updateDpRouteTaskStatus(params,callback){
         paramsArray[i++] = params.taskStartDate;
         query = query + " ,task_start_date = ? ";
     }
+    if(params.onRoadDate){
+        paramsArray[i++] = params.onRoadDate;
+        query = query + " ,on_road_date = ? ";
+    }
     if(params.taskEndDate){
         paramsArray[i++] = params.taskEndDate;
         query = query + " ,task_end_date = ? ";
