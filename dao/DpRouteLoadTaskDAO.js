@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDAO.js');
 
 function addDpRouteLoadTask(params,callback){
-    var query = " insert into dp_route_load_task (user_id,demand_id,transfer_demand_id,dp_route_task_id,route_start_id,base_addr_id,route_end_id,receive_id,date_id," +
-        "plan_date,plan_count,transfer_flag,transfer_city_id,transfer_addr_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_load_task (user_id,load_task_type,demand_id,transfer_demand_id,dp_route_task_id,route_start_id,base_addr_id,route_end_id,receive_id,date_id," +
+        "plan_date,plan_count,transfer_flag,transfer_city_id,transfer_addr_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.loadTaskType;
     paramsArray[i++]=params.dpDemandId;
     paramsArray[i++]=params.transferDemandId;
     paramsArray[i++]=params.dpRouteTaskId;
@@ -55,6 +56,10 @@ function getDpRouteLoadTask(params,callback) {
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dprl.dp_route_task_id = ? ";
+    }
+    if(params.loadTaskType){
+        paramsArray[i++] = params.loadTaskType;
+        query = query + " and dprl.load_task_type = ? ";
     }
     if(params.dpDemandId){
         paramsArray[i++] = params.dpDemandId;

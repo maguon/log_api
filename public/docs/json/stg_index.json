@@ -13783,6 +13783,14 @@
 
           },
           {
+            "name": "loadTaskType",
+            "in": "query",
+            "description": "loadTask type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "dpDemandId",
             "in": "query",
             "description": "dpDemand id",
@@ -21392,6 +21400,9 @@
       "type": "object",
       "properties": {
 
+        "loadTaskType": {
+          "type": "integer"
+        },
         "dpDemandId": {
           "type": "integer"
         },

@@ -13,6 +13,7 @@ ADD COLUMN `serial_number`  int(10) NOT NULL DEFAULT 0 COMMENT '序号' AFTER `n
 -- 调度中转添加字段
 -- ----------------------------
 ALTER TABLE `dp_route_load_task`
+ADD COLUMN `load_task_type`  tinyint(1) NULL DEFAULT 1 COMMENT '调度任务类型(1-始发站出发,2-中转站出发)' AFTER `field_op_id`,
 ADD COLUMN `transfer_demand_id`  int(10) NULL DEFAULT 0 COMMENT '中转需求ID' AFTER `demand_id`,
 ADD COLUMN `transfer_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否中转标识(0-否,1-是)' AFTER `load_task_status`,
 ADD COLUMN `transfer_city_id`  int(10) NULL DEFAULT 0 COMMENT '中转城市ID' AFTER `transfer_flag`,
