@@ -145,7 +145,6 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.transferAddrId = rows[0].transfer_addr_id;
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
-                        parkObj.preCount = rows[0].real_count;
                         parkObj.cleanFee = rows[0].clean_fee;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.carExceptionCount = rows[0].car_exception_count;
@@ -223,7 +222,8 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.transferCityId = parkObj.transferCityId;
             params.transferAddrId = parkObj.transferAddrId;
             params.receiveId = parkObj.receiveId;
-            params.preCount = parkObj.preCount;
+            params.preCount = parkObj.carCount;
+            params.transferCount = parkObj.carCount;
             params.dateId = parkObj.dateId;
             dpTransferDemandDAO.addDpTransferDemand(params, function (error, result) {
                 if (error) {
