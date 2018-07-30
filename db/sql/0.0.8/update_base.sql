@@ -134,8 +134,3 @@ VALUES (new.route_start_id,new.base_addr_id,new.transfer_city_id,new.transfer_ad
 ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,transfer_status=1;
 ;;
 DELIMITER ;
--- ----------------------------
--- 2018-07-30 更新
--- ----------------------------
-ALTER TABLE `dp_route_task`
-ADD COLUMN `on_road_date`  datetime NULL COMMENT '在途时间' AFTER `task_start_date`;

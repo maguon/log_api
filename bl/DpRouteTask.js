@@ -319,9 +319,6 @@ function updateDpRouteTaskStatus(req,res,next){
         if(params.taskStatus == sysConst.TASK_STATUS.doing){
             params.taskStartDate = myDate;
         }
-        if(params.taskStatus == sysConst.TASK_STATUS.on_road){
-            params.onRoadDate = myDate;
-        }
         if(params.taskStatus == sysConst.TASK_STATUS.completed){
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
