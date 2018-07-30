@@ -129,8 +129,8 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_new_transfer_demand_stat`;
 DELIMITER ;;
 CREATE TRIGGER `trg_new_transfer_demand_stat` AFTER INSERT ON `dp_transfer_demand_info` FOR EACH ROW
-INSERT INTO dp_task_transfer_stat(route_start_id,base_addr_id,transfer_city_id,transfer_addr_id,route_end_id,receive_id,pre_count,date_id)
-VALUES (new.route_start_id,new.base_addr_id,new.transfer_city_id,new.transfer_addr_id,new.route_end_id,new.receive_id,new.pre_count,new.date_id)
-ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,transfer_status=1;
+INSERT INTO dp_task_transfer_stat(route_start_id,base_addr_id,transfer_city_id,transfer_addr_id,route_end_id,receive_id,pre_count,transfer_count,date_id)
+VALUES (new.route_start_id,new.base_addr_id,new.transfer_city_id,new.transfer_addr_id,new.route_end_id,new.receive_id,new.pre_count,new.transfer_count,new.date_id)
+ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,transfer_count = transfer_count+ new.transfer_count transfer_status=1;
 ;;
 DELIMITER ;
