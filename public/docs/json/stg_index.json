@@ -13863,6 +13863,14 @@
 
           },
           {
+            "name": "loadTaskStatus",
+            "in": "query",
+            "description": "loadTask status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "vin",
             "in": "query",
             "description": "vin",
