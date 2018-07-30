@@ -92,6 +92,10 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and dprl.receive_id = ? ";
     }
+    if(params.transferCityId){
+        paramsArray[i++] = params.transferCityId;
+        query = query + " and dprl.transfer_city_id = ? ";
+    }
     if(params.dateId){
         paramsArray[i++] = params.dateId;
         query = query + " and dprl.date_id = ? ";
