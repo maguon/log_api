@@ -22,29 +22,6 @@ ADD COLUMN `transfer_addr_id`  int(10) NULL DEFAULT 0 COMMENT '中转站装车�
 ALTER TABLE `dp_task_stat`
 ADD COLUMN `transfer_count`  int(10) NULL DEFAULT 0 COMMENT '中转数' AFTER `not_plan_count`;
 -- ----------------------------
--- Table structure for dp_task_transfer_stat
--- ----------------------------
-DROP TABLE IF EXISTS `dp_task_transfer_stat`;
-CREATE TABLE `dp_task_transfer_stat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `route_start_id` int(10) NOT NULL COMMENT '起始地ID',
-  `base_addr_id` int(10) NOT NULL COMMENT '起始地发货地址ID',
-  `transfer_city_id` int(10) NOT NULL COMMENT '中转城市ID',
-  `transfer_addr_id` int(10) NOT NULL COMMENT '中转站ID',
-  `route_end_id` int(10) NOT NULL DEFAULT '0' COMMENT '目的地ID',
-  `receive_id` int(10) NOT NULL DEFAULT '0' COMMENT '经销商ID',
-  `pre_count` int(10) DEFAULT '0' COMMENT '需求安排台数',
-  `transfer_count` int(10) DEFAULT '0' COMMENT '中转数',
-  `plan_count` int(10) DEFAULT '0' COMMENT '已派发台数',
-  `date_id` int(4) NOT NULL COMMENT '指令时间',
-  `transfer_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '中转状态(1-未完成,2-已完成)',
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`route_start_id`,`base_addr_id`,`transfer_city_id`,`transfer_addr_id`,`route_end_id`,`receive_id`,`date_id`),
-  UNIQUE KEY `id` (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
 -- Table structure for dp_transfer_demand_info
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_transfer_demand_info`;
@@ -57,18 +34,20 @@ CREATE TABLE `dp_transfer_demand_info` (
   `transfer_addr_id` int(10) NOT NULL DEFAULT '0' COMMENT '中转站装车地ID',
   `route_end_id` int(10) NOT NULL DEFAULT '0' COMMENT '目的地ID',
   `receive_id` int(10) NOT NULL DEFAULT '0' COMMENT '经销商ID',
-  `pre_count` int(10) DEFAULT '0' COMMENT '需求安排台数',
-  `transfer_count` int(10) DEFAULT '0' COMMENT '中转数',
+  `pre_count` int(10) DEFAULT '0' COMMENT '需求中转数',
+  `transfer_count` int(10) DEFAULT '0' COMMENT '即将到达中转数',
+  `arrive_count` int(10) DEFAULT '0' COMMENT '已到达中转数',
   `plan_count` int(10) DEFAULT '0' COMMENT '已派发台数',
   `date_id` int(4) NOT NULL COMMENT '指令时间',
   `transfer_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态(0-取消,1-正常,2-完成)',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`route_start_id`,`base_addr_id`,`transfer_city_id`,`transfer_addr_id`,`route_end_id`,`receive_id`,`date_id`),
+  UNIQUE KEY `id` (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- 2018-07-25 更新
--- 追加transfer_flag状态验证，如果任务是中转，更新中转需求、中转需求统计、原始需求统计中的plan_count
+-- 追加transfer_flag状态验证，如果任务是中转，更新中转需求、原始需求统计中的plan_count
 -- ----------------------------
 DROP TRIGGER IF EXISTS `trg_new_load_task`;
 DELIMITER ;;
@@ -80,16 +59,13 @@ IF(new.transfer_flag=1) THEN
 UPDATE dp_transfer_demand_info set plan_count=plan_count+new.plan_count where id= new.transfer_demand_id ;
 UPDATE dp_task_stat set transfer_count = transfer_count+new.plan_count where route_start_id=new.route_start_id
 and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
-UPDATE dp_task_transfer_stat set plan_count = plan_count+new.plan_count where route_start_id=new.route_start_id
-and base_addr_id=new.base_addr_id and transfer_city_id=new.transfer_city_id and transfer_addr_id = new.transfer_addr_id
-and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
 END IF;
 END
 ;;
 DELIMITER ;
 -- ----------------------------
 -- 2018-07-25 更新
--- 追加transfer_flag状态验证，如果中转任务被取消，更新原始需求、原始需求统计、中转需求、中转需求统计plan_count
+-- 追加transfer_flag状态验证，如果中转任务被取消，更新原始需求、原始需求统计、中转需求plan_count
 -- ----------------------------
 DROP TRIGGER IF EXISTS `trg_update_load_task`;
 DELIMITER ;;
@@ -100,9 +76,6 @@ UPDATE dp_task_stat set plan_count = plan_count-old.plan_count,transfer_count = 
 where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id
 and receive_id=new.receive_id and date_id = new.date_id;
 UPDATE dp_transfer_demand_info set plan_count=plan_count-old.plan_count where id= new.transfer_demand_id ;
-UPDATE dp_task_transfer_stat set plan_count = plan_count-old.plan_count where route_start_id=new.route_start_id
-and base_addr_id=new.base_addr_id and transfer_city_id=new.transfer_city_id and transfer_addr_id = new.transfer_addr_id
-and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
 ELSEIF(new.load_task_status=8 && old.load_task_status<>8) THEN
 UPDATE dp_demand_info set plan_count=plan_count-old.plan_count where id= new.demand_id ;
 UPDATE dp_task_stat set plan_count = plan_count-old.plan_count
@@ -120,17 +93,5 @@ where id = old.dp_route_task_id and task_status =9 and
 (select count(*) from dp_route_load_task where load_task_status <>7 and load_task_status<>8 and dp_route_task_id = old.dp_route_task_id ) =0 ;
 END IF;
 END
-;;
-DELIMITER ;
--- ----------------------------
--- 2018-07-27 更新
--- 通过到达生成中转需求，同时生成中转需求统计
--- ----------------------------
-DROP TRIGGER IF EXISTS `trg_new_transfer_demand_stat`;
-DELIMITER ;;
-CREATE TRIGGER `trg_new_transfer_demand_stat` AFTER INSERT ON `dp_transfer_demand_info` FOR EACH ROW
-INSERT INTO dp_task_transfer_stat(route_start_id,base_addr_id,transfer_city_id,transfer_addr_id,route_end_id,receive_id,pre_count,transfer_count,date_id)
-VALUES (new.route_start_id,new.base_addr_id,new.transfer_city_id,new.transfer_addr_id,new.route_end_id,new.receive_id,new.pre_count,new.transfer_count,new.date_id)
-ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,transfer_count = transfer_count+ new.transfer_count ,transfer_status=1;
 ;;
 DELIMITER ;
