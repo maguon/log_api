@@ -13077,25 +13077,17 @@
         }
       }
     },
-    "/dpTaskTransferStat": {
+    "/dpTransferDemandStat": {
       "get": {
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dpTaskTransferStat list",
-        "description": "query dpTaskTransferStat",
+        "summary": "query  dpTransferDemandStat list",
+        "description": "query dpTransferDemandStat",
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "dpTaskTransferStatId",
-            "in": "query",
-            "description": "dpTaskTransferStat id",
-            "required": false,
-            "type": "integer"
-
-          },
           {
             "name": "transferStatus",
             "in": "query",
@@ -13111,12 +13103,12 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/dpTaskTransferStat"
+                "$ref": "#/definitions/dpTransferDemand"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid dpTaskTransferStat id"
+            "description": "Invalid token value or invalid dpTransferDemand id"
           }
         }
       }
