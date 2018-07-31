@@ -79,7 +79,7 @@ function getDpTransferDemandStat(params,callback) {
         " dptd.route_start_id,c2.city_name as route_start_name, " +
         " dptd.transfer_city_id,c.city_name as transfer_city_name, " +
         " dptd.route_end_id,c1.city_name as route_end_name,dptd.date_id " +
-        " from dp_task_transfer_stat dptd " +
+        " from dp_transfer_demand_info dptd " +
         " left join city_info c2 on dptd.route_start_id = c2.id " +
         " left join city_info c on dptd.transfer_city_id = c.id " +
         " left join city_info c1 on dptd.route_end_id = c1.id " +
