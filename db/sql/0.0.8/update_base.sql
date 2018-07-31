@@ -57,16 +57,18 @@ UPDATE dp_demand_info set plan_count=plan_count+new.plan_count where id= new.dem
 UPDATE dp_task_stat set plan_count = plan_count+new.plan_count where route_start_id=new.route_start_id
 and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
 IF(new.transfer_flag=1) THEN
-UPDATE dp_transfer_demand_info set plan_count=plan_count+new.plan_count where id= new.transfer_demand_id ;
 UPDATE dp_task_stat set transfer_count = transfer_count+new.plan_count where route_start_id=new.route_start_id
 and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+END IF;
+IF(new.load_task_type=2) THEN
+UPDATE dp_transfer_demand_info set plan_count=plan_count+new.plan_count where id= new.transfer_demand_id ;
 END IF;
 END
 ;;
 DELIMITER ;
 -- ----------------------------
 -- 2018-07-25 更新
--- 追加transfer_flag状态验证，如果中转任务被取消，更新原始需求、原始需求统计、中转需求plan_count
+-- 追加transfer_flag和load_task_type状态，如果中转任务被取消，更新原始需求、原始需求统计、中转需求plan_count
 -- ----------------------------
 DROP TRIGGER IF EXISTS `trg_update_load_task`;
 DELIMITER ;;
@@ -82,6 +84,9 @@ UPDATE dp_demand_info set plan_count=plan_count-old.plan_count where id= new.dem
 UPDATE dp_task_stat set plan_count = plan_count-old.plan_count
 where route_start_id=new.route_start_id
 and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+IF(new.load_task_type=2) THEN
+UPDATE dp_transfer_demand_info set plan_count=plan_count-new.plan_count where id= new.transfer_demand_id ;
+END IF;
 END IF;
 IF(new.load_task_status=3 && old.load_task_status<>3) THEN
 UPDATE dp_route_task set task_status=4,car_count = (select sum(real_count)
