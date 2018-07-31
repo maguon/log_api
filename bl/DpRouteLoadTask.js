@@ -238,6 +238,29 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     that();
                 }
             })
+        }else if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.arrive&&parkObj.transferFlag>0){
+            params.transferCount = parkObj.carCount;
+            params.arriveCount = parkObj.carCount;
+            params.routeStartId = parkObj.routeStartId;
+            params.baseAddrId = parkObj.baseAddrId;
+            params.routeEndId = parkObj.routeEndId;
+            params.transferCityId = parkObj.transferCityId;
+            params.transferAddrId = parkObj.transferAddrId;
+            params.receiveId = parkObj.receiveId;
+            params.dateId = parkObj.dateId;
+            dpTransferDemandDAO.updateDpTransferDemand(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateDpTransferDemand ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDpTransferDemand ' + 'success');
+                    } else {
+                        logger.warn(' updateDpTransferDemand ' + 'failed');
+                    }
+                    that();
+                }
+            })
         }else{
             that();
         }

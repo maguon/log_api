@@ -28,7 +28,22 @@ function queryDpTransferDemand(req,res,next){
     })
 }
 
+function queryDpTransferDemandStat(req,res,next){
+    var params = req.params ;
+    dpTransferDemandDAO.getDpTransferDemandStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpTransferDemandStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpTransferDemandStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    queryDpTransferDemand : queryDpTransferDemand
+    queryDpTransferDemand : queryDpTransferDemand,
+    queryDpTransferDemandStat : queryDpTransferDemandStat
 }
