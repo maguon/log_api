@@ -43,7 +43,8 @@ CREATE TABLE `dp_transfer_demand_info` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`route_start_id`,`base_addr_id`,`transfer_city_id`,`transfer_addr_id`,`route_end_id`,`receive_id`,`date_id`),
-  UNIQUE KEY `id` (`id`) USING BTREE
+  UNIQUE KEY `id` (`id`) USING BTREE,
+  UNIQUE KEY `demand_id` (`demand_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- 2018-07-25 更新
