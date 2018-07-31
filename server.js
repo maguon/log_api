@@ -391,6 +391,7 @@ function createServer() {
      * DrivePeccancy Module
      */
     server.get('/api/drivePeccancy' , drivePeccancy.queryDrivePeccancy);
+    server.get('/api/drivePeccancyCount' , drivePeccancy.queryDrivePeccancyCount);
     server.get('/api/drivePeccancy.csv' , drivePeccancy.getDrivePeccancyCsv);
     server.post({path:'/api/user/:userId/drivePeccancy',contentType: 'application/json'},drivePeccancy.createDrivePeccancy);
     server.put({path:'/api/user/:userId/peccancy/:peccancyId',contentType: 'application/json'} ,drivePeccancy.updateDrivePeccancy);
@@ -399,6 +400,7 @@ function createServer() {
      * DriveExceedOil Module
      */
     server.get('/api/driveExceedOil' , driveExceedOil.queryDriveExceedOil);
+    server.get('/api/driveExceedOilCount' , driveExceedOil.queryDriveExceedOilCount);
     server.get('/api/driveExceedOil.csv' , driveExceedOil.getDriveExceedOilCsv);
     server.post({path:'/api/user/:userId/driveExceedOil',contentType: 'application/json'},driveExceedOil.createDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);

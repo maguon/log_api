@@ -41,6 +41,20 @@ function queryDriveExceedOil(req,res,next){
     })
 }
 
+function queryDriveExceedOilCount(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.getDriveExceedOilCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveExceedOilCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveExceedOilCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDriveExceedOil(req,res,next){
     var params = req.params ;
     driveExceedOilDAO.updateDriveExceedOil(params,function(error,result){
@@ -110,6 +124,7 @@ function getDriveExceedOilCsv(req,res,next){
 module.exports = {
     createDriveExceedOil : createDriveExceedOil,
     queryDriveExceedOil : queryDriveExceedOil,
+    queryDriveExceedOilCount : queryDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
     getDriveExceedOilCsv : getDriveExceedOilCsv
 }

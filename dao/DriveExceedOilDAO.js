@@ -68,6 +68,17 @@ function getDriveExceedOil(params,callback) {
     });
 }
 
+function getDriveExceedOilCount(params,callback) {
+    var query = " select stat_status,count(deo.id)as exceed_oil_count,sum(deo.exceed_oil_money)as exceed_oil_money from drive_exceed_oil deo " +
+        " where deo.id is not null ";
+    var paramsArray=[],i=0;
+    query = query + ' group by deo.stat_status ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDriveExceedOil(params,callback){
     var query = " update drive_exceed_oil set dp_route_task_id = ? , exceed_oil_quantity = ? , exceed_oil_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -97,6 +108,7 @@ function updateDriveExceedOilStatStatus(params,callback){
 module.exports ={
     addDriveExceedOil : addDriveExceedOil,
     getDriveExceedOil : getDriveExceedOil,
+    getDriveExceedOilCount : getDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
     updateDriveExceedOilStatStatus : updateDriveExceedOilStatStatus
 }

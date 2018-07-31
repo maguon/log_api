@@ -66,6 +66,17 @@ function getDrivePeccancy(params,callback) {
     });
 }
 
+function getDrivePeccancyCount(params,callback) {
+    var query = " select stat_status,count(dp.id)as peccancy_count,sum(dp.fine_money)as fine_money from drive_peccancy dp " +
+        " where dp.id is not null ";
+    var paramsArray=[],i=0;
+    query = query + ' group by dp.stat_status ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDrivePeccancyCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDrivePeccancy(params,callback){
     var query = " update drive_peccancy set drive_id = ? , truck_id = ? , fine_score = ? , fine_money = ? , start_date = ? , end_date = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -98,6 +109,7 @@ function updateDrivePeccancyStatStatus(params,callback){
 module.exports ={
     addDrivePeccancy : addDrivePeccancy,
     getDrivePeccancy : getDrivePeccancy,
+    getDrivePeccancyCount : getDrivePeccancyCount,
     updateDrivePeccancy : updateDrivePeccancy,
     updateDrivePeccancyStatStatus : updateDrivePeccancyStatStatus
 }

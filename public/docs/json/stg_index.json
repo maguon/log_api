@@ -8017,6 +8017,35 @@
         }
       }
     },
+    "/drivePeccancyCount": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  drivePeccancy count",
+        "description": "query drivePeccancyCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drivePeccancy"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drivePeccancy id"
+          }
+        }
+      }
+    },
     "/drivePeccancy.csv": {
       "get": {
         "tags": [
@@ -8251,6 +8280,35 @@
             "type": "integer"
 
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOil"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOil id"
+          }
+        }
+      }
+    },
+    "/driveExceedOilCount": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOil count",
+        "description": "query driveExceedOilCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
         ],
         "responses": {
           "200": {

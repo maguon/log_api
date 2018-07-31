@@ -41,6 +41,20 @@ function queryDrivePeccancy(req,res,next){
     })
 }
 
+function queryDrivePeccancyCount(req,res,next){
+    var params = req.params ;
+    drivePeccancyDAO.getDrivePeccancyCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDrivePeccancyCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDrivePeccancyCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDrivePeccancy(req,res,next){
     var params = req.params ;
     drivePeccancyDAO.updateDrivePeccancy(params,function(error,result){
@@ -114,6 +128,7 @@ function getDrivePeccancyCsv(req,res,next){
 module.exports = {
     createDrivePeccancy : createDrivePeccancy,
     queryDrivePeccancy : queryDrivePeccancy,
+    queryDrivePeccancyCount : queryDrivePeccancyCount,
     updateDrivePeccancy : updateDrivePeccancy,
     getDrivePeccancyCsv : getDrivePeccancyCsv
 }
