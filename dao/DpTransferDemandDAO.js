@@ -35,9 +35,33 @@ function getDpTransferDemand(params,callback) {
         " left join receive_info r on dptd.receive_id = r.id " +
         " where dptd.id is not null ";
     var paramsArray=[],i=0;
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dptd.route_start_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dptd.base_addr_id = ? ";
+    }
+    if(params.transferCityId){
+        paramsArray[i++] = params.transferCityId;
+        query = query + " and dptd.transfer_city_id = ? ";
+    }
     if(params.transferAddrId){
         paramsArray[i++] = params.transferAddrId;
         query = query + " and dptd.transfer_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dptd.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and dptd.receive_id = ? ";
+    }
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and dptd.date_id = ? ";
     }
     if(params.transferStatus){
         paramsArray[i++] = params.transferStatus;
@@ -78,7 +102,26 @@ function getDpTransferDemandStat(params,callback) {
     });
 }
 
-function updateDpTransferDemand(params,callback){
+function updateDpTransferDemandPreCount(params,callback){
+    var query = " update dp_transfer_demand_info set pre_count = pre_count + ? , transfer_count = transfer_count + ? " +
+        " where route_start_id = ? and base_addr_id = ? and transfer_city_id = ? and transfer_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.preCount;
+    paramsArray[i++]=params.transferCount;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.transferCityId;
+    paramsArray[i++]=params.transferAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpTransferDemandPreCount ');
+        return callback(error,rows);
+    });
+}
+
+function updateDpTransferDemandArriveCount(params,callback){
     var query = " update dp_transfer_demand_info set transfer_count = transfer_count - ? , arrive_count = arrive_count + ? " +
         " where route_start_id = ? and base_addr_id = ? and transfer_city_id = ? and transfer_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? " ;
     var paramsArray=[],i=0;
@@ -92,7 +135,7 @@ function updateDpTransferDemand(params,callback){
     paramsArray[i++]=params.receiveId;
     paramsArray[i]=params.dateId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateDpTransferDemand ');
+        logger.debug(' updateDpTransferDemandArriveCount ');
         return callback(error,rows);
     });
 }
@@ -102,5 +145,6 @@ module.exports ={
     addDpTransferDemand : addDpTransferDemand,
     getDpTransferDemand : getDpTransferDemand,
     getDpTransferDemandStat : getDpTransferDemandStat,
-    updateDpTransferDemand : updateDpTransferDemand
+    updateDpTransferDemandPreCount : updateDpTransferDemandPreCount,
+    updateDpTransferDemandArriveCount : updateDpTransferDemandArriveCount
 }

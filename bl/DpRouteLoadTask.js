@@ -125,6 +125,7 @@ function queryDpRouteLoadTaskCount(req,res,next){
 function updateDpRouteLoadTaskStatus(req,res,next){
     var params = req.params;
     var parkObj = {};
+    var newTransferDemandFlag  = false;
     Seq().seq(function() {
         var that = this;
             dpRouteLoadTaskDAO.getDpRouteLoadTask({dpRouteLoadTaskId:params.dpRouteLoadTaskId}, function (error, rows) {
@@ -161,6 +162,32 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     }
                 }
             })
+    }).seq(function() {
+        var that = this;
+        var subParams = {
+            routeStartId : parkObj.routeStartId,
+            baseAddrId : parkObj.baseAddrId,
+            transferCityId : parkObj.transferCityId,
+            transferAddrId : parkObj.transferAddrId,
+            routeEndId : parkObj.routeEndId,
+            receiveId : parkObj.receiveId,
+            dateId : parkObj.dateId
+        }
+        dpTransferDemandDAO.getDpTransferDemand(subParams, function (error, rows) {
+            if (error) {
+                logger.error(' getDpTransferDemand ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length > 0) {
+                    newTransferDemandFlag =true;
+                    that();
+                } else {
+                    newTransferDemandFlag =false;
+                    that();
+                }
+            }
+        })
     }).seq(function() {
         var that = this;
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load){
@@ -214,7 +241,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load&&parkObj.transferFlag>0) {
+        if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load&&parkObj.transferFlag>0&&newTransferDemandFlag==false) {
             params.demandId = parkObj.demandId;
             params.routeStartId = parkObj.routeStartId;
             params.baseAddrId = parkObj.baseAddrId;
@@ -238,6 +265,29 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     that();
                 }
             })
+        }else if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load&&parkObj.transferFlag>0&&newTransferDemandFlag==true){
+            params.preCount = parkObj.carCount;
+            params.transferCount = parkObj.carCount;
+            params.routeStartId = parkObj.routeStartId;
+            params.baseAddrId = parkObj.baseAddrId;
+            params.routeEndId = parkObj.routeEndId;
+            params.transferCityId = parkObj.transferCityId;
+            params.transferAddrId = parkObj.transferAddrId;
+            params.receiveId = parkObj.receiveId;
+            params.dateId = parkObj.dateId;
+            dpTransferDemandDAO.updateDpTransferDemandPreCount(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateDpTransferDemandPreCount ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDpTransferDemandPreCount ' + 'success');
+                    } else {
+                        logger.warn(' updateDpTransferDemandPreCount ' + 'failed');
+                    }
+                    that();
+                }
+            })
         }else if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.arrive&&parkObj.transferFlag>0){
             params.transferCount = parkObj.carCount;
             params.arriveCount = parkObj.carCount;
@@ -248,15 +298,15 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.transferAddrId = parkObj.transferAddrId;
             params.receiveId = parkObj.receiveId;
             params.dateId = parkObj.dateId;
-            dpTransferDemandDAO.updateDpTransferDemand(params, function (error, result) {
+            dpTransferDemandDAO.updateDpTransferDemandArriveCount(params, function (error, result) {
                 if (error) {
-                    logger.error(' updateDpTransferDemand ' + error.message);
+                    logger.error(' updateDpTransferDemandArriveCount ' + error.message);
                     throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
                     if (result && result.affectedRows > 0) {
-                        logger.info(' updateDpTransferDemand ' + 'success');
+                        logger.info(' updateDpTransferDemandArriveCount ' + 'success');
                     } else {
-                        logger.warn(' updateDpTransferDemand ' + 'failed');
+                        logger.warn(' updateDpTransferDemandArriveCount ' + 'failed');
                     }
                     that();
                 }
