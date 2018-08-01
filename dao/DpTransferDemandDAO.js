@@ -39,6 +39,10 @@ function getDpTransferDemand(params,callback) {
         " left join receive_info r on dptd.receive_id = r.id " +
         " where dptd.id is not null ";
     var paramsArray=[],i=0;
+    if(params.transferDemandId){
+        paramsArray[i++] = params.transferDemandId;
+        query = query + " and dptd.id = ? ";
+    }
     if(params.routeStartId){
         paramsArray[i++] = params.routeStartId;
         query = query + " and dptd.route_start_id = ? ";
