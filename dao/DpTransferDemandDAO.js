@@ -30,7 +30,7 @@ function getDpTransferDemand(params,callback) {
     var query = " select dptd.*,c1.city_name as route_start_name,ba.addr_name, " +
         " c3.city_name as transfer_city_name,ba1.addr_name as transfer_addr_name, " +
         " c2.city_name as route_end_name,r.short_name, " +
-        " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name " +
+        " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end " +
         " from dp_transfer_demand_info dptd " +
         " left join city_info c1 on dptd.route_start_id = c1.id " +
         " left join city_info c2 on dptd.route_end_id = c2.id " +
