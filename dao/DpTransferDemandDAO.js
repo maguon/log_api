@@ -63,9 +63,23 @@ function getDpTransferDemand(params,callback) {
         paramsArray[i++] = params.dateId;
         query = query + " and dptd.date_id = ? ";
     }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dptd.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dptd.date_id <= ? ";
+    }
     if(params.transferStatus){
         paramsArray[i++] = params.transferStatus;
         query = query + " and dptd.transfer_status = ? ";
+    }
+    query = query + ' order by dptd.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpTransferDemand ');
