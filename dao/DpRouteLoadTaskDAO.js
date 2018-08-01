@@ -65,6 +65,10 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.dpDemandId;
         query = query + " and dprl.demand_id = ? ";
     }
+    if(params.transferDemandId){
+        paramsArray[i++] = params.transferDemandId;
+        query = query + " and dprl.transfer_demand_id = ? ";
+    }
     if(params.dpRouteLoadTaskId){
         paramsArray[i++] = params.dpRouteLoadTaskId;
         query = query + " and dprl.id = ? ";

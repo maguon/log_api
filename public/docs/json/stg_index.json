@@ -13937,6 +13937,14 @@
 
           },
           {
+            "name": "transferDemandId",
+            "in": "query",
+            "description": "transferDemand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "dpRouteLoadTaskId",
             "in": "query",
             "description": "dpRouteLoadTask id",
