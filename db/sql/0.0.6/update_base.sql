@@ -178,3 +178,11 @@ DROP PRIMARY KEY,
 ADD PRIMARY KEY (`vin`, `route_start_id`, `base_addr_id`,`entrust_id`),
 DROP INDEX `vin` ,
 ADD UNIQUE INDEX `id` (`id`) USING BTREE COMMENT '唯一VIN';
+-- ----------------------------
+-- 2018-08-02 更新
+-- ----------------------------
+ALTER TABLE `log_base`.`car_info`
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`),
+DROP INDEX `id`,
+ADD UNIQUE `vin` USING BTREE (`vin`, `route_start_id`, `base_addr_id`, `entrust_id`) COMMENT '唯一VIN';

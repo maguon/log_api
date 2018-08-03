@@ -3767,6 +3767,22 @@
 
           },
           {
+            "name": "transferCityId",
+            "in": "query",
+            "description": "transferCity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "transferAddrId",
+            "in": "query",
+            "description": "transferAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",

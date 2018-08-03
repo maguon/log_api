@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckDispatchDAO.js');
 
 function getTruckDispatch(params,callback) {
-    var query = " select td.*,ci.city_name,cs.city_name as task_start_name,ce.city_name as task_end_name," +
+    var query = " select td.*,ci.city_name,cs.city_name as task_start_name,ce.city_name as task_end_name, " +
         " h.truck_num,h.hp,h.truck_tel,h.drive_id,h.company_id,h.truck_type,t.number as trail_number, " +
         " d.drive_name,u.mobile,c.company_name,c.operate_type from truck_dispatch td " +
         " left join city_info ci on td.current_city = ci.id " +
@@ -25,6 +25,14 @@ function getTruckDispatch(params,callback) {
     if(params.dispatchFlag){
         paramsArray[i++] = params.dispatchFlag;
         query = query + " and td.dispatch_flag = ? ";
+    }
+    if(params.transferCityId){
+        paramsArray[i++] = params.transferCityId;
+        query = query + " and dprl.transfer_city_id = ? ";
+    }
+    if(params.transferAddrId){
+        paramsArray[i++] = params.transferAddrId;
+        query = query + " and dprl.transfer_addr_id = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
