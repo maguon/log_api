@@ -20,7 +20,7 @@ function getTruckDispatch(params,callback) {
         " left join dp_route_task dpr on td.truck_id = dpr.truck_id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id" +
         " left join user_info u on d.user_id = u.uid " +
-        " where td.truck_id is not null and dpr.task_status <=4";
+        " where td.truck_id is not null ";
     var paramsArray=[],i=0;
     if(params.dispatchFlag){
         paramsArray[i++] = params.dispatchFlag;
