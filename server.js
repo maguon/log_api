@@ -213,6 +213,7 @@ function createServer() {
     server.get('/api/truckTypeCountTotal',truck.queryTruckTypeCountTotal);
     server.get('/api/truckOperateTypeCountTotal',truck.queryTruckOperateTypeCountTotal);
     server.get('/api/truckFirstCsv.csv', truck.getTruckFirstCsv);
+    server.get('/api/truckTrailerCsv.csv', truck.getTruckTrailerCsv);
     server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.saveTruckRecord);
     server.post({path:'/api/user/:userId/truckTrailer',contentType: 'application/json'},truck.createTruckTrailer,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck);

@@ -813,6 +813,54 @@ function getTruckFirstCsv(req,res,next){
     })
 }
 
+function getTruckTrailerCsv(req,res,next){
+    var csvString = "";
+    var header = "挂车牌号" + ',' + "挂车货位" + ',' + "关联头车号" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    truckDAO.getTruckTrailer(params,function(error,rows){
+        if (error) {
+            logger.error(' queryTruckTrailer( ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.truckNum = rows[i].truck_num;
+                parkObj.number = rows[i].number;
+                if(rows[i].first_num == null){
+                    parkObj.firstNum = "";
+                }else{
+                    parkObj.firstNum = rows[i].first_num;
+                }
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else if(rows[i].operate_type == 2){
+                    parkObj.operateType = "外协";
+                }else if(rows[i].operate_type == 3){
+                    parkObj.operateType = "供方";
+                }else{
+                    parkObj.operateType = "承包";
+                }
+                parkObj.companyName = rows[i].company_name;
+                if(rows[i].truck_status == 1){
+                    parkObj.truckStatus = "可用";
+                }else{
+                    parkObj.truckStatus = "停用";
+                }
+                csvString = csvString+parkObj.truckNum+"," +parkObj.number+"," +parkObj.firstNum+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckStatus+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createTruckFirst : createTruckFirst,
@@ -839,5 +887,6 @@ module.exports = {
     updateTruckStatusFirst : updateTruckStatusFirst,
     updateTruckStatusTrailer : updateTruckStatusTrailer,
     updateRepairStatus : updateRepairStatus,
-    getTruckFirstCsv : getTruckFirstCsv
+    getTruckFirstCsv : getTruckFirstCsv,
+    getTruckTrailerCsv : getTruckTrailerCsv
 }
