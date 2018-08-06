@@ -116,7 +116,8 @@ IF (new.demand_status=2)THEN
 UPDATE dp_task_stat set  task_stat_status = 2
 where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
 and route_end_id=old.route_end_id and receive_id = old.receive_id and date_id = old.date_id
-and (select count(id) from dp_demand_info where date_id =old.date_id and demand_status=1)=0 ;
+and (select count(id) from dp_demand_info where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
+and route_end_id=old.route_end_id and receive_id = old.receive_id and date_id = old.date_id and demand_status = 1 )=0 ;
 END IF;
 IF(new.user_id=0) THEN
 UPDATE dp_task_stat set pre_count = pre_count + (new.pre_count - old.pre_count)
