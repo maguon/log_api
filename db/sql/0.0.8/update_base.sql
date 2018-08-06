@@ -127,3 +127,8 @@ END IF;
 END
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2018-08-06 更新
+-- ----------------------------
+ALTER TABLE `settle_handover_info`
+ADD COLUMN `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '交接单状态(1-未完结,2-已完结)' AFTER `handove_image`;

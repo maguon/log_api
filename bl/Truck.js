@@ -758,11 +758,31 @@ function getTruckFirstCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.truckNum = rows[i].truck_num;
                 parkObj.brandName = rows[i].brand_name;
-                parkObj.trailNum = rows[i].trail_num;
-                parkObj.trailNumber = rows[i].trail_number;
-                parkObj.truckTel = rows[i].truck_tel;
-                parkObj.driveName = rows[i].drive_name;
-                parkObj.viceDriveName = rows[i].vice_drive_name;
+                if(rows[i].trail_num == null){
+                    parkObj.trailNum = "";
+                }else{
+                    parkObj.trailNum = rows[i].trail_num;
+                }
+                if(rows[i].trail_number == null){
+                    parkObj.trailNumber = "";
+                }else{
+                    parkObj.trailNumber = rows[i].trail_number;
+                }
+                if(rows[i].truck_tel == null){
+                    parkObj.truckTel = "";
+                }else{
+                    parkObj.truckTel = rows[i].truck_tel;
+                }
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].vice_drive_name == null){
+                    parkObj.viceDriveName = "";
+                }else{
+                    parkObj.viceDriveName = rows[i].vice_drive_name;
+                }
                 if(rows[i].operate_type == 1){
                     parkObj.operateType = "自营";
                 }else if(rows[i].operate_type == 2){
