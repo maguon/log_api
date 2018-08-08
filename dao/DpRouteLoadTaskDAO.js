@@ -148,9 +148,13 @@ function getDpRouteLoadTask(params,callback) {
 }
 
 function getDpRouteLoadTaskBase(params,callback) {
-    var query = " select dprl.*,dpr.task_status from dp_route_load_task dprl " +
+    var query = " select dprl.*,dpr.task_status,c.city_name as route_start_name,ba.addr_name as base_addr_name " +
+        " from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
-        " left join dp_demand_info dpd on dprl.demand_id = dpd.id where dprl.id is not null ";
+        " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
+        " left join city_info c on dprl.route_start_id = c.id " +
+        " left join base_addr ba on dprl.base_addr_id = ba.id " +
+        " where dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteLoadTaskId){
         paramsArray[i++] = params.dpRouteLoadTaskId;
