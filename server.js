@@ -728,7 +728,7 @@ function createServer() {
      * SettleHandoverCarRel Module
      */
     server.get('/api/settleHandoverCarRel', settleHandoverCarRel.querySettleHandoverCarRel);
-    server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},settleHandoverCarRel.createSettleHandoverCarRel);
+    server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},settleHandoverCarRel.createSettleHandoverCarRel,sysRecord.saveCarRecord);
     server.del('/api/user/:userId/settleHandover/:settleHandoverId/car/:carId' , settleHandoverCarRel.removeSettleHandoverCarRel);
 
     /**

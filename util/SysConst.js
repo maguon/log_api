@@ -25,7 +25,8 @@ var RECORD_OP_TYPE  ={
     doing : 33,
     on_road : 34,
     cancel : 38,
-    completed : 39
+    completed : 39,
+    settle_handover : 41
 };
 var LICENSE_TYPE  ={
     A1 : 1,

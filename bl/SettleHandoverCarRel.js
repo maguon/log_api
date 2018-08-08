@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var settleHandoverCarRelDAO = require('../dao/SettleHandoverCarRelDAO.js');
 var settleHandoverDAO = require('../dao/SettleHandoverDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
@@ -70,6 +71,7 @@ function createSettleHandoverCarRel(req,res,next){
                     throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else{
                     if(rows&&rows.length>0&&rows[0].route_start_id==routeStartId&&rows[0].route_end_id==routeEndId){
+                        parkObj.vin = rows[0].vin;
                         that();
                     }else{
                         logger.warn(' getDpRouteLoadTaskDetailBase ' + 'failed');
@@ -144,6 +146,9 @@ function createSettleHandoverCarRel(req,res,next){
         }
     }).seq(function(){
         logger.info(' createSettleHandoverCarRel ' + 'success');
+        req.params.carContent =" 生成交接单 ";
+        req.params.vin =parkObj.vin;
+        req.params.op =sysConst.RECORD_OP_TYPE.settle_handover;
         resUtil.resetCreateRes(res,{insertId:settleHandoverId},null);
         return next();
     })
