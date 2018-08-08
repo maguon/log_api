@@ -172,6 +172,11 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                 if (rows && rows.length > 0) {
                     parkObj.carId = rows[0].car_id;
                     parkObj.vin = rows[0].vin;
+                    parkObj.routeEndName = rows[0].route_end_name;
+                    parkObj.receiveName = rows[0].receive_name;
+                    parkObj.transferFlag = rows[0].transfer_flag;
+                    parkObj.transferCityName = rows[0].transfer_city_name;
+                    parkObj.transferAddrName = rows[0].transfer_addr_name;
                     that();
                 } else {
                     logger.warn(' getDpRouteLoadTaskDetail ' + 'failed');
@@ -206,10 +211,18 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateTruckDispatchCarCount ' + 'success');
-                req.params.carContent =" 完成送达 ";
-                req.params.carId =parkObj.carId;
-                req.params.vin =parkObj.vin;
-                req.params.op =sysConst.RECORD_OP_TYPE.completed;
+                if(parkObj.transferFlag==1){
+                    req.params.carContent =" 送达 中转站 "+parkObj.transferCityName+" "+parkObj.transferAddrName;
+                    req.params.carId =parkObj.carId;
+                    req.params.vin =parkObj.vin;
+                    req.params.op =sysConst.RECORD_OP_TYPE.completed;
+                }else{
+                    req.params.carContent =" 送达 经销商 "+parkObj.routeEndName+" "+parkObj.receiveName;
+                    req.params.carId =parkObj.carId;
+                    req.params.vin =parkObj.vin;
+                    req.params.op =sysConst.RECORD_OP_TYPE.completed;
+                }
+
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
