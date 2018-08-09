@@ -11389,6 +11389,14 @@
 
           },
           {
+            "name": "carStatusArr",
+            "in": "query",
+            "description": "car statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "userId",
             "in": "query",
             "description": "user id",

@@ -144,6 +144,9 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.carStatus;
         query = query + " and c.car_status = ? ";
     }
+    if(params.carStatusArr){
+        query = query + " and c.car_status in ("+params.carStatusArr + ") ";
+    }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
