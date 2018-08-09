@@ -33,6 +33,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 if(rows && rows.length>0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
                     parkObj.routeStartName = rows[0].route_start_name;
                     parkObj.baseAddrName = rows[0].base_addr_name;
+                    parkObj.transferFlag = rows[0].transfer_flag;
                     that();
                 }else{
                     logger.warn(' getDpRouteLoadTaskBase ' +' failed ');
@@ -49,7 +50,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0&&rows[0].car_status ==listOfValue.CAR_STATUS_MOVE){
+                if(rows && rows.length>0&&rows[0].car_status <listOfValue.CAR_STATUS_LOAD){
                     that();
                 }else{
                     logger.warn(' getCarList ' +' failed ');
@@ -92,7 +93,11 @@ function createDpRouteLoadTaskDetail(req,res,next){
         })
     }).seq(function () {
         var that = this;
-        params.carStatus = listOfValue.CAR_STATUS_LOAD;
+        if(parkObj.transferFlag==1){
+            params.carStatus = listOfValue.CAR_STATUS_TRANSFER;
+        }else{
+            params.carStatus = listOfValue.CAR_STATUS_LOAD;
+        }
         carDAO.updateCarStatus(params,function(error,result){
             if (error) {
                 logger.error(' updateCarStatus ' + error.message);
