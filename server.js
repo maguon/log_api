@@ -264,6 +264,7 @@ function createServer() {
      * TruckDispatch Module
      */
     server.get('/api/truckDispatch' , truckDispatch.queryTruckDispatch);
+    server.get('/api/truckDispatchLoadTask' , truckDispatch.queryTruckDispatchLoadTask);
     server.get('/api/truckDispatchCount' , truckDispatch.queryTruckDispatchCount);
     server.put({path:'/api/user/:userId/truck/:truckId/dispatch',contentType: 'application/json'} , truckDispatch.initTruckDispatchCity);
 

@@ -43,6 +43,14 @@ var DEMAND_STATUS  ={
     not_completed : 1,
     completed : 2
 };
+
+var CAR_STATUS  ={
+    not_completed : 1, //默认
+    transfer_load : 2, //中转装车
+    load : 3, //装车
+    completed : 9 //出库完成
+};
+
 var TASK_STATUS  ={
     ready_accept : 1,
     accept : 2,
@@ -169,6 +177,7 @@ module.exports = {
     RECORD_OP_TYPE : RECORD_OP_TYPE,
     LICENSE_TYPE : LICENSE_TYPE,
     DEMAND_STATUS : DEMAND_STATUS,
+    CAR_STATUS : CAR_STATUS,
     TASK_STATUS : TASK_STATUS,
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,
