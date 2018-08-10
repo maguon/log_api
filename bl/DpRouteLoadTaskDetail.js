@@ -90,6 +90,22 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 that();
             }
         })
+    }).seq(function () {
+        var that = this;
+        params.carStatus = listOfValue.CAR_STATUS_LOAD;
+        carDAO.updateCarStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCarStatus ' + 'success');
+                }else{
+                    logger.warn(' updateCarStatus ' + 'failed');
+                }
+                that();
+            }
+        })
     }).seq(function(){
         logger.info(' createDpRouteLoadTaskDetail ' + 'success');
         req.params.carContent = parkObj.routeStartName+" "+parkObj.baseAddrName+" 完成装车  调度编号 "+params.dpRouteTaskId;
