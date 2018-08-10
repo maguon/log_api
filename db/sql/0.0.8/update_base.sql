@@ -52,9 +52,11 @@ CREATE TABLE `dp_transfer_demand_info` (
 DROP TRIGGER IF EXISTS `trg_new_load_task`;
 DELIMITER ;;
 CREATE TRIGGER `trg_new_load_task` AFTER INSERT ON `dp_route_load_task` FOR EACH ROW BEGIN
+IF(new.load_task_type=1) THEN
 UPDATE dp_demand_info set plan_count=plan_count+new.plan_count where id= new.demand_id ;
 UPDATE dp_task_stat set plan_count = plan_count+new.plan_count where route_start_id=new.route_start_id
 and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+END IF;
 IF(new.transfer_flag=1) THEN
 UPDATE dp_task_stat set transfer_count = transfer_count+new.plan_count where route_start_id=new.route_start_id
 and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
