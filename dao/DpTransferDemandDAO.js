@@ -86,6 +86,10 @@ function getDpTransferDemand(params,callback) {
         paramsArray[i++] = params.transferStatus;
         query = query + " and dptd.transfer_status = ? ";
     }
+    if(params.arriveCount){
+        paramsArray[i++] = params.arriveCount;
+        query = query + " and dptd.arrive_count > ? ";
+    }
     query = query + ' order by dptd.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

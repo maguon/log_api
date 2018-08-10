@@ -33,7 +33,6 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 if(rows && rows.length>0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
                     parkObj.routeStartName = rows[0].route_start_name;
                     parkObj.baseAddrName = rows[0].base_addr_name;
-                    parkObj.transferFlag = rows[0].transfer_flag;
                     that();
                 }else{
                     logger.warn(' getDpRouteLoadTaskBase ' +' failed ');
@@ -87,26 +86,6 @@ function createDpRouteLoadTaskDetail(req,res,next){
                     logger.info(' updateTruckDispatchCarCount ' + 'success');
                 }else{
                     logger.warn(' updateTruckDispatchCarCount ' + 'failed');
-                }
-                that();
-            }
-        })
-    }).seq(function () {
-        var that = this;
-        if(parkObj.transferFlag==1){
-            params.carStatus = listOfValue.CAR_STATUS_TRANSFER;
-        }else{
-            params.carStatus = listOfValue.CAR_STATUS_LOAD;
-        }
-        carDAO.updateCarStatus(params,function(error,result){
-            if (error) {
-                logger.error(' updateCarStatus ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' updateCarStatus ' + 'success');
-                }else{
-                    logger.warn(' updateCarStatus ' + 'failed');
                 }
                 that();
             }
@@ -209,6 +188,28 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                 that();
             }
         })
+    }).seq(function () {
+        var that = this;
+        if(parkObj.transferFlag==1){
+            params.carStatus = listOfValue.CAR_STATUS_TRANSFER;
+            params.carId = parkObj.carId;
+            carDAO.updateCarStatus(params,function(error,result){
+                if (error) {
+                    logger.error(' updateCarStatus ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' updateCarStatus ' + 'success');
+                    }else{
+                        logger.warn(' updateCarStatus ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
+
     }).seq(function () {
         truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {
