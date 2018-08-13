@@ -201,6 +201,8 @@ function getDpRouteLoadTaskCount(params,callback) {
 function updateDpRouteLoadTaskStatus(params,callback){
     if(params.loadTaskStatus == 3){
         var query = " update dp_route_load_task set field_op_id = ? , load_date = ? , real_count = ? , load_task_status = ? where  id = ? ";
+    }else if(params.loadTaskStatus == 7){
+        var query = " update dp_route_load_task set arrive_date = ? , load_task_status = ? where  id = ? ";
     }else{
         var query = " update dp_route_load_task set load_task_status = ? where  id = ? ";
     }
@@ -209,6 +211,9 @@ function updateDpRouteLoadTaskStatus(params,callback){
         paramsArray[i++] = params.userId;
         paramsArray[i++] = params.loadDate;
         paramsArray[i++] = params.realCount;
+    }
+    if(params.loadTaskStatus == 7){
+        paramsArray[i++] = params.arriveDate;
     }
     paramsArray[i++] = params.loadTaskStatus;
     paramsArray[i] = params.dpRouteLoadTaskId;

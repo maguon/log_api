@@ -134,3 +134,8 @@ DELIMITER ;
 -- ----------------------------
 ALTER TABLE `settle_handover_info`
 ADD COLUMN `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '交接单状态(1-未完结,2-已完结)' AFTER `handove_image`;
+-- ----------------------------
+-- 2018-08-13 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task`
+ADD COLUMN `arrive_date`  datetime NULL COMMENT '到达时间' AFTER `load_date`;

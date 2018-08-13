@@ -345,6 +345,10 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.loadDate = myDate;
             params.realCount = parkObj.carCount;
         }
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.arrive){
+            var myDate = new Date();
+            params.arriveDate = myDate;
+        }
         dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
             if (error) {
                 logger.error(' updateDpRouteLoadTaskStatus ' + error.message);
