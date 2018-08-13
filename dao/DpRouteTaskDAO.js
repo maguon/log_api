@@ -36,7 +36,7 @@ function getDpRouteTask(params,callback) {
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " left join user_info u1 on d.user_id = u1.uid " +
-        " where dpr.id is not null and dprl.load_task_status !=8 ";
+        " where dpr.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
