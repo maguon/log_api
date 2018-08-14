@@ -104,33 +104,6 @@ END
 DELIMITER ;
 -- ----------------------------
 -- 2018-08-06 更新
--- 修改如果需求状态等于2，同时更新需求统计状态等于2
--- ----------------------------
-DROP TRIGGER IF EXISTS `trg_update_demand_stat`;
-DELIMITER ;;
-CREATE TRIGGER `trg_update_demand_stat` AFTER UPDATE ON `dp_demand_info` FOR EACH ROW BEGIN
-IF (new.demand_status=0 && old.demand_status=1)THEN
-UPDATE dp_task_stat set pre_count = pre_count- new.pre_count
-where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
-and route_end_id=new.route_end_id and receive_id = new.receive_id and date_id = new.date_id;
-END IF;
-IF (new.demand_status=2)THEN
-UPDATE dp_task_stat set  task_stat_status = 2
-where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
-and route_end_id=old.route_end_id and receive_id = old.receive_id and date_id = old.date_id
-and (select count(id) from dp_demand_info where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
-and route_end_id=old.route_end_id and receive_id = old.receive_id and date_id = old.date_id and demand_status = 1 )=0 ;
-END IF;
-IF(new.user_id=0) THEN
-UPDATE dp_task_stat set pre_count = pre_count + (new.pre_count - old.pre_count)
-where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
-and route_end_id=new.route_end_id and receive_id = new.receive_id and date_id = new.date_id;
-END IF;
-END
-;;
-DELIMITER ;
--- ----------------------------
--- 2018-08-06 更新
 -- ----------------------------
 ALTER TABLE `settle_handover_info`
 ADD COLUMN `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '交接单状态(1-未完结,2-已完结)' AFTER `handove_image`;
