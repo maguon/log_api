@@ -483,6 +483,17 @@ function updateCarOrderDate(params,callback){
     });
 }
 
+function updateCaCurrentCity(params,callback){
+    var query = " update car_info set current_city_id = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.currentCityId;
+    paramsArray[i] = params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCaCurrentCity ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUploadCar : addUploadCar,
@@ -499,5 +510,6 @@ module.exports ={
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
-    updateCarOrderDate : updateCarOrderDate
+    updateCarOrderDate : updateCarOrderDate,
+    updateCaCurrentCity : updateCaCurrentCity
 }

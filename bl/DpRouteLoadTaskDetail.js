@@ -172,6 +172,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                 if (rows && rows.length > 0) {
                     parkObj.carId = rows[0].car_id;
                     parkObj.vin = rows[0].vin;
+                    parkObj.routeEndId = rows[0].route_end_id;
                     parkObj.routeEndName = rows[0].route_end_name;
                     parkObj.receiveName = rows[0].receive_name;
                     parkObj.transferFlag = rows[0].transfer_flag;
@@ -226,6 +227,23 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
             that();
         }
 
+    }).seq(function () {
+        var that = this;
+        params.currentCityId = parkObj.routeEndId;
+        params.carId = parkObj.carId;
+        carDAO.updateCaCurrentCity(params,function(error,result){
+            if (error) {
+                logger.error(' updateCaCurrentCity ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCaCurrentCity ' + 'success');
+                }else{
+                    logger.warn(' updateCaCurrentCity ' + 'failed');
+                }
+                that();
+            }
+        })
     }).seq(function () {
         truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {

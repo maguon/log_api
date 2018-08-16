@@ -21,7 +21,7 @@ function addDpRouteLoadTaskDetail(params,callback){
 
 function getDpRouteLoadTaskDetail(params,callback) {
     var query = " select dpdtl.*,c.make_id,c.make_name,e.short_name, " +
-        " c1.city_name as route_end_name,r.short_name as receive_name,dprl.transfer_flag, " +
+        " dprl.route_end_id,c1.city_name as route_end_name,r.short_name as receive_name,dprl.transfer_flag, " +
         " c2.city_name as transfer_city_name,ba.addr_name as transfer_addr_name,dprl.load_task_status,cer.exception_status " +
         " from dp_route_load_task_detail dpdtl " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
