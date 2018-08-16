@@ -110,7 +110,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
         logger.info(' createDpRouteLoadTaskDetail ' + 'success');
         req.params.carContent = parkObj.routeStartName+" "+parkObj.baseAddrName+" 完成装车  调度编号 "+params.dpRouteTaskId;
         req.params.vin =params.vin;
-        req.params.op =sysConst.RECORD_OP_TYPE.on_road;
+        req.params.op =sysConst.CAR_OP_TYPE.LOAD;
         resUtil.resetCreateRes(res,{insertId:dpRouteTaskDetailId},null);
         return next();
     })
@@ -260,12 +260,12 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                     req.params.carContent =" 送达 中转站 "+parkObj.transferCityName+" "+parkObj.transferAddrName;
                     req.params.carId =parkObj.carId;
                     req.params.vin =parkObj.vin;
-                    req.params.op =sysConst.RECORD_OP_TYPE.completed;
+                    req.params.op =sysConst.CAR_OP_TYPE.ARRIVED;
                 }else{
                     req.params.carContent =" 送达 经销商 "+parkObj.routeEndName+" "+parkObj.receiveName;
                     req.params.carId =parkObj.carId;
                     req.params.vin =parkObj.vin;
-                    req.params.op =sysConst.RECORD_OP_TYPE.completed;
+                    req.params.op =sysConst.CAR_OP_TYPE.ARRIVED;
                 }
 
                 resUtil.resetUpdateRes(res,result,null);

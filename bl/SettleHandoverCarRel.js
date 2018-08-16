@@ -148,7 +148,7 @@ function createSettleHandoverCarRel(req,res,next){
         logger.info(' createSettleHandoverCarRel ' + 'success');
         req.params.carContent =" 生成交接单 ";
         req.params.vin =parkObj.vin;
-        req.params.op =sysConst.RECORD_OP_TYPE.settle_handover;
+        req.params.op =sysConst.CAR_OP_TYPE.SETTLE_HANDOVER;
         resUtil.resetCreateRes(res,{insertId:settleHandoverId},null);
         return next();
     })

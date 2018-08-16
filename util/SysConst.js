@@ -17,6 +17,15 @@ var USER_TYPE  ={
     settle_op : 61, //结算部操作员
     settle_admin : 69 //结算部管理员
 };
+var CAR_OP_TYPE = {
+    QUALITY : 10, //质检
+    IMPORT : 11, //入库
+    MOVING : 12, //移位
+    EXPORT : 13, //出库
+    LOAD :14 , //装车
+    ARRIVED : 15, //到达
+    SETTLE_HANDOVER : 16 //交接单
+};
 var RECORD_OP_TYPE  ={
     truckOp : 20,
     driverOp : 30,
@@ -25,8 +34,7 @@ var RECORD_OP_TYPE  ={
     doing : 33,
     on_road : 34,
     cancel : 38,
-    completed : 39,
-    settle_handover : 41
+    completed : 39
 };
 var LICENSE_TYPE  ={
     A1 : 1,
@@ -124,14 +132,6 @@ var DAMAGE_STEP_TYPE = {
 };
 var UNLOAD_CAR_COUNT = 3;
 
-var CAR_OP_TYPE = {
-    QUALITY : 10,
-    IMPORT : 11,
-    MOVING : 12,
-    EXPORT : 13,
-    LOAD :14 ,
-    ARRIVED : 15
-};
 var ACCIDENT_STATUS  ={ //事故状态
     ready_process : 1,  //待处理
     in_process : 2, //处理中
@@ -174,6 +174,7 @@ var RECEIVE_TYPE = {  //经销商类型
 
 module.exports = {
     USER_TYPE : USER_TYPE,
+    CAR_OP_TYPE : CAR_OP_TYPE,
     RECORD_OP_TYPE : RECORD_OP_TYPE,
     LICENSE_TYPE : LICENSE_TYPE,
     DEMAND_STATUS : DEMAND_STATUS,
@@ -188,7 +189,6 @@ module.exports = {
     UNLOAD_CAR_COUNT  : UNLOAD_CAR_COUNT ,
     DAMAGE_TYPE : DAMAGE_TYPE ,
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
-    CAR_OP_TYPE : CAR_OP_TYPE,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
     ACCIDENT__TYPE : ACCIDENT__TYPE,
     LOAN__STATUS : LOAN__STATUS,
