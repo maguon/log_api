@@ -176,6 +176,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                     parkObj.routeEndName = rows[0].route_end_name;
                     parkObj.receiveName = rows[0].receive_name;
                     parkObj.transferFlag = rows[0].transfer_flag;
+                    parkObj.transferCityId = rows[0].transfer_city_id;
                     parkObj.transferCityName = rows[0].transfer_city_name;
                     parkObj.transferAddrName = rows[0].transfer_addr_name;
                     that();
@@ -229,7 +230,11 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
 
     }).seq(function () {
         var that = this;
-        params.currentCityId = parkObj.routeEndId;
+        if(parkObj.transferFlag==1){
+            params.currentCityId = parkObj.transferCityId;
+        }else{
+            params.currentCityId = parkObj.routeEndId;
+        }
         params.carId = parkObj.carId;
         carDAO.updateCaCurrentCity(params,function(error,result){
             if (error) {
