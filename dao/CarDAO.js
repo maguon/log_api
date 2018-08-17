@@ -402,8 +402,17 @@ function getCarDayStat(params,callback) {
     }else if(params.makeId>0){
         var query = " select db.id,count(case when c.make_id = "+ params.makeId +" then c.id end) as car_count from date_base db " +
             " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else if(params.routeStartId>0){
+        var query = " select db.id,count(case when c.route_start_id = "+ params.routeStartId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
     }else if(params.baseAddrId>0){
         var query = " select db.id,count(case when c.base_addr_id = "+ params.baseAddrId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else if(params.routeEndId>0){
+        var query = " select db.id,count(case when c.route_end_id = "+ params.routeEndId +" then c.id end) as car_count from date_base db " +
+            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else if(params.receiveId>0){
+        var query = " select db.id,count(case when c.receive_id = "+ params.receiveId +" then c.id end) as car_count from date_base db " +
             " left join car_info c on db.id = c.order_date_id where db.id is not null ";
     }else{
         var query = " select db.id,count(c.id) as car_count from date_base db " +

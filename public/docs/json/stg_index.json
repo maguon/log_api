@@ -11909,9 +11909,33 @@
 
           },
           {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart Id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "baseAddrId",
             "in": "query",
             "description": "baseAddr Id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd Id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive Id",
             "required": false,
             "type": "integer"
 
