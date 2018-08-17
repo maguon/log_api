@@ -26,9 +26,10 @@ function addTruckAccidentCheck(params,callback){
 }
 
 function getTruckAccidentCheck(params,callback) {
-    var query = " select tac.*,ta.accident_status,u.real_name as op_user_name from truck_accident_check tac " +
+    var query = " select tac.*,u1.type,ta.accident_status,u.real_name as op_user_name from truck_accident_check tac " +
         " left join truck_accident_info ta on tac.truck_accident_id = ta.id " +
         " left join user_info u on tac.op_user_id = u.uid " +
+        " left join user_info u1 on tac.under_user_id = u1.uid" +
         " where tac.id is not null ";
     var paramsArray=[],i=0;
     if(params.truckAccidentCheckId){
