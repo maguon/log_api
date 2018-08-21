@@ -350,7 +350,7 @@ function getCarReceiveCount(params,callback) {
     });
 }
 
-/*function getCarMonthStat(params,callback) {
+function getCarMonthStat(params,callback) {
     if(params.entrustId>0){
         var query = " select DISTINCT(db.y_month),count(case when c.entrust_id = "+ params.entrustId +" then c.id end) as car_count from date_base db " +
             " left join car_info c on db.id = c.order_date_id where db.id is not null ";
@@ -393,13 +393,13 @@ function getCarReceiveCount(params,callback) {
         logger.debug(' getCarMonthStat ');
         return callback(error,rows);
     });
-}*/
+}
 
-function getCarMonthStat(params,callback) {
-        var query = " select db.y_month ";
+/*function getCarMonthStat(params,callback) {
+        var query = " select db.y_month,count(case when ";
     var paramsArray=[],i=0;
     if(params.entrustId){
-        query = query + " ,count(case when c.entrust_id = "+ params.entrustId +"";
+        query = query + " c.entrust_id = "+ params.entrustId +"";
     }
     if(params.makeId){
         query = query + " and  c.make_id = "+ params.makeId +"";
@@ -436,7 +436,7 @@ function getCarMonthStat(params,callback) {
         logger.debug(' getCarMonthStat ');
         return callback(error,rows);
     });
-}
+}*/
 
 function getCarDayStat(params,callback) {
     if(params.entrustId>0){
