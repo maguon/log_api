@@ -470,7 +470,7 @@ function getCarMonthStat(params,callback) {
     });
 }
 
-function getCarDayStat(params,callback) {
+/*function getCarDayStat(params,callback) {
     if(params.entrustId>0){
         var query = " select db.id,count(case when c.entrust_id = "+ params.entrustId +" then c.id end) as car_count from date_base db " +
             " left join car_info c on db.id = c.order_date_id where db.id is not null ";
@@ -494,6 +494,73 @@ function getCarDayStat(params,callback) {
             " left join car_info c on db.id = c.order_date_id where db.id is not null ";
     }
     var paramsArray=[],i=0;
+    query = query + ' group by db.id ';
+    query = query + ' order by db.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarDayStat ');
+        return callback(error,rows);
+    });
+}*/
+
+function getCarDayStat(params,callback) {
+    if(params.entrustId==null&&params.makeId==null&&params.routeStartId==null&&params.baseAddrId==null&&params.routeEndId==null&&params.receiveId==null){
+        var query = " select db.id, ";
+    }else{
+        var query = " select db.id,count(case when ";
+    }
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        if(paramsArray.length>1){
+            query = query + ' and '
+        }
+        query = query + " c.entrust_id = ?";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        if(paramsArray.length>1){
+            query = query + ' and '
+        }
+        query = query + "  c.make_id = ?";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        if(paramsArray.length>1){
+            query = query + ' and '
+        }
+        query = query + " c.route_start_id = ?";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        if(paramsArray.length>1){
+            query = query + ' and '
+        }
+        query = query + " c.base_addr_id = ?";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        if(paramsArray.length>1){
+            query = query + ' and '
+        }
+        query = query + " c.route_end_id = ?";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        if(paramsArray.length>1){
+            query = query + ' and '
+        }
+        query = query + " c.receive_id = ?";
+    }
+    if(paramsArray.length>0){
+        query = query + " then c.id end) as car_count from date_base db left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }else{
+        query = query + " count(c.id) as car_count from date_base db left join car_info c on db.id = c.order_date_id where db.id is not null ";
+    }
     query = query + ' group by db.id ';
     query = query + ' order by db.id desc ';
     if (params.start && params.size) {
