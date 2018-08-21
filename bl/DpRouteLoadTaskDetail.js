@@ -231,9 +231,9 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
     }).seq(function () {
         var that = this;
         if(parkObj.transferFlag==1){
-            params.currentCityId = parkObj.transferCityId;
+            params.currentCity = parkObj.transferCityName;
         }else{
-            params.currentCityId = parkObj.routeEndId;
+            params.currentCity = parkObj.routeEndName;
         }
         params.carId = parkObj.carId;
         carDAO.updateCaCurrentCity(params,function(error,result){

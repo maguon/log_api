@@ -116,4 +116,4 @@ ADD COLUMN `arrive_date`  datetime NULL COMMENT '到达时间' AFTER `load_date`
 -- 2018-08-16 更新
 -- ----------------------------
 ALTER TABLE `car_info`
-ADD COLUMN `current_city_id`  int(10) NULL DEFAULT 0 COMMENT '当前城市' AFTER `order_date_id`;
+ADD COLUMN `current_city`  varchar(50) NULL COMMENT '当前所在城市' AFTER `order_date_id`;

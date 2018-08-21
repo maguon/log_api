@@ -350,7 +350,7 @@ function getCarReceiveCount(params,callback) {
     });
 }
 
-function getCarMonthStat(params,callback) {
+/*function getCarMonthStat(params,callback) {
     if(params.entrustId>0){
         var query = " select DISTINCT(db.y_month),count(case when c.entrust_id = "+ params.entrustId +" then c.id end) as car_count from date_base db " +
             " left join car_info c on db.id = c.order_date_id where db.id is not null ";
@@ -374,6 +374,49 @@ function getCarMonthStat(params,callback) {
             " left join car_info c on db.id = c.order_date_id where db.id is not null ";
     }
     var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarMonthStat ');
+        return callback(error,rows);
+    });
+}*/
+
+function getCarMonthStat(params,callback) {
+        var query = " select db.y_month ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        query = query + " ,count(case when c.entrust_id = "+ params.entrustId +"";
+    }
+    if(params.makeId){
+        query = query + " and  c.make_id = "+ params.makeId +"";
+    }
+    if(params.routeStartId){
+        query = query + " and  c.route_start_id = "+ params.routeStartId +"";
+    }
+    if(params.baseAddrId){
+        query = query + " and  c.base_addr_id = "+ params.baseAddrId +"";
+    }
+    if(params.routeEndId){
+        query = query + " and  c.route_end_id = "+ params.routeEndId +"";
+    }
+    if(params.receiveId){
+        query = query + " and  c.receive_id = "+ params.receiveId +"";
+    }
+    query = query + " then c.id end) as car_count from date_base db left join car_info c on db.id = c.order_date_id where db.id is not null ";
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";
@@ -502,9 +545,9 @@ function updateCarOrderDate(params,callback){
 }
 
 function updateCaCurrentCity(params,callback){
-    var query = " update car_info set current_city_id = ? where id = ?";
+    var query = " update car_info set current_city = ? where id = ?";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.currentCityId;
+    paramsArray[i++] = params.currentCity;
     paramsArray[i] = params.carId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCaCurrentCity ');
