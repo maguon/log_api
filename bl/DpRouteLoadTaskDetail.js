@@ -178,6 +178,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                     parkObj.transferFlag = rows[0].transfer_flag;
                     parkObj.transferCityId = rows[0].transfer_city_id;
                     parkObj.transferCityName = rows[0].transfer_city_name;
+                    parkObj.transferAddrId = rows[0].transfer_addr_id;
                     parkObj.transferAddrName = rows[0].transfer_addr_name;
                     that();
                 } else {
@@ -233,7 +234,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
         if(parkObj.transferFlag==1){
             params.currentCityId = parkObj.transferCityId;
             params.currentCity = parkObj.transferCityName;
-            params.currentAddrId = parkObj.transferAddrName;
+            params.currentAddrId = parkObj.transferAddrId;
         }else{
             params.currentCityId = parkObj.routeEndId;
             params.currentCity = parkObj.routeEndName;
