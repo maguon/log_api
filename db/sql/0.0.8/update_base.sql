@@ -69,7 +69,8 @@ END
 DELIMITER ;
 -- ----------------------------
 -- 2018-07-25 更新
--- 追加transfer_flag和load_task_type状态，如果中转任务被取消，更新原始需求、原始需求统计、中转需求plan_count
+-- 追加transfer_flag和load_task_type状态,如果中转任务被取消,更新原始需求、原始需求统计、中转需求plan_count
+--追加状态等于3装车完成，更新dp_demand_info,dp_task_stat计划数为实际装车数,如果是中转任务,同时更新transfer_count为实际中转数
 -- ----------------------------
 DROP TRIGGER IF EXISTS `trg_update_load_task`;
 DELIMITER ;;
@@ -93,6 +94,15 @@ IF(new.load_task_status=3 && old.load_task_status<>3) THEN
 UPDATE dp_route_task set task_status=4,car_count = (select sum(real_count)
 from dp_route_load_task where dp_route_task_id = old.dp_route_task_id)
 where (select count(*) from dp_route_load_task where load_task_status <>3 and load_task_status<>8 and dp_route_task_id = old.dp_route_task_id ) =0 and id= old.dp_route_task_id;
+UPDATE dp_demand_info set plan_count = plan_count+(new.real_count-old.plan_count) where id = new.demand_id and route_start_id=new.route_start_id
+and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+UPDATE dp_task_stat set plan_count = plan_count+(new.real_count-old.plan_count) where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+IF(old.transfer_flag =1) THEN
+UPDATE dp_task_stat set transfer_count = transfer_count+(new.real_count-old.plan_count)
+where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id
+and receive_id=new.receive_id and date_id = new.date_id;
+END IF;
 END IF;
 IF(new.load_task_status=7 && old.load_task_status<>7) THEN
 UPDATE dp_route_task set task_status=10
@@ -116,4 +126,6 @@ ADD COLUMN `arrive_date`  datetime NULL COMMENT '到达时间' AFTER `load_date`
 -- 2018-08-16 更新
 -- ----------------------------
 ALTER TABLE `car_info`
-ADD COLUMN `current_city`  varchar(50) NULL COMMENT '当前所在城市' AFTER `order_date_id`;
+ADD COLUMN `current_city_id`  int(10) NULL DEFAULT 0 COMMENT '当前所在城市ID' AFTER `order_date_id`,
+ADD COLUMN `current_city`  varchar(50) NULL COMMENT '当前所在城市' AFTER `current_city_id`;
+ADD COLUMN `current_addr_id`  int(10) NULL DEFAULT 0 COMMENT '当前装车地点ID' AFTER `current_city`;

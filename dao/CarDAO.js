@@ -147,6 +147,14 @@ function getCarList(params,callback) {
     if(params.carStatusArr){
         query = query + " and c.car_status in ("+params.carStatusArr + ") ";
     }
+    if(params.currentCityId){
+        paramsArray[i++] = params.currentCityId;
+        query = query + " and c.current_city_id = ? ";
+    }
+    if(params.currentAddrId){
+        paramsArray[i++] = params.currentAddrId;
+        query = query + " and c.current_addr_id = ? ";
+    }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -644,9 +652,11 @@ function updateCarOrderDate(params,callback){
 }
 
 function updateCaCurrentCity(params,callback){
-    var query = " update car_info set current_city = ? where id = ?";
+    var query = " update car_info set current_city_id = ? , current_city = ? , current_addr_id = ? where id = ?";
     var paramsArray=[],i=0;
+    paramsArray[i++] = params.currentCityId;
     paramsArray[i++] = params.currentCity;
+    paramsArray[i++] = params.currentAddrId;
     paramsArray[i] = params.carId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCaCurrentCity ');
