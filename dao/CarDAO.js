@@ -569,6 +569,14 @@ function getCarDayStat(params,callback) {
     }else{
         query = query + " count(c.id) as car_count from date_base db left join car_info c on db.id = c.order_date_id where db.id is not null ";
     }
+    if(params.DayStart){
+        paramsArray[i++] = params.DayStart;
+        query = query + " and db.id >= ? ";
+    }
+    if(params.DayEnd){
+        paramsArray[i++] = params.DayEnd;
+        query = query + " and db.id <= ? ";
+    }
     query = query + ' group by db.id ';
     query = query + ' order by db.id desc ';
     if (params.start && params.size) {

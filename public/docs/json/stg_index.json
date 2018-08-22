@@ -11957,6 +11957,22 @@
 
           },
           {
+            "name": "DayStart",
+            "in": "query",
+            "description": "Day start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "DayEnd",
+            "in": "query",
+            "description": "Day end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
