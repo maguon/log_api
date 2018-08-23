@@ -19832,6 +19832,14 @@
 
           },
           {
+            "name": "transferFlag",
+            "in": "query",
+            "description": "transfer flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -20307,6 +20315,14 @@
             "name": "settleHandoverId",
             "in": "query",
             "description": "settleHandover id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "transferFlag",
+            "in": "query",
+            "description": "transfer flag",
             "required": false,
             "type": "integer"
 

@@ -169,6 +169,7 @@ function getNotSettleHandover(params,callback) {
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join receive_info r on c.receive_id = r.id " +
         " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
+        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
         " left join city_info c1 on dpr.route_start_id = c1.id " +
         " left join city_info c2 on dpr.route_end_id = c2.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
@@ -221,6 +222,10 @@ function getNotSettleHandover(params,callback) {
     if(params.carLoadStatus){
         paramsArray[i++] = params.carLoadStatus;
         query = query + " and dpdtl.car_load_status = ? ";
+    }
+    if(params.transferFlag){
+        paramsArray[i++] = params.transferFlag;
+        query = query + " and dprl.transfer_flag = ? ";
     }
     query = query + ' group by dpdtl.id ';
     query = query + ' order by dpdtl.id desc ';

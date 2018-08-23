@@ -24,6 +24,7 @@ function getSettleHandoverCarRel(params,callback) {
         " left join car_info c on shcr.car_id = c.id " +
         " left join dp_route_load_task_detail dpd on shcr.car_id = dpd.car_id " +
         " left join dp_route_task dpr on dpd.dp_route_task_id = dpr.id " +
+        " left join dp_route_load_task dprl on dpd.dp_route_load_task_id = dprl.id " +
         " left join city_info c1 on dpr.route_start_id = c1.id " +
         " left join city_info c2 on dpr.route_end_id = c2.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
@@ -34,10 +35,9 @@ function getSettleHandoverCarRel(params,callback) {
         paramsArray[i++] = params.settleHandoverId;
         query = query + " and shcr.settle_handover_id = ? ";
     }
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
+    if(params.transferFlag){
+        paramsArray[i++] = params.transferFlag;
+        query = query + " and dprl.transfer_flag = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getSettleHandoverCarRel ');
