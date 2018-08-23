@@ -611,6 +611,7 @@ function createServer() {
     server.get('/api/dpRouteLoadTaskCleanRelReceiveWeekStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelReceiveWeekStat);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRel);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId/status/:status',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRelStatus);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/status/:status',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateCleanRelStatus);
 
     /**
      * DpRouteTaskLoan Module

@@ -205,9 +205,9 @@ function updateDpRouteLoadTaskCleanRel(params,callback){
 
 function updateDpRouteLoadTaskCleanRelStatus(params,callback){
     if(params.status==2){
-        var query = " update dp_route_load_task_clean_rel set drive_user_id = ? , actual_price = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
+        var query = " update dp_route_load_task_clean_rel set grant_user_id = ? , actual_price = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
     }else{
-        var query = " update dp_route_load_task_clean_rel set drive_user_id = ? , actual_price = ? , status = ? where id = ? ";
+        var query = " update dp_route_load_task_clean_rel set grant_user_id = ? , actual_price = ? , status = ? where id = ? ";
     }
     var paramsArray=[],i=0;
     paramsArray[i++] = params.userId;
@@ -224,6 +224,22 @@ function updateDpRouteLoadTaskCleanRelStatus(params,callback){
     });
 }
 
+function updateCleanRelStatus(params,callback){
+    var query = " update dp_route_load_task_clean_rel set grant_user_id = ? , clean_date = ? , date_id = ? , status = ? where dp_route_task_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.userId;
+    if(params.cleanDate){
+        paramsArray[i++] = params.cleanDate;
+        paramsArray[i++] = params.dateId;
+    }
+    paramsArray[i++] = params.status;
+    paramsArray[i] = params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCleanRelStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteLoadTaskCleanRel : addDpRouteLoadTaskCleanRel,
@@ -233,5 +249,6 @@ module.exports ={
     getDpRouteLoadTaskCleanRelWeekStat  : getDpRouteLoadTaskCleanRelWeekStat,
     getDpRouteLoadTaskCleanRelReceiveWeekStat : getDpRouteLoadTaskCleanRelReceiveWeekStat,
     updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
-    updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
+    updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus,
+    updateCleanRelStatus : updateCleanRelStatus
 }

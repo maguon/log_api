@@ -138,6 +138,26 @@ function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
     })
 }
 
+function updateCleanRelStatus(req,res,next){
+    var params = req.params;
+    if(params.status==sysConst.CLEAN_STATUS.completed){
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
+        params.cleanDate = myDate;
+    }
+    dpRouteLoadTaskCleanRelDAO.updateCleanRelStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateCleanRelStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateCleanRelStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     queryDpRouteLoadTaskCleanRel : queryDpRouteLoadTaskCleanRel,
@@ -146,5 +166,6 @@ module.exports = {
     queryDpRouteLoadTaskCleanRelWeekStat : queryDpRouteLoadTaskCleanRelWeekStat,
     queryDpRouteLoadTaskCleanRelReceiveWeekStat : queryDpRouteLoadTaskCleanRelReceiveWeekStat,
     updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
-    updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus
+    updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus,
+    updateCleanRelStatus : updateCleanRelStatus
 }
