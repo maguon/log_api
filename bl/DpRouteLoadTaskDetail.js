@@ -209,26 +209,25 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
         })
     }).seq(function () {
         var that = this;
-        if(parkObj.transferFlag==1){
+        if(parkObj.transferFlag==1) {
             params.carStatus = listOfValue.CAR_STATUS_TRANSFER;
-            params.carId = parkObj.carId;
-            carDAO.updateCarStatus(params,function(error,result){
-                if (error) {
-                    logger.error(' updateCarStatus ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if(result&&result.affectedRows>0){
-                        logger.info(' updateCarStatus ' + 'success');
-                    }else{
-                        logger.warn(' updateCarStatus ' + 'failed');
-                    }
-                    that();
-                }
-            })
-        }else{
-            that();
+        }else {
+            params.carStatus = listOfValue.CAR_STATUS_OUT;
         }
-
+        params.carId = parkObj.carId;
+        carDAO.updateCarStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateCarStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCarStatus ' + 'success');
+                }else{
+                    logger.warn(' updateCarStatus ' + 'failed');
+                }
+                that();
+            }
+        })
     }).seq(function () {
         var that = this;
         if(parkObj.transferFlag==1){
