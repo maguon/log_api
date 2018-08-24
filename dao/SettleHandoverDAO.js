@@ -161,7 +161,7 @@ function getSettleHandoverBase(params,callback) {
 
 function getNotSettleHandover(params,callback) {
     var query = " select dpdtl.*,c.make_name,e.short_name as e_short_name, " +
-        " c1.city_name as city_route_start,c2.city_name as city_route_end,r.short_name as r_short_name, " +
+        " dpd.route_start,dpd.route_end,r.short_name as r_short_name, " +
         " d.drive_name,t.truck_num,dpr.task_plan_date " +
         " from dp_route_load_task_detail dpdtl " +
         " left join settle_handover_car_rel shcr on dpdtl.car_id = shcr.car_id " +
@@ -170,8 +170,7 @@ function getNotSettleHandover(params,callback) {
         " left join receive_info r on c.receive_id = r.id " +
         " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
-        " left join city_info c1 on dpr.route_start_id = c1.id " +
-        " left join city_info c2 on dpr.route_end_id = c2.id " +
+        " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " where shcr.car_id is null ";
