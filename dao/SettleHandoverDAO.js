@@ -167,9 +167,9 @@ function getNotSettleHandover(params,callback) {
         " left join settle_handover_car_rel shcr on dpdtl.car_id = shcr.car_id " +
         " left join car_info c on dpdtl.car_id = c.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
-        " left join receive_info r on c.receive_id = r.id " +
         " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
+        " left join receive_info r on dprl.receive_id = r.id " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
