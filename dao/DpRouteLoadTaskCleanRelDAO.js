@@ -86,6 +86,7 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
         query = query + " and dpcr.clean_date <= ? ";
     }
     query = query + ' group by dpcr.id ';
+    query = query + ' order by dpcr.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
