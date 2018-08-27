@@ -129,3 +129,9 @@ ALTER TABLE `car_info`
 ADD COLUMN `current_city_id`  int(10) NULL DEFAULT 0 COMMENT '当前所在城市ID' AFTER `order_date_id`,
 ADD COLUMN `current_city`  varchar(50) NULL COMMENT '当前所在城市' AFTER `current_city_id`,
 ADD COLUMN `current_addr_id`  int(10) NULL DEFAULT 0 COMMENT '当前装车地点ID' AFTER `current_city`;
+-- ----------------------------
+-- 2018-08-27 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `truck_number`  tinyint(2) NULL DEFAULT 0 COMMENT '板车位数' AFTER `car_count`,
+ADD COLUMN `load_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否满载(0-否,1-是)' AFTER `truck_number`;
