@@ -136,7 +136,7 @@ var DAMAGE_STEP_TYPE = {
     HUMAN : 16//运输途中遭人为破坏
 
 };
-var UNLOAD_CAR_COUNT = 3;
+var UNLOAD_CAR_COUNT = 3;//<=3重载,>=3空载
 
 var ACCIDENT_STATUS  ={ //事故状态
     ready_process : 1,  //待处理

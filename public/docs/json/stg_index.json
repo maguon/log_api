@@ -13975,22 +13975,6 @@
 
           },
           {
-            "name": "loadDistance",
-            "in": "query",
-            "description": "load distance",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "noLoadDistance",
-            "in": "query",
-            "description": "noLoad distance",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
             "name": "driveId",
             "in": "query",
             "description": "drive id",
