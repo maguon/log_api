@@ -21963,6 +21963,9 @@
         "truckId": {
           "type": "integer"
         },
+        "truckNumber": {
+          "type": "integer"
+        },
         "driveId": {
           "type": "integer"
         },

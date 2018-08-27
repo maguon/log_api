@@ -368,6 +368,7 @@ function getRouteTaskWeekStat(params,callback){
         return callback(error,rows);
     });
 }
+
 function getRouteTaskDayStat(params,callback){
     var query = "select sum(case when drt.car_count >= "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as load_distance ," +
         " sum(case when drt.car_count < "+sysConst.UNLOAD_CAR_COUNT+" then drt.distance end) as no_load_distance ,db.id " +
@@ -393,6 +394,19 @@ function getRouteTaskDayStat(params,callback){
         return callback(error,rows);
     });
 }
+
+function updateDpRouteLoadFlag(params,callback){
+    var query = " update dp_route_task set load_flag = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.loadFlag;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteLoadFlag ');
+        return callback(error,rows);
+    });
+}
+
+
 module.exports ={
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
@@ -406,5 +420,6 @@ module.exports ={
     finishDpRouteTask : finishDpRouteTask ,
     getRouteTaskMonthStat : getRouteTaskMonthStat ,
     getRouteTaskWeekStat : getRouteTaskWeekStat ,
-    getRouteTaskDayStat : getRouteTaskDayStat
+    getRouteTaskDayStat : getRouteTaskDayStat,
+    updateDpRouteLoadFlag : updateDpRouteLoadFlag
 }
