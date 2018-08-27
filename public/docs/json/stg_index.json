@@ -13899,22 +13899,6 @@
 
           },
           {
-            "name": "loadDistance",
-            "in": "query",
-            "description": "load distance",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "noLoadDistance",
-            "in": "query",
-            "description": "noLoad distance",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
             "name": "statStatus",
             "in": "query",
             "description": "stat status",
