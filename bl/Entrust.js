@@ -46,6 +46,20 @@ function queryEntrust(req,res,next){
     })
 }
 
+function queryEntrustRoute(req,res,next){
+    var params = req.params ;
+    entrustDAO.getEntrustRoute(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustRoute ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustRoute ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateEntrust(req,res,next){
     var params = req.params ;
     entrustDAO.updateEntrust(params,function(error,result){
@@ -64,5 +78,6 @@ function updateEntrust(req,res,next){
 module.exports = {
     createEntrust : createEntrust,
     queryEntrust : queryEntrust,
+    queryEntrustRoute : queryEntrustRoute,
     updateEntrust : updateEntrust
 }

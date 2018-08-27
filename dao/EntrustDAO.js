@@ -43,6 +43,27 @@ function getEntrust(params,callback) {
     });
 }
 
+function getEntrustRoute(params,callback) {
+    var query = " select e.*,count(ecrr.id) as route_count from entrust_info e " +
+        " left join entrust_city_route_rel ecrr on e.id = ecrr.entrust_id " +
+        " where e.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and e.id = ? ";
+    }
+    query = query + ' group by e.id ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getEntrustRoute ');
+        return callback(error,rows);
+    });
+}
+
 function updateEntrust(params,callback){
     var query = " update entrust_info set short_name = ?,entrust_name = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -57,9 +78,9 @@ function updateEntrust(params,callback){
 }
 
 
-
 module.exports ={
     addEntrust : addEntrust,
     getEntrust : getEntrust,
+    getEntrustRoute : getEntrustRoute,
     updateEntrust : updateEntrust
 }

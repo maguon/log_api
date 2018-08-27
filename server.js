@@ -461,6 +461,7 @@ function createServer() {
      * Entrust Module
      */
     server.get('/api/entrust',entrust.queryEntrust);
+    server.get('/api/entrustRoute',entrust.queryEntrustRoute);
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
     server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);
 

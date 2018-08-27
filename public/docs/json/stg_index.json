@@ -10126,6 +10126,58 @@
         }
       }
     },
+    "/entrustRoute": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query entrustRoute list",
+        "description": "query entrustRoute",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrust"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrust id"
+          }
+        }
+      }
+    },
     "/user/{userId}/entrust": {
       "post": {
         "tags": [
