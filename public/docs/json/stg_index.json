@@ -13,7 +13,7 @@
       "url": "https://github.com/maguon/log_api/blob/master/LICENSE"
     }
   },
-  "host": "stg.myxxjs.com:9001",
+  "host": "localhost:9001",
   "basePath": "/api",
   "tags": [
     {
@@ -7463,22 +7463,6 @@
             "in": "query",
             "description": "driveSalary id",
             "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "loadDistance",
-            "in": "query",
-            "description": "load distance",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "noLoadDistance",
-            "in": "query",
-            "description": "noLoad distance",
-            "required": true,
             "type": "integer"
 
           },
