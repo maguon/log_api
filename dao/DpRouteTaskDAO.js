@@ -273,6 +273,10 @@ function updateDpRouteTaskStatus(params,callback){
         paramsArray[i++] = params.dateId;
         query = query + " ,date_id = ? ";
     }
+    if(params.loadFlag){
+        paramsArray[i++] = params.loadFlag;
+        query = query + " ,load_flag = ? ";
+    }
     query = query + ' where id = ' + params.dpRouteTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskStatus ');
