@@ -20,7 +20,7 @@ function addEntrustCityRouteRel(params,callback){
 }
 
 function getEntrustCityRouteRel(params,callback) {
-    var query = " select ecrr.*,cr.route_start,cr.route_end,e.short_name " +
+    var query = " select ecrr.*,cr.route_start_id,cr.route_start,cr.route_end_id,cr.route_end,e.short_name " +
         " from entrust_city_route_rel ecrr " +
         " left join city_route_info cr on ecrr.city_route_id = cr.id " +
         " left join entrust_info e on ecrr.entrust_id = e.id " +

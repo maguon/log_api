@@ -135,3 +135,18 @@ ADD COLUMN `current_addr_id`  int(10) NULL DEFAULT 0 COMMENT '当前装车地点
 ALTER TABLE `dp_route_task`
 ADD COLUMN `truck_number`  tinyint(2) NULL DEFAULT 0 COMMENT '板车位数' AFTER `car_count`,
 ADD COLUMN `load_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否满载(0-否,1-是)' AFTER `truck_number`;
+-- ----------------------------
+-- Table structure for entrust_city_route_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `entrust_city_route_rel`;
+CREATE TABLE `entrust_city_route_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entrust_id` int(10) NOT NULL COMMENT '委托方ID',
+  `city_route_id` int(10) NOT NULL COMMENT '路线ID',
+  `distance` decimal(10,2) NOT NULL COMMENT '公里数',
+  `fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '每公里费用',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`entrust_id`,`city_route_id`),
+  UNIQUE KEY `id` (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
