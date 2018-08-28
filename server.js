@@ -463,6 +463,7 @@ function createServer() {
      */
     server.get('/api/entrust',entrust.queryEntrust);
     server.get('/api/entrustRoute',entrust.queryEntrustRoute);
+    server.get('/api/entrustCar',entrust.queryEntrustCar);
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
     server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);
 

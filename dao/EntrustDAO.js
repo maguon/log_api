@@ -64,6 +64,59 @@ function getEntrustRoute(params,callback) {
     });
 }
 
+function getEntrustCar(params,callback) {
+    var query = " select c.*,e.short_name as e_short_name,ba.addr_name,r.short_name as r_short_name,ecrr.distance,ecrr.fee " +
+        " from car_info c " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
+        " left join receive_info r on c.receive_id = r.id " +
+        " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id " +
+        " where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
+    }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    query = query + '  order by c.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getEntrustCar ');
+        return callback(error,rows);
+    });
+}
+
 function updateEntrust(params,callback){
     var query = " update entrust_info set short_name = ?,entrust_name = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -82,5 +135,6 @@ module.exports ={
     addEntrust : addEntrust,
     getEntrust : getEntrust,
     getEntrustRoute : getEntrustRoute,
+    getEntrustCar : getEntrustCar,
     updateEntrust : updateEntrust
 }

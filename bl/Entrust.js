@@ -60,6 +60,20 @@ function queryEntrustRoute(req,res,next){
     })
 }
 
+function queryEntrustCar(req,res,next){
+    var params = req.params ;
+    entrustDAO.getEntrustCar(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustCar ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateEntrust(req,res,next){
     var params = req.params ;
     entrustDAO.updateEntrust(params,function(error,result){
@@ -79,5 +93,6 @@ module.exports = {
     createEntrust : createEntrust,
     queryEntrust : queryEntrust,
     queryEntrustRoute : queryEntrustRoute,
+    queryEntrustCar : queryEntrustCar,
     updateEntrust : updateEntrust
 }
