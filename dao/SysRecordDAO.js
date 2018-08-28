@@ -41,10 +41,19 @@ function addReceiverRecord(req,params,callback) {
         callback(error,result);
     })
 }
+
+function addEntrustRecord(req,params,callback) {
+    var url = '/api/entrustRecord';
+    httpUtil.httpPost(sysConfig.hosts.record,url,req,params,function(error,result){
+        callback(error,result);
+    })
+}
+
 module.exports ={
     addRecord : addRecord,
     addTruckRecord : addTruckRecord ,
     addDriverRecord : addDriverRecord,
     addRouteRecord : addRouteRecord ,
-    addReceiverRecord : addReceiverRecord
+    addReceiverRecord : addReceiverRecord,
+    addEntrustRecord : addEntrustRecord
 }

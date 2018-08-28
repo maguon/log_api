@@ -126,10 +126,37 @@ function saveReceiverRecord(req,res,next){
         return next();
     }
 }
+
+function saveEntrustRecord(req,res,next){
+    if(res._body.success){
+        var params = req.params;
+        console.log(params);
+        var recordParams ={};
+        recordParams.userId = params._uid;
+        recordParams.userType = params._utype || 99;
+        recordParams.username = params._uname || 'admin';
+        recordParams.entrustId = params.entrustId;
+        recordParams.cityRouteId = params.cityRouteId;
+        recordParams.content = params.entrustContent;
+        sysRecordDAO.addEntrustRecord(req,recordParams,function(error,result){
+            if(error){
+                logger.error('saveEntrustRecord ' + error.stack);
+            }else{
+                logger.info('saveEntrustRecord success')
+            }
+            return next();
+        })
+    }else{
+        return next();
+    }
+}
+
+
 module.exports ={
     saveCarRecord : saveCarRecord ,
     saveTruckRecord : saveTruckRecord ,
     saveDriverRecord : saveDriverRecord ,
     saveRouteRecord : saveRouteRecord,
-    saveReceiverRecord : saveReceiverRecord
+    saveReceiverRecord : saveReceiverRecord,
+    saveEntrustRecord : saveEntrustRecord
 }

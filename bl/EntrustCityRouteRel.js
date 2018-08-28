@@ -26,6 +26,9 @@ function createEntrustCityRouteRel(req,res,next){
             }
         } else {
             logger.info(' createEntrustCityRouteRel ' + 'success');
+            req.params.entrustContent =" 设置 "+params.distance+"公里  "+params.fee+"元/公里 ";
+            req.params.entrustId = params.entrustId;
+            req.params.cityRouteId = params.cityRouteId;
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
