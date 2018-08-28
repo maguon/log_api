@@ -42,6 +42,7 @@ var receive = require('./bl/Receive.js');
 var receiveContacts = require('./bl/ReceiveContacts.js');
 var entrust = require('./bl/Entrust.js');
 var entrustContacts = require('./bl/EntrustContacts.js');
+var entrustCityRouteRel = require('./bl/EntrustCityRouteRel.js');
 var storage = require('./bl/Storage.js');
 var storageArea = require('./bl/StorageArea.js');
 var storageParking = require('./bl/StorageParking.js');
@@ -472,6 +473,11 @@ function createServer() {
     server.post({path:'/api/user/:userId/entrust/:entrustId/contacts',contentType: 'application/json'},entrustContacts.createEntrustContacts);
     server.put({path:'/api/user/:userId/entrustContacts/:entrustContactsId',contentType: 'application/json'} ,entrustContacts.updateEntrustContacts);
     server.del('/api/user/:userId/entrustContacts/:entrustContactsId' , entrustContacts.removeContacts);
+
+    /**
+     * EntrustCityRouteRel Module
+     */
+    server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel);
 
     /**
      * Storage Module

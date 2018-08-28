@@ -10455,6 +10455,51 @@
         }
       }
     },
+    "/user/{userId}/entrustCityRouteRel": {
+      "post": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "user create entrustCityRouteRel",
+        "description": "user create entrustCityRouteRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustCityRouteRel",
+            "in": "body",
+            "description": "entrustCityRouteRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entrustCityRouteRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustCityRouteRel id"
+          }
+        }
+      }
+    },
     "/storage": {
       "get": {
         "tags": [
@@ -21755,6 +21800,27 @@
       },
       "xml": {
         "name": "contacts"
+      }
+    },
+    "entrustCityRouteRel": {
+      "type": "object",
+      "properties": {
+
+        "entrustId": {
+          "type": "integer"
+        },
+        "cityRouteId": {
+          "type": "integer"
+        },
+        "distance": {
+          "type": "integer"
+        },
+        "fee": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "entrustCityRouteRel"
       }
     },
     "storage": {
