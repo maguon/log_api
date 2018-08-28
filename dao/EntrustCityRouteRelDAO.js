@@ -19,7 +19,20 @@ function addEntrustCityRouteRel(params,callback){
     });
 }
 
+function updateEntrustCityRouteRel(params,callback){
+    var query = " update entrust_city_route_rel set distance = ? , fee = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.distance;
+    paramsArray[i++]=params.fee;
+    paramsArray[i]=params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateEntrustCityRouteRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addEntrustCityRouteRel : addEntrustCityRouteRel
+    addEntrustCityRouteRel : addEntrustCityRouteRel,
+    updateEntrustCityRouteRel : updateEntrustCityRouteRel
 }

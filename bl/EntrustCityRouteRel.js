@@ -32,7 +32,22 @@ function createEntrustCityRouteRel(req,res,next){
     })
 }
 
+function updateEntrustCityRouteRel(req,res,next){
+    var params = req.params ;
+    entrustCityRouteRelDAO.updateEntrustCityRouteRel(params,function(error,result){
+        if (error) {
+            logger.error(' updateEntrustCityRouteRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateEntrustCityRouteRel ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createEntrustCityRouteRel : createEntrustCityRouteRel
+    createEntrustCityRouteRel : createEntrustCityRouteRel,
+    updateEntrustCityRouteRel : updateEntrustCityRouteRel
 }
