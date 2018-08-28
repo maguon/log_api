@@ -19,6 +19,31 @@ function addEntrustCityRouteRel(params,callback){
     });
 }
 
+function getEntrustCityRouteRel(params,callback) {
+    var query = " select ecrr.*,cr.route_start,cr.route_end,e.short_name " +
+        " from entrust_city_route_rel ecrr " +
+        " left join city_route_info cr on ecrr.city_route_id = cr.id " +
+        " left join entrust_info e on ecrr.entrust_id = e.id " +
+        " where ecrr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and e.id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and cr.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and cr.route_end_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getEntrustCityRouteRel ');
+        return callback(error,rows);
+    });
+}
+
 function updateEntrustCityRouteRel(params,callback){
     var query = " update entrust_city_route_rel set distance = ? , fee = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -34,5 +59,6 @@ function updateEntrustCityRouteRel(params,callback){
 
 module.exports ={
     addEntrustCityRouteRel : addEntrustCityRouteRel,
+    getEntrustCityRouteRel : getEntrustCityRouteRel,
     updateEntrustCityRouteRel : updateEntrustCityRouteRel
 }

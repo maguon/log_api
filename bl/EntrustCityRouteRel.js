@@ -32,6 +32,20 @@ function createEntrustCityRouteRel(req,res,next){
     })
 }
 
+function queryEntrustCityRouteRel(req,res,next){
+    var params = req.params ;
+    entrustCityRouteRelDAO.getEntrustCityRouteRel(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustCityRouteRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustCityRouteRel ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateEntrustCityRouteRel(req,res,next){
     var params = req.params ;
     entrustCityRouteRelDAO.updateEntrustCityRouteRel(params,function(error,result){
@@ -49,5 +63,6 @@ function updateEntrustCityRouteRel(req,res,next){
 
 module.exports = {
     createEntrustCityRouteRel : createEntrustCityRouteRel,
+    queryEntrustCityRouteRel : queryEntrustCityRouteRel,
     updateEntrustCityRouteRel : updateEntrustCityRouteRel
 }

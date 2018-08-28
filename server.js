@@ -477,6 +477,7 @@ function createServer() {
     /**
      * EntrustCityRouteRel Module
      */
+    server.get('/api/entrustCityRouteRel',entrustCityRouteRel.queryEntrustCityRouteRel);
     server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel);
     server.put({path:'/api/user/:userId/entrustCityRouteRel/:relId',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel);
 
