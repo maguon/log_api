@@ -51,15 +51,40 @@ function queryEntrustCityRouteRel(req,res,next){
 
 function updateEntrustCityRouteRel(req,res,next){
     var params = req.params ;
-    entrustCityRouteRelDAO.updateEntrustCityRouteRel(params,function(error,result){
-        if (error) {
-            logger.error(' updateEntrustCityRouteRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateEntrustCityRouteRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    var parkObj = {};
+    Seq().seq(function(){
+        var that = this;
+        entrustCityRouteRelDAO.getEntrustCityRouteRel({relId:params.relId},function(error,rows){
+            if (error) {
+                logger.error(' getEntrustCityRouteRel ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    parkObj.entrustId = rows[0].entrust_id;
+                    parkObj.cityRouteId = rows[0].city_route_id;
+                    that();
+                }else{
+                    logger.warn(' getEntrustCityRouteRel ' + 'failed');
+                    resUtil.resetFailedRes(res,"数据不存在，请重新输入 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        entrustCityRouteRelDAO.updateEntrustCityRouteRel(params,function(error,result){
+            if (error) {
+                logger.error(' updateEntrustCityRouteRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateEntrustCityRouteRel ' + 'success');
+                req.params.entrustContent =" 修改设置 "+params.distance+"公里  "+params.fee+"元/公里 ";
+                req.params.entrustId = parkObj.entrustId;
+                req.params.cityRouteId = parkObj.cityRouteId;
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

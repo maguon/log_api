@@ -42,8 +42,8 @@ function addReceiverRecord(req,params,callback) {
     })
 }
 
-function addEntrustRecord(req,params,callback) {
-    var url = '/api/entrustRecord';
+function addEntrustRecord(req,params,callback){
+    var url = '/api/entrust/'+params.entrustId+'/cityRouteId/'+params.cityRouteId+"/entrustRecord";
     httpUtil.httpPost(sysConfig.hosts.record,url,req,params,function(error,result){
         callback(error,result);
     })

@@ -26,6 +26,10 @@ function getEntrustCityRouteRel(params,callback) {
         " left join entrust_info e on ecrr.entrust_id = e.id " +
         " where ecrr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.relId){
+        paramsArray[i++] = params.relId;
+        query = query + " and ecrr.id = ? ";
+    }
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
         query = query + " and e.id = ? ";

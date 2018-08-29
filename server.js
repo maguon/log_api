@@ -481,7 +481,7 @@ function createServer() {
      */
     server.get('/api/entrustCityRouteRel',entrustCityRouteRel.queryEntrustCityRouteRel);
     server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel,sysRecord.saveEntrustRecord);
-    server.put({path:'/api/user/:userId/entrustCityRouteRel/:relId',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel);
+    server.put({path:'/api/user/:userId/entrustCityRouteRel/:relId',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.saveEntrustRecord);
 
     /**
      * Storage Module

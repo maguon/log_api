@@ -127,7 +127,7 @@ function saveReceiverRecord(req,res,next){
     }
 }
 
-function saveEntrustRecord(req,res,next){
+function saveEntrustRecord (req,res,next){
     if(res._body.success){
         var params = req.params;
         console.log(params);
@@ -135,9 +135,9 @@ function saveEntrustRecord(req,res,next){
         recordParams.userId = params._uid;
         recordParams.userType = params._utype || 99;
         recordParams.username = params._uname || 'admin';
+        recordParams.content = params.entrustContent;
         recordParams.entrustId = params.entrustId;
         recordParams.cityRouteId = params.cityRouteId;
-        recordParams.content = params.entrustContent;
         sysRecordDAO.addEntrustRecord(req,recordParams,function(error,result){
             if(error){
                 logger.error('saveEntrustRecord ' + error.stack);
