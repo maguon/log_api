@@ -150,3 +150,18 @@ CREATE TABLE `entrust_city_route_rel` (
   PRIMARY KEY (`entrust_id`,`city_route_id`),
   UNIQUE KEY `id` (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-08-30 更新
+-- ----------------------------
+ALTER TABLE `city_route_info`
+ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `id`;
+ALTER TABLE `car_info`
+ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `model_name`;
+ALTER TABLE `dp_route_task`
+ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `drive_id`;
+-- ----------------------------
+-- 2018-08-30 更新
+--更新route_id线路组合ID
+-- ----------------------------
+update city_route_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id))
+update car_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id))

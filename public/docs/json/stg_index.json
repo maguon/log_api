@@ -10193,7 +10193,7 @@
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
@@ -10301,7 +10301,7 @@
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
