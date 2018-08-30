@@ -7,8 +7,9 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
-    var query = " insert into city_route_info (route_start_id,route_start,route_end_id,route_end,distance,protect_fee) values ( ? , ? , ? , ? , ? , ? )";
+    var query = " insert into city_route_info (route_id,route_start_id,route_start,route_end_id,route_end,distance,protect_fee) values ( ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.routeId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.routeEndId;

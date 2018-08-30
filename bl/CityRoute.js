@@ -32,6 +32,11 @@ function createCityRoute(req,res,next){
             }
         })
     }).seq(function(){
+        if(params.routeStartId>params.routeEndId){
+            params.routeId = params.routeEndId+''+params.routeStartId;
+        }else{
+            params.routeId = params.routeStartId+''+params.routeEndId;
+        }
         cityRouteDAO.addCityRoute(params,function(error,result){
             if (error) {
                 logger.error(' createCityRoute ' + error.message);
