@@ -36,6 +36,15 @@ function createCar(req,res,next){
         var strDate = moment(orderDate).format('YYYYMMDD');
         params.orderDateId = parseInt(strDate);
     }
+    if(params.routeEndId!=null){
+        if(params.routeStartId>params.routeEndId){
+            params.routeId = params.routeEndId+''+params.routeStartId;
+        }else{
+            params.routeId = params.routeStartId+''+params.routeEndId;
+        }
+    }else{
+        params.routeId = 0;
+    }
     carDAO.addCar(params,function(error,result){
         if (error) {
             if(error.message.indexOf("Duplicate") > 0) {
