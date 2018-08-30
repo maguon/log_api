@@ -593,7 +593,7 @@ function getCarDayStat(params,callback) {
 
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
-        " route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , receive_id = ? , " +
+        " route_id = ? , route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , receive_id = ? , " +
         " entrust_id = ? , order_date = ? , order_date_id = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
@@ -601,6 +601,7 @@ function updateCar(params,callback){
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
+    paramsArray[i++]=params.routeId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
@@ -645,7 +646,7 @@ function updateCarStatus(params,callback){
 function updateCarOrderDate(params,callback){
     var query = " update car_info left join dp_route_load_task_detail on car_info.id = dp_route_load_task_detail.car_id " +
         " left join dp_route_load_task on dp_route_load_task.id = dp_route_load_task_detail.dp_route_load_task_id " +
-        " set car_info.order_date = ? , car_info.order_date_id =  ? , car_info.route_end_id = ? , car_info.route_end =  ? , car_info.receive_id =  ? , car_info.route_id " +
+        " set car_info.order_date = ? , car_info.order_date_id =  ? , car_info.route_end_id = ? , car_info.route_end =  ? , car_info.receive_id =  ? , car_info.route_id = ? " +
         " where car_info.order_date is  null and dp_route_load_task_detail.dp_route_load_task_id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.orderDate;

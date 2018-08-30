@@ -173,6 +173,15 @@ function updateCar(req,res,next){
         var strDate = moment(orderDate).format('YYYYMMDD');
         params.orderDateId = parseInt(strDate);
     }
+    if(params.routeEndId!=null){
+        if(params.routeStartId>params.routeEndId){
+            params.routeId = params.routeEndId+''+params.routeStartId;
+        }else{
+            params.routeId = params.routeStartId+''+params.routeEndId;
+        }
+    }else{
+        params.routeId = 0;
+    }
     carDAO.updateCar(params,function(error,result){
         if (error) {
             logger.error(' updateCar ' + error.message);
