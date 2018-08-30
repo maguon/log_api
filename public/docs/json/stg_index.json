@@ -22445,6 +22445,9 @@
         "driveId": {
           "type": "integer"
         },
+        "routeId": {
+          "type": "integer"
+        },
         "routeStartId": {
           "type": "integer"
         },

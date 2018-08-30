@@ -165,3 +165,4 @@ ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `dr
 -- ----------------------------
 update city_route_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id))
 update car_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id))
+update dp_route_task set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id))
