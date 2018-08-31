@@ -22484,11 +22484,17 @@
         "routeStartId": {
           "type": "integer"
         },
+        "routeStart": {
+          "type": "string"
+        },
         "baseAddrId": {
           "type": "integer"
         },
         "routeEndId": {
           "type": "integer"
+        },
+        "routeEnd": {
+          "type": "string"
         },
         "receiveId": {
           "type": "integer"
@@ -22507,6 +22513,9 @@
         },
         "transferCityId": {
           "type": "integer"
+        },
+        "transferCity": {
+          "type": "string"
         },
         "transferAddrId": {
           "type": "integer"

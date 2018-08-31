@@ -7,8 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDAO.js');
 
 function addDpRouteLoadTask(params,callback){
-    var query = " insert into dp_route_load_task (user_id,load_task_type,demand_id,transfer_demand_id,dp_route_task_id,route_start_id,base_addr_id,route_end_id,receive_id,date_id," +
-        "plan_date,plan_count,transfer_flag,transfer_city_id,transfer_addr_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_load_task (user_id,load_task_type,demand_id,transfer_demand_id, " +
+        " dp_route_task_id,route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,date_id," +
+        " plan_date,plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.loadTaskType;
@@ -16,14 +18,17 @@ function addDpRouteLoadTask(params,callback){
     paramsArray[i++]=params.transferDemandId;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
     paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.planDate;
     paramsArray[i++]=params.planCount;
     paramsArray[i++]=params.transferFlag;
     paramsArray[i++]=params.transferCityId;
+    paramsArray[i++]=params.transferCity;
     paramsArray[i++]=params.transferAddrId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteLoadTask ');

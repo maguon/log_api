@@ -172,3 +172,10 @@ update city_route_info set route_id = concat(LEAST(route_start_id,route_end_id),
 update car_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
 update dp_route_task set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
 update dp_demand_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
+-- ----------------------------
+-- 2018-08-31 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task`
+ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始地' AFTER `route_start_id`,
+ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的地' AFTER `route_end_id`,
+ADD COLUMN `transfer_city`  varchar(50) NULL COMMENT '中转城市' AFTER `transfer_city_id`;
