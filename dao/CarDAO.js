@@ -8,8 +8,7 @@ var logger = serverLogger.createLogger('CarDAO.js');
 
 function addUploadCar(params,callback){
     var query = " insert into car_info(vin,make_id,make_name,route_id,route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,entrust_id,order_date,upload_id) " +
-        " select tmp.vin,tmp.make_id,ma.make_name,concat(if(LEAST(tmp.route_start_id,tmp.route_end_id)>0,LEAST(tmp.route_start_id,tmp.route_end_id),0), " +
-        " if(GREATEST(tmp.route_start_id,tmp.route_end_id)>0,GREATEST(tmp.route_start_id,tmp.route_end_id),'')), " +
+        " select tmp.vin,tmp.make_id,ma.make_name,concat(LEAST(tmp.route_start_id,tmp.route_end_id),GREATEST(tmp.route_start_id,tmp.route_end_id)), " +
         " tmp.route_start_id,cs.city_name as route_start,tmp.base_addr_id,tmp.route_end_id,ce.city_name as route_end, " +
         " tmp.receive_id,tmp.entrust_id,tmp.order_date,tmp.upload_id from car_info_tmp tmp " +
         " left join car_make ma on tmp.make_id = ma.id " +
