@@ -179,3 +179,5 @@ ALTER TABLE `dp_route_load_task`
 ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始地' AFTER `route_start_id`,
 ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的地' AFTER `route_end_id`,
 ADD COLUMN `transfer_city`  varchar(50) NULL COMMENT '中转城市' AFTER `transfer_city_id`;
+update dp_route_load_task dprl, city_info c,city_info c1 set dprl.route_start = c.city_name ,dprl.route_end = c1.city_name where dprl.route_start_id = c.id and dprl.route_end_id = c1.id
+update dp_route_load_task dprl, city_info c set dprl.transfer_city = c.city_name where dprl.transfer_city_id = c.id

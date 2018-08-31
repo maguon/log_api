@@ -37,9 +37,9 @@ function addDpRouteLoadTask(params,callback){
 }
 
 function getDpRouteLoadTask(params,callback) {
-    var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,c.city_name as city_start_name,c1.city_name,r.short_name,r.clean_fee,dpd.pre_count, " +
+    var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,r.short_name,r.clean_fee,dpd.pre_count, " +
         " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
-        " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count,c2.city_name as transfer_city_name,ba1.addr_name as transfer_addr_name, " +
+        " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count,ba1.addr_name as transfer_addr_name, " +
         " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
@@ -52,9 +52,6 @@ function getDpRouteLoadTask(params,callback) {
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join base_addr ba on dprl.base_addr_id = ba.id " +
         " left join base_addr ba1 on dprl.transfer_addr_id = ba1.id " +
-        " left join city_info c on dprl.route_start_id = c.id " +
-        " left join city_info c1 on dprl.route_end_id = c1.id " +
-        " left join city_info c2 on dprl.transfer_city_id = c2.id" +
         " left join receive_info r on dprl.receive_id = r.id " +
         " left join user_info u2 on d.user_id = u2.uid " +
         " left join base_addr ba2 on dpd.base_addr_id = ba2.id " +
