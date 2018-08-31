@@ -157,8 +157,7 @@ ALTER TABLE `city_route_info`
 ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `id`;
 ALTER TABLE `city_route_info`
 DROP PRIMARY KEY,
-ADD PRIMARY KEY (`route_id`),
-ADD UNIQUE INDEX `route_start_id` (`route_start_id`, `route_end_id`) USING BTREE ;
+ADD PRIMARY KEY (`route_id`);
 ALTER TABLE `car_info`
 ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `model_name`;
 ALTER TABLE `dp_route_task`
