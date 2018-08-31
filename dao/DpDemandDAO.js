@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpDemandDAO.js');
 
 function addDpDemand(params,callback){
-    var query = " insert into dp_demand_info (user_id,route_start_id,route_start,base_addr_id,route_end_id,route_end, " +
-        " receive_id,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_demand_info (user_id,route_id,route_start_id,route_start,base_addr_id,route_end_id,route_end, " +
+        " receive_id,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.routeId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
