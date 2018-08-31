@@ -163,8 +163,6 @@ ALTER TABLE `car_info`
 ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `model_name`;
 ALTER TABLE `dp_route_task`
 ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `drive_id`;
-ALTER TABLE `dp_route_load_task`
-ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `dp_route_task_id`;
 -- ----------------------------
 -- 2018-08-30 更新
 --更新route_id线路组合ID
@@ -172,4 +170,3 @@ ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `dp
 update city_route_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
 update car_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
 update dp_route_task set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
-update dp_route_load_task set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
