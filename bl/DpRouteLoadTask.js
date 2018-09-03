@@ -162,12 +162,14 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     if (rows && rows.length > 0) {
                         parkObj.demandId = rows[0].demand_id;
                         parkObj.routeStartId = rows[0].route_start_id;
+                        parkObj.routeStart = rows[0].route_start;
                         parkObj.baseAddrId = rows[0].base_addr_id;
                         parkObj.addrName = rows[0].addr_name;
                         parkObj.routeEndId = rows[0].route_end_id;
-                        parkObj.cityName = rows[0].city_name;
+                        parkObj.routeEnd = rows[0].route_end;
                         parkObj.transferFlag = rows[0].transfer_flag;
                         parkObj.transferCityId = rows[0].transfer_city_id;
+                        parkObj.transferCity = rows[0].transfer_city;
                         parkObj.transferAddrId = rows[0].transfer_addr_id;
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
@@ -220,7 +222,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.orderDate = moment(orderDate).format('YYYY-MM-DD');
             params.orderDateId = parkObj.dateId;
             params.routeEndId = parkObj.routeEndId;
-            params.routeEnd = parkObj.cityName;
+            params.routeEnd = parkObj.routeEnd;
             params.receiveId = parkObj.receiveId;
             if(parkObj.routeStartId>parkObj.routeEndId){
                 params.routeId = params.routeEndId+''+params.routeStartId;
@@ -274,9 +276,12 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load&&parkObj.transferFlag>0&&newTransferDemandFlag==false) {
             params.demandId = parkObj.demandId;
             params.routeStartId = parkObj.routeStartId;
+            params.routeStart = parkObj.routeStart;
             params.baseAddrId = parkObj.baseAddrId;
             params.routeEndId = parkObj.routeEndId;
+            params.routeEnd = parkObj.routeEnd;
             params.transferCityId = parkObj.transferCityId;
+            params.transferCity = parkObj.transferCity;
             params.transferAddrId = parkObj.transferAddrId;
             params.receiveId = parkObj.receiveId;
             params.preCount = parkObj.carCount;
