@@ -176,8 +176,15 @@ update dp_demand_info set route_id = concat(LEAST(route_start_id,route_end_id),G
 -- 2018-08-31 更新
 -- ----------------------------
 ALTER TABLE `dp_route_load_task`
-ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始地' AFTER `route_start_id`,
-ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的地' AFTER `route_end_id`,
+ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始城市' AFTER `route_start_id`,
+ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的城市' AFTER `route_end_id`,
 ADD COLUMN `transfer_city`  varchar(50) NULL COMMENT '中转城市' AFTER `transfer_city_id`;
 update dp_route_load_task dprl, city_info c,city_info c1 set dprl.route_start = c.city_name ,dprl.route_end = c1.city_name where dprl.route_start_id = c.id and dprl.route_end_id = c1.id
 update dp_route_load_task dprl, city_info c set dprl.transfer_city = c.city_name where dprl.transfer_city_id = c.id
+-- ----------------------------
+-- 2018-09-03 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始城市' AFTER `route_start_id`,
+ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的城市' AFTER `route_end_id`;
+update dp_route_task dpr, city_info c,city_info c1 set dpr.route_start = c.city_name ,dpr.route_end = c1.city_name where dpr.route_start_id = c.id and dpr.route_end_id = c1.id

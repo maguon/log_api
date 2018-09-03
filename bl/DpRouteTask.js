@@ -25,6 +25,11 @@ function createDpRouteTask(req,res,next){
     var dpRouteTaskId = 0;
     Seq().seq(function(){
         var that = this;
+        if(params.routeStartId>params.routeEndId){
+            params.routeId = params.routeEndId+''+params.routeStartId;
+        }else{
+            params.routeId = params.routeStartId+''+params.routeEndId;
+        }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteTask ' + error.message);
