@@ -37,7 +37,8 @@ function addDpRouteLoadTask(params,callback){
 }
 
 function getDpRouteLoadTask(params,callback) {
-    var query = " select dprl.*,u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,r.short_name,r.clean_fee,dpd.pre_count, " +
+    var query = " select dprl.*,dprl.route_start as city_start_name,dprl.route_end as city_name,dprl.transfer_city as transfer_city_name, " +
+        " u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,r.short_name,r.clean_fee,dpd.pre_count, " +
         " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
         " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count,ba1.addr_name as transfer_addr_name, " +
         " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end " +
@@ -150,11 +151,10 @@ function getDpRouteLoadTask(params,callback) {
 }
 
 function getDpRouteLoadTaskBase(params,callback) {
-    var query = " select dprl.*,dpr.task_status,c.city_name as route_start_name,ba.addr_name as base_addr_name " +
+    var query = " select dprl.*,ba.addr_name,dpr.task_status " +
         " from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
-        " left join city_info c on dprl.route_start_id = c.id " +
         " left join base_addr ba on dprl.base_addr_id = ba.id " +
         " where dprl.id is not null ";
     var paramsArray=[],i=0;

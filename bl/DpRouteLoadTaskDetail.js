@@ -31,8 +31,8 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].load_task_status ==sysConst.LOAD_TASK_STATUS.no_load){
-                    parkObj.routeStartName = rows[0].route_start_name;
-                    parkObj.baseAddrName = rows[0].base_addr_name;
+                    parkObj.routeStart = rows[0].route_start;
+                    parkObj.addrName = rows[0].addr_name;
                     that();
                 }else{
                     logger.warn(' getDpRouteLoadTaskBase ' +' failed ');
@@ -108,7 +108,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
         })
     }).seq(function(){
         logger.info(' createDpRouteLoadTaskDetail ' + 'success');
-        req.params.carContent = parkObj.routeStartName+" "+parkObj.baseAddrName+" 完成装车  调度编号 "+params.dpRouteTaskId;
+        req.params.carContent = parkObj.routeStart+" "+parkObj.addrName+" 完成装车  调度编号 "+params.dpRouteTaskId;
         req.params.vin =params.vin;
         req.params.op =sysConst.CAR_OP_TYPE.LOAD;
         resUtil.resetCreateRes(res,{insertId:dpRouteTaskDetailId},null);
