@@ -11,7 +11,11 @@ function addDpDemand(params,callback){
         " receive_id,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
-    paramsArray[i++]=params.routeId;
+    if(params.routeStartId>params.routeEndId){
+        paramsArray[i++] = params.routeEndId+''+params.routeStartId;
+    }else{
+        paramsArray[i++] = params.routeStartId+''+params.routeEndId;
+    }
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;

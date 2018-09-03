@@ -9,7 +9,11 @@ var logger = serverLogger.createLogger('CityRouteDAO.js');
 function addCityRoute(params,callback){
     var query = " insert into city_route_info (route_id,route_start_id,route_start,route_end_id,route_end,distance,protect_fee) values ( ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.routeId;
+    if(params.routeStartId>params.routeEndId){
+        paramsArray[i++] = params.routeEndId+''+params.routeStartId;
+    }else{
+        paramsArray[i++] = params.routeStartId+''+params.routeEndId;
+    }
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.routeEndId;

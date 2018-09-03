@@ -14,7 +14,11 @@ function addDpRouteTask(params,callback){
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.driveId;
-    paramsArray[i++]=params.routeId;
+    if(params.routeStartId>params.routeEndId){
+        paramsArray[i++] = params.routeEndId+''+params.routeStartId;
+    }else{
+        paramsArray[i++] = params.routeStartId+''+params.routeEndId;
+    }
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.routeEndId;

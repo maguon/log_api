@@ -23,11 +23,6 @@ function createDpDemand(req,res,next){
     var d = new Date(dateId);
     var currentDateStr = moment(d).format('YYYYMMDD');
     params.dateId = parseInt(currentDateStr);
-    if(params.routeStartId>params.routeEndId){
-        params.routeId = params.routeEndId+''+params.routeStartId;
-    }else{
-        params.routeId = params.routeStartId+''+params.routeEndId;
-    }
     dpDemandDAO.addDpDemand(params,function(error,result){
         if (error) {
             logger.error(' createDpDemand ' + error.message);

@@ -49,8 +49,8 @@ function addCarTmp(params,callback){
 }
 
 function addCar(params,callback){
-    var query = " insert into car_info (user_id,vin,make_id,make_name,model_id,model_name,route_id," +
-        " route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,entrust_id,order_date,order_date_id,colour,engine_num,remark) " +
+    var query = " insert into car_info (user_id,vin,make_id,make_name,model_id,model_name," +
+        " route_start_id,route_start,base_addr_id,route_end_id,route_end,route_id,receive_id,entrust_id,order_date,order_date_id,colour,engine_num,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
@@ -59,12 +59,21 @@ function addCar(params,callback){
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
-    paramsArray[i++]=params.routeId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
     paramsArray[i++]=params.routeEndId;
-    paramsArray[i++]=params.routeEnd;
+    if(params.routeEndId !=null && params.routeEndId != ''){
+        paramsArray[i++]=params.routeEnd;
+        if(params.routeStartId>params.routeEndId){
+            paramsArray[i++] = params.routeEndId+''+params.routeStartId;
+        }else{
+            paramsArray[i++] = params.routeStartId+''+params.routeEndId;
+        }
+    }else{
+        paramsArray[i++]=null;
+        paramsArray[i++] =0;
+    }
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.orderDate;
@@ -595,7 +604,7 @@ function getCarDayStat(params,callback) {
 
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
-        " route_id = ? , route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , receive_id = ? , " +
+        " route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , route_id = ? , receive_id = ? , " +
         " entrust_id = ? , order_date = ? , order_date_id = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
@@ -603,12 +612,21 @@ function updateCar(params,callback){
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;
     paramsArray[i++]=params.modelName;
-    paramsArray[i++]=params.routeId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
     paramsArray[i++]=params.routeEndId;
-    paramsArray[i++]=params.routeEnd;
+    if(params.routeEndId !=null && params.routeEndId != ''){
+        paramsArray[i++]=params.routeEnd;
+        if(params.routeStartId>params.routeEndId){
+            paramsArray[i++] = params.routeEndId+''+params.routeStartId;
+        }else{
+            paramsArray[i++] = params.routeStartId+''+params.routeEndId;
+        }
+    }else{
+        paramsArray[i++]=null;
+        paramsArray[i++] =0;
+    }
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.orderDate;
