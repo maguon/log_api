@@ -10675,6 +10675,14 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "routeStartId",
             "in": "query",
             "description": "routeStart id",
@@ -22118,6 +22126,12 @@
         "cityRouteId": {
           "type": "integer"
         },
+        "makeId": {
+          "type": "integer"
+        },
+        "makeName": {
+          "type": "string"
+        },
         "distance": {
           "type": "integer"
         },
@@ -22496,6 +22510,9 @@
         "baseAddrId": {
           "type": "integer"
         },
+        "addrName": {
+          "type": "string"
+        },
         "routeEndId": {
           "type": "integer"
         },
@@ -22504,6 +22521,9 @@
         },
         "receiveId": {
           "type": "integer"
+        },
+        "shortName": {
+          "type": "string"
         },
         "dateId": {
           "type": "integer"
@@ -22525,6 +22545,9 @@
         },
         "transferAddrId": {
           "type": "integer"
+        },
+        "transferAddrName": {
+          "type": "string"
         }
       },
       "xml": {

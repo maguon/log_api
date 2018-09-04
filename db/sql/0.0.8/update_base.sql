@@ -179,18 +179,26 @@ ALTER TABLE `dp_route_load_task`
 ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始城市' AFTER `route_start_id`,
 ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的城市' AFTER `route_end_id`,
 ADD COLUMN `transfer_city`  varchar(50) NULL COMMENT '中转城市' AFTER `transfer_city_id`;
-update dp_route_load_task dprl, city_info c,city_info c1 set dprl.route_start = c.city_name ,dprl.route_end = c1.city_name where dprl.route_start_id = c.id and dprl.route_end_id = c1.id
-update dp_route_load_task dprl, city_info c set dprl.transfer_city = c.city_name where dprl.transfer_city_id = c.id
+update dp_route_load_task dprl, city_info c,city_info c1 set dprl.route_start = c.city_name ,dprl.route_end = c1.city_name where dprl.route_start_id = c.id and dprl.route_end_id = c1.id;
+update dp_route_load_task dprl, city_info c set dprl.transfer_city = c.city_name where dprl.transfer_city_id = c.id;
 -- ----------------------------
 -- 2018-09-03 更新
 -- ----------------------------
 ALTER TABLE `dp_route_task`
 ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始城市' AFTER `route_start_id`,
 ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的城市' AFTER `route_end_id`;
-update dp_route_task dpr, city_info c,city_info c1 set dpr.route_start = c.city_name ,dpr.route_end = c1.city_name where dpr.route_start_id = c.id and dpr.route_end_id = c1.id
+update dp_route_task dpr, city_info c,city_info c1 set dpr.route_start = c.city_name ,dpr.route_end = c1.city_name where dpr.route_start_id = c.id and dpr.route_end_id = c1.id;
 ALTER TABLE `dp_transfer_demand_info`
 ADD COLUMN `route_start`  varchar(50) NULL COMMENT '起始城市' AFTER `route_start_id`,
 ADD COLUMN `transfer_city`  varchar(50) NULL COMMENT '中转城市' AFTER `transfer_city_id`,
 ADD COLUMN `route_end`  varchar(50) NULL COMMENT '目的城市' AFTER `route_end_id`;
-update dp_transfer_demand_info dptd, city_info c,city_info c1 set dptd.route_start = c.city_name ,dptd.route_end = c1.city_name where dptd.route_start_id = c.id and dptd.route_end_id = c1.id
-update dp_transfer_demand_info dptd, city_info c set dptd.transfer_city = c.city_name where dptd.transfer_city_id = c.id
+update dp_transfer_demand_info dptd, city_info c,city_info c1 set dptd.route_start = c.city_name ,dptd.route_end = c1.city_name where dptd.route_start_id = c.id and dptd.route_end_id = c1.id;
+update dp_transfer_demand_info dptd, city_info c set dptd.transfer_city = c.city_name where dptd.transfer_city_id = c.id;
+-- ----------------------------
+-- 2018-09-04 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+ADD COLUMN `make_id`  int(10) NOT NULL COMMENT '品牌ID' AFTER `city_route_id`,
+ADD COLUMN `make_name`  varchar(50) NULL COMMENT '品牌' AFTER `make_id`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`entrust_id`, `city_route_id`, `make_id`);

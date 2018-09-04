@@ -8,9 +8,9 @@ var logger = serverLogger.createLogger('DpRouteLoadTaskDAO.js');
 
 function addDpRouteLoadTask(params,callback){
     var query = " insert into dp_route_load_task (user_id,load_task_type,demand_id,transfer_demand_id, " +
-        " dp_route_task_id,route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,date_id," +
-        " plan_date,plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " dp_route_task_id,route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end,receive_id,short_name,date_id," +
+        " plan_date,plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id,transfer_addr_name) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.loadTaskType;
@@ -20,9 +20,11 @@ function addDpRouteLoadTask(params,callback){
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.addrName;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.planDate;
     paramsArray[i++]=params.planCount;
@@ -30,6 +32,7 @@ function addDpRouteLoadTask(params,callback){
     paramsArray[i++]=params.transferCityId;
     paramsArray[i++]=params.transferCity;
     paramsArray[i++]=params.transferAddrId;
+    paramsArray[i++]=params.transferAddrName;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteLoadTask ');
         return callback(error,rows);
@@ -38,9 +41,9 @@ function addDpRouteLoadTask(params,callback){
 
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,dprl.route_start as city_start_name,dprl.route_end as city_name,dprl.transfer_city as transfer_city_name, " +
-        " u.real_name as task_op_name,u1.real_name as field_op_name,ba.addr_name,r.short_name,r.clean_fee,dpd.pre_count, " +
+        " u.real_name as task_op_name,u1.real_name as field_op_name,r.clean_fee,dpd.pre_count, " +
         " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
-        " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count,ba1.addr_name as transfer_addr_name, " +
+        " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count, " +
         " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
@@ -51,8 +54,6 @@ function getDpRouteLoadTask(params,callback) {
         " left join car_exception_rel cer on dpdtl.car_id = cer.car_id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
-        " left join base_addr ba on dprl.base_addr_id = ba.id " +
-        " left join base_addr ba1 on dprl.transfer_addr_id = ba1.id " +
         " left join receive_info r on dprl.receive_id = r.id " +
         " left join user_info u2 on d.user_id = u2.uid " +
         " left join base_addr ba2 on dpd.base_addr_id = ba2.id " +
@@ -151,11 +152,10 @@ function getDpRouteLoadTask(params,callback) {
 }
 
 function getDpRouteLoadTaskBase(params,callback) {
-    var query = " select dprl.*,ba.addr_name,dpr.task_status " +
+    var query = " select dprl.*,dpr.task_status " +
         " from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
-        " left join base_addr ba on dprl.base_addr_id = ba.id " +
         " where dprl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteLoadTaskId){
