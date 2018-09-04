@@ -44,7 +44,7 @@ function getEntrust(params,callback) {
 }
 
 function getEntrustRoute(params,callback) {
-    var query = " select e.*,count(ecrr.id) as route_count from entrust_info e " +
+    var query = " select e.*,count(ecrr.entrust_id) as route_count from entrust_info e " +
         " left join entrust_city_route_rel ecrr on e.id = ecrr.entrust_id " +
         " where e.id is not null ";
     var paramsArray=[],i=0;
