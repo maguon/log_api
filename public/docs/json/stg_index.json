@@ -10193,7 +10193,7 @@
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -10201,7 +10201,7 @@
             "name": "orderStart",
             "in": "query",
             "description": "order start",
-            "required": false,
+            "required": true,
             "type": "string"
 
           },
@@ -10209,7 +10209,7 @@
             "name": "orderEnd",
             "in": "query",
             "description": "order end",
-            "required": false,
+            "required": true,
             "type": "string"
 
           },
