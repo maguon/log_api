@@ -28,29 +28,29 @@ function getEntrustCityRouteRel(params,callback) {
             " inner join (select * from city_route_info where route_start_id = " + params.routeStartId + " and route_end_id = " + params.routeEndId +
             " union select * from city_route_info where route_end_id = " + params.routeStartId + " and route_start_id = " + params.routeEndId +")  cr on ecrr.city_route_id = cr.id " +
             " left join entrust_info e on ecrr.entrust_id = e.id " +
-            " where ecrr.id is not null ";
+            " where ecrr.entrust_id is not null ";
     }else if(params.routeStartId >0){
         var query = " select ecrr.*,cr.route_start_id,cr.route_start,cr.route_end_id,cr.route_end,e.short_name " +
             " from entrust_city_route_rel ecrr " +
             " inner join (select * from city_route_info where route_start_id = " + params.routeStartId +
             " union select * from city_route_info where route_end_id = " + params.routeStartId +")  cr on ecrr.city_route_id = cr.id " +
             " left join entrust_info e on ecrr.entrust_id = e.id " +
-            " where ecrr.id is not null ";
+            " where ecrr.entrust_id is not null ";
     }else {
         var query = " select ecrr.*,cr.route_start_id,cr.route_start,cr.route_end_id,cr.route_end,e.short_name " +
             " from entrust_city_route_rel ecrr " +
             " left join city_route_info cr on ecrr.city_route_id = cr.id " +
             " left join entrust_info e on ecrr.entrust_id = e.id " +
-            " where ecrr.id is not null ";
+            " where ecrr.entrust_id is not null ";
     }
     var paramsArray=[],i=0;
-    if(params.relId){
-        paramsArray[i++] = params.relId;
-        query = query + " and ecrr.id = ? ";
-    }
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
         query = query + " and e.id = ? ";
+    }
+    if(params.cityRouteId){
+        paramsArray[i++] = params.cityRouteId;
+        query = query + " and ecrr.city_route_id = ? ";
     }
     if(params.makeId){
         paramsArray[i++] = params.makeId;
@@ -63,11 +63,13 @@ function getEntrustCityRouteRel(params,callback) {
 }
 
 function updateEntrustCityRouteRel(params,callback){
-    var query = " update entrust_city_route_rel set distance = ? , fee = ? where id = ? " ;
+    var query = " update entrust_city_route_rel set distance = ? , fee = ? where entrust_id = ? and city_route_id = ? and make_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.fee;
-    paramsArray[i]=params.relId;
+    paramsArray[i++]=params.entrustId;
+    paramsArray[i++]=params.cityRouteId;
+    paramsArray[i]=params.makeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateEntrustCityRouteRel ');
         return callback(error,rows);

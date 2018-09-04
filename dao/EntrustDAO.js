@@ -71,7 +71,7 @@ function getEntrustCar(params,callback) {
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
         " left join city_route_info cr on c.route_id = cr.route_id " +
-        " left join entrust_city_route_rel ecrr on cr.id = ecrr.city_route_id and c.make_id = ecrr.make_id ";
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id ";
         if(params.entrustId){
             query = query + " and ecrr.entrust_id = "+params.entrustId;
         }
