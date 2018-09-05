@@ -225,9 +225,9 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.routeEnd = parkObj.routeEnd;
             params.receiveId = parkObj.receiveId;
             if(parkObj.routeStartId>parkObj.routeEndId){
-                params.routeId = params.routeEndId+''+params.routeStartId;
+                params.routeId = parkObj.routeEndId+''+parkObj.routeStartId;
             }else{
-                params.routeId = params.routeStartId+''+params.routeEndId;
+                params.routeId = parkObj.routeStartId+''+parkObj.routeEndId;
             }
             carDAO.updateCarOrderDate(params,function(error,result){
                 if (error) {
