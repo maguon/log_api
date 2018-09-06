@@ -22426,6 +22426,9 @@
         "baseAddrId": {
           "type": "integer"
         },
+        "addrName": {
+          "type": "string"
+        },
         "routeEndId": {
           "type": "integer"
         },
@@ -22434,6 +22437,9 @@
         },
         "receiveId": {
           "type": "integer"
+        },
+        "shortName": {
+          "type": "string"
         },
         "preCount": {
           "type": "integer"

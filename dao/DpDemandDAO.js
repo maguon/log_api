@@ -7,8 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpDemandDAO.js');
 
 function addDpDemand(params,callback){
-    var query = " insert into dp_demand_info (user_id,route_id,route_start_id,route_start,base_addr_id,route_end_id,route_end, " +
-        " receive_id,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_demand_info (user_id,route_id,route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end, " +
+        " receive_id,short_name,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     if(params.routeStartId>params.routeEndId){
@@ -19,9 +19,11 @@ function addDpDemand(params,callback){
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.addrName;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.preCount;
     paramsArray[i]=params.dateId;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -31,10 +33,9 @@ function addDpDemand(params,callback){
 }
 
 function getDpDemand(params,callback) {
-    var query = " select dpd.*,u.real_name as demand_op_name,ba.addr_name,r.short_name from dp_demand_info dpd " +
+    var query = " select dpd.*,u.real_name as demand_op_name from dp_demand_info dpd " +
         " left join user_info u on dpd.user_id = u.uid " +
-        " left join base_addr ba on dpd.base_addr_id = ba.id " +
-        " left join receive_info r on dpd.receive_id = r.id where dpd.id is not null ";
+        " where dpd.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpDemandId){
         paramsArray[i++] = params.dpDemandId;
@@ -101,10 +102,9 @@ function getDpDemand(params,callback) {
 }
 
 function getDpDemandBase(params,callback) {
-    var query = " select dpd.*,u.real_name as demand_op_name,ba.addr_name,r.short_name from dp_demand_info dpd " +
+    var query = " select dpd.*,u.real_name as demand_op_name from dp_demand_info dpd " +
         " left join user_info u on dpd.user_id = u.uid " +
-        " left join base_addr ba on dpd.base_addr_id = ba.id " +
-        " left join receive_info r on dpd.receive_id = r.id where dpd.demand_status >0 and dpd.id is not null ";
+        " where dpd.demand_status >0 and dpd.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpDemandId){
         paramsArray[i++] = params.dpDemandId;
