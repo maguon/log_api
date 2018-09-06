@@ -8,19 +8,22 @@ var logger = serverLogger.createLogger('DpTransferDemandDAO.js');
 
 function addDpTransferDemand(params,callback){
     var query = " insert into dp_transfer_demand_info (demand_id,route_start_id,route_start, " +
-        " base_addr_id,transfer_city_id,transfer_city,transfer_addr_id,route_end_id,route_end, " +
-        " receive_id,pre_count,transfer_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " base_addr_id,addr_name,transfer_city_id,transfer_city,transfer_addr_id,transfer_addr_name,route_end_id,route_end, " +
+        " receive_id,short_name,pre_count,transfer_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.demandId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.addrName;
     paramsArray[i++]=params.transferCityId;
     paramsArray[i++]=params.transferCity;
     paramsArray[i++]=params.transferAddrId;
+    paramsArray[i++]=params.transferAddrName;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.preCount;
     paramsArray[i++]=params.transferCount;
     paramsArray[i]=params.dateId;
@@ -31,14 +34,9 @@ function addDpTransferDemand(params,callback){
 }
 
 function getDpTransferDemand(params,callback) {
-    var query = " select dptd.*,dptd.route_start as route_start_name,ba.addr_name, " +
-        " dptd.transfer_city as transfer_city_name,ba1.addr_name as transfer_addr_name, " +
-        " dptd.route_end as route_end_name,r.short_name, " +
+    var query = " select dptd.*,dptd.route_start as route_start_name,dptd.transfer_city as transfer_city_name,dptd.route_end as route_end_name, " +
         " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end " +
         " from dp_transfer_demand_info dptd " +
-        " left join base_addr ba on dptd.base_addr_id = ba.id " +
-        " left join base_addr ba1 on dptd.transfer_addr_id = ba1.id " +
-        " left join receive_info r on dptd.receive_id = r.id " +
         " left join dp_demand_info dpd on dptd.demand_id = dpd.id " +
         " left join base_addr ba2 on dpd.base_addr_id = ba2.id " +
         " where dptd.id is not null ";

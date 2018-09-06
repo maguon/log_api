@@ -171,6 +171,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.transferCityId = rows[0].transfer_city_id;
                         parkObj.transferCity = rows[0].transfer_city;
                         parkObj.transferAddrId = rows[0].transfer_addr_id;
+                        parkObj.transferAddrName = rows[0].transfer_addr_name;
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
                         parkObj.cleanFee = rows[0].clean_fee;
@@ -278,12 +279,15 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.routeStartId = parkObj.routeStartId;
             params.routeStart = parkObj.routeStart;
             params.baseAddrId = parkObj.baseAddrId;
+            params.addrName = parkObj.addrName;
             params.routeEndId = parkObj.routeEndId;
             params.routeEnd = parkObj.routeEnd;
             params.transferCityId = parkObj.transferCityId;
             params.transferCity = parkObj.transferCity;
             params.transferAddrId = parkObj.transferAddrId;
+            params.transferAddrName = parkObj.transferAddrName;
             params.receiveId = parkObj.receiveId;
+            params.shortName = parkObj.shortName;
             params.preCount = parkObj.carCount;
             params.transferCount = parkObj.carCount;
             params.dateId = parkObj.dateId;
