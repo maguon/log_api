@@ -24,9 +24,8 @@ function addDpTaskStat(params,callback){
 
 function getDpTaskStat(params,callback) {
     var query = " select sum(dpt.pre_count) as pre_count,sum(dpt.plan_count) as plan_count,sum(dpt.transfer_count) as transfer_count, " +
-        " dpt.route_start_id,c.city_name as city_route_start,dpt.route_end_id,ce.city_name as city_route_end,dpt.date_id from dp_task_stat dpt " +
-        " left join city_info c on dpt.route_start_id = c.id " +
-        " left join city_info ce on dpt.route_end_id = ce.id where dpt.id is not null ";
+        " dpt.route_start_id,dpt.route_start as city_route_start,dpt.route_end_id,dpt.route_end as city_route_end,dpt.date_id from dp_task_stat dpt " +
+        " where dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskStatId){
         paramsArray[i++] = params.dpTaskStatId;
@@ -36,7 +35,7 @@ function getDpTaskStat(params,callback) {
         paramsArray[i++] = params.dpTaskStatStatus;
         query = query + " and dpt.task_stat_status = ? ";
     }
-    query = query + ' group by dpt.route_start_id,c.city_name,dpt.route_end_id,ce.city_name,dpt.date_id ';
+    query = query + ' group by dpt.route_start_id,dpt.route_start,dpt.route_end_id,dpt.route_end,dpt.date_id ';
     query = query + ' order by dpt.date_id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -50,11 +49,8 @@ function getDpTaskStat(params,callback) {
 }
 
 function getDpTaskStatBase(params,callback) {
-    var query = " select dpt.*,c.city_name as city_route_start,ce.city_name as city_route_end,ba.addr_name,r.short_name from dp_task_stat dpt " +
-        " left join receive_info r on dpt.receive_id = r.id " +
-        " left join base_addr ba on dpt.base_addr_id = ba.id " +
-        " left join city_info c on dpt.route_start_id = c.id " +
-        " left join city_info ce on dpt.route_end_id = ce.id where dpt.pre_count > 0 and dpt.id is not null ";
+    var query = " select dpt.*,dpt.route_start as city_route_start,dpt.route_end as city_route_end from dp_task_stat dpt " +
+        " where dpt.pre_count > 0 and dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskStatId){
         paramsArray[i++] = params.dpTaskStatId;
