@@ -10689,22 +10689,6 @@
             "required": false,
             "type": "integer"
 
-          },
-          {
-            "name": "routeStartId",
-            "in": "query",
-            "description": "routeStart id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "routeEndId",
-            "in": "query",
-            "description": "routeEnd id",
-            "required": false,
-            "type": "integer"
-
           }
         ],
         "responses": {
@@ -15091,6 +15075,58 @@
       }
     },
     "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}/loadTaskStatus/{loadTaskStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteLoadTask status",
+        "description": "update dpRouteLoadTask status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTaskId",
+            "in": "path",
+            "description": "dpRouteLoadTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadTaskStatus",
+            "in": "path",
+            "description": "loadTask status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTask id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteLoadTask/{dpRouteLoadTaskId}/loadTaskStatusBack/{loadTaskStatus}": {
       "put": {
         "tags": [
           "dispatch"
