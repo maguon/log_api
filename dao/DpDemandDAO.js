@@ -33,8 +33,9 @@ function addDpDemand(params,callback){
 }
 
 function getDpDemand(params,callback) {
-    var query = " select dpd.*,u.real_name as demand_op_name from dp_demand_info dpd " +
+    var query = " select dpd.*,u.real_name as demand_op_name,r.short_name from dp_demand_info dpd " +
         " left join user_info u on dpd.user_id = u.uid " +
+        " left join receive_info r on dpd.receive_id = r.id" +
         " where dpd.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpDemandId){
@@ -102,8 +103,9 @@ function getDpDemand(params,callback) {
 }
 
 function getDpDemandBase(params,callback) {
-    var query = " select dpd.*,u.real_name as demand_op_name from dp_demand_info dpd " +
+    var query = " select dpd.*,u.real_name as demand_op_name,r.short_name from dp_demand_info dpd " +
         " left join user_info u on dpd.user_id = u.uid " +
+        " left join receive_info r on dpd.receive_id = r.id" +
         " where dpd.demand_status >0 and dpd.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpDemandId){

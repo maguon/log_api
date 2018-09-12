@@ -49,7 +49,9 @@ function getDpTaskStat(params,callback) {
 }
 
 function getDpTaskStatBase(params,callback) {
-    var query = " select dpt.*,dpt.route_start as city_route_start,dpt.route_end as city_route_end from dp_task_stat dpt " +
+    var query = " select dpt.*,dpt.route_start as city_route_start,dpt.route_end as city_route_end,r.short_name " +
+        " from dp_task_stat dpt " +
+        " left join receive_info r on dpt.receive_id = r.id" +
         " where dpt.pre_count > 0 and dpt.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpTaskStatId){
