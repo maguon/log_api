@@ -682,6 +682,7 @@ function createServer() {
     server.get('/api/damageCheckIndemnity',damageCheckIndemnity.queryDamageCheckIndemnity);
     server.get('/api/indemnityStatusCount' ,damageCheckIndemnity.queryIndemnityStatusCount);
     server.get('/api/indemnityMonthStat' ,damageCheckIndemnity.queryIndemnityMonthStat);
+    server.get('/api/damageCheckIndemnity.csv', damageCheckIndemnity.getDamageCheckIndemnityCsv);
     server.post({path:'/api/user/:userId/damageCheckIndemnity',contentType: 'application/json'},damageCheckIndemnity.createDamageCheckIndemnity);
     server.put({path:'/api/user/:userId/damageCheckIndemnity/:indemnityId',contentType: 'application/json'} ,damageCheckIndemnity.updateDamageCheckIndemnity);
     server.put({path:'/api/user/:userId/damageCheckIndemnity/:indemnityId/image',contentType: 'application/json'} ,damageCheckIndemnity.updateDamageCheckIndemnityImage);

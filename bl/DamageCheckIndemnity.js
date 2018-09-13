@@ -180,6 +180,79 @@ function queryIndemnityMonthStat(req,res,next){
     })
 }
 
+function getDamageCheckIndemnityCsv(req,res,next){
+    var csvString = "";
+    var header = "质损编号" + ',' + "打款账号" + ',' + "户名"+ ',' + "开户行" + ','+ "城市" + ','+ "经销商"+ ','+ "计划打款金额" + ','+ "联系人" + ','+ "联系电话"
+        + ','+ "申请时间" + ','+ "申请打款备注" + ','+ "申报人"+ ','+ "实际打款金额" + ','+ "打款说明" + ','+ "打款时间" + ','+ "状态" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    damageCheckIndemnityDAO.getDamageCheckIndemnity(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDamageCheckIndemnity ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.damageId = rows[i].damage_id;
+                parkObj.bankNumber = rows[i].bank_number;
+                parkObj.bankUserName = rows[i].bank_user_name;
+                parkObj.bankName = rows[i].bank_name;
+                parkObj.cityName = rows[i].city_name;
+                parkObj.receiveName = rows[i].receive_name;
+                parkObj.planMoney = rows[i].plan_money;
+                if(rows[i].contacts_name == null){
+                    parkObj.contactsName = "";
+                }else{
+                    parkObj.contactsName = rows[i].contacts_name;
+                }
+                if(rows[i].tel == null){
+                    parkObj.tel = "";
+                }else{
+                    parkObj.tel = rows[i].tel;
+                }
+                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                if(rows[i].apply_explain == null){
+                    parkObj.applyExplain = "";
+                }else{
+                    parkObj.applyExplain = rows[i].apply_explain;
+                }
+                parkObj.applyUserName = rows[i].apply_user_name;
+                if(rows[i].actual_money == null){
+                    parkObj.actualMoney = "";
+                }else{
+                    parkObj.actualMoney = rows[i].actual_money;
+                }
+                if(rows[i].indemnity_explain == null){
+                    parkObj.indemnityExplain = "";
+                }else{
+                    parkObj.indemnityExplain = rows[i].indemnity_explain;
+                }
+                if(rows[i].indemnity_date == null){
+                    parkObj.indemnityDate = "";
+                }else{
+                    parkObj.indemnityDate = new Date(rows[i].indemnity_date).toLocaleDateString();
+                }
+                if(rows[i].indemnity_status == 1){
+                    parkObj.indemnityStatus = "未打款";
+                }else{
+                    parkObj.indemnityStatus = "已打款";
+                }
+                csvString = csvString+parkObj.damageId+","+parkObj.bankNumber+","+parkObj.bankUserName+"," +parkObj.bankName+","+parkObj.cityName+","
+                    +parkObj.receiveName+"," +parkObj.planMoney+"," +parkObj.contactsName+","+parkObj.tel+","+parkObj.createdOn+"," +parkObj.applyExplain+","
+                    +parkObj.applyUserName+","+parkObj.actualMoney+","+parkObj.indemnityExplain+","+parkObj.indemnityDate+","+parkObj.indemnityStatus+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDamageCheckIndemnity : createDamageCheckIndemnity,
@@ -189,5 +262,6 @@ module.exports = {
     updateIndemnity : updateIndemnity,
     updateIndemnityStatus : updateIndemnityStatus,
     queryIndemnityStatusCount : queryIndemnityStatusCount,
-    queryIndemnityMonthStat : queryIndemnityMonthStat
+    queryIndemnityMonthStat : queryIndemnityMonthStat,
+    getDamageCheckIndemnityCsv : getDamageCheckIndemnityCsv
 }

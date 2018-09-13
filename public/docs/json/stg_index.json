@@ -18640,6 +18640,130 @@
         }
       }
     },
+    "/damageCheckIndemnity.csv": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageCheckIndemnity csv",
+        "description": "query damageCheckIndemnityCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "indemnityId",
+            "in": "query",
+            "description": "indemnity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheckId",
+            "in": "query",
+            "description": "damageCheck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityStatus",
+            "in": "query",
+            "description": "indemnity status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "applyUserName",
+            "in": "query",
+            "description": "applyUser name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "planMoneyStart",
+            "in": "query",
+            "description": "planMoney start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "planMoneyEnd",
+            "in": "query",
+            "description": "planMoney end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveName",
+            "in": "query",
+            "description": "receive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyDateStart",
+            "in": "query",
+            "description": "applyDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "applyDateEnd",
+            "in": "query",
+            "description": "applyDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "indemnityDateStart",
+            "in": "query",
+            "description": "indemnityDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "indemnityDateEnd",
+            "in": "query",
+            "description": "indemnityDate end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageCheckIndemnity"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheckIndemnity id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damageCheckIndemnity": {
       "post": {
         "tags": [
