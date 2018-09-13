@@ -22854,6 +22854,12 @@
         "planMoney": {
           "type": "integer"
         },
+        "contactsName": {
+          "type": "string"
+        },
+        "tel": {
+          "type": "string"
+        },
         "applyExplain": {
           "type": "string"
         }

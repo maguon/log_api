@@ -39,3 +39,9 @@ VALUES (new.route_start_id,new.route_start,new.base_addr_id,new.addr_name,new.ro
 ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,task_stat_status=1;
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2018-09-13 更新
+-- ----------------------------
+ALTER TABLE `damage_check_indemnity`
+ADD COLUMN `contacts_name`  varchar(50) NULL COMMENT '联系人' AFTER `plan_money`,
+ADD COLUMN `tel`  varchar(20) NULL COMMENT '联系电话' AFTER `contacts_name`;
