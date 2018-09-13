@@ -59,10 +59,13 @@ function getDpRouteLoadTaskDetail(params,callback) {
 }
 
 function getDpRouteLoadTaskDetailBase(params,callback) {
-    var query = " select dpdtl.*,dprl.route_start_id,dprl.route_end_id,dprl.receive_id " +
+    var query = " select dpdtl.*,dprl.route_start_id,dprl.route_end_id,dprl.receive_id,dprl.load_date,t.truck_num,d.drive_name " +
         " from dp_route_load_task_detail dpdtl " +
         " left join car_info c on dpdtl.car_id = c.id " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
+        " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
         " where dpdtl.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskDetailId){
