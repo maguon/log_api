@@ -510,6 +510,71 @@ function queryRouteTaskDayStat(req,res,next){
     })
 }
 
+function getDpRouteTaskCsv(req,res,next){
+    var csvString = "";
+    var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "司机" + ','+ "货车牌号" + ','+ "计划装车数"+ ','+ "实际装车数" + ','+ "计划执行时间" + ','+ "完成时间"
+        + ','+ "调度人" + ','+ "状态" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskDAO.getDpRouteTask(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDpRouteTaskCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                parkObj.route = rows[i].route_start+'-'+rows[i].route_end;
+                parkObj.distance = rows[i].distance;
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].plan_count == null){
+                    parkObj.planCount = "";
+                }else{
+                    parkObj.planCount = rows[i].plan_count;
+                }
+                if(rows[i].real_count == null){
+                    parkObj.realCount = "";
+                }else{
+                    parkObj.realCount = rows[i].real_count;
+                }
+                parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                if(rows[i].task_end_date == null){
+                    parkObj.taskEndDate = "";
+                }else{
+                    parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
+                }
+                parkObj.routeOpName = rows[i].route_op_name;
+                if(rows[i].task_status == 1){
+                    parkObj.taskStatus = "待接受";
+                }else if(rows[i].task_status == 2){
+                    parkObj.taskStatus = "接受";
+                }else if(rows[i].task_status == 3){
+                    parkObj.taskStatus = "执行";
+                }else if(rows[i].task_status == 4){
+                    parkObj.taskStatus = "在途";
+                }else if(rows[i].task_status == 8){
+                    parkObj.taskStatus = "取消安排";
+                }else if(rows[i].task_status == 9){
+                    parkObj.taskStatus = "已完成";
+                }else{
+                    parkObj.taskStatus = "全部完成";
+                }
+                csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.driveName+","+parkObj.truckNum+","
+                    +parkObj.planCount+"," +parkObj.realCount+"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+"," +parkObj.taskStatus+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -523,5 +588,6 @@ module.exports = {
     removeDpRouteTask : removeDpRouteTask ,
     queryRouteTaskDayStat : queryRouteTaskDayStat ,
     queryRouteTaskWeekStat : queryRouteTaskWeekStat ,
-    queryRouteTaskMonthStat : queryRouteTaskMonthStat
+    queryRouteTaskMonthStat : queryRouteTaskMonthStat,
+    getDpRouteTaskCsv : getDpRouteTaskCsv
 }

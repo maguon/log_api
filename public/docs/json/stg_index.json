@@ -14622,6 +14622,98 @@
         }
       }
     },
+    "/dpRouteTask.csv": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTask csv",
+        "description": "query dpRouteTaskCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask": {
       "post": {
         "tags": [
