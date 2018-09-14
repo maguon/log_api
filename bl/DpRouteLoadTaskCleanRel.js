@@ -125,6 +125,9 @@ function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
     var strDate = moment(myDate).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
     params.cleanDate = myDate;
+    }else{
+        params.actualPrice = 0;
+        params.actualGuardFee = 0;
     }
     dpRouteLoadTaskCleanRelDAO.updateDpRouteLoadTaskCleanRelStatus(params,function(error,result){
         if (error) {
