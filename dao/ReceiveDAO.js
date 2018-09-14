@@ -95,9 +95,10 @@ function updateReceive(params,callback){
 }
 
 function updateReceiveCleanFee(params,callback){
-    var query = " update receive_info set clean_fee = ? where id = ? ";
+    var query = " update receive_info set clean_fee = ? , guard_fee = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.cleanFee;
+    paramsArray[i++]=params.guardFee;
     paramsArray[i]=params.receiveId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateReceiveCleanFee ');

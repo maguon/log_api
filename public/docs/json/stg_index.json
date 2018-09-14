@@ -22339,6 +22339,9 @@
         "cleanFee": {
           "type": "integer"
         },
+        "guardFee": {
+          "type": "integer"
+        },
         "lng": {
           "type": "integer"
         },
