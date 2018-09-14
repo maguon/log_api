@@ -88,10 +88,18 @@ function addCar(params,callback){
 }
 
 function getCarList(params,callback) {
-    var query = " select c.*,ba.addr_name,re.short_name as re_short_name,re.receive_name,en.short_name as en_short_name,en.entrust_name from car_info c " +
+    var query = " select c.*,ba.addr_name,re.short_name as re_short_name,re.receive_name," +
+        " en.short_name as en_short_name,en.entrust_name,d.drive_name,t.truck_num,dprl.load_date " +
+        " from car_info c " +
         " left join receive_info re on c.receive_id = re.id " +
         " left join entrust_info en on c.entrust_id = en.id " +
-        " left join base_addr ba on c.base_addr_id = ba.id where c.id is not null ";
+        " left join base_addr ba on c.base_addr_id = ba.id " +
+        " left join dp_route_load_task_detail dpdtl on c.id = dpdtl.car_id " +
+        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
+        " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
         paramsArray[i++] = params.carId;
