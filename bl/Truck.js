@@ -10,6 +10,7 @@ var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var truckDAO = require('../dao/TruckDAO.js');
 var driveDAO = require('../dao/DriveDAO.js');
+var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -346,11 +347,28 @@ function updateTruckRelBind(req,res,next){
                         return next();
                     }else{
                         parkObj.firstNum = rows[0].truck_num;
+                        parkObj.number = rows[0].number;
                         that();
                     }
                 }else{
                     that();
                 }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.truckNumber = parkObj.number;
+        truckDispatchDAO.updateTruckDispatchNumber(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckDispatchNumber ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateTruckDispatchNumber ' + 'success');
+                }else{
+                    logger.warn(' updateTruckDispatchNumber ' + 'failed');
+                }
+                that();
             }
         })
     }).seq(function(){
@@ -392,6 +410,22 @@ function updateTruckRelUnBind(req,res,next){
                     return next();
 
                 }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.truckNumber = 0;
+        truckDispatchDAO.updateTruckDispatchNumber(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckDispatchNumber ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateTruckDispatchNumber ' + 'success');
+                }else{
+                    logger.warn(' updateTruckDispatchNumber ' + 'failed');
+                }
+                that();
             }
         })
     }).seq(function(){

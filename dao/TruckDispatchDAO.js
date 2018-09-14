@@ -201,10 +201,23 @@ function updateTruckDispatch(params,callback){
     });
 }
 
+function updateTruckDispatchNumber (params,callback){
+    var query = " update truck_dispatch set truck_number = ? where truck_id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckNumber;
+    paramsArray[i]=params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckDispatchNumber ');
+        return callback(error,rows);
+    });
+}
+
+
 module.exports = {
     getTruckDispatch : getTruckDispatch,
     getTruckDispatchLoadTask : getTruckDispatchLoadTask,
     getTruckDispatchCount : getTruckDispatchCount,
     updateTruckDispatchCarCount : updateTruckDispatchCarCount,
-    updateTruckDispatch : updateTruckDispatch
+    updateTruckDispatch : updateTruckDispatch,
+    updateTruckDispatchNumber : updateTruckDispatchNumber
 }
