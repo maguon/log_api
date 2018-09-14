@@ -175,6 +175,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
                         parkObj.cleanFee = rows[0].clean_fee;
+                        parkObj.guardFee = rows[0].guard_fee;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.carExceptionCount = rows[0].car_exception_count;
                         parkObj.truckNum = rows[0].truck_num;
@@ -255,6 +256,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.receiveId = parkObj.receiveId;
             params.singlePrice = parkObj.cleanFee;
             params.totalPrice = parkObj.cleanFee * parkObj.carCount;
+            params.guardFee = parkObj.guardFee;
             params.carCount = parkObj.carCount;
             dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params, function (error, result) {
                 if (error) {
