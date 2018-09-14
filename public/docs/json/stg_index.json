@@ -10822,6 +10822,131 @@
         }
       }
     },
+    "/entrustMakeRel": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query entrustMakeRel list",
+        "description": "query entrustMakeRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrustMakeRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustMakeRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrustMakeRel": {
+      "post": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "user create entrustMakeRel",
+        "description": "user create entrustMakeRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustMakeRel",
+            "in": "body",
+            "description": "entrustMakeRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entrustMakeRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustMakeRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrust/{entrustId}/make/{makeId}": {
+      "delete": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "Deletes a entrustMakeRel",
+        "description": "",
+        "operationId": "deleteEntrustMakeRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/storage": {
       "get": {
         "tags": [
@@ -22420,6 +22545,21 @@
       },
       "xml": {
         "name": "entrustCityRouteRel"
+      }
+    },
+    "entrustMakeRel": {
+      "type": "object",
+      "properties": {
+
+        "entrustId": {
+          "type": "integer"
+        },
+        "makeId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "entrustMakeRel"
       }
     },
     "storage": {

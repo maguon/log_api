@@ -43,6 +43,7 @@ var receiveContacts = require('./bl/ReceiveContacts.js');
 var entrust = require('./bl/Entrust.js');
 var entrustContacts = require('./bl/EntrustContacts.js');
 var entrustCityRouteRel = require('./bl/EntrustCityRouteRel.js');
+var entrustMakeRel = require('./bl/EntrustMakeRel.js');
 var storage = require('./bl/Storage.js');
 var storageArea = require('./bl/StorageArea.js');
 var storageParking = require('./bl/StorageParking.js');
@@ -482,6 +483,13 @@ function createServer() {
     server.get('/api/entrustCityRouteRel',entrustCityRouteRel.queryEntrustCityRouteRel);
     server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel,sysRecord.saveEntrustRecord);
     server.put({path:'/api/user/:userId/entrust/:entrustId/cityRoute/:cityRouteId/make/:makeId',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.saveEntrustRecord);
+
+    /**
+    * EntrustMakeRel Module
+    */
+    server.get('/api/entrustMakeRel',entrustMakeRel.queryEntrustMakeRel);
+    server.post({path:'/api/user/:userId/entrustMakeRel',contentType: 'application/json'},entrustMakeRel.createEntrustMakeRel);
+    server.del('/api/user/:userId/entrust/:entrustId/make/:makeId' , entrustMakeRel.removeEntrustMakeRel);
 
     /**
      * Storage Module
