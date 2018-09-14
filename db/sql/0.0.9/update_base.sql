@@ -45,3 +45,16 @@ DELIMITER ;
 ALTER TABLE `damage_check_indemnity`
 ADD COLUMN `contacts_name`  varchar(50) NULL COMMENT '联系人' AFTER `plan_money`,
 ADD COLUMN `tel`  varchar(20) NULL COMMENT '联系电话' AFTER `contacts_name`;
+-- ----------------------------
+-- 2018-09-14 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `guard_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '门卫费' AFTER `clean_fee`;
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `guard_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '门卫费' AFTER `total_price`;
+-- ----------------------------
+-- 2018-09-14 更新
+-- ----------------------------
+ALTER TABLE `truck_dispatch`
+ADD COLUMN `truck_number`  tinyint(2) NULL DEFAULT 0 COMMENT '板车位数' AFTER `truck_id`;
+update truck_dispatch td inner join(select t.id,t1.number from truck_info t left join truck_info t1 on t.rel_id = t1.id ) t on td.truck_id = t.id set td.truck_number = t.number;
