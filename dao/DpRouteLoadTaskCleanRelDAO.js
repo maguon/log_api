@@ -195,9 +195,10 @@ function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
 }
 
 function updateDpRouteLoadTaskCleanRel(params,callback){
-    var query = " update dp_route_load_task_clean_rel set actual_price = ? where id = ? " ;
+    var query = " update dp_route_load_task_clean_rel set actual_price = ? , actual_guard_fee = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++] = params.actualPrice;
+    paramsArray[i++] = params.actualGuardFee;
     paramsArray[i] = params.loadTaskCleanRelId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadTaskCleanRel ');

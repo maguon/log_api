@@ -52,9 +52,22 @@ ALTER TABLE `receive_info`
 ADD COLUMN `guard_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '门卫费' AFTER `clean_fee`;
 ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `guard_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '门卫费' AFTER `total_price`;
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `actual_guard_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际门卫费' AFTER `guard_fee`;
 -- ----------------------------
 -- 2018-09-14 更新
 -- ----------------------------
 ALTER TABLE `truck_dispatch`
 ADD COLUMN `truck_number`  tinyint(2) NULL DEFAULT 0 COMMENT '板车位数' AFTER `truck_id`;
 update truck_dispatch td inner join(select t.id,t1.number from truck_info t left join truck_info t1 on t.rel_id = t1.id ) t on td.truck_id = t.id set td.truck_number = t.number;
+-- ----------------------------
+-- Table structure for entrust_make_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `entrust_make_rel`;
+CREATE TABLE `entrust_make_rel` (
+  `entrust_id` int(10) NOT NULL COMMENT '委托方ID',
+  `make_id` int(10) NOT NULL COMMENT '品牌ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`entrust_id`,`make_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
