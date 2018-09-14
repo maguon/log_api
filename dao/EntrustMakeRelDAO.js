@@ -18,13 +18,18 @@ function addEntrustMakeRel(params,callback){
 }
 
 function getEntrustMakeRel(params,callback) {
-    var query = " select emr.*,cm.make_name from entrust_make_rel emr " +
+    var query = " select emr.*,e.short_name,cm.make_name from entrust_make_rel emr " +
+        " left join entrust_info e on emr.entrust_id = e.id " +
         " left join car_make cm on emr.make_id = cm.id " +
         " where emr.entrust_id is not null ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
         query = query + " and emr.entrust_id = ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and emr.make_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getEntrustMakeRel ');
