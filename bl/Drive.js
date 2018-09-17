@@ -288,6 +288,58 @@ function updateDriveStatus (req,res,next){
     })
 }
 
+function getDriveSettleCsv(req,res,next){
+    var csvString = "";
+    var header = "司机姓名" + ',' + "所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "商品车台数"+ ','+ "委托方总价" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveDAO.getDriveSettle(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSettle ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else if(rows[i].operate_type == 2){
+                    parkObj.operateType = "外协";
+                }else if(rows[i].operate_type == 3){
+                    parkObj.operateType = "供方";
+                }else{
+                    parkObj.operateType = "承包";
+                }
+                parkObj.companyName = rows[i].company_name;
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].car_count == null){
+                    parkObj.carCount = "";
+                }else{
+                    parkObj.carCount = rows[i].car_count;
+                }
+                if(rows[i].value_total == null){
+                    parkObj.valueTotal = "";
+                }else{
+                    parkObj.valueTotal = rows[i].value_total;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckNum+","+parkObj.carCount+","+parkObj.valueTotal+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDrive : createDrive,
@@ -299,5 +351,6 @@ module.exports = {
     updateDrive : updateDrive,
     updateDriveCompany : updateDriveCompany,
     updateDriveImage : updateDriveImage,
-    updateDriveStatus : updateDriveStatus
+    updateDriveStatus : updateDriveStatus,
+    getDriveSettleCsv : getDriveSettleCsv
 }
