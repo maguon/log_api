@@ -142,6 +142,20 @@ function queryDriveOperateTypeCount(req,res,next){
     })
 }
 
+function queryDriveSettle(req,res,next){
+    var params = req.params ;
+    driveDAO.getDriveSettle(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveSettle ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveSettle ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDrive(req,res,next){
     var params = req.params ;
     driveDAO.updateDrive(params,function(error,result){
@@ -281,6 +295,7 @@ module.exports = {
     queryLicenseCount : queryLicenseCount,
     queryDriveCount : queryDriveCount,
     queryDriveOperateTypeCount : queryDriveOperateTypeCount,
+    queryDriveSettle : queryDriveSettle,
     updateDrive : updateDrive,
     updateDriveCompany : updateDriveCompany,
     updateDriveImage : updateDriveImage,

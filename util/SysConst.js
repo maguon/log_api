@@ -137,6 +137,7 @@ var DAMAGE_STEP_TYPE = {
 
 };
 var UNLOAD_CAR_COUNT = 3;//<=3重载,>=3空载
+var DISTANCE_PRICE = 1.6;//里程单价(过路费=路程*单价)
 
 var ACCIDENT_STATUS  ={ //事故状态
     ready_process : 1,  //待处理
@@ -194,6 +195,7 @@ module.exports = {
     DAMAGE_STATUS : DAMAGE_STATUS ,
     REFUEL_STATUS : REFUEL_STATUS ,
     UNLOAD_CAR_COUNT  : UNLOAD_CAR_COUNT ,
+    DISTANCE_PRICE : DISTANCE_PRICE,
     DAMAGE_TYPE : DAMAGE_TYPE ,
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
