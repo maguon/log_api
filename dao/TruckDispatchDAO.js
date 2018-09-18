@@ -266,6 +266,26 @@ function getTruckDisCount(params,callback) {
     });
 }
 
+function getCityTruckDispatchCount(params,callback) {
+    var query = " select c.id,c.city_name,count( td.truck_id) as truck_id from city_info c " +
+        " left join truck_dispatch td on c.id = td.current_city " +
+        " where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.currentCity){
+        paramsArray[i++] = params.currentCity;
+        query = query + " and td.current_city = ? ";
+    }
+    if(params.truckNumber){
+        paramsArray[i++] = params.truckNumber;
+        query = query + " and td.truck_number = ? ";
+    }
+    query = query + ' group by c.id ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCityTruckDispatchCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruckDispatchCarCount(params,callback){
     if(params.carLoadStatus==2){
         var query = " update truck_dispatch set car_count = car_count - 1 where truck_id = ? " ;
@@ -312,6 +332,7 @@ module.exports = {
     getTruckDispatchLoadTask : getTruckDispatchLoadTask,
     getTruckDispatchCount : getTruckDispatchCount,
     getTruckDisCount : getTruckDisCount,
+    getCityTruckDispatchCount : getCityTruckDispatchCount,
     updateTruckDispatchCarCount : updateTruckDispatchCarCount,
     updateTruckDispatch : updateTruckDispatch,
     updateTruckDispatchNumber : updateTruckDispatchNumber

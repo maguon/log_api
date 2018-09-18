@@ -4380,6 +4380,50 @@
         }
       }
     },
+    "/cityTruckDispatchCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  cityTruckDispatch count",
+        "description": "query cityTruckDispatchCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "currentCity",
+            "in": "query",
+            "description": "current city",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNumber",
+            "in": "query",
+            "description": "truck number",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDispatch id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truck/{truckId}/dispatch": {
       "put": {
         "tags": [

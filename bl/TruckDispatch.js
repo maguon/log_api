@@ -83,6 +83,20 @@ function queryTruckDisCount(req,res,next){
     })
 }
 
+function queryCityTruckDispatchCount(req,res,next){
+    var params = req.params ;
+    truckDispatchDAO.getCityTruckDispatchCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryCityTruckDispatchCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCityTruckDispatchCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function initTruckDispatchCity(req,res,next){
     var params = req.params ;
     params.taskStart = 0;
@@ -106,5 +120,6 @@ module.exports = {
     queryTruckDispatchLoadTask : queryTruckDispatchLoadTask,
     queryTruckDispatchCount : queryTruckDispatchCount,
     queryTruckDisCount : queryTruckDisCount,
+    queryCityTruckDispatchCount : queryCityTruckDispatchCount,
     initTruckDispatchCity : initTruckDispatchCity
 }
