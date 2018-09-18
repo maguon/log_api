@@ -159,10 +159,15 @@ function getTruckDispatchLoadTask(params,callback) {
 }
 
 function getTruckDispatchCount(params,callback) {
-    var query = " select count(case when td.current_city >0 then td.truck_id end) as ready_accept_count, " +
-        " count(case when td.task_start >0 and td.task_end>0 then td.truck_id end) as on_road_count " +
-        " from truck_dispatch td " +
-        " where td.truck_id is not null ";
+    if(params.dispatchFlag==1){
+        var query = " select count(case when td.current_city >0 then td.truck_id end) as ready_accept_count, " +
+            " count(case when td.task_start >0 and td.task_end>0 then td.truck_id end) as on_road_count " +
+            " from truck_dispatch td " +
+            " where td.truck_id is not null ";
+    }else{
+        var query = " select count(td.truck_id) as truck_count from truck_dispatch td where td.truck_id is not null "
+    }
+
     var paramsArray=[],i=0;
     if(params.dispatchFlag){
         paramsArray[i++] = params.dispatchFlag;
