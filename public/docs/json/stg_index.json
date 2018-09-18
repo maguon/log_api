@@ -4019,6 +4019,146 @@
         }
       }
     },
+    "/truckDispatchStop": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckDispatchStop",
+        "description": "query truckDispatchStop",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dispatchFlag",
+            "in": "query",
+            "description": "dispatch flag",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "transferCityId",
+            "in": "query",
+            "description": "transferCity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "transferAddrId",
+            "in": "query",
+            "description": "transferAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "currentCity",
+            "in": "query",
+            "description": "current city",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskStart",
+            "in": "query",
+            "description": "task start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityTaskStart",
+            "in": "query",
+            "description": "cityTask start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskEnd",
+            "in": "query",
+            "description": "task end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDispatch id"
+          }
+        }
+      }
+    },
     "/truckDispatchLoadTask": {
       "get": {
         "tags": [
