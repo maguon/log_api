@@ -278,6 +278,10 @@ function getCityTruckDispatchCount(params,callback) {
         paramsArray[i++] = params.currentCity;
         query = query + " and td.current_city = ? ";
     }
+    if(params.cityTaskStart){
+        query = query + " and concat(td.current_city,td.task_start) like '%"+params.cityTaskStart+"%'";
+
+    }
     if(params.truckNumber){
         paramsArray[i++] = params.truckNumber;
         query = query + " and td.truck_number = ? ";

@@ -4408,6 +4408,14 @@
 
           },
           {
+            "name": "cityTaskStart",
+            "in": "query",
+            "description": "cityTask start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckNumber",
             "in": "query",
             "description": "truck number",
