@@ -267,7 +267,7 @@ function getTruckDisCount(params,callback) {
 }
 
 function getCityTruckDispatchCount(params,callback) {
-    var query = " select count(td.truck_id) as truck_id from truck_dispatch td " +
+    var query = " select count(td.truck_id) as truck_id,sum(td.truck_number) as truck_number from truck_dispatch td " +
         " where td.truck_id is not null ";
     var paramsArray=[],i=0;
     if(params.dispatchFlag){
