@@ -332,8 +332,6 @@ function createServer() {
     server.get('/api/licenseCount' , drive.queryLicenseCount);
     server.get('/api/company/:companyId/driveCount' , drive.queryDriveCount);
     server.get('/api/driveOperateTypeCount' , drive.queryDriveOperateTypeCount);
-    server.get('/api/driveSettle' , drive.queryDriveSettle);
-    server.get('/api/driveSettle.csv' , drive.getDriveSettleCsv);
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/driveCompany',contentType: 'application/json'} ,drive.updateDriveCompany,sysRecord.saveDriverRecord);
@@ -748,6 +746,8 @@ function createServer() {
     server.get('/api/settleHandoverDayCount', settleHandover.querySettleHandoverDayCount);
     server.get('/api/settleHandoverMonthCount', settleHandover.querySettleHandoverMonthCount);
     server.get('/api/settleHandover.csv', settleHandover.getSettleHandoverCsv);
+    server.get('/api/driveSettle' , settleHandover.queryDriveSettle);
+    server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId',contentType: 'application/json'} ,settleHandover.updateSettleHandover);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId/image',contentType: 'application/json'} ,settleHandover.updateHandoveImage);

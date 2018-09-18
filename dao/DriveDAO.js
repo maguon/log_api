@@ -149,62 +149,6 @@ function getDriveOperateTypeCount(params,callback) {
     });
 }
 
-function getDriveSettle(params,callback) {
-    var query = " select d.id,d.drive_name,cp.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
-        " count(dpdtl.id)as car_count,sum(ecrr.fee)as value_total from drive_info d " +
-        " left join company_info cp on d.company_id = cp.id " +
-        " left join truck_info t on d.id = t.drive_id " +
-        " left join dp_route_task dpr on t.id = dpr.truck_id " +
-        " left join dp_route_load_task_detail dpdtl on dpr.id = dpdtl.dp_route_task_id " +
-        " left join car_info c on dpdtl.car_id = c.id " +
-        " left join city_route_info cr on c.route_id = cr.route_id " +
-        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id " +
-        " where d.id is not null";
-    var paramsArray=[],i=0;
-    if(params.orderStart){
-        paramsArray[i++] = params.orderStart;
-        query = query + " and c.order_date >= ? ";
-    }
-    if(params.orderEnd){
-        paramsArray[i++] = params.orderEnd;
-        query = query + " and c.order_date <= ? ";
-    }
-    if(params.driveId){
-        paramsArray[i++] = params.driveId;
-        query = query + " and d.id = ? ";
-    }
-    if(params.driveName){
-        paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
-    }
-    if(params.truckId){
-        paramsArray[i++] = params.truckId;
-        query = query + " and t.id = ? ";
-    }
-    if(params.truckNum){
-        paramsArray[i++] = params.truckNum;
-        query = query + " and t.truck_num = ? ";
-    }
-    if(params.operateType){
-        paramsArray[i++] = params.operateType;
-        query = query + " and cp.operate_type = ? ";
-    }
-    if(params.companyId){
-        paramsArray[i++] = params.companyId;
-        query = query + " and d.company_id = ? ";
-    }
-    query = query + ' group by d.id,t.id ';
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
-    }
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDriveSettle ');
-        return callback(error,rows);
-    });
-}
-
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , license_type = ? , " +
         " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
@@ -308,7 +252,6 @@ module.exports ={
     getLicenseCount : getLicenseCount,
     getDriveCount : getDriveCount,
     getDriveOperateTypeCount : getDriveOperateTypeCount,
-    getDriveSettle : getDriveSettle,
     updateDrive : updateDrive,
     updateDriveCompany : updateDriveCompany,
     updateDriveImage : updateDriveImage,
