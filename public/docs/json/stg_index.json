@@ -4392,6 +4392,14 @@
         ],
         "parameters": [
           {
+            "name": "dispatchFlag",
+            "in": "query",
+            "description": "dispatch flag",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
             "name": "currentCity",
             "in": "query",
             "description": "current city",

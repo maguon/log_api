@@ -267,10 +267,13 @@ function getTruckDisCount(params,callback) {
 }
 
 function getCityTruckDispatchCount(params,callback) {
-    var query = " select c.id,c.city_name,count( td.truck_id) as truck_id from city_info c " +
-        " left join truck_dispatch td on c.id = td.current_city " +
-        " where c.id is not null ";
+    var query = " select count(td.truck_id) as truck_id from truck_dispatch td " +
+        " where td.truck_id is not null ";
     var paramsArray=[],i=0;
+    if(params.dispatchFlag){
+        paramsArray[i++] = params.dispatchFlag;
+        query = query + " and td.dispatch_flag = ? ";
+    }
     if(params.currentCity){
         paramsArray[i++] = params.currentCity;
         query = query + " and td.current_city = ? ";
@@ -279,7 +282,6 @@ function getCityTruckDispatchCount(params,callback) {
         paramsArray[i++] = params.truckNumber;
         query = query + " and td.truck_number = ? ";
     }
-    query = query + ' group by c.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCityTruckDispatchCount ');
         return callback(error,rows);
