@@ -87,6 +87,7 @@ function initTruckDispatchCity(req,res,next){
     var params = req.params ;
     params.taskStart = 0;
     params.taskEnd = 0;
+    params.carCount = 0;
     truckDispatchDAO.updateTruckDispatch(params,function(error,result){
         if (error) {
             logger.error(' initTruckDispatchCity ' + error.message);
