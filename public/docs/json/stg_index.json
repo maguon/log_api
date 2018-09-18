@@ -4351,13 +4351,13 @@
         }
       }
     },
-    "/truckDisCount": {
+    "/truckNumberType": {
       "get": {
         "tags": [
           "truck"
         ],
-        "summary": "query  truckDis count",
-        "description": "query truckDisCount",
+        "summary": "query  truckNumber type",
+        "description": "query truckNumberType",
         "produces": [
           "application/json"
         ],

@@ -69,14 +69,14 @@ function queryTruckDispatchCount(req,res,next){
     })
 }
 
-function queryTruckDisCount(req,res,next){
+function queryTruckNumberType(req,res,next){
     var params = req.params ;
-    truckDispatchDAO.getTruckDisCount(params,function(error,result){
+    truckDispatchDAO.getTruckNumberType(params,function(error,result){
         if (error) {
-            logger.error(' queryTruckDisCount ' + error.message);
+            logger.error(' queryTruckNumberType ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryTruckDisCount ' + 'success');
+            logger.info(' queryTruckNumberType ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -119,7 +119,7 @@ module.exports = {
     queryTruckDispatchStop : queryTruckDispatchStop,
     queryTruckDispatchLoadTask : queryTruckDispatchLoadTask,
     queryTruckDispatchCount : queryTruckDispatchCount,
-    queryTruckDisCount : queryTruckDisCount,
+    queryTruckNumberType : queryTruckNumberType,
     queryCityTruckDispatchCount : queryCityTruckDispatchCount,
     initTruckDispatchCity : initTruckDispatchCity
 }

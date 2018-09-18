@@ -269,7 +269,7 @@ function createServer() {
     server.get('/api/truckDispatchStop' , truckDispatch.queryTruckDispatchStop);
     server.get('/api/truckDispatchLoadTask' , truckDispatch.queryTruckDispatchLoadTask);
     server.get('/api/truckDispatchCount' , truckDispatch.queryTruckDispatchCount);
-    server.get('/api/truckDisCount' , truckDispatch.queryTruckDisCount);
+    server.get('/api/truckNumberType' , truckDispatch.queryTruckNumberType);
     server.get('/api/cityTruckDispatchCount' , truckDispatch.queryCityTruckDispatchCount);
     server.put({path:'/api/user/:userId/truck/:truckId/dispatch',contentType: 'application/json'} , truckDispatch.initTruckDispatchCity);
 

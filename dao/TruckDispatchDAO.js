@@ -255,13 +255,13 @@ function getTruckDispatchCount(params,callback) {
     });
 }
 
-function getTruckDisCount(params,callback) {
+function getTruckNumberType(params,callback) {
     var query = " select td.truck_number from truck_dispatch td " +
         " where td.truck_id is not null and td.truck_number > 0 ";
     var paramsArray=[],i=0;
     query = query + ' group by td.truck_number ';
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getTruckDisCount ');
+        logger.debug(' getTruckNumberType ');
         return callback(error,rows);
     });
 }
@@ -337,7 +337,7 @@ module.exports = {
     getTruckDispatchStop : getTruckDispatchStop,
     getTruckDispatchLoadTask : getTruckDispatchLoadTask,
     getTruckDispatchCount : getTruckDispatchCount,
-    getTruckDisCount : getTruckDisCount,
+    getTruckNumberType : getTruckNumberType,
     getCityTruckDispatchCount : getCityTruckDispatchCount,
     updateTruckDispatchCarCount : updateTruckDispatchCarCount,
     updateTruckDispatch : updateTruckDispatch,
