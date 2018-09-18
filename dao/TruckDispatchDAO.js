@@ -41,6 +41,10 @@ function getTruckDispatch(params,callback) {
         paramsArray[i++] = params.truckNum;
         query = query + " and h.truck_num = ? ";
     }
+    if(params.truckNumber){
+        paramsArray[i++] = params.truckNumber;
+        query = query + " and td.truck_number = ? ";
+    }
     if(params.driveName){
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
@@ -115,6 +119,10 @@ function getTruckDispatchStop(params,callback) {
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
         query = query + " and h.truck_num = ? ";
+    }
+    if(params.truckNumber){
+        paramsArray[i++] = params.truckNumber;
+        query = query + " and td.truck_number = ? ";
     }
     if(params.driveName){
         paramsArray[i++] = params.driveName;

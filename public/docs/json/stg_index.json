@@ -3931,6 +3931,14 @@
 
           },
           {
+            "name": "truckNumber",
+            "in": "query",
+            "description": "truck number",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "driveName",
             "in": "query",
             "description": "drive name",
@@ -4066,6 +4074,14 @@
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNumber",
+            "in": "query",
+            "description": "truck number",
             "required": false,
             "type": "integer"
 
