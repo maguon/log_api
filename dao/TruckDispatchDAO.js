@@ -232,15 +232,10 @@ function getTruckDispatchLoadTask(params,callback) {
 }
 
 function getTruckDispatchCount(params,callback) {
-    if(params.dispatchFlag==1){
-        var query = " select count(case when td.current_city >0 then td.truck_id end) as ready_accept_count, " +
-            " count(case when td.task_start >0 and td.task_end>0 then td.truck_id end) as on_road_count " +
-            " from truck_dispatch td " +
-            " where td.truck_id is not null ";
-    }else{
-        var query = " select count(td.truck_id) as truck_count from truck_dispatch td where td.truck_id is not null "
-    }
-
+    var query = " select count(case when td.current_city >0 then td.truck_id end) as ready_accept_count, " +
+        " count(case when td.task_start >0 and td.task_end>0 then td.truck_id end) as on_road_count " +
+        " from truck_dispatch td " +
+        " where td.truck_id is not null ";
     var paramsArray=[],i=0;
     if(params.dispatchFlag){
         paramsArray[i++] = params.dispatchFlag;
@@ -248,6 +243,17 @@ function getTruckDispatchCount(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckDispatchCount ');
+        return callback(error,rows);
+    });
+}
+
+function getTruckDisCount(params,callback) {
+    var query = " select td.truck_number from truck_dispatch td " +
+        " where td.truck_id is not null and td.truck_number > 0 ";
+    var paramsArray=[],i=0;
+    query = query + ' group by td.truck_number ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckDisCount ');
         return callback(error,rows);
     });
 }
@@ -296,6 +302,7 @@ module.exports = {
     getTruckDispatchStop : getTruckDispatchStop,
     getTruckDispatchLoadTask : getTruckDispatchLoadTask,
     getTruckDispatchCount : getTruckDispatchCount,
+    getTruckDisCount : getTruckDisCount,
     updateTruckDispatchCarCount : updateTruckDispatchCarCount,
     updateTruckDispatch : updateTruckDispatch,
     updateTruckDispatchNumber : updateTruckDispatchNumber

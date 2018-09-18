@@ -59,7 +59,7 @@ ADD COLUMN `actual_guard_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际门�
 -- ----------------------------
 ALTER TABLE `truck_dispatch`
 ADD COLUMN `truck_number`  tinyint(2) NULL DEFAULT 0 COMMENT '板车位数' AFTER `truck_id`;
-update truck_dispatch td inner join(select t.id,t1.number from truck_info t left join truck_info t1 on t.rel_id = t1.id ) t on td.truck_id = t.id set td.truck_number = t.number;
+update truck_dispatch td inner join(select t.id,t1.number from truck_info t left join truck_info t1 on t.rel_id = t1.id ) t on td.truck_id = t.id set td.truck_number = if(isnull(t.number),0,t.number);
 -- ----------------------------
 -- Table structure for entrust_make_rel
 -- ----------------------------
