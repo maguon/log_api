@@ -57,7 +57,11 @@ function getDamageInsureRelCsv(req,res,next){
                 parkObj.damageInsureId = rows[i].damage_insure_id;
                 parkObj.damageInsureDate = new Date(rows[i].damage_insure_date).toLocaleDateString();
                 parkObj.insurePlan = rows[i].insure_plan;
-                parkObj.insureActual = rows[i].insure_actual;
+                if(rows[i].insure_actual==null){
+                    parkObj.insureActual = "";
+                }else{
+                    parkObj.insureActual = rows[i].insure_actual;
+                }
                 parkObj.insureName = rows[i].insure_name;
                 parkObj.insureUserName = rows[i].insure_user_name;
                 parkObj.damageId = rows[i].damage_id;
@@ -75,10 +79,26 @@ function getDamageInsureRelCsv(req,res,next){
                 }else{
                     parkObj.damageType = "F级";
                 }
-                parkObj.underUserName = rows[i].under_user_name;
-                parkObj.driveName = rows[i].drive_name;
-                parkObj.truckNum = rows[i].truck_num;
-                parkObj.damageExplain = rows[i].damage_explain;
+                if(rows[i].under_user_name==null){
+                    parkObj.underUserName = "";
+                }else{
+                    parkObj.underUserName = rows[i].under_user_name;
+                }
+                if(rows[i].drive_name==null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].truck_num==null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].damage_explain==null){
+                    parkObj.damageExplain = "";
+                }else{
+                    parkObj.damageExplain = rows[i].damage_explain;
+                }
                 csvString = csvString+parkObj.damageInsureId+","+parkObj.damageInsureDate+","+parkObj.insurePlan+","
                     +parkObj.insureActual+"," +parkObj.insureName+","+parkObj.insureUserName+","
                     +parkObj.damageId+","+parkObj.vin+parkObj.eShortName+","+parkObj.rShortName+","+parkObj.damageType+","

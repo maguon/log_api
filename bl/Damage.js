@@ -258,11 +258,27 @@ function getDamageCsv(req,res,next){
                 parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
                 parkObj.vin = rows[i].vin;
                 parkObj.makeName = rows[i].make_name;
-                parkObj.damageExplain = rows[i].damage_explain;
+                if(rows[i].damage_explain==null){
+                    parkObj.damageExplain = "";
+                }else{
+                    parkObj.damageExplain = rows[i].damage_explain;
+                }
                 parkObj.declareUserName = rows[i].declare_user_name;
-                parkObj.truckNum = rows[i].truck_num;
-                parkObj.driveName = rows[i].drive_name;
-                parkObj.reShortName = rows[i].re_short_name;
+                if(rows[i].truck_num==null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].drive_name==null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].re_short_name==null){
+                    parkObj.reShortName = "";
+                }else{
+                    parkObj.reShortName = rows[i].re_short_name;
+                }
                 parkObj.enShortName = rows[i].en_short_name;
                 if(rows[i].damage_type == 1){
                     parkObj.damageType = "A级";
@@ -286,7 +302,11 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.damageLinkType = "交通事故";
                 }
-                parkObj.underUserName = rows[i].under_user_name;
+                if(rows[i].under_user_name==null){
+                    parkObj.underUserName = "";
+                }else{
+                    parkObj.underUserName = rows[i].under_user_name;
+                }
                 if(rows[i].damage_status == 1){
                     parkObj.damageStatus = "待处理";
                 }else if(rows[i].damage_status == 2){
