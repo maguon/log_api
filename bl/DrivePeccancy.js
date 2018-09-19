@@ -97,7 +97,11 @@ function getDrivePeccancyCsv(req,res,next){
                 }else{
                     parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
                 }
-                parkObj.settleUserName = rows[i].settle_user_name;
+                if(rows[i].settle_user_name==null){
+                    parkObj.settleUserName = "";
+                }else{
+                    parkObj.settleUserName = rows[i].settle_user_name;
+                }
                 if(rows[i].fine_status == 1){
                     parkObj.fineStatus = "未扣";
                 }else{
