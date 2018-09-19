@@ -83,7 +83,7 @@ function getDamage(params,callback) {
     }
     if(params.underUserName){
         paramsArray[i++] = params.underUserName;
-        query = query + " and u1.real_name = ? ";
+        query = query + " and dc.under_user_name = ? ";
     }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
