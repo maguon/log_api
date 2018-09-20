@@ -67,7 +67,11 @@ function getDamageInsureRelCsv(req,res,next){
                 parkObj.damageId = rows[i].damage_id;
                 parkObj.vin = rows[i].vin;
                 parkObj.eShortName = rows[i].e_short_name;
-                parkObj.rShortName = rows[i].r_short_name;
+                if(rows[i].r_short_name==null){
+                    parkObj.rShortName = "";
+                }else{
+                    parkObj.rShortName = rows[i].r_short_name;
+                }
                 if(rows[i].damage_type == 1){
                     parkObj.damageType = "A级";
                 }else if(rows[i].damage_type == 2){
