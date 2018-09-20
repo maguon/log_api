@@ -179,7 +179,11 @@ function getTruckInsureRelCsv(req,res,next){
                 parkObj.insureUserName = rows[i].insure_user_name;
                 parkObj.startDate = new Date(rows[i].start_date).toLocaleDateString();
                 parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
-                parkObj.insureExplain = rows[i].insure_explain;
+                if(rows[i].insure_explain==null){
+                    parkObj.insureExplain = "";
+                }else{
+                    parkObj.insureExplain = rows[i].insure_explain;
+                }
                 csvString = csvString+parkObj.insureNum+","+parkObj.insureName+","+parkObj.insureType+","
                     +parkObj.insureMoney+"," +parkObj.truckNum+","+parkObj.truckType+","
                     +parkObj.insureUserName+","+parkObj.startDate+","+parkObj.endDate+","+parkObj.insureExplain+ '\r\n';
