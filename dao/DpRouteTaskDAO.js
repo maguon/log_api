@@ -35,13 +35,15 @@ function addDpRouteTask(params,callback){
 function getDpRouteTask(params,callback) {
     var query = " select dpr.*,dpr.route_start as city_route_start,dpr.route_end as city_route_end,u.real_name as route_op_name, " +
         " t.truck_num,tl.id as trail_id,tl.truck_num as trail_num,tl.number as trail_number,d.drive_name,u1.mobile, " +
-        " sum(dprl.plan_count) as plan_count,sum(dprl.real_count) as real_count " +
+        " (select sum(plan_count) from dp_route_load_task where dp_route_task_id=dpr.id )plan_count, " +
+        " (select sum(real_count) from dp_route_load_task where dp_route_task_id=dpr.id )real_count " +
         " from dp_route_task dpr " +
         " left join user_info u on dpr.user_id = u.uid " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join truck_info tl on t.rel_id = tl.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " left join dp_route_load_task_detail dpdtl on dpr.id = dpdtl.dp_route_task_id " +
         " left join user_info u1 on d.user_id = u1.uid " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
@@ -119,6 +121,10 @@ function getDpRouteTask(params,callback) {
     if(params.loadFlag){
         paramsArray[i++] = params.loadFlag;
         query = query + " and dpr.load_flag = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and dpdtl.vin = ? ";
     }
     if(params.loadTaskStatus){
         paramsArray[i++] = params.loadTaskStatus;

@@ -387,6 +387,10 @@ function getDriveCost(params,callback) {
             " where d.id is not null ";
     }
     var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and d.id = ? ";
+    }
     query = query + ' group by d.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
