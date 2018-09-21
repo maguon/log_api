@@ -333,6 +333,64 @@ function getDriveSettleCsv(req,res,next){
     })
 }
 
+function getDriveCostCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "出车款" + ','+ "货车维修费"+ ','+ "违章扣款"+ ','+ "超油扣款" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    settleHandoverDAO.getDriveCost(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveCost ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                if(rows[i].actual_price == null){
+                    parkObj.actualPrice = "";
+                }else{
+                    parkObj.actualPrice = rows[i].actual_price;
+                }
+                if(rows[i].actual_guard_fee == null){
+                    parkObj.actualGuardFee = "";
+                }else{
+                    parkObj.actualGuardFee = rows[i].actual_guard_fee;
+                }
+                if(rows[i].grant_actual_money == null){
+                    parkObj.grantActualMoney = "";
+                }else{
+                    parkObj.grantActualMoney = rows[i].grant_actual_money;
+                }
+                if(rows[i].repair_money == null){
+                    parkObj.repairMoney = "";
+                }else{
+                    parkObj.repairMoney = rows[i].repair_money;
+                }
+                if(rows[i].peccancy_fine_money == null){
+                    parkObj.peccancyFineMoney = "";
+                }else{
+                    parkObj.peccancyFineMoney = rows[i].peccancy_fine_money;
+                }
+                if(rows[i].exceed_oil_money == null){
+                    parkObj.exceedOilMoney = "";
+                }else{
+                    parkObj.exceedOilMoney = rows[i].exceed_oil_money;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.actualPrice+","+parkObj.actualGuardFee+","+parkObj.grantActualMoney
+                    +","+parkObj.repairMoney+","+parkObj.peccancyFineMoney+","+parkObj.exceedOilMoney+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createSettleHandover : createSettleHandover,
@@ -346,5 +404,6 @@ module.exports = {
     updateSettleHandover : updateSettleHandover,
     updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv,
-    getDriveSettleCsv : getDriveSettleCsv
+    getDriveSettleCsv : getDriveSettleCsv,
+    getDriveCostCsv : getDriveCostCsv
 }
