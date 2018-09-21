@@ -11,10 +11,14 @@ var drivePeccancyDAO = require('../dao/DrivePeccancyDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DrivePeccancy.js');
 
 function createDrivePeccancy(req,res,next){
     var params = req.params ;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
     drivePeccancyDAO.addDrivePeccancy(params,function(error,result){
         if (error) {
             logger.error(' createDrivePeccancy ' + error.message);

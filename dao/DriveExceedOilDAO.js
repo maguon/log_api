@@ -7,13 +7,14 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilDAO.js');
 
 function addDriveExceedOil(params,callback){
-    var query = " insert into drive_exceed_oil (dp_route_task_id,exceed_oil_quantity,exceed_oil_money,op_user_id,remark) " +
-        " values ( ? , ? , ? , ? , ? )";
+    var query = " insert into drive_exceed_oil (dp_route_task_id,exceed_oil_quantity,exceed_oil_money,op_user_id,date_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.exceedOilQuantity;
     paramsArray[i++]=params.exceedOilMoney;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveExceedOil ');

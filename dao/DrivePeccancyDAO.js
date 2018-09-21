@@ -7,8 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DrivePeccancyDAO.js');
 
 function addDrivePeccancy(params,callback){
-    var query = " insert into drive_peccancy (drive_id,truck_id,fine_score,fine_money,start_date,end_date,op_user_id,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into drive_peccancy (drive_id,truck_id,fine_score,fine_money,start_date,end_date,op_user_id,date_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
@@ -17,6 +17,7 @@ function addDrivePeccancy(params,callback){
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDrivePeccancy ');

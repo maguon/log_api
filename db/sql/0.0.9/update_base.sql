@@ -71,3 +71,15 @@ CREATE TABLE `entrust_make_rel` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`entrust_id`,`make_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-09-21 更新
+-- ----------------------------
+ALTER TABLE `drive_peccancy`
+ADD COLUMN `date_id`  int(4) NULL COMMENT '违章统计时间' AFTER `op_user_id`;
+update drive_peccancy set date_id = DATE_FORMAT(created_on,'%Y%m%d')
+-- ----------------------------
+-- 2018-09-21 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil`
+ADD COLUMN `date_id`  int(4) NULL COMMENT '超油统计时间' AFTER `op_user_id`;
+update drive_exceed_oil set date_id = DATE_FORMAT(created_on,'%Y%m%d')
