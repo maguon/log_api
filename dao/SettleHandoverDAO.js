@@ -387,12 +387,12 @@ function getDriveCost(params,callback) {
             " where d.id is not null ";
     }
     var paramsArray=[],i=0;
+    query = query + ' group by d.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
         query += " limit ? , ? "
     }
-    query = query + ' group by d.id ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveCost ');
         return callback(error,rows);
