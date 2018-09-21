@@ -168,6 +168,20 @@ function queryDriveSettle(req,res,next){
     })
 }
 
+function queryDriveCost(req,res,next){
+    var params = req.params ;
+    settleHandoverDAO.getDriveCost(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveCost ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveCost ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateSettleHandover(req,res,next){
     var params = req.params ;
     var receivedDate = moment(params.receivedDate).format('YYYYMMDD');
@@ -328,6 +342,7 @@ module.exports = {
     querySettleHandoverDayCount : querySettleHandoverDayCount,
     querySettleHandoverMonthCount : querySettleHandoverMonthCount,
     queryDriveSettle : queryDriveSettle,
+    queryDriveCost : queryDriveCost,
     updateSettleHandover : updateSettleHandover,
     updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv,

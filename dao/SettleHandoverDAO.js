@@ -364,6 +364,31 @@ function getDriveSettle(params,callback) {
     });
 }
 
+function getDriveCost(params,callback) {
+    var query = " select d.id,d.drive_name,dpcr.actual_price,dpcr.actual_guard_fee,dploan.grant_actual_money, " +
+        " trr.repair_money,dp.peccancy_fine_money,deo.exceed_oil_money from drive_info d " +
+        " left join (select drive_id,sum(actual_price)actual_price,sum(actual_guard_fee)actual_guard_fee " +
+        " from dp_route_load_task_clean_rel group by drive_id)dpcr on d.id = dpcr.drive_id " +
+        " left join (select drive_id,sum(case when task_loan_status = 2 then grant_actual_money end) as grant_actual_money " +
+        " from dp_route_task_loan group by drive_id) dploan on d.id = dploan.drive_id " +
+        " left join (select drive_id,sum(repair_money)repair_money from truck_repair_rel group by drive_id) trr on d.id = trr.drive_id " +
+        " left join (select drive_id,sum(fine_money)peccancy_fine_money from drive_peccancy group by drive_id) dp on d.id = dp.drive_id " +
+        " left join (select dp_route_task.drive_id,sum(exceed_oil_money)exceed_oil_money from drive_exceed_oil " +
+        " inner join dp_route_task on drive_exceed_oil.dp_route_task_id = dp_route_task.id group by dp_route_task.drive_id) deo on d.id = deo.drive_id " +
+        " where d.id is not null ";
+    var paramsArray=[],i=0;
+
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveCost ');
+        return callback(error,rows);
+    });
+}
+
 function updateSettleHandover(params,callback){
     var query = " update settle_handover_info set serial_number = ? , received_date = ? , date_id = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -432,6 +457,7 @@ module.exports ={
     getSettleHandoverDayCount : getSettleHandoverDayCount,
     getSettleHandoverMonthCount : getSettleHandoverMonthCount,
     getDriveSettle : getDriveSettle,
+    getDriveCost : getDriveCost,
     updateSettleHandover : updateSettleHandover,
     updateSettleHandoverRoute : updateSettleHandoverRoute,
     updateCarCountPlus : updateCarCountPlus,

@@ -21424,6 +21424,51 @@
         }
       }
     },
+    "/driveCost": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query  driveCost list",
+        "description": "query driveCost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
     "/driveSettle.csv": {
       "get": {
         "tags": [

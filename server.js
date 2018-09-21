@@ -748,6 +748,7 @@ function createServer() {
     server.get('/api/settleHandoverMonthCount', settleHandover.querySettleHandoverMonthCount);
     server.get('/api/settleHandover.csv', settleHandover.getSettleHandoverCsv);
     server.get('/api/driveSettle' , settleHandover.queryDriveSettle);
+    server.get('/api/driveCost' , settleHandover.queryDriveCost);
     server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId',contentType: 'application/json'} ,settleHandover.updateSettleHandover);
