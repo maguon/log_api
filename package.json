@@ -4,6 +4,7 @@
     "dependencies": {
         "assert-plus": "*",
         "bunyan": "*",
+        "csvtojson" : "2.0.8",
         "extend": "*",
         "gm": "1.23.0",
         "log4js": "1.1.1",
