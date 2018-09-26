@@ -62,7 +62,7 @@ function uploadSettleCarFile(req,res,next){
     var params = req.params;
     var successedInsert = 0;
     var successedUpdate = 0;
-    var csvFileName='upload/upload.tmp';
+    var csvFileName='./upload/upload.tmp';
     var file = req.files.file;
     var read = fs.createReadStream(file.path);
     var write = fs.createWriteStream(csvFileName);
