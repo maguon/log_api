@@ -6,6 +6,7 @@ var util = require('util');
 
 var assert = require('assert-plus');
 var restify = require('restify');
+var corsMiddleware = require('restify-cors-middleware')
 
 var sysConfig = require('./config/SystemConfig.js');
 var serverLogger = require('./util/ServerLogger.js');
@@ -114,32 +115,36 @@ function createServer() {
     //server.use(restify.requestLogger());
 
     // Allow 5 requests/second by IP, and burst to 10
-    server.use(restify.throttle({
+    server.use(restify.plugins.throttle({
         burst: 100,
         rate: 50,
         ip: true
     }));
 
-    restify.CORS.ALLOW_HEADERS.push('auth-token');
-    restify.CORS.ALLOW_HEADERS.push('user-name');
-    restify.CORS.ALLOW_HEADERS.push('user-type');
-    restify.CORS.ALLOW_HEADERS.push('user-id');
-    restify.CORS.ALLOW_HEADERS.push('Access-Control-Allow-Origin');
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","GET");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","POST");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","PUT");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","DELETE");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Headers","x-requested-with,content-type");
-    server.use(restify.CORS());
+    var corsAllowHeaders = [];
+    corsAllowHeaders.push('auth-token');
+    corsAllowHeaders.push('user-name');
+    corsAllowHeaders.push('user-type');
+    corsAllowHeaders.push('user-id');
+    corsAllowHeaders.push('Access-Control-Allow-Origin');
+    corsAllowHeaders.push("GET");
+    corsAllowHeaders.push("POST");
+    corsAllowHeaders.push("PUT");
+    corsAllowHeaders.push("DELETE");
+    corsAllowHeaders.push("x-requested-with,content-type");
+    var cors = corsMiddleware({
+        allowHeaders: corsAllowHeaders,
+    })
+    server.use(cors.actual);
 
     // Use the common stuff you probably want
     //hard code the upload folder for now
-    server.use(restify.bodyParser({uploadDir:__dirname+'/../uploads/'}));
-    server.use(restify.acceptParser(server.acceptable));
-    server.use(restify.dateParser());
-    server.use(restify.authorizationParser());
-    server.use(restify.queryParser());
-    server.use(restify.gzipResponse());
+    server.use(restify.plugins.bodyParser({uploadDir:__dirname+'/../uploads/'}));
+    server.use(restify.plugins.acceptParser(server.acceptable));
+    server.use(restify.plugins.dateParser());
+    server.use(restify.plugins.authorizationParser());
+    server.use(restify.plugins.queryParser());
+    server.use(restify.plugins.gzipResponse());
     server.use(oauth.transferToken());
 
 
@@ -159,16 +164,16 @@ function createServer() {
     // static files: /, /index.html, /images...
     //var STATIS_FILE_RE = /\/?\.css|\/?\.js|\/?\.png|\/?\.jpg|\/?\.gif|\/?\.jpeg|\/?\.less|\/?\.eot|\/?\.svg|\/?\.ttf|\/?\.otf|\/?\.woff|\/?\.pdf|\/?\.ico|\/?\.json|\/?\.wav|\/?\.mp3/;
     var STATIS_FILE_RE = /\.(css|js|jpe?g|png|gif|less|eot|svg|bmp|tiff|ttf|otf|woff|pdf|ico|json|wav|ogg|mp3?|xml|woff2|map)$/i;
-    server.get(STATIS_FILE_RE, restify.serveStatic({ directory: './public/docs', default: 'index.html', maxAge: 0 }));
+    server.get(STATIS_FILE_RE, restify.plugins.serveStatic({ directory: './public/docs', default: 'index.html', maxAge: 0 }));
 //    server.get(/^\/((.*)(\.)(.+))*$/, restify.serveStatic({ directory: './TruMenuWeb', default: "index.html" }));
 
 
 
-    server.get(/\.html$/i,restify.serveStatic({
+    server.get(/\.html$/i,restify.plugins.serveStatic({
         directory: './public/docs',
         maxAge: 0}));
     //For 'abc.html?name=zzz'
-    server.get(/\.html\?/i,restify.serveStatic({
+    server.get(/\.html\?/i,restify.plugins.serveStatic({
         directory: './public/docs',
         maxAge: 0}));
 

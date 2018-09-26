@@ -57,7 +57,7 @@ function usage(msg) {
 
 
     server.listen((opt.port?opt.port:9001), function onListening() {
-        server.get('/',restify.serveStatic({
+        server.get('/',restify.plugins.serveStatic({
             directory: './public/docs',
             default: 'index.html',
             maxAge: 0
