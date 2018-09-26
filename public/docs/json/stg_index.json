@@ -21924,6 +21924,109 @@
         }
       }
     },
+    "/settleCar": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleCar list",
+        "description": "query settleCar",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "settleCarId",
+            "in": "query",
+            "description": "settleCar id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleCar"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleCar id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/settleCarFile": {
+      "post": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "user upload settleCarFile ",
+        "description": "user upload settleCarFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleCar id"
+          }
+        }
+      }
+    },
     "/user/{userId}/settleCar": {
       "post": {
         "tags": [
@@ -21965,6 +22068,60 @@
           },
           "400": {
             "description": "Invalid token value or invalid settleCar id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/settleCar/{settleCarId}": {
+      "put": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "update settleCar info",
+        "description": "update settleCar info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleCarId",
+            "in": "path",
+            "description": "settleCar id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleCar",
+            "in": "body",
+            "description": "settleCar info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleCar"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
           }
         }
       }

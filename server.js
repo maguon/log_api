@@ -120,22 +120,6 @@ function createServer() {
         ip: true
     }));
 
-    /*var corsAllowHeaders = [];
-    corsAllowHeaders.push('auth-token');
-    corsAllowHeaders.push('user-name');
-    corsAllowHeaders.push('user-type');
-    corsAllowHeaders.push('user-id');
-    corsAllowHeaders.push('Access-Control-Allow-Origin');
-    corsAllowHeaders.push("GET");
-    corsAllowHeaders.push("POST");
-    corsAllowHeaders.push("PUT");
-    corsAllowHeaders.push("DELETE");
-    corsAllowHeaders.push("x-requested-with,content-type");
-    var cors = corsMiddleware({
-        allowHeaders: corsAllowHeaders,
-    })
-    server.use(cors.actual);*/
-
     restify.CORS.ALLOW_HEADERS.push('auth-token');
     restify.CORS.ALLOW_HEADERS.push('user-name');
     restify.CORS.ALLOW_HEADERS.push('user-type');
@@ -782,7 +766,10 @@ function createServer() {
     /**
      * SettleCar Module
      */
+    server.get('/api/settleCar', settleCar.querySettleCar);
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);
+    server.post({path:'/api/user/:userId/settleCarFile',contentType: 'multipart/form-data'},settleCar.uploadSettleCarFile);
+    server.put({path:'/api/user/:userId/settleCar/:settleCarId',contentType: 'application/json'} ,settleCar.updateSettleCar);
 
     /**
      * MsgPush Module
