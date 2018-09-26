@@ -6,7 +6,6 @@ var util = require('util');
 
 var assert = require('assert-plus');
 var restify = require('restify');
-var corsMiddleware = require('restify-cors-middleware')
 
 var sysConfig = require('./config/SystemConfig.js');
 var serverLogger = require('./util/ServerLogger.js');
@@ -121,7 +120,7 @@ function createServer() {
         ip: true
     }));
 
-    var corsAllowHeaders = [];
+    /*var corsAllowHeaders = [];
     corsAllowHeaders.push('auth-token');
     corsAllowHeaders.push('user-name');
     corsAllowHeaders.push('user-type');
@@ -135,8 +134,20 @@ function createServer() {
     var cors = corsMiddleware({
         allowHeaders: corsAllowHeaders,
     })
-    server.use(cors.actual);
+    server.use(cors.actual);*/
 
+    restify.CORS.ALLOW_HEADERS.push('auth-token');
+    restify.CORS.ALLOW_HEADERS.push('user-name');
+    restify.CORS.ALLOW_HEADERS.push('user-type');
+    restify.CORS.ALLOW_HEADERS.push('user-id');
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Origin");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Credentials");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","GET");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","POST");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","PUT");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","DELETE");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Headers","accept,api-version, content-length, content-md5,x-requested-with,content-type, date, request-id, response-time");
+    server.use(restify.CORS());
     // Use the common stuff you probably want
     //hard code the upload folder for now
     server.use(restify.plugins.bodyParser({uploadDir:__dirname+'/../uploads/'}));
