@@ -107,7 +107,7 @@ function uploadSettleCarFile(req,res,next){
             })
 
         }).seq(function(){
-            //fs.unlink(file.path, function() {});
+            fs.unlink(file.path, function() {});
             failedCase=objArray.length-successedInsert;
             logger.info(' uploadSettleCarFile ' + 'success');
             resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
