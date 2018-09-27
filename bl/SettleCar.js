@@ -80,6 +80,7 @@ function uploadSettleCarFile(req,res,next){
                 routeStartId : objArray[i].routeStartId,
                 routeEndId : objArray[i].routeEndId,
                 price : objArray[i].price,
+                userId : params.userId,
                 row : i+1,
             }
             settleCarDAO.addSettleCar(subParams,function(err,result){
