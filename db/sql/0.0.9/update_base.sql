@@ -83,3 +83,21 @@ update drive_peccancy set date_id = DATE_FORMAT(created_on,'%Y%m%d')
 ALTER TABLE `drive_exceed_oil`
 ADD COLUMN `date_id`  int(4) NULL COMMENT '超油统计时间' AFTER `op_user_id`;
 update drive_exceed_oil set date_id = DATE_FORMAT(created_on,'%Y%m%d')
+-- ----------------------------
+-- Table structure for settle_car
+-- ----------------------------
+DROP TABLE IF EXISTS `settle_car`;
+CREATE TABLE `settle_car` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vin` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品车VIN码',
+  `entrust_id` int(10) DEFAULT '0' COMMENT '委托方ID',
+  `route_start_id` int(10) DEFAULT '0' COMMENT '起始地ID',
+  `route_end_id` int(10) DEFAULT '0' COMMENT '目的地ID',
+  `price` decimal(10,2) DEFAULT '0.00' COMMENT '价格',
+  `user_id` int(10) DEFAULT '0' COMMENT '用户ID',
+  `upload_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上传ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vin` (`vin`,`entrust_id`,`route_start_id`,`route_end_id`) USING BTREE COMMENT '唯一VIN'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
