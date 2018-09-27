@@ -84,8 +84,14 @@ function uploadSettleCarFile(req,res,next){
             }
             settleCarDAO.addSettleCar(subParams,function(err,result){
                 if (err) {
-                    logger.error(' createSettleCar ' + err.message);
-                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    if(err.message.indexOf("Duplicate") > 0) {
+                        failedCase=objArray.length-successedInsert;
+                        resUtil.resetFailedRes(res, "数据已存在，上传失败 本次成功上传"+successedInsert+"条 失败"+failedCase+"条");
+                        return next();
+                    } else{
+                        logger.error(' createSettleCar ' + err.message);
+                        throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    }
                 } else {
                     if(result&&result.insertId>0){
                         successedInsert = successedInsert+result.affectedRows;
@@ -97,8 +103,9 @@ function uploadSettleCarFile(req,res,next){
                 }
             })
         }).seq(function(){
+            failedCase=objArray.length-successedInsert;
             logger.info(' uploadSettleCarFile ' + 'success');
-            resUtil.resetQueryRes(res, {successedInsert:successedInsert},null);
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
             return next();
         })
     })
