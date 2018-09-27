@@ -21984,6 +21984,14 @@
 
           },
           {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "userId",
             "in": "query",
             "description": "user id",

@@ -40,10 +40,12 @@ function addUploadSettleCar(params,callback){
 }
 
 function getSettleCar(params,callback) {
-    var query = " select sc.*,e.short_name,c.route_start,c.route_end from settle_car sc " +
+    var query = " select sc.*,e.short_name as e_short_name,c.route_start,c.route_end,c.receive_id,r.short_name as r_short_name " +
+        " from settle_car sc " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
         " left join entrust_info e on c.entrust_id = e.id " +
+        " left join receive_info r on c.receive_id = r.id " +
         " where sc.id is not null ";
     var paramsArray=[],i=0;
     if(params.settleCarId){
@@ -68,6 +70,10 @@ function getSettleCar(params,callback) {
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
         query = query + " and sc.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
     }
     if(params.userId){
         paramsArray[i++] = params.userId;
