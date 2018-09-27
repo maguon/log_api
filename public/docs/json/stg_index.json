@@ -22028,6 +22028,14 @@
 
           },
           {
+            "name": "uploadId",
+            "in": "path",
+            "description": "upload id",
+            "required": true,
+            "type": "string"
+
+          },
+          {
             "name": "file",
             "in": "formData",
             "description": "file to upload",

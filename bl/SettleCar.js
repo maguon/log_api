@@ -63,14 +63,14 @@ function uploadSettleCarFile(req,res,next){
     var successedInsert = 0;
     var failedCase = 0;
     var file = req.files.file;
-    var target_path = './upload/' + file.name;
-    fs.rename(file.path, target_path, function(err) {
+    //var target_path = './upload/' + file.name;
+/*    fs.rename(file.path, target_path, function(err) {
         if (err) throw err;
         fs.unlink(file.path, function() {
             if (err) throw err;
         });
-    });
-    csv().fromFile(target_path).then(function(objArray) {
+    });*/
+    csv().fromFile(file.path).then(function(objArray) {
         console.log(objArray.length);
         Seq(objArray).seqEach(function(rowObj,i){
             var that = this;
