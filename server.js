@@ -767,6 +767,7 @@ function createServer() {
      * SettleCar Module
      */
     server.get('/api/settleCar', settleCar.querySettleCar);
+    server.get('/api/notSettleCar', settleCar.queryNotSettleCar);
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);
     server.post({path:'/api/user/:userId/settleCarFile',contentType: 'multipart/form-data'},settleCar.uploadSettleCarFile);
     server.put({path:'/api/user/:userId/settleCar/:settleCarId',contentType: 'application/json'} ,settleCar.updateSettleCar);

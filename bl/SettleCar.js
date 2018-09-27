@@ -44,6 +44,20 @@ function querySettleCar(req,res,next){
     })
 }
 
+function queryNotSettleCar(req,res,next){
+    var params = req.params ;
+    settleCarDAO.getNotSettleCar(params,function(error,result){
+        if (error) {
+            logger.error(' queryNotSettleCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryNotSettleCar ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateSettleCar(req,res,next){
     var params = req.params ;
     settleCarDAO.updateSettleCar(params,function(error,result){
@@ -63,16 +77,7 @@ function uploadSettleCarFile(req,res,next){
     var successedInsert = 0;
     var failedCase = 0;
     var file = req.files.file;
-    console.log(file.path);
-    //var target_path = './upload/' + file.name;
-/*    fs.rename(file.path, target_path, function(err) {
-        if (err) throw err;
-        fs.unlink(file.path, function() {
-            if (err) throw err;
-        });
-    });*/
     csv().fromFile(file.path).then(function(objArray) {
-        console.log(objArray.length);
         Seq(objArray).seqEach(function(rowObj,i){
             var that = this;
             var subParams ={
@@ -114,13 +119,13 @@ function uploadSettleCarFile(req,res,next){
             return next();
         })
     })
-
 }
 
 
 module.exports = {
     createSettleCar : createSettleCar,
     querySettleCar : querySettleCar,
+    queryNotSettleCar : queryNotSettleCar,
     updateSettleCar : updateSettleCar,
     uploadSettleCarFile : uploadSettleCarFile
 }
