@@ -21952,6 +21952,30 @@
 
           },
           {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

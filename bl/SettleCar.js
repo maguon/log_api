@@ -61,19 +61,17 @@ function updateSettleCar(req,res,next){
 function uploadSettleCarFile(req,res,next){
     var params = req.params;
     var successedInsert = 0;
-    var successedUpdate = 0;
-    var csvFileName='./upload/upload.tmp';
+    var failedCase = 0;
     var file = req.files.file;
-    var read = fs.createReadStream(file.path);
-    var write = fs.createWriteStream(csvFileName);
-    read.pipe(write);
-    read.on("end_parsed", function () {
-        fs.unlink(file.path, function (err) {
-
-        })
+    var target_path = './upload/' + file.name;
+    fs.rename(file.path, target_path, function(err) {
+        if (err) throw err;
+        fs.unlink(file.path, function() {
+            if (err) throw err;
+        });
     });
-    csv().fromFile(csvFileName).then(function(objArray) {
-        console.log(objArray);
+    csv().fromFile(target_path).then(function(objArray) {
+        console.log(objArray.length);
         Seq(objArray).seqEach(function(rowObj,i){
             var that = this;
             var subParams ={
@@ -90,6 +88,7 @@ function uploadSettleCarFile(req,res,next){
                     throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
                     if(result&&result.insertId>0){
+                        successedInsert = successedInsert+result.affectedRows;
                         logger.info(' createSettleCar ' + 'success');
                     }else{
                         logger.warn(' createSettleCar ' + 'failed');
@@ -97,11 +96,13 @@ function uploadSettleCarFile(req,res,next){
                     that(null,i);
                 }
             })
+        }).seq(function(){
+            logger.info(' uploadSettleCarFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert},null);
+            return next();
         })
-        logger.info(' uploadSettleCarFile ' + 'success');
-        resUtil.resetQueryRes(res, objArray);
-        return next();
     })
+
 }
 
 
