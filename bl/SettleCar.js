@@ -63,6 +63,7 @@ function uploadSettleCarFile(req,res,next){
     var successedInsert = 0;
     var failedCase = 0;
     var file = req.files.file;
+    console.log(file.path);
     //var target_path = './upload/' + file.name;
 /*    fs.rename(file.path, target_path, function(err) {
         if (err) throw err;
@@ -81,29 +82,32 @@ function uploadSettleCarFile(req,res,next){
                 routeEndId : objArray[i].routeEndId,
                 price : objArray[i].price,
                 userId : params.userId,
+                uploadId : params.uploadId,
                 row : i+1,
             }
-            settleCarDAO.addSettleCar(subParams,function(err,result){
+            settleCarDAO.addUploadSettleCar(subParams,function(err,result){
                 if (err) {
                     if(err.message.indexOf("Duplicate") > 0) {
                         failedCase=objArray.length-successedInsert;
                         resUtil.resetFailedRes(res, "数据已存在，上传失败 本次成功上传"+successedInsert+"条 失败"+failedCase+"条");
                         return next();
                     } else{
-                        logger.error(' createSettleCar ' + err.message);
+                        logger.error(' createUploadSettleCar ' + err.message);
                         throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     }
                 } else {
                     if(result&&result.insertId>0){
                         successedInsert = successedInsert+result.affectedRows;
-                        logger.info(' createSettleCar ' + 'success');
+                        logger.info(' createUploadSettleCar ' + 'success');
                     }else{
-                        logger.warn(' createSettleCar ' + 'failed');
+                        logger.warn(' createUploadSettleCar ' + 'failed');
                     }
                     that(null,i);
                 }
             })
+
         }).seq(function(){
+            //fs.unlink(file.path, function() {});
             failedCase=objArray.length-successedInsert;
             logger.info(' uploadSettleCarFile ' + 'success');
             resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);

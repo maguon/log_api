@@ -22,6 +22,23 @@ function addSettleCar(params,callback){
     });
 }
 
+function addUploadSettleCar(params,callback){
+    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,price,user_id,upload_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? )";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.vin;
+    paramsArray[i++]=params.entrustId;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.price;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.uploadId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addUploadSettleCar ');
+        return callback(error,rows);
+    });
+}
+
 function getSettleCar(params,callback) {
     var query = " select sc.*,e.short_name,c.route_start,c.route_end from settle_car sc " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
@@ -78,6 +95,7 @@ function updateSettleCar(params,callback){
 
 module.exports ={
     addSettleCar : addSettleCar,
+    addUploadSettleCar : addUploadSettleCar,
     getSettleCar : getSettleCar,
     updateSettleCar : updateSettleCar
 }

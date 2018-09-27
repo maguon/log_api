@@ -22029,7 +22029,7 @@
           },
           {
             "name": "uploadId",
-            "in": "path",
+            "in": "query",
             "description": "upload id",
             "required": true,
             "type": "string"
