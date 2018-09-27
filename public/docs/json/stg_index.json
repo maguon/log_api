@@ -21952,6 +21952,14 @@
 
           },
           {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",
@@ -21973,6 +21981,22 @@
             "description": "routeEnd id",
             "required": false,
             "type": "integer"
+
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": false,
+            "type": "string"
 
           },
           {

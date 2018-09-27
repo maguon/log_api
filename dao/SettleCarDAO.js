@@ -54,6 +54,9 @@ function getSettleCar(params,callback) {
         paramsArray[i++] = params.vin;
         query = query + " and sc.vin = ? ";
     }
+    if(params.vinCode){
+        query = query + " and sc.vin like '%"+params.vinCode+"%'";
+    }
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
         query = query + " and sc.entrust_id = ? ";
@@ -65,6 +68,14 @@ function getSettleCar(params,callback) {
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
         query = query + " and sc.route_end_id = ? ";
+    }
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and sc.user_id = ? ";
+    }
+    if(params.uploadId){
+        paramsArray[i++] = params.uploadId;
+        query = query + " and sc.upload_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
