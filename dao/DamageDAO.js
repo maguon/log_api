@@ -26,7 +26,7 @@ function addDamage(params,callback){
 
 function getDamage(params,callback) {
     var query = " select da.*,u.real_name as declare_user_name,u.type,u.mobile,c.vin,c.make_id,c.make_name,c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name, " +
-        " dc.under_user_id,dc.under_user_name,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name, " +
+        " dc.under_user_id,dc.under_user_name,u2.type as under_user_type,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name, " +
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id, " +
         " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date " +
         " from damage_info da " +
@@ -35,6 +35,7 @@ function getDamage(params,callback) {
         " left join receive_info r on c.receive_id = r.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join damage_check dc on da.id = dc.damage_id " +
+        " left join user_info u2 on dc.under_user_id = u2.uid " +
         " left join user_info u3 on dc.op_user_id = u3.uid " +
         " where da.id is not null ";
     var paramsArray=[],i=0;
@@ -119,15 +120,17 @@ function getDamage(params,callback) {
 
 function getDamageBase(params,callback) {
     var query = " select d.*,c.vin,c.make_name,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name," +
-        "dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_user_name,dc.under_cost," +
+        "dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_user_name,u2.type as under_user_type,dc.under_cost," +
         "dc.company_cost,rs.repair_station_name,e.short_name as e_short_name,r.short_name as r_short_name from damage_info d " +
         " left join damage_insure_rel dir on d.id = dir.damage_id " +
         " left join damage_insure di on dir.damage_id = di.id " +
         " left join damage_check dc on d.id = dc.damage_id " +
+        " left join user_info u2 on dc.under_user_id = u2.uid " +
         " left join car_info c on d.car_id = c.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join receive_info r on c.receive_id = r.id " +
-        " left join repair_station_info rs on dc.repair_id = rs.id where d.id is not null ";
+        " left join repair_station_info rs on dc.repair_id = rs.id " +
+        " where d.id is not null ";
     var paramsArray=[],i=0;
     if(params.damageId){
         paramsArray[i++] = params.damageId;

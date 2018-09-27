@@ -36,9 +36,10 @@ function addDamageCheck(params,callback){
 }
 
 function getDamageCheck(params,callback) {
-    var query = " select dc.*,rs.repair_station_name,u3.real_name as op_user_name, " +
+    var query = " select dc.*,rs.repair_station_name,u2.type as under_user_type,u3.real_name as op_user_name, " +
         " c.route_end_id,c.route_end,c.receive_id,r.short_name as re_short_name from damage_check dc " +
         " left join damage_info da on dc.damage_id = da.id " +
+        " left join user_info u2 on dc.under_user_id = u2.uid " +
         " left join user_info u3 on dc.op_user_id = u3.uid " +
         " left join repair_station_info rs on dc.repair_id = rs.id " +
         " left join car_info c on da.car_id = c.id " +
