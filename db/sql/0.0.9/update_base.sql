@@ -94,7 +94,6 @@ CREATE TABLE `settle_car` (
   `route_start_id` int(10) NOT NULL DEFAULT '0' COMMENT '起始地ID',
   `route_end_id` int(10) NOT NULL DEFAULT '0' COMMENT '目的地ID',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
-  `date_id` int(4) DEFAULT NULL COMMENT '统计时间',
   `user_id` int(10) DEFAULT '0' COMMENT '用户ID',
   `upload_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上传ID',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

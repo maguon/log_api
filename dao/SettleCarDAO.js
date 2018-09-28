@@ -7,15 +7,14 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SettleCarDAO.js');
 
 function addSettleCar(params,callback){
-    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,price,date_id,user_id) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,price,user_id) " +
+        " values ( ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.price;
-    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addSettleCar ');
@@ -24,15 +23,14 @@ function addSettleCar(params,callback){
 }
 
 function addUploadSettleCar(params,callback){
-    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,price,date_id,user_id,upload_id) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,price,user_id,upload_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.price;
-    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.uploadId;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -42,12 +40,13 @@ function addUploadSettleCar(params,callback){
 }
 
 function getSettleCar(params,callback) {
-    var query = " select sc.*,e.short_name as e_short_name,c.route_start,c.route_end,c.receive_id,r.short_name as r_short_name " +
+    var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date " +
         " from settle_car sc " +
+        " left join entrust_info e on sc.entrust_id = e.id " +
+        " left join city_info c1 on sc.route_start_id = c1.id " +
+        " left join city_info c2 on sc.route_end_id = c2.id " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
-        " left join entrust_info e on c.entrust_id = e.id " +
-        " left join receive_info r on c.receive_id = r.id " +
         " where sc.id is not null ";
     var paramsArray=[],i=0;
     if(params.settleCarId){
@@ -73,9 +72,13 @@ function getSettleCar(params,callback) {
         paramsArray[i++] = params.routeEndId;
         query = query + " and sc.route_end_id = ? ";
     }
-    if(params.receiveId){
-        paramsArray[i++] = params.receiveId;
-        query = query + " and c.receive_id = ? ";
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
     }
     if(params.userId){
         paramsArray[i++] = params.userId;
