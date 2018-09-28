@@ -18,6 +18,9 @@ var fs = require('fs');
 
 function createSettleCar(req,res,next){
     var params = req.params ;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
     settleCarDAO.addSettleCar(params,function(error,result){
         if (error) {
             logger.error(' createSettleCar ' + error.message);
@@ -74,6 +77,9 @@ function updateSettleCar(req,res,next){
 
 function uploadSettleCarFile(req,res,next){
     var params = req.params;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    var dateId = parseInt(strDate);
     var successedInsert = 0;
     var failedCase = 0;
     var file = req.files.file;
@@ -86,6 +92,7 @@ function uploadSettleCarFile(req,res,next){
                 routeStartId : objArray[i].routeStartId,
                 routeEndId : objArray[i].routeEndId,
                 price : objArray[i].price,
+                dateId : dateId,
                 userId : params.userId,
                 uploadId : params.uploadId,
                 row : i+1,
