@@ -768,6 +768,8 @@ function createServer() {
      */
     server.get('/api/settleCar', settleCar.querySettleCar);
     server.get('/api/notSettleCar', settleCar.queryNotSettleCar);
+    server.get('/api/settleCarCount', settleCar.querySettleCarCount);
+    server.get('/api/notSettleCarCount', settleCar.queryNotSettleCarCount);
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);
     server.post({path:'/api/user/:userId/settleCarFile',contentType: 'multipart/form-data'},settleCar.uploadSettleCarFile);
     server.put({path:'/api/user/:userId/settleCar/:settleCarId',contentType: 'application/json'} ,settleCar.updateSettleCar);

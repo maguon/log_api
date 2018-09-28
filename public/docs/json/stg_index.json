@@ -17679,6 +17679,14 @@
 
           },
           {
+            "name": "underUserType",
+            "in": "query",
+            "description": "underUser type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "routeEndId",
             "in": "query",
             "description": "routeEnd id",
@@ -22116,6 +22124,66 @@
             "type": "integer"
 
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleCar"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleCar id"
+          }
+        }
+      }
+    },
+    "/settleCarCount": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleCar count",
+        "description": "query settleCarCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleCar"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleCar id"
+          }
+        }
+      }
+    },
+    "/notSettleCarCount": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query notSettleCar count",
+        "description": "query notSettleCarCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+
         ],
         "responses": {
           "200": {

@@ -139,6 +139,30 @@ function getNotSettleCar(params,callback) {
     });
 }
 
+function getSettleCarCount(params,callback) {
+    var query = " select count(id) as settle_car_count,sum(price) as price from settle_car " +
+        " where id is not null ";
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getSettleCarCount ');
+        return callback(error,rows);
+    });
+}
+
+function getNotSettleCarCount(params,callback) {
+    var query = " select count(c.id) as not_settle_count from car_info c " +
+        " left join settle_car sc on c.vin = sc.vin and c.entrust_id = sc.entrust_id " +
+        " and c.route_start_id = sc.route_start_id and c.route_end_id = sc.route_end_id " +
+        " where sc.id is null ";
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getNotSettleCarCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateSettleCar(params,callback){
     var query = " update settle_car set vin = ? , entrust_id = ? , route_start_id = ? , route_end_id = ? , price = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -158,6 +182,8 @@ function updateSettleCar(params,callback){
 module.exports ={
     addSettleCar : addSettleCar,
     getNotSettleCar : getNotSettleCar,
+    getSettleCarCount : getSettleCarCount,
+    getNotSettleCarCount : getNotSettleCarCount,
     addUploadSettleCar : addUploadSettleCar,
     getSettleCar : getSettleCar,
     updateSettleCar : updateSettleCar

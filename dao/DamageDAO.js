@@ -86,6 +86,10 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.underUserName;
         query = query + " and dc.under_user_name = ? ";
     }
+    if(params.underUserType){
+        paramsArray[i++] = params.underUserType;
+        query = query + " and u2.type = ? ";
+    }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
         query = query + " and c.route_end_id = ? ";
