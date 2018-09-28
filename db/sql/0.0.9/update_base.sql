@@ -76,13 +76,13 @@ CREATE TABLE `entrust_make_rel` (
 -- ----------------------------
 ALTER TABLE `drive_peccancy`
 ADD COLUMN `date_id`  int(4) NULL COMMENT '违章统计时间' AFTER `op_user_id`;
-update drive_peccancy set date_id = DATE_FORMAT(created_on,'%Y%m%d')
+update drive_peccancy set date_id = DATE_FORMAT(created_on,'%Y%m%d');
 -- ----------------------------
 -- 2018-09-21 更新
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil`
 ADD COLUMN `date_id`  int(4) NULL COMMENT '超油统计时间' AFTER `op_user_id`;
-update drive_exceed_oil set date_id = DATE_FORMAT(created_on,'%Y%m%d')
+update drive_exceed_oil set date_id = DATE_FORMAT(created_on,'%Y%m%d');
 -- ----------------------------
 -- Table structure for settle_car
 -- ----------------------------
