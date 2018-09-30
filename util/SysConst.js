@@ -144,7 +144,7 @@ var ACCIDENT_STATUS  ={ //事故状态
     in_process : 2, //处理中
     completed : 3   //已处理
 };
-var ACCIDENT__TYPE = {  //事故类型
+var ACCIDENT_TYPE = {  //事故类型
     commonly : 1 ,  //一般
     serious : 2 //严重
 };
@@ -157,12 +157,12 @@ var TASK_LOAN__STATUS = {  //出车款状态
     grant : 1, //已发放
     refund : 2  //已报销
 };
-var DAMAGE_INDEMNITY__STATUS = {  //申请质损赔款状态
+var DAMAGE_INDEMNITY_STATUS = {  //申请质损赔款状态
     no : 1 ,  //不需赔款
     yes : 2 //需要赔款
 };
 
-var TRUCK_INSURE__STATUS = {  //货车保险状态
+var TRUCK_INSURE_STATUS = {  //货车保险状态
     cancel : -1 ,  //取消删除
     normal : 1 //正常
 };
@@ -199,11 +199,11 @@ module.exports = {
     DAMAGE_TYPE : DAMAGE_TYPE ,
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
-    ACCIDENT__TYPE : ACCIDENT__TYPE,
+    ACCIDENT_TYPE : ACCIDENT_TYPE,
     LOAN__STATUS : LOAN__STATUS,
     TASK_LOAN__STATUS : TASK_LOAN__STATUS,
-    DAMAGE_INDEMNITY__STATUS : DAMAGE_INDEMNITY__STATUS,
-    TRUCK_INSURE__STATUS : TRUCK_INSURE__STATUS,
+    DAMAGE_INDEMNITY_STATUS : DAMAGE_INDEMNITY_STATUS,
+    TRUCK_INSURE_STATUS : TRUCK_INSURE_STATUS,
     STAT_STATUS : STAT_STATUS,
     RECEIVE_TYPE : RECEIVE_TYPE
 }

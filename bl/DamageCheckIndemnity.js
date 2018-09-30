@@ -38,7 +38,7 @@ function createDamageCheckIndemnity(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        params.damageIndemnityStatus = sysConst.DAMAGE_INDEMNITY__STATUS.yes;
+        params.damageIndemnityStatus = sysConst.DAMAGE_INDEMNITY_STATUS.yes;
         damageCheckDAO.updateDamageCheckIndemnityStatus(params,function(err,result){
             if (err) {
                 logger.error(' updateDamageCheckIndemnityStatus ' + err.message);

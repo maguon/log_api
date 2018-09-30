@@ -135,7 +135,7 @@ function updateTruckInsureRel(req,res,next){
 
 function removeTruckInsureRel(req,res,next){
     var params = req.params;
-    params.insureStatus = sysConst.TRUCK_INSURE__STATUS.cancel;
+    params.insureStatus = sysConst.TRUCK_INSURE_STATUS.cancel;
     truckInsureRelDAO.updateTruckInsureStatus(params,function(error,result){
         if (error) {
             logger.error(' removeTruckInsureRel ' + error.message);
