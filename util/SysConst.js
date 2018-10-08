@@ -148,11 +148,11 @@ var ACCIDENT_TYPE = {  //事故类型
     commonly : 1 ,  //一般
     serious : 2 //严重
 };
-var LOAN__STATUS = {  //财务借款状态
+var LOAN_STATUS = {  //财务借款状态
     no : 0 ,  //否
     yes : 1 //是
 };
-var TASK_LOAN__STATUS = {  //出车款状态
+var TASK_LOAN_STATUS = {  //出车款状态
     cancel : 0, //取消
     grant : 1, //已发放
     refund : 2  //已报销
@@ -200,8 +200,8 @@ module.exports = {
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
     ACCIDENT_TYPE : ACCIDENT_TYPE,
-    LOAN__STATUS : LOAN__STATUS,
-    TASK_LOAN__STATUS : TASK_LOAN__STATUS,
+    LOAN_STATUS : LOAN_STATUS,
+    TASK_LOAN_STATUS : TASK_LOAN_STATUS,
     DAMAGE_INDEMNITY_STATUS : DAMAGE_INDEMNITY_STATUS,
     TRUCK_INSURE_STATUS : TRUCK_INSURE_STATUS,
     STAT_STATUS : STAT_STATUS,

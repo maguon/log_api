@@ -114,7 +114,7 @@ function updateDpRouteTaskLoanRepayment (req,res,next){
     var strDate = moment(myDate).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
     params.refundDate = myDate;
-    params.taskLoanStatus = sysConst.TASK_LOAN__STATUS.refund;
+    params.taskLoanStatus = sysConst.TASK_LOAN_STATUS.refund;
     dpRouteTaskLoanDAO.updateDpRouteTaskLoanRepayment(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteTaskLoanRepayment ' + error.message);

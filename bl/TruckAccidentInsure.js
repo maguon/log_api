@@ -55,7 +55,7 @@ function createTruckAccidentInsureBase(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN__STATUS.yes){
+        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
             params.accidentInsureId = accidentInsureId;
             truckAccidentInsureLoanDAO.addTruckAccidentInsureLoan(params,function(error,result){
                 if (error) {
@@ -130,7 +130,7 @@ function createTruckAccidentInsure(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN__STATUS.yes){
+        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
             params.accidentInsureId = accidentInsureId;
             truckAccidentInsureLoanDAO.addTruckAccidentInsureLoan(params,function(error,result){
                 if (error) {

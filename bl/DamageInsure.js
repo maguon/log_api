@@ -55,7 +55,7 @@ function createInsure(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN__STATUS.yes){
+        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
             params.damageInsureId = damageInsureId;
             damageInsureLoanDAO.addDamageInsureLoan(params,function(error,result){
                 if (error) {
@@ -130,7 +130,7 @@ function createDamageInsure(req,res,next){
         })
     }).seq(function(){
         var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN__STATUS.yes){
+        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
             params.damageInsureId = damageInsureId;
             damageInsureLoanDAO.addDamageInsureLoan(params,function(error,result){
                 if (error) {

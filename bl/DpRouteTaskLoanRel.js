@@ -57,7 +57,7 @@ function removeDpRouteTaskLoanRel(req,res,next){
                 logger.error(' getDpRouteTaskLoan ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length >0&&rows[0].task_loan_status == sysConst.TASK_LOAN__STATUS.refund){
+                if(rows&&rows.length >0&&rows[0].task_loan_status == sysConst.TASK_LOAN_STATUS.refund){
                     logger.warn(' getDpRouteTaskLoan ' + 'failed');
                     resUtil.resetFailedRes(res," 出车款已报销，不能删除调度关联 ");
                     return next();
