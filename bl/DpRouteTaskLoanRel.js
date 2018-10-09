@@ -23,8 +23,8 @@ function createDpRouteTaskLoanRel(req,res,next){
                 resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
                 return next();
             } else{
-                logger.error(' createDpRouteTaskLoanRel ' + err.message);
-                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                logger.error(' createDpRouteTaskLoanRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             }
         } else {
             logger.info(' createDpRouteTaskLoanRel ' + 'success');

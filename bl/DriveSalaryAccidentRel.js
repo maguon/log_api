@@ -26,8 +26,8 @@ function createDriveSalaryAccidentRel(req,res,next){
                     resUtil.resetFailedRes(res, "事故编号已经被关联，操作失败");
                     return next();
                 } else{
-                    logger.error(' createDriveSalaryAccidentRel ' + err.message);
-                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    logger.error(' createDriveSalaryAccidentRel ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 }
             } else {
                 if(result&&result.insertId>0){

@@ -48,8 +48,8 @@ function createCarStorageRel(req,res,next){
                         resUtil.resetFailedRes(res, "商品车数据已经存在，请核对后在入库");
                         return next();
                     } else{
-                        logger.error(' createCar ' + err.message);
-                        throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                        logger.error(' createCar ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     }
                 } else {
                     if(result&&result.insertId>0){
