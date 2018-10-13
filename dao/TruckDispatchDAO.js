@@ -307,12 +307,17 @@ function updateTruckDispatchCarCount(params,callback){
 }
 
 function updateTruckDispatch(params,callback){
-    var query = " update truck_dispatch set current_city = ? , task_start = ? , task_end = ? , car_count = ? where truck_id = ? " ;
+    var query = " update truck_dispatch set current_city = ? , task_start = ? , task_end = ?  " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.currentCity;
     paramsArray[i++]=params.taskStart;
     paramsArray[i++]=params.taskEnd;
-    paramsArray[i++]=params.carCount;
+    if(params.carCount){
+        query = query +" , car_count = ? "
+        paramsArray[i++]=params.carCount;
+    }
+    query = query+" where truck_id = ? ";
+
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckDispatch ');
