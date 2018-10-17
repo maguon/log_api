@@ -136,7 +136,7 @@ var DAMAGE_STEP_TYPE = {
     HUMAN : 16//运输途中遭人为破坏
 
 };
-var UNLOAD_CAR_COUNT = 3;//<=3重载,>=3空载
+var UNLOAD_CAR_COUNT = 3;//>=3重载,<=3空载
 var DISTANCE_PRICE = 1.6;//里程单价(过路费=路程*单价)
 
 var ACCIDENT_STATUS  ={ //事故状态
