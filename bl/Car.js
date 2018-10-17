@@ -155,6 +155,20 @@ function queryCarDayStat(req,res,next){
     })
 }
 
+function queryCarDamageDeclare(req,res,next){
+    var params = req.params ;
+    carDAO.getCarDamageDeclare(params,function(error,result){
+        if (error) {
+            logger.error(' queryCarDamageDeclare ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCarDamageDeclare ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCar(req,res,next){
     var params = req.params ;
     if(params.orderDate==null){
@@ -243,6 +257,7 @@ module.exports = {
     queryCarReceiveCount : queryCarReceiveCount,
     queryCarMonthStat : queryCarMonthStat,
     queryCarDayStat : queryCarDayStat,
+    queryCarDamageDeclare : queryCarDamageDeclare,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus

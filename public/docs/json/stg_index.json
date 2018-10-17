@@ -12786,6 +12786,202 @@
         }
       }
     },
+    "/carDamageDeclare": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  car list",
+        "description": "query car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdStart",
+            "in": "query",
+            "description": "created start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdEnd",
+            "in": "query",
+            "description": "created end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "carStatus",
+            "in": "query",
+            "description": "car status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "carStatusArr",
+            "in": "query",
+            "description": "car statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "currentCityId",
+            "in": "query",
+            "description": "currentCity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "currentAddrId",
+            "in": "query",
+            "description": "currentAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
     "/user/{userId}/uploadCar": {
       "post": {
         "tags": [

@@ -533,6 +533,7 @@ function createServer() {
     server.get('/api/carReceiveCount',car.queryCarReceiveCount);
     server.get('/api/carMonthStat',car.queryCarMonthStat);
     server.get('/api/carDayStat',car.queryCarDayStat);
+    server.get('/api/carDamageDeclare',car.queryCarDamageDeclare);
     server.post({path:'/api/user/:userId/uploadCar',contentType: 'application/json'},car.createUploadCar);
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);

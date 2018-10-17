@@ -89,16 +89,10 @@ function addCar(params,callback){
 
 function getCarList(params,callback) {
     var query = " select c.*,ba.addr_name,re.short_name as re_short_name,re.receive_name," +
-        " en.short_name as en_short_name,en.entrust_name,d.drive_name,t.truck_num,dprl.load_date " +
-        " from car_info c " +
+        " en.short_name as en_short_name,en.entrust_name from car_info c " +
         " left join receive_info re on c.receive_id = re.id " +
         " left join entrust_info en on c.entrust_id = en.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
-        " left join dp_route_load_task_detail dpdtl on c.id = dpdtl.car_id " +
-        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
-        " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
-        " left join drive_info d on dpr.drive_id = d.id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
         " where c.id is not null ";
     var paramsArray=[],i=0;
     if(params.carId){
@@ -378,51 +372,6 @@ function getCarReceiveCount(params,callback) {
     });
 }
 
-/*function getCarMonthStat(params,callback) {
-    if(params.entrustId>0){
-        var query = " select DISTINCT(db.y_month),count(case when c.entrust_id = "+ params.entrustId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.makeId>0){
-        var query = " select DISTINCT(db.y_month),count(case when c.make_id = "+ params.makeId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.routeStartId>0){
-        var query = " select DISTINCT(db.y_month),count(case when c.route_start_id = "+ params.routeStartId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.baseAddrId>0){
-        var query = " select DISTINCT(db.y_month),count(case when c.base_addr_id = "+ params.baseAddrId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.routeEndId>0){
-        var query = " select DISTINCT(db.y_month),count(case when c.route_end_id = "+ params.routeEndId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.receiveId>0){
-        var query = " select DISTINCT(db.y_month),count(case when c.receive_id = "+ params.receiveId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else{
-        var query = " select DISTINCT(db.y_month),count(c.id) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }
-    var paramsArray=[],i=0;
-    if(params.monthStart){
-        paramsArray[i++] = params.monthStart;
-        query = query + " and db.y_month >= ? ";
-    }
-    if(params.monthEnd){
-        paramsArray[i++] = params.monthEnd;
-        query = query + " and db.y_month <= ? ";
-    }
-    query = query + ' group by db.y_month ';
-    query = query + ' order by db.y_month desc ';
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
-    }
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getCarMonthStat ');
-        return callback(error,rows);
-    });
-}*/
-
 function getCarMonthStat(params,callback) {
     if(params.entrustId==null&&params.makeId==null&&params.routeStartId==null&&params.baseAddrId==null&&params.routeEndId==null&&params.receiveId==null){
         var query = " select db.y_month, ";
@@ -498,43 +447,6 @@ function getCarMonthStat(params,callback) {
     });
 }
 
-/*function getCarDayStat(params,callback) {
-    if(params.entrustId>0){
-        var query = " select db.id,count(case when c.entrust_id = "+ params.entrustId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.makeId>0){
-        var query = " select db.id,count(case when c.make_id = "+ params.makeId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.routeStartId>0){
-        var query = " select db.id,count(case when c.route_start_id = "+ params.routeStartId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.baseAddrId>0){
-        var query = " select db.id,count(case when c.base_addr_id = "+ params.baseAddrId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.routeEndId>0){
-        var query = " select db.id,count(case when c.route_end_id = "+ params.routeEndId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else if(params.receiveId>0){
-        var query = " select db.id,count(case when c.receive_id = "+ params.receiveId +" then c.id end) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }else{
-        var query = " select db.id,count(c.id) as car_count from date_base db " +
-            " left join car_info c on db.id = c.order_date_id where db.id is not null ";
-    }
-    var paramsArray=[],i=0;
-    query = query + ' group by db.id ';
-    query = query + ' order by db.id desc ';
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
-    }
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getCarDayStat ');
-        return callback(error,rows);
-    });
-}*/
-
 function getCarDayStat(params,callback) {
     if(params.entrustId==null&&params.makeId==null&&params.routeStartId==null&&params.baseAddrId==null&&params.routeEndId==null&&params.receiveId==null){
         var query = " select db.id, ";
@@ -606,6 +518,106 @@ function getCarDayStat(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarDayStat ');
+        return callback(error,rows);
+    });
+}
+
+function getCarDamageDeclare(params,callback) {
+    var query = " select c.*,ba.addr_name,re.short_name as re_short_name,re.receive_name," +
+        " en.short_name as en_short_name,en.entrust_name,d.drive_name,t.truck_num,dprl.load_date " +
+        " from car_info c " +
+        " left join receive_info re on c.receive_id = re.id " +
+        " left join entrust_info en on c.entrust_id = en.id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
+        " left join dp_route_load_task_detail dpdtl on c.id = dpdtl.car_id " +
+        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
+        " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.carId){
+        paramsArray[i++] = params.carId;
+        query = query + " and c.id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and c.vin like '%"+params.vinCode+"%'";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
+    }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and c.user_id = ? ";
+    }
+    if(params.uploadId){
+        paramsArray[i++] = params.uploadId;
+        query = query + " and c.upload_id = ? ";
+    }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
+    if(params.createdStart){
+        paramsArray[i++] = params.createdStart +" 00:00:00";
+        query = query + " and c.created_on >= ? ";
+    }
+    if(params.createdEnd){
+        paramsArray[i++] = params.createdEnd +" 23:59:59";
+        query = query + " and c.created_on <= ? ";
+    }
+    if(params.carStatus){
+        paramsArray[i++] = params.carStatus;
+        query = query + " and c.car_status = ? ";
+    }
+    if(params.carStatusArr){
+        query = query + " and c.car_status in ("+params.carStatusArr + ") ";
+    }
+    if(params.currentCityId){
+        paramsArray[i++] = params.currentCityId;
+        query = query + " and c.current_city_id = ? ";
+    }
+    if(params.currentAddrId){
+        paramsArray[i++] = params.currentAddrId;
+        query = query + " and c.current_addr_id = ? ";
+    }
+    query = query + '  order by c.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCarDamageDeclare ');
         return callback(error,rows);
     });
 }
@@ -716,6 +728,7 @@ module.exports ={
     getCarReceiveCount : getCarReceiveCount,
     getCarMonthStat : getCarMonthStat,
     getCarDayStat : getCarDayStat,
+    getCarDamageDeclare : getCarDamageDeclare,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
