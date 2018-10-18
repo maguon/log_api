@@ -96,7 +96,8 @@ function getUserBase(params,callback){
 }
 
 function getUserDrive(params,callback){
-    var query = " select u.* from user_info u where u.sa = 0 and u.uid is not null ";
+    var query = " select u.uid,u.mobile,u.real_name,u.type,u.gender,u.avatar_image,u.status,u.last_login_on,u.created_on,u.updated_on " +
+        " from user_info u where u.sa = 0 and u.uid is not null ";
     var paramsArray=[],i=0;
     if(params.userId){
         paramsArray[i++] = params.userId;
