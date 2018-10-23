@@ -80,7 +80,7 @@ function getCityRouteDispatch(params,callback) {
         " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.route_id,cri.distance,cri.protect_fee,cri.id from city_route_info cri where cri.route_start_id = " + params.routeStartId +
         " union " +
         " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.route_id,cri2.distance,cri2.protect_fee,cri2.id from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
-        " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id where  cd.distance > 0 ";
+        " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id where  cd.distance >= 0 ";
     var paramsArray=[],i=0;
     query = query + '  order by end_id  ';
     db.dbQuery(query,paramsArray,function(error,rows){
