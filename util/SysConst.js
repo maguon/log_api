@@ -18,6 +18,7 @@ var USER_TYPE  ={
     settle_admin : 69 //结算部管理员
 };
 var CAR_OP_TYPE = {
+    CREATE_CAR : 1, //新增商品车
     QUALITY : 10, //质检
     IMPORT : 11, //入库
     MOVING : 12, //移位

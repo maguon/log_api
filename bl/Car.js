@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -50,7 +51,7 @@ function createCar(req,res,next){
             req.params.carContent =" 商品车信息录入 ";
             carId = result.insertId;
             req.params.carId = carId;
-            req.params.op =10;
+            req.params.op =sysConst.CAR_OP_TYPE.CREATE_CAR;
             resUtil.resetCreateRes(res,result,null);
             return next();
         }
