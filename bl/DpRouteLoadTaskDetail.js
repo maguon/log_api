@@ -182,7 +182,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                 resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if (rows && rows.length > 0) {
+                if (rows && rows.length > 0 && rows[0].task_status>sysConst.TASK_STATUS.doing) {
                     parkObj.carId = rows[0].car_id;
                     parkObj.vin = rows[0].vin;
                     parkObj.routeEndId = rows[0].route_end_id;
@@ -196,7 +196,7 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                     that();
                 } else {
                     logger.warn(' getDpRouteLoadTaskDetail ' + 'failed');
-                    resUtil.resetFailedRes(res, " 数据不存在，或已取消装车 ");
+                    resUtil.resetFailedRes(res, " 不是在途状态，操作失败 ");
                     return next();
                 }
             }

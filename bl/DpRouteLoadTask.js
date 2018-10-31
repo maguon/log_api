@@ -159,7 +159,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
                     return next();
                 } else {
-                    if (rows && rows.length > 0) {
+                    if (rows && rows.length > 0 && rows[0].task_status>rows[0].load_task_status) {
                         parkObj.demandId = rows[0].demand_id;
                         parkObj.routeStartId = rows[0].route_start_id;
                         parkObj.routeStart = rows[0].route_start;
@@ -186,7 +186,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         that();
                     } else {
                         logger.warn(' getDpRouteLoadTask ' + 'failed');
-                        resUtil.resetFailedRes(res, " 任务不存在 ");
+                        resUtil.resetFailedRes(res, " 路线状态错误，操作失败 ");
                         return next();
                     }
                 }
