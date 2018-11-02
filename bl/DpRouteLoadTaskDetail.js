@@ -54,7 +54,15 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].car_status <listOfValue.CAR_STATUS_LOAD){
+                    if(rows[0].route_start_id==parkObj.routeStartId&&rows[0].route_end_id==parkObj.routeEndId&&rows[0].receive_id==parkObj.receiveId){
                         that();
+                    }else if(rows[0].route_start_id==parkObj.routeStartId&&rows[0].route_end_id==null&&rows[0].receive_id==null){
+                        that();
+                    }else{
+                        logger.warn(' getCarList ' +' failed ');
+                        resUtil.resetFailedRes(res,' 商品车路线与调度路线不一致，不能进行装车 ');
+                        return next();
+                    }
                 }else{
                     logger.warn(' getCarList ' +' failed ');
                     resUtil.resetFailedRes(res,' 商品车不是待装车状态，不能进行装车 ');
