@@ -22,9 +22,6 @@ function createDriveSalaryTask(req,res,next){
     var driveSalaryId = 0;
     Seq().seq(function(){
         var that = this;
-        var myDate = new Date();
-        var strDate = moment(myDate).format('YYYYMM');
-        params.monthDateId = parseInt(strDate);
         driveSalaryDAO.addDriveSalary(params,function(error,result){
             if (error) {
                 if(error.message.indexOf("Duplicate") > 0) {

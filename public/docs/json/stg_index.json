@@ -23480,6 +23480,9 @@
       "type": "object",
       "properties": {
 
+        "monthDateId": {
+          "type": "integer"
+        },
         "driveId": {
           "type": "integer"
         },

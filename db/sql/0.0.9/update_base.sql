@@ -101,3 +101,8 @@ CREATE TABLE `settle_car` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `vin` (`vin`,`entrust_id`,`route_start_id`,`route_end_id`) USING BTREE COMMENT '唯一VIN'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-11-02 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+MODIFY COLUMN `grant_status`  tinyint(1) NOT NULL DEFAULT 2 COMMENT '工资状态(2-未发放,3-已发放)' AFTER `actual_salary`;
