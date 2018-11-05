@@ -749,6 +749,7 @@ function createServer() {
     server.get('/api/settleHandoverDayCount', settleHandover.querySettleHandoverDayCount);
     server.get('/api/settleHandoverMonthCount', settleHandover.querySettleHandoverMonthCount);
     server.get('/api/settleHandover.csv', settleHandover.getSettleHandoverCsv);
+    server.get('/api/notSettleHandover.csv', settleHandover.getNotSettleHandoverCsv);
     server.get('/api/driveSettle' , settleHandover.queryDriveSettle);
     server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
     server.get('/api/driveCost' , settleHandover.queryDriveCost);

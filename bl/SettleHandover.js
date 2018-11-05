@@ -281,6 +281,85 @@ function getSettleHandoverCsv(req,res,next){
     })
 }
 
+function getNotSettleHandoverCsv(req,res,next){
+    var csvString = "";
+    var header = "VIN" + ',' + "品牌" + ',' + "委托方" + ','+ "调度编号" + ','+ "起始城市"+ ','+ "目的城市" + ','+ "经销商"
+        + ',' +"司机" + ','+ "货车车牌"+','+ "计划执行时间" + ',' +"送达时间";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    settleHandoverDAO.getNotSettleHandover(params,function(error,rows){
+        if (error) {
+            logger.error(' getNotSettleHandover ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.vin = rows[i].vin;
+                if(rows[i].make_name == null){
+                    parkObj.makeName = "";
+                }else{
+                    parkObj.makeName = rows[i].make_name;
+                }
+                if(rows[i].e_short_name == null){
+                    parkObj.eShortName = "";
+                }else{
+                    parkObj.eShortName = rows[i].e_short_name;
+                }
+                if(rows[i].dp_route_task_id == null){
+                    parkObj.dpRouteTaskId = "";
+                }else{
+                    parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
+                }
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                if(rows[i].r_short_name == null){
+                    parkObj.rShortName = "";
+                }else{
+                    parkObj.rShortName = rows[i].r_short_name;
+                }
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].task_plan_date == null){
+                    parkObj.taskPlanDate = "";
+                }else{
+                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                }
+                if(rows[i].arrive_date == null){
+                    parkObj.arriveDate = "";
+                }else{
+                    parkObj.arriveDate = new Date(rows[i].arrive_date).toLocaleDateString();
+                }
+                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.eShortName+","+parkObj.dpRouteTaskId +","+parkObj.routeStart
+                    +","+parkObj.routeEnd+","+parkObj.rShortName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.taskPlanDate+","+parkObj.arriveDate+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 function getDriveSettleCsv(req,res,next){
     var csvString = "";
     var header = "司机姓名" + ',' + "所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "商品车台数"+ ','+ "产值" ;
@@ -404,6 +483,7 @@ module.exports = {
     updateSettleHandover : updateSettleHandover,
     updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv,
+    getNotSettleHandoverCsv : getNotSettleHandoverCsv,
     getDriveSettleCsv : getDriveSettleCsv,
     getDriveCostCsv : getDriveCostCsv
 }
