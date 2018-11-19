@@ -40,6 +40,14 @@ function getDpRouteTaskTmp(params,callback) {
         paramsArray[i++] = params.dpRouteTaskTmpId;
         query = query + " and dprtmp.id = ? ";
     }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dprtmp.truck_id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dprtmp.drive_id = ? ";
+    }
     query = query + " order by dprtmp.id desc";
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteTaskTmp ');

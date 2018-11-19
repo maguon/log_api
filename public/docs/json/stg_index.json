@@ -15440,6 +15440,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -15478,9 +15494,9 @@
 
           },
           {
-            "name": "dpRouteTask",
+            "name": "dpRouteTaskTmp",
             "in": "body",
-            "description": "dpRouteTask info",
+            "description": "dpRouteTaskTmp info",
             "required": true,
             "schema": {
               "$ref": "#/definitions/dpRouteTask"
@@ -15995,6 +16011,59 @@
           },
           "404": {
             "description": "contacts not found"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskTmp/{dpRouteTaskTmpId}/dpRouteLoadTaskTmp": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteLoadTaskTmp",
+        "description": "user create dpRouteLoadTaskTmp",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskTmpId",
+            "in": "path",
+            "description": "dpRouteTaskTmp Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTaskTmp",
+            "in": "body",
+            "description": "dpRouteLoadTaskTmp info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteLoadTask"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTaskTmp id"
           }
         }
       }
