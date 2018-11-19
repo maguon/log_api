@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
+var dpRouteTaskTmpDAO = require('../dao/DpRouteTaskTmpDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
@@ -63,6 +64,93 @@ function createDpRouteTask(req,res,next){
         })
     }).seq(function(){
         logger.info(' createDpRouteTask ' + 'success');
+        req.params.routeContent =" 生成路线 ";
+        req.params.routeId = dpRouteTaskId;
+        req.params.routeOp =sysConst.RECORD_OP_TYPE.create;
+        resUtil.resetCreateRes(res,{insertId:dpRouteTaskId},null);
+        return next();
+    })
+}
+
+function createDpRouteTaskBatch(req,res,next){
+    var params = req.params ;
+    var dpRouteTaskId = 0;
+    Seq().seq(function(){
+        var that = this;
+        var subParams ={
+            taskStatusArr : '1,2,3,4',
+            truckId : params.truckId
+        }
+        dpRouteTaskDAO.getDpRouteTask(subParams,function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteTask ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0&&rows[0].route_end_id ==params.routeStartId){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteTask ' + 'failed');
+                    resUtil.resetFailedRes(res," 当前任务的目的城市与发布的起始城市不一致。 ");
+                    return next();
+
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
+            if (error) {
+                logger.error(' createDpRouteTaskBatch ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteTaskBatch ' + 'success');
+                    dpRouteTaskId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create dpRouteTask failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.dpRouteTaskId = dpRouteTaskId;
+        dpRouteTaskRelDAO.addDpRouteTaskRel(params,function(error,result){
+            if (error) {
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
+                    return next();
+                } else{
+                    logger.error(' createDpRouteTaskRel ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteTaskRel ' + 'success');
+                }else{
+                    logger.warn(' createDpRouteTaskRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        dpRouteTaskTmpDAO.deleteDpRouteTaskTmp(params,function(error,result){
+            if (error) {
+                logger.error(' deleteDpRouteTaskTmp ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' deleteDpRouteTaskTmp ' + 'success');
+                }else{
+                    logger.warn(' deleteDpRouteTaskTmp ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        logger.info(' createDpRouteTaskBatch ' + 'success');
         req.params.routeContent =" 生成路线 ";
         req.params.routeId = dpRouteTaskId;
         req.params.routeOp =sysConst.RECORD_OP_TYPE.create;
@@ -578,6 +666,7 @@ function getDpRouteTaskCsv(req,res,next){
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
+    createDpRouteTaskBatch : createDpRouteTaskBatch,
     queryDpRouteTask : queryDpRouteTask,
     queryDpRouteTaskBase : queryDpRouteTaskBase,
     queryDriveDistanceCount : queryDriveDistanceCount,
