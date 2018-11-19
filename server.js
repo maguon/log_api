@@ -629,7 +629,9 @@ function createServer() {
     /**
      * dpRouteLoadTaskTmp Module
      */
+    server.get('/api/dpRouteLoadTaskTmp',dpRouteLoadTaskTmp.queryDpRouteLoadTaskTmp);
     server.post({path:'/api/user/:userId/dpRouteTaskTmp/:dpRouteTaskTmpId/dpRouteLoadTaskTmp',contentType: 'application/json'},dpRouteLoadTaskTmp.createDpRouteLoadTaskTmp);
+    server.del('/api/user/:userId/dpRouteLoadTaskTmp/:dpRouteLoadTaskTmpId' , dpRouteLoadTaskTmp.removeDpRouteLoadTaskTmp);
 
     /**
      * DpRouteLoadTaskDetail Module

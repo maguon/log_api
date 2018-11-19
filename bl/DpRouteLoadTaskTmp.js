@@ -85,7 +85,37 @@ function createDpRouteLoadTaskTmp(req,res,next){
     })
 }
 
+function queryDpRouteLoadTaskTmp(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskTmpDAO.getDpRouteLoadTaskTmp(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTaskTmp ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTaskTmp ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function removeDpRouteLoadTaskTmp(req,res,next){
+    var params = req.params;
+    dpRouteLoadTaskTmpDAO.deleteDpRouteLoadTaskTmp(params,function(error,result){
+        if (error) {
+            logger.error(' removeDpRouteLoadTaskTmp ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeDpRouteLoadTaskTmp ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createDpRouteLoadTaskTmp : createDpRouteLoadTaskTmp
+    createDpRouteLoadTaskTmp : createDpRouteLoadTaskTmp,
+    queryDpRouteLoadTaskTmp : queryDpRouteLoadTaskTmp,
+    removeDpRouteLoadTaskTmp : removeDpRouteLoadTaskTmp
 }

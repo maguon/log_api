@@ -39,7 +39,41 @@ function addDpRouteLoadTaskTmp(params,callback){
     });
 }
 
+function getDpRouteLoadTaskTmp(params,callback) {
+    var query = " select dprltmp.*,dprltmp.route_start as city_start_name,dprltmp.route_end as city_name,dprltmp.transfer_city as transfer_city_name, " +
+        " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end " +
+        " from dp_route_load_task_tmp dprltmp " +
+        " left join dp_demand_info dpd on dprltmp.demand_id = dpd.id " +
+        " left join base_addr ba2 on dpd.base_addr_id = ba2.id " +
+        " where dprltmp.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskTmpId){
+        paramsArray[i++] = params.dpRouteTaskTmpId;
+        query = query + " and dprltmp.dp_route_task_id = ? ";
+    }
+    if(params.dpRouteLoadTaskTmpId){
+        paramsArray[i++] = params.dpRouteLoadTaskTmpId;
+        query = query + " and dprltmp.id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskTmp ');
+        return callback(error,rows);
+    });
+}
+
+function deleteDpRouteLoadTaskTmp(params,callback){
+    var query = " delete from dp_route_load_task_tmp where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.dpRouteLoadTaskTmpId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteDpRouteLoadTaskTmp ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDpRouteLoadTaskTmp : addDpRouteLoadTaskTmp
+    addDpRouteLoadTaskTmp : addDpRouteLoadTaskTmp,
+    getDpRouteLoadTaskTmp : getDpRouteLoadTaskTmp,
+    deleteDpRouteLoadTaskTmp : deleteDpRouteLoadTaskTmp
 }

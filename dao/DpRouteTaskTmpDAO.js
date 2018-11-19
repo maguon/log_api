@@ -32,8 +32,9 @@ function addDpRouteTaskTmp(params,callback){
 }
 
 function getDpRouteTaskTmp(params,callback) {
-    var query = " select dprtmp.*,dprtmp.route_start as city_route_start,dprtmp.route_end as city_route_end " +
+    var query = " select dprtmp.*,dprtmp.route_start as city_route_start,dprtmp.route_end as city_route_end,u.real_name as route_op_name " +
         " from dp_route_task_tmp dprtmp " +
+        " left join user_info u on dprtmp.user_id = u.uid " +
         " where dprtmp.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskTmpId){
