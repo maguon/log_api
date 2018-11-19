@@ -15422,6 +15422,124 @@
         }
       }
     },
+    "/dpRouteTaskTmp": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskTmp list",
+        "description": "query dpRouteTaskTmp",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskTmpId",
+            "in": "query",
+            "description": "dpRouteTaskTmp id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskTmp"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskTmp id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskTmp": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteTaskTmp",
+        "description": "user create dpRouteTaskTmp",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTask",
+            "in": "body",
+            "description": "dpRouteTask info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTask"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskTmp id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskTmp/{dpRouteTaskTmpId}": {
+      "delete": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "Deletes a dpRouteTaskTmp",
+        "description": "",
+        "operationId": "deletedpRouteTaskTmp",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "dpRouteTaskTmpId",
+            "in": "path",
+            "description": "dpRouteTaskTmp id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/dpRouteLoadTask": {
       "get": {
         "tags": [

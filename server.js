@@ -56,6 +56,7 @@ var dpDemand = require('./bl/DpDemand.js');
 var dpTaskStat = require('./bl/DpTaskStat.js');
 var dpTransferDemand = require('./bl/DpTransferDemand.js');
 var dpRouteTask = require('./bl/DpRouteTask.js');
+var dpRouteTaskTmp = require('./bl/DpRouteTaskTmp.js');
 var dpRouteLoadTask = require('./bl/DpRouteLoadTask.js');
 var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
 var dpRouteLoadTaskCleanRel = require('./bl/DpRouteLoadTaskCleanRel.js');
@@ -607,6 +608,13 @@ function createServer() {
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus,sysRecord.saveRouteRecord);
     server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId' , dpRouteTask.removeDpRouteTask,sysRecord.saveRouteRecord);
+
+    /**
+     * dpRouteTaskTmp Module
+     */
+    server.get('/api/dpRouteTaskTmp' , dpRouteTaskTmp.queryDpRouteTaskTmp);
+    server.post({path:'/api/user/:userId/dpRouteTaskTmp',contentType: 'application/json'},dpRouteTaskTmp.createDpRouteTaskTmp);
+    server.del('/api/user/:userId/dpRouteTaskTmp/:dpRouteTaskTmpId' , dpRouteTaskTmp.removeDpRouteTaskTmp);
 
     /**
      * DpRouteLoadTask Module
