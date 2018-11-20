@@ -11,10 +11,12 @@ var sysConst = require('../util/SysConst.js');
 var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteTaskTmpDAO = require('../dao/DpRouteTaskTmpDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
+var dpRouteLoadTaskTmpDAO = require('../dao/DpRouteLoadTaskTmpDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
 var dpRouteTaskRelDAO = require('../dao/DpRouteTaskRelDAO.js');
+var cityRouteDAO = require('../dao/CityRouteDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -75,6 +77,7 @@ function createDpRouteTask(req,res,next){
 function createDpRouteTaskBatch(req,res,next){
     var params = req.params ;
     var dpRouteTaskId = 0;
+    var cityRouteId = 0;
     Seq().seq(function(){
         var that = this;
         var subParams ={
@@ -100,6 +103,28 @@ function createDpRouteTaskBatch(req,res,next){
         })
     }).seq(function(){
         var that = this;
+        var subParams ={
+            routeStartId : params.routeStartId,
+            routeEndId : params.routeEndId
+        }
+        cityRouteDAO.getCityRoute(subParams,function(error,rows){
+            if (error) {
+                logger.error(' getCityRoute ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0){
+                    cityRouteId = rows[0].id;
+                    that();
+                }else{
+                    logger.warn(' getCityRoute ' + 'failed');
+                    resUtil.resetFailedRes(res," 此路线未设置。 ");
+                    return next();
+
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteTaskBatch ' + error.message);
@@ -118,6 +143,7 @@ function createDpRouteTaskBatch(req,res,next){
     }).seq(function(){
         var that = this;
         params.dpRouteTaskId = dpRouteTaskId;
+        params.cityRouteId = cityRouteId;
         dpRouteTaskRelDAO.addDpRouteTaskRel(params,function(error,result){
             if (error) {
                 if(error.message.indexOf("Duplicate") > 0) {
@@ -146,12 +172,10 @@ function createDpRouteTaskBatch(req,res,next){
             } else {
                 if(result&&result.insertId>0){
                     logger.info(' createDpRouteLoadTaskBatch ' + 'success');
-                    dpRouteTaskId = result.insertId;
-                    that();
                 }else{
-                    resUtil.resetFailedRes(res,"create dpRouteTask failed");
-                    return next();
+                    logger.warn(' createDpRouteLoadTaskBatch ' + 'failed');
                 }
+                that();
             }
         })
     }).seq(function(){
@@ -165,6 +189,21 @@ function createDpRouteTaskBatch(req,res,next){
                     logger.info(' deleteDpRouteTaskTmp ' + 'success');
                 }else{
                     logger.warn(' deleteDpRouteTaskTmp ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        dpRouteLoadTaskTmpDAO.deleteDpRouteLoadTaskTmp(params,function(error,result){
+            if (error) {
+                logger.error(' deleteDpRouteLoadTaskTmp ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' deleteDpRouteLoadTaskTmp ' + 'success');
+                }else{
+                    logger.warn(' deleteDpRouteLoadTaskTmp ' + 'failed');
                 }
                 that();
             }

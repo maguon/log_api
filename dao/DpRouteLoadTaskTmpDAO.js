@@ -62,9 +62,16 @@ function getDpRouteLoadTaskTmp(params,callback) {
 }
 
 function deleteDpRouteLoadTaskTmp(params,callback){
-    var query = " delete from dp_route_load_task_tmp where id = ? ";
+    var query = " delete from dp_route_load_task_tmp where id is not null ";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.dpRouteLoadTaskTmpId;
+    if(params.dpRouteLoadTaskTmpId){
+        paramsArray[i++] = params.dpRouteLoadTaskTmpId;
+        query = query + " and id = ? ";
+    }
+    if(params.dpRouteTaskTmpId){
+        paramsArray[i++] = params.dpRouteTaskTmpId;
+        query = query + " and dp_route_task_id = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' deleteDpRouteLoadTaskTmp ');
         return callback(error,rows);
