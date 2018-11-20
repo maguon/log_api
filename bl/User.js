@@ -431,6 +431,53 @@ function updateUserAvatarImage(req,res,next){
     })
 }
 
+function updateUserMobile(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        userDAO.getUser(params,function(error,rows){
+            if (error) {
+                logger.error(' updateUserMobile ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(rows && rows.length<1){
+                    logger.warn(' updateUserMobile ' + sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        //check phone captcha
+        var that = this;
+        oAuthUtil.getPasswordCode({phone:params.newMobile},function (error,result) {
+            if (error) {
+                logger.error(' updateUserMobile ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else if(result == null || result.result== null || params.captcha != result.result.code){
+                logger.warn(' updateUserMobile ' + 'failed');
+                resUtil.resetFailedRes(res,sysMsg.CUST_SMS_CAPTCHA_ERROR,null);
+                return next();
+            }else{
+                that();
+            }
+        })
+    }).seq(function(){
+        userDAO.updateUserMobile(params,function(error,result){
+            if (error) {
+                logger.error(' updateUserMobile ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateUserMobile ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createUser : createUser,
@@ -443,5 +490,6 @@ module.exports = {
     changeUserPassword : changeUserPassword,
     resetPassword : resetPassword,
     changeUserToken : changeUserToken,
-    updateUserAvatarImage : updateUserAvatarImage
+    updateUserAvatarImage : updateUserAvatarImage,
+    updateUserMobile : updateUserMobile
 }

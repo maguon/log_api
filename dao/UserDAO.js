@@ -175,6 +175,20 @@ function updateUserAvatarImage(params,callback){
     });
 }
 
+function updateUserMobile(params,callback){
+    var query = " update user_info set mobile = ? where uid is not null ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.newMobile;
+    if(params.mobile){
+        paramsArray[i++] = params.mobile;
+        query = query + " and mobile = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateUserMobile ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUser : addUser,
@@ -184,5 +198,6 @@ module.exports ={
     updateUserInfo : updateUserInfo,
     updateUserStatus : updateUserStatus,
     updateUserPassword : updateUserPassword,
-    updateUserAvatarImage : updateUserAvatarImage
+    updateUserAvatarImage : updateUserAvatarImage,
+    updateUserMobile : updateUserMobile
 }

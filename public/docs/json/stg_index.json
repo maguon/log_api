@@ -430,6 +430,43 @@
         }
       }
     },
+    "/phone/{mobile}/mobileSms": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "send rest mobile sms",
+        "description": "sendMobileSms",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "mobile",
+            "in": "path",
+            "description": "user unique mobile",
+            "required": true,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid phone value or invalid user status"
+          }
+        }
+      }
+    },
     "/user/{userId}": {
       "get": {
         "tags": [
@@ -636,6 +673,52 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/backPassword"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/phone/{mobile}/mobile": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "reset user mobile",
+        "description": "reset user mobile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "mobile",
+            "in": "path",
+            "description": "user unique mobile",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "newMobile",
+            "in": "body",
+            "description": "newMobile info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newMobile"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/newMobile"
               }
             }
           },
@@ -23472,6 +23555,21 @@
       },
       "xml": {
         "name": "backPassword"
+      }
+    },
+    "newMobile": {
+      "type": "object",
+      "properties": {
+
+        "captcha": {
+          "type": "string"
+        },
+        "newMobile": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "newMobile"
       }
     },
     "truck": {

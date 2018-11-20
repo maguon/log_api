@@ -192,6 +192,7 @@ function createServer() {
     server.post({path:'/api/mobileUserLogin' ,contentType: 'application/json'}, user.mobileUserLogin);
     server.put({path:'/api/user/:userId/password',contentType: 'application/json'} ,user.changeUserPassword);
     server.put({path:'/api/phone/:mobile/password',contentType: 'application/json'} ,user.resetPassword);
+    server.put({path:'/api/phone/:mobile/mobile',contentType: 'application/json'} ,user.updateUserMobile);
     server.get('/api/user/:userId/token/:token' , user.changeUserToken);
     server.put({path:'/api/user/:userId/avatarImage',contentType: 'application/json'} ,user.updateUserAvatarImage);
     server.get('/api/userDrive' ,user.queryUserDrive);
