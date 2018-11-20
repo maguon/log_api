@@ -271,7 +271,7 @@ function getDriveDistanceLoadStat(params,callback) {
     var query = " select d.id as drive_id,d.drive_name," +
         " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
+        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " where dpr.id is not null ";
