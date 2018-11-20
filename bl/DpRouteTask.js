@@ -136,6 +136,24 @@ function createDpRouteTaskBatch(req,res,next){
         })
     }).seq(function(){
         var that = this;
+        params.dpRouteTaskId = dpRouteTaskId;
+        dpRouteLoadTaskDAO.addDpRouteLoadTaskBatch(params,function(error,result){
+            if (error) {
+                logger.error(' createDpRouteLoadTaskBatch ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteLoadTaskBatch ' + 'success');
+                    dpRouteTaskId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create dpRouteTask failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
         dpRouteTaskTmpDAO.deleteDpRouteTaskTmp(params,function(error,result){
             if (error) {
                 logger.error(' deleteDpRouteTaskTmp ' + error.message);

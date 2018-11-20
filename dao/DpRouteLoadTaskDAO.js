@@ -39,6 +39,28 @@ function addDpRouteLoadTask(params,callback){
     });
 }
 
+function addDpRouteLoadTaskBatch(params,callback){
+    var query = " insert into dp_route_load_task (user_id,load_task_type,demand_id,transfer_demand_id,dp_route_task_id, " +
+        " route_start_id,route_start,base_addr_id,addr_name,route_end_id, " +
+        " route_end,receive_id,short_name,date_id,plan_date, " +
+        " plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id,transfer_addr_name) " +
+        " select dprltmp.user_id,dprltmp.load_task_type,dprltmp.demand_id,dprltmp.transfer_demand_id,"+ params.dpRouteTaskId +", " +
+        " dprltmp.route_start_id,dprltmp.route_start,dprltmp.base_addr_id,dprltmp.addr_name,dprltmp.route_end_id, " +
+        " dprltmp.route_end,dprltmp.receive_id,dprltmp.short_name,dprltmp.date_id,dprltmp.plan_date, " +
+        " dprltmp.plan_count,dprltmp.transfer_flag,dprltmp.transfer_city_id,dprltmp.transfer_city,dprltmp.transfer_addr_id," +
+        " dprltmp.transfer_addr_name " +
+        " from dp_route_load_task_tmp dprltmp where dprltmp.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskTmpId){
+        paramsArray[i++] = params.dpRouteTaskTmpId;
+        query = query + " and dprltmp.dp_route_task_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDpRouteLoadTaskBatch ');
+        return callback(error,rows);
+    });
+}
+
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,dprl.route_start as city_start_name,dprl.route_end as city_name,dprl.transfer_city as transfer_city_name, " +
         " u.real_name as task_op_name,u1.real_name as field_op_name,r.clean_fee,r.guard_fee,dpd.pre_count,dpr.task_status, " +
@@ -241,6 +263,7 @@ function resetLoadTaskTruckCount(params,callback){
 
 module.exports ={
     addDpRouteLoadTask : addDpRouteLoadTask,
+    addDpRouteLoadTaskBatch : addDpRouteLoadTaskBatch,
     getDpRouteLoadTask : getDpRouteLoadTask,
     getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
     getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
