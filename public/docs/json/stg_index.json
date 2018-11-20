@@ -15333,6 +15333,51 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTaskBatch": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteTaskBatch",
+        "description": "user create dpRouteTaskBatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskBatch",
+            "in": "body",
+            "description": "dpRouteTaskBatch info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskBatch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask/{dpRouteTaskId}/taskStatus/{taskStatus}": {
       "put": {
         "tags": [
@@ -24636,6 +24681,51 @@
       },
       "xml": {
         "name": "dpRouteTask"
+      }
+    },
+    "dpRouteTaskBatch": {
+      "type": "object",
+      "properties": {
+
+        "dpRouteTaskTmpId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "truckNumber": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "routeId": {
+          "type": "integer"
+        },
+        "routeStartId": {
+          "type": "integer"
+        },
+        "routeStart": {
+          "type": "string"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "routeEnd": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "integer"
+        },
+        "taskPlanDate": {
+          "type": "string"
+        },
+        "cityRouteId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTaskBatch"
       }
     },
     "dpRouteLoadTask": {
