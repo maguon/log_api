@@ -24722,6 +24722,9 @@
         },
         "cityRouteId": {
           "type": "integer"
+        },
+        "currentCity": {
+          "type": "integer"
         }
       },
       "xml": {

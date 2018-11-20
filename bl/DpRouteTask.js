@@ -88,6 +88,8 @@ function createDpRouteTaskBatch(req,res,next){
             } else{
                 if(rows&&rows.length >0&&rows[0].route_end_id ==params.routeStartId){
                     that();
+                }else if(rows&&rows.length ==0&&params.currentCity ==params.routeStartId){
+                    that();
                 }else{
                     logger.warn(' getDpRouteTask ' + 'failed');
                     resUtil.resetFailedRes(res," 当前任务的目的城市与发布的起始城市不一致。 ");
