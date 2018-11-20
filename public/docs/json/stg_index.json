@@ -24818,9 +24818,6 @@
         "taskPlanDate": {
           "type": "string"
         },
-        "cityRouteId": {
-          "type": "integer"
-        },
         "currentCity": {
           "type": "integer"
         }
