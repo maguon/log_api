@@ -106,3 +106,67 @@ CREATE TABLE `settle_car` (
 -- ----------------------------
 ALTER TABLE `drive_salary`
 MODIFY COLUMN `grant_status`  tinyint(1) NOT NULL DEFAULT 2 COMMENT '工资状态(2-未发放,3-已发放)' AFTER `actual_salary`;
+-- ----------------------------
+-- Table structure for dp_route_task_tmp
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_route_task_tmp`;
+CREATE TABLE `dp_route_task_tmp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL COMMENT '指令调度人ID',
+  `truck_id` int(10) NOT NULL COMMENT '货车ID',
+  `drive_id` int(10) NOT NULL COMMENT '司机ID',
+  `route_id` int(10) DEFAULT '0' COMMENT '线路组合ID',
+  `route_start_id` int(10) NOT NULL COMMENT '城市线路ID',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '起始城市',
+  `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '目的城市',
+  `distance` decimal(10,2) NOT NULL COMMENT '公里数',
+  `task_plan_date` datetime DEFAULT NULL COMMENT '任务计划时间',
+  `task_start_date` datetime DEFAULT NULL COMMENT '任务起始时间',
+  `task_end_date` datetime DEFAULT NULL COMMENT '任务完成时间',
+  `date_id` int(4) DEFAULT NULL COMMENT '任务完成统计时间',
+  `car_count` int(10) NOT NULL DEFAULT '0' COMMENT '实际装车商品车数量',
+  `truck_number` tinyint(2) DEFAULT '0' COMMENT '板车位数',
+  `load_flag` tinyint(1) DEFAULT '0' COMMENT '是否满载(0-否,1-是)',
+  `task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '指令状态(1-待接受,2-接受,3执行,4-在途,8-取消安排,9-已完成,10-全部完成)',
+  `stat_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '结算状态(1-未结算,2-已结算)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- Table structure for dp_route_load_task_tmp
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_route_load_task_tmp`;
+CREATE TABLE `dp_route_load_task_tmp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL COMMENT '派发人ID',
+  `field_op_id` int(10) DEFAULT NULL COMMENT '现场调度员ID',
+  `load_task_type` tinyint(1) DEFAULT '1' COMMENT '调度任务类型(1-始发站出发,2-中转站出发)',
+  `demand_id` int(10) NOT NULL COMMENT '调度需求ID',
+  `transfer_demand_id` int(10) DEFAULT '0' COMMENT '中转需求ID',
+  `dp_route_task_id` int(10) NOT NULL COMMENT '任务路线ID',
+  `route_start_id` int(10) NOT NULL COMMENT '城市线路ID',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '起始城市',
+  `base_addr_id` int(10) NOT NULL COMMENT '起始地发货地址ID',
+  `addr_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '装车地',
+  `route_end_id` int(10) NOT NULL COMMENT '目的地ID',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '目的城市',
+  `receive_id` int(10) NOT NULL COMMENT '经销商ID',
+  `short_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '经销商简称',
+  `date_id` int(4) NOT NULL COMMENT '指令时间',
+  `plan_date` datetime DEFAULT NULL COMMENT '计划装车时间',
+  `load_date` datetime DEFAULT NULL COMMENT '装车时间',
+  `arrive_date` datetime DEFAULT NULL COMMENT '到达时间',
+  `plan_count` int(10) NOT NULL DEFAULT '0' COMMENT '计划派发商品车数量',
+  `real_count` int(10) DEFAULT '0' COMMENT '实际装车数量',
+  `load_task_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '任务状态(1-未装车,3-已装车,7-已到达,8-取消任务,9-已完成)',
+  `transfer_flag` tinyint(1) DEFAULT '0' COMMENT '是否中转标识(0-否,1-是)',
+  `transfer_city_id` int(10) DEFAULT '0' COMMENT '中转城市ID',
+  `transfer_city` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '中转城市',
+  `transfer_addr_id` int(10) DEFAULT '0' COMMENT '中转站装车地ID',
+  `transfer_addr_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '中转装车地',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
