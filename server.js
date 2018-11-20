@@ -802,6 +802,7 @@ function createServer() {
      * SMS Module
      */
     server.post({path:'/api/phone/:mobile/passwordSms',contentType: 'application/json'},sms.sendPswdSms);
+    server.post({path:'/api/phone/:mobile/mobileSms',contentType: 'application/json'},sms.sendPhoneSms);
     /**
      * App Module
      */

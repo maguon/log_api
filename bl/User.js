@@ -452,7 +452,7 @@ function updateUserMobile(req,res,next){
     }).seq(function(){
         //check phone captcha
         var that = this;
-        oAuthUtil.getPasswordCode({phone:params.newMobile},function (error,result) {
+        oAuthUtil.getPhoneCode({phone:params.newMobile},function (error,result) {
             if (error) {
                 logger.error(' updateUserMobile ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
