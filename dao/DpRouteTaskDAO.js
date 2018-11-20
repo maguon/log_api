@@ -267,6 +267,38 @@ function getDriveDistanceLoad(params,callback) {
     });
 }
 
+function getDriveDistanceLoadStat(params,callback) {
+    var query = " select d.id as drive_id,d.drive_name," +
+        " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
+        " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
+        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
+        " from dp_route_task dpr " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " where dpr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dpr.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dpr.date_id <= ? ";
+    }
+    query = query + ' group by d.id';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveDistanceLoadStat ');
+        return callback(error,rows);
+    });
+}
+
 function getNotCompletedTaskStatusCount(params,callback) {
     var query = " select count(id) as task_status_count from dp_route_task where id is not null ";
     var paramsArray=[],i=0;
@@ -469,6 +501,7 @@ module.exports ={
     getNotCompletedTaskStatusCount : getNotCompletedTaskStatusCount,
     getDriveDistanceCount : getDriveDistanceCount,
     getDriveDistanceLoad : getDriveDistanceLoad,
+    getDriveDistanceLoadStat : getDriveDistanceLoadStat,
     getTaskStatusCount : getTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,
     updateDpRouteStatStatus : updateDpRouteStatStatus,

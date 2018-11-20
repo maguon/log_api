@@ -296,6 +296,32 @@ function queryDriveDistanceLoad(req,res,next){
     })
 }
 
+function queryDriveDistanceLoadStat(req,res,next){
+    var params = req.params ;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
+    dpRouteTaskDAO.getDriveDistanceLoadStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveDistanceLoadStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveDistanceLoadStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryNotCompletedTaskStatusCount(req,res,next){
     var params = req.params ;
     dpRouteTaskDAO.getNotCompletedTaskStatusCount(params,function(error,result){
@@ -730,6 +756,7 @@ module.exports = {
     queryDpRouteTaskBase : queryDpRouteTaskBase,
     queryDriveDistanceCount : queryDriveDistanceCount,
     queryDriveDistanceLoad : queryDriveDistanceLoad,
+    queryDriveDistanceLoadStat : queryDriveDistanceLoadStat,
     queryNotCompletedTaskStatusCount : queryNotCompletedTaskStatusCount,
     queryTaskStatusCount : queryTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,

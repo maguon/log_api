@@ -601,6 +601,7 @@ function createServer() {
     server.get('/api/dpRouteTaskBase' , dpRouteTask.queryDpRouteTaskBase);
     server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
     server.get('/api/driveDistanceLoad' , dpRouteTask.queryDriveDistanceLoad);
+    server.get('/api/driveDistanceLoadStat' , dpRouteTask.queryDriveDistanceLoadStat);
     server.get('/api/distanceMonthStat' , dpRouteTask.queryRouteTaskMonthStat);
     server.get('/api/distanceWeekStat' , dpRouteTask.queryRouteTaskWeekStat);
     server.get('/api/distanceDayStat' , dpRouteTask.queryRouteTaskDayStat);

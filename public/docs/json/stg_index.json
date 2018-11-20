@@ -15135,9 +15135,69 @@
 
           },
           {
-            "name": "truckNum",
+            "name": "dateIdStart",
             "in": "query",
-            "description": "truck num",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/driveDistanceLoadStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query driveDistance load",
+        "description": "query driveDistanceLoad",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
             "required": false,
             "type": "integer"
 
