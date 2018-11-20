@@ -233,7 +233,7 @@ function getDriveDistanceCount(params,callback) {
 
 function getDriveDistanceLoad(params,callback) {
     var query = " select d.id as drive_id,d.drive_name,u.mobile, " +
-        " count(case when dpr.task_status = " + params.taskStatus + " then dpr.id end) as complete_count, " +
+        " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
         " td.dispatch_flag,td.current_city,td.task_start,td.task_end " +
