@@ -232,7 +232,7 @@ function getDriveDistanceCount(params,callback) {
 }
 
 function getDriveDistanceLoad(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,u.mobile,dpr.truck_id,t.truck_num, " +
+    var query = " select d.id as drive_id,d.drive_name,u.mobile, " +
         " count(case when dpr.task_status = " + params.taskStatus + " then dpr.id end) as complete_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
@@ -252,10 +252,6 @@ function getDriveDistanceLoad(params,callback) {
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
     }
-    if(params.truckNum){
-        paramsArray[i++] = params.truckNum;
-        query = query + " and t.truck_num = ? ";
-    }
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
         query = query + " and dpr.date_id >= ? ";
@@ -264,7 +260,7 @@ function getDriveDistanceLoad(params,callback) {
         paramsArray[i++] = params.dateIdEnd;
         query = query + " and dpr.date_id <= ? ";
     }
-    query = query + ' group by d.id,dpr.truck_id,td.dispatch_flag,td.current_city,td.task_start,td.task_end ';
+    query = query + ' group by d.id,td.dispatch_flag,td.current_city,td.task_start,td.task_end ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveDistanceLoad ');
         return callback(error,rows);
