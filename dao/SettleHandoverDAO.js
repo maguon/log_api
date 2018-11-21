@@ -242,8 +242,17 @@ function getNotSettleHandover(params,callback) {
 function getNotSettleHandoverCarCount(params,callback) {
     var query = " select count(dpdtl.id) as car_count from dp_route_load_task_detail dpdtl " +
         " left join settle_handover_car_rel shcr on dpdtl.car_id = shcr.car_id " +
+        " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
         " where shcr.car_id is null ";
     var paramsArray=[],i=0;
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
     if(params.carLoadStatus){
         paramsArray[i++] = params.carLoadStatus;
         query = query + " and dpdtl.car_load_status = ? ";
@@ -310,7 +319,10 @@ function getSettleHandoverMonthCount(params,callback) {
 
 function getDriveSettle(params,callback) {
     var query = " select d.id,d.drive_name,cp.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
-        " count(dpdtl.id) as car_count,sum(ecrr.fee)as value_total from drive_info d " +
+        " count(dpdtl.id) as car_count,sum(ecrr.fee)as value_total," +
+        " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance," +
+        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
+        " from drive_info d " +
         " left join company_info cp on d.company_id = cp.id " +
         " left join truck_info t on d.id = t.drive_id " +
         " left join dp_route_task dpr on t.id = dpr.truck_id " +

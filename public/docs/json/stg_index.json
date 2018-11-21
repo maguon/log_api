@@ -21714,6 +21714,22 @@
         "parameters": [
 
           {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "carLoadStatus",
             "in": "query",
             "description": "carLoad status",

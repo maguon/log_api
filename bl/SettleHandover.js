@@ -362,7 +362,8 @@ function getNotSettleHandoverCsv(req,res,next){
 
 function getDriveSettleCsv(req,res,next){
     var csvString = "";
-    var header = "司机姓名" + ',' + "所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "商品车台数"+ ','+ "产值" ;
+    var header = "司机姓名" + ',' + "所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "商品车台数"+ ','+ "产值"
+        + ','+ "重载公里数"+ ','+ "空载公里数" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -398,7 +399,18 @@ function getDriveSettleCsv(req,res,next){
                 }else{
                     parkObj.valueTotal = rows[i].value_total;
                 }
-                csvString = csvString+parkObj.driveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckNum+","+parkObj.carCount+","+parkObj.valueTotal+ '\r\n';
+                if(rows[i].load_distance == null){
+                    parkObj.loadDistance = "";
+                }else{
+                    parkObj.loadDistance = rows[i].load_distance;
+                }
+                if(rows[i].no_load_distance == null){
+                    parkObj.noLoadDistance = "";
+                }else{
+                    parkObj.noLoadDistance = rows[i].no_load_distance;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckNum+","+parkObj.carCount+","+parkObj.valueTotal
+                    +","+parkObj.loadDistance+","+parkObj.noLoadDistance+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
