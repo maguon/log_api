@@ -21736,6 +21736,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "transferFlag",
+            "in": "query",
+            "description": "transfer flag",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

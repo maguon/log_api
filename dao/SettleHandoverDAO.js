@@ -243,6 +243,7 @@ function getNotSettleHandoverCarCount(params,callback) {
     var query = " select count(dpdtl.id) as car_count from dp_route_load_task_detail dpdtl " +
         " left join settle_handover_car_rel shcr on dpdtl.car_id = shcr.car_id " +
         " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
+        " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
         " where shcr.car_id is null ";
     var paramsArray=[],i=0;
     if(params.taskPlanDateStart){
@@ -256,6 +257,10 @@ function getNotSettleHandoverCarCount(params,callback) {
     if(params.carLoadStatus){
         paramsArray[i++] = params.carLoadStatus;
         query = query + " and dpdtl.car_load_status = ? ";
+    }
+    if(params.transferFlag){
+        paramsArray[i++] = params.transferFlag;
+        query = query + " and dprl.transfer_flag = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getNotSettleHandoverCarCount ');
