@@ -430,7 +430,7 @@
         }
       }
     },
-    "/phone/{mobile}/mobileSms": {
+    "/user/{userId}/phone/{mobile}/mobileSms": {
       "post": {
         "tags": [
           "user"
@@ -442,6 +442,14 @@
         ],
         "parameters": [
 
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
           {
             "name": "mobile",
             "in": "path",
@@ -682,7 +690,7 @@
         }
       }
     },
-    "/phone/{mobile}/mobile": {
+    "/user/{userId}/mobile": {
       "put": {
         "tags": [
           "user"
@@ -694,11 +702,11 @@
         ],
         "parameters": [
           {
-            "name": "mobile",
+            "name": "userId",
             "in": "path",
-            "description": "user unique mobile",
+            "description": "user id",
             "required": true,
-            "type": "string"
+            "type": "integer"
 
           },
           {

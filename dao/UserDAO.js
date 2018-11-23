@@ -179,9 +179,9 @@ function updateUserMobile(params,callback){
     var query = " update user_info set mobile = ? where uid is not null ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.newMobile;
-    if(params.mobile){
-        paramsArray[i++] = params.mobile;
-        query = query + " and mobile = ? ";
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and uid = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateUserMobile ');

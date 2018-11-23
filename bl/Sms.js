@@ -69,7 +69,7 @@ function sendPhoneSms(req,res,next){
     Seq().seq(function(){
         var that = this;
         //Get user by phone
-        userDAO.getUser(params,function(error,rows){
+        userDAO.getUser(params.userId,function(error,rows){
             if (error) {
                 logger.error(' sendPhoneSms ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
