@@ -718,7 +718,7 @@ function updateCaCurrentCity(params,callback){
 function deleteUploadCar(params,callback){
     var query = " delete from car_info where car_status = ? and upload_id = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i] = params.carStatus;
+    paramsArray[i++] = params.carStatus;
     paramsArray[i] = params.uploadId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' deleteUploadCar ');
