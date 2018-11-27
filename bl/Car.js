@@ -250,6 +250,7 @@ function updateCarStatus(req,res,next){
 
 function removeUploadCar(req,res,next){
     var params = req.params ;
+    params.carStatus = listOfValue.CAR_STATUS_MOVE;
     carDAO.deleteUploadCar(params,function(error,result){
         if (error) {
             logger.error(' removeUploadCar ' + error.message);
