@@ -75,7 +75,7 @@ function getEntrustCar(params,callback) {
         if(params.entrustId){
             query = query + " and ecrr.entrust_id = "+params.entrustId;
         }
-    query = query + " where c.id is not null  ";
+    query = query + " where c.id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
