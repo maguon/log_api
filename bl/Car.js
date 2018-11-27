@@ -248,6 +248,21 @@ function updateCarStatus(req,res,next){
     })
 }
 
+function removeUploadCar(req,res,next){
+    var params = req.params ;
+    carDAO.deleteUploadCar(params,function(error,result){
+        if (error) {
+            logger.error(' removeUploadCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeUploadCar ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+
 module.exports = {
     createUploadCar : createUploadCar,
     createCar : createCar,
@@ -261,5 +276,6 @@ module.exports = {
     queryCarDamageDeclare : queryCarDamageDeclare,
     updateCar : updateCar,
     updateCarVin : updateCarVin,
-    updateCarStatus : updateCarStatus
+    updateCarStatus : updateCarStatus,
+    removeUploadCar : removeUploadCar
 }
