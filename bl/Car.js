@@ -263,6 +263,62 @@ function removeUploadCar(req,res,next){
     })
 }
 
+function getCarRelCsv(req,res,next){
+    var csvString = "";
+    var header = "VIN" + ',' + "制造商" + ',' + "入库时间" + ','+ "存放车库" + ','+ "存放区域"+ ','+ "存放位置" + ','+ "实际出库时间" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    carDAO.getCar(params,function(error,rows){
+        if (error) {
+            logger.error(' getCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.vin = rows[i].vin;
+                parkObj.makeName = rows[i].make_name;
+                if(rows[i].enter_time == null){
+                    parkObj.enterTime = "";
+                }else{
+                    parkObj.enterTime = new Date(rows[i].enter_time).toLocaleDateString();
+                }
+                if(rows[i].storage_name == null){
+                    parkObj.storageName = "";
+                }else{
+                    parkObj.storageName = rows[i].storage_name;
+                }
+                if(rows[i].area_name == null){
+                    parkObj.areaName = "";
+                }else{
+                    parkObj.areaName = rows[i].area_name;
+                }
+                if(rows[i].row == null){
+                    parkObj.rowCol = "";
+                }else{
+                    parkObj.rowCol = rows[i].row+"排"+rows[i].col+"列";
+                }
+                if(rows[i].real_out_time == null){
+                    parkObj.realOutTime = "";
+                }else{
+                    parkObj.realOutTime = new Date(rows[i].real_out_time).toLocaleDateString();
+                }
+
+
+                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.enterTime+","+parkObj.storageName+","+parkObj.areaName+","
+                    +parkObj.rowCol+","+parkObj.realOutTime+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createUploadCar : createUploadCar,
@@ -278,5 +334,6 @@ module.exports = {
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
-    removeUploadCar : removeUploadCar
+    removeUploadCar : removeUploadCar,
+    getCarRelCsv : getCarRelCsv
 }
