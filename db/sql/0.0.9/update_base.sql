@@ -175,3 +175,10 @@ CREATE TABLE `dp_route_load_task_tmp` (
 -- ----------------------------
 ALTER TABLE `drive_salary`
 ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `actual_salary`;
+-- ----------------------------
+-- 2018-12-07 更新
+-- ----------------------------
+ALTER TABLE `settle_car`
+ADD COLUMN `distance`  decimal(10,2) NULL DEFAULT 0 COMMENT '公里数' AFTER `route_end_id`,
+ADD COLUMN `fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '公里数单价' AFTER `distance`,
+ADD COLUMN `plan_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '预计总价' AFTER `fee`;

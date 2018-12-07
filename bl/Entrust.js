@@ -148,6 +148,20 @@ function getEntrustCarCsv(req,res,next){
     })
 }
 
+function createSettleCarBatch(req,res,next){
+    var params = req.params ;
+    entrustDAO.addSettleCarBatch(params,function(error,result){
+        if (error) {
+            logger.error(' createSettleCarBatch ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createSettleCarBatch ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createEntrust : createEntrust,
@@ -155,5 +169,6 @@ module.exports = {
     queryEntrustRoute : queryEntrustRoute,
     queryEntrustCar : queryEntrustCar,
     updateEntrust : updateEntrust,
-    getEntrustCarCsv : getEntrustCarCsv
+    getEntrustCarCsv : getEntrustCarCsv,
+    createSettleCarBatch : createSettleCarBatch
 }
