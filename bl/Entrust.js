@@ -74,6 +74,34 @@ function queryEntrustCar(req,res,next){
     })
 }
 
+function queryEntrustCarCount(req,res,next){
+    var params = req.params ;
+    entrustDAO.getEntrustCarCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustCarCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustCarCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryEntrustCarNotCount(req,res,next){
+    var params = req.params ;
+    entrustDAO.getEntrustCarNotCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustCarNotCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustCarNotCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateEntrust(req,res,next){
     var params = req.params ;
     entrustDAO.updateEntrust(params,function(error,result){
@@ -168,6 +196,8 @@ module.exports = {
     queryEntrust : queryEntrust,
     queryEntrustRoute : queryEntrustRoute,
     queryEntrustCar : queryEntrustCar,
+    queryEntrustCarCount : queryEntrustCarCount,
+    queryEntrustCarNotCount : queryEntrustCarNotCount,
     updateEntrust : updateEntrust,
     getEntrustCarCsv : getEntrustCarCsv,
     createSettleCarBatch : createSettleCarBatch

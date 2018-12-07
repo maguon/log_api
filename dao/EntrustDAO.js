@@ -71,11 +71,8 @@ function getEntrustCar(params,callback) {
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
         " left join city_route_info cr on c.route_id = cr.route_id " +
-        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id ";
-        if(params.entrustId){
-            query = query + " and ecrr.entrust_id = "+params.entrustId;
-        }
-    query = query + " where ecrr.entrust_id is not null and c.car_status >=1 ";
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " where ecrr.entrust_id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
@@ -121,6 +118,102 @@ function getEntrustCar(params,callback) {
     });
 }
 
+function getEntrustCarCount(params,callback) {
+    var query = " select count(c.id)as entrust_car_count,convert(sum(ecrr.distance*ecrr.fee),decimal(10,2)) as entrust_car_price " +
+        " from car_info c " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
+        " left join receive_info r on c.receive_id = r.id " +
+        " left join city_route_info cr on c.route_id = cr.route_id " +
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " where ecrr.entrust_id is not null and c.car_status >=1 ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
+    }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getEntrustCarCount ');
+        return callback(error,rows);
+    });
+}
+
+function getEntrustCarNotCount(params,callback) {
+    var query = " select count(c.id)as entrust_car_not_count " +
+        " from car_info c " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
+        " left join receive_info r on c.receive_id = r.id " +
+        " left join city_route_info cr on c.route_id = cr.route_id " +
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " where ecrr.entrust_id is null and c.car_status >=1 ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
+    }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getEntrustCarNotCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateEntrust(params,callback){
     var query = " update entrust_info set short_name = ?,entrust_name = ?,remark = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -142,11 +235,8 @@ function addSettleCarBatch(params,callback) {
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
         " left join city_route_info cr on c.route_id = cr.route_id " +
-        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id ";
-    if(params.entrustId){
-        query = query + " and ecrr.entrust_id = "+params.entrustId;
-    }
-    query = query + " where ecrr.entrust_id is not null and c.car_status >=1 ";
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id" +
+        " where ecrr.entrust_id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
@@ -193,6 +283,8 @@ module.exports ={
     getEntrust : getEntrust,
     getEntrustRoute : getEntrustRoute,
     getEntrustCar : getEntrustCar,
+    getEntrustCarCount : getEntrustCarCount,
+    getEntrustCarNotCount : getEntrustCarNotCount,
     updateEntrust : updateEntrust,
     addSettleCarBatch : addSettleCarBatch
 }
