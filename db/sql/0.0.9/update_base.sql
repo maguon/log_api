@@ -170,3 +170,8 @@ CREATE TABLE `dp_route_load_task_tmp` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2018-12-07 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `actual_salary`;
