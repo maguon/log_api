@@ -10898,8 +10898,8 @@
         }
       }
     },
-    "/user/{userId}/settleCarBatch": {
-      "post": {
+    "/settleCarBatch": {
+      "get": {
         "tags": [
           "entrust"
         ],
