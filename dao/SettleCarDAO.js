@@ -88,6 +88,10 @@ function getSettleCar(params,callback) {
         paramsArray[i++] = params.uploadId;
         query = query + " and sc.upload_id = ? ";
     }
+    if(params.settleStatus){
+        paramsArray[i++] = params.settleStatus;
+        query = query + " and sc.settle_status = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
