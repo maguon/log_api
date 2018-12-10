@@ -10910,14 +10910,6 @@
         ],
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",
