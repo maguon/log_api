@@ -152,7 +152,8 @@ function getNotSettleCar(params,callback) {
 }
 
 function getSettleCarCount(params,callback) {
-    var query = " select count(sc.id) as settle_car_count,sum(sc.price) as price from settle_car sc " +
+    var query = " select sc.settle_status,count(sc.id) as settle_car_count,sum(sc.price) as price " +
+        " from settle_car sc " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
         " where sc.id is not null ";
@@ -184,6 +185,11 @@ function getSettleCarCount(params,callback) {
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
     }
+    if(params.settleStatus){
+        paramsArray[i++] = params.settleStatus;
+        query = query + " and sc.settle_status = ? ";
+    }
+    query = query + ' group by sc.settle_status ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getSettleCarCount ');
         return callback(error,rows);

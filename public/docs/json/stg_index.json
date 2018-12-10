@@ -23566,6 +23566,14 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "settleStatus",
+            "in": "query",
+            "description": "settle status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
