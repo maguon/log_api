@@ -152,7 +152,7 @@ function getNotSettleCar(params,callback) {
 }
 
 function getSettleCarCount(params,callback) {
-    var query = " select sc.settle_status,count(sc.id) as settle_car_count,sum(sc.price) as price " +
+    var query = " select count(sc.id) as settle_car_count,sum(sc.price) as price " +
         " from settle_car sc " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
@@ -189,7 +189,6 @@ function getSettleCarCount(params,callback) {
         paramsArray[i++] = params.settleStatus;
         query = query + " and sc.settle_status = ? ";
     }
-    query = query + ' group by sc.settle_status ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getSettleCarCount ');
         return callback(error,rows);
@@ -197,30 +196,30 @@ function getSettleCarCount(params,callback) {
 }
 
 function getNotSettleCarCount(params,callback) {
-    var query = " select count(c.id) as not_settle_count from car_info c " +
-        " left join settle_car sc on c.vin = sc.vin and c.entrust_id = sc.entrust_id " +
-        " and c.route_start_id = sc.route_start_id and c.route_end_id = sc.route_end_id " +
-        " where sc.id is null ";
+    var query = " select count(sc.id) as not_settle_car_count,sum(sc.plan_price) as plan_price " +
+        " from settle_car sc " +
+        " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
+        " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
+        " where sc.id is not null ";
     var paramsArray=[],i=0;
     if(params.vin){
         paramsArray[i++] = params.vin;
-        query = query + " and c.vin = ? ";
+        query = query + " and sc.vin = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and sc.vin like '%"+params.vinCode+"%'";
     }
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
-        query = query + " and c.entrust_id = ? ";
+        query = query + " and sc.entrust_id = ? ";
     }
     if(params.routeStartId){
         paramsArray[i++] = params.routeStartId;
-        query = query + " and c.route_start_id = ? ";
+        query = query + " and sc.route_start_id = ? ";
     }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
-        query = query + " and c.route_end_id = ? ";
-    }
-    if(params.receiveId){
-        paramsArray[i++] = params.receiveId;
-        query = query + " and c.receive_id = ? ";
+        query = query + " and sc.route_end_id = ? ";
     }
     if(params.orderStart){
         paramsArray[i++] = params.orderStart;
@@ -230,8 +229,12 @@ function getNotSettleCarCount(params,callback) {
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
     }
+    if(params.settleStatus){
+        paramsArray[i++] = params.settleStatus;
+        query = query + " and sc.settle_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getNotSettleCarCount ');
+        logger.debug(' getSettleCarCount ');
         return callback(error,rows);
     });
 }
