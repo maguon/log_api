@@ -183,9 +183,15 @@ function createSettleCarBatch(req,res,next){
             logger.error(' createSettleCarBatch ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' createSettleCarBatch ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
+            if(result&&result.insertId>0){
+                logger.info(' createSettleCarBatch ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }else{
+                resUtil.resetFailedRes(res," 暂无数据 ");
+                return next();
+            }
+
         }
     })
 }

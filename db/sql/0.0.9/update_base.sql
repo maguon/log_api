@@ -182,3 +182,8 @@ ALTER TABLE `settle_car`
 ADD COLUMN `distance`  decimal(10,2) NULL DEFAULT 0 COMMENT '公里数' AFTER `route_end_id`,
 ADD COLUMN `fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '公里数单价' AFTER `distance`,
 ADD COLUMN `plan_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '预计总价' AFTER `fee`;
+-- ----------------------------
+-- 2018-12-10 更新
+-- ----------------------------
+ALTER TABLE `settle_car`
+ADD COLUMN `settle_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态' AFTER `price`;
