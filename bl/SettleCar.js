@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var settleCarDAO = require('../dao/SettleCarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -114,11 +115,12 @@ function uploadSettleCarFile(req,res,next){
                 routeStartId : objArray[i].routeStartId,
                 routeEndId : objArray[i].routeEndId,
                 price : objArray[i].price,
+                settleStatus : sysConst.SETTLE_STATUS.settle,
                 userId : params.userId,
                 uploadId : params.uploadId,
                 row : i+1,
             }
-            settleCarDAO.addUploadSettleCar(subParams,function(err,result){
+            settleCarDAO.updateUploadSettleCar(subParams,function(err,result){
                 if (err) {
                     if(err.message.indexOf("Duplicate") > 0) {
                         failedCase=objArray.length-successedInsert;
