@@ -4106,22 +4106,6 @@
 
           },
           {
-            "name": "transferCityId",
-            "in": "query",
-            "description": "transferCity id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "transferAddrId",
-            "in": "query",
-            "description": "transferAddr id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
@@ -4178,25 +4162,9 @@
 
           },
           {
-            "name": "baseAddrId",
-            "in": "query",
-            "description": "baseAddr id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "taskEnd",
             "in": "query",
             "description": "task end",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "receiveId",
-            "in": "query",
-            "description": "receive id",
             "required": false,
             "type": "integer"
 
