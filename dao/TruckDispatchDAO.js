@@ -16,22 +16,12 @@ function getTruckDispatch(params,callback) {
         " left join truck_info h on td.truck_id = h.id " +
         " left join drive_info d on h.drive_id = d.id " +
         " left join company_info c on h.company_id = c.id " +
-        " left join dp_route_task dpr on td.truck_id = dpr.truck_id " +
-        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id" +
         " left join user_info u on d.user_id = u.uid " +
         " where td.truck_id is not null ";
     var paramsArray=[],i=0;
     if(params.dispatchFlag){
         paramsArray[i++] = params.dispatchFlag;
         query = query + " and td.dispatch_flag = ? ";
-    }
-    if(params.transferCityId){
-        paramsArray[i++] = params.transferCityId;
-        query = query + " and dprl.transfer_city_id = ? ";
-    }
-    if(params.transferAddrId){
-        paramsArray[i++] = params.transferAddrId;
-        query = query + " and dprl.transfer_addr_id = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
@@ -57,17 +47,9 @@ function getTruckDispatch(params,callback) {
         paramsArray[i++] = params.taskStart;
         query = query + " and td.task_start = ? ";
     }
-    if(params.baseAddrId){
-        paramsArray[i++] = params.baseAddrId;
-        query = query + " and dprl.base_addr_id = ? ";
-    }
     if(params.taskEnd){
         paramsArray[i++] = params.taskEnd;
         query = query + " and td.task_end = ? ";
-    }
-    if(params.receiveId){
-        paramsArray[i++] = params.receiveId;
-        query = query + " and dprl.receive_id = ? ";
     }
     if(params.cityTaskStart){
         query = query + " and concat(td.current_city,td.task_start) like '%"+params.cityTaskStart+"%'";
