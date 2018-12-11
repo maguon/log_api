@@ -319,6 +319,65 @@ function getCarRelCsv(req,res,next){
     })
 }
 
+function getCarListCsv(req,res,next){
+    var csvString = "";
+    var header = "VIN" + ',' + "制造商" + ',' +"委托方" + ',' + "发运地城市" + ','+ "发运地地址" + ','+ "目的地城市"+ ','+ "经销商" + ','+ "指令时间" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    carDAO.getCarList(params,function(error,rows){
+        if (error) {
+            logger.error(' getCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.vin = rows[i].vin;
+                parkObj.makeName = rows[i].make_name;
+                if(rows[i].en_short_name == null){
+                    parkObj.enShortName = "";
+                }else{
+                    parkObj.enShortName = rows[i].en_short_name;
+                }
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].addr_name == null){
+                    parkObj.addrName = "";
+                }else{
+                    parkObj.addrName = rows[i].addr_name;
+                }
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                if(rows[i].re_short_name == null){
+                    parkObj.reShortName = "";
+                }else{
+                    parkObj.reShortName = rows[i].re_short_name;
+                }
+                if(rows[i].order_date == null){
+                    parkObj.orderDate = "";
+                }else{
+                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                }
+                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.enShortName+","+parkObj.routeStart+","+parkObj.addrName+","
+                    +parkObj.routeEnd+","+parkObj.reShortName+","+parkObj.orderDate+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createUploadCar : createUploadCar,
@@ -335,5 +394,6 @@ module.exports = {
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
     removeUploadCar : removeUploadCar,
-    getCarRelCsv : getCarRelCsv
+    getCarRelCsv : getCarRelCsv,
+    getCarListCsv : getCarListCsv
 }

@@ -13354,8 +13354,8 @@
         "tags": [
           "car"
         ],
-        "summary": "query  car csv",
-        "description": "query carCsv",
+        "summary": "query  carRel csv",
+        "description": "query carRelCsv",
         "produces": [
           "application/json"
         ],
@@ -13534,6 +13534,186 @@
             "description": "storage id",
             "required": false,
             "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/car"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/carList.csv": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query carList csv ",
+        "description": "query carListCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "carId",
+            "in": "query",
+            "description": "car id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdStart",
+            "in": "query",
+            "description": "created start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdEnd",
+            "in": "query",
+            "description": "created end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "carStatus",
+            "in": "query",
+            "description": "car status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "carStatusArr",
+            "in": "query",
+            "description": "car statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "currentCityId",
+            "in": "query",
+            "description": "currentCity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "currentAddrId",
+            "in": "query",
+            "description": "currentAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": false,
+            "type": "string"
 
           }
         ],
@@ -15625,74 +15805,6 @@
         }
       }
     },
-    "/driveDistanceLoad": {
-      "get": {
-        "tags": [
-          "dispatch"
-        ],
-        "summary": "query driveDistance load",
-        "description": "query driveDistanceLoad",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "taskStatus",
-            "in": "query",
-            "description": "task status",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "driveId",
-            "in": "query",
-            "description": "drive id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "driveName",
-            "in": "query",
-            "description": "drive name",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "dateIdStart",
-            "in": "query",
-            "description": "dateId start",
-            "required": false,
-            "type": "string"
-
-          },
-          {
-            "name": "dateIdEnd",
-            "in": "query",
-            "description": "dateId end",
-            "required": false,
-            "type": "string"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/dpRouteTask"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid dpRouteTask id"
-          }
-        }
-      }
-    },
     "/driveDistanceLoadStat": {
       "get": {
         "tags": [
@@ -15742,6 +15854,14 @@
             "description": "dateId end",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "loadFlag",
+            "in": "query",
+            "description": "load flag",
+            "required": false,
+            "type": "integer"
 
           }
         ],

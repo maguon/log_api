@@ -231,42 +231,6 @@ function getDriveDistanceCount(params,callback) {
     });
 }
 
-function getDriveDistanceLoad(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,u.mobile, " +
-        " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
-        " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
-        " td.dispatch_flag,td.current_city,td.task_start,td.task_end " +
-        " from dp_route_task dpr " +
-        " left join drive_info d on dpr.drive_id = d.id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
-        " left join truck_dispatch td on dpr.truck_id = td.truck_id " +
-        " left join user_info u on d.user_id = u.uid " +
-        " where dpr.id is not null ";
-    var paramsArray=[],i=0;
-    if(params.driveId){
-        paramsArray[i++] = params.driveId;
-        query = query + " and dpr.drive_id = ? ";
-    }
-    if(params.driveName){
-        paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
-    }
-    if(params.dateIdStart){
-        paramsArray[i++] = params.dateIdStart;
-        query = query + " and dpr.date_id >= ? ";
-    }
-    if(params.dateIdEnd){
-        paramsArray[i++] = params.dateIdEnd;
-        query = query + " and dpr.date_id <= ? ";
-    }
-    query = query + ' group by d.id,td.dispatch_flag,td.current_city,td.task_start,td.task_end ';
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDriveDistanceLoad ');
-        return callback(error,rows);
-    });
-}
-
 function getDriveDistanceLoadStat(params,callback) {
     var query = " select d.id as drive_id,d.drive_name,u.mobile," +
         " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
@@ -292,6 +256,10 @@ function getDriveDistanceLoadStat(params,callback) {
     if(params.dateIdEnd){
         paramsArray[i++] = params.dateIdEnd;
         query = query + " and dpr.date_id <= ? ";
+    }
+    if(params.loadFlag){
+        paramsArray[i++] = params.loadFlag;
+        query = query + " and dpr.load_flag = ? ";
     }
     query = query + ' group by d.id';
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -501,7 +469,6 @@ module.exports ={
     getDpRouteTaskBase : getDpRouteTaskBase,
     getNotCompletedTaskStatusCount : getNotCompletedTaskStatusCount,
     getDriveDistanceCount : getDriveDistanceCount,
-    getDriveDistanceLoad : getDriveDistanceLoad,
     getDriveDistanceLoadStat : getDriveDistanceLoadStat,
     getTaskStatusCount : getTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,

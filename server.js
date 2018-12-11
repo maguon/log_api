@@ -542,6 +542,7 @@ function createServer() {
     server.get('/api/carDayStat',car.queryCarDayStat);
     server.get('/api/carDamageDeclare',car.queryCarDamageDeclare);
     server.get('/api/carRel.csv',car.getCarRelCsv);
+    server.get('/api/carList.csv',car.getCarListCsv);
     server.post({path:'/api/user/:userId/uploadCar',contentType: 'application/json'},car.createUploadCar);
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
@@ -606,7 +607,6 @@ function createServer() {
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
     server.get('/api/dpRouteTaskBase' , dpRouteTask.queryDpRouteTaskBase);
     server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
-    server.get('/api/driveDistanceLoad' , dpRouteTask.queryDriveDistanceLoad);
     server.get('/api/driveDistanceLoadStat' , dpRouteTask.queryDriveDistanceLoadStat);
     server.get('/api/distanceMonthStat' , dpRouteTask.queryRouteTaskMonthStat);
     server.get('/api/distanceWeekStat' , dpRouteTask.queryRouteTaskWeekStat);
