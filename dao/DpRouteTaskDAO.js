@@ -268,12 +268,13 @@ function getDriveDistanceLoad(params,callback) {
 }
 
 function getDriveDistanceLoadStat(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name," +
+    var query = " select d.id as drive_id,d.drive_name,u.mobile," +
         " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
+        " left join user_info u on d.user_id = u.uid " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveId){
