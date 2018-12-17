@@ -15,7 +15,7 @@ var USER_STATUS_NOT_ACTIVE = 0;
 /**
  * CAR STATUS
  */
-var CAR_STATUS_OUT = 9;
+var CAR_STATUS_OUT = 9;//出库送达完成
 var CAR_STATUS_LOAD = 3;
 var CAR_STATUS_TRANSFER = 2;
 var CAR_STATUS_MOVE = 1;
