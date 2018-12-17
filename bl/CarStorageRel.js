@@ -10,6 +10,8 @@ var listOfValue = require('../util/ListOfValue.js');
 var carStorageRelDAO = require('../dao/CarStorageRelDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var storageParkingDAO = require('../dao/StorageParkingDAO.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -375,10 +377,100 @@ function updateRelPlanOutTime(req,res,next){
     })
 }
 
+function uploadCarExportsFile(req,res,next){
+    var params = req.params;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                vin : objArray[i].vin,
+                entrustId : objArray[i].entrustId,
+                storageId : objArray[i].storageId,
+                active : listOfValue.REL_STATUS_ACTIVE,
+                row : i+1,
+            }
+            carDAO.getCar(subParams,function(error,rows){
+                if (error) {
+                    logger.error(' getCar ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else{
+                    if(rows&&rows.length>0){
+                        parkObj.carId = rows[0].id;
+                        parkObj.entrustId = rows[0].entrust_id;
+                        parkObj.carStatus = listOfValue.CAR_STATUS_OUT;
+                        parkObj.relId = rows[0].r_id;
+                        parkObj.relStatus = listOfValue.REL_STATUS_OUT;
+                        parkObj.parkingId = rows[0].p_id;
+                        parkObj.storageId = rows[0].storage_id;
+                        console.log(parkObj)
+                        carDAO.updateCarStatusBatch(parkObj,function(err,result){
+                            if (err) {
+                                logger.error(' updateCarStatusBatch ' + err.message);
+                                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            } else {
+                                if(result&&result.affectedRows>0){
+                                    successedInsert = successedInsert+1;
+                                    logger.info(' updateCarStatusBatch ' + 'success');
+                                }else{
+                                    logger.warn(' updateCarStatusBatch ' + 'failed');
+                                }
+                                that(null, i);
+                            }
+                        })
+                        carStorageRelDAO.updateRelStatus(parkObj,function(error,result){
+                            if (error) {
+                                logger.error(' updateRelStatus ' + error.message);
+                                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            } else {
+                                if(result&&result.affectedRows>0){
+                                    logger.info(' updateRelStatus ' + 'success');
+                                }else{
+                                    logger.warn(' updateRelStatus ' + 'failed');
+                                }
+                                that(null, i);
+                            }
+                        })
+                        storageParkingDAO.updateStorageParkingOut(parkObj,function(error,result){
+                            if (error) {
+                                logger.error(' updateStorageParkingOut ' + error.message);
+                                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            } else {
+                                if(result&&result.affectedRows>0){
+                                    logger.info(' updateStorageParkingOut ' + 'success');
+                                }else{
+                                    logger.warn(' updateStorageParkingOut ' + 'failed');
+                                }
+                                that(null, i);
+                            }
+                        })
+                    }else{
+                        logger.warn(' getCar ' + 'failed');
+                        resUtil.resetFailedRes(res," 与系统数据不匹配,操作失败 ");
+                        return next();
+                    }
+                }
+            })
+
+        }).seq(function(){
+            console.log(successedInsert)
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadCarExportsFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 
 module.exports = {
     createCarStorageRel : createCarStorageRel,
     createAgainCarStorageRel : createAgainCarStorageRel,
     updateRelStatus : updateRelStatus,
-    updateRelPlanOutTime : updateRelPlanOutTime
+    updateRelPlanOutTime : updateRelPlanOutTime,
+    uploadCarExportsFile : uploadCarExportsFile
 }

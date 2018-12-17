@@ -683,6 +683,18 @@ function updateCarStatus(params,callback){
     });
 }
 
+function updateCarStatusBatch(params,callback){
+    var query = " update car_info set car_status = ? where id = ? and entrust_id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.carStatus;
+    paramsArray[i++] = params.carId;
+    paramsArray[i++] = params.entrustId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarStatusBatch ');
+        return callback(error,rows);
+    });
+}
+
 function updateCarOrderDate(params,callback){
     var query = " update car_info left join dp_route_load_task_detail on car_info.id = dp_route_load_task_detail.car_id " +
         " left join dp_route_load_task on dp_route_load_task.id = dp_route_load_task_detail.dp_route_load_task_id " +
@@ -743,6 +755,7 @@ module.exports ={
     updateCar : updateCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
+    updateCarStatusBatch : updateCarStatusBatch,
     updateCarOrderDate : updateCarOrderDate,
     updateCaCurrentCity : updateCaCurrentCity,
     deleteUploadCar : deleteUploadCar
