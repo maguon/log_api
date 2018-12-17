@@ -418,8 +418,9 @@ function uploadCarExportsFile(req,res,next){
                         })
                     }else{
                         logger.warn(' getCar ' + 'failed');
-                        resUtil.resetFailedRes(res," 与系统数据不匹配,操作失败 ");
-                        return next();
+/*                        resUtil.resetFailedRes(res," 与系统数据不匹配,操作失败 ");
+                        return next();*/
+                        that();
                     }
                 }
             })
