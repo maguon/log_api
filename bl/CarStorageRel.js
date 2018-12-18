@@ -387,8 +387,7 @@ function uploadCarExportsFile(req,res,next){
                         that(null, i);
                     }else{
                         logger.warn(' getCar ' + 'failed');
-                        resUtil.resetFailedRes(res," 数据不匹配或已经出库,操作失败 ");
-                        return next();
+                        that();
                     }
                 }
             })
