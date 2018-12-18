@@ -373,7 +373,7 @@ function uploadCarExportsFile(req,res,next){
                 vin : objArray[i].vin,
                 entrustId : objArray[i].entrustId,
                 storageId : objArray[i].storageId,
-                //relStatus : listOfValue.REL_STATUS_MOVE,
+                relStatus : listOfValue.REL_STATUS_MOVE,
                 active : listOfValue.REL_STATUS_ACTIVE,
                 row : i+1,
             }
