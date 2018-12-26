@@ -763,7 +763,7 @@ function getDriveDistanceLoadStatCsv(req,res,next){
 
 
                 csvString = csvString+parkObj.driveName+","+parkObj.completeCount+","+parkObj.totalDistance+","
-                    +parkObj.loadDistance+","+parkObj.noLoadDistance+"," +parkObj.loadDistanceRate+"," + '\r\n';
+                    +parkObj.loadDistance+","+parkObj.noLoadDistance+"," +parkObj.loadDistanceRate.toFixed(2) + '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
