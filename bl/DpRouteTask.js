@@ -728,6 +728,18 @@ function getDriveDistanceLoadStatCsv(req,res,next){
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
     dpRouteTaskDAO.getDriveDistanceLoadStat(params,function(error,rows){
         if (error) {
             logger.error(' getDriveDistanceLoadStatCsv ' + error.message);
