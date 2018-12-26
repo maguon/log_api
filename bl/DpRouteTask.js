@@ -722,6 +722,49 @@ function getDpRouteTaskCsv(req,res,next){
     })
 }
 
+function getDriveDistanceLoadStatCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' + "完成任务数" + ',' + "总计里程"+ ',' + "重载公里数" + ','+ "空载公里数" + ','+ "重载率(%)" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskDAO.getDriveDistanceLoadStat(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveDistanceLoadStatCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.completeCount = rows[i].complete_count;
+                parkObj.totalDistance = rows[i].load_distance+rows[i].no_load_distance;
+                if(rows[i].load_distance == null){
+                    parkObj.loadDistance = 0;
+                }else{
+                    parkObj.loadDistance = rows[i].load_distance;
+                }
+                if(rows[i].no_load_distance == null){
+                    parkObj.noLoadDistance = 0;
+                }else{
+                    parkObj.noLoadDistance = rows[i].no_load_distance;
+                }
+                parkObj.loadDistanceRate =rows[i].load_distance/(rows[i].load_distance+rows[i].no_load_distance)*100;
+
+
+                csvString = csvString+parkObj.driveName+","+parkObj.completeCount+","+parkObj.totalDistance+","
+                    +parkObj.loadDistance+","+parkObj.noLoadDistance+"," +parkObj.loadDistanceRate+"," + '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -737,5 +780,6 @@ module.exports = {
     queryRouteTaskDayStat : queryRouteTaskDayStat ,
     queryRouteTaskWeekStat : queryRouteTaskWeekStat ,
     queryRouteTaskMonthStat : queryRouteTaskMonthStat,
-    getDpRouteTaskCsv : getDpRouteTaskCsv
+    getDpRouteTaskCsv : getDpRouteTaskCsv,
+    getDriveDistanceLoadStatCsv : getDriveDistanceLoadStatCsv
 }
