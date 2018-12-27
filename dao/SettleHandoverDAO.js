@@ -323,53 +323,47 @@ function getSettleHandoverMonthCount(params,callback) {
 }
 
 function getDriveSettle(params,callback) {
-    var query = " select d.id,d.drive_name,cp.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
-        " count(dpdtl.id) as car_count,sum(ecrr.fee)as value_total," +
-        " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance," +
-        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
-        " from drive_info d " +
+    var query = " select dt.*,dd.load_distance,dd.no_load_distance from " +
+        " (select d.id,d.drive_name,cp.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
+        " count(dpdtl.id) as car_count,sum(ecrr.fee) as value_total from drive_info d " +
         " left join company_info cp on d.company_id = cp.id " +
+        " left join dp_route_task dpr on d.id = dpr.drive_id " +
         " left join truck_info t on d.id = t.drive_id " +
-        " left join dp_route_task dpr on t.id = dpr.truck_id " +
         " left join dp_route_load_task_detail dpdtl on dpr.id = dpdtl.dp_route_task_id " +
         " left join car_info c on dpdtl.car_id = c.id " +
         " left join city_route_info cr on c.route_id = cr.route_id " +
         " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id " +
-        " where d.id is not null";
+        " where d.id is not null and dpr.date_id>="+params.dateIdStart+" and dpr.date_id<= " +params.dateIdEnd+
+        " group by d.id,t.id)dt left join(select d.id,sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
+        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance from drive_info d " +
+        " left join dp_route_task dpr on d.id = dpr.drive_id " +
+        " where d.id is not null and dpr.date_id>="+params.dateIdStart+" and dpr.date_id<= " +params.dateIdEnd+
+        " group by d.id )dd on dd.id = dt.id where dd.id is not null ";
     var paramsArray=[],i=0;
-    if(params.orderStart){
-        paramsArray[i++] = params.orderStart;
-        query = query + " and c.order_date >= ? ";
-    }
-    if(params.orderEnd){
-        paramsArray[i++] = params.orderEnd;
-        query = query + " and c.order_date <= ? ";
-    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and d.id = ? ";
+        query = query + " and dt.id = ? ";
     }
     if(params.driveName){
         paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
+        query = query + " and dt.drive_name = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and t.id = ? ";
+        query = query + " and dt.truck_id = ? ";
     }
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
-        query = query + " and t.truck_num = ? ";
+        query = query + " and dt.truck_num = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and cp.operate_type = ? ";
+        query = query + " and dt.operate_type = ? ";
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
-        query = query + " and d.company_id = ? ";
+        query = query + " and dt.company_id = ? ";
     }
-    query = query + ' group by d.id,t.id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

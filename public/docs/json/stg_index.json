@@ -22845,17 +22845,17 @@
         ],
         "parameters": [
           {
-            "name": "orderStart",
+            "name": "dateIdStart",
             "in": "query",
-            "description": "order start",
+            "description": "dateId start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "orderEnd",
+            "name": "dateIdEnd",
             "in": "query",
-            "description": "order end",
+            "description": "dateId end",
             "required": false,
             "type": "string"
 
