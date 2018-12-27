@@ -45,20 +45,6 @@ function querySettleCar(req,res,next){
     })
 }
 
-function queryNotSettleCar(req,res,next){
-    var params = req.params ;
-    settleCarDAO.getNotSettleCar(params,function(error,result){
-        if (error) {
-            logger.error(' queryNotSettleCar ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryNotSettleCar ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function querySettleCarCount(req,res,next){
     var params = req.params ;
     settleCarDAO.getSettleCarCount(params,function(error,result){
@@ -155,7 +141,6 @@ function uploadSettleCarFile(req,res,next){
 module.exports = {
     createSettleCar : createSettleCar,
     querySettleCar : querySettleCar,
-    queryNotSettleCar : queryNotSettleCar,
     querySettleCarCount : querySettleCarCount,
     queryNotSettleCarCount : queryNotSettleCarCount,
     updateSettleCar : updateSettleCar,

@@ -476,7 +476,6 @@ function createServer() {
     server.get('/api/entrustCarNotCount',entrust.queryEntrustCarNotCount);
     server.get('/api/entrustCar.csv',entrust.getEntrustCarCsv);
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
-    //server.post({path:'/api/user/:userId/settleCarBatch',contentType: 'application/json'},entrust.createSettleCarBatch);
     server.get('/api/settleCarBatch',entrust.createSettleCarBatch);
     server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);
 
@@ -796,7 +795,6 @@ function createServer() {
      * SettleCar Module
      */
     server.get('/api/settleCar', settleCar.querySettleCar);
-    server.get('/api/notSettleCar', settleCar.queryNotSettleCar);
     server.get('/api/settleCarCount', settleCar.querySettleCarCount);
     server.get('/api/notSettleCarCount', settleCar.queryNotSettleCarCount);
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);

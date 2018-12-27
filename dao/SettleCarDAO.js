@@ -103,54 +103,6 @@ function getSettleCar(params,callback) {
     });
 }
 
-function getNotSettleCar(params,callback) {
-    var query = " select c.*,e.short_name as e_short_name,r.short_name as r_short_name " +
-        " from car_info c " +
-        " left join entrust_info e on c.entrust_id = e.id " +
-        " left join receive_info r on c.receive_id = r.id " +
-        " left join settle_car sc on c.vin = sc.vin and c.entrust_id = sc.entrust_id " +
-        " and c.route_start_id = sc.route_start_id and c.route_end_id = sc.route_end_id " +
-        " where sc.id is null ";
-    var paramsArray=[],i=0;
-    if(params.vin){
-        paramsArray[i++] = params.vin;
-        query = query + " and c.vin = ? ";
-    }
-    if(params.entrustId){
-        paramsArray[i++] = params.entrustId;
-        query = query + " and c.entrust_id = ? ";
-    }
-    if(params.routeStartId){
-        paramsArray[i++] = params.routeStartId;
-        query = query + " and c.route_start_id = ? ";
-    }
-    if(params.routeEndId){
-        paramsArray[i++] = params.routeEndId;
-        query = query + " and c.route_end_id = ? ";
-    }
-    if(params.receiveId){
-        paramsArray[i++] = params.receiveId;
-        query = query + " and c.receive_id = ? ";
-    }
-    if(params.orderStart){
-        paramsArray[i++] = params.orderStart;
-        query = query + " and c.order_date >= ? ";
-    }
-    if(params.orderEnd){
-        paramsArray[i++] = params.orderEnd;
-        query = query + " and c.order_date <= ? ";
-    }
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
-    }
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getNotSettleCar ');
-        return callback(error,rows);
-    });
-}
-
 function getSettleCarCount(params,callback) {
     var query = " select count(sc.id) as settle_car_count,sum(sc.price) as price " +
         " from settle_car sc " +
@@ -275,7 +227,6 @@ function updateUploadSettleCar(params,callback){
 
 module.exports ={
     addSettleCar : addSettleCar,
-    getNotSettleCar : getNotSettleCar,
     getSettleCarCount : getSettleCarCount,
     getNotSettleCarCount : getNotSettleCarCount,
     addUploadSettleCar : addUploadSettleCar,
