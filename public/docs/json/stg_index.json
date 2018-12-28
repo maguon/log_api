@@ -15828,6 +15828,14 @@
 
           },
           {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "dateIdStart",
             "in": "query",
             "description": "dateId start",

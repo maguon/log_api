@@ -232,13 +232,13 @@ function getDriveDistanceCount(params,callback) {
 }
 
 function getDriveDistanceLoadStat(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,u.mobile,t.truck_num," +
+    var query = " select d.id as drive_id,d.drive_name,u.mobile,t.id as truck_id,t.truck_num," +
         " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
-        " left join truck_info t on d.id = t.drive_id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
         " left join user_info u on d.user_id = u.uid " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
@@ -249,6 +249,10 @@ function getDriveDistanceLoadStat(params,callback) {
     if(params.driveName){
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpr.truck_id = ? ";
     }
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
