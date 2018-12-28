@@ -9931,6 +9931,14 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
