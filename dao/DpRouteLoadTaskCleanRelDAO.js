@@ -100,10 +100,22 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
 }
 
 function getDpRouteLoadTaskCleanRelMonthStat(params,callback) {
-        var query = " select DISTINCT(db.y_month),sum(dpcr.actual_price) as actual_price,count(dpcr.id) as clean_count, " +
-            " sum(dpcr.car_count) as car_count from date_base db " +
-            " left join dp_route_load_task_clean_rel dpcr on db.id = dpcr.date_id where db.id is not null ";
+    var query = " select DISTINCT(db.y_month), " ;
     var paramsArray=[],i=0;
+    if(params.makeId){
+        query = query + " sum(case when r.make_id = "+params.makeId+" then dpcr.actual_price end) as actual_price, " +
+            " count(case when r.make_id = "+params.makeId+" then dpcr.id end) as clean_count, " +
+            " sum(case when r.make_id = "+params.makeId+" then dpcr.car_count end) as car_count ";
+    }else{
+        query = query + " sum(dpcr.actual_price) as actual_price, " +
+            " count(dpcr.id) as clean_count, " +
+            " sum(dpcr.car_count) as car_count ";
+    }
+    query = query + " from date_base db " +
+        " left join dp_route_load_task_clean_rel dpcr on db.id = dpcr.date_id "+
+        " left join receive_info r on dpcr.receive_id = r.id " +
+        " where db.id is not null ";
+
     if(params.yearMonth){
         paramsArray[i++] = params.yearMonth;
         query = query + " and db.y_month = ? ";
@@ -134,6 +146,10 @@ function getDpRouteLoadTaskCleanRelReceiveMonthStat(params,callback) {
         " left join date_base db on dpcr.date_id = db.id " +
         " left join receive_info r on dpcr.receive_id = r.id where dpcr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and r.make_id = ? ";
+    }
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";
@@ -156,9 +172,17 @@ function getDpRouteLoadTaskCleanRelReceiveMonthStat(params,callback) {
 }
 
 function getDpRouteLoadTaskCleanRelWeekStat(params,callback) {
-    var query = " select db.y_week,sum(dpcr.actual_price) as actual_price from date_base db " +
-        " left join dp_route_load_task_clean_rel dpcr on db.id = dpcr.date_id where db.id is not null ";
+    var query = " select db.y_week, ";
     var paramsArray=[],i=0;
+    if(params.makeId){
+        query = query + " sum(case when r.make_id = "+params.makeId+" then dpcr.actual_price end) as actual_price ";
+    }else{
+        query = query + " sum(dpcr.actual_price) as actual_price ";
+    }
+    query = query + " from date_base db " +
+        " left join dp_route_load_task_clean_rel dpcr on db.id = dpcr.date_id " +
+        " left join receive_info r on dpcr.receive_id = r.id " +
+        " where db.id is not null ";
     query = query + ' group by db.y_week ';
     query = query + ' order by db.y_week desc ';
     if (params.start && params.size) {
@@ -177,6 +201,10 @@ function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
         " left join date_base db on dpcr.date_id = db.id " +
         " left join receive_info r on dpcr.receive_id = r.id where dpcr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and r.make_id = ? ";
+    }
     if(params.yWeek){
         paramsArray[i++] = params.yWeek;
         query = query + " and db.y_week = ? ";
