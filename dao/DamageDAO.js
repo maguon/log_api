@@ -261,10 +261,23 @@ function updateDamageStatStatus(params,callback){
 }
 
 function getDamageTypeMonthStat(params,callback){
-    var query = " select db.y_month,dt.id,count(case when di.damage_status = "+params.damageStatus+" then di.id end) as damage_count from date_base db " +
-        " inner join damage_type dt " +
-        " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
-        " left join damage_info di on dc.damage_id = di.id where db.id is not null ";
+    if(params.makeId){
+        var query = " select db.y_month,dt.id,count(case when di.damage_status = "+params.damageStatus+" and c.make_id ="+params.makeId+" then di.id end) as damage_count " +
+            " from date_base db " +
+            " inner join damage_type dt " +
+            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id " +
+            " left join car_info c on di.car_id = c.id " +
+            " where db.id is not null ";
+    }else{
+        var query = " select db.y_month,dt.id,count(case when di.damage_status = "+params.damageStatus+" then di.id end) as damage_count " +
+            " from date_base db " +
+            " inner join damage_type dt " +
+            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id " +
+            " left join car_info c on di.car_id = c.id " +
+            " where db.id is not null ";
+    }
     var paramsArray=[],i=0;
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
@@ -288,10 +301,23 @@ function getDamageTypeMonthStat(params,callback){
 }
 
 function getDamageTypeWeekStat(params,callback){
-    var query = " select db.y_week,dt.id,count(case when di.damage_status = "+params.damageStatus+" then di.id end) as damage_count from date_base db " +
-        " inner join damage_type dt " +
-        " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
-        " left join damage_info di on dc.damage_id = di.id where db.id is not null ";
+    if(params.makeId){
+        var query = " select db.y_week,dt.id,count(case when di.damage_status = "+params.damageStatus+" and c.make_id = "+params.makeId+" then di.id end) as damage_count " +
+            " from date_base db " +
+            " inner join damage_type dt " +
+            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id " +
+            " left join car_info c on di.car_id = c.id " +
+            " where db.id is not null ";
+    }else{
+        var query = " select db.y_week,dt.id,count(case when di.damage_status = "+params.damageStatus+" then di.id end) as damage_count " +
+            " from date_base db " +
+            " inner join damage_type dt " +
+            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id " +
+            " left join car_info c on di.car_id = c.id " +
+            " where db.id is not null ";
+    }
     var paramsArray=[],i=0;
     query = query + ' group by db.y_week,dt.id ';
     query = query + ' order by db.y_week desc ';

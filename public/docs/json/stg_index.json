@@ -19284,6 +19284,14 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "monthStart",
             "in": "query",
             "description": "month start",
@@ -19348,6 +19356,14 @@
             "in": "query",
             "description": "damage status",
             "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
             "type": "integer"
 
           },
