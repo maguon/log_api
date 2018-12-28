@@ -323,24 +323,24 @@ function getSettleHandoverMonthCount(params,callback) {
 }
 
 function getDriveSettle(params,callback) {
-    var query = " select dt.*,dd.truck_id,dd.truck_num,dd.load_distance,dd.no_load_distance from " +
-        " (select d.id,d.drive_name,cp.operate_type,cp.id as company_id,cp.company_name, " +
+    var query = " select dt.*,dd.load_distance,dd.no_load_distance from " +
+        " (select d.id,d.drive_name,cp.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
         " count(dpdtl.id) as car_count,sum(ecrr.fee) as value_total from drive_info d " +
         " left join company_info cp on d.company_id = cp.id " +
         " left join dp_route_task dpr on d.id = dpr.drive_id " +
-        " left join truck_info t on d.id = t.drive_id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
         " left join dp_route_load_task_detail dpdtl on dpr.id = dpdtl.dp_route_task_id " +
         " left join car_info c on dpdtl.car_id = c.id " +
         " left join city_route_info cr on c.route_id = cr.route_id " +
-        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id " +
-        " where d.id is not null and dpr.date_id>="+params.dateIdStart+" and dpr.date_id<= " +params.dateIdEnd+
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " where d.id is not null and dpdtl.car_load_status = 2 and dpr.date_id>="+params.dateIdStart+" and dpr.date_id<= " +params.dateIdEnd+
         " group by d.id,t.id)dt left join(select d.id,t.id as truck_id,t.truck_num," +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance from drive_info d " +
         " left join dp_route_task dpr on d.id = dpr.drive_id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " where d.id is not null and dpr.date_id>="+params.dateIdStart+" and dpr.date_id<= " +params.dateIdEnd+
-        " group by d.id,t.id )dd on dd.id = dt.id where dd.id is not null ";
+        " group by d.id,t.id )dd on dd.id = dt.id and dd.truck_id = dt.truck_id where dd.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveId){
         paramsArray[i++] = params.driveId;
