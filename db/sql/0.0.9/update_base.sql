@@ -187,3 +187,12 @@ ADD COLUMN `plan_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '预计总价' AFT
 -- ----------------------------
 ALTER TABLE `settle_car`
 ADD COLUMN `settle_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态' AFTER `price`;
+-- ----------------------------
+-- 2018-12-28 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `make_id`  int(10) NULL DEFAULT 0 COMMENT '品牌ID' AFTER `city_id`,
+ADD COLUMN `make_name`  varchar(50) NULL COMMENT '品牌名称' AFTER `make_id`;
+
+ALTER TABLE `drive_salary`
+ADD COLUMN `social_security_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '社保缴费' AFTER `refund_fee`;

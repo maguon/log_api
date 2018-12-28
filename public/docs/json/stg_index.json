@@ -24764,6 +24764,9 @@
         "refundFee": {
           "type": "integer"
         },
+        "socialSecurityFee": {
+          "type": "integer"
+        },
         "otherFee": {
           "type": "integer"
         },
@@ -25054,6 +25057,12 @@
         },
         "cityId": {
           "type": "integer"
+        },
+        "makeId": {
+          "type": "integer"
+        },
+        "makeName": {
+          "type": "string"
         },
         "remark": {
           "type": "string"
