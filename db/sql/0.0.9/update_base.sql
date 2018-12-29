@@ -196,3 +196,8 @@ ADD COLUMN `make_name`  varchar(50) NULL COMMENT '品牌名称' AFTER `make_id`;
 
 ALTER TABLE `drive_salary`
 ADD COLUMN `social_security_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '社保缴费' AFTER `refund_fee`;
+-- ----------------------------
+-- 2018-12-29 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil`
+ADD COLUMN `exceed_type`  tinyint(1) NULL DEFAULT 0 COMMENT '超量类型(1-超油,2-超尿素)' AFTER `dp_route_task_id`;

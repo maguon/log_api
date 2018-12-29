@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilDAO.js');
 
 function addDriveExceedOil(params,callback){
-    var query = " insert into drive_exceed_oil (dp_route_task_id,exceed_oil_quantity,exceed_oil_money,op_user_id,date_id,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? )";
+    var query = " insert into drive_exceed_oil (dp_route_task_id,exceed_type,exceed_oil_quantity,exceed_oil_money,op_user_id,date_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
+    paramsArray[i++]=params.exceedType;
     paramsArray[i++]=params.exceedOilQuantity;
     paramsArray[i++]=params.exceedOilMoney;
     paramsArray[i++]=params.userId;
@@ -54,6 +55,10 @@ function getDriveExceedOil(params,callback) {
         paramsArray[i++] = params.fineStatus;
         query = query + " and deo.fine_status = ? ";
     }
+    if(params.exceedType){
+        paramsArray[i++] = params.exceedType;
+        query = query + " and deo.exceed_type = ? ";
+    }
     if(params.statStatus){
         paramsArray[i++] = params.statStatus;
         query = query + " and deo.stat_status = ? ";
@@ -81,9 +86,10 @@ function getDriveExceedOilCount(params,callback) {
 }
 
 function updateDriveExceedOil(params,callback){
-    var query = " update drive_exceed_oil set dp_route_task_id = ? , exceed_oil_quantity = ? , exceed_oil_money = ? , remark = ? where id = ? " ;
+    var query = " update drive_exceed_oil set dp_route_task_id = ? , exceed_type = ? , exceed_oil_quantity = ? , exceed_oil_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
+    paramsArray[i++]=params.exceedType;
     paramsArray[i++]=params.exceedOilQuantity;
     paramsArray[i++]=params.exceedOilMoney;
     paramsArray[i++]=params.remark;

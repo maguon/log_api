@@ -8801,6 +8801,14 @@
 
           },
           {
+            "name": "exceedType",
+            "in": "query",
+            "description": "exceed type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "statStatus",
             "in": "query",
             "description": "stat status",
@@ -24970,6 +24978,9 @@
       "properties": {
 
         "dpRouteTaskId": {
+          "type": "integer"
+        },
+        "exceedType": {
           "type": "integer"
         },
         "exceedOilQuantity": {
