@@ -200,4 +200,4 @@ ADD COLUMN `social_security_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '社保�
 -- 2018-12-29 更新
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil`
-ADD COLUMN `exceed_type`  tinyint(1) NULL DEFAULT 1 COMMENT '超量类型(1-超油,2-超尿素)' AFTER `dp_route_task_id`;
+ADD COLUMN `exceed_type`  tinyint(1) NULL DEFAULT 1 COMMENT '超量类型(1-油,2-尿素)' AFTER `dp_route_task_id`;
