@@ -148,7 +148,7 @@ CREATE TABLE `damage_insure` (
 DROP TABLE IF EXISTS `damage_insure_rel`;
 CREATE TABLE `damage_insure_rel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `insure_id` int(10) NOT NULL COMMENT '保险公司ID',
+  `damage_insure_id` int(10) NOT NULL COMMENT '保险赔付ID',
   `damage_id` int(10) NOT NULL COMMENT '质损编号ID',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

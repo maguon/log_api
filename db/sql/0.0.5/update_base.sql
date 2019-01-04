@@ -22,7 +22,7 @@ ADD COLUMN `repair_station_id`  int(10) NULL DEFAULT NULL COMMENT '维修站ID' 
 ADD COLUMN `repair_type`  tinyint(1) NULL DEFAULT NULL COMMENT '维修类型(1-事故,2-非事故)' AFTER `repair_station_id`,
 ADD COLUMN `accident_id`  int(10) NULL COMMENT '事故ID' AFTER `repair_type`;
 
-update car_info set order_date_id = DATE_FORMAT(order_date,'%Y%m%d') where order_date is not null
+update car_info set order_date_id = DATE_FORMAT(order_date,'%Y%m%d') where order_date is not null;
 
 -- ----------------------------
 -- Table structure for damage_type
@@ -259,7 +259,7 @@ ALTER TABLE `damage_info` AUTO_INCREMENT =10000;
 ALTER TABLE `damage_insure` AUTO_INCREMENT =10000;
 
 ALTER TABLE `damage_insure`
-CHANGE COLUMN `insure_id` `damage_insure_id`  int(10) NOT NULL COMMENT '保险公司ID' AFTER `id`;
+CHANGE COLUMN `damage_insure_id` `insure_id`  int(10) NOT NULL COMMENT '保险公司ID' AFTER `id`;
 
 insert into truck_insure_type (id,name ) values ( 1,'交强险' );
 insert into truck_insure_type (id,name ) values ( 2,'商业险' );

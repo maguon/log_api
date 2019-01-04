@@ -1,24 +1,24 @@
-ALTER TABLE `drive_info`
-ADD COLUMN `confirm_date`  datetime NULL COMMENT '检证时间' AFTER `license_type`,
-ADD COLUMN `address`  varchar(200) NULL COMMENT '家庭住址' AFTER `confirm_date`,
-ADD COLUMN `sib_tel`  varchar(20) NULL COMMENT '家属电话' AFTER `address`;
+-- ALTER TABLE `drive_info`
+-- ADD COLUMN `confirm_date`  datetime NULL COMMENT '检证时间' AFTER `license_type`,
+-- ADD COLUMN `address`  varchar(200) NULL COMMENT '家庭住址' AFTER `confirm_date`,
+-- ADD COLUMN `sib_tel`  varchar(20) NULL COMMENT '家属电话' AFTER `address`;
 
 ALTER TABLE `truck_insure_rel`
 ADD COLUMN `active`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '默认-1' AFTER `insure_status`,
 ADD COLUMN `date_id`  int(4) NOT NULL AFTER `active`;
 
 ALTER TABLE `truck_info`
-ADD COLUMN `truck_num`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '车牌号或挂车号' AFTER `id`,
-ADD COLUMN `drive_id`  int(10) NOT NULL DEFAULT 0 COMMENT '主驾ID' AFTER `the_code`,
-ADD COLUMN `company_id`  int(10) NOT NULL DEFAULT 0 COMMENT '所属公司ID' AFTER `copilot`,
-ADD COLUMN `truck_type`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '车辆类型(1-车头,2-挂车)' AFTER `company_id`,
+MODIFY COLUMN `truck_num`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '车牌号或挂车号' AFTER `id`,
+MODIFY COLUMN `drive_id`  int(10) NOT NULL DEFAULT 0 COMMENT '主驾ID' AFTER `the_code`,
+MODIFY COLUMN `company_id`  int(10) NOT NULL DEFAULT 0 COMMENT '所属公司ID' AFTER `copilot`,
+MODIFY COLUMN `truck_type`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '车辆类型(1-车头,2-挂车)' AFTER `company_id`,
 ADD COLUMN `repair_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '维修状态(0-维修,1-正常)' AFTER `rel_id`,
-ADD COLUMN `truck_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '车辆状态(0-停用,1-可用)' AFTER `repair_status`,
-ADD COLUMN `number`  tinyint(2) NOT NULL DEFAULT 0 COMMENT '板车位数' AFTER `truck_status`;
+MODIFY COLUMN `truck_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '车辆状态(0-停用,1-可用)' AFTER `repair_status`,
+MODIFY COLUMN `number`  tinyint(2) NOT NULL DEFAULT 0 COMMENT '板车位数' AFTER `truck_status`;
 
-ALTER TABLE `storage_info`
-DROP COLUMN `row`,
-DROP COLUMN `col`;
+-- ALTER TABLE `storage_info`
+-- DROP COLUMN `row`,
+-- DROP COLUMN `col`;
 
 ALTER TABLE `storage_parking`
 ADD COLUMN `storage_area_id`  int(10) NOT NULL COMMENT '仓库分区ID' AFTER `storage_id`;

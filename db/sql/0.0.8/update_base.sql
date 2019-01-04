@@ -70,7 +70,7 @@ DELIMITER ;
 -- ----------------------------
 -- 2018-07-25 更新
 -- 追加transfer_flag和load_task_type状态,如果中转任务被取消,更新原始需求、原始需求统计、中转需求plan_count
---追加状态等于3装车完成，更新dp_demand_info,dp_task_stat计划数为实际装车数,如果是中转任务,同时更新transfer_count为实际中转数
+-- 追加状态等于3装车完成，更新dp_demand_info,dp_task_stat计划数为实际装车数,如果是中转任务,同时更新transfer_count为实际中转数
 -- ----------------------------
 DROP TRIGGER IF EXISTS `trg_update_load_task`;
 DELIMITER ;;
@@ -166,7 +166,7 @@ ALTER TABLE `dp_demand_info`
 ADD COLUMN `route_id`  int(10) NULL DEFAULT 0 COMMENT '线路组合ID' AFTER `user_id`;
 -- ----------------------------
 -- 2018-08-30 更新
---更新route_id线路组合ID
+-- 更新route_id线路组合ID
 -- ----------------------------
 update city_route_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));
 update car_info set route_id = concat(LEAST(route_start_id,route_end_id),GREATEST(route_start_id,route_end_id));

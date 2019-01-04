@@ -44,6 +44,7 @@ delimiter ;
 delimiter $$
 DROP TRIGGER IF EXISTS trg_set_truck_dispatch;
 CREATE TRIGGER `trg_set_truck_dispatch` AFTER UPDATE ON `truck_info` FOR EACH ROW
+BEGIN
 IF(new.drive_id>0&&new.rel_id>0&&new.repair_status=1) THEN
 update truck_dispatch set dispatch_flag =1 where truck_id = new.id;
 ELSEIF(new.drive_id=0||new.rel_id=0||new.repair_status=0) THEN
@@ -154,7 +155,9 @@ CREATE TABLE `dp_demand_info` (
 -- ----------------------------
 DROP TRIGGER IF EXISTS `trg_new_demand_stat`;
 delimiter $$
-CREATE TRIGGER `trg_new_demand_stat` AFTER INSERT ON `dp_demand_info` FOR EACH ROW INSERT INTO dp_task_stat(route_start_id,base_addr_id,route_end_id,receive_id,date_id,pre_count)
+CREATE TRIGGER `trg_new_demand_stat` AFTER INSERT ON `dp_demand_info` FOR EACH ROW
+BEGIN
+INSERT INTO dp_task_stat(route_start_id,base_addr_id,route_end_id,receive_id,date_id,pre_count)
 VALUES (new.route_start_id,new.base_addr_id,new.route_end_id,new.receive_id,new.date_id,new.pre_count)
 ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,task_stat_status=1;
 END $$
@@ -229,7 +232,6 @@ and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receiv
 END $$
 delimiter ;
 
-DROP TRIGGER IF EXISTS `trg_cancel_load_task`;
 DROP TRIGGER IF EXISTS `trg_update_load_task`;
 delimiter $$
 CREATE TRIGGER `trg_update_load_task` AFTER UPDATE ON `dp_route_load_task` FOR EACH ROW
@@ -253,7 +255,7 @@ END IF;
 END $$
 delimiter ;
 
-
+DROP TRIGGER IF EXISTS `trg_update_route_task`;
 delimiter $$
 CREATE TRIGGER `trg_update_route_task` AFTER UPDATE ON `dp_route_task` FOR EACH ROW
 BEGIN
