@@ -6102,6 +6102,143 @@
         }
       }
     },
+    "/truckSecurityCheck": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckSecurityCheck list",
+        "description": "query truckSecurityCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "securityCheckId",
+            "in": "query",
+            "description": "securityCheck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "checkDateStart",
+            "in": "query",
+            "description": "checkDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "checkDateEnd",
+            "in": "query",
+            "description": "checkDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckSecurityCheck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckSecurityCheck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckSecurityCheck": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckSecurityCheck",
+        "description": "user create truckSecurityCheck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckSecurityCheck",
+            "in": "body",
+            "description": "truckSecurityCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckSecurityCheck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckSecurityCheck id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [
@@ -24744,6 +24881,51 @@
       },
       "xml": {
         "name": "truckAccidentInsureRepayment"
+      }
+    },
+    "truckSecurityCheck": {
+      "type": "object",
+      "properties": {
+
+        "truckId": {
+          "type": "integer"
+        },
+        "truckType": {
+          "type": "integer"
+        },
+        "turn": {
+          "type": "integer"
+        },
+        "braking": {
+          "type": "integer"
+        },
+        "lighting": {
+          "type": "integer"
+        },
+        "transmission": {
+          "type": "integer"
+        },
+        "tyre": {
+          "type": "integer"
+        },
+        "structure": {
+          "type": "integer"
+        },
+        "facilities": {
+          "type": "integer"
+        },
+        "linkDevice": {
+          "type": "integer"
+        },
+        "checkDate": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckSecurityCheck"
       }
     },
     "brand": {
