@@ -75,7 +75,7 @@ function updateDrivePeccancy(req,res,next){
 
 function getDrivePeccancyCsv(req,res,next){
     var csvString = "";
-    var header = "违章结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "扣罚分数" + ','+ "交通罚款"+ ','+ "罚款金额"
+    var header = "违章结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "货车类型" + ','+ "扣罚分数" + ','+ "交通罚款" + ','+ "罚款金额"
         + ','+ "违章时间范围(始)" + ','+ "违章时间范围(终)" + ','+ "处理时间"+ ','+ "违章地点" + ','+ "操作人" + ','+ "状态" + ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -89,6 +89,11 @@ function getDrivePeccancyCsv(req,res,next){
                 parkObj.id = rows[i].id;
                 parkObj.driveName = rows[i].drive_name;
                 parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].truck_type == 1){
+                    parkObj.truckType = "头车";
+                }else{
+                    parkObj.truckType = "挂车";
+                }
                 parkObj.fineScore = rows[i].fine_score;
                 parkObj.trafficFine = rows[i].traffic_fine;
                 parkObj.fineMoney = rows[i].fine_money;
@@ -128,7 +133,7 @@ function getDrivePeccancyCsv(req,res,next){
                     parkObj.remark = rows[i].remark;
                 }
 
-                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.fineScore+","+parkObj.trafficFine+","+parkObj.fineMoney
+                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.truckType+","+parkObj.fineScore+","+parkObj.trafficFine+","+parkObj.fineMoney
                     +","+parkObj.startDate+","+parkObj.endDate+","+parkObj.handleDate+","+parkObj.address+","+parkObj.opUserName +","+parkObj.fineStatus+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');

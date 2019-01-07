@@ -52,6 +52,14 @@ function getDrivePeccancy(params,callback) {
         paramsArray[i++] = params.endDateEnd +" 23:59:59";
         query = query + " and dp.created_on <= ? ";
     }
+    if(params.handleDateStart){
+        paramsArray[i++] = params.handleDateStart;
+        query = query + " and dp.handle_date >= ? ";
+    }
+    if(params.handleDateEnd){
+        paramsArray[i++] = params.handleDateEnd;
+        query = query + " and dp.handle_date <= ? ";
+    }
     if(params.truckType){
         paramsArray[i++] = params.truckType;
         query = query + " and dp.truck_type = ? ";
@@ -64,6 +72,7 @@ function getDrivePeccancy(params,callback) {
         paramsArray[i++] = params.statStatus;
         query = query + " and dp.stat_status = ? ";
     }
+    query = query + '  order by dp.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

@@ -8513,6 +8513,22 @@
 
           },
           {
+            "name": "handleDateStart",
+            "in": "query",
+            "description": "handleDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "handleDateEnd",
+            "in": "query",
+            "description": "handleDateStart end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "fineStatus",
             "in": "query",
             "description": "fine status",
@@ -8645,6 +8661,22 @@
             "name": "endDateEnd",
             "in": "query",
             "description": "endDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "handleDateStart",
+            "in": "query",
+            "description": "handleDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "handleDateEnd",
+            "in": "query",
+            "description": "handleDateStart end",
             "required": false,
             "type": "string"
 
