@@ -202,3 +202,13 @@ ADD COLUMN `social_security_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '社保�
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil`
 ADD COLUMN `exceed_type`  tinyint(1) NULL DEFAULT 1 COMMENT '超量类型(1-油,2-尿素)' AFTER `dp_route_task_id`;
+-- ----------------------------
+-- 2019-01-07 更新
+-- ----------------------------
+ALTER TABLE `drive_peccancy`
+ADD COLUMN `truck_type`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '车辆类型(1-车头,2-挂车)' AFTER `truck_id`,
+ADD COLUMN `traffic_fine`  decimal(10,2) NOT NULL DEFAULT 0 COMMENT '交通罚款' AFTER `fine_score`,
+ADD COLUMN `handle_date`  date NULL COMMENT '处理时间' AFTER `end_date`,
+ADD COLUMN `address`  varchar(200) NULL COMMENT '违章地点' AFTER `handle_date`;
+
+update drive_peccancy set traffic_fine = fine_money , fine_money = 0;

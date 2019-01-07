@@ -8529,6 +8529,14 @@
 
           },
           {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -8621,6 +8629,30 @@
             "name": "fineStatus",
             "in": "query",
             "description": "fine status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "startDateStart",
+            "in": "query",
+            "description": "startDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
             "required": false,
             "type": "integer"
 
@@ -24953,7 +24985,13 @@
         "truckId": {
           "type": "integer"
         },
+        "truckType": {
+          "type": "integer"
+        },
         "fineScore": {
+          "type": "integer"
+        },
+        "trafficFine": {
           "type": "integer"
         },
         "fineMoney": {
@@ -24963,6 +25001,12 @@
           "type": "string"
         },
         "endDate": {
+          "type": "string"
+        },
+        "handleDate": {
+          "type": "string"
+        },
+        "address": {
           "type": "string"
         },
         "remark": {

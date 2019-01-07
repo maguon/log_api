@@ -7,15 +7,19 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DrivePeccancyDAO.js');
 
 function addDrivePeccancy(params,callback){
-    var query = " insert into drive_peccancy (drive_id,truck_id,fine_score,fine_money,start_date,end_date,op_user_id,date_id,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into drive_peccancy (drive_id,truck_id,truck_type,fine_score,traffic_fine,fine_money, " +
+        " start_date,end_date,handle_date,address,op_user_id,date_id,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.truckType;
     paramsArray[i++]=params.fineScore;
+    paramsArray[i++]=params.trafficFine;
     paramsArray[i++]=params.fineMoney;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.handleDate;
+    paramsArray[i++]=params.address;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.dateId;
     paramsArray[i]=params.remark;
@@ -48,6 +52,10 @@ function getDrivePeccancy(params,callback) {
         paramsArray[i++] = params.endDateEnd +" 23:59:59";
         query = query + " and dp.created_on <= ? ";
     }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and dp.truck_type = ? ";
+    }
     if(params.fineStatus){
         paramsArray[i++] = params.fineStatus;
         query = query + " and dp.fine_status = ? ";
@@ -79,14 +87,19 @@ function getDrivePeccancyCount(params,callback) {
 }
 
 function updateDrivePeccancy(params,callback){
-    var query = " update drive_peccancy set drive_id = ? , truck_id = ? , fine_score = ? , fine_money = ? , start_date = ? , end_date = ? , remark = ? where id = ? " ;
+    var query = " update drive_peccancy set drive_id = ? , truck_id = ? , truck_type = ? , fine_score = ? , traffic_fine = ? , fine_money = ? , " +
+        " start_date = ? , end_date = ? , handle_date = ? , address = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.truckType;
     paramsArray[i++]=params.fineScore;
+    paramsArray[i++]=params.trafficFine;
     paramsArray[i++]=params.fineMoney;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.handleDate;
+    paramsArray[i++]=params.address;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.peccancyId;
     db.dbQuery(query,paramsArray,function(error,rows){
