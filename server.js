@@ -330,6 +330,7 @@ function createServer() {
     server.get('/api/truckSecurityCheck' ,truckSecurityCheck.queryTruckSecurityCheck);
     server.post({path:'/api/user/:userId/truckSecurityCheck',contentType: 'application/json'},truckSecurityCheck.createTruckSecurityCheck);
     server.put({path:'/api/user/:userId/truckSecurityCheck/:securityCheckId',contentType: 'application/json'} ,truckSecurityCheck.updateTruckSecurityCheck);
+    server.get('/api/truckSecurityCheck.csv', truckSecurityCheck.getTruckSecurityCheckCsv);
 
     /**
      * Brand Module

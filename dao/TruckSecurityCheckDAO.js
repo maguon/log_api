@@ -44,19 +44,19 @@ function getTruckSecurityCheck(params,callback) {
     }
     if(params.createdOnStart){
         paramsArray[i++] = params.createdOnStart +" 00:00:00";
-        query = query + " and dp.created_on >= ? ";
+        query = query + " and tsc.created_on >= ? ";
     }
     if(params.createdOnEnd){
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
-        query = query + " and dp.created_on <= ? ";
+        query = query + " and tsc.created_on <= ? ";
     }
     if(params.checkDateStart){
         paramsArray[i++] = params.checkDateStart;
-        query = query + " and dp.check_date >= ? ";
+        query = query + " and tsc.check_date >= ? ";
     }
     if(params.checkDateEnd){
         paramsArray[i++] = params.checkDateEnd;
-        query = query + " and dp.check_date <= ? ";
+        query = query + " and tsc.check_date <= ? ";
     }
     query = query + '  order by tsc.id desc ';
     if (params.start && params.size) {
