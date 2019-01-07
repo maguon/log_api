@@ -41,12 +41,12 @@ function getDrivePeccancy(params,callback) {
         query = query + " and dp.drive_id = ? ";
     }
     if(params.startDateStart){
-        paramsArray[i++] = params.startDateStart;
-        query = query + " and dp.start_date >= ? ";
+        paramsArray[i++] = params.startDateStart +" 00:00:00";
+        query = query + " and dp.created_on >= ? ";
     }
     if(params.endDateEnd){
-        paramsArray[i++] = params.endDateEnd;
-        query = query + " and dp.end_date <= ? ";
+        paramsArray[i++] = params.endDateEnd +" 23:59:59";
+        query = query + " and dp.created_on <= ? ";
     }
     if(params.fineStatus){
         paramsArray[i++] = params.fineStatus;

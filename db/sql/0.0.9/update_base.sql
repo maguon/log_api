@@ -32,13 +32,14 @@ update dp_task_stat dpts, receive_info r set dpts.short_name = r.short_name wher
 -- dp_task_stat追加route_start,addr_name,route_end,short_name字段
 -- ----------------------------
 DROP TRIGGER IF EXISTS `trg_new_demand_stat`;
-DELIMITER ;;
-CREATE TRIGGER `trg_new_demand_stat` AFTER INSERT ON `dp_demand_info` FOR EACH ROW INSERT INTO
-dp_task_stat(route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end,receive_id,short_name,date_id,pre_count)
+delimiter $$
+CREATE TRIGGER `trg_new_demand_stat` AFTER INSERT ON `dp_demand_info` FOR EACH ROW
+BEGIN
+INSERT INTO dp_task_stat(route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end,receive_id,short_name,date_id,pre_count)
 VALUES (new.route_start_id,new.route_start,new.base_addr_id,new.addr_name,new.route_end_id,new.route_end,new.receive_id,new.short_name,new.date_id,new.pre_count)
 ON DUPLICATE KEY UPDATE pre_count = pre_count+ new.pre_count ,task_stat_status=1;
-;;
-DELIMITER ;
+END $$
+delimiter ;
 -- ----------------------------
 -- 2018-09-13 更新
 -- ----------------------------
