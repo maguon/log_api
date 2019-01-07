@@ -211,4 +211,4 @@ ADD COLUMN `traffic_fine`  decimal(10,2) NOT NULL DEFAULT 0 COMMENT '交通罚�
 ADD COLUMN `handle_date`  date NULL COMMENT '处理时间' AFTER `end_date`,
 ADD COLUMN `address`  varchar(200) NULL COMMENT '违章地点' AFTER `handle_date`;
 
-update drive_peccancy set traffic_fine = fine_money , fine_money = 0;
+update drive_peccancy set traffic_fine = fine_money;
