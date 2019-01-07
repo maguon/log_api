@@ -70,8 +70,30 @@ function getTruckSecurityCheck(params,callback) {
     });
 }
 
+function updateTruckSecurityCheck(params,callback){
+    var query = " update truck_security_check set turn = ? , braking = ? , lighting = ? , transmission = ? , " +
+        " tyre = ? , structure = ? , facilities = ? , link_device = ? , check_date = ? , remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.turn;
+    paramsArray[i++]=params.braking;
+    paramsArray[i++]=params.lighting;
+    paramsArray[i++]=params.transmission;
+    paramsArray[i++]=params.tyre;
+    paramsArray[i++]=params.structure;
+    paramsArray[i++]=params.facilities;
+    paramsArray[i++]=params.linkDevice;
+    paramsArray[i++]=params.checkDate;
+    paramsArray[i++]=params.remark;
+    paramsArray[i] = params.securityCheckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckSecurityCheck ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckSecurityCheck : addTruckSecurityCheck,
-    getTruckSecurityCheck : getTruckSecurityCheck
+    getTruckSecurityCheck : getTruckSecurityCheck,
+    updateTruckSecurityCheck : updateTruckSecurityCheck
 }

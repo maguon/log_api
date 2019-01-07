@@ -212,3 +212,26 @@ ADD COLUMN `handle_date`  date NULL COMMENT '处理时间' AFTER `end_date`,
 ADD COLUMN `address`  varchar(200) NULL COMMENT '违章地点' AFTER `handle_date`;
 
 update drive_peccancy dp left join truck_info t on dp.truck_id = t.id set dp.truck_type = t.truck_type;
+
+-- ----------------------------
+-- Table structure for truck_security_check
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_security_check`;
+CREATE TABLE `truck_security_check` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
+  `truck_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '车辆类型(1-车头,2-挂车)',
+  `turn` tinyint(1) DEFAULT '0' COMMENT '转向',
+  `braking` tinyint(1) DEFAULT '0' COMMENT '制动',
+  `lighting` tinyint(1) DEFAULT '0' COMMENT '照明',
+  `transmission` tinyint(1) DEFAULT '0' COMMENT '传动',
+  `tyre` tinyint(1) DEFAULT '0' COMMENT '轮胎',
+  `structure` tinyint(1) DEFAULT '0' COMMENT '结构',
+  `facilities` tinyint(1) DEFAULT '0' COMMENT '随车安全设施(灭火器、危险安全牌)',
+  `link_device` tinyint(1) DEFAULT '0' COMMENT '主挂连接装置',
+  `check_date` date DEFAULT NULL COMMENT '检查时间',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

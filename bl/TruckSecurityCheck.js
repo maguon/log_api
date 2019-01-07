@@ -41,8 +41,23 @@ function queryTruckSecurityCheck(req,res,next){
     })
 }
 
+function updateTruckSecurityCheck(req,res,next){
+    var params = req.params ;
+    truckSecurityCheckDAO.updateTruckSecurityCheck(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckSecurityCheck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckSecurityCheck ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckSecurityCheck : createTruckSecurityCheck,
-    queryTruckSecurityCheck : queryTruckSecurityCheck
+    queryTruckSecurityCheck : queryTruckSecurityCheck,
+    updateTruckSecurityCheck : updateTruckSecurityCheck
 }
