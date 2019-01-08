@@ -225,7 +225,7 @@ CREATE TABLE `truck_security_check` (
   `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
   `truck_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '车辆类型(1-车头,2-挂车)',
   `drive_id` int(10) DEFAULT '0' COMMENT '司机ID',
-  `turn` tinyint(1) DEFAULT '0' COMMENT '转向(0-未检,1-不合格,2-合格,3-复检合格)',
+  `turn` tinyint(1) DEFAULT '0' COMMENT '转向(0-默认,1-未检,2-不合格,3-合格,4-复检合格)',
   `turn_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '转向备注',
   `braking` tinyint(1) DEFAULT '0' COMMENT '制动',
   `braking_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

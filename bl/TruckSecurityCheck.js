@@ -81,10 +81,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                     parkObj.driveName = rows[i].drive_name;
                 }
                 if(rows[i].turn == 0){
-                    parkObj.turn = "未检";
+                    parkObj.turn = "";
                 }else if(rows[i].turn == 1){
-                    parkObj.turn = "不合格";
+                    parkObj.turn = "未检";
                 }else if(rows[i].turn == 2){
+                    parkObj.turn = "不合格";
+                }else if(rows[i].turn == 3){
                     parkObj.turn = "合格";
                 }else{
                     parkObj.turn = "复检合格";
@@ -96,10 +98,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].braking == 0){
-                    parkObj.braking = "未检";
+                    parkObj.braking = "";
                 }else if(rows[i].braking == 1){
-                    parkObj.braking = "不合格";
+                    parkObj.braking = "未检";
                 }else if(rows[i].braking == 2){
+                    parkObj.braking = "不合格";
+                }else if(rows[i].braking == 3){
                     parkObj.braking = "合格";
                 }else{
                     parkObj.braking = "复检合格";
@@ -111,10 +115,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].liquid == 0){
-                    parkObj.liquid = "未检";
+                    parkObj.liquid = "";
                 }else if(rows[i].liquid == 1){
-                    parkObj.liquid = "不合格";
+                    parkObj.liquid = "未检";
                 }else if(rows[i].liquid == 2){
+                    parkObj.liquid = "不合格";
+                }else if(rows[i].liquid == 3){
                     parkObj.liquid = "合格";
                 }else{
                     parkObj.liquid = "复检合格";
@@ -126,10 +132,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].lighting == 0){
-                    parkObj.lighting = "未检";
-                }else if(rows[i].lighting == 1){
-                    parkObj.lighting = "不合格";
+                    parkObj.lighting = "";
                 }else if(rows[i].lighting == 2){
+                    parkObj.lighting = "未检";
+                }else if(rows[i].lighting == 3){
+                    parkObj.lighting = "不合格";
+                }else if(rows[i].lighting == 4){
                     parkObj.lighting = "合格";
                 }else{
                     parkObj.lighting = "复检合格";
@@ -141,10 +149,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].transmission == 0){
-                    parkObj.transmission = "未检";
+                    parkObj.transmission = "";
                 }else if(rows[i].transmission == 1){
-                    parkObj.transmission = "不合格";
+                    parkObj.transmission = "未检";
                 }else if(rows[i].transmission == 2){
+                    parkObj.transmission = "不合格";
+                }else if(rows[i].transmission == 3){
                     parkObj.transmission = "合格";
                 }else{
                     parkObj.transmission = "复检合格";
@@ -156,10 +166,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].tyre == 0){
-                    parkObj.tyre = "未检";
+                    parkObj.tyre = "";
                 }else if(rows[i].tyre == 1){
-                    parkObj.tyre = "不合格";
+                    parkObj.tyre = "未检";
                 }else if(rows[i].tyre == 2){
+                    parkObj.tyre = "不合格";
+                }else if(rows[i].tyre == 3){
                     parkObj.tyre = "合格";
                 }else{
                     parkObj.tyre = "复检合格";
@@ -171,10 +183,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].suspension == 0){
-                    parkObj.suspension = "未检";
+                    parkObj.suspension = "";
                 }else if(rows[i].suspension == 1){
-                    parkObj.suspension = "不合格";
+                    parkObj.suspension = "未检";
                 }else if(rows[i].suspension == 2){
+                    parkObj.suspension = "不合格";
+                }else if(rows[i].suspension == 3){
                     parkObj.suspension = "合格";
                 }else{
                     parkObj.suspension = "复检合格";
@@ -186,10 +200,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].structure == 0){
-                    parkObj.structure = "未检";
+                    parkObj.structure = "";
                 }else if(rows[i].structure == 1){
-                    parkObj.structure = "不合格";
+                    parkObj.structure = "未检";
                 }else if(rows[i].structure == 2){
+                    parkObj.structure = "不合格";
+                }else if(rows[i].structure == 3){
                     parkObj.structure = "合格";
                 }else{
                     parkObj.structure = "复检合格";
@@ -201,10 +217,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].facilities == 0){
-                    parkObj.facilities = "未检";
+                    parkObj.facilities = "";
                 }else if(rows[i].facilities == 1){
-                    parkObj.facilities = "不合格";
+                    parkObj.facilities = "未检";
                 }else if(rows[i].facilities == 2){
+                    parkObj.facilities = "不合格";
+                }else if(rows[i].facilities == 3){
                     parkObj.facilities = "合格";
                 }else{
                     parkObj.facilities = "复检合格";
@@ -216,10 +234,12 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }
 
                 if(rows[i].link_device == 0){
-                    parkObj.linkDevice = "未检";
+                    parkObj.linkDevice = "";
                 }else if(rows[i].link_device == 1){
-                    parkObj.linkDevice = "不合格";
+                    parkObj.linkDevice = "未检";
                 }else if(rows[i].link_device == 2){
+                    parkObj.linkDevice = "不合格";
+                }else if(rows[i].link_device == 3){
                     parkObj.linkDevice = "合格";
                 }else{
                     parkObj.linkDevice = "复检合格";
