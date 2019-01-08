@@ -74,45 +74,45 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }else{
                     parkObj.truckType = "挂车";
                 }
-                if(rows[i].turn == null){
+                if(rows[i].turn == 0){
                     parkObj.turn = "";
                 }else{
-                    parkObj.turn = rows[i].turn;
+                    parkObj.turn = "检了";
                 }
-                if(rows[i].braking == null){
+                if(rows[i].braking == 0){
                     parkObj.braking = "";
                 }else{
-                    parkObj.braking = rows[i].braking;
+                    parkObj.braking = "检了";
                 }
-                if(rows[i].lighting == null){
+                if(rows[i].lighting == 0){
                     parkObj.lighting = "";
                 }else{
-                    parkObj.lighting = rows[i].lighting;
+                    parkObj.lighting = "检了";
                 }
-                if(rows[i].transmission == null){
+                if(rows[i].transmission == 0){
                     parkObj.transmission = "";
                 }else{
-                    parkObj.transmission = rows[i].transmission;
+                    parkObj.transmission = "检了";
                 }
-                if(rows[i].tyre == null){
+                if(rows[i].tyre == 0){
                     parkObj.tyre = "";
                 }else{
-                    parkObj.tyre = rows[i].tyre;
+                    parkObj.tyre = "检了";
                 }
-                if(rows[i].structure == null){
+                if(rows[i].structure == 0){
                     parkObj.structure = "";
                 }else{
-                    parkObj.structure = rows[i].structure;
+                    parkObj.structure = "检了";
                 }
-                if(rows[i].facilities == null){
+                if(rows[i].facilities == 0){
                     parkObj.facilities = "";
                 }else{
-                    parkObj.facilities = rows[i].facilities;
+                    parkObj.facilities = "检了";
                 }
-                if(rows[i].link_device == null){
+                if(rows[i].link_device == 0){
                     parkObj.linkDevice = "";
                 }else{
-                    parkObj.linkDevice = rows[i].link_device;
+                    parkObj.linkDevice = "检了";
                 }
                 if(rows[i].check_date == null){
                     parkObj.checkDate = "";
