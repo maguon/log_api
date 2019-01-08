@@ -214,6 +214,9 @@ ADD COLUMN `address`  varchar(200) NULL COMMENT '违章地点' AFTER `handle_dat
 update drive_peccancy dp left join truck_info t on dp.truck_id = t.id set dp.truck_type = t.truck_type;
 
 -- ----------------------------
+-- 2019-01-08 更新
+-- ----------------------------
+-- ----------------------------
 -- Table structure for truck_security_check
 -- ----------------------------
 DROP TABLE IF EXISTS `truck_security_check`;
@@ -221,16 +224,30 @@ CREATE TABLE `truck_security_check` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
   `truck_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '车辆类型(1-车头,2-挂车)',
-  `turn` tinyint(1) DEFAULT '0' COMMENT '转向',
+  `drive_id` int(10) DEFAULT '0' COMMENT '司机ID',
+  `turn` tinyint(1) DEFAULT '0' COMMENT '转向(0-未检,1-不合格,2-合格,3-复检合格)',
+  `turn_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '转向备注',
   `braking` tinyint(1) DEFAULT '0' COMMENT '制动',
+  `braking_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `liquid` tinyint(1) DEFAULT '0' COMMENT '液压',
+  `liquid_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lighting` tinyint(1) DEFAULT '0' COMMENT '照明',
+  `lighting_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `transmission` tinyint(1) DEFAULT '0' COMMENT '传动',
+  `transmission_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tyre` tinyint(1) DEFAULT '0' COMMENT '轮胎',
-  `structure` tinyint(1) DEFAULT '0' COMMENT '结构',
+  `tyre_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suspension` tinyint(1) DEFAULT '0' COMMENT '悬挂',
+  `suspension_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `structure` tinyint(1) DEFAULT '0' COMMENT '车身结构',
+  `structure_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facilities` tinyint(1) DEFAULT '0' COMMENT '随车安全设施(灭火器、危险安全牌)',
+  `facilities_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `link_device` tinyint(1) DEFAULT '0' COMMENT '主挂连接装置',
+  `link_device_remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `check_date` date DEFAULT NULL COMMENT '检查时间',
   `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `check_user_id` int(10) DEFAULT '0' COMMENT '检查人ID',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

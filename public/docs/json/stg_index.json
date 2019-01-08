@@ -25016,29 +25016,68 @@
         "truckType": {
           "type": "integer"
         },
+        "driveId": {
+          "type": "integer"
+        },
         "turn": {
           "type": "integer"
+        },
+        "turnRemark": {
+          "type": "string"
         },
         "braking": {
           "type": "integer"
         },
+        "brakingRemark": {
+          "type": "string"
+        },
+        "liquid": {
+          "type": "integer"
+        },
+        "liquidRemark": {
+          "type": "string"
+        },
         "lighting": {
           "type": "integer"
+        },
+        "lightingRemark": {
+          "type": "string"
         },
         "transmission": {
           "type": "integer"
         },
+        "transmissionRemark": {
+          "type": "string"
+        },
         "tyre": {
           "type": "integer"
+        },
+        "tyreRemark": {
+          "type": "string"
+        },
+        "suspension": {
+          "type": "integer"
+        },
+        "suspensionRemark": {
+          "type": "string"
         },
         "structure": {
           "type": "integer"
         },
+        "structureRemark": {
+          "type": "string"
+        },
         "facilities": {
           "type": "integer"
         },
+        "facilitiesRemark": {
+          "type": "string"
+        },
         "linkDevice": {
           "type": "integer"
+        },
+        "linkDeviceRemark": {
+          "type": "string"
         },
         "checkDate": {
           "type": "string"

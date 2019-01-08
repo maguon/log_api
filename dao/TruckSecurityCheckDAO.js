@@ -7,22 +7,37 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckSecurityCheckDAO.js');
 
 function addTruckSecurityCheck(params,callback){
-    var query = " insert into truck_security_check (truck_id,truck_type,turn,braking,lighting,transmission, " +
-        " tyre,structure,facilities,link_device,check_date,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into truck_security_check (truck_id,truck_type,drive_id,turn,turn_remark,braking,braking_remark,liquid,liquid_remark, " +
+        " lighting,lighting_remark,transmission,transmission_remark,tyre,tyre_remark,suspension,suspension_remark,structure,structure_remark, " +
+        " facilities,facilities_remark,link_device,link_device_remark,check_date,remark,check_user_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.truckType;
+    paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.turn;
+    paramsArray[i++]=params.turnRemark;
     paramsArray[i++]=params.braking;
+    paramsArray[i++]=params.brakingRemark;
+    paramsArray[i++]=params.liquid;
+    paramsArray[i++]=params.liquidRemark;
     paramsArray[i++]=params.lighting;
+    paramsArray[i++]=params.lightingRemark;
     paramsArray[i++]=params.transmission;
+    paramsArray[i++]=params.transmissionRemark;
     paramsArray[i++]=params.tyre;
+    paramsArray[i++]=params.tyreRemark;
+    paramsArray[i++]=params.suspension;
+    paramsArray[i++]=params.suspensionRemark;
     paramsArray[i++]=params.structure;
+    paramsArray[i++]=params.structureRemark;
     paramsArray[i++]=params.facilities;
+    paramsArray[i++]=params.facilitiesRemark;
     paramsArray[i++]=params.linkDevice;
+    paramsArray[i++]=params.linkDeviceRemark;
     paramsArray[i++]=params.checkDate;
     paramsArray[i++]=params.remark;
+    paramsArray[i++]=params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addTruckSecurityCheck ');
         return callback(error,rows);
@@ -30,8 +45,11 @@ function addTruckSecurityCheck(params,callback){
 }
 
 function getTruckSecurityCheck(params,callback) {
-    var query = " select tsc.*,t.truck_num from truck_security_check tsc " +
+    var query = " select tsc.*,t.truck_num,d.drive_name,u.real_name as check_user_name " +
+        " from truck_security_check tsc " +
         " left join truck_info t on tsc.truck_id = t.id " +
+        " left join drive_info d on tsc.drive_id = d.id " +
+        " left join user_info u on tsc.check_user_id = u.uid " +
         " where tsc.id is not null ";
     var paramsArray=[],i=0;
     if(params.securityCheckId){
@@ -71,17 +89,31 @@ function getTruckSecurityCheck(params,callback) {
 }
 
 function updateTruckSecurityCheck(params,callback){
-    var query = " update truck_security_check set turn = ? , braking = ? , lighting = ? , transmission = ? , " +
-        " tyre = ? , structure = ? , facilities = ? , link_device = ? , check_date = ? , remark = ? where id = ? " ;
+    var query = " update truck_security_check set turn = ? , turn_remark = ? , braking = ? , braking_remark = ? , " +
+        " liquid = ? , liquid_remark = ? , lighting = ? , lighting_remark = ? , transmission = ? , transmission_remark = ? , " +
+        " tyre = ? , tyre_remark = ? , suspension = ? , suspension_remark = ? , structure = ? , structure_remark = ?, " +
+        " facilities = ? , facilities_remark = ? , link_device = ? , link_device_remark = ? , check_date = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.turn;
+    paramsArray[i++]=params.turnRemark;
     paramsArray[i++]=params.braking;
+    paramsArray[i++]=params.brakingRemark;
+    paramsArray[i++]=params.liquid;
+    paramsArray[i++]=params.liquidRemark;
     paramsArray[i++]=params.lighting;
+    paramsArray[i++]=params.lightingRemark;
     paramsArray[i++]=params.transmission;
+    paramsArray[i++]=params.transmissionRemark;
     paramsArray[i++]=params.tyre;
+    paramsArray[i++]=params.tyreRemark;
+    paramsArray[i++]=params.suspension;
+    paramsArray[i++]=params.suspensionRemark;
     paramsArray[i++]=params.structure;
+    paramsArray[i++]=params.structureRemark;
     paramsArray[i++]=params.facilities;
+    paramsArray[i++]=params.facilitiesRemark;
     paramsArray[i++]=params.linkDevice;
+    paramsArray[i++]=params.linkDeviceRemark;
     paramsArray[i++]=params.checkDate;
     paramsArray[i++]=params.remark;
     paramsArray[i] = params.securityCheckId;
