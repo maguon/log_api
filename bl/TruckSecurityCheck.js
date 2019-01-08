@@ -57,8 +57,9 @@ function updateTruckSecurityCheck(req,res,next){
 
 function getTruckSecurityCheckCsv(req,res,next){
     var csvString = "";
-    var header = "货车牌号" + ',' + "货车类型" + ',' + "转向" + ','+ "制动" + ','+ "照明" + ','+ "传动" + ','+ "轮胎"
-        + ','+ "车身结构" + ','+ "随车安全设施(灭火器、危险安全牌)" + ','+ "主挂连接装置"+ ','+ "检查时间" + ','+ "备注" ;
+    var header = "货车牌号" + ',' + "货车类型" + ',' + "司机" + ','+ "转向" + ','+ "转向备注" + ','+ "制动" + ','+ "制动备注" + ','+ "液压" + ','+ "液压备注"
+        + ','+ "照明" + ','+ "照明备注" + ','+ "传动"+ ','+ "传动备注" + ','+ "轮胎" + ','+ "轮胎备注" + ','+ "悬挂" + ','+ "悬挂备注" + ','+ "车身"
+        + ','+ "车身备注" + ','+ "随车安全设施" + ','+ "随车安全设施备注" + ','+ "连接" + ','+ "连接备注" + ','+ "检查时间" + ','+ "检查结论及建议" + ','+ "检查员";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -74,46 +75,161 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }else{
                     parkObj.truckType = "挂车";
                 }
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
                 if(rows[i].turn == 0){
-                    parkObj.turn = "";
+                    parkObj.turn = "未检";
+                }else if(rows[i].turn == 1){
+                    parkObj.turn = "不合格";
+                }else if(rows[i].turn == 2){
+                    parkObj.turn = "合格";
                 }else{
-                    parkObj.turn = "检了";
+                    parkObj.turn = "复检合格";
                 }
+                if(rows[i].turn_remark == null){
+                    parkObj.turnRemark = "";
+                }else{
+                    parkObj.turnRemark = rows[i].turn_remark;
+                }
+
                 if(rows[i].braking == 0){
-                    parkObj.braking = "";
+                    parkObj.braking = "未检";
+                }else if(rows[i].braking == 1){
+                    parkObj.braking = "不合格";
+                }else if(rows[i].braking == 2){
+                    parkObj.braking = "合格";
                 }else{
-                    parkObj.braking = "检了";
+                    parkObj.braking = "复检合格";
                 }
+                if(rows[i].braking_remark == null){
+                    parkObj.brakingRemark = "";
+                }else{
+                    parkObj.brakingRemark = rows[i].braking_remark;
+                }
+
+                if(rows[i].liquid == 0){
+                    parkObj.liquid = "未检";
+                }else if(rows[i].liquid == 1){
+                    parkObj.liquid = "不合格";
+                }else if(rows[i].liquid == 2){
+                    parkObj.liquid = "合格";
+                }else{
+                    parkObj.liquid = "复检合格";
+                }
+                if(rows[i].liquid_remark == null){
+                    parkObj.liquidRemark = "";
+                }else{
+                    parkObj.liquidRemark = rows[i].liquid_remark;
+                }
+
                 if(rows[i].lighting == 0){
-                    parkObj.lighting = "";
+                    parkObj.lighting = "未检";
+                }else if(rows[i].lighting == 1){
+                    parkObj.lighting = "不合格";
+                }else if(rows[i].lighting == 2){
+                    parkObj.lighting = "合格";
                 }else{
-                    parkObj.lighting = "检了";
+                    parkObj.lighting = "复检合格";
                 }
+                if(rows[i].lighting_remark == null){
+                    parkObj.lightingRemark = "";
+                }else{
+                    parkObj.lightingRemark = rows[i].lighting_remark;
+                }
+
                 if(rows[i].transmission == 0){
-                    parkObj.transmission = "";
+                    parkObj.transmission = "未检";
+                }else if(rows[i].transmission == 1){
+                    parkObj.transmission = "不合格";
+                }else if(rows[i].transmission == 2){
+                    parkObj.transmission = "合格";
                 }else{
-                    parkObj.transmission = "检了";
+                    parkObj.transmission = "复检合格";
                 }
+                if(rows[i].transmission_remark == null){
+                    parkObj.transmissionRemark = "";
+                }else{
+                    parkObj.transmissionRemark = rows[i].transmission_remark;
+                }
+
                 if(rows[i].tyre == 0){
-                    parkObj.tyre = "";
+                    parkObj.tyre = "未检";
+                }else if(rows[i].tyre == 1){
+                    parkObj.tyre = "不合格";
+                }else if(rows[i].tyre == 2){
+                    parkObj.tyre = "合格";
                 }else{
-                    parkObj.tyre = "检了";
+                    parkObj.tyre = "复检合格";
                 }
+                if(rows[i].tyre_remark == null){
+                    parkObj.tyreRemark = "";
+                }else{
+                    parkObj.tyreRemark = rows[i].tyre_remark;
+                }
+
+                if(rows[i].suspension == 0){
+                    parkObj.suspension = "未检";
+                }else if(rows[i].suspension == 1){
+                    parkObj.suspension = "不合格";
+                }else if(rows[i].suspension == 2){
+                    parkObj.suspension = "合格";
+                }else{
+                    parkObj.suspension = "复检合格";
+                }
+                if(rows[i].suspension_remark == null){
+                    parkObj.suspensionRemark = "";
+                }else{
+                    parkObj.suspensionRemark = rows[i].suspension_remark;
+                }
+
                 if(rows[i].structure == 0){
-                    parkObj.structure = "";
+                    parkObj.structure = "未检";
+                }else if(rows[i].structure == 1){
+                    parkObj.structure = "不合格";
+                }else if(rows[i].structure == 2){
+                    parkObj.structure = "合格";
                 }else{
-                    parkObj.structure = "检了";
+                    parkObj.structure = "复检合格";
                 }
+                if(rows[i].structure_remark == null){
+                    parkObj.structureRemark = "";
+                }else{
+                    parkObj.structureRemark = rows[i].structure_remark;
+                }
+
                 if(rows[i].facilities == 0){
-                    parkObj.facilities = "";
+                    parkObj.facilities = "未检";
+                }else if(rows[i].facilities == 1){
+                    parkObj.facilities = "不合格";
+                }else if(rows[i].facilities == 2){
+                    parkObj.facilities = "合格";
                 }else{
-                    parkObj.facilities = "检了";
+                    parkObj.facilities = "复检合格";
                 }
+                if(rows[i].facilities_remark == null){
+                    parkObj.facilitiesRemark = "";
+                }else{
+                    parkObj.facilitiesRemark = rows[i].facilities_remark;
+                }
+
                 if(rows[i].link_device == 0){
-                    parkObj.linkDevice = "";
+                    parkObj.linkDevice = "未检";
+                }else if(rows[i].link_device == 1){
+                    parkObj.linkDevice = "不合格";
+                }else if(rows[i].link_device == 2){
+                    parkObj.linkDevice = "合格";
                 }else{
-                    parkObj.linkDevice = "检了";
+                    parkObj.linkDevice = "复检合格";
                 }
+                if(rows[i].link_device_remark == null){
+                    parkObj.linkDeviceRemark = "";
+                }else{
+                    parkObj.linkDeviceRemark = rows[i].link_device_remark;
+                }
+
                 if(rows[i].check_date == null){
                     parkObj.checkDate = "";
                 }else{
@@ -124,9 +240,16 @@ function getTruckSecurityCheckCsv(req,res,next){
                 }else{
                     parkObj.remark = rows[i].remark;
                 }
+                if(rows[i].check_user_name == null){
+                    parkObj.checkUserName = "";
+                }else{
+                    parkObj.checkUserName = rows[i].check_user_name;
+                }
 
-                csvString = csvString+parkObj.truckNum+","+parkObj.truckType+","+parkObj.turn+","+parkObj.braking+","+parkObj.lighting
-                    +","+parkObj.transmission+","+parkObj.tyre+","+parkObj.structure+","+parkObj.facilities+","+parkObj.linkDevice +","+parkObj.checkDate+","+parkObj.remark+ '\r\n';
+                csvString = csvString+parkObj.truckNum+","+parkObj.truckType+","+parkObj.driveName+","+parkObj.turn+","+parkObj.turnRemark+","+parkObj.braking+","+parkObj.brakingRemark
+                    +","+parkObj.liquid+","+parkObj.liquidRemark+","+parkObj.lighting+","+parkObj.lightingRemark+","+parkObj.transmission +","+parkObj.transmissionRemark
+                +","+parkObj.tyre+","+parkObj.tyreRemark+","+parkObj.suspension+","+parkObj.suspensionRemark+","+parkObj.structure +","+parkObj.structureRemark
+                +","+parkObj.facilities+","+parkObj.facilitiesRemark+","+parkObj.linkDevice+","+parkObj.linkDeviceRemark+","+parkObj.checkDate +","+parkObj.remark+","+parkObj.checkUserName+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
