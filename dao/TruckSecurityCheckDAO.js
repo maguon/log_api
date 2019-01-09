@@ -89,11 +89,12 @@ function getTruckSecurityCheck(params,callback) {
 }
 
 function updateTruckSecurityCheck(params,callback){
-    var query = " update truck_security_check set turn = ? , turn_remark = ? , braking = ? , braking_remark = ? , " +
+    var query = " update truck_security_check set drive_id = ? , turn = ? , turn_remark = ? , braking = ? , braking_remark = ? , " +
         " liquid = ? , liquid_remark = ? , lighting = ? , lighting_remark = ? , transmission = ? , transmission_remark = ? , " +
         " tyre = ? , tyre_remark = ? , suspension = ? , suspension_remark = ? , structure = ? , structure_remark = ?, " +
         " facilities = ? , facilities_remark = ? , link_device = ? , link_device_remark = ? , check_date = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.turn;
     paramsArray[i++]=params.turnRemark;
     paramsArray[i++]=params.braking;
