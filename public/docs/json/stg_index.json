@@ -6130,6 +6130,14 @@
 
           },
           {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "createdOnStart",
             "in": "query",
             "description": "createdOn start",
@@ -6210,6 +6218,14 @@
             "name": "truckId",
             "in": "query",
             "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
             "required": false,
             "type": "integer"
 

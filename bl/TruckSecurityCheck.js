@@ -133,11 +133,11 @@ function getTruckSecurityCheckCsv(req,res,next){
 
                 if(rows[i].lighting == 0){
                     parkObj.lighting = "";
-                }else if(rows[i].lighting == 2){
+                }else if(rows[i].lighting == 1){
                     parkObj.lighting = "未检";
-                }else if(rows[i].lighting == 3){
+                }else if(rows[i].lighting == 2){
                     parkObj.lighting = "不合格";
-                }else if(rows[i].lighting == 4){
+                }else if(rows[i].lighting == 3){
                     parkObj.lighting = "合格";
                 }else{
                     parkObj.lighting = "复检合格";

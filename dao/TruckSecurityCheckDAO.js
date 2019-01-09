@@ -60,6 +60,10 @@ function getTruckSecurityCheck(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and tsc.truck_id = ? ";
     }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and tsc.truck_type = ? ";
+    }
     if(params.createdOnStart){
         paramsArray[i++] = params.createdOnStart +" 00:00:00";
         query = query + " and tsc.created_on >= ? ";
