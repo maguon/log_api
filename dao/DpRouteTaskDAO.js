@@ -147,6 +147,72 @@ function getDpRouteTask(params,callback) {
     });
 }
 
+function getDpRouteTaskList(params,callback) {
+    var query = " select dpr.*,dpr.route_start as city_route_start,dpr.route_end as city_route_end,u.real_name as route_op_name, " +
+        " t.truck_num,tl.id as trail_id,tl.truck_num as trail_num,tl.number as trail_number,d.drive_name,u1.mobile, " +
+        " (select sum(plan_count) from dp_route_load_task where dp_route_task_id=dpr.id )plan_count, " +
+        " (select sum(real_count) from dp_route_load_task where dp_route_task_id=dpr.id )real_count " +
+        " from dp_route_task dpr " +
+        " left join user_info u on dpr.user_id = u.uid " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join truck_info tl on t.rel_id = tl.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join user_info u1 on d.user_id = u1.uid " +
+        " where dpr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dpr.id = ? ";
+    }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status = ? ";
+    }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpr.truck_id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dpr.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dpr.route_end_id = ? ";
+    }
+    query = query + ' group by dpr.id ';
+    query = query + " order by dpr.id desc";
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskList ');
+        return callback(error,rows);
+    });
+}
+
 function getDpRouteTaskBase(params,callback) {
     var query = " select dpr.*,dpr.route_start as city_route_start,dpr.route_end as city_route_end, " +
         " u.real_name as route_op_name,t.truck_num,tb.brand_name, " +
@@ -471,6 +537,7 @@ function updateDpRouteLoadFlag(params,callback){
 module.exports ={
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
+    getDpRouteTaskList : getDpRouteTaskList,
     getDpRouteTaskBase : getDpRouteTaskBase,
     getNotCompletedTaskStatusCount : getNotCompletedTaskStatusCount,
     getDriveDistanceCount : getDriveDistanceCount,

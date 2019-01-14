@@ -614,6 +614,7 @@ function createServer() {
      * DpRouteTask Module
      */
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
+    server.get('/api/dpRouteTaskList' , dpRouteTask.queryDpRouteTaskList);
     server.get('/api/dpRouteTaskBase' , dpRouteTask.queryDpRouteTaskBase);
     server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
     server.get('/api/driveDistanceLoadStat' , dpRouteTask.queryDriveDistanceLoadStat);

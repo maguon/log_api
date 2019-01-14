@@ -244,6 +244,20 @@ function queryDpRouteTask(req,res,next){
     })
 }
 
+function queryDpRouteTaskList(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getDpRouteTaskList(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskList ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskList ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDriveDistanceCount(req,res,next){
     var params = req.params ;
     if(params.dateIdStart !=null || params.dateIdStart !=""){
@@ -782,6 +796,7 @@ module.exports = {
     createDpRouteTask : createDpRouteTask,
     createDpRouteTaskBatch : createDpRouteTaskBatch,
     queryDpRouteTask : queryDpRouteTask,
+    queryDpRouteTaskList : queryDpRouteTaskList,
     queryDpRouteTaskBase : queryDpRouteTaskBase,
     queryDriveDistanceCount : queryDriveDistanceCount,
     queryDriveDistanceLoadStat : queryDriveDistanceLoadStat,
