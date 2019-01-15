@@ -164,10 +164,6 @@ function getDpRouteTaskList(params,callback) {
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dpr.id = ? ";
     }
-    if(params.taskStatus){
-        paramsArray[i++] = params.taskStatus;
-        query = query + " and dpr.task_status = ? ";
-    }
     if(params.taskPlanDateStart){
         paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
         query = query + " and dpr.task_plan_date >= ? ";
@@ -199,6 +195,25 @@ function getDpRouteTaskList(params,callback) {
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
         query = query + " and dpr.route_end_id = ? ";
+    }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dpr.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dpr.date_id <= ? ";
+    }
+    if(params.taskStatusArr){
+        query = query + " and dpr.task_status in ("+params.taskStatusArr + ") "
+    }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status = ? ";
+    }
+    if(params.loadFlag){
+        paramsArray[i++] = params.loadFlag;
+        query = query + " and dpr.load_flag = ? ";
     }
     query = query + ' group by dpr.id ';
     query = query + " order by dpr.id desc";
