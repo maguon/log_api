@@ -738,7 +738,7 @@ function getDpRouteTaskCsv(req,res,next){
 
 function getDriveDistanceLoadStatCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' + "完成任务数" + ',' + "总计里程"+ ',' + "重载公里数" + ','+ "空载公里数" + ','+ "重载率(%)" ;
+    var header = "司机" + ',' +"货车牌号" + ',' + "完成任务数" + ',' + "总计里程"+ ',' + "重载公里数" + ','+ "空载公里数" + ','+ "重载率(%)" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -761,6 +761,7 @@ function getDriveDistanceLoadStatCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
                 parkObj.completeCount = rows[i].complete_count;
                 parkObj.totalDistance = rows[i].load_distance+rows[i].no_load_distance;
                 if(rows[i].load_distance == null){
@@ -776,7 +777,7 @@ function getDriveDistanceLoadStatCsv(req,res,next){
                 parkObj.loadDistanceRate =rows[i].load_distance/(rows[i].load_distance+rows[i].no_load_distance)*100;
 
 
-                csvString = csvString+parkObj.driveName+","+parkObj.completeCount+","+parkObj.totalDistance+","
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.completeCount+","+parkObj.totalDistance+","
                     +parkObj.loadDistance+","+parkObj.noLoadDistance+"," +parkObj.loadDistanceRate.toFixed(2) + '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
