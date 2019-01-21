@@ -379,6 +379,18 @@ function getDriveSettleCsv(req,res,next){
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
+    if(params.orderStart !=null || params.orderStart !=""){
+        var orderStart = params.orderStart;
+        var d = new Date(orderStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.orderEnd !=null || params.orderEnd !=""){
+        var orderEnd = params.orderEnd;
+        var d = new Date(orderEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
     settleHandoverDAO.getDriveSettle(params,function(error,rows){
         if (error) {
             logger.error(' getDriveSettle ' + error.message);
