@@ -279,7 +279,11 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.reShortName = rows[i].re_short_name;
                 }
-                parkObj.enShortName = rows[i].en_short_name;
+                if(rows[i].en_short_name==null){
+                    parkObj.enShortName = "";
+                }else{
+                    parkObj.enShortName = rows[i].en_short_name;
+                }
                 if(rows[i].damage_type == 1){
                     parkObj.damageType = "A级";
                 }else if(rows[i].damage_type == 2){
@@ -299,9 +303,34 @@ function getDamageCsv(req,res,next){
                     parkObj.damageLinkType = "公司运输";
                 }else if(rows[i].damage_link_type == 4){
                     parkObj.damageLinkType = "驾驶员漏检";
-                }else{
+                }else if(rows[i].damage_link_type == 5){
                     parkObj.damageLinkType = "交通事故";
+                }else if(rows[i].damage_link_type == 6){
+                    parkObj.damageLinkType = "前端责任";
+                }else if(rows[i].damage_link_type == 7){
+                    parkObj.damageLinkType = "安盛船务责任";
+                }else if(rows[i].damage_link_type == 8){
+                    parkObj.damageLinkType = "安盛判定";
+                }else if(rows[i].damage_link_type == 9){
+                    parkObj.damageLinkType = "通用判定";
+                }else if(rows[i].damage_link_type == 10){
+                    parkObj.damageLinkType = "驾驶员违规操作";
+                }else if(rows[i].damage_link_type == 11){
+                    parkObj.damageLinkType = "长春办收发车";
+                }else if(rows[i].damage_link_type == 12){
+                    parkObj.damageLinkType = "沈阳办收发车";
+                }else if(rows[i].damage_link_type == 13){
+                    parkObj.damageLinkType = "天津办收发车";
+                }else if(rows[i].damage_link_type == 14){
+                    parkObj.damageLinkType = "PDI漏检";
+                }else if(rows[i].damage_link_type == 15){
+                    parkObj.damageLinkType = "大连现场收发车";
+                }else{
+                    parkObj.damageLinkType = "运输途中遭人为破坏";
                 }
+
+
+
                 if(rows[i].under_user_name==null){
                     parkObj.underUserName = "";
                 }else{
