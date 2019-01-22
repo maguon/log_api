@@ -252,3 +252,8 @@ CREATE TABLE `truck_security_check` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-01-22 更新
+-- ----------------------------
+ALTER TABLE `entrust_info`
+ADD COLUMN `secret_key`  varchar(50) NULL COMMENT '密钥' AFTER `entrust_name`;

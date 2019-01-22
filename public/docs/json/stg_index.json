@@ -24867,6 +24867,9 @@
         "theCode": {
           "type": "string"
         },
+        "companyId": {
+          "type": "integer"
+        },
         "truckType": {
           "type": "integer"
         },
@@ -25747,6 +25750,9 @@
           "type": "string"
         },
         "entrustName": {
+          "type": "string"
+        },
+        "secretKey": {
           "type": "string"
         },
         "remark": {
