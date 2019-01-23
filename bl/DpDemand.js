@@ -125,10 +125,89 @@ function updateDpDemandStatus(req,res,next){
     })
 }
 
+function createEntrustDpDemand(req,res,next){
+    var params = req.params ;
+    var dateId = params.dateId;
+    var d = new Date(dateId);
+    var currentDateStr = moment(d).format('YYYYMMDD');
+    params.dateId = parseInt(currentDateStr);
+    dpDemandDAO.addEntrustDpDemand(params,function(error,result){
+        if (error) {
+            logger.error(' createEntrustDpDemand ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createEntrustDpDemand ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryEntrustDpDemand(req,res,next){
+    var params = req.params ;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
+    dpDemandDAO.getEntrustDpDemand(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustDpDemand ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustDpDemand ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateEntrustDpDemandStatus(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        dpRouteLoadTaskDAO.getDpRouteLoadTask({dpDemandId:params.dpDemandId},function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteLoadTask ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0&&params.demandStatus == sysConst.DEMAND_STATUS.cancel){
+                    logger.warn(' getDpRouteLoadTask ' + 'failed');
+                    resUtil.resetFailedRes(res," 需求已经指派了任务，请先取消任务 ");
+                    return next();
+                }else{
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        dpDemandDAO.updateEntrustDpDemandStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateEntrustDpDemandStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateEntrustDpDemandStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createDpDemand : createDpDemand,
     queryDpDemand : queryDpDemand,
     queryDpDemandBase : queryDpDemandBase,
-    updateDpDemandStatus : updateDpDemandStatus
+    updateDpDemandStatus : updateDpDemandStatus,
+    createEntrustDpDemand : createEntrustDpDemand,
+    queryEntrustDpDemand : queryEntrustDpDemand,
+    updateEntrustDpDemandStatus : updateEntrustDpDemandStatus
 }

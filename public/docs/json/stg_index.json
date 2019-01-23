@@ -15209,6 +15209,166 @@
         }
       }
     },
+    "/entrust/{entrustId}/dpDemand": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpDemand list",
+        "description": "query dpDemand",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpDemandId",
+            "in": "query",
+            "description": "dpDemand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "demandStatus",
+            "in": "query",
+            "description": "demand status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpDemand"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpDemand id"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpDemand",
+        "description": "user create dpDemand",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpDemand",
+            "in": "body",
+            "description": "dpDemand info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpDemand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpDemand id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpDemand": {
       "post": {
         "tags": [
@@ -15269,6 +15429,58 @@
             "name": "userId",
             "in": "path",
             "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpDemandId",
+            "in": "path",
+            "description": "dpDemand id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "demandStatus",
+            "in": "path",
+            "description": "demand status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpDemand id"
+          }
+        }
+      }
+    },
+    "/entrust/{entrustId}/dpDemand/{dpDemandId}/demandStatus/{demandStatus}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpDemand status",
+        "description": "update dpDemand status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust Id",
             "required": true,
             "type": "integer"
 

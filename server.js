@@ -592,8 +592,11 @@ function createServer() {
      */
     server.get('/api/dpDemand',dpDemand.queryDpDemand);
     server.get('/api/dpDemandBase',dpDemand.queryDpDemandBase);
+    server.get('/api/entrust/:entrustId/dpDemand',dpDemand.queryEntrustDpDemand);
     server.post({path:'/api/user/:userId/dpDemand',contentType: 'application/json'},dpDemand.createDpDemand);
+    server.post({path:'/api/entrust/:entrustId/dpDemand',contentType: 'application/json'},dpDemand.createEntrustDpDemand);
     server.put({path:'/api/user/:userId/dpDemand/:dpDemandId/demandStatus/:demandStatus',contentType: 'application/json'} ,dpDemand.updateDpDemandStatus);
+    server.put({path:'/api/entrust/:entrustId/dpDemand/:dpDemandId/demandStatus/:demandStatus',contentType: 'application/json'} ,dpDemand.updateEntrustDpDemandStatus);
 
     /**
      * DpTaskStat Module
