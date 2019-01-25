@@ -257,7 +257,7 @@ function queryDpRouteTaskList(req,res,next){
         }
     })
 }
-
+//app不使用可废除
 function queryDriveDistanceCount(req,res,next){
     var params = req.params ;
     if(params.dateIdStart !=null || params.dateIdStart !=""){
@@ -283,7 +283,7 @@ function queryDriveDistanceCount(req,res,next){
         }
     })
 }
-
+//web,app司机里程共用
 function queryDriveDistanceLoadStat(req,res,next){
     var params = req.params ;
     if(params.dateIdStart !=null || params.dateIdStart !=""){

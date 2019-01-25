@@ -479,6 +479,7 @@ function createServer() {
      * Entrust Module
      */
     server.get('/api/entrust',entrust.queryEntrust);
+    server.get('/api/entrust/:entrustId',entrust.queryEntrust);
     server.get('/api/entrustRoute',entrust.queryEntrustRoute);
     server.get('/api/entrustCar',entrust.queryEntrustCar);
     server.get('/api/entrustCarCount',entrust.queryEntrustCarCount);

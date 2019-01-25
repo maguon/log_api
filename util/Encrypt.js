@@ -234,6 +234,10 @@ function getSmsRandomKey(){
     return getNumberRandomKey(9999,1000);
 }
 
+function getEntrustRandomKey(){
+    return getNumberRandomKey(9999999999,1000000000);
+}
+
 module.exports = {
     encryptByMd5 : encryptByMd5,
     encryptByMd5Key : encryptByMd5Key ,
@@ -250,5 +254,6 @@ module.exports = {
     resolveGiftCode : resolveGiftCode,
     getGiftOrderCode :getGiftOrderCode ,
     encryptByMd5NoKey : encryptByMd5NoKey ,
-    getSmsRandomKey : getSmsRandomKey
+    getSmsRandomKey : getSmsRandomKey,
+    getEntrustRandomKey : getEntrustRandomKey
 };

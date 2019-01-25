@@ -15,6 +15,7 @@ var logger = serverLogger.createLogger('Entrust.js');
 
 function createEntrust(req,res,next){
     var params = req.params ;
+    //params.secretKey = encrypt.getEntrustRandomKey();
     entrustDAO.addEntrust(params,function(error,result){
         if (error) {
             if(error.message.indexOf("Duplicate") > 0) {
