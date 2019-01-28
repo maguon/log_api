@@ -100,6 +100,16 @@ function updateCityRoute(params,callback){
         return callback(error,rows);
     });
 }
+//外部使用接口
+function getCityRouteId(params,callback) {
+    var query = " select * from city_route_info where route_start = " + "'" + params.routeStart + "'" + " and route_end = " + "'" + params.routeEnd + "'" +
+        " union select * from city_route_info where route_end = " + "'" + params.routeStart + "'" + " and route_start = " + "'" + params.routeEnd + "'" ;
+    var paramsArray=[],i=0;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCityRouteId ');
+        return callback(error,rows);
+    });
+}
 
 
 module.exports ={
@@ -108,5 +118,6 @@ module.exports ={
     getCityRouteBase : getCityRouteBase,
     getCityRouteCheck : getCityRouteCheck,
     getCityRouteDispatch : getCityRouteDispatch,
-    updateCityRoute : updateCityRoute
+    updateCityRoute : updateCityRoute,
+    getCityRouteId : getCityRouteId
 }

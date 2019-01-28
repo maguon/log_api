@@ -11,6 +11,9 @@ var listOfValue = require('../util/ListOfValue.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
+var cityRouteDAO = require('../dao/CityRouteDAO.js');
+var baseAddrDAO = require('../dao/BaseAddrDAO.js');
+var receiveDAO = require('../dao/ReceiveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -127,19 +130,89 @@ function updateDpDemandStatus(req,res,next){
 
 function createEntrustDpDemand(req,res,next){
     var params = req.params ;
-    var dateId = params.dateId;
-    var d = new Date(dateId);
-    var currentDateStr = moment(d).format('YYYYMMDD');
-    params.dateId = parseInt(currentDateStr);
-    dpDemandDAO.addEntrustDpDemand(params,function(error,result){
-        if (error) {
-            logger.error(' createEntrustDpDemand ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createEntrustDpDemand ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
+    var demandObj = {};
+    Seq().seq(function(){
+        var that = this;
+        var subParams ={
+            routeStart : params.routeStart,
+            routeEnd : params.routeEnd,
         }
+        cityRouteDAO.getCityRouteId(subParams,function(error,rows){
+            if (error) {
+                logger.error(' getCityRouteCheck ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0){
+                    demandObj.routeStartId = rows[0].route_start_id;
+                    demandObj.routeEndId = rows[0].route_end_id;
+                    that();
+                }else{
+                    logger.warn(' getCityRouteCheck ' + 'failed');
+                    resUtil.resetFailedRes(res," 路线不存在,请先设置路线 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        var subParams ={
+            baseAddrId : params.baseAddrId,
+        }
+        baseAddrDAO.getBaseAddr(subParams,function(error,rows){
+            if (error) {
+                logger.error(' getBaseAddr ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0){
+                    demandObj.addrName = rows[0].addr_name;
+                    that();
+                }else{
+                    logger.warn(' getBaseAddr ' + 'failed');
+                    resUtil.resetFailedRes(res," 发运地不存在,请先设置发运地 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        var subParams ={
+            receiveId : params.receiveId,
+        }
+        receiveDAO.getReceive(subParams,function(error,rows){
+            if (error) {
+                logger.error(' getBaseAddr ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0){
+                    demandObj.shortName = rows[0].short_name;
+                    that();
+                }else{
+                    logger.warn(' getBaseAddr ' + 'failed');
+                    resUtil.resetFailedRes(res," 经销商不存在,请先设置经销商 ");
+                    return next();
+                }
+            }
+        })
+
+    }).seq(function () {
+        var dateId = params.dateId;
+        var d = new Date(dateId);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateId = parseInt(currentDateStr);
+        params.routeStartId = demandObj.routeStartId;
+        params.routeEndId = demandObj.routeEndId;
+        params.addrName = demandObj.addrName;
+        params.shortName = demandObj.shortName;
+        dpDemandDAO.addEntrustDpDemand(params,function(error,result){
+            if (error) {
+                logger.error(' createEntrustDpDemand ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createEntrustDpDemand ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

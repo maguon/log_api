@@ -169,7 +169,7 @@ function updateDpDemandStatus(params,callback){
 //外部使用接口
 function addEntrustDpDemand(params,callback){
     var query = " insert into dp_demand_info (user_id,route_id,route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end, " +
-        " receive_id,short_name,pre_count,date_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " receive_id,short_name,pre_count,date_id,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.entrustId;
     if(params.routeStartId>params.routeEndId){
@@ -186,7 +186,8 @@ function addEntrustDpDemand(params,callback){
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.preCount;
-    paramsArray[i]=params.dateId;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addEntrustDpDemand ');
         return callback(error,rows);
@@ -207,26 +208,6 @@ function getEntrustDpDemand(params,callback) {
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
         query = query + " and dpd.user_id = ? ";
-    }
-    if(params.dateIdStart){
-        paramsArray[i++] = params.dateIdStart;
-        query = query + " and dpd.date_id >= ? ";
-    }
-    if(params.dateIdEnd){
-        paramsArray[i++] = params.dateIdEnd;
-        query = query + " and dpd.date_id <= ? ";
-    }
-    if(params.routeStartId){
-        paramsArray[i++] = params.routeStartId;
-        query = query + " and dpd.route_start_id = ? ";
-    }
-    if(params.baseAddrId){
-        paramsArray[i++] = params.baseAddrId;
-        query = query + " and dpd.base_addr_id = ? ";
-    }
-    if(params.routeEndId){
-        paramsArray[i++] = params.routeEndId;
-        query = query + " and dpd.route_end_id = ? ";
     }
     if(params.demandStatus){
         paramsArray[i++] = params.demandStatus;

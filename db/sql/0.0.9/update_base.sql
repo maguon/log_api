@@ -257,3 +257,8 @@ CREATE TABLE `truck_security_check` (
 -- ----------------------------
 ALTER TABLE `entrust_info`
 ADD COLUMN `secret_key`  varchar(50) NULL COMMENT '密钥' AFTER `entrust_name`;
+-- ----------------------------
+-- 2019-01-28 更新
+-- ----------------------------
+ALTER TABLE `dp_demand_info`
+ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `demand_status`;
