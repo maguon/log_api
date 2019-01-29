@@ -29,7 +29,8 @@ function addDriveRefuel(params,callback){
 
 function getDriveRefuel(params,callback) {
     var query = " select dr.*,d.drive_name,t.truck_num," +
-        " dpt.route_start_id,dpt.route_end_id,c.city_name route_start,ce.city_name route_end,u.real_name as check_user_name " +
+        " dpt.route_start_id,dpt.route_end_id,c.city_name route_start,ce.city_name route_end,dpt.distance,dpt.load_flag," +
+        " u.real_name as check_user_name " +
         " from drive_refuel dr " +
         " left join drive_info d on dr.drive_id = d.id " +
         " left join truck_info t on dr.truck_id = t.id " +
