@@ -195,10 +195,6 @@ function createEntrustDpDemand(req,res,next){
         })
 
     }).seq(function () {
-        var dateId = params.dateId;
-        var d = new Date(dateId);
-        var currentDateStr = moment(d).format('YYYYMMDD');
-        params.dateId = parseInt(currentDateStr);
         params.routeStartId = demandObj.routeStartId;
         params.routeEndId = demandObj.routeEndId;
         params.addrName = demandObj.addrName;

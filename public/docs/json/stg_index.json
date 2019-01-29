@@ -26465,7 +26465,7 @@
           "type": "integer"
         },
         "dateId": {
-          "type": "string"
+          "type": "integer"
         },
         "remark": {
           "type": "string"
