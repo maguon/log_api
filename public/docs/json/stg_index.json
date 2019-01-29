@@ -16693,19 +16693,11 @@
 
           },
           {
-            "name": "taskStatus",
+            "name": "taskStatusArr",
             "in": "query",
-            "description": "task status",
+            "description": "task statusArr",
             "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "loadFlag",
-            "in": "query",
-            "description": "load flag",
-            "required": false,
-            "type": "integer"
+            "type": "string"
 
           }
         ],
