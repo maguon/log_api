@@ -792,6 +792,60 @@ function getDriveDistanceLoadStatCsv(req,res,next){
     })
 }
 
+function getDriveDistanceLoadCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "指令编号"+ ',' + "指令完成时间" + ','+ "起始城市" + ','+ "目的城市"
+        + ','+ "装载车辆数" + ','+ "公里数" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
+    dpRouteTaskDAO.getDpRouteTaskList(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveDistanceLoadStatCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                parkObj.mobile = rows[i].mobile;
+                parkObj.id = rows[i].id;
+                if(rows[i].task_end_date == null){
+                    parkObj.taskEndDate = "";
+                }else{
+                    parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
+                }
+                parkObj.routeStart = rows[i].route_start;
+                parkObj.routeEnd = rows[i].route_end;
+                parkObj.carCount = rows[i].car_count;
+                parkObj.distance = rows[i].distance;
+
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.id+","
+                    +parkObj.taskEndDate+","+parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.carCount+","+parkObj.distance+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -809,5 +863,6 @@ module.exports = {
     queryRouteTaskWeekStat : queryRouteTaskWeekStat ,
     queryRouteTaskMonthStat : queryRouteTaskMonthStat,
     getDpRouteTaskCsv : getDpRouteTaskCsv,
-    getDriveDistanceLoadStatCsv : getDriveDistanceLoadStatCsv
+    getDriveDistanceLoadStatCsv : getDriveDistanceLoadStatCsv,
+    getDriveDistanceLoadCsv : getDriveDistanceLoadCsv
 }
