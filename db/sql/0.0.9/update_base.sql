@@ -262,3 +262,9 @@ ADD COLUMN `secret_key`  varchar(50) NULL COMMENT '密钥' AFTER `entrust_name`;
 -- ----------------------------
 ALTER TABLE `dp_demand_info`
 ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `demand_status`;
+-- ----------------------------
+-- 2019-01-29 更新
+-- ----------------------------
+ALTER TABLE `truck_info`
+ADD COLUMN `load_distance_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '重载油量' AFTER `inspect_image`,
+ADD COLUMN `no_load_distance_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '空载油量' AFTER `load_distance_oil`;

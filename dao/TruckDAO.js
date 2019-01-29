@@ -476,6 +476,18 @@ function updateRepairStatus(params,callback){
     });
 }
 
+function updateTruckLoadDistanceOil(params,callback){
+    var query = " update truck_info set load_distance_oil = ? , no_load_distance_oil = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.loadDistanceOil;
+    paramsArray[i++] = params.noLoadDistanceOil;
+    paramsArray[i] = params.truckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckLoadDistanceOil ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckFirst : addTruckFirst,
@@ -499,5 +511,6 @@ module.exports ={
     updateTruckDriveRel : updateTruckDriveRel,
     updateTruckViceDriveRel : updateTruckViceDriveRel,
     updateTruckStatus : updateTruckStatus,
-    updateRepairStatus : updateRepairStatus
+    updateRepairStatus : updateRepairStatus,
+    updateTruckLoadDistanceOil : updateTruckLoadDistanceOil
 }

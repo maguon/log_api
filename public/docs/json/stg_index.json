@@ -2675,6 +2675,59 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/truckLoadDistanceOil": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user update truck loadDistanceOil",
+        "description": "user update truck loadDistanceOil",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckLoadDistanceOil",
+            "in": "body",
+            "description": "truckLoadDistanceOil info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckLoadDistanceOil"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truck id"
+          }
+        }
+      }
+    },
     "/truckInsureRel": {
       "get": {
         "tags": [
@@ -16677,6 +16730,14 @@
 
           },
           {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "dateIdStart",
             "in": "query",
             "description": "dateId start",
@@ -25182,6 +25243,21 @@
       },
       "xml": {
         "name": "truckImage"
+      }
+    },
+    "truckLoadDistanceOil": {
+      "type": "object",
+      "properties": {
+
+        "loadDistanceOil": {
+          "type": "integer"
+        },
+        "noLoadDistanceOil": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "truckLoadDistanceOil"
       }
     },
     "truckInsureRel": {
