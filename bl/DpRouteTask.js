@@ -794,7 +794,7 @@ function getDriveDistanceLoadStatCsv(req,res,next){
 
 function getDriveDistanceLoadCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "指令编号"+ ',' + "指令完成时间" + ','+ "起始城市" + ','+ "目的城市"
+    var header = "司机" + ',' +"货车牌号" + ',' + "联系电话" + ',' + "指令编号"+ ',' + "指令完成时间" + ','+ "起始城市" + ','+ "目的城市"
         + ','+ "装载车辆数" + ','+ "公里数" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;

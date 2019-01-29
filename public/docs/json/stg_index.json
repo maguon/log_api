@@ -14203,6 +14203,51 @@
         }
       }
     },
+    "/user/{userId}/entrustCar": {
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "user create car",
+        "description": "user create car",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustCar",
+            "in": "body",
+            "description": "entrustCar info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entrustCar"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
     "/user/{userId}/car/{carId}": {
       "put": {
         "tags": [
@@ -26263,6 +26308,39 @@
       },
       "xml": {
         "name": "vin"
+      }
+    },
+    "entrustCar": {
+      "type": "object",
+      "properties": {
+
+        "vin": {
+          "type": "string"
+        },
+        "makeId": {
+          "type": "integer"
+        },
+        "makeName": {
+          "type": "string"
+        },
+        "routeStart": {
+          "type": "string"
+        },
+        "baseAddrId": {
+          "type": "integer"
+        },
+        "entrustId": {
+          "type": "integer"
+        },
+        "orderDate": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "entrustCar"
       }
     },
     "carStorageRel": {

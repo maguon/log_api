@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var carDAO = require('../dao/CarDAO.js');
+var cityDAO = require('../dao/CityDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -377,6 +378,54 @@ function getCarListCsv(req,res,next){
         }
     })
 }
+//外部使用接口
+function createEntrustCar(req,res,next){
+    var params = req.params ;
+    var carObj = {};
+    var carId = 0;
+    Seq().seq(function(){
+        var that = this;
+        if(params.routeStart !=null && params.routeStart != ''){
+            params.cityName = params.routeStart;
+        }
+        cityDAO.getCity(params,function(error,rows){
+            if (error) {
+                logger.error(' getCity ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0){
+                    carObj.routeStartId = rows[0].id;
+                    that();
+                }else{
+                    logger.warn(' getCity ' + 'failed');
+                    resUtil.resetFailedRes(res," 城市不存在,请先设置城市 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.routeStartId = carObj.routeStartId;
+        carDAO.addCar(params,function(error,result){
+            if (error) {
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "本条数据已经存在，请核对后重新录入");
+                    return next();
+                } else{
+                    logger.error(' createCar ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
+            } else {
+                logger.info(' createCar ' + 'success');
+                req.params.carContent =" 商品车信息录入 ";
+                carId = result.insertId;
+                req.params.carId = carId;
+                req.params.op =sysConst.CAR_OP_TYPE.CREATE_CAR;
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
 
 
 module.exports = {
@@ -395,5 +444,6 @@ module.exports = {
     updateCarStatus : updateCarStatus,
     removeUploadCar : removeUploadCar,
     getCarRelCsv : getCarRelCsv,
-    getCarListCsv : getCarListCsv
+    getCarListCsv : getCarListCsv,
+    createEntrustCar : createEntrustCar
 }
