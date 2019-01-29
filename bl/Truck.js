@@ -778,20 +778,6 @@ function updateRepairStatus(req,res,next){
     })
 }
 
-function updateTruckLoadDistanceOil(req,res,next){
-    var params = req.params ;
-    truckDAO.updateTruckLoadDistanceOil(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckLoadDistanceOil ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckLoadDistanceOil ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
-    })
-}
-
 function getTruckFirstCsv(req,res,next){
     var csvString = "";
     var header = "货车牌号" + ',' + "品牌" + ',' + "关联挂车号" + ',' + "挂车货位" + ','+ "联系电话" + ','+ "主驾司机"+ ','+ "副驾司机" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态";
@@ -935,7 +921,6 @@ module.exports = {
     updateTruckStatusFirst : updateTruckStatusFirst,
     updateTruckStatusTrailer : updateTruckStatusTrailer,
     updateRepairStatus : updateRepairStatus,
-    updateTruckLoadDistanceOil : updateTruckLoadDistanceOil,
     getTruckFirstCsv : getTruckFirstCsv,
     getTruckTrailerCsv : getTruckTrailerCsv
 }

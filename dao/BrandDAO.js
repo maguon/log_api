@@ -49,9 +49,22 @@ function updateBrand(params,callback){
     });
 }
 
+function updateTruckLoadDistanceOil(params,callback){
+    var query = " update truck_brand set load_distance_oil = ? , no_load_distance_oil = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.loadDistanceOil;
+    paramsArray[i++] = params.noLoadDistanceOil;
+    paramsArray[i]=params.brandId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckLoadDistanceOil ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addBrand : addBrand,
     getBrand : getBrand,
-    updateBrand : updateBrand
+    updateBrand : updateBrand,
+    updateTruckLoadDistanceOil : updateTruckLoadDistanceOil
 }

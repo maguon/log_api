@@ -2675,59 +2675,6 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/truckLoadDistanceOil": {
-      "put": {
-        "tags": [
-          "truck"
-        ],
-        "summary": "user update truck loadDistanceOil",
-        "description": "user update truck loadDistanceOil",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckId",
-            "in": "path",
-            "description": "truck id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckLoadDistanceOil",
-            "in": "body",
-            "description": "truckLoadDistanceOil info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/truckLoadDistanceOil"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid truck id"
-          }
-        }
-      }
-    },
     "/truckInsureRel": {
       "get": {
         "tags": [
@@ -6556,6 +6503,59 @@
               "$ref": "#/definitions/brand"
             }
 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid brand id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/brand/{brandId}/truckLoadDistanceOil": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user update truck loadDistanceOil",
+        "description": "user update truck loadDistanceOil",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandId",
+            "in": "path",
+            "description": "brand id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckLoadDistanceOil",
+            "in": "body",
+            "description": "truckLoadDistanceOil info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckLoadDistanceOil"
+            }
           }
         ],
         "responses": {

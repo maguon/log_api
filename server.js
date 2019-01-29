@@ -235,7 +235,6 @@ function createServer() {
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus/first',contentType: 'application/json'} ,truck.updateTruckStatusFirst);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus/trailer',contentType: 'application/json'} ,truck.updateTruckStatusTrailer);
     server.put({path:'/api/user/:userId/truck/:truckId/repairStatus/:repairStatus',contentType: 'application/json'} ,truck.updateRepairStatus);
-    server.put({path:'/api/user/:userId/truck/:truckId/truckLoadDistanceOil',contentType: 'application/json'} ,truck.updateTruckLoadDistanceOil);
 
     /**
      * TruckInsureRel Module
@@ -339,6 +338,7 @@ function createServer() {
     server.get('/api/brand',brand.queryBrand);
     server.post({path:'/api/user/:userId/brand',contentType: 'application/json'},brand.createBrand);
     server.put({path:'/api/user/:userId/brand/:brandId',contentType: 'application/json'} ,brand.updateBrand);
+    server.put({path:'/api/user/:userId/brand/:brandId/truckLoadDistanceOil',contentType: 'application/json'} ,brand.updateTruckLoadDistanceOil);
 
     /**
      * Drive Module

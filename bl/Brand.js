@@ -55,9 +55,24 @@ function updateBrand(req,res,next){
     })
 }
 
+function updateTruckLoadDistanceOil(req,res,next){
+    var params = req.params ;
+    brandDAO.updateTruckLoadDistanceOil(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckLoadDistanceOil ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckLoadDistanceOil ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createBrand : createBrand,
     queryBrand : queryBrand,
-    updateBrand : updateBrand
+    updateBrand : updateBrand,
+    updateTruckLoadDistanceOil : updateTruckLoadDistanceOil
 }
