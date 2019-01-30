@@ -142,7 +142,7 @@ function createEntrustDpDemand(req,res,next){
                 logger.error(' getCityRouteCheck ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length>0){
+                if(rows&&rows.length==1){
                     demandObj.routeStartId = rows[0].route_start_id;
                     demandObj.routeEndId = rows[0].route_end_id;
                     that();
@@ -163,7 +163,7 @@ function createEntrustDpDemand(req,res,next){
                 logger.error(' getBaseAddr ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length>0){
+                if(rows&&rows.length==1){
                     demandObj.addrName = rows[0].addr_name;
                     that();
                 }else{
@@ -183,7 +183,7 @@ function createEntrustDpDemand(req,res,next){
                 logger.error(' getBaseAddr ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length>0){
+                if(rows&&rows.length==1){
                     demandObj.shortName = rows[0].short_name;
                     that();
                 }else{

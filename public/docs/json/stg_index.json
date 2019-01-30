@@ -26320,9 +26320,6 @@
         "makeId": {
           "type": "integer"
         },
-        "makeName": {
-          "type": "string"
-        },
         "routeStart": {
           "type": "string"
         },
@@ -26333,9 +26330,6 @@
           "type": "integer"
         },
         "orderDate": {
-          "type": "string"
-        },
-        "remark": {
           "type": "string"
         }
       },

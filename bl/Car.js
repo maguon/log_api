@@ -10,6 +10,7 @@ var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var carDAO = require('../dao/CarDAO.js');
 var cityDAO = require('../dao/CityDAO.js');
+var carMakeDAO = require('../dao/CarMakeDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -385,15 +386,35 @@ function createEntrustCar(req,res,next){
     var carId = 0;
     Seq().seq(function(){
         var that = this;
-        if(params.routeStart !=null && params.routeStart != ''){
-            params.cityName = params.routeStart;
+        var subParams ={
+            makeId : params.makeId,
         }
-        cityDAO.getCity(params,function(error,rows){
+        carMakeDAO.getCarMake(subParams,function(error,rows){
+            if (error) {
+                logger.error(' getCarMake ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length==1){
+                    carObj.makeName = rows[0].make_name;
+                    that();
+                }else{
+                    logger.warn(' getCarMake ' + 'failed');
+                    resUtil.resetFailedRes(res," 品牌不存在,请先设置商品车品牌 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        var subParams ={
+            cityName : params.routeStart,
+        }
+        cityDAO.getCity(subParams,function(error,rows){
             if (error) {
                 logger.error(' getCity ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
-                if(rows&&rows.length>0){
+                if(rows&&rows.length==1){
                     carObj.routeStartId = rows[0].id;
                     that();
                 }else{
@@ -404,6 +425,7 @@ function createEntrustCar(req,res,next){
             }
         })
     }).seq(function () {
+        params.makeName = carObj.makeName;
         params.routeStartId = carObj.routeStartId;
         carDAO.addCar(params,function(error,result){
             if (error) {
