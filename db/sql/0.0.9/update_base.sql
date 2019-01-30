@@ -268,3 +268,8 @@ ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `demand_status`;
 ALTER TABLE `truck_brand`
 ADD COLUMN `load_distance_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '重载油量' AFTER `brand_name`,
 ADD COLUMN `no_load_distance_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '空载油量' AFTER `load_distance_oil`;
+-- ----------------------------
+-- 2019-01-30 更新
+-- ----------------------------
+ALTER TABLE `entrust_contacts`
+ADD COLUMN `contacts_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '联系人状态' AFTER `tel`;
