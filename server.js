@@ -486,6 +486,7 @@ function createServer() {
     server.get('/api/entrustCarCount',entrust.queryEntrustCarCount);
     server.get('/api/entrustCarNotCount',entrust.queryEntrustCarNotCount);
     server.get('/api/entrustCar.csv',entrust.getEntrustCarCsv);
+    server.get('/api/entrustNotCar.csv',entrust.getEntrustNotCarCsv);
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
     server.get('/api/settleCarBatch',entrust.createSettleCarBatch);
     server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);

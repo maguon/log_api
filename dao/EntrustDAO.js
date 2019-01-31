@@ -119,6 +119,60 @@ function getEntrustCar(params,callback) {
     });
 }
 
+function getEntrustNotCar(params,callback) {
+    var query = " select c.*,e.short_name as e_short_name,ba.addr_name,r.short_name as r_short_name,ecrr.distance,ecrr.fee " +
+        " from car_info c " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
+        " left join receive_info r on c.receive_id = r.id " +
+        " left join city_route_info cr on c.route_id = cr.route_id " +
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " where ecrr.entrust_id is null and c.car_status >=1 ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
+    }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    query = query + '  order by c.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getEntrustNotCar ');
+        return callback(error,rows);
+    });
+}
+
 function getEntrustCarCount(params,callback) {
     var query = " select count(c.id)as entrust_car_count,convert(sum(ecrr.distance*ecrr.fee),decimal(10,2)) as entrust_car_price " +
         " from car_info c " +
@@ -285,6 +339,7 @@ module.exports ={
     getEntrust : getEntrust,
     getEntrustRoute : getEntrustRoute,
     getEntrustCar : getEntrustCar,
+    getEntrustNotCar : getEntrustNotCar,
     getEntrustCarCount : getEntrustCarCount,
     getEntrustCarNotCount : getEntrustCarNotCount,
     updateEntrust : updateEntrust,
