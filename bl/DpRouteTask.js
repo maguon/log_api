@@ -81,29 +81,6 @@ function createDpRouteTaskBatch(req,res,next){
     Seq().seq(function(){
         var that = this;
         var subParams ={
-            taskStatusArr : '1,2,3,4',
-            truckId : params.truckId
-        }
-        dpRouteTaskDAO.getDpRouteTask(subParams,function(error,rows){
-            if (error) {
-                logger.error(' getDpRouteTask ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else{
-                if(rows&&rows.length >0&&rows[0].route_end_id ==params.routeStartId){
-                    that();
-                }else if(rows&&rows.length ==0&&params.currentCity ==params.routeStartId){
-                    that();
-                }else{
-                    logger.warn(' getDpRouteTask ' + 'failed');
-                    resUtil.resetFailedRes(res," 当前任务的目的城市与发布的起始城市不一致。 ");
-                    return next();
-
-                }
-            }
-        })
-    }).seq(function(){
-        var that = this;
-        var subParams ={
             routeStartId : params.routeStartId,
             routeEndId : params.routeEndId
         }
