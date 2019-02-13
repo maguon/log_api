@@ -37,7 +37,7 @@ function getBaseAddr(params,callback) {
     }
     if(params.cityId){
         paramsArray[i++] = params.cityId;
-        query = query + " and ba.city_id = ? ";
+        query = query + " and ba.city_id = ? or ba.city_id = 0 ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

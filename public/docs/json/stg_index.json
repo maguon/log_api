@@ -26420,9 +26420,6 @@
         },
         "entrustId": {
           "type": "integer"
-        },
-        "orderDate": {
-          "type": "string"
         }
       },
       "xml": {
