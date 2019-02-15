@@ -66,7 +66,7 @@ function getDpRouteLoadTask(params,callback) {
         " u.real_name as task_op_name,u1.real_name as field_op_name,r.clean_fee,r.guard_fee,dpd.pre_count,dpr.task_status, " +
         " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
         " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count, " +
-        " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end " +
+        " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end,dpd.remark as demand_remark " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join user_info u on dprl.user_id = u.uid " +
