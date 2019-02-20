@@ -195,20 +195,46 @@ function updateCar(req,res,next){
 
 function updateCarVin(req,res,next){
     var params = req.params ;
-    carDAO.updateCarVin(params,function(error,result){
-        if (error) {
-            if(error.message.indexOf("Duplicate") > 0) {
-                resUtil.resetFailedRes(res, "本条数据已经存在，请核对后重新操作");
+    var parkObj = {};
+    Seq().seq(function(){
+        var that = this;
+        carDAO.getCarList({carId:params.carId},function(error,rows){
+            if (error) {
+                logger.error(' getCarList ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
-            } else{
-                logger.error(' createCar ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(rows && rows.length>0){
+                    parkObj.vin = rows[0].vin;
+                    that();
+                }else{
+                    logger.warn(' getCarList ' + 'failed');
+                    resUtil.resetFailedRes(res," VIN码不存在 ");
+                    return next();
+
+                }
             }
-        } else {
-            logger.info(' updateCarVin ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+        })
+    }).seq(function () {
+        carDAO.updateCarVin(params,function(error,result){
+            if (error) {
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "本条数据已经存在，请核对后重新操作");
+                    return next();
+                } else{
+                    logger.error(' createCar ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
+            } else {
+                logger.info(' updateCarVin ' + 'success');
+                req.params.carContent =" 从原VIN码："+ parkObj.vin+" 修改为新VIN码："+params.vin;
+                req.params.vin =params.vin;
+                req.params.carId = params.carId;
+                req.params.op =sysConst.CAR_OP_TYPE.CREATE_CAR;
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

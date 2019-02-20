@@ -558,7 +558,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/entrustCar',contentType: 'application/json'},car.createEntrustCar,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
-    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin);
+    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId/carStatus/:carStatus',contentType: 'application/json'} ,car.updateCarStatus,sysRecord.saveCarRecord);
     server.del('/api/user/:userId/upload/:uploadId' , car.removeUploadCar);
 
