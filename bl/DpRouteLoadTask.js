@@ -380,19 +380,19 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     req.params.routeContent =" 运输货车 "+ parkObj.truckNum +" 已到达 " + parkObj.shortName + "   卸车数量：" + parkObj.carCount + "   异常车辆：" + parkObj.carExceptionCount;
                     req.params.routeId = parkObj.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.completed;
-                    parkObj.dpRouteLoadTaskId = params.dpRouteLoadTaskId;
-                    dpRouteLoadTaskDAO.resetLoadTaskTruckCount(parkObj,function(error,result){
-                        if (error) {
-                            logger.error(' updateTruckDispatch ' + error.message);
-                            throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                        } else {
-                            if (result && result.affectedRows > 0) {
-                                logger.info(' updateTruckDispatch ' + 'success');
-                            } else {
-                                logger.warn(' updateTruckDispatch ' + 'failed');
-                            }
-                        }
-                    })
+                    // parkObj.dpRouteLoadTaskId = params.dpRouteLoadTaskId;
+                    // dpRouteLoadTaskDAO.resetLoadTaskTruckCount(parkObj,function(error,result){
+                    //     if (error) {
+                    //         logger.error(' updateTruckDispatch ' + error.message);
+                    //         throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    //     } else {
+                    //         if (result && result.affectedRows > 0) {
+                    //             logger.info(' updateTruckDispatch ' + 'success');
+                    //         } else {
+                    //             logger.warn(' updateTruckDispatch ' + 'failed');
+                    //         }
+                    //     }
+                    // })
                 }
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
