@@ -273,3 +273,59 @@ ADD COLUMN `no_load_distance_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '空�
 -- ----------------------------
 ALTER TABLE `entrust_contacts`
 ADD COLUMN `contacts_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '联系人状态' AFTER `tel`;
+-- ----------------------------
+-- 2019-02-20 更新
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_update_load_task`;
+DELIMITER ;;
+CREATE TRIGGER `trg_update_load_task` AFTER UPDATE ON `dp_route_load_task` FOR EACH ROW BEGIN
+IF(new.load_task_status=8 && old.load_task_status<>8 && old.transfer_flag =1) THEN
+UPDATE dp_demand_info set plan_count=plan_count-old.plan_count where id= new.demand_id ;
+UPDATE dp_task_stat set plan_count = plan_count-old.plan_count,transfer_count = transfer_count -old.plan_count
+where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id
+and receive_id=new.receive_id and date_id = new.date_id;
+UPDATE dp_transfer_demand_info set plan_count=plan_count-old.plan_count where id= new.transfer_demand_id ;
+ELSEIF(new.load_task_status=8 && old.load_task_status<>8) THEN
+UPDATE dp_demand_info set plan_count=plan_count-old.plan_count where id= new.demand_id ;
+UPDATE dp_task_stat set plan_count = plan_count-old.plan_count
+where route_start_id=new.route_start_id
+and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+IF(new.load_task_type=2) THEN
+UPDATE dp_transfer_demand_info set plan_count=plan_count-new.plan_count where id= new.transfer_demand_id ;
+END IF;
+END IF;
+IF(new.load_task_status=3 && old.load_task_status<>3) THEN
+UPDATE dp_route_task set task_status=4
+where (select count(*) from dp_route_load_task where load_task_status <>3 and load_task_status<>8 and dp_route_task_id = old.dp_route_task_id ) =0 and id= old.dp_route_task_id;
+UPDATE dp_demand_info set plan_count = plan_count+(new.real_count-old.plan_count) where id = new.demand_id and route_start_id=new.route_start_id
+and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+UPDATE dp_task_stat set plan_count = plan_count+(new.real_count-old.plan_count) where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = new.date_id;
+IF(old.transfer_flag =1) THEN
+UPDATE dp_task_stat set transfer_count = transfer_count+(new.real_count-old.plan_count)
+where route_start_id=new.route_start_id and base_addr_id=new.base_addr_id and route_end_id = new.route_end_id
+and receive_id=new.receive_id and date_id = new.date_id;
+END IF;
+END IF;
+IF(new.load_task_status=7 && old.load_task_status<>7) THEN
+UPDATE dp_route_task set task_status=10
+where id = old.dp_route_task_id and task_status =9 and
+(select count(*) from dp_route_load_task where load_task_status <>7 and load_task_status<>8 and dp_route_task_id = old.dp_route_task_id ) =0 ;
+END IF;
+END
+;;
+DELIMITER ;
+-- ----------------------------
+-- 2019-02-20 更新
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_update_route_task`;
+DELIMITER ;;
+CREATE TRIGGER `trg_update_route_task` BEFORE UPDATE ON `dp_route_task` FOR EACH ROW BEGIN
+IF(new.task_status=4 && old.task_status<>4) THEN
+UPDATE truck_dispatch set current_city= 0 , task_start = old.route_start_id ,task_end=old.route_end_id
+where truck_id=old.truck_id ;
+set new.car_count = (select car_count from truck_dispatch where truck_id = old.truck_id);
+END IF;
+END
+;;
+DELIMITER ;
