@@ -15,8 +15,11 @@ var logger = serverLogger.createLogger('Receive.js');
 
 function createReceive(req,res,next){
     var params = req.params ;
-    if(params.makeId==null){
+    if(params.makeId==null || params.makeId==""){
         params.makeId = 0;
+    }
+    if(params.cityId==null || params.cityId==""){
+        params.cityId = 0;
     }
     receiveDAO.addReceive(params,function(error,result){
         if (error) {
@@ -67,8 +70,11 @@ function queryReceiveCount(req,res,next){
 
 function updateReceive(req,res,next){
     var params = req.params ;
-    if(params.makeId==null){
+    if(params.makeId==null || params.makeId==""){
         params.makeId = 0;
+    }
+    if(params.cityId==null || params.cityId==""){
+        params.cityId = 0;
     }
     receiveDAO.updateReceive(params,function(error,result){
         if (error) {
