@@ -329,3 +329,9 @@ END IF;
 END
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2019-02-22 更新
+-- ----------------------------
+ALTER TABLE `car_info`
+DROP INDEX `vin` ,
+ADD UNIQUE INDEX `vin` (`vin`, `route_start_id`, `base_addr_id`, `entrust_id`, `route_end_id`, `receive_id`) USING BTREE COMMENT '唯一VIN';
