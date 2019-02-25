@@ -49,7 +49,7 @@ function getReceive(params,callback) {
     }
     if(params.cityId){
         paramsArray[i++] = params.cityId;
-        query = query + " and re.city_id = ? ";
+        query = query + " and re.city_id = ? or re.city_id = 0 ";
     }
     if(params.makeId){
         paramsArray[i++] = params.makeId;
