@@ -450,7 +450,9 @@ function getDriveSettleCsv(req,res,next){
 
 function getDriveCostCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "出车款" + ','+ "货车维修费"+ ','+ "违章扣款"+ ','+ "超油扣款" ;
+    var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "出车款" + ','+ "过路费"+ ','+ "燃料费"+ ','+ "保道费"
+        + ','+ "罚款费"+ ','+ "停车费"+ ','+ "打车费" + ','+ "住宿费"+ ','+ "商品车费用"
+        + ','+ "货车维修费"+ ','+ "违章扣款"+ ','+ "超量扣款" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -476,6 +478,55 @@ function getDriveCostCsv(req,res,next){
                 }else{
                     parkObj.grantActualMoney = rows[i].grant_actual_money;
                 }
+
+                if(rows[i].grant_passing_cost == null){
+                    parkObj.grantPassingCost = "";
+                }else{
+                    parkObj.grantPassingCost = rows[i].grant_passing_cost;
+                }
+
+                if(rows[i].grant_fuel_cost == null){
+                    parkObj.grantFuelCost = "";
+                }else{
+                    parkObj.grantFuelCost = rows[i].grant_fuel_cost;
+                }
+
+                if(rows[i].grant_protect_cost == null){
+                    parkObj.grantProtectCost = "";
+                }else{
+                    parkObj.grantProtectCost = rows[i].grant_protect_cost;
+                }
+
+                if(rows[i].grant_penalty_cost == null){
+                    parkObj.grantPenaltyCost = "";
+                }else{
+                    parkObj.grantPenaltyCost = rows[i].grant_penalty_cost;
+                }
+
+                if(rows[i].grant_parking_cost == null){
+                    parkObj.grantParkingCost = "";
+                }else{
+                    parkObj.grantParkingCost = rows[i].grant_parking_cost;
+                }
+
+                if(rows[i].grant_taxi_cost == null){
+                    parkObj.grantTaxiCost = "";
+                }else{
+                    parkObj.grantTaxiCost = rows[i].grant_taxi_cost;
+                }
+
+                if(rows[i].grant_hotel_cost == null){
+                    parkObj.grantHotelCost = "";
+                }else{
+                    parkObj.grantHotelCost = rows[i].grant_hotel_cost;
+                }
+
+                if(rows[i].grant_car_cost == null){
+                    parkObj.grantCarCost = "";
+                }else{
+                    parkObj.grantCarCost = rows[i].grant_car_cost;
+                }
+
                 if(rows[i].repair_money == null){
                     parkObj.repairMoney = "";
                 }else{
@@ -492,7 +543,10 @@ function getDriveCostCsv(req,res,next){
                     parkObj.exceedOilMoney = rows[i].exceed_oil_money;
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.actualPrice+","+parkObj.actualGuardFee+","+parkObj.grantActualMoney
-                    +","+parkObj.repairMoney+","+parkObj.peccancyFineMoney+","+parkObj.exceedOilMoney+ '\r\n';
+                    +","+parkObj.grantPassingCost+","+parkObj.grantFuelCost+","+parkObj.grantProtectCost
+                +","+parkObj.grantPenaltyCost+","+parkObj.grantParkingCost+","+parkObj.grantTaxiCost
+                +","+parkObj.grantHotelCost+","+parkObj.grantCarCost
+                +","+parkObj.repairMoney+","+parkObj.peccancyFineMoney+","+parkObj.exceedOilMoney+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

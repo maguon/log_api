@@ -51,7 +51,7 @@ function addCarTmp(params,callback){
 function addCar(params,callback){
     var query = " insert into car_info (user_id,vin,make_id,make_name,model_id,model_name," +
         " route_start_id,route_start,base_addr_id,route_end_id,route_end,route_id,receive_id,entrust_id,order_date,order_date_id,ship_name,colour,engine_num,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.vin;
