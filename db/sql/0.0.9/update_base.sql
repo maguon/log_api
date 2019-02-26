@@ -343,3 +343,6 @@ ADD COLUMN `grant_hotel_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '发放住�
 ADD COLUMN `grant_car_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '发放商品车费用' AFTER `grant_hotel_cost`,
 ADD COLUMN `refund_hotel_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销住宿费' AFTER `refund_taxi_cost`,
 ADD COLUMN `refund_car_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销商品车费用' AFTER `refund_hotel_cost`;
+
+ALTER TABLE `car_info`
+ADD COLUMN `ship_name`  varchar(40) NULL COMMENT '船名' AFTER `order_date_id`;

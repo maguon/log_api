@@ -26492,6 +26492,9 @@
         "orderDate": {
           "type": "string"
         },
+        "shipName": {
+          "type": "string"
+        },
         "colour": {
           "type": "string"
         },
