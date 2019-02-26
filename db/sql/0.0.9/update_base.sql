@@ -335,3 +335,11 @@ DELIMITER ;
 ALTER TABLE `car_info`
 DROP INDEX `vin` ,
 ADD UNIQUE INDEX `vin` (`vin`, `route_start_id`, `base_addr_id`, `entrust_id`, `route_end_id`, `receive_id`) USING BTREE COMMENT '唯一VIN';
+-- ----------------------------
+-- 2019-02-26 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_loan`
+ADD COLUMN `grant_hotel_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '发放住宿费' AFTER `grant_taxi_cost`,
+ADD COLUMN `grant_car_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '发放商品车费用' AFTER `grant_hotel_cost`,
+ADD COLUMN `refund_hotel_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销住宿费' AFTER `refund_taxi_cost`,
+ADD COLUMN `refund_car_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销商品车费用' AFTER `refund_hotel_cost`;

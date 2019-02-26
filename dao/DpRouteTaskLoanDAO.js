@@ -8,7 +8,8 @@ var logger = serverLogger.createLogger('DpRouteTaskLoanDAO.js');
 
 function addDpRouteTaskLoan(params,callback){
     var query = " insert into dp_route_task_loan(drive_id,truck_id,grant_passing_cost,grant_fuel_cost,grant_protect_cost,grant_penalty_cost," +
-        "grant_parking_cost,grant_taxi_cost,grant_explain,grant_user_id,grant_date) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        "grant_parking_cost,grant_taxi_cost,grant_hotel_cost,grant_car_cost,grant_explain,grant_user_id,grant_date) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
@@ -18,6 +19,8 @@ function addDpRouteTaskLoan(params,callback){
     paramsArray[i++]=params.grantPenaltyCost;
     paramsArray[i++]=params.grantParkingCost;
     paramsArray[i++]=params.grantTaxiCost;
+    paramsArray[i++]=params.grantHotelCost;
+    paramsArray[i++]=params.grantCarCost;
     paramsArray[i++]=params.grantExplain;
     paramsArray[i++]=params.userId;
     paramsArray[i]=params.grantDate;
@@ -101,7 +104,8 @@ function getDpRouteTaskLoan(params,callback) {
 
 function updateDpRouteTaskLoanGrant(params,callback){
     var query = " update dp_route_task_loan set grant_passing_cost = ? , grant_fuel_cost = ? , grant_protect_cost = ? , grant_penalty_cost = ? , " +
-        " grant_parking_cost = ? , grant_taxi_cost = ? , grant_explain = ? , grant_actual_money = ? , grant_user_id = ? , grant_date = ? where id = ? ";
+        " grant_parking_cost = ? , grant_taxi_cost = ? , grant_hotel_cost = ? , grant_car_cost = ? , grant_explain = ? , grant_actual_money = ? , " +
+        " grant_user_id = ? , grant_date = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.grantPassingCost;
     paramsArray[i++] = params.grantFuelCost;
@@ -109,6 +113,8 @@ function updateDpRouteTaskLoanGrant(params,callback){
     paramsArray[i++] = params.grantPenaltyCost;
     paramsArray[i++] = params.grantParkingCost;
     paramsArray[i++] = params.grantTaxiCost;
+    paramsArray[i++] = params.grantHotelCost;
+    paramsArray[i++] = params.grantCarCost;
     paramsArray[i++] = params.grantExplain;
     paramsArray[i++] = params.grantActualMoney;
     paramsArray[i++] = params.userId;
@@ -122,8 +128,9 @@ function updateDpRouteTaskLoanGrant(params,callback){
 
 function updateDpRouteTaskLoanRepayment(params,callback){
     var query = " update dp_route_task_loan set refund_passing_cost = ? , refund_fuel_cost = ? , refund_protect_cost = ? , " +
-        "refund_penalty_cost = ? , refund_parking_cost = ? , refund_taxi_cost = ? , repayment_money = ? , refund_actual_money = ? , " +
-        " profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ? , date_id = ? , task_loan_status = ?  where id = ? ";
+        " refund_penalty_cost = ? , refund_parking_cost = ? , refund_taxi_cost = ? , refund_hotel_cost = ? , refund_car_cost = ? , " +
+        " repayment_money = ? , refund_actual_money = ? , profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ? , " +
+        " date_id = ? , task_loan_status = ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.refundPassingCost;
     paramsArray[i++] = params.refundFuelCost;
@@ -131,6 +138,8 @@ function updateDpRouteTaskLoanRepayment(params,callback){
     paramsArray[i++] = params.refundPenaltyCost;
     paramsArray[i++] = params.refundParkingCost;
     paramsArray[i++] = params.refundTaxiCost;
+    paramsArray[i++] = params.refundHotelCost;
+    paramsArray[i++] = params.refundCarCost;
     paramsArray[i++] = params.repaymentMoney;
     paramsArray[i++] = params.refundActualMoney;
     paramsArray[i++] = params.profit;

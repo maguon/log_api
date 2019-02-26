@@ -26987,6 +26987,12 @@
         "grantTaxiCost": {
           "type": "integer"
         },
+        "grantHotelCost": {
+          "type": "integer"
+        },
+        "grantCarCost": {
+          "type": "integer"
+        },
         "grantExplain": {
           "type": "string"
         },
@@ -27021,6 +27027,12 @@
           "type": "integer"
         },
         "refundTaxiCost": {
+          "type": "integer"
+        },
+        "refundHotelCost": {
+          "type": "integer"
+        },
+        "refundCarCost": {
           "type": "integer"
         },
         "repaymentMoney": {
