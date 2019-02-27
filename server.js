@@ -717,6 +717,7 @@ function createServer() {
     server.get('/api/damageTotalCost',damage.queryDamageTotalCost);
     server.get('/api/damageTypeMonthStat',damage.queryDamageTypeMonthStat);
     server.get('/api/damageTypeWeekStat',damage.queryDamageTypeWeekStat);
+    server.get('/api/damageMakeMonthStat',damage.queryDamageMakeMonthStat);
     server.get('/api/damage.csv', damage.getDamageCsv);
     server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},damage.createQualityAssurance,sysRecord.saveCarRecord);
