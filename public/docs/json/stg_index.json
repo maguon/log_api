@@ -6838,6 +6838,42 @@
         }
       }
     },
+    "/driveTruckCount": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveTruck count",
+        "description": "query driveTruckCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveStatus",
+            "in": "query",
+            "description": "drive status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
     "/user/{userId}/drive": {
       "post": {
         "tags": [

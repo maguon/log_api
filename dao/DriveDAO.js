@@ -149,6 +149,22 @@ function getDriveOperateTypeCount(params,callback) {
     });
 }
 
+function getDriveTruckCount(params,callback) {
+    var query = " select count(d.id) as total_drive,count(t.drive_id) as drive_truck_count " +
+        " from drive_info d " +
+        " left join truck_info t on d.id = t.drive_id " +
+        " where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveStatus){
+        paramsArray[i++] = params.driveStatus;
+        query = query + " and d.drive_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveTruckCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , license_type = ? , " +
         " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
@@ -252,6 +268,7 @@ module.exports ={
     getLicenseCount : getLicenseCount,
     getDriveCount : getDriveCount,
     getDriveOperateTypeCount : getDriveOperateTypeCount,
+    getDriveTruckCount : getDriveTruckCount,
     updateDrive : updateDrive,
     updateDriveCompany : updateDriveCompany,
     updateDriveImage : updateDriveImage,
