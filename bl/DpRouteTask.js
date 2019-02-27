@@ -406,7 +406,7 @@ function updateDpRouteTaskStatus(req,res,next){
                     resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     return next();
                 } else {
-                    //carCount=rows[0].arrive_count;
+                    carCount=rows[0].arrive_count;
                     that();
                 }
             })
