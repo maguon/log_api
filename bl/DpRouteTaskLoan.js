@@ -110,10 +110,18 @@ function updateDpRouteTaskLoanGrant (req,res,next){
 
 function updateDpRouteTaskLoanRepayment (req,res,next){
     var params = req.params;
-    var myDate = new Date();
-    var strDate = moment(myDate).format('YYYYMMDD');
-    params.dateId = parseInt(strDate);
-    params.refundDate = myDate;
+    if(params.refundDate){
+        var refundDate = params.refundDate;
+        var d = new Date(refundDate);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateId = parseInt(currentDateStr);
+        params.refundDate = d;
+    }else{
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
+        params.refundDate = myDate;
+    }
     params.taskLoanStatus = sysConst.TASK_LOAN_STATUS.refund;
     dpRouteTaskLoanDAO.updateDpRouteTaskLoanRepayment(params,function(error,result){
         if (error) {
