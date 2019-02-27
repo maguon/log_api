@@ -450,7 +450,7 @@ function getDriveSettleCsv(req,res,next){
 
 function getDriveCostCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "出车款" + ','+ "过路费"+ ','+ "燃料费"+ ','+ "保道费"
+    var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "过路费"+ ','+ "燃料费"+ ','+ "保道费"
         + ','+ "罚款费"+ ','+ "停车费"+ ','+ "打车费" + ','+ "住宿费"+ ','+ "商品车费用"
         + ','+ "进门费"+ ','+ "地跑费"+ ','+ "拖车费" + ','+ "维修配件费"+ ','+ "保养费"
         + ','+ "货车维修费"+ ','+ "违章扣款"+ ','+ "超量扣款" ;
@@ -473,11 +473,6 @@ function getDriveCostCsv(req,res,next){
                     parkObj.actualGuardFee = "";
                 }else{
                     parkObj.actualGuardFee = rows[i].actual_guard_fee;
-                }
-                if(rows[i].refund_actual_money == null){
-                    parkObj.refundActualMoney = "";
-                }else{
-                    parkObj.refundActualMoney = rows[i].refund_actual_money;
                 }
                 if(rows[i].refund_passing_cost == null){
                     parkObj.refundPassingCost = "";
@@ -559,7 +554,7 @@ function getDriveCostCsv(req,res,next){
                 }else{
                     parkObj.exceedOilMoney = rows[i].exceed_oil_money;
                 }
-                csvString = csvString+parkObj.driveName+","+parkObj.actualPrice+","+parkObj.actualGuardFee+","+parkObj.refundActualMoney
+                csvString = csvString+parkObj.driveName+","+parkObj.actualPrice+","+parkObj.actualGuardFee
                     +","+parkObj.refundPassingCost+","+parkObj.refundFuelCost+","+parkObj.refundProtectCost +","+parkObj.refundPenaltyCost
                     +","+parkObj.refundParkingCost+","+parkObj.refundTaxiCost+","+parkObj.refundHotelCost+","+parkObj.refundCarCost
                     +","+parkObj.refundEnterCost+","+parkObj.refundRunCost+","+parkObj.refundTrailerCost+","+parkObj.refundRepairCost
