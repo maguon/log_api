@@ -20483,6 +20483,90 @@
         }
       }
     },
+    "/damageReceiveMonthStat": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageReceiveMonth stat",
+        "description": "query damageReceiveMonthStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damage"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/damageNotCheckCount": {
       "get": {
         "tags": [
