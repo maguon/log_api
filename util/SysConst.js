@@ -115,7 +115,9 @@ var DAMAGE_TYPE = {
     b : 2 ,
     c : 3 ,
     d : 4 ,
-    f : 6
+    f : 6,
+    buyout_car : 7, //买断车
+    retreat_car : 8 //退库车
 };
 
 var DAMAGE_STEP_TYPE = {
