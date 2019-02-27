@@ -355,3 +355,6 @@ ADD COLUMN `refund_run_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销地跑
 ADD COLUMN `refund_trailer_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销拖车费用' AFTER `refund_run_cost`,
 ADD COLUMN `refund_repair_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销维修配件费用' AFTER `refund_trailer_cost`,
 ADD COLUMN `refund_care_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销保养费用' AFTER `refund_repair_cost`;
+
+insert into damage_type (id,name ) values ( 7,'买断车' );
+insert into damage_type (id,name ) values ( 8,'退库车' );
