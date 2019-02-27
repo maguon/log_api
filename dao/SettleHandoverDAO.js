@@ -382,15 +382,20 @@ function getDriveCost(params,callback) {
         var query = " select d.id,d.drive_name, " +
             " (select sum(actual_price) from dp_route_load_task_clean_rel where drive_id=d.id and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+")actual_price, " +
             " (select sum(actual_guard_fee) from dp_route_load_task_clean_rel where drive_id=d.id and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+")actual_guard_fee, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_passing_cost end) grant_passing_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_fuel_cost end) grant_fuel_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_protect_cost end) grant_protect_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_penalty_cost end) grant_penalty_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_parking_cost end) grant_parking_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_taxi_cost end) grant_taxi_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_hotel_cost end) grant_hotel_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_car_cost end) grant_car_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_actual_money end) grant_actual_money, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_passing_cost end) refund_passing_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_fuel_cost end) refund_fuel_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_protect_cost end) refund_protect_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_penalty_cost end) refund_penalty_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_parking_cost end) refund_parking_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_taxi_cost end) refund_taxi_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_hotel_cost end) refund_hotel_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_car_cost end) refund_car_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_enter_cost end) refund_enter_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_run_cost end) refund_run_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_trailer_cost end) refund_trailer_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_repair_cost end) refund_repair_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_care_cost end) refund_care_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_actual_money end) refund_actual_money, " +
             " (select sum(repair_money) from truck_repair_rel where drive_id=d.id and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+")repair_money, " +
             " (select sum(fine_money) from drive_peccancy where drive_id=d.id and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+")peccancy_fine_money, " +
             " (select sum(exceed_oil_money) from drive_exceed_oil left join dp_route_task on drive_exceed_oil.dp_route_task_id = dp_route_task.id " +
@@ -402,15 +407,20 @@ function getDriveCost(params,callback) {
         var query = " select d.id,d.drive_name, " +
             " (select sum(actual_price) from dp_route_load_task_clean_rel where drive_id=d.id)actual_price, " +
             " (select sum(actual_guard_fee) from dp_route_load_task_clean_rel where drive_id=d.id)actual_guard_fee, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_passing_cost end) grant_passing_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_fuel_cost end) grant_fuel_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_protect_cost end) grant_protect_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_penalty_cost end) grant_penalty_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_parking_cost end) grant_parking_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_taxi_cost end) grant_taxi_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_hotel_cost end) grant_hotel_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_car_cost end) grant_car_cost, " +
-            " sum(case when task_loan_status = 2 then dprtl.grant_actual_money end) grant_actual_money, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_passing_cost end) refund_passing_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_fuel_cost end) refund_fuel_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_protect_cost end) refund_protect_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_penalty_cost end) refund_penalty_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_parking_cost end) refund_parking_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_taxi_cost end) refund_taxi_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_hotel_cost end) refund_hotel_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_car_cost end) refund_car_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_enter_cost end) refund_enter_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_run_cost end) refund_run_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_trailer_cost end) refund_trailer_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_repair_cost end) refund_repair_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_care_cost end) refund_care_cost, " +
+            " sum(case when task_loan_status = 2 then dprtl.refund_actual_money end) refund_actual_money, " +
             " (select sum(repair_money) from truck_repair_rel where drive_id=d.id)repair_money, " +
             " (select sum(fine_money) from drive_peccancy where drive_id=d.id)peccancy_fine_money, " +
             " (select sum(exceed_oil_money) from drive_exceed_oil left join dp_route_task on drive_exceed_oil.dp_route_task_id = dp_route_task.id " +

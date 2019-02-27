@@ -452,6 +452,7 @@ function getDriveCostCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "出车款" + ','+ "过路费"+ ','+ "燃料费"+ ','+ "保道费"
         + ','+ "罚款费"+ ','+ "停车费"+ ','+ "打车费" + ','+ "住宿费"+ ','+ "商品车费用"
+        + ','+ "进门费"+ ','+ "地跑费"+ ','+ "拖车费" + ','+ "维修配件费"+ ','+ "保养费"
         + ','+ "货车维修费"+ ','+ "违章扣款"+ ','+ "超量扣款" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -473,60 +474,76 @@ function getDriveCostCsv(req,res,next){
                 }else{
                     parkObj.actualGuardFee = rows[i].actual_guard_fee;
                 }
-                if(rows[i].grant_actual_money == null){
-                    parkObj.grantActualMoney = "";
+                if(rows[i].refund_actual_money == null){
+                    parkObj.refundActualMoney = "";
                 }else{
-                    parkObj.grantActualMoney = rows[i].grant_actual_money;
+                    parkObj.refundActualMoney = rows[i].refund_actual_money;
                 }
-
-                if(rows[i].grant_passing_cost == null){
-                    parkObj.grantPassingCost = "";
+                if(rows[i].refund_passing_cost == null){
+                    parkObj.refundPassingCost = "";
                 }else{
-                    parkObj.grantPassingCost = rows[i].grant_passing_cost;
+                    parkObj.refundPassingCost = rows[i].refund_passing_cost;
                 }
-
-                if(rows[i].grant_fuel_cost == null){
-                    parkObj.grantFuelCost = "";
+                if(rows[i].refund_fuel_cost == null){
+                    parkObj.refundFuelCost = "";
                 }else{
-                    parkObj.grantFuelCost = rows[i].grant_fuel_cost;
+                    parkObj.refundFuelCost = rows[i].refund_fuel_cost;
                 }
-
-                if(rows[i].grant_protect_cost == null){
-                    parkObj.grantProtectCost = "";
+                if(rows[i].refund_protect_cost == null){
+                    parkObj.refundProtectCost = "";
                 }else{
-                    parkObj.grantProtectCost = rows[i].grant_protect_cost;
+                    parkObj.refundProtectCost = rows[i].refund_protect_cost;
                 }
-
-                if(rows[i].grant_penalty_cost == null){
-                    parkObj.grantPenaltyCost = "";
+                if(rows[i].refund_penalty_cost == null){
+                    parkObj.refundPenaltyCost = "";
                 }else{
-                    parkObj.grantPenaltyCost = rows[i].grant_penalty_cost;
+                    parkObj.refundPenaltyCost = rows[i].refund_penalty_cost;
                 }
-
-                if(rows[i].grant_parking_cost == null){
-                    parkObj.grantParkingCost = "";
+                if(rows[i].refund_parking_cost == null){
+                    parkObj.refundParkingCost = "";
                 }else{
-                    parkObj.grantParkingCost = rows[i].grant_parking_cost;
+                    parkObj.refundParkingCost = rows[i].refund_parking_cost;
                 }
-
-                if(rows[i].grant_taxi_cost == null){
-                    parkObj.grantTaxiCost = "";
+                if(rows[i].refund_taxi_cost == null){
+                    parkObj.refundTaxiCost = "";
                 }else{
-                    parkObj.grantTaxiCost = rows[i].grant_taxi_cost;
+                    parkObj.refundTaxiCost = rows[i].refund_taxi_cost;
                 }
-
-                if(rows[i].grant_hotel_cost == null){
-                    parkObj.grantHotelCost = "";
+                if(rows[i].refund_hotel_cost == null){
+                    parkObj.refundHotelCost = "";
                 }else{
-                    parkObj.grantHotelCost = rows[i].grant_hotel_cost;
+                    parkObj.refundHotelCost = rows[i].refund_hotel_cost;
                 }
-
-                if(rows[i].grant_car_cost == null){
-                    parkObj.grantCarCost = "";
+                if(rows[i].refund_car_cost == null){
+                    parkObj.refundCarCost = "";
                 }else{
-                    parkObj.grantCarCost = rows[i].grant_car_cost;
+                    parkObj.refundCarCost = rows[i].refund_car_cost;
                 }
-
+                if(rows[i].refund_enter_cost == null){
+                    parkObj.refundEnterCost = "";
+                }else{
+                    parkObj.refundEnterCost = rows[i].refund_enter_cost;
+                }
+                if(rows[i].refund_run_cost == null){
+                    parkObj.refundRunCost = "";
+                }else{
+                    parkObj.refundRunCost = rows[i].refund_run_cost;
+                }
+                if(rows[i].refund_trailer_cost == null){
+                    parkObj.refundTrailerCost = "";
+                }else{
+                    parkObj.refundTrailerCost = rows[i].refund_trailer_cost;
+                }
+                if(rows[i].refund_repair_cost == null){
+                    parkObj.refundRepairCost = "";
+                }else{
+                    parkObj.refundRepairCost = rows[i].refund_repair_cost;
+                }
+                if(rows[i].refund_care_cost == null){
+                    parkObj.refundCareCost = "";
+                }else{
+                    parkObj.refundCareCost = rows[i].refund_care_cost;
+                }
                 if(rows[i].repair_money == null){
                     parkObj.repairMoney = "";
                 }else{
@@ -542,11 +559,11 @@ function getDriveCostCsv(req,res,next){
                 }else{
                     parkObj.exceedOilMoney = rows[i].exceed_oil_money;
                 }
-                csvString = csvString+parkObj.driveName+","+parkObj.actualPrice+","+parkObj.actualGuardFee+","+parkObj.grantActualMoney
-                    +","+parkObj.grantPassingCost+","+parkObj.grantFuelCost+","+parkObj.grantProtectCost
-                +","+parkObj.grantPenaltyCost+","+parkObj.grantParkingCost+","+parkObj.grantTaxiCost
-                +","+parkObj.grantHotelCost+","+parkObj.grantCarCost
-                +","+parkObj.repairMoney+","+parkObj.peccancyFineMoney+","+parkObj.exceedOilMoney+ '\r\n';
+                csvString = csvString+parkObj.driveName+","+parkObj.actualPrice+","+parkObj.actualGuardFee+","+parkObj.refundActualMoney
+                    +","+parkObj.refundPassingCost+","+parkObj.refundFuelCost+","+parkObj.refundProtectCost +","+parkObj.refundPenaltyCost
+                    +","+parkObj.refundParkingCost+","+parkObj.refundTaxiCost+","+parkObj.refundHotelCost+","+parkObj.refundCarCost
+                    +","+parkObj.refundEnterCost+","+parkObj.refundRunCost+","+parkObj.refundTrailerCost+","+parkObj.refundRepairCost
+                    +","+parkObj.refundCareCost+","+parkObj.repairMoney+","+parkObj.peccancyFineMoney+","+parkObj.exceedOilMoney+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

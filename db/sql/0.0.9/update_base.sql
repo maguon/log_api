@@ -346,3 +346,12 @@ ADD COLUMN `refund_car_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销商品
 
 ALTER TABLE `car_info`
 ADD COLUMN `ship_name`  varchar(40) NULL COMMENT '船名' AFTER `order_date_id`;
+-- ----------------------------
+-- 2019-02-27 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_loan`
+ADD COLUMN `refund_enter_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销进门费用' AFTER `refund_car_cost`,
+ADD COLUMN `refund_run_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销地跑费用' AFTER `refund_enter_cost`,
+ADD COLUMN `refund_trailer_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销拖车费用' AFTER `refund_run_cost`,
+ADD COLUMN `refund_repair_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销维修配件费用' AFTER `refund_trailer_cost`,
+ADD COLUMN `refund_care_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销保养费用' AFTER `refund_repair_cost`;

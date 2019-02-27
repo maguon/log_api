@@ -129,6 +129,7 @@ function updateDpRouteTaskLoanGrant(params,callback){
 function updateDpRouteTaskLoanRepayment(params,callback){
     var query = " update dp_route_task_loan set refund_passing_cost = ? , refund_fuel_cost = ? , refund_protect_cost = ? , " +
         " refund_penalty_cost = ? , refund_parking_cost = ? , refund_taxi_cost = ? , refund_hotel_cost = ? , refund_car_cost = ? , " +
+        " refund_enter_cost = ? , refund_run_cost = ? , refund_trailer_cost = ? , refund_repair_cost = ? , refund_care_cost = ? , " +
         " repayment_money = ? , refund_actual_money = ? , profit = ? , refund_explain = ? , refund_user_id = ? , refund_date = ? , " +
         " date_id = ? , task_loan_status = ?  where id = ? ";
     var paramsArray=[],i=0;
@@ -140,6 +141,11 @@ function updateDpRouteTaskLoanRepayment(params,callback){
     paramsArray[i++] = params.refundTaxiCost;
     paramsArray[i++] = params.refundHotelCost;
     paramsArray[i++] = params.refundCarCost;
+    paramsArray[i++] = params.refundEnterCost;
+    paramsArray[i++] = params.refundRunCost;
+    paramsArray[i++] = params.refundTrailerCost;
+    paramsArray[i++] = params.refundRepairCost;
+    paramsArray[i++] = params.refundCareCost;
     paramsArray[i++] = params.repaymentMoney;
     paramsArray[i++] = params.refundActualMoney;
     paramsArray[i++] = params.profit;

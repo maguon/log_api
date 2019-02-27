@@ -27074,6 +27074,21 @@
         "refundCarCost": {
           "type": "integer"
         },
+        "refundEnterCost": {
+          "type": "integer"
+        },
+        "refundRunCost": {
+          "type": "integer"
+        },
+        "refundTrailerCost": {
+          "type": "integer"
+        },
+        "refundRepairCost": {
+          "type": "integer"
+        },
+        "refundCareCost": {
+          "type": "integer"
+        },
         "repaymentMoney": {
           "type": "integer"
         },
