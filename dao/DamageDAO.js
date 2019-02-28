@@ -442,7 +442,7 @@ function getDamageReceiveMonthStat(params,callback){
 }
 
 function getDamageMakeTopMonthStat(params,callback) {
-    var query = " select db.y_month,c.make_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
+    var query = " select c.make_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
         " from damage_info d" +
         " left join date_base db on d.date_id = db.id " +
         " left join car_info c on d.car_id = c.id " +
@@ -456,7 +456,7 @@ function getDamageMakeTopMonthStat(params,callback) {
         paramsArray[i++] = params.monthEnd;
         query = query + " and db.y_month <= ? ";
     }
-    query = query + ' group by db.y_month,c.make_name ';
+    query = query + ' group by c.make_name ';
     query = query + ' order by damage_count desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -470,7 +470,7 @@ function getDamageMakeTopMonthStat(params,callback) {
 }
 
 function getDamageReceiveTopMonthStat(params,callback) {
-    var query = " select db.y_month,r.short_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
+    var query = " select r.short_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
         " from damage_info d" +
         " left join date_base db on d.date_id = db.id " +
         " left join car_info c on d.car_id = c.id " +
@@ -485,7 +485,7 @@ function getDamageReceiveTopMonthStat(params,callback) {
         paramsArray[i++] = params.monthEnd;
         query = query + " and db.y_month <= ? ";
     }
-    query = query + ' group by db.y_month,r.short_name ';
+    query = query + ' group by r.short_name ';
     query = query + ' order by damage_count desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
