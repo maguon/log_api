@@ -406,7 +406,7 @@ function getDamageReceiveMonthStat(params,callback){
 }
 
 function getDamageMakeTopMonthStat(params,callback) {
-    var query = " select db.y_month,c.make_name,count(case when d.damage_status = 3 then d.id end) as damage_count " +
+    var query = " select db.y_month,c.make_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
         " from damage_info d" +
         " left join date_base db on d.date_id = db.id " +
         " left join car_info c on d.car_id = c.id " +
@@ -433,6 +433,35 @@ function getDamageMakeTopMonthStat(params,callback) {
     });
 }
 
+function getDamageReceiveTopMonthStat(params,callback) {
+    var query = " select db.y_month,r.short_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
+        " from damage_info d" +
+        " left join date_base db on d.date_id = db.id " +
+        " left join car_info c on d.car_id = c.id " +
+        " left join receive_info r on c.receive_id = r.id " +
+        " where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month,r.short_name ';
+    query = query + ' order by damage_count desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageReceiveTopMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamage : addDamage,
@@ -448,5 +477,6 @@ module.exports ={
     getDamageTypeWeekStat : getDamageTypeWeekStat,
     getDamageMakeMonthStat : getDamageMakeMonthStat,
     getDamageReceiveMonthStat : getDamageReceiveMonthStat,
-    getDamageMakeTopMonthStat : getDamageMakeTopMonthStat
+    getDamageMakeTopMonthStat : getDamageMakeTopMonthStat,
+    getDamageReceiveTopMonthStat : getDamageReceiveTopMonthStat
 }
