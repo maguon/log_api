@@ -142,7 +142,7 @@ function getDpRouteLoadTaskCleanRelMonthStat(params,callback) {
 }
 
 function getDpRouteLoadTaskCleanRelReceiveMonthStat(params,callback) {
-    var query = " select db.y_month,dpcr.receive_id,r.short_name,sum(dpcr.actual_price) as actual_price from dp_route_load_task_clean_rel dpcr " +
+    var query = " select dpcr.receive_id,r.short_name,sum(dpcr.actual_price) as actual_price from dp_route_load_task_clean_rel dpcr " +
         " left join date_base db on dpcr.date_id = db.id " +
         " left join receive_info r on dpcr.receive_id = r.id where dpcr.id is not null ";
     var paramsArray=[],i=0;
@@ -158,7 +158,7 @@ function getDpRouteLoadTaskCleanRelReceiveMonthStat(params,callback) {
         paramsArray[i++] = params.monthEnd;
         query = query + " and db.y_month <= ? ";
     }
-    query = query + '  group by db.y_month,dpcr.receive_id,r.short_name ';
+    query = query + ' group by dpcr.receive_id,r.short_name ';
     query = query + ' order by actual_price desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -197,7 +197,7 @@ function getDpRouteLoadTaskCleanRelWeekStat(params,callback) {
 }
 
 function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
-    var query = " select db.y_week,dpcr.receive_id,r.short_name,sum(dpcr.actual_price) as actual_price from dp_route_load_task_clean_rel dpcr " +
+    var query = " select dpcr.receive_id,r.short_name,sum(dpcr.actual_price) as actual_price from dp_route_load_task_clean_rel dpcr " +
         " left join date_base db on dpcr.date_id = db.id " +
         " left join receive_info r on dpcr.receive_id = r.id where dpcr.id is not null ";
     var paramsArray=[],i=0;
@@ -209,7 +209,7 @@ function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
         paramsArray[i++] = params.yWeek;
         query = query + " and db.y_week = ? ";
     }
-    query = query + '  group by db.y_week,dpcr.receive_id,r.short_name ';
+    query = query + '  group by dpcr.receive_id,r.short_name ';
     query = query + '  order by actual_price desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
