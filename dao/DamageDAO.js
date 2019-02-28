@@ -265,16 +265,16 @@ function getDamageTypeMonthStat(params,callback){
         var query = " select db.y_month,dt.id,count(case when di.damage_status = "+params.damageStatus+" and c.make_id ="+params.makeId+" then di.id end) as damage_count " +
             " from date_base db " +
             " inner join damage_type dt " +
-            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
-            " left join damage_info di on dc.damage_id = di.id " +
+            " left join damage_check dc on dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id and db.id = di.date_id " +
             " left join car_info c on di.car_id = c.id " +
             " where db.id is not null ";
     }else{
         var query = " select db.y_month,dt.id,count(case when di.damage_status = "+params.damageStatus+" then di.id end) as damage_count " +
             " from date_base db " +
             " inner join damage_type dt " +
-            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
-            " left join damage_info di on dc.damage_id = di.id " +
+            " left join damage_check dc on dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id and db.id = di.date_id " +
             " left join car_info c on di.car_id = c.id " +
             " where db.id is not null ";
     }
@@ -341,16 +341,16 @@ function getDamageTypeWeekStat(params,callback){
         var query = " select db.y_week,dt.id,count(case when di.damage_status = "+params.damageStatus+" and c.make_id = "+params.makeId+" then di.id end) as damage_count " +
             " from date_base db " +
             " inner join damage_type dt " +
-            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
-            " left join damage_info di on dc.damage_id = di.id " +
+            " left join damage_check dc on dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id and db.id = di.date_id " +
             " left join car_info c on di.car_id = c.id " +
             " where db.id is not null ";
     }else{
         var query = " select db.y_week,dt.id,count(case when di.damage_status = "+params.damageStatus+" then di.id end) as damage_count " +
             " from date_base db " +
             " inner join damage_type dt " +
-            " left join damage_check dc on db.id = dc.date_id and dt.id = dc.damage_type " +
-            " left join damage_info di on dc.damage_id = di.id " +
+            " left join damage_check dc on dt.id = dc.damage_type " +
+            " left join damage_info di on dc.damage_id = di.id and db.id = di.date_id " +
             " left join car_info c on di.car_id = c.id " +
             " where db.id is not null ";
     }
