@@ -300,6 +300,42 @@ function getDamageTypeMonthStat(params,callback){
     });
 }
 
+function getDamageLinkTypeMonthStat(params,callback){
+    var query = " select dc.damage_link_type,count(d.id) as damage_count " +
+        " from damage_info d " +
+        " left join damage_check dc on d.id = dc.damage_id " +
+        " left join car_info c on d.car_id = c.id " +
+        " left join date_base db on d.date_id = db.id " +
+        " where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.damageStatus){
+        paramsArray[i++] = params.damageStatus;
+        query = query + " and d.damage_status = ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by dc.damage_link_type ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageLinkTypeMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 function getDamageTypeWeekStat(params,callback){
     if(params.makeId){
         var query = " select db.y_week,dt.id,count(case when di.damage_status = "+params.damageStatus+" and c.make_id = "+params.makeId+" then di.id end) as damage_count " +
@@ -474,6 +510,7 @@ module.exports ={
     updateDamageStatus : updateDamageStatus,
     updateDamageStatStatus : updateDamageStatStatus,
     getDamageTypeMonthStat : getDamageTypeMonthStat,
+    getDamageLinkTypeMonthStat : getDamageLinkTypeMonthStat,
     getDamageTypeWeekStat : getDamageTypeWeekStat,
     getDamageMakeMonthStat : getDamageMakeMonthStat,
     getDamageReceiveMonthStat : getDamageReceiveMonthStat,

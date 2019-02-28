@@ -716,6 +716,7 @@ function createServer() {
     server.get('/api/damageNotCheckCount',damage.queryDamageNotCheckCount);
     server.get('/api/damageTotalCost',damage.queryDamageTotalCost);
     server.get('/api/damageTypeMonthStat',damage.queryDamageTypeMonthStat);
+    server.get('/api/damageLinkTypeMonthStat',damage.queryDamageLinkTypeMonthStat);
     server.get('/api/damageTypeWeekStat',damage.queryDamageTypeWeekStat);
     server.get('/api/damageMakeMonthStat',damage.queryDamageMakeMonthStat);
     server.get('/api/damageReceiveMonthStat',damage.queryDamageReceiveMonthStat);
