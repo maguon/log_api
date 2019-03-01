@@ -25,7 +25,8 @@ var CAR_OP_TYPE = {
     EXPORT : 13, //出库
     LOAD :14 , //装车
     ARRIVED : 15, //到达
-    SETTLE_HANDOVER : 16 //交接单
+    SETTLE_HANDOVER : 16, //交接单
+    DIRECT_ARRIVED : 19 //直发送达
 };
 var RECORD_OP_TYPE  ={
     truckOp : 20,
