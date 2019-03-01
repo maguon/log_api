@@ -291,6 +291,21 @@ function removeUploadCar(req,res,next){
     })
 }
 
+function removeCar(req,res,next){
+    var params = req.params ;
+    params.carStatus = listOfValue.CAR_STATUS_MOVE;
+    carDAO.deleteCar(params,function(error,result){
+        if (error) {
+            logger.error(' removeCar ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeCar ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getCarRelCsv(req,res,next){
     var csvString = "";
     var header = "VIN" + ',' + "制造商" + ',' + "入库时间" + ','+ "存放车库" + ','+ "存放区域"+ ','+ "存放位置" + ','+ "实际出库时间" ;
@@ -491,6 +506,7 @@ module.exports = {
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
     removeUploadCar : removeUploadCar,
+    removeCar : removeCar,
     getCarRelCsv : getCarRelCsv,
     getCarListCsv : getCarListCsv,
     createEntrustCar : createEntrustCar

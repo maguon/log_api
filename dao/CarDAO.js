@@ -728,6 +728,17 @@ function deleteUploadCar(params,callback){
     });
 }
 
+function deleteCar(params,callback){
+    var query = " delete from car_info where car_status = ? and id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.carStatus;
+    paramsArray[i] = params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteCar ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUploadCar : addUploadCar,
@@ -747,5 +758,6 @@ module.exports ={
     updateCarStatus : updateCarStatus,
     updateCarOrderDate : updateCarOrderDate,
     updateCaCurrentCity : updateCaCurrentCity,
-    deleteUploadCar : deleteUploadCar
+    deleteUploadCar : deleteUploadCar,
+    deleteCar : deleteCar
 }
