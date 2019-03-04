@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var carStorageRelDAO = require('../dao/CarStorageRelDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var storageParkingDAO = require('../dao/StorageParkingDAO.js');
@@ -57,7 +58,6 @@ function createCarStorageRel(req,res,next){
                     if(result&&result.insertId>0){
                         logger.info(' createCar ' + 'success');
                         carId = result.insertId;
-                        req.params.carId = carId;
                         that();
                     }else{
                         resUtil.resetFailedRes(res," 创建商品车失败 ");
@@ -114,7 +114,10 @@ function createCarStorageRel(req,res,next){
     }).seq(function(){
         logger.info(' createCarStorageRel ' + 'success');
         req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " + parkObj.areaName + " " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
-        req.params.op =11;
+        req.params.carId = carId;
+        req.params.makeId =params.makeId;
+        req.params.makeName =params.makeName;
+        req.params.op =sysConst.CAR_OP_TYPE.IMPORT;
         resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();
     })
@@ -164,10 +167,14 @@ function createAgainCarStorageRel(req,res,next){
                     return next();
                 }else if(rows && rows.length>0&&rows[0].rel_status == listOfValue.REL_STATUS_OUT) {
                     carId = rows[0].id;
+                    parkObj.makeId = rows[0].make_id;
+                    parkObj.makeName = rows[0].make_name;
                     newCarFlag = true;
                     that();
                 }else{
                     carId = rows[0].id;
+                    parkObj.makeId = rows[0].make_id;
+                    parkObj.makeName = rows[0].make_name;
                     that();
                 }
             }
@@ -261,7 +268,9 @@ function createAgainCarStorageRel(req,res,next){
     }).seq(function(){
         logger.info(' createAgainCarStorageRel ' + 'success');
         req.params.carContent =" 入库 "+req.params.storageName+ " 停放位置 " + parkObj.areaName + " " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
-        req.params.op =11;
+        req.params.makeId =parkObj.makeId;
+        req.params.makeName =parkObj.makeName;
+        req.params.op =sysConst.CAR_OP_TYPE.IMPORT;
         resUtil.resetQueryRes(res,{carId:carId,relId:relId},null);
         return next();
     })
@@ -285,6 +294,8 @@ function updateRelStatus(req,res,next){
                     parkObj.col = rows[0].col;
                     parkObj.carId = rows[0].id;
                     parkObj.vin = rows[0].vin;
+                    parkObj.makeId = rows[0].make_id;
+                    parkObj.makeName = rows[0].make_name;
                     that();
                 }else{
                     logger.warn(' getCarBase ' + 'failed');
@@ -338,7 +349,9 @@ function updateRelStatus(req,res,next){
                 logger.info(' updateStorageParkingOut ' + 'success');
                 req.params.carContent =" 从 "+parkObj.storageName+ " 出库 ";
                 req.params.vin =parkObj.vin;
-                req.params.op =13;
+                req.params.makeId =parkObj.makeId;
+                req.params.makeName =parkObj.makeName;
+                req.params.op =sysConst.CAR_OP_TYPE.EXPORT;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

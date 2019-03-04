@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var storageParkingDAO = require('../dao/StorageParkingDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -46,6 +47,8 @@ function updateStorageParking(req,res,next){
                     parkObj.relId = rows[0].r_id;
                     parkObj.carId = rows[0].id;
                     parkObj.vin = rows[0].vin;
+                    parkObj.makeId = rows[0].make_id;
+                    parkObj.makeName = rows[0].make_name;
                     that();
                 }else{
                     logger.warn(' getCarBase ' + 'failed');
@@ -114,7 +117,9 @@ function updateStorageParking(req,res,next){
                 logger.info(' updateStorageParking ' + 'success');
                 req.params.carContent =" 移位 "+parkObj.storageName+ " 至 " + parkObj.areaName + " " +parkObj.row+ " 排 "+parkObj.col+ " 列 ";
                 req.params.vin =parkObj.vin;
-                req.params.op =12;
+                req.params.makeId =parkObj.makeId;
+                req.params.makeName =parkObj.makeName;
+                req.params.op =sysConst.CAR_OP_TYPE.MOVING;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

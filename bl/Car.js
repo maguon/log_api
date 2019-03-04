@@ -407,6 +407,8 @@ function updateCarStatus(req,res,next){
                     return next();
                 }else{
                     parkObj.vin = rows[0].vin;
+                    parkObj.makeId = rows[0].make_id;
+                    parkObj.makeName = rows[0].make_name;
                     that();
                 }
             }
@@ -420,7 +422,9 @@ function updateCarStatus(req,res,next){
                 logger.info(' updateCarStatus ' + 'success');
                 req.params.carContent =" 直发送达 ";
                 req.params.vin =parkObj.vin;
-                req.params.op =19;
+                req.params.makeId =parkObj.makeId;
+                req.params.makeName =parkObj.makeName;
+                req.params.op =sysConst.CAR_OP_TYPE.DIRECT_ARRIVED;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

@@ -16,6 +16,8 @@ function saveCarRecord (req,res,next){
         recordParams.username = params._uname || 'admin';
         recordParams.content = params.carContent;
         recordParams.carId = params.carId;
+        recordParams.makeId = params.makeId;
+        recordParams.makeName = params.makeName;
         recordParams.vin = params.vin;
         recordParams.op = params.op;
         sysRecordDAO.addRecord(req,recordParams,function(error,result){
