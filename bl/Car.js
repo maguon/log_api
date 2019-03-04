@@ -191,7 +191,7 @@ function updateCar(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    if(rows[0].car_status==listOfValue.CAR_STATUS_MOVE){
+                    if(rows[0].car_status==listOfValue.CAR_STATUS_MOVE&&params.routeStartId>0&&params.baseAddrId>0){
                         carObj.carStatus = rows[0].car_status;
                         carObj.routeStartId = rows[0].route_start_id;
                         carObj.baseAddrId = rows[0].base_addr_id;
