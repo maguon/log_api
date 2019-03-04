@@ -332,7 +332,6 @@ function queryTaskStatusCount(req,res,next){
 function updateDpRouteTaskStatus(req,res,next){
     var params = req.params;
     var parkObj = {};
-    var dispObj = {};
     Seq().seq(function() {
         var that = this;
         dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
@@ -372,21 +371,15 @@ function updateDpRouteTaskStatus(req,res,next){
                     }
                 }
             })
-        }else{
-            that();
-        }
-    }).seq(function () {
-        var that = this;
-        if(params.taskStatus == sysConst.TASK_STATUS.on_road) {
-            params.truckId = parkObj.truckId
-            truckDispatchDAO.getTruckDispatch(params,function(error,rows){
+        }else if(params.taskStatus == sysConst.TASK_STATUS.completed){
+            dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId},function(error,rows){
                 if (error) {
-                    logger.error(' getCarLoadStatusCount ' + error.message);
+                    logger.error(' getDpRouteTask ' + error.message);
                     resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     return next();
                 } else {
-                    dispObj.carCount = rows[0].car_count;
-                    dispObj.truckNumber = rows[0].truck_number;
+                    parkObj.carCount = rows[0].car_count;
+                    parkObj.truckNumber = rows[0].truck_number;
                     that();
                 }
             })
@@ -445,14 +438,12 @@ function updateDpRouteTaskStatus(req,res,next){
         if(params.taskStatus == sysConst.TASK_STATUS.doing){
             params.taskStartDate = myDate;
         }
-        if(params.taskStatus == sysConst.TASK_STATUS.on_road){
-            if(dispObj.carCount/dispObj.truckNumber>0.3){
-                params.loadFlag = sysConst.LOAD_FLAG.loan;
-            }
-        }
         if(params.taskStatus == sysConst.TASK_STATUS.completed){
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
+            if(parkObj.carCount/parkObj.truckNumber>0.3){
+                params.loadFlag = sysConst.LOAD_FLAG.loan;
+            }
         }
         dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
             if (error) {
