@@ -54,7 +54,6 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].car_status <listOfValue.CAR_STATUS_LOAD){
-                    that();
                     if(rows[0].route_start_id==parkObj.routeStartId&&rows[0].route_end_id==parkObj.routeEndId&&rows[0].receive_id==parkObj.receiveId){
                         that();
                     }else if(rows[0].route_start_id==parkObj.routeStartId&&rows[0].route_end_id==null&&rows[0].receive_id==null){
