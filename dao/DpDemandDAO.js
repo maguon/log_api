@@ -126,6 +126,10 @@ function getDpDemandBase(params,callback) {
         paramsArray[i++] = params.routeEndId;
         query = query + " and dpd.route_end_id = ? ";
     }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and dpd.receive_id = ? ";
+    }
     if(params.dateId){
         paramsArray[i++] = params.dateId;
         query = query + " and dpd.date_id = ? ";
@@ -136,6 +140,36 @@ function getDpDemandBase(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpDemandBase ');
+        return callback(error,rows);
+    });
+}
+
+function updateDpDemandPreCountMinus(params,callback){
+    var query = " update dp_demand_info set pre_count = pre_count - 1 " +
+        " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpDemandPreCount ');
+        return callback(error,rows);
+    });
+}
+
+function updateDpDemandPreCountPlus(params,callback){
+    var query = " update dp_demand_info set pre_count = pre_count + 1 " +
+        " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpDemandPreCount ');
         return callback(error,rows);
     });
 }
@@ -242,6 +276,8 @@ module.exports ={
     addDpDemand : addDpDemand,
     getDpDemand : getDpDemand,
     getDpDemandBase : getDpDemandBase,
+    updateDpDemandPreCountMinus : updateDpDemandPreCountMinus,
+    updateDpDemandPreCountPlus : updateDpDemandPreCountPlus,
     updateDpDemandPlanCount : updateDpDemandPlanCount,
     updateDpDemandStatus : updateDpDemandStatus,
     addEntrustDpDemand : addEntrustDpDemand,

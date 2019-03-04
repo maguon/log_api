@@ -111,11 +111,43 @@ function updateDpTaskStatStatus(params,callback){
     });
 }
 
+function updateDpTaskStatPreCountMinus(params,callback){
+    var query = " update dp_task_stat set pre_count = pre_count - 1 " +
+        " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpTaskStatPreCountMinus ');
+        return callback(error,rows);
+    });
+}
+
+function updateDpTaskStatPreCountPlus(params,callback){
+    var query = " update dp_task_stat set pre_count = pre_count + 1 " +
+        " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpTaskStatPreCountPlus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpTaskStat : addDpTaskStat,
     getDpTaskStat : getDpTaskStat,
     getDpTaskStatBase : getDpTaskStatBase,
     getDpTaskStatCount : getDpTaskStatCount,
-    updateDpTaskStatStatus : updateDpTaskStatStatus
+    updateDpTaskStatStatus : updateDpTaskStatStatus,
+    updateDpTaskStatPreCountMinus : updateDpTaskStatPreCountMinus,
+    updateDpTaskStatPreCountPlus : updateDpTaskStatPreCountPlus
 }

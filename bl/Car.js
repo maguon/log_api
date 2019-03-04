@@ -11,6 +11,8 @@ var sysConst = require('../util/SysConst.js');
 var carDAO = require('../dao/CarDAO.js');
 var cityDAO = require('../dao/CityDAO.js');
 var carMakeDAO = require('../dao/CarMakeDAO.js');
+var dpDemandDAO = require('../dao/DpDemandDAO.js');
+var dpTaskStatDAO = require('../dao/DpTaskStatDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -174,22 +176,172 @@ function queryCarDamageDeclare(req,res,next){
 
 function updateCar(req,res,next){
     var params = req.params ;
-    if(params.orderDate==null){
-        params.orderDateId = null;
-    }else{
+    var carObj = {};
+    var dateId = 0;
+    var updateDemandFlag;
+    Seq().seq(function () {
+        var that = this;
         var orderDate = params.orderDate;
         var strDate = moment(orderDate).format('YYYYMMDD');
-        params.orderDateId = parseInt(strDate);
-    }
-    carDAO.updateCar(params,function(error,result){
-        if (error) {
-            logger.error(' updateCar ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateCar ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
+        dateId = parseInt(strDate);
+        carDAO.getCarList({carId:params.carId},function(error,rows){
+            if (error) {
+                logger.error(' getCarList ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    if(rows[0].car_status==listOfValue.CAR_STATUS_MOVE){
+                        carObj.carStatus = rows[0].car_status;
+                        carObj.routeStartId = rows[0].route_start_id;
+                        carObj.baseAddrId = rows[0].base_addr_id;
+                        carObj.routeEndId = rows[0].route_end_id;
+                        carObj.receiveId = rows[0].receive_id;
+                        carObj.dateId = rows[0].order_date_id;
+                        that();
+                    }else if(rows[0].car_status>listOfValue.CAR_STATUS_MOVE&&rows[0].route_start_id==params.routeStartId
+                    &&rows[0].base_addr_id==params.baseAddrId&&rows[0].route_end_id==params.routeEndId
+                        &&rows[0].receive_id==params.receiveId&&rows[0].order_date_id==dateId){
+                        that();
+                    }else{
+                        logger.warn(' getCarList ' + 'failed');
+                        resUtil.resetFailedRes(res, " 不是待装车状态，不能修改任务关联信息 ");
+                        return next();
+                    }
+
+                }else{
+                    logger.warn(' getCarList ' + 'failed');
+                    resUtil.resetFailedRes(res, " 数据不存在，操作失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        if(carObj.carStatus==listOfValue.CAR_STATUS_MOVE&&carObj.routeStartId>0&&carObj.baseAddrId>0&&carObj.routeEndId>0&&carObj.receiveId>0&&carObj.dateId>0){
+            var subParams ={
+                routeStartId : carObj.routeStartId,
+                baseAddrId : carObj.baseAddrId,
+                routeEndId : carObj.routeEndId,
+                receiveId : carObj.receiveId,
+                dateId : carObj.dateId
+            }
+            dpDemandDAO.updateDpDemandPreCountMinus(subParams,function(error,result){
+                if (error) {
+                    logger.error(' updateDpDemandPreCountMinus ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDpDemandPreCountMinus ' + 'success');
+                    } else {
+                        logger.warn(' updateDpDemandPreCountMinus ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
         }
+    }).seq(function () {
+        var that = this;
+        if(carObj.carStatus==listOfValue.CAR_STATUS_MOVE&&params.routeStartId>0&&params.baseAddrId>0&&params.routeEndId>0&&params.receiveId>0&&params.orderDate!=null){
+            var orderDate = params.orderDate;
+            var strDate = moment(orderDate).format('YYYYMMDD');
+            dateId = parseInt(strDate);
+            var subParams ={
+                routeStartId : params.routeStartId,
+                baseAddrId : params.baseAddrId,
+                routeEndId : params.routeEndId,
+                receiveId : params.receiveId,
+                dateId : dateId
+            }
+            dpDemandDAO.getDpDemandBase(subParams,function(error,rows){
+                if (error) {
+                    logger.error(' getDpDemandBase ' + error.message);
+                    resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    return next();
+                } else {
+                    if(rows && rows.length>0){
+                        updateDemandFlag = true;
+                        that();
+                    }else{
+                        updateDemandFlag = false;
+                        that();
+                    }
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function () {
+        var that = this;
+        if(updateDemandFlag==true){
+            var subParams ={
+                routeStartId : params.routeStartId,
+                baseAddrId : params.baseAddrId,
+                routeEndId : params.routeEndId,
+                receiveId : params.receiveId,
+                dateId : dateId
+            }
+            dpDemandDAO.updateDpDemandPreCountPlus(subParams,function(error,result){
+                if (error) {
+                    logger.error(' updateDpDemandPreCountPlus ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDpDemandPreCountPlus ' + 'success');
+                    } else {
+                        logger.warn(' updateDpDemandPreCountPlus ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else if(updateDemandFlag==false){
+            var subParams ={
+                userId : 0,
+                routeStartId : params.routeStartId,
+                routeStart : params.routeStart,
+                baseAddrId : params.baseAddrId,
+                routeEndId : params.routeEndId,
+                routeEnd : params.routeEnd,
+                receiveId : params.receiveId,
+                preCount : 1,
+                dateId : dateId
+            }
+            dpDemandDAO.addDpDemand(subParams,function(error,result){
+                if (error) {
+                    logger.error(' createDpDemand ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' createDpDemand ' + 'success');
+                    }else{
+                        logger.warn(' createDpDemand ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function () {
+        if(params.orderDate==null){
+            params.orderDateId = null;
+        }else{
+            var orderDate = params.orderDate;
+            var strDate = moment(orderDate).format('YYYYMMDD');
+            params.orderDateId = parseInt(strDate);
+        }
+        carDAO.updateCar(params,function(error,result){
+            if (error) {
+                logger.error(' updateCar ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCar ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
