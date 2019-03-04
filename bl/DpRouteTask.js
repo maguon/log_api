@@ -332,8 +332,7 @@ function queryTaskStatusCount(req,res,next){
 function updateDpRouteTaskStatus(req,res,next){
     var params = req.params;
     var parkObj = {};
-    var carCount = 0;
-    var newCompletedFlag  = false;
+    var dispObj = {};
     Seq().seq(function() {
         var that = this;
         dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
@@ -346,7 +345,6 @@ function updateDpRouteTaskStatus(req,res,next){
                         parkObj.routeStartId=rows[0].route_start_id;
                         parkObj.routeEndId=rows[0].route_end_id;
                         parkObj.truckId=rows[0].truck_id;
-                        parkObj.truckNumber=rows[0].truck_number;
                         that();
                     } else {
                         logger.warn(' getDpRouteTask ' + 'failed');
@@ -374,68 +372,30 @@ function updateDpRouteTaskStatus(req,res,next){
                     }
                 }
             })
-        }else if (params.taskStatus == sysConst.TASK_STATUS.completed) {
-            /*params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.load;
-            dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params, function (error, rows) {
-                if (error) {
-                    logger.error(' getDpRouteLoadTaskBase ' + error.message);
-                    resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    return next();
-                } else {
-                    if (rows && rows.length > 0) {
-                        logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
-                        resUtil.resetFailedRes(res, " 未全部送达，状态不可为完成 ");
-                        return next();
-                    } else {
-                        newCompletedFlag = true;
-                        that();
-                    }
-                }
-            })*/
-            newCompletedFlag = true;
-            that();
         }else{
             that();
         }
     }).seq(function () {
         var that = this;
-        if(newCompletedFlag) {
-            dpRouteLoadTaskDetailDAO.getCarLoadStatusCount({dpRouteTaskId:params.dpRouteTaskId},function(error,rows){
+        if(params.taskStatus == sysConst.TASK_STATUS.on_road) {
+            params.truckId = parkObj.truckId
+            truckDispatchDAO.getTruckDispatch(params,function(error,rows){
                 if (error) {
                     logger.error(' getCarLoadStatusCount ' + error.message);
                     resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     return next();
                 } else {
-                    carCount=rows[0].arrive_count;
+                    dispObj.carCount = rows[0].car_count;
+                    dispObj.truckNumber = rows[0].truck_number;
                     that();
                 }
             })
         }else{
             that();
         }
-    }).seq(function () {
-        var that = this;
-        /*if(newCompletedFlag) {
-            params.carCount = carCount;
-            dpRouteTaskDAO.updateDpRouteTaskCarCount(params, function (error, result) {
-                if (error) {
-                    logger.error(' updateDpRouteTaskCarCount ' + error.message);
-                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if (result && result.affectedRows > 0) {
-                        logger.info(' updateDpRouteTaskCarCount ' + 'success');
-                    } else {
-                        logger.warn(' updateDpRouteTaskCarCount ' + 'failed');
-                    }
-                    that();
-                }
-            })
-        }else{*/
-            that();
-        //}
     }).seq(function() {
         var that = this;
-        if (params.taskStatus == sysConst.TASK_STATUS.on_road) {
+        /*if (params.taskStatus == sysConst.TASK_STATUS.on_road) {
             var subParams ={
                 currentCity:0,
                 taskStart:parkObj.routeStartId,
@@ -455,7 +415,8 @@ function updateDpRouteTaskStatus(req,res,next){
                     that();
                 }
             })
-        }else if (params.taskStatus == sysConst.TASK_STATUS.completed) {
+        }else*/
+            if (params.taskStatus == sysConst.TASK_STATUS.completed) {
             var subParams ={
                 currentCity:parkObj.routeEndId,
                 taskStart:0,
@@ -484,12 +445,14 @@ function updateDpRouteTaskStatus(req,res,next){
         if(params.taskStatus == sysConst.TASK_STATUS.doing){
             params.taskStartDate = myDate;
         }
+        if(params.taskStatus == sysConst.TASK_STATUS.on_road){
+            if(dispObj.carCount/dispObj.truckNumber>0.3){
+                params.loadFlag = sysConst.LOAD_FLAG.loan;
+            }
+        }
         if(params.taskStatus == sysConst.TASK_STATUS.completed){
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
-            if(carCount/parkObj.truckNumber>0.3){
-                params.loadFlag = sysConst.LOAD_FLAG.loan;
-            }
         }
         dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
             if (error) {
