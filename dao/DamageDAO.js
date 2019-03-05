@@ -149,7 +149,7 @@ function getDamageBase(params,callback) {
         return callback(error,rows);
     });
 }
-
+//web没用
 function getDamageCheckCount(params,callback) {
     var query = " select count(da.id) as damage_count" ;
 

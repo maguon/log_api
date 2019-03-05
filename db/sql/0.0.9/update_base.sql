@@ -358,3 +358,8 @@ ADD COLUMN `refund_care_cost`  decimal(10,2) NULL DEFAULT 0 COMMENT '报销保�
 
 insert into damage_type (id,name ) values ( 7,'买断车' );
 insert into damage_type (id,name ) values ( 8,'退库车' );
+-- ----------------------------
+-- 2019-03-05 更新
+-- ----------------------------
+ALTER TABLE `damage_info`
+ADD COLUMN `hang_status`  tinyint(1) NULL DEFAULT 0 COMMENT '挂起状态' AFTER `damage_status`;

@@ -52,7 +52,8 @@ function getDrive(params,callback) {
     }
     if(params.operateFlag==1){
         query = query + " and ti1.id is not null";
-    }else{
+    }
+    if(params.operateFlag==0){
         query = query + " and ti1.id is null";
     }
     if(params.truckId){
