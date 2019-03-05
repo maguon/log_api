@@ -363,3 +363,8 @@ insert into damage_type (id,name ) values ( 8,'退库车' );
 -- ----------------------------
 ALTER TABLE `damage_info`
 ADD COLUMN `hang_status`  tinyint(1) NULL DEFAULT 0 COMMENT '挂起状态' AFTER `damage_status`;
+
+ALTER TABLE `drive_peccancy`
+ADD COLUMN `buy_score`  int(4) NULL DEFAULT 0 COMMENT '买分金额' AFTER `fine_score`,
+ADD COLUMN `city_id`  int(10) NULL DEFAULT 0 COMMENT '城市ID' AFTER `handle_date`,
+ADD COLUMN `city_name`  varchar(50) NULL DEFAULT NULL COMMENT '城市名称' AFTER `city_id`;

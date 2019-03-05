@@ -26746,6 +26746,9 @@
         "fineScore": {
           "type": "integer"
         },
+        "buyScore": {
+          "type": "integer"
+        },
         "trafficFine": {
           "type": "integer"
         },
@@ -26759,6 +26762,12 @@
           "type": "string"
         },
         "handleDate": {
+          "type": "string"
+        },
+        "cityId": {
+          "type": "integer"
+        },
+        "cityName": {
           "type": "string"
         },
         "address": {
