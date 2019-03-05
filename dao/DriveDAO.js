@@ -157,9 +157,11 @@ function getDriveOperateTypeCount(params,callback) {
 }
 
 function getDriveTruckCount(params,callback) {
-    var query = " select count(d.id) as total_drive,count(t.drive_id) as drive_truck_count " +
+    var query = " select count(d.id) as total_drive,count(t.drive_id) as drive_truck_count," +
+        " count(t1.vice_drive_id)as vice_drive_count " +
         " from drive_info d " +
         " left join truck_info t on d.id = t.drive_id " +
+        " left join truck_info t1 on d.id = t1.vice_drive_id " +
         " where d.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveStatus){

@@ -729,6 +729,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},damage.createQualityAssurance,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
     server.put({path:'/api/user/:userId/damage/:damageId/damageStatus/:damageStatus',contentType: 'application/json'} ,damage.updateDamageStatus);
+    server.put({path:'/api/user/:userId/damage/:damageId/hangStatus/:hangStatus',contentType: 'application/json'} ,damage.updateDamageHangStatus);
 
     /**
      * DamageCheck Module

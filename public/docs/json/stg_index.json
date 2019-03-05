@@ -21365,6 +21365,58 @@
         }
       }
     },
+    "/user/{userId}/damage/{damageId}/hangStatus/{hangStatus}": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update hang status",
+        "description": "update hang status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "path",
+            "description": "damage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "hangStatus",
+            "in": "path",
+            "description": "hang status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/damageCheck": {
       "get": {
         "tags": [

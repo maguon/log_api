@@ -186,8 +186,10 @@ function getDamageCheckCount(params,callback) {
 }
 
 function getDamageNotCheckCount(params,callback) {
-    var query = " select db.y_month,count(da.id) as damage_count,da.damage_status from damage_info da " +
-        " left join date_base db on da.date_id = db.id where da.id is not null ";
+    var query = " select db.y_month,count(da.id) as damage_count,da.damage_status " +
+        " from damage_info da " +
+        " left join date_base db on da.date_id = db.id " +
+        " where da.id is not null and da.hang_status = 0 ";
     var paramsArray=[],i=0;
     if(params.declareUserId){
         paramsArray[i++] = params.declareUserId;
@@ -245,6 +247,17 @@ function updateDamageStatus(params,callback){
     paramsArray[i]=params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageStatus ');
+        return callback(error,rows);
+    });
+}
+
+function updateDamageHangStatus(params,callback){
+    var query = " update damage_info set hang_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.hangStatus;
+    paramsArray[i]=params.damageId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageHangStatus ');
         return callback(error,rows);
     });
 }
@@ -508,6 +521,7 @@ module.exports ={
     getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus,
+    updateDamageHangStatus : updateDamageHangStatus,
     updateDamageStatStatus : updateDamageStatStatus,
     getDamageTypeMonthStat : getDamageTypeMonthStat,
     getDamageLinkTypeMonthStat : getDamageLinkTypeMonthStat,

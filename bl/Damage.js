@@ -204,6 +204,20 @@ function updateDamageStatus(req,res,next){
     })
 }
 
+function updateDamageHangStatus(req,res,next){
+    var params = req.params ;
+    damageDAO.updateDamageHangStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDamageHangStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageHangStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function createQualityAssurance(req,res,next){
     var params = req.params;
     req.params.carContent =" 质检 ";
@@ -438,6 +452,7 @@ module.exports = {
     queryDamageTotalCost : queryDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus ,
+    updateDamageHangStatus : updateDamageHangStatus,
     createQualityAssurance : createQualityAssurance ,
     queryDamageTypeMonthStat : queryDamageTypeMonthStat,
     queryDamageLinkTypeMonthStat : queryDamageLinkTypeMonthStat,
