@@ -50,6 +50,11 @@ function getDrive(params,callback) {
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
     }
+    if(params.operateFlag==1){
+        query = query + " and ti1.id is not null";
+    }else{
+        query = query + " and ti1.id is null";
+    }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and ti1.id = ? ";

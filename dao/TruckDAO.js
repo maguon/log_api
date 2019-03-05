@@ -356,6 +356,55 @@ function getTruckOperateTypeCountTotal(params,callback) {
     });
 }
 
+function getTruckOperate(params,callback) {
+    var query = " select t.id,t.truck_num,d.id as drive_id,d.drive_name,u.mobile,c.id as company_id,c.company_name, " +
+        " td.dispatch_flag,td.current_city,td.task_start,td.task_end " +
+        " from truck_info t " +
+        " left join company_info c on t.company_id = c.id " +
+        " left join drive_info d on t.drive_id = d.id " +
+        " left join user_info u on d.user_id = u.uid " +
+        " left join truck_dispatch td on t.id = td.truck_id " +
+        " where t.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and t.id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and t.truck_type = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and t.drive_id = ? ";
+    }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and t.company_id = ? ";
+    }
+    if(params.dispatchFlag){
+        paramsArray[i++] = params.dispatchFlag;
+        query = query + " and td.dispatch_flag = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckOperate ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , hp= ? , truck_tel = ? ,the_code = ? , " +
         " truck_type = ? , number = ? , driving_date = ? , license_date = ? , two_date = ? , remark = ?  where id = ? " ;
@@ -491,6 +540,7 @@ module.exports ={
     getTrailerCount : getTrailerCount,
     getTruckTypeCountTotal : getTruckTypeCountTotal,
     getTruckOperateTypeCountTotal : getTruckOperateTypeCountTotal,
+    getTruckOperate : getTruckOperate,
     updateTruck : updateTruck,
     updateTruckCompany : updateTruckCompany,
     updateTruckDrivingImage :updateTruckDrivingImage,

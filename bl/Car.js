@@ -205,7 +205,7 @@ function updateCar(req,res,next){
                         that();
                     }else{
                         logger.warn(' getCarList ' + 'failed');
-                        resUtil.resetFailedRes(res, " 不是待装车状态，不能修改任务关联信息 ");
+                        resUtil.resetFailedRes(res, " 数据填写不完整，或不是待装车状态，保存失败 ");
                         return next();
                     }
 

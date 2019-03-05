@@ -228,6 +228,20 @@ function queryTruckOperateTypeCountTotal(req,res,next){
     })
 }
 
+function queryTruckOperate(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckOperate(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckOperate ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckOperate ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruck(req,res,next){
     var params = req.params ;
     if(params.number == null || params.number == ""){
@@ -909,6 +923,7 @@ module.exports = {
     queryTrailerCount : queryTrailerCount,
     queryTruckTypeCountTotal : queryTruckTypeCountTotal,
     queryTruckOperateTypeCountTotal : queryTruckOperateTypeCountTotal,
+    queryTruckOperate : queryTruckOperate,
     updateTruck : updateTruck,
     updateTruckCompany : updateTruckCompany,
     updateTruckImage : updateTruckImage,
