@@ -29,11 +29,13 @@ function addTruckInsureRel(params,callback){
 
 function getTruckInsureRel(params,callback) {
     var query = " select r.*,i.insure_name,t.truck_num,t.truck_type,u.real_name as insure_user_name," +
-        " u1.real_name as delete_user_name from truck_insure_rel r " +
+        " u1.real_name as delete_user_name,c.company_name " +
+        " from truck_insure_rel r " +
         " left join truck_insure i on r.insure_id = i.id " +
         " left join truck_info t on r.truck_id = t.id " +
         " left join user_info u on r.insure_user_id = u.uid " +
         " left join user_info u1 on r.delete_user_id = u1.uid " +
+        " left join company_info c on t.company_id = c.id " +
         " where r.insure_status >=0 and r.id is not null ";
     var paramsArray=[],i=0;
     if(params.relId){
@@ -71,6 +73,10 @@ function getTruckInsureRel(params,callback) {
     if(params.truckType){
         paramsArray[i++] = params.truckType;
         query = query + " and t.truck_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and t.company_id = ? ";
     }
     if(params.endDateStart){
         paramsArray[i++] = params.endDateStart;
