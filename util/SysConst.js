@@ -140,6 +140,14 @@ var DAMAGE_STEP_TYPE = {
     HUMAN : 16//运输途中遭人为破坏
 
 };
+
+var LIABILITY_TYPE = {
+    whole : 1 ,//全责
+    exemption : 2 ,//免责
+    five_five : 3 ,//五五
+    three_seven : 4 //三七
+};
+
 var UNLOAD_CAR_COUNT = 3;//>=3重载,<=3空载
 var DISTANCE_PRICE = 1.6;//里程单价(过路费=路程*单价)
 
@@ -207,6 +215,7 @@ module.exports = {
     DISTANCE_PRICE : DISTANCE_PRICE,
     DAMAGE_TYPE : DAMAGE_TYPE ,
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
+    LIABILITY_TYPE : LIABILITY_TYPE,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
     ACCIDENT_TYPE : ACCIDENT_TYPE,
     LOAN_STATUS : LOAN_STATUS,

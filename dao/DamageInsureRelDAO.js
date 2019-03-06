@@ -18,10 +18,12 @@ function addDamageInsureRel(params,callback){
 }
 
 function getDamageInsureRel(params,callback) {
-    var query = " select dir.id,dir.damage_insure_id,dir.damage_id,di.created_on as damage_insure_date, " +
-        " di.insure_plan,di.insure_actual,ti.insure_name,u.real_name as insure_user_name,c.vin, " +
-        " e.short_name as e_short_name,r.short_name as r_short_name,dc.damage_type, " +
-        " dc.under_user_name,d.drive_name,d.truck_num,d.damage_explain from damage_insure_rel dir " +
+    var query = " select dir.id,dir.damage_insure_id,dir.damage_id,di.created_on,ti.insure_name, " +
+        " di.damage_money,di.insure_plan,di.insure_actual,u.real_name as insure_user_name, " +
+        " di.city_name,di.declare_date,di.liability_type,di.ref_remark,di.derate_money,di.car_valuation,di.invoice_money, " +
+        " c.vin,e.short_name as e_short_name,r.short_name as r_short_name,dc.damage_type, " +
+        " dc.under_user_name,d.drive_name,d.truck_num,d.damage_explain " +
+        " from damage_insure_rel dir " +
         " left join damage_insure di  on di.id = dir.damage_insure_id " +
         " left join damage_info d on dir.damage_id = d.id " +
         " left join damage_check dc on d.id = dc.damage_id " +
@@ -77,6 +79,7 @@ function getDamageInsureRel(params,callback) {
         query = query + " and u.real_name = ? ";
     }
     query = query + " group by dir.id ";
+    query = query + " order by dir.id desc ";
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageInsureRel ');
         return callback(error,rows);

@@ -43,7 +43,8 @@ function removeDamageInsureRel(req,res,next){
 
 function getDamageInsureRelCsv(req,res,next){
     var csvString = "";
-    var header = "赔付编号" + ',' + "办理时间" + ',' + "保险待赔" + ','+ "保险赔付" + ','+ "保险公司"+ ','+ "经办人"
+    var header = "赔付编号" + ',' + "办理时间" + ','+ "保险公司"+ ',' + "定损金额"+ ',' + "待赔金额" + ','+ "实际赔付" + ','+ "经办人"
+        + ','+ "出险城市" + ',' + "报案日期" + ','+ "责任判定"+ ',' + "定损员信息"+ ',' + "免赔金额" + ','+ "车辆估值" + ','+ "发票金额"
         + ','+ "质损编号" + ','+ "VIN码" + ','+ "委托方" + ','+ "经销商" + ','+ "质损类型" + ','+ "责任人" + ','+ "司机" + ','+ "货车牌号" + ','+ "质损说明";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -55,15 +56,61 @@ function getDamageInsureRelCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.damageInsureId = rows[i].damage_insure_id;
-                parkObj.damageInsureDate = new Date(rows[i].damage_insure_date).toLocaleDateString();
+                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                parkObj.insureName = rows[i].insure_name;
+                if(rows[i].damage_money==null){
+                    parkObj.damageMoney = "";
+                }else{
+                    parkObj.damageMoney = rows[i].damage_money;
+                }
                 parkObj.insurePlan = rows[i].insure_plan;
                 if(rows[i].insure_actual==null){
                     parkObj.insureActual = "";
                 }else{
                     parkObj.insureActual = rows[i].insure_actual;
                 }
-                parkObj.insureName = rows[i].insure_name;
                 parkObj.insureUserName = rows[i].insure_user_name;
+                if(rows[i].city_name==null){
+                    parkObj.cityName = "";
+                }else{
+                    parkObj.cityName = rows[i].city_name;
+                }
+                if(rows[i].declare_date == null){
+                    parkObj.declareDate = "";
+                }else{
+                    parkObj.declareDate = new Date(rows[i].declare_date).toLocaleDateString();
+                }
+                if(rows[i].liability_type == 1){
+                    parkObj.liabilityType = "全责";
+                }else if(rows[i].liability_type == 2){
+                    parkObj.liabilityType = "免责";
+                }else if(rows[i].liability_type == 3){
+                    parkObj.liabilityType = "五五";
+                }else if(rows[i].liability_type == 4){
+                    parkObj.liabilityType = "三七";
+                }else{
+                    parkObj.liabilityType = "";
+                }
+                if(rows[i].ref_remark==null){
+                    parkObj.refRemark = "";
+                }else{
+                    parkObj.refRemark = rows[i].ref_remark;
+                }
+                if(rows[i].derate_money==null){
+                    parkObj.derateMoney = "";
+                }else{
+                    parkObj.derateMoney = rows[i].derate_money;
+                }
+                if(rows[i].car_valuation==null){
+                    parkObj.carValuation = "";
+                }else{
+                    parkObj.carValuation = rows[i].car_valuation;
+                }
+                if(rows[i].invoice_money==null){
+                    parkObj.invoiceMoney = "";
+                }else{
+                    parkObj.invoiceMoney = rows[i].invoice_money;
+                }
                 parkObj.damageId = rows[i].damage_id;
                 parkObj.vin = rows[i].vin;
                 parkObj.eShortName = rows[i].e_short_name;
@@ -103,8 +150,10 @@ function getDamageInsureRelCsv(req,res,next){
                 }else{
                     parkObj.damageExplain = rows[i].damage_explain;
                 }
-                csvString = csvString+parkObj.damageInsureId+","+parkObj.damageInsureDate+","+parkObj.insurePlan+","
-                    +parkObj.insureActual+"," +parkObj.insureName+","+parkObj.insureUserName+","
+                csvString = csvString+parkObj.damageInsureId+","+parkObj.createdOn+","+parkObj.insureName+","
+                    +parkObj.damageMoney+"," +parkObj.insurePlan+","+parkObj.insureActual+"," +parkObj.insureUserName+","
+                    +parkObj.cityName+"," +parkObj.declareDate+","+parkObj.liabilityType+"," +parkObj.refRemark+","
+                    +parkObj.derateMoney+"," +parkObj.carValuation+","+parkObj.invoiceMoney+","
                     +parkObj.damageId+","+parkObj.vin+parkObj.eShortName+","+parkObj.rShortName+","+parkObj.damageType+","
                     +parkObj.underUserName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.damageExplain+ '\r\n';
             }
