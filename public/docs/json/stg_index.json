@@ -26129,6 +26129,9 @@
         },
         "noLoadDistanceOil": {
           "type": "integer"
+        },
+        "urea": {
+          "type": "integer"
         }
       },
       "xml": {

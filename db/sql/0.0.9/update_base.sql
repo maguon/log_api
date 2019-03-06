@@ -368,3 +368,8 @@ ALTER TABLE `drive_peccancy`
 ADD COLUMN `buy_score`  decimal(10,2) NULL DEFAULT 0 COMMENT '买分金额' AFTER `fine_score`,
 ADD COLUMN `city_id`  int(10) NULL DEFAULT 0 COMMENT '城市ID' AFTER `handle_date`,
 ADD COLUMN `city_name`  varchar(50) NULL DEFAULT NULL COMMENT '城市名称' AFTER `city_id`;
+-- ----------------------------
+-- 2019-03-06 更新
+-- ----------------------------
+ALTER TABLE `truck_brand`
+ADD COLUMN `urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '尿素' AFTER `no_load_distance_oil`;
