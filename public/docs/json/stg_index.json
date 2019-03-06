@@ -8994,9 +8994,9 @@
 
           },
           {
-            "name": "endDateEnd",
+            "name": "startDateEnd",
             "in": "query",
-            "description": "endDate end",
+            "description": "startDate end",
             "required": false,
             "type": "string"
 
@@ -9147,9 +9147,9 @@
 
           },
           {
-            "name": "endDateEnd",
+            "name": "startDateEnd",
             "in": "query",
-            "description": "endDate end",
+            "description": "startDate end",
             "required": false,
             "type": "string"
 
@@ -26766,9 +26766,6 @@
         "startDate": {
           "type": "string"
         },
-        "endDate": {
-          "type": "string"
-        },
         "handleDate": {
           "type": "string"
         },
@@ -26786,7 +26783,7 @@
         }
       },
       "xml": {
-        "name": "checkReason"
+        "name": "drivePeccancy"
       }
     },
     "driveExceedOil": {

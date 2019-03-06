@@ -76,8 +76,7 @@ function updateDrivePeccancy(req,res,next){
 function getDrivePeccancyCsv(req,res,next){
     var csvString = "";
     var header = "违章结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "货车类型" + ','+ "扣罚分数" + ','+ "买分金额" + ','+ "交通罚款"
-        + ','+ "罚款金额" + ','+ "违章时间范围(始)" + ','+ "违章时间范围(终)" + ','+ "处理时间"+ ','+ "违章城市"+ ','+ "违章地点"
-        + ','+ "操作人" + ','+ "状态" + ','+ "备注" ;
+        + ','+ "罚款金额" + ','+ "违章时间" + ','+ "处理时间"+ ','+ "违章城市"+ ','+ "违章地点" + ','+ "操作人" + ','+ "状态" + ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -107,11 +106,6 @@ function getDrivePeccancyCsv(req,res,next){
                     parkObj.startDate = "";
                 }else{
                     parkObj.startDate = new Date(rows[i].start_date).toLocaleDateString();
-                }
-                if(rows[i].end_date == null){
-                    parkObj.endDate = "";
-                }else{
-                    parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
                 }
                 if(rows[i].handle_date == null){
                     parkObj.handleDate = "";
@@ -145,8 +139,8 @@ function getDrivePeccancyCsv(req,res,next){
                 }
 
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.truckType+","+parkObj.fineScore
-                    +","+parkObj.buyScore+","+parkObj.trafficFine+","+parkObj.fineMoney +","+parkObj.startDate+","+parkObj.endDate
-                    +","+parkObj.handleDate+","+parkObj.cityName+","+parkObj.address+","+parkObj.opUserName +","+parkObj.fineStatus+","+parkObj.remark+ '\r\n';
+                    +","+parkObj.buyScore+","+parkObj.trafficFine+","+parkObj.fineMoney +","+parkObj.startDate +","+parkObj.handleDate
+                    +","+parkObj.cityName+","+parkObj.address+","+parkObj.opUserName +","+parkObj.fineStatus+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
