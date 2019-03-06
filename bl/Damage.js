@@ -297,6 +297,20 @@ function queryDamageReceiveMonthStat(req,res,next){
     })
 }
 
+function queryDamageDaseAddrMonthStat(req,res,next){
+    var params = req.params;
+    damageDAO.getDamageDaseAddrMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageDaseAddrMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageDaseAddrMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDamageMakeTopMonthStat(req,res,next){
     var params = req.params;
     damageDAO.getDamageMakeTopMonthStat(params,function(error,result){
@@ -459,6 +473,7 @@ module.exports = {
     queryDamageTypeWeekStat : queryDamageTypeWeekStat,
     queryDamageMakeMonthStat : queryDamageMakeMonthStat,
     queryDamageReceiveMonthStat : queryDamageReceiveMonthStat,
+    queryDamageDaseAddrMonthStat : queryDamageDaseAddrMonthStat,
     queryDamageMakeTopMonthStat : queryDamageMakeTopMonthStat,
     queryDamageReceiveTopMonthStat : queryDamageReceiveTopMonthStat,
     getDamageCsv : getDamageCsv

@@ -722,6 +722,7 @@ function createServer() {
     server.get('/api/damageTypeWeekStat',damage.queryDamageTypeWeekStat);
     server.get('/api/damageMakeMonthStat',damage.queryDamageMakeMonthStat);
     server.get('/api/damageReceiveMonthStat',damage.queryDamageReceiveMonthStat);
+    server.get('/api/damageDaseAddrMonthStat',damage.queryDamageDaseAddrMonthStat);
     server.get('/api/damageMakeTopMonthStat',damage.queryDamageMakeTopMonthStat);
     server.get('/api/damageReceiveTopMonthStat',damage.queryDamageReceiveTopMonthStat);
     server.get('/api/damage.csv', damage.getDamageCsv);
