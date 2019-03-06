@@ -386,20 +386,17 @@ function getDamageTypeWeekStat(params,callback){
 }
 
 function getDamageMakeMonthStat(params,callback){
-    if(params.makeId){
-        var query = " select db.y_month,count(case when d.damage_status = "+ params.damageStatus +" and c.make_id = "+ params.makeId +" then d.id end) as damage_count " +
-            " from date_base db " +
-            " left join damage_info d on db.id = d.date_id " +
-            " left join car_info c on d.car_id = c.id " +
-            " where db.id is not null ";
-    }else{
-        var query = " select db.y_month,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
-            " from date_base db " +
-            " left join damage_info d on db.id = d.date_id " +
-            " left join car_info c on d.car_id = c.id " +
-            " where db.id is not null ";
-    }
+    var query = " select db.y_month,count(case when d.damage_status = "+ params.damageStatus;
     var paramsArray=[],i=0;
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    query = query + " then d.id end) as damage_count " +
+        " from date_base db " +
+        " left join damage_info d on db.id = d.date_id " +
+        " left join car_info c on d.car_id = c.id " +
+        " where db.id is not null ";
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";
@@ -459,20 +456,18 @@ function getDamageReceiveMonthStat(params,callback){
 }
 
 function getDamageDaseAddrMonthStat(params,callback){
-    if(params.baseAddrId){
-        var query = " select db.y_month,count(case when d.damage_status = "+ params.damageStatus +" and c.base_addr_id = "+ params.baseAddrId +" then d.id end) as damage_count " +
-            " from date_base db " +
-            " left join damage_info d on db.id = d.date_id " +
-            " left join car_info c on d.car_id = c.id " +
-            " where db.id is not null ";
-    }else{
-        var query = " select db.y_month,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
-            " from date_base db " +
-            " left join damage_info d on db.id = d.date_id " +
-            " left join car_info c on d.car_id = c.id " +
-            " where db.id is not null ";
-    }
+    var query = " select db.y_month,count(case when d.damage_status = "+ params.damageStatus;
     var paramsArray=[],i=0;
+
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    query = query + " then d.id end) as damage_count " +
+        " from date_base db " +
+        " left join damage_info d on db.id = d.date_id " +
+        " left join car_info c on d.car_id = c.id " +
+        " where db.id is not null ";
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
         query = query + " and db.y_month >= ? ";
@@ -496,7 +491,7 @@ function getDamageDaseAddrMonthStat(params,callback){
 
 function getDamageMakeTopMonthStat(params,callback) {
     var query = " select c.make_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
-        " from damage_info d" +
+        " from damage_info d " +
         " left join date_base db on d.date_id = db.id " +
         " left join car_info c on d.car_id = c.id " +
         " where d.id is not null ";
@@ -551,6 +546,35 @@ function getDamageReceiveTopMonthStat(params,callback) {
     });
 }
 
+function getDamageDaseAddrTopMonthStat(params,callback) {
+    var query = " select ba.addr_name,count(case when d.damage_status = "+ params.damageStatus +" then d.id end) as damage_count " +
+        " from damage_info d " +
+        " left join date_base db on d.date_id = db.id " +
+        " left join car_info c on d.car_id = c.id " +
+        " left join base_addr ba on c.base_addr_id = ba.id " +
+        " where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by ba.addr_name ';
+    query = query + ' order by damage_count desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageDaseAddrTopMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDamage : addDamage,
@@ -570,5 +594,6 @@ module.exports ={
     getDamageReceiveMonthStat : getDamageReceiveMonthStat,
     getDamageDaseAddrMonthStat : getDamageDaseAddrMonthStat,
     getDamageMakeTopMonthStat : getDamageMakeTopMonthStat,
-    getDamageReceiveTopMonthStat : getDamageReceiveTopMonthStat
+    getDamageReceiveTopMonthStat : getDamageReceiveTopMonthStat,
+    getDamageDaseAddrTopMonthStat : getDamageDaseAddrTopMonthStat
 }

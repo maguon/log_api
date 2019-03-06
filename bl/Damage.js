@@ -339,6 +339,20 @@ function queryDamageReceiveTopMonthStat(req,res,next){
     })
 }
 
+function queryDamageDaseAddrTopMonthStat(req,res,next){
+    var params = req.params;
+    damageDAO.getDamageDaseAddrTopMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDamageDaseAddrTopMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDamageDaseAddrTopMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDamageCsv(req,res,next){
     var csvString = "";
     var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+ "司机"
@@ -476,5 +490,6 @@ module.exports = {
     queryDamageDaseAddrMonthStat : queryDamageDaseAddrMonthStat,
     queryDamageMakeTopMonthStat : queryDamageMakeTopMonthStat,
     queryDamageReceiveTopMonthStat : queryDamageReceiveTopMonthStat,
+    queryDamageDaseAddrTopMonthStat : queryDamageDaseAddrTopMonthStat,
     getDamageCsv : getDamageCsv
 }
