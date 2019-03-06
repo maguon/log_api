@@ -110,6 +110,10 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.statStatus;
         query = query + " and da.stat_status = ? ";
     }
+    if(params.hangStatus){
+        paramsArray[i++] = params.hangStatus;
+        query = query + " and da.hang_status = ? ";
+    }
     query = query + " order by da.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

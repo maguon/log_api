@@ -20289,6 +20289,14 @@
 
           },
           {
+            "name": "hangStatus",
+            "in": "query",
+            "description": "hang status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
