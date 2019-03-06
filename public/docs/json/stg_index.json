@@ -28038,6 +28038,30 @@
         "insureId": {
           "type": "integer"
         },
+        "cityId": {
+          "type": "integer"
+        },
+        "cityName": {
+          "type": "string"
+        },
+        "declareDate": {
+          "type": "string"
+        },
+        "liabilityType": {
+          "type": "integer"
+        },
+        "refRemark": {
+          "type": "string"
+        },
+        "derateMoney": {
+          "type": "integer"
+        },
+        "carValuation": {
+          "type": "integer"
+        },
+        "invoiceMoney": {
+          "type": "integer"
+        },
         "damageMoney": {
           "type": "integer"
         },
@@ -28072,6 +28096,30 @@
       "properties": {
 
         "insureId": {
+          "type": "integer"
+        },
+        "cityId": {
+          "type": "integer"
+        },
+        "cityName": {
+          "type": "string"
+        },
+        "declareDate": {
+          "type": "string"
+        },
+        "liabilityType": {
+          "type": "integer"
+        },
+        "refRemark": {
+          "type": "string"
+        },
+        "derateMoney": {
+          "type": "integer"
+        },
+        "carValuation": {
+          "type": "integer"
+        },
+        "invoiceMoney": {
           "type": "integer"
         },
         "damageMoney": {

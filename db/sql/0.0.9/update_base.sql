@@ -373,3 +373,15 @@ ADD COLUMN `city_name`  varchar(50) NULL DEFAULT NULL COMMENT '城市名称' AFT
 -- ----------------------------
 ALTER TABLE `truck_brand`
 ADD COLUMN `urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '尿素' AFTER `no_load_distance_oil`;
+-- ----------------------------
+-- 2019-03-06 更新
+-- ----------------------------
+ALTER TABLE `damage_insure`
+ADD COLUMN `city_id`  int(10) NULL COMMENT '出险城市ID' AFTER `insure_user_id`,
+ADD COLUMN `city_name`  varchar(50) NULL DEFAULT NULL COMMENT '出险城市名称' AFTER `city_id`,
+ADD COLUMN `declare_date`  date NULL DEFAULT NULL COMMENT '报案日期' AFTER `city_name`,
+ADD COLUMN `liability_type`  tinyint(1) NULL DEFAULT 0 COMMENT '责任判定(1-全责,2-免责,3-五五,4-三七）' AFTER `declare_date`,
+ADD COLUMN `ref_remark`  varchar(200) NULL DEFAULT NULL COMMENT '定损员信息' AFTER `liability_type`,
+ADD COLUMN `derate_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '免赔金额' AFTER `ref_remark`,
+ADD COLUMN `car_valuation`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车估值' AFTER `derate_money`,
+ADD COLUMN `invoice_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '发票金额' AFTER `var_valuation`;
