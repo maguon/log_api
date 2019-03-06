@@ -384,4 +384,4 @@ ADD COLUMN `liability_type`  tinyint(1) NULL DEFAULT 0 COMMENT '责任判定(1-�
 ADD COLUMN `ref_remark`  varchar(200) NULL DEFAULT NULL COMMENT '定损员信息' AFTER `liability_type`,
 ADD COLUMN `derate_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '免赔金额' AFTER `ref_remark`,
 ADD COLUMN `car_valuation`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车估值' AFTER `derate_money`,
-ADD COLUMN `invoice_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '发票金额' AFTER `var_valuation`;
+ADD COLUMN `invoice_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '发票金额' AFTER `car_valuation`;

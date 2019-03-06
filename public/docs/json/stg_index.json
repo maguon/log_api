@@ -22763,6 +22763,22 @@
 
           },
           {
+            "name": "cityId",
+            "in": "query",
+            "description": "city id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "liabilityType",
+            "in": "query",
+            "description": "liability type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -23216,6 +23232,22 @@
             "description": "insureUser name",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "cityId",
+            "in": "query",
+            "description": "city id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "liabilityType",
+            "in": "query",
+            "description": "liability type",
+            "required": false,
+            "type": "integer"
 
           }
         ],

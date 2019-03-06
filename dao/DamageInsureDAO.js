@@ -85,6 +85,14 @@ function getDamageInsure(params,callback) {
         paramsArray[i++] = params.insureUserName;
         query = query + " and u.real_name = ? ";
     }
+    if(params.cityId){
+        paramsArray[i++] = params.cityId;
+        query = query + " and di.city_id = ? ";
+    }
+    if(params.liabilityType){
+        paramsArray[i++] = params.liabilityType;
+        query = query + " and di.liability_type = ? ";
+    }
     query = query + " group by di.id ";
     query = query + " order by di.id desc";
     if (params.start && params.size) {

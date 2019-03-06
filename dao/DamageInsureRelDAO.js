@@ -78,6 +78,14 @@ function getDamageInsureRel(params,callback) {
         paramsArray[i++] = params.insureUserName;
         query = query + " and u.real_name = ? ";
     }
+    if(params.cityId){
+        paramsArray[i++] = params.cityId;
+        query = query + " and di.city_id = ? ";
+    }
+    if(params.liabilityType){
+        paramsArray[i++] = params.liabilityType;
+        query = query + " and di.liability_type = ? ";
+    }
     query = query + " group by dir.id ";
     query = query + " order by dir.id desc ";
     db.dbQuery(query,paramsArray,function(error,rows){
