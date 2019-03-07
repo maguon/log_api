@@ -236,7 +236,7 @@ function getDpRouteTaskLoanDayStat(params,callback){
 }
 
 function getDpRouteTaskNotLoan(params,callback) {
-    var query = " select dpr.id,dpr.route_start_id,dpr.route_start,dpr.route_end_id,dpr.route_end, " +
+    var query = " select dpr.id,dpr.drive_id,dpr.truck_id,dpr.route_start_id,dpr.route_start,dpr.route_end_id,dpr.route_end, " +
         " dpr.distance,dpr.task_status,d.drive_name,t.truck_num " +
         " from dp_route_task dpr " +
         " left join dp_route_task_loan_rel rel on dpr.id = rel.dp_route_task_id " +
