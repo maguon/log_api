@@ -236,14 +236,12 @@ function getDpRouteTaskLoanDayStat(params,callback){
 }
 
 function getDpRouteTaskNotLoan(params,callback) {
-    var query = " select dpr.*,c.city_name as city_route_start,ce.city_name as city_route_end,cr.protect_fee, " +
-        " d.drive_name,t.truck_num,sum(dprl.plan_count) as plan_count,sum(dprl.real_count) as real_count " +
-        "  from dp_route_task dpr " +
+    var query = " select dpr.id,dpr.route_start_id,dpr.route_start as city_route_start,dpr.route_end_id,dpr.route_end as city_route_end, " +
+        " dpr.distance,dpr.task_plan_date,dpr.task_status,cr.protect_fee,d.drive_name,t.truck_num,sum(dprl.plan_count) as plan_count " +
+        " from dp_route_task dpr " +
         " left join dp_route_task_rel dprr on dpr.id = dprr.dp_route_task_id " +
         " left join city_route_info cr on dprr.city_route_id = cr.id " +
         " left join dp_route_task_loan_rel rel on dpr.id = rel.dp_route_task_id " +
-        " left join city_info c on dpr.route_start_id = c.id " +
-        " left join city_info ce on dpr.route_end_id = ce.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
