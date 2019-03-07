@@ -17754,6 +17754,14 @@
 
           },
           {
+            "name": "loadTaskStatusArr",
+            "in": "query",
+            "description": "loadTaskStatus arr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "loadTaskStatus",
             "in": "query",
             "description": "loadTask status",
