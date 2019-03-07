@@ -177,7 +177,8 @@ function getDpRouteLoadTask(params,callback) {
 }
 
 function getDpRouteLoadTaskBase(params,callback) {
-    var query = " select dprl.*,dpr.task_status " +
+    var query = " select dprl.*,dpr.task_status, " +
+        " dpd.route_start_id as demand_route_start_id,dpd.route_end_id as demand_route_end_id " +
         " from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +

@@ -36,6 +36,8 @@ function createDpRouteLoadTaskDetail(req,res,next){
                     parkObj.addrName = rows[0].addr_name;
                     parkObj.routeEndId = rows[0].route_end_id;
                     parkObj.receiveId = rows[0].receive_id;
+                    parkObj.demandRouteStartId = rows[0].demand_route_start_id;
+                    parkObj.demandRouteEndId = rows[0].demand_route_end_id;
 
                     that();
                 }else{
@@ -54,9 +56,9 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0&&rows[0].car_status <listOfValue.CAR_STATUS_LOAD){
-                    if(rows[0].route_start_id==parkObj.routeStartId&&rows[0].route_end_id==parkObj.routeEndId&&rows[0].receive_id==parkObj.receiveId){
+                    if(rows[0].route_start_id==parkObj.demandRouteStartId&&rows[0].route_end_id==parkObj.demandRouteEndId&&rows[0].receive_id==parkObj.receiveId){
                         that();
-                    }else if(rows[0].route_start_id==parkObj.routeStartId&&rows[0].route_end_id==null&&rows[0].receive_id==null){
+                    }else if(rows[0].route_start_id==parkObj.demandRouteStartId&&rows[0].route_end_id==null&&rows[0].receive_id==null){
                         that();
                     }else{
                         logger.warn(' getCarList ' +' failed ');
