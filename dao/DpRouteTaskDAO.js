@@ -42,8 +42,6 @@ function getDpRouteTask(params,callback) {
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join truck_info tl on t.rel_id = tl.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
-        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
-        " left join dp_route_load_task_detail dpdtl on dpr.id = dpdtl.dp_route_task_id " +
         " left join user_info u1 on d.user_id = u1.uid " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
