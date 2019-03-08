@@ -336,6 +336,22 @@ function removeDpRouteLoadTaskDetail(req,res,next){
                 }
             }
         })
+    }).seq(function() {
+        var that = this;
+        truckDispatchDAO.getTruckDispatch({truckId:params.truckId}, function (error, rows) {
+            if (error) {
+                logger.error(' getTruckDispatch ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length>0) {
+                    parkObj.carCount = rows[0].car_count;
+                    that();
+                } else {
+                    that();
+                }
+            }
+        })
     }).seq(function(){
         var that = this;
         dpRouteLoadTaskDetailDAO.deleteDpRouteLoadTaskDetail(params,function(error,result){
