@@ -30,6 +30,12 @@ function createDpRouteTask(req,res,next){
         var that = this;
         if(params.taskStatus==null||params.taskStatus==""){
             params.taskStatus = sysConst.TASK_STATUS.ready_accept;
+        }else{
+            var myDate = new Date();
+            var strDate = moment(myDate).format('YYYYMMDD');
+            params.taskStartDate = myDate;
+            params.taskEndDate = myDate;
+            params.dateId = parseInt(strDate);
         }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
