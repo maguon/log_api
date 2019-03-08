@@ -27644,6 +27644,9 @@
         "taskPlanDate": {
           "type": "string"
         },
+        "taskStatus": {
+          "type": "integer"
+        },
         "cityRouteId": {
           "type": "integer"
         }

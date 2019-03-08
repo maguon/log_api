@@ -28,6 +28,9 @@ function createDpRouteTask(req,res,next){
     var dpRouteTaskId = 0;
     Seq().seq(function(){
         var that = this;
+        if(params.taskStatus==null||params.taskStatus==""){
+            params.taskStatus = sysConst.TASK_STATUS.ready_accept;
+        }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteTask ' + error.message);
