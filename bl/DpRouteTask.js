@@ -111,6 +111,9 @@ function createDpRouteTaskBatch(req,res,next){
         })
     }).seq(function(){
         var that = this;
+        if(params.taskStatus==null||params.taskStatus==""){
+            params.taskStatus = sysConst.TASK_STATUS.ready_accept;
+        }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteTaskBatch ' + error.message);
