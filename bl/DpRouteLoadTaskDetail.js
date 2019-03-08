@@ -91,6 +91,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
         })
     }).seq(function () {
         var that = this;
+        params.carCount = 1;
         truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {
                 logger.error(' updateTruckDispatchCarCount ' + error.message);
@@ -202,6 +203,22 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
                 }
             }
         })
+    }).seq(function() {
+        var that = this;
+        truckDispatchDAO.getTruckDispatch({truckId:params.truckId}, function (error, rows) {
+            if (error) {
+                logger.error(' getTruckDispatch ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length>0) {
+                    parkObj.carCount = rows[0].car_count;
+                    that();
+                } else {
+                    that();
+                }
+            }
+        })
     }).seq(function(){
         var that = this;
         var myDate = new Date();
@@ -268,6 +285,11 @@ function updateDpRouteLoadTaskDetailStatus(req,res,next){
             }
         })
     }).seq(function () {
+        if(parkObj.carCount==0){
+            params.carCount = 0;
+        }else{
+            params.carCount = 1;
+        }
         truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {
                 logger.error(' updateTruckDispatchCarCount ' + error.message);
@@ -334,6 +356,11 @@ function removeDpRouteLoadTaskDetail(req,res,next){
     }).seq(function () {
         var that = this;
         params.carLoadStatus = sysConst.CAR_LOAD_STATUS.arrive;
+        if(parkObj.carCount==0){
+            params.carCount = 0;
+        }else{
+            params.carCount = 1;
+        }
         truckDispatchDAO.updateTruckDispatchCarCount(params,function(error,result){
             if (error) {
                 logger.error(' updateTruckDispatchCarCount ' + error.message);

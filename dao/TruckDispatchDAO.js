@@ -258,11 +258,12 @@ function getCityTruckDispatchCount(params,callback) {
 
 function updateTruckDispatchCarCount(params,callback){
     if(params.carLoadStatus==2){
-        var query = " update truck_dispatch set car_count = car_count - 1 where truck_id = ? " ;
+        var query = " update truck_dispatch set car_count = car_count - ? where truck_id = ? " ;
     }else{
-        var query = " update truck_dispatch set car_count = car_count + 1 where truck_id = ? " ;
+        var query = " update truck_dispatch set car_count = car_count + ? where truck_id = ? " ;
     }
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.carCount;
     paramsArray[i]=params.truckId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckDispatchCarCount ');
