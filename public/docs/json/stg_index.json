@@ -17770,6 +17770,14 @@
 
           },
           {
+            "name": "taskStatusArr",
+            "in": "query",
+            "description": "taskStatus arr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "vin",
             "in": "query",
             "description": "vin",

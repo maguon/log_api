@@ -144,6 +144,9 @@ function getDpRouteLoadTask(params,callback) {
         paramsArray[i++] = params.loadTaskStatus;
         query = query + " and dprl.load_task_status = ? ";
     }
+    if(params.taskStatusArr){
+        query = query + " and dpr.task_status in ("+params.taskStatusArr + ") ";
+    }
     if(params.vin){
         paramsArray[i++] = params.vin;
         query = query + " and dpdtl.vin = ? ";
