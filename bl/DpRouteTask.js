@@ -505,6 +505,66 @@ function updateDpRouteTaskStatus(req,res,next){
     })
 }
 
+function updateDpRouteTaskStatusBack(req,res,next){
+    var params = req.params;
+    var dispatchObj = {};
+    Seq().seq(function() {
+        var that = this;
+        truckDispatchDAO.getTruckDispatch({truckId:params.truckId}, function (error, rows) {
+            if (error) {
+                logger.error(' getTruckDispatch ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length > 0) {
+                    dispatchObj.current_city=rows[0].current_city;
+                    dispatchObj.taskStart=rows[0].task_start;
+                    dispatchObj.taskEnd=rows[0].task_end;
+                    that();
+                } else {
+                    logger.warn(' getTruckDispatch ' + 'failed');
+                    resUtil.resetFailedRes(res, " 货车不存在,任务回退失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteTaskStatusBack ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if (result && result.affectedRows > 0) {
+                    logger.info(' updateDpRouteTaskStatusBack ' + 'success');
+                    that();
+                } else {
+                    logger.warn(' updateDpRouteTaskStatusBack ' + 'failed');
+                    resUtil.resetFailedRes(res," 任务回退失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function() {
+        var subParams ={
+            currentCity:dispatchObj.taskStart,
+            taskStart:0,
+            taskEnd:0,
+            truckId:params.truckId
+        }
+        truckDispatchDAO.updateTruckDispatch(subParams, function (error, result) {
+            if (error) {
+                logger.error(' updateTruckDispatch ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckDispatch ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 function removeDpRouteTask(req,res,next){
     var params = req.params;
     Seq().seq(function(){
@@ -801,6 +861,7 @@ module.exports = {
     queryNotCompletedTaskStatusCount : queryNotCompletedTaskStatusCount,
     queryTaskStatusCount : queryTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,
+    updateDpRouteTaskStatusBack : updateDpRouteTaskStatusBack,
     removeDpRouteTask : removeDpRouteTask ,
     queryRouteTaskDayStat : queryRouteTaskDayStat ,
     queryRouteTaskWeekStat : queryRouteTaskWeekStat ,
