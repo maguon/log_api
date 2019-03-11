@@ -143,8 +143,14 @@ function createEntrustDpDemand(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length==1){
-                    demandObj.routeStartId = rows[0].route_start_id;
-                    demandObj.routeEndId = rows[0].route_end_id;
+                    if(rows[0].route_start==params.routeStart&&rows[0].route_end==params.routeEnd){
+                        demandObj.routeStartId = rows[0].route_start_id;
+                        demandObj.routeEndId = rows[0].route_end_id;
+                    }else{
+                        demandObj.routeStartId = rows[0].route_end_id;
+                        demandObj.routeEndId = rows[0].route_start_id;
+                    }
+
                     that();
                 }else{
                     logger.warn(' getCityRouteCheck ' + 'failed');
