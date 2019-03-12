@@ -546,6 +546,22 @@ function updateDpRouteTaskStatusBack(req,res,next){
             }
         })
     }).seq(function() {
+        var that = this;
+        params.carCount = 0;
+        dpRouteTaskDAO.updateDpRouteTaskCarCount(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteTaskCarCount ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if (result && result.affectedRows > 0) {
+                    logger.info(' updateDpRouteTaskCarCount ' + 'success');
+                } else {
+                    logger.warn(' updateDpRouteTaskCarCount ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function() {
         var subParams ={
             currentCity:dispatchObj.taskStart,
             taskStart:0,
