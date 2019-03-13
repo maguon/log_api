@@ -18110,6 +18110,15 @@
             "required": true,
             "type": "integer"
 
+          },
+          {
+            "name": "loadTaskStatusBack",
+            "in": "body",
+            "description": "loadTaskStatusBack info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loadTaskStatusBack"
+            }
           }
         ],
         "responses": {
@@ -27832,6 +27841,18 @@
       },
       "xml": {
         "name": "dpRouteLoadTask"
+      }
+    },
+    "loadTaskStatusBack": {
+      "type": "object",
+      "properties": {
+
+        "carIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "loadTaskStatusBack"
       }
     },
     "dpRouteLoadTaskDetail": {

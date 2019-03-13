@@ -464,6 +464,35 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
         })
 
     }).seq(function() {
+        //循环修改car状态=3
+        var that = this;
+        var carIds = params.carIds;
+        var rowArray = [] ;
+        rowArray.length= carIds.length;
+        Seq(rowArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                carStatus : sysConst.CAR_STATUS.load,
+                carId : carIds[i],
+                row : i+1,
+            }
+            carDAO.updateCarStatus(subParams,function(err,result){
+                if (err) {
+                    logger.error(' updateCarStatus ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' updateCarStatus ' + 'success');
+                    }else{
+                        logger.warn(' updateCarStatus ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+        }).seq(function(){
+            that();
+        })
+    }).seq(function() {
         var that = this;
         var subParams ={
             planCount:parkObj.planCount,
