@@ -11,6 +11,7 @@ var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
+var dpTaskStatDAO = require('../dao/DpTaskStatDAO.js');
 var dpTransferDemandDAO = require('../dao/DpTransferDemandDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var dpRouteLoadTaskCleanRelDAO = require('../dao/DpRouteLoadTaskCleanRelDAO.js');
@@ -88,7 +89,6 @@ function createDpRouteLoadTask(req,res,next){
         }
 
     }).seq(function () {
-        var that = this;
         dpRouteLoadTaskDAO.addDpRouteLoadTask(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteLoadTask ' + error.message);
@@ -105,18 +105,6 @@ function createDpRouteLoadTask(req,res,next){
             }
         })
     })
-        /*.seq(function () {//db端执行
-            dpDemandDAO.updateDpDemandPlanCount(params,function(error,result){
-                if (error) {
-                    logger.error(' updateDpDemandPlanCount ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    logger.info(' updateDpDemandPlanCount ' + 'success');
-                    resUtil.resetUpdateRes(res,result,null);
-                    return next();
-                }
-            })
-        })*/
 }
 
 function queryDpRouteLoadTask(req,res,next){
@@ -380,24 +368,145 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     req.params.routeContent =" 运输货车 "+ parkObj.truckNum +" 已到达 " + parkObj.shortName + "   卸车数量：" + parkObj.carCount + "   异常车辆：" + parkObj.carExceptionCount;
                     req.params.routeId = parkObj.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.completed;
-                    // parkObj.dpRouteLoadTaskId = params.dpRouteLoadTaskId;
-                    // dpRouteLoadTaskDAO.resetLoadTaskTruckCount(parkObj,function(error,result){
-                    //     if (error) {
-                    //         logger.error(' updateTruckDispatch ' + error.message);
-                    //         throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    //     } else {
-                    //         if (result && result.affectedRows > 0) {
-                    //             logger.info(' updateTruckDispatch ' + 'success');
-                    //         } else {
-                    //             logger.warn(' updateTruckDispatch ' + 'failed');
-                    //         }
-                    //     }
-                    // })
                 }
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
         })
+    })
+}
+
+function updateDpRouteLoadTaskStatusBack(req,res,next){
+    var params = req.params;
+    var parkObj = {};
+    Seq().seq(function() {
+        var that = this;
+        dpRouteLoadTaskDAO.getDpRouteLoadTask({dpRouteLoadTaskId:params.dpRouteLoadTaskId}, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteLoadTask ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length>0&&rows[0].task_status==sysConst.TASK_STATUS.doing) {
+                    parkObj.demandId = rows[0].demand_id;
+                    parkObj.routeStartId = rows[0].route_start_id;
+                    parkObj.baseAddrId = rows[0].base_addr_id;
+                    parkObj.routeEndId = rows[0].route_end_id;
+                    parkObj.receiveId = rows[0].receive_id;
+                    parkObj.dateId = rows[0].date_id;
+                    parkObj.planCount = rows[0].plan_count;
+                    parkObj.realCount = rows[0].real_count;
+                    parkObj.transferFlag = rows[0].transfer_flag;
+                    that();
+                } else {
+                    logger.warn(' getDpRouteLoadTask ' + 'failed');
+                    resUtil.resetFailedRes(res, " 路线状态不是执行，不能回退 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        if(params.loadTaskStatus){
+            params.loadDate = null;
+            params.realCount = 0;
+        }
+        dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){   //回退状态=1
+            if (error) {
+                logger.error(' updateDpRouteLoadTaskStatusBack ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateDpRouteLoadTaskStatusBack ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' updateDpRouteLoadTaskStatusBack ' + 'failed');
+                    resUtil.resetFailedRes(res," 任务回退失败，请核对相关ID ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        dpRouteLoadTaskCleanRelDAO.deleteDpRouteLoadTaskCleanRel(params,function(error,result){ //删除生成的洗车费
+            if (error) {
+                logger.error(' removeDpRouteLoadTaskCleanRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeDpRouteLoadTaskCleanRel ' + 'success');
+                }else{
+                    logger.warn(' removeDpRouteLoadTaskCleanRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        var subParams ={
+            planCount:parkObj.planCount,
+            dpDemandId:parkObj.demandId
+        }
+        dpDemandDAO.updateDpDemandPlanCountMinus(subParams, function (error, result) {    //需求plan_count
+            if (error) {
+                logger.error(' updateDpDemandPlanCountMinus ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if (result && result.affectedRows > 0) {
+                    logger.info(' updateDpDemandPlanCountMinus ' + 'success');
+                } else {
+                    logger.warn(' updateDpDemandPlanCountMinus ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        if(parkObj.transferFlag=1){
+            var subParams ={
+                transferCount:parkObj.planCount,
+                routeStartId:parkObj.routeStartId,
+                baseAddrId:parkObj.baseAddrId,
+                routeEndId:parkObj.routeEndId,
+                receiveId:parkObj.receiveId,
+                dateId:parkObj.dateId
+            }
+            dpTaskStatDAO.updateDpTaskStatTransferCountMinus(subParams, function (error, result) {    //需求中转transfer_count
+                if (error) {
+                    logger.error(' updateDpTaskStatTransferCountMinus ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDpTaskStatTransferCountMinus ' + 'success');
+                    } else {
+                        logger.warn(' updateDpTaskStatTransferCountMinus ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
+    }).seq(function() {
+        var subParams ={
+            planCount:parkObj.planCount,
+            routeStartId:parkObj.routeStartId,
+            baseAddrId:parkObj.baseAddrId,
+            routeEndId:parkObj.routeEndId,
+            receiveId:parkObj.receiveId,
+            dateId:parkObj.dateId
+        }
+        dpTaskStatDAO.updateDpTaskStatPlanCountMinus(subParams, function (error, result) {    //需求统计plan_count
+            if (error) {
+                logger.error(' updateDpTaskStatPlanCountMinus ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpTaskStatPlanCountMinus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+
     })
 }
 
@@ -439,7 +548,6 @@ function removeDpRouteLoadTask(req,res,next){
             }
         })
     }).seq(function () {
-        var that = this;
         params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
         dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
             if (error) {
@@ -458,21 +566,6 @@ function removeDpRouteLoadTask(req,res,next){
             }
         })
     })
-        /*.seq(function () {//db端执行
-        params.loadTaskStatus = sysConst.LOAD_TASK_STATUS.cancel;
-        params.dpDemandId = parkObj.demandId;
-        params.planCount = parkObj.planCount;
-        dpDemandDAO.updateDpDemandPlanCount(params,function(error,result){
-            if (error) {
-                logger.error(' updateDpDemandPlanCount ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' updateDpDemandPlanCount ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
-                return next();
-            }
-        })
-    })*/
 }
 
 
@@ -481,5 +574,6 @@ module.exports = {
     queryDpRouteLoadTask : queryDpRouteLoadTask,
     queryDpRouteLoadTaskCount : queryDpRouteLoadTaskCount,
     updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus,
+    updateDpRouteLoadTaskStatusBack : updateDpRouteLoadTaskStatusBack,
     removeDpRouteLoadTask : removeDpRouteLoadTask
 }

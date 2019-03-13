@@ -272,6 +272,19 @@ function updateCleanRelStatus(params,callback){
     });
 }
 
+function deleteDpRouteLoadTaskCleanRel(params,callback){    //装车回退删除洗车费
+    var query = " delete from dp_route_load_task_clean_rel where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteLoadTaskId){
+        paramsArray[i++] = params.dpRouteLoadTaskId;
+        query = query + " and dp_route_load_task_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteDpRouteLoadTaskCleanRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteLoadTaskCleanRel : addDpRouteLoadTaskCleanRel,
@@ -282,5 +295,6 @@ module.exports ={
     getDpRouteLoadTaskCleanRelReceiveWeekStat : getDpRouteLoadTaskCleanRelReceiveWeekStat,
     updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus,
-    updateCleanRelStatus : updateCleanRelStatus
+    updateCleanRelStatus : updateCleanRelStatus,
+    deleteDpRouteLoadTaskCleanRel : deleteDpRouteLoadTaskCleanRel
 }

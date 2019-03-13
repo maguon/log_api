@@ -385,3 +385,18 @@ ADD COLUMN `ref_remark`  varchar(200) NULL DEFAULT NULL COMMENT '定损员信息
 ADD COLUMN `derate_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '免赔金额' AFTER `ref_remark`,
 ADD COLUMN `car_valuation`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车估值' AFTER `derate_money`,
 ADD COLUMN `invoice_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '发票金额' AFTER `car_valuation`;
+-- ----------------------------
+-- 2019-03-13 更新    INSERT追加参数route_id
+-- ----------------------------
+BEGIN
+set @count = (select count(*) from dp_demand_info
+where user_id=0 and route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+ and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = DATE_FORMAT(new.order_date,'%Y%m%d'));
+IF(new.route_end_id>0 && new.car_status=1&&new.receive_id>0&&new.order_date is not null && @count=0) THEN
+INSERT INTO dp_demand_info(user_id,route_id,route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,date_id,pre_count)
+VALUES (0,new.route_id,new.route_start_id,new.route_start,new.base_addr_id,new.route_end_id,new.route_end,new.receive_id,DATE_FORMAT(new.order_date,'%Y%m%d'),1);
+ELSEIF (new.route_end_id>0 && new.car_status=1&&new.receive_id>0&&new.order_date is not null&&@count>0) THEN
+UPDATE dp_demand_info set pre_count=pre_count+1 where user_id=0 and route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+ and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = DATE_FORMAT(new.order_date,'%Y%m%d');
+END IF ;
+END

@@ -189,6 +189,17 @@ function updateDpDemandPlanCount(params,callback){
     });
 }
 
+function updateDpDemandPlanCountMinus(params,callback){
+    var query = " update dp_demand_info set plan_count = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.planCount;
+    paramsArray[i] = params.dpDemandId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpDemandPlanCountMinus ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpDemandStatus(params,callback){
     var query = " update dp_demand_info set demand_status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -279,6 +290,7 @@ module.exports ={
     updateDpDemandPreCountMinus : updateDpDemandPreCountMinus,
     updateDpDemandPreCountPlus : updateDpDemandPreCountPlus,
     updateDpDemandPlanCount : updateDpDemandPlanCount,
+    updateDpDemandPlanCountMinus : updateDpDemandPlanCountMinus,
     updateDpDemandStatus : updateDpDemandStatus,
     addEntrustDpDemand : addEntrustDpDemand,
     getEntrustDpDemand : getEntrustDpDemand,

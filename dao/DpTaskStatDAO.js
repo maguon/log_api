@@ -141,6 +141,38 @@ function updateDpTaskStatPreCountPlus(params,callback){
     });
 }
 
+function updateDpTaskStatPlanCountMinus(params,callback){
+    var query = " update dp_task_stat set plan_count = ? " +
+        " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.planCount;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpTaskStatPlanCountMinus ');
+        return callback(error,rows);
+    });
+}
+
+function updateDpTaskStatTransferCountMinus(params,callback){
+    var query = " update dp_task_stat set transfer_count = ? " +
+        " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.transferCount;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpTaskStatTransferCountMinus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpTaskStat : addDpTaskStat,
@@ -149,5 +181,7 @@ module.exports ={
     getDpTaskStatCount : getDpTaskStatCount,
     updateDpTaskStatStatus : updateDpTaskStatStatus,
     updateDpTaskStatPreCountMinus : updateDpTaskStatPreCountMinus,
-    updateDpTaskStatPreCountPlus : updateDpTaskStatPreCountPlus
+    updateDpTaskStatPreCountPlus : updateDpTaskStatPreCountPlus,
+    updateDpTaskStatPlanCountMinus : updateDpTaskStatPlanCountMinus,
+    updateDpTaskStatTransferCountMinus : updateDpTaskStatTransferCountMinus
 }
