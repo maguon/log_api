@@ -144,6 +144,20 @@ function updateDpRouteLoadTaskDetailStatus(params,callback){
     });
 }
 
+function updateDpRouteLoadTaskDetailStatusAll(params,callback){
+    var query = " update dp_route_load_task_detail set car_load_status = ?, " +
+        " arrive_date = ?, date_id = ? where dp_route_load_task_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.carLoadStatus;
+    paramsArray[i++] = params.arriveDate;
+    paramsArray[i++] = params.dateId;
+    paramsArray[i] = params.dpRouteLoadTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteLoadTaskDetailStatusAll ');
+        return callback(error,rows);
+    });
+}
+
 function deleteDpRouteLoadTaskDetail(params,callback){
     var query = " delete from dp_route_load_task_detail where id = ? and car_id = ? ";
     var paramsArray=[],i=0;
@@ -162,5 +176,6 @@ module.exports ={
     getDpRouteLoadTaskDetailBase : getDpRouteLoadTaskDetailBase,
     getCarLoadStatusCount : getCarLoadStatusCount,
     updateDpRouteLoadTaskDetailStatus : updateDpRouteLoadTaskDetailStatus,
-    deleteDpRouteLoadTaskDetail : deleteDpRouteLoadTaskDetail
+    deleteDpRouteLoadTaskDetail : deleteDpRouteLoadTaskDetail,
+    updateDpRouteLoadTaskDetailStatusAll : updateDpRouteLoadTaskDetailStatusAll
 }

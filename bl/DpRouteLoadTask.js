@@ -444,6 +444,28 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
     }).seq(function() {
         var that = this;
         var subParams ={
+            carLoadStatus:sysConst.CAR_LOAD_STATUS.load,
+            arriveDate:null,
+            dateId:null,
+            dpRouteLoadTaskId:params.dpRouteLoadTaskId
+        }
+        dpRouteLoadTaskDetailDAO.updateDpRouteLoadTaskDetailStatusAll(subParams, function (error, result) {    //Detail状态回退=1
+            if (error) {
+                logger.error(' updateDpRouteLoadTaskDetailStatusAll ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if (result && result.affectedRows > 0) {
+                    logger.info(' updateDpRouteLoadTaskDetailStatusAll ' + 'success');
+                } else {
+                    logger.warn(' updateDpRouteLoadTaskDetailStatusAll ' + 'failed');
+                }
+                that();
+            }
+        })
+
+    }).seq(function() {
+        var that = this;
+        var subParams ={
             planCount:parkObj.planCount,
             dpDemandId:parkObj.demandId
         }
@@ -471,7 +493,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
                 receiveId:parkObj.receiveId,
                 dateId:parkObj.dateId
             }
-            dpTaskStatDAO.updateDpTaskStatTransferCountMinus(subParams, function (error, result) {    //需求中转transfer_count
+            dpTaskStatDAO.updateDpTaskStatTransferCountMinus(subParams, function (error, result) {    //需求统计中转transfer_count
                 if (error) {
                     logger.error(' updateDpTaskStatTransferCountMinus ' + error.message);
                     throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
@@ -506,7 +528,6 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
                 return next();
             }
         })
-
     })
 }
 
