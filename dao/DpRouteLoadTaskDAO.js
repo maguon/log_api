@@ -230,31 +230,35 @@ function getDpRouteLoadTaskCount(params,callback) {
 }
 
 function updateDpRouteLoadTaskStatus(params,callback){
-    if(params.loadTaskStatus == 3){
-        var query = " update dp_route_load_task set field_op_id = ? , load_date = ? , real_count = ? , load_task_status = ? where  id = ? ";
-    }else if(params.loadTaskStatus == 7){
-        var query = " update dp_route_load_task set arrive_date = ? , load_task_status = ? where  id = ? ";
-    }else{
-        var query = " update dp_route_load_task set load_task_status = ? where  id = ? ";
-    }
+    var query = " update dp_route_load_task set load_task_status = ? ";
     var paramsArray=[],i=0;
-    if(params.loadTaskStatus == 3){
-        paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.taskStatus;
+    if(params.loadTaskStatus==3){
+        if(params.userId){
+            paramsArray[i++] = params.userId;
+            query = query + " ,field_op_id = ? ";
+        }
+    }
+    if(params.loadDate){
         paramsArray[i++] = params.loadDate;
+        query = query + " ,load_date = ? ";
+    }
+    if(params.realCount){
         paramsArray[i++] = params.realCount;
+        query = query + " ,real_count = ? ";
     }
-    if(params.loadTaskStatus == 7){
+    if(params.arriveDate){
         paramsArray[i++] = params.arriveDate;
+        query = query + " ,arrive_date = ? ";
     }
-    paramsArray[i++] = params.loadTaskStatus;
-    paramsArray[i] = params.dpRouteLoadTaskId;
+    query = query + ' where id = ' + params.dpRouteLoadTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadTaskStatus ');
         return callback(error,rows);
     });
 }
 
-function resetLoadTaskTruckCount(params,callback){
+/*function resetLoadTaskTruckCount(params,callback){
     var query = " update truck_dispatch set car_count = " +
         "GREATEST((car_count-(select real_count from dp_route_load_task where id= ? ))  ,0) where truck_id= ? " ;
     var paramsArray=[],i=0;
@@ -264,7 +268,7 @@ function resetLoadTaskTruckCount(params,callback){
         logger.debug(' resetLoadTaskTruckCount ');
         return callback(error,rows);
     });
-}
+}*/
 
 
 
@@ -274,6 +278,6 @@ module.exports ={
     getDpRouteLoadTask : getDpRouteLoadTask,
     getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
     getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
-    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus ,
-    resetLoadTaskTruckCount : resetLoadTaskTruckCount
+    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
+    //resetLoadTaskTruckCount : resetLoadTaskTruckCount
 }

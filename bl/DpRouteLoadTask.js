@@ -407,7 +407,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
         })
     }).seq(function() {
         var that = this;
-        if(params.loadTaskStatus){
+        if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.no_load){
             params.loadDate = null;
             params.realCount = 0;
         }
