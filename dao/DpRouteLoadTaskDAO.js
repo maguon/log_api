@@ -232,7 +232,7 @@ function getDpRouteLoadTaskCount(params,callback) {
 function updateDpRouteLoadTaskStatus(params,callback){
     var query = " update dp_route_load_task set load_task_status = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.taskStatus;
+    paramsArray[i++] = params.loadTaskStatus;
     if(params.loadTaskStatus==3){
         if(params.userId){
             paramsArray[i++] = params.userId;
