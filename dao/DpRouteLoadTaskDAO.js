@@ -233,23 +233,20 @@ function updateDpRouteLoadTaskStatus(params,callback){
     var query = " update dp_route_load_task set load_task_status = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.loadTaskStatus;
-    if(params.loadTaskStatus==3){
-        if(params.userId){
-            paramsArray[i++] = params.userId;
-            query = query + " ,field_op_id = ? ";
-        }
-    }
-    if(params.loadDate){
+    if(params.loadTaskStatus == 1){
+        query = query +" ,load_date = ? , real_count = ? ";
         paramsArray[i++] = params.loadDate;
-        query = query + " ,load_date = ? ";
-    }
-    if(params.realCount){
         paramsArray[i++] = params.realCount;
-        query = query + " ,real_count = ? ";
     }
-    if(params.arriveDate){
+    if(params.loadTaskStatus == 3){
+        query = query +" ,field_op_id = ? , load_date = ? , real_count = ? ";
+        paramsArray[i++] = params.userId;
+        paramsArray[i++] = params.loadDate;
+        paramsArray[i++] = params.realCount;
+    }
+    if(params.loadTaskStatus == 7){
+        query = query +" ,arrive_date = ? ";
         paramsArray[i++] = params.arriveDate;
-        query = query + " ,arrive_date = ? ";
     }
     query = query + ' where id = ' + params.dpRouteLoadTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
