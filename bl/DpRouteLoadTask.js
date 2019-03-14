@@ -515,7 +515,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
         var that = this;
         if(parkObj.transferFlag==1){
             var subParams ={
-                transferCount:parkObj.planCount,
+                realCount:parkObj.realCount,
                 routeStartId:parkObj.routeStartId,
                 baseAddrId:parkObj.baseAddrId,
                 routeEndId:parkObj.routeEndId,
