@@ -142,7 +142,7 @@ function updateDpTaskStatPreCountPlus(params,callback){
 }
 
 function updateDpTaskStatPlanCountMinus(params,callback){
-    var query = " update dp_task_stat set plan_count = plan_count + ("+params.realCount+"-plan_count) " +
+    var query = " update dp_task_stat set plan_count = "+params.planCount+" + ("+params.realCount+"-plan_count) " +
         " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.routeStartId;
