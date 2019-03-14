@@ -495,7 +495,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
     }).seq(function() {
         var that = this;
         var subParams ={
-            planCount:parkObj.planCount,
+            planCount:parkObj.realCount,
             dpDemandId:parkObj.demandId
         }
         dpDemandDAO.updateDpDemandPlanCountMinus(subParams, function (error, result) {    //需求plan_count
@@ -540,7 +540,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
         }
     }).seq(function() {
         var subParams ={
-            planCount:parkObj.planCount,
+            planCount:parkObj.realCount,
             routeStartId:parkObj.routeStartId,
             baseAddrId:parkObj.baseAddrId,
             routeEndId:parkObj.routeEndId,
