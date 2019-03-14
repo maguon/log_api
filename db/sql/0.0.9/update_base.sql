@@ -388,7 +388,9 @@ ADD COLUMN `invoice_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '发票金额' 
 -- ----------------------------
 -- 2019-03-13 更新    INSERT追加参数route_id
 -- ----------------------------
-BEGIN
+DROP TRIGGER IF EXISTS `trg_new_car`;
+DELIMITER ;;
+CREATE TRIGGER `trg_new_car` AFTER INSERT ON `car_info` FOR EACH ROW BEGIN
 set @count = (select count(*) from dp_demand_info
 where user_id=0 and route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
  and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = DATE_FORMAT(new.order_date,'%Y%m%d'));
@@ -400,3 +402,5 @@ UPDATE dp_demand_info set pre_count=pre_count+1 where user_id=0 and route_start_
  and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = DATE_FORMAT(new.order_date,'%Y%m%d');
 END IF ;
 END
+;;
+DELIMITER ;
