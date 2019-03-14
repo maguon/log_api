@@ -190,9 +190,8 @@ function updateDpDemandPlanCount(params,callback){
 }
 
 function updateDpDemandPlanCountMinus(params,callback){
-    var query = " update dp_demand_info set plan_count = plan_count - ? where id = ? ";
+    var query = " update dp_demand_info set plan_count = plan_count + ("+params.realCount+"-plan_count) where id = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.planCount;
     paramsArray[i] = params.dpDemandId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpDemandPlanCountMinus ');
