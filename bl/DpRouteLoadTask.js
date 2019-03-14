@@ -513,7 +513,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
         })
     }).seq(function() {
         var that = this;
-        if(parkObj.transferFlag=1){
+        if(parkObj.transferFlag==1){
             var subParams ={
                 transferCount:parkObj.planCount,
                 routeStartId:parkObj.routeStartId,
