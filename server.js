@@ -35,6 +35,7 @@ var driveSalaryPeccancyRel = require('./bl/DriveSalaryPeccancyRel.js');
 var driveSalaryExceedOilRel = require('./bl/DriveSalaryExceedOilRel.js');
 var drivePeccancy = require('./bl/DrivePeccancy.js');
 var driveExceedOil = require('./bl/DriveExceedOil.js');
+var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -64,6 +65,7 @@ var dpRouteLoadTaskDetail = require('./bl/DpRouteLoadTaskDetail.js');
 var dpRouteLoadTaskCleanRel = require('./bl/DpRouteLoadTaskCleanRel.js');
 var dpRouteTaskLoan = require('./bl/DpRouteTaskLoan.js');
 var dpRouteTaskLoanRel = require('./bl/DpRouteTaskLoanRel.js');
+var dpRouteTaskOilRel = require('./bl/DpRouteTaskOilRel.js');
 var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
 var damageCheckIndemnity = require('./bl/DamageCheckIndemnity.js');
@@ -429,6 +431,13 @@ function createServer() {
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);
 
     /**
+     * DriveDpRouteTaskOilRel Module
+     */
+    server.get('/api/driveDpRouteTaskOilRel' , driveDpRouteTaskOilRel.queryDriveDpRouteTaskOilRel);
+    server.post({path:'/api/user/:userId/driveDpRouteTaskOilRel',contentType: 'application/json'},driveDpRouteTaskOilRel.createDriveDpRouteTaskOilRel);
+    server.del('/api/user/:userId/dpRouteTaskOilRel/:dpRouteTaskOilRelId/driveExceedOil/:driveExceedOilId' , driveDpRouteTaskOilRel.removeDriveDpRouteTaskOilRel);
+
+    /**
      * Company Module
      */
     server.get('/api/company',company.queryCompany);
@@ -710,6 +719,12 @@ function createServer() {
     server.post({path:'/api/user/:userId/dpRouteTaskLoanRel',contentType: 'application/json'},dpRouteTaskLoanRel.createDpRouteTaskLoanRel);
     server.del('/api/user/:userId/dpRouteTaskLoan/:dpRouteTaskLoanId/dpRouteTask/:dpRouteTaskId' , dpRouteTaskLoanRel.removeDpRouteTaskLoanRel);
     server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteTaskLoanRel' , dpRouteTaskLoanRel.removeDpRouteTaskLoanRelAll);
+
+    /**
+     * DpRouteTaskOilRel Module
+     */
+    server.get('/api/dpRouteTaskOilRel',dpRouteTaskOilRel.queryDpRouteTaskOilRel);
+    server.put({path:'/api/user/:userId/dpRouteTaskOilRel/:dpRouteTaskOilRelId/settleStatus/:settleStatus',contentType: 'application/json'} ,dpRouteTaskOilRel.updateDpRouteTaskOilRelStatus);
 
     /**
      * Damage Module

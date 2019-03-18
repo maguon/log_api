@@ -12,7 +12,7 @@ var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteTaskTmpDAO = require('../dao/DpRouteTaskTmpDAO.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 var dpRouteLoadTaskTmpDAO = require('../dao/DpRouteLoadTaskTmpDAO.js');
-var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
+var dpRouteTaskOilRelDAO = require('../dao/DpRouteTaskOilRelDAO.js');
 var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
 var dpRouteTaskRelDAO = require('../dao/DpRouteTaskRelDAO.js');
@@ -353,9 +353,18 @@ function updateDpRouteTaskStatus(req,res,next){
                     return next();
                 } else {
                     if (rows && rows.length > 0) {
-                        parkObj.routeStartId=rows[0].route_start_id;
-                        parkObj.routeEndId=rows[0].route_end_id;
                         parkObj.truckId=rows[0].truck_id;
+                        parkObj.driveId=rows[0].drive_id;
+                        parkObj.routeId=rows[0].route_id;
+                        parkObj.routeStartId=rows[0].route_start_id;
+                        parkObj.routeStart=rows[0].route_start;
+                        parkObj.routeEndId=rows[0].route_end_id;
+                        parkObj.routeEnd=rows[0].route_end;
+                        parkObj.distance=rows[0].distance;
+                        parkObj.loadFlag=rows[0].load_flag;
+                        parkObj.loadDistanceOil=rows[0].load_distance_oil;
+                        parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
+                        parkObj.urea=rows[0].urea;
                         that();
                     } else {
                         logger.warn(' getDpRouteTask ' + 'failed');
@@ -400,27 +409,6 @@ function updateDpRouteTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        /*if (params.taskStatus == sysConst.TASK_STATUS.on_road) {
-            var subParams ={
-                currentCity:0,
-                taskStart:parkObj.routeStartId,
-                taskEnd:parkObj.routeEndId,
-                truckId:parkObj.truckId
-            }
-            truckDispatchDAO.updateTruckDispatch(subParams, function (error, result) {
-                if (error) {
-                    logger.error(' updateTruckDispatch ' + error.message);
-                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if (result && result.affectedRows > 0) {
-                        logger.info(' updateTruckDispatch ' + 'success');
-                    } else {
-                        logger.warn(' updateTruckDispatch ' + 'failed');
-                    }
-                    that();
-                }
-            })
-        }else*/
             if (params.taskStatus == sysConst.TASK_STATUS.completed) {
             var subParams ={
                 currentCity:parkObj.routeEndId,
@@ -441,6 +429,40 @@ function updateDpRouteTaskStatus(req,res,next){
                     that();
                 }
             });
+        }else{
+            that();
+        }
+    }).seq(function() {
+        var that = this;
+        if (params.taskStatus == sysConst.TASK_STATUS.completed) {
+            var subParams ={
+                dpRouteTaskId:params.dpRouteTaskId,
+                truckId:parkObj.truckId,
+                driveId:parkObj.driveId,
+                routeId:parkObj.routeId,
+                routeStartId:parkObj.routeStartId,
+                routeStart:parkObj.routeStart,
+                routeEndId:parkObj.routeEndId,
+                routeEnd:parkObj.routeEnd,
+                distance:parkObj.distance,
+                loadFlag:parkObj.loadFlag,
+                loadDistanceOil:parkObj.loadDistanceOil,
+                noLoadDistanceOil:parkObj.noLoadDistanceOil,
+                urea:parkObj.urea
+            }
+            dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
+                if (error) {
+                    logger.error(' addDpRouteTaskOilRel ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.insertId > 0) {
+                        logger.info(' addDpRouteTaskOilRel ' + 'success');
+                    } else {
+                        logger.warn(' addDpRouteTaskOilRel ' + 'failed');
+                    }
+                    that();
+                }
+            })
         }else{
             that();
         }
@@ -495,8 +517,6 @@ function updateDpRouteTaskStatus(req,res,next){
                         }
                     });
                 }
-
-
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
@@ -646,7 +666,6 @@ function removeDpRouteTask(req,res,next){
         })
     })
 }
-
 
 function queryRouteTaskWeekStat(req,res,next){
     var params = req.params ;
