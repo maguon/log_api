@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var driveDpRouteTaskOilRelDAO = require('../dao/DriveDpRouteTaskOilRelDAO.js');
+var dpRouteTaskOilRelDAO = require('../dao/DpRouteTaskOilRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -15,20 +16,39 @@ var logger = serverLogger.createLogger('DriveDpRouteTaskOilRel.js');
 
 function createDriveDpRouteTaskOilRel(req,res,next){
     var params = req.params ;
-    driveDpRouteTaskOilRelDAO.addDriveDpRouteTaskOilRel(params,function(error,result){
-        if (error) {
-            if(error.message.indexOf("Duplicate") > 0) {
-                resUtil.resetFailedRes(res, "重复关联，操作失败");
-                return next();
-            } else{
-                logger.error(' createDriveDpRouteTaskOilRel ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+    Seq().seq(function(){
+        var that = this;
+        driveDpRouteTaskOilRelDAO.addDriveDpRouteTaskOilRel(params,function(error,result){
+            if (error) {
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "重复关联，操作失败");
+                    return next();
+                } else{
+                    logger.error(' createDriveDpRouteTaskOilRel ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDriveDpRouteTaskOilRel ' + 'success');
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"createDriveDpRouteTaskOilRel failed");
+                    return next();
+                }
             }
-        } else {
-            logger.info(' createDriveDpRouteTaskOilRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+        })
+    }).seq(function () {
+        params.settleStatus = sysConst.SETTLE_STATUS.settle;
+        dpRouteTaskOilRelDAO.updateDpRouteTaskOilRelStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteTaskOilRelStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpRouteTaskOilRelStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

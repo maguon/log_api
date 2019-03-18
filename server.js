@@ -724,7 +724,6 @@ function createServer() {
      * DpRouteTaskOilRel Module
      */
     server.get('/api/dpRouteTaskOilRel',dpRouteTaskOilRel.queryDpRouteTaskOilRel);
-    server.put({path:'/api/user/:userId/dpRouteTaskOilRel/:dpRouteTaskOilRelId/settleStatus/:settleStatus',contentType: 'application/json'} ,dpRouteTaskOilRel.updateDpRouteTaskOilRelStatus);
 
     /**
      * Damage Module

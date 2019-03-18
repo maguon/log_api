@@ -20435,58 +20435,6 @@
         }
       }
     },
-    "/user/{userId}/dpRouteTaskOilRel/{dpRouteTaskOilRelId}/settleStatus/{settleStatus}": {
-      "put": {
-        "tags": [
-          "dispatch"
-        ],
-        "summary": "update dpRouteTaskOilRel status",
-        "description": "update dpRouteTaskOilRel status",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "dpRouteTaskOilRelId",
-            "in": "path",
-            "description": "dpRouteTaskOilRel id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "settleStatus",
-            "in": "path",
-            "description": "settle status",
-            "required": true,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid dpRouteTaskOilRel id"
-          }
-        }
-      }
-    },
     "/damage": {
       "get": {
         "tags": [
