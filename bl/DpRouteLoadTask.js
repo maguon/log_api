@@ -9,7 +9,6 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
-var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var dpTaskStatDAO = require('../dao/DpTaskStatDAO.js');
@@ -395,6 +394,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
                     parkObj.routeEndId = rows[0].route_end_id;
                     parkObj.receiveId = rows[0].receive_id;
                     parkObj.dateId = rows[0].date_id;
+                    parkObj.planCount = rows[0].plan_count;
                     parkObj.realCount = rows[0].real_count;
                     parkObj.transferFlag = rows[0].transfer_flag;
                     parkObj.dpRouteTaskId = rows[0].dp_route_task_id;
@@ -402,27 +402,6 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
                 } else {
                     logger.warn(' getDpRouteLoadTask ' + 'failed');
                     resUtil.resetFailedRes(res, " 路线状态不是执行，不能回退 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function() {
-        var that = this;
-        var subParams ={
-            dpRouteTaskId:parkObj.dpRouteTaskId
-        }
-        dpRouteTaskDAO.getDpRouteTask(subParams, function (error, rows) {
-            if (error) {
-                logger.error(' getDpRouteTask ' + error.message);
-                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                if (rows && rows.length>0&&rows[0].task_status!=sysConst.TASK_STATUS.cancel) {
-                    parkObj.planCount = rows[0].plan_count;
-                    that();
-                } else {
-                    logger.warn(' getDpRouteTask ' + 'failed');
-                    resUtil.resetFailedRes(res, " 路线状态错误，回退失败 ");
                     return next();
                 }
             }
