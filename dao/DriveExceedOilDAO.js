@@ -6,7 +6,7 @@ var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilDAO.js');
 
-function addDriveExceedOil(params,callback){
+/*function addDriveExceedOil(params,callback){
     var query = " insert into drive_exceed_oil (dp_route_task_id,exceed_type,exceed_oil_quantity,exceed_oil_money,op_user_id,date_id,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
@@ -17,6 +17,18 @@ function addDriveExceedOil(params,callback){
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.dateId;
     paramsArray[i]=params.remark;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDriveExceedOil ');
+        return callback(error,rows);
+    });
+}*/
+
+function addDriveExceedOil(params,callback){
+    var query = " insert into drive_exceed_oil (drive_id,date_start,date_end) values ( ? , ? , ? )";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.dateStart;
+    paramsArray[i++]=params.dateEnd;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveExceedOil ');
         return callback(error,rows);
@@ -85,7 +97,7 @@ function getDriveExceedOilCount(params,callback) {
     });
 }
 
-function updateDriveExceedOil(params,callback){
+/*function updateDriveExceedOil(params,callback){
     var query = " update drive_exceed_oil set dp_route_task_id = ? , exceed_type = ? , exceed_oil_quantity = ? , exceed_oil_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
@@ -93,6 +105,21 @@ function updateDriveExceedOil(params,callback){
     paramsArray[i++]=params.exceedOilQuantity;
     paramsArray[i++]=params.exceedOilMoney;
     paramsArray[i++]=params.remark;
+    paramsArray[i]=params.exceedOilId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveExceedOil ');
+        return callback(error,rows);
+    });
+}*/
+
+function updateDriveExceedOil(params,callback){
+    var query = " update drive_exceed_oil set plan_oil = ? , plan_urea = ? , actual_oil = ? , actual_urea = ? , actual_money = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.planOil;
+    paramsArray[i++]=params.planUrea;
+    paramsArray[i++]=params.actualOil;
+    paramsArray[i++]=params.actualUrea;
+    paramsArray[i++]=params.actualMoney;
     paramsArray[i]=params.exceedOilId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveExceedOil ');

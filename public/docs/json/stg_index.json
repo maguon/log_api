@@ -9588,12 +9588,12 @@
 
           },
           {
-            "name": "driveExceedOil",
+            "name": "driveActualExceedOil",
             "in": "body",
-            "description": "driveExceedOil info",
+            "description": "driveActualExceedOil info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/driveExceedOil"
+              "$ref": "#/definitions/driveActualExceedOil"
             }
 
           }
@@ -23559,6 +23559,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "declareDateStart",
+            "in": "query",
+            "description": "declareDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "declareDateEnd",
+            "in": "query",
+            "description": "declareDate end",
+            "required": false,
+            "type": "string"
+
           }
         ],
         "responses": {
@@ -27295,24 +27311,42 @@
       "type": "object",
       "properties": {
 
-        "dpRouteTaskId": {
+        "driveId": {
           "type": "integer"
         },
-        "exceedType": {
-          "type": "integer"
+        "dateStart": {
+          "type": "string"
         },
-        "exceedOilQuantity": {
-          "type": "integer"
-        },
-        "exceedOilMoney": {
-          "type": "integer"
-        },
-        "remark": {
+        "dateEnd": {
           "type": "string"
         }
       },
       "xml": {
         "name": "driveExceedOil"
+      }
+    },
+    "driveActualExceedOil": {
+      "type": "object",
+      "properties": {
+
+        "planOil": {
+          "type": "integer"
+        },
+        "planUrea": {
+          "type": "integer"
+        },
+        "actualOil": {
+          "type": "integer"
+        },
+        "actualUrea": {
+          "type": "integer"
+        },
+        "actualMoney": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveActualExceedOil"
       }
     },
     "driveDpRouteTaskOilRel": {

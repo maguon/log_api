@@ -404,3 +404,25 @@ END IF ;
 END
 ;;
 DELIMITER ;
+
+-- ----------------------------
+-- 2019-03-19 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil`
+ADD COLUMN `drive_id`  int(10) NULL DEFAULT 0 COMMENT '司机ID' AFTER `remark`,
+ADD COLUMN `date_start`  date NULL COMMENT '指令起始时间' AFTER `drive_id`,
+ADD COLUMN `date_end`  date NULL COMMENT '指令结束时间' AFTER `date_start`,
+ADD COLUMN `plan_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '计划用油量' AFTER `date_end`,
+ADD COLUMN `plan_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '计划尿素量' AFTER `plan_oil`,
+ADD COLUMN `actual_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际用油量' AFTER `plan_urea`,
+ADD COLUMN `actual_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际尿素量' AFTER `actual_oil`,
+ADD COLUMN `actual_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际超量金额' AFTER `actual_urea`;
+-- ----------------------------
+-- 2019-03-19 更新    修改字段可以为空
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil`
+MODIFY COLUMN `dp_route_task_id`  int(10) NULL DEFAULT 0 COMMENT '调度编号ID' AFTER `id`,
+MODIFY COLUMN `exceed_oil_quantity`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '超油量' AFTER `exceed_type`,
+MODIFY COLUMN `exceed_oil_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '超油金额' AFTER `exceed_oil_quantity`,
+MODIFY COLUMN `fine_status`  tinyint(1) NULL DEFAULT 1 COMMENT '扣款状态(1-未扣,2-已扣)' AFTER `exceed_oil_money`,
+MODIFY COLUMN `op_user_id`  int(10) NULL DEFAULT 0 COMMENT '操作人ID' AFTER `fine_status`;
