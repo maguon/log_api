@@ -9346,9 +9346,9 @@
 
           },
           {
-            "name": "statStatus",
+            "name": "settleStatus",
             "in": "query",
-            "description": "stat status",
+            "description": "settle status",
             "required": false,
             "type": "integer"
 
@@ -9451,9 +9451,9 @@
 
           },
           {
-            "name": "statStatus",
+            "name": "settleStatus",
             "in": "query",
-            "description": "stat status",
+            "description": "settle status",
             "required": false,
             "type": "integer"
 
