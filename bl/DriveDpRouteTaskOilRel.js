@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var driveDpRouteTaskOilRelDAO = require('../dao/DriveDpRouteTaskOilRelDAO.js');
 var dpRouteTaskOilRelDAO = require('../dao/DpRouteTaskOilRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -68,15 +69,35 @@ function queryDriveDpRouteTaskOilRel(req,res,next){
 
 function removeDriveDpRouteTaskOilRel(req,res,next){
     var params = req.params;
-    driveDpRouteTaskOilRelDAO.deleteDriveDpRouteTaskOilRel(params,function(error,result){
-        if (error) {
-            logger.error(' removeDriveDpRouteTaskOilRel ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' removeDriveDpRouteTaskOilRel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        driveDpRouteTaskOilRelDAO.deleteDriveDpRouteTaskOilRel(params,function(error,result){
+            if (error) {
+                logger.error(' removeDriveDpRouteTaskOilRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeDriveDpRouteTaskOilRel ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' removeDriveDpRouteTaskOilRel ' + 'failed');
+                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.settleStatus = sysConst.SETTLE_STATUS.not_settle;
+        dpRouteTaskOilRelDAO.updateDpRouteTaskOilRelStatus(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteTaskOilRelStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpRouteTaskOilRelStatus ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
