@@ -23073,6 +23073,22 @@
 
           },
           {
+            "name": "declareDateStart",
+            "in": "query",
+            "description": "declareDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "declareDateEnd",
+            "in": "query",
+            "description": "declareDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

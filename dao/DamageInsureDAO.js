@@ -93,6 +93,14 @@ function getDamageInsure(params,callback) {
         paramsArray[i++] = params.liabilityType;
         query = query + " and di.liability_type = ? ";
     }
+    if(params.declareDateStart){
+        paramsArray[i++] = params.declareDateStart;
+        query = query + " and di.declare_date >= ? ";
+    }
+    if(params.declareDateEnd){
+        paramsArray[i++] = params.declareDateEnd;
+        query = query + " and di.declare_date <= ? ";
+    }
     query = query + " group by di.id ";
     query = query + " order by di.id desc";
     if (params.start && params.size) {
