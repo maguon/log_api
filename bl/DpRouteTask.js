@@ -436,11 +436,13 @@ function updateDpRouteTaskStatus(req,res,next){
         var that = this;
         if (params.taskStatus == sysConst.TASK_STATUS.completed) {
             if(parkObj.loadFlag==sysConst.LOAD_FLAG.loan){
-                parkObj.distanceOil = parkObj.loadDistanceOil;
+                parkObj.oil = parkObj.loadDistanceOil;
                 parkObj.totalOil = parkObj.distance*parkObj.loadDistanceOil;
+                parkObj.totalUrea = parkObj.distance*parkObj.urea;
             }else{
-                parkObj.distanceOil = parkObj.noLoadDistanceOil;
+                parkObj.oil = parkObj.noLoadDistanceOil;
                 parkObj.totalOil = parkObj.distance*parkObj.noLoadDistanceOil;
+                parkObj.totalUrea = parkObj.distance*parkObj.urea;
             }
             var subParams ={
                 dpRouteTaskId:params.dpRouteTaskId,
@@ -453,9 +455,10 @@ function updateDpRouteTaskStatus(req,res,next){
                 routeEnd:parkObj.routeEnd,
                 distance:parkObj.distance,
                 loadFlag:parkObj.loadFlag,
-                distanceOil:parkObj.distanceOil,
+                oil:parkObj.oil,
                 totalOil:parkObj.totalOil,
-                urea:parkObj.urea
+                urea:parkObj.urea,
+                totalUrea:parkObj.totalUrea
             }
             dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
                 if (error) {

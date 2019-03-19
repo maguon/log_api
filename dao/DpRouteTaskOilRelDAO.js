@@ -8,8 +8,8 @@ var logger = serverLogger.createLogger('DpRouteTaskOilRelDAO.js');
 
 function addDpRouteTaskOilRel(params,callback){
     var query = " insert into dp_route_task_oil_rel(dp_route_task_id,truck_id,drive_id,route_id," +
-        " route_start_id,route_start,route_end_id,route_end,distance,load_flag,distance_oil,total_oil,urea)" +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " route_start_id,route_start,route_end_id,route_end,distance,load_flag,oil,total_oil,urea,total_urea)" +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.truckId;
@@ -21,9 +21,10 @@ function addDpRouteTaskOilRel(params,callback){
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.loadFlag;
-    paramsArray[i++]=params.distanceOil;
+    paramsArray[i++]=params.oil;
     paramsArray[i++]=params.totalOil;
     paramsArray[i++]=params.urea;
+    paramsArray[i++]=params.totalUrea;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTaskOilRel ');
         return callback(error,rows);
