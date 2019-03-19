@@ -27274,10 +27274,7 @@
         "driveId": {
           "type": "integer"
         },
-        "dateStart": {
-          "type": "string"
-        },
-        "dateEnd": {
+        "oilDate": {
           "type": "string"
         }
       },
