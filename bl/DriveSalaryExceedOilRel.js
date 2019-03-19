@@ -42,16 +42,16 @@ function createDriveSalaryExceedOilRel(req,res,next){
         })
     }).seq(function () {
         var that = this;
-        params.statStatus = sysConst.STAT_STATUS.stat;
-        driveExceedOilDAO.updateDriveExceedOilStatStatus(params,function(error,result){
+        params.settleStatus = sysConst.SETTLE_STATUS.settle;
+        driveExceedOilDAO.updateDriveExceedOilStatus(params,function(error,result){
             if (error) {
-                logger.error(' updateDriveExceedOilStatStatus ' + error.message);
+                logger.error(' updateDriveExceedOilStatus ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.affectedRows>0){
-                    logger.info(' updateDriveExceedOilStatStatus ' + 'success');
+                    logger.info(' updateDriveExceedOilStatus ' + 'success');
                 }else{
-                    logger.warn(' updateDriveExceedOilStatStatus ' + 'failed');
+                    logger.warn(' updateDriveExceedOilStatus ' + 'failed');
                 }
                 that();
             }
@@ -97,13 +97,13 @@ function removeDriveSalaryExceedOilRel(req,res,next){
             }
         })
     }).seq(function () {
-        params.statStatus = sysConst.STAT_STATUS.not_stat;
-        driveExceedOilDAO.updateDriveExceedOilStatStatus(params,function(error,result){
+        params.settleStatus = sysConst.SETTLE_STATUS.not_settle;
+        driveExceedOilDAO.updateDriveExceedOilStatus(params,function(error,result){
             if (error) {
-                logger.error(' updateDriveExceedOilStatStatus ' + error.message);
+                logger.error(' updateDriveExceedOilStatus ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateDriveExceedOilStatStatus ' + 'success');
+                logger.info(' updateDriveExceedOilStatus ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

@@ -415,7 +415,8 @@ ADD COLUMN `plan_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '计划用油量' AF
 ADD COLUMN `plan_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '计划尿素量' AFTER `plan_oil`,
 ADD COLUMN `actual_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际用油量' AFTER `plan_urea`,
 ADD COLUMN `actual_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际尿素量' AFTER `actual_oil`,
-ADD COLUMN `actual_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际超量金额' AFTER `actual_urea`;
+ADD COLUMN `actual_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际超量金额' AFTER `actual_urea`,
+ADD COLUMN `settle_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `actual_money`;
 -- ----------------------------
 -- 2019-03-19 更新
 -- ----------------------------
@@ -427,4 +428,5 @@ DROP COLUMN `exceed_oil_money`,
 DROP COLUMN `fine_status`,
 DROP COLUMN `op_user_id`,
 DROP COLUMN `date_id`,
-DROP COLUMN `remark`;
+DROP COLUMN `remark`,
+DROP COLUMN `stat_status`;

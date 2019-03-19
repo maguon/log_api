@@ -82,13 +82,13 @@ function updateDriveExceedOil(params,callback){
     });
 }
 
-function updateDriveExceedOilStatStatus(params,callback){
-    var query = " update drive_exceed_oil set stat_status = ? where id = ? " ;
+function updateDriveExceedOilStatus(params,callback){
+    var query = " update drive_exceed_oil set settle_status = ? where id = ? " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.statStatus;
+    paramsArray[i++]=params.settleStatus;
     paramsArray[i]=params.exceedOilId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateDriveExceedOilStatStatus ');
+        logger.debug(' updateDriveExceedOilStatus ');
         return callback(error,rows);
     });
 }
@@ -99,5 +99,5 @@ module.exports ={
     getDriveExceedOil : getDriveExceedOil,
     getDriveExceedOilCount : getDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
-    updateDriveExceedOilStatStatus : updateDriveExceedOilStatStatus
+    updateDriveExceedOilStatus : updateDriveExceedOilStatus
 }
