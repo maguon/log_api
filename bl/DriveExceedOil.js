@@ -75,8 +75,8 @@ function updateDriveExceedOil(req,res,next){
 
 function getDriveExceedOilCsv(req,res,next){
     var csvString = "";
-    var header = "超量结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "调度编号" + ','+ "计划执行时间"+','+ "超量类型"
-        + ','+ "超量数" + ','+ "超量金额" + ','+ "结算人" + ','+ "状态" + ','+ "备注" ;
+    var header = "超量结算编号" + ',' + "司机" + ',' + "核油日期" + ','+ "所用油量" + ','+ "所用尿素量"+','+ "实际用油量"
+        + ','+ "实际尿素量" + ','+ "实际超量金额" + ','+ "状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -88,39 +88,23 @@ function getDriveExceedOilCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.id = rows[i].id;
                 parkObj.driveName = rows[i].drive_name;
-                parkObj.truckNum = rows[i].truck_num;
-                parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
-                if(rows[i].task_plan_date == null){
-                    parkObj.taskPlanDate = "";
+                if(rows[i].oil_date == null){
+                    parkObj.oilDate = "";
                 }else{
-                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                    parkObj.oilDate = new Date(rows[i].oil_date).toLocaleDateString();
                 }
-
-                if(rows[i].exceed_type == null){
-                    parkObj.exceedType = "";
+                parkObj.planOil = rows[i].plan_oil;
+                parkObj.planUrea = rows[i].plan_urea;
+                parkObj.actualOil = rows[i].actual_oil;
+                parkObj.actualUrea = rows[i].actual_urea;
+                parkObj.actualMoney = rows[i].actual_money;
+                if(rows[i].stat_status == 1){
+                    parkObj.statStatus = "未扣";
                 }else{
-                    parkObj.exceedType = rows[i].exceed_type;
+                    parkObj.statStatus = "已扣";
                 }
-                parkObj.exceedOilQuantity = rows[i].exceed_oil_quantity;
-                parkObj.exceedOilMoney = rows[i].exceed_oil_money;
-                if(rows[i].settle_user_name==null){
-                    parkObj.settleUserName = "";
-                }else{
-                    parkObj.settleUserName = rows[i].settle_user_name;
-                }
-                if(rows[i].fine_status == 1){
-                    parkObj.fineStatus = "未扣";
-                }else{
-                    parkObj.fineStatus = "已扣";
-                }
-                if(rows[i].remark == null){
-                    parkObj.remark = "";
-                }else{
-                    parkObj.remark = rows[i].remark;
-                }
-
-                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.dpRouteTaskId+","+parkObj.taskPlanDate
-                    +","+parkObj.exceedType+","+parkObj.exceedOilQuantity+","+parkObj.exceedOilMoney+","+parkObj.settleUserName +","+parkObj.fineStatus+","+parkObj.remark+ '\r\n';
+                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.oilDate+","+parkObj.planOil+","+parkObj.planUrea
+                    +","+parkObj.actualOil+","+parkObj.actualUrea+","+parkObj.actualMoney+","+parkObj.statStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

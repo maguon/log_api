@@ -9330,17 +9330,17 @@
 
           },
           {
-            "name": "dateStart",
+            "name": "oilDateStart",
             "in": "query",
-            "description": "date start",
+            "description": "oilDate start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "dateEnd",
+            "name": "oilDateEnd",
             "in": "query",
-            "description": "date end",
+            "description": "oilDate end",
             "required": false,
             "type": "string"
 
@@ -9427,22 +9427,6 @@
         ],
         "parameters": [
           {
-            "name": "exceedOilId",
-            "in": "query",
-            "description": "exceedOil id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "dpRouteTaskId",
-            "in": "query",
-            "description": "dpRouteTask id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "driveId",
             "in": "query",
             "description": "drive id",
@@ -9451,25 +9435,25 @@
 
           },
           {
-            "name": "taskPlanDateStart",
+            "name": "oilDateStart",
             "in": "query",
-            "description": "taskPlanDate start",
+            "description": "oilDate start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "taskPlanDateEnd",
+            "name": "oilDateEnd",
             "in": "query",
-            "description": "taskPlanDate end",
+            "description": "oilDate end",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "fineStatus",
+            "name": "statStatus",
             "in": "query",
-            "description": "fine status",
+            "description": "stat status",
             "required": false,
             "type": "integer"
 
