@@ -415,7 +415,9 @@ ADD COLUMN `plan_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '计划用油量' AF
 ADD COLUMN `plan_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '计划尿素量' AFTER `plan_oil`,
 ADD COLUMN `actual_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际用油量' AFTER `plan_urea`,
 ADD COLUMN `actual_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际尿素量' AFTER `actual_oil`,
-ADD COLUMN `actual_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际超量金额' AFTER `actual_urea`,
+ADD COLUMN `exceed_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '超油' AFTER `actual_urea`,
+ADD COLUMN `exceed_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '超尿素' AFTER `exceed_oil`,
+ADD COLUMN `actual_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '实际超量金额' AFTER `exceed_urea`,
 ADD COLUMN `settle_status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '结算状态(1-未结算,2-已结算)' AFTER `actual_money`;
 -- ----------------------------
 -- 2019-03-19 更新
@@ -430,3 +432,47 @@ DROP COLUMN `op_user_id`,
 DROP COLUMN `date_id`,
 DROP COLUMN `remark`,
 DROP COLUMN `stat_status`;
+-- ----------------------------
+-- 2019-03-19 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for dp_route_task_oil_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_route_task_oil_rel`;
+CREATE TABLE `dp_route_task_oil_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_route_task_id` int(10) DEFAULT '0' COMMENT '任务路线ID',
+  `truck_id` int(10) DEFAULT '0' COMMENT '货车ID',
+  `drive_id` int(10) DEFAULT NULL COMMENT '司机ID',
+  `route_id` int(10) DEFAULT '0' COMMENT '线路组合ID',
+  `route_start_id` int(10) DEFAULT NULL COMMENT '城市线路ID',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '起始城市',
+  `route_end_id` int(10) DEFAULT NULL COMMENT '目的地ID',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '目的城市',
+  `distance` decimal(10,2) DEFAULT '0.00' COMMENT '公里数',
+  `load_flag` tinyint(1) DEFAULT '0' COMMENT '是否满载(0-否,1-是)',
+  `oil` decimal(10,2) DEFAULT '0.00' COMMENT '百公里油耗',
+  `total_oil` decimal(10,2) DEFAULT '0.00' COMMENT '总油量',
+  `urea` decimal(10,2) DEFAULT '0.00' COMMENT '尿素',
+  `total_urea` decimal(10,2) DEFAULT '0.00' COMMENT '总尿素',
+  `settle_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '结算状态(1-未结算,2-已结算)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-03-19 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for drive_dp_route_task_oil_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_dp_route_task_oil_rel`;
+CREATE TABLE `drive_dp_route_task_oil_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_route_task_oil_rel_id` int(10) NOT NULL COMMENT '出车款ID',
+  `drive_exceed_oil_id` int(10) NOT NULL COMMENT '调度编号ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `dp_route_task_oil_rel_id` (`dp_route_task_oil_rel_id`,`drive_exceed_oil_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -67,12 +67,15 @@ function getDriveExceedOilCount(params,callback) {
 }
 
 function updateDriveExceedOil(params,callback){
-    var query = " update drive_exceed_oil set plan_oil = ? , plan_urea = ? , actual_oil = ? , actual_urea = ? , actual_money = ? where id = ? " ;
+    var query = " update drive_exceed_oil set plan_oil = ? , plan_urea = ? , actual_oil = ? , actual_urea = ? , " +
+        " exceed_oil = ? , exceed_urea = ? , actual_money = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.planOil;
     paramsArray[i++]=params.planUrea;
     paramsArray[i++]=params.actualOil;
     paramsArray[i++]=params.actualUrea;
+    paramsArray[i++]=params.exceedOil;
+    paramsArray[i++]=params.exceedUrea;
     paramsArray[i++]=params.actualMoney;
     paramsArray[i]=params.exceedOilId;
     db.dbQuery(query,paramsArray,function(error,rows){
