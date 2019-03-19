@@ -9322,14 +9322,6 @@
 
           },
           {
-            "name": "dpRouteTaskId",
-            "in": "query",
-            "description": "dpRouteTask id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "driveId",
             "in": "query",
             "description": "drive id",
@@ -9338,35 +9330,19 @@
 
           },
           {
-            "name": "taskPlanDateStart",
+            "name": "dateStart",
             "in": "query",
-            "description": "taskPlanDate start",
+            "description": "date start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "taskPlanDateEnd",
+            "name": "dateEnd",
             "in": "query",
-            "description": "taskPlanDate end",
+            "description": "date end",
             "required": false,
             "type": "string"
-
-          },
-          {
-            "name": "fineStatus",
-            "in": "query",
-            "description": "fine status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "exceedType",
-            "in": "query",
-            "description": "exceed type",
-            "required": false,
-            "type": "integer"
 
           },
           {

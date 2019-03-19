@@ -35,7 +35,7 @@ function addDriveExceedOil(params,callback){
     });
 }
 
-function getDriveExceedOil(params,callback) {
+/*function getDriveExceedOil(params,callback) {
     var query = " select deo.*,dpr.task_plan_date,dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,u.real_name as op_user_name from drive_exceed_oil deo " +
         " left join dp_route_task dpr on deo.dp_route_task_id = dpr.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
@@ -70,6 +70,43 @@ function getDriveExceedOil(params,callback) {
     if(params.exceedType){
         paramsArray[i++] = params.exceedType;
         query = query + " and deo.exceed_type = ? ";
+    }
+    if(params.statStatus){
+        paramsArray[i++] = params.statStatus;
+        query = query + " and deo.stat_status = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOil ');
+        return callback(error,rows);
+    });
+}*/
+
+function getDriveExceedOil(params,callback) {
+    var query = " select deo.*,d.drive_name " +
+        " from drive_exceed_oil deo " +
+        " left join drive_info d on deo.drive_id = d.id " +
+        " where deo.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.exceedOilId){
+        paramsArray[i++] = params.exceedOilId;
+        query = query + " and deo.id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and deo.drive_id = ? ";
+    }
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
+        query = query + " and deo.date_start >= ? ";
+    }
+    if(params.dateEnd){
+        paramsArray[i++] = params.dateEnd;
+        query = query + " and deo.date_end <= ? ";
     }
     if(params.statStatus){
         paramsArray[i++] = params.statStatus;
