@@ -56,11 +56,11 @@ function getDriveExceedOil(params,callback) {
 }
 
 function getDriveExceedOilCount(params,callback) {
-    var query = " select stat_status,count(deo.id)as exceed_oil_count,sum(deo.actual_money)as actual_money " +
+    var query = " select settle_status,count(deo.id)as exceed_oil_count,sum(deo.actual_money)as actual_money " +
         " from drive_exceed_oil deo " +
         " where deo.id is not null ";
     var paramsArray=[],i=0;
-    query = query + ' group by deo.stat_status ';
+    query = query + ' group by deo.settle_status ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveExceedOilCount ');
         return callback(error,rows);
