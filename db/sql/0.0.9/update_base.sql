@@ -435,6 +435,11 @@ DROP COLUMN `stat_status`;
 -- ----------------------------
 -- 2019-03-19 更新
 -- ----------------------------
+ALTER TABLE `drive_exceed_oil`
+ADD COLUMN `date_id`  int(4) NULL COMMENT '核油统计时间' AFTER `oil_date`;
+-- ----------------------------
+-- 2019-03-19 更新
+-- ----------------------------
 -- ----------------------------
 -- Table structure for dp_route_task_oil_rel
 -- ----------------------------

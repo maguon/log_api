@@ -16,8 +16,8 @@ var logger = serverLogger.createLogger('DriveExceedOil.js');
 
 function createDriveExceedOil(req,res,next){
     var params = req.params ;
-    var myDate = new Date();
-    var strDate = moment(myDate).format('YYYYMMDD');
+    var dateId = params.oilDate;
+    var strDate = moment(dateId).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
     driveExceedOilDAO.addDriveExceedOil(params,function(error,result){
         if (error) {
