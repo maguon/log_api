@@ -437,6 +437,8 @@ DROP COLUMN `stat_status`;
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil`
 ADD COLUMN `date_id`  int(4) NULL COMMENT '核油统计时间' AFTER `oil_date`;
+ALTER TABLE `drive_exceed_oil`
+ADD COLUMN `oil_status`  tinyint(1) NULL DEFAULT 1 COMMENT '录入状态(1-未完成,2-已完成)' AFTER `actual_money`;
 -- ----------------------------
 -- 2019-03-19 更新
 -- ----------------------------

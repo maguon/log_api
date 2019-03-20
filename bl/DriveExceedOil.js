@@ -73,6 +73,20 @@ function updateDriveExceedOil(req,res,next){
     })
 }
 
+function updateDriveOilStatus(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.updateDriveOilStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveOilStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveOilStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDriveExceedOilCsv(req,res,next){
     var csvString = "";
     var header = "超量结算编号" + ',' + "司机" + ',' + "核油日期" + ','+ "所用油量" + ','+ "所用尿素量"+','+ "实际用油量"
@@ -124,5 +138,6 @@ module.exports = {
     queryDriveExceedOil : queryDriveExceedOil,
     queryDriveExceedOilCount : queryDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
+    updateDriveOilStatus : updateDriveOilStatus,
     getDriveExceedOilCsv : getDriveExceedOilCsv
 }

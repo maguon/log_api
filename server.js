@@ -429,6 +429,7 @@ function createServer() {
     server.get('/api/driveExceedOil.csv' , driveExceedOil.getDriveExceedOilCsv);
     server.post({path:'/api/user/:userId/driveExceedOil',contentType: 'application/json'},driveExceedOil.createDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);
+    server.put({path:'/api/user/:userId/exceedOil/:exceedOilId/oilStatus/:oilStatus',contentType: 'application/json'} ,driveExceedOil.updateDriveOilStatus);
 
     /**
      * DriveDpRouteTaskOilRel Module

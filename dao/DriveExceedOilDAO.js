@@ -96,11 +96,23 @@ function updateDriveExceedOilStatus(params,callback){
     });
 }
 
+function updateDriveOilStatus(params,callback){
+    var query = " update drive_exceed_oil set oil_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.oilStatus;
+    paramsArray[i]=params.exceedOilId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveOilStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDriveExceedOil : addDriveExceedOil,
     getDriveExceedOil : getDriveExceedOil,
     getDriveExceedOilCount : getDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
-    updateDriveExceedOilStatus : updateDriveExceedOilStatus
+    updateDriveExceedOilStatus : updateDriveExceedOilStatus,
+    updateDriveOilStatus : updateDriveOilStatus
 }
