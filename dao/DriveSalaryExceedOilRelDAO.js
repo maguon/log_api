@@ -18,11 +18,13 @@ function addDriveSalaryExceedOilRel(params,callback){
 }
 
 function getDriveSalaryExceedOilRel(params,callback) {
-    var query = " select dseor.*,deo.exceed_oil_quantity,deo.exceed_oil_money,deo.dp_route_task_id,dpr.task_plan_date,dpr.truck_id,t.truck_num " +
+    var query = " select dseor.*,t.truck_num,dpror.route_start,dpror.route_end,dpror.distance,dpror.load_flag, " +
+        " deo.exceed_oil,deo.exceed_urea,deo.actual_money,deo.oil_date,deo.settle_status " +
         " from drive_salary_exceed_oil_rel dseor " +
         " left join drive_exceed_oil deo on dseor.exceed_oil_id = deo.id " +
-        " left join dp_route_task dpr on deo.dp_route_task_id = dpr.id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join drive_dp_route_task_oil_rel dor on deo.id = dor.drive_exceed_oil_id " +
+        " left join dp_route_task_oil_rel dpror on dor.dp_route_task_oil_rel_id = dpror.id" +
+        " left join truck_info t on dpror.truck_id = t.id " +
         " where dseor.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
