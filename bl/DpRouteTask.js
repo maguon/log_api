@@ -437,12 +437,12 @@ function updateDpRouteTaskStatus(req,res,next){
         if (params.taskStatus == sysConst.TASK_STATUS.completed) {
             if(parkObj.loadFlag==sysConst.LOAD_FLAG.loan){
                 parkObj.oil = parkObj.loadDistanceOil;
-                parkObj.totalOil = parkObj.distance*parkObj.loadDistanceOil;
-                parkObj.totalUrea = parkObj.distance*parkObj.urea;
+                parkObj.totalOil = (parkObj.distance*parkObj.loadDistanceOil)/100;
+                parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
             }else{
                 parkObj.oil = parkObj.noLoadDistanceOil;
-                parkObj.totalOil = parkObj.distance*parkObj.noLoadDistanceOil;
-                parkObj.totalUrea = parkObj.distance*parkObj.urea;
+                parkObj.totalOil = (parkObj.distance*parkObj.noLoadDistanceOil)/100;
+                parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
             }
             var subParams ={
                 dpRouteTaskId:params.dpRouteTaskId,
