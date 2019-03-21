@@ -27328,6 +27328,9 @@
         },
         "oilDate": {
           "type": "string"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {
@@ -27358,6 +27361,9 @@
         },
         "actualMoney": {
           "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {

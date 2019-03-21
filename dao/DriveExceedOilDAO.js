@@ -7,11 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilDAO.js');
 
 function addDriveExceedOil(params,callback){
-    var query = " insert into drive_exceed_oil (drive_id,oil_date,date_id) values ( ? , ? , ? )";
+    var query = " insert into drive_exceed_oil (drive_id,oil_date,date_id,remark) values ( ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.oilDate;
     paramsArray[i++]=params.dateId;
+    paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveExceedOil ');
         return callback(error,rows);
@@ -69,7 +70,7 @@ function getDriveExceedOilCount(params,callback) {
 
 function updateDriveExceedOil(params,callback){
     var query = " update drive_exceed_oil set plan_oil = ? , plan_urea = ? , actual_oil = ? , actual_urea = ? , " +
-        " exceed_oil = ? , exceed_urea = ? , actual_money = ? where id = ? " ;
+        " exceed_oil = ? , exceed_urea = ? , actual_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.planOil;
     paramsArray[i++]=params.planUrea;
@@ -78,6 +79,7 @@ function updateDriveExceedOil(params,callback){
     paramsArray[i++]=params.exceedOil;
     paramsArray[i++]=params.exceedUrea;
     paramsArray[i++]=params.actualMoney;
+    paramsArray[i++]=params.remark;
     paramsArray[i]=params.exceedOilId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveExceedOil ');

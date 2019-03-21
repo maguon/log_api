@@ -483,3 +483,8 @@ CREATE TABLE `drive_dp_route_task_oil_rel` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `dp_route_task_oil_rel_id` (`dp_route_task_oil_rel_id`,`drive_exceed_oil_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-03-21 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil`
+ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `settle_status`;
