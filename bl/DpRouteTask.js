@@ -361,7 +361,6 @@ function updateDpRouteTaskStatus(req,res,next){
                         parkObj.routeEndId=rows[0].route_end_id;
                         parkObj.routeEnd=rows[0].route_end;
                         parkObj.distance=rows[0].distance;
-                        parkObj.loadFlag=rows[0].load_flag;
                         parkObj.loadDistanceOil=rows[0].load_distance_oil;
                         parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
                         parkObj.urea=rows[0].urea;
@@ -435,6 +434,11 @@ function updateDpRouteTaskStatus(req,res,next){
     }).seq(function() {
         var that = this;
         if (params.taskStatus == sysConst.TASK_STATUS.completed) {
+            if(parkObj.carCount/parkObj.truckNumber>0.3){
+                parkObj.loadFlag = sysConst.LOAD_FLAG.loan;
+            }else{
+                parkObj.loadFlag = sysConst.LOAD_FLAG.not_loan;
+            }
             if(parkObj.loadFlag==sysConst.LOAD_FLAG.loan){
                 parkObj.oil = parkObj.loadDistanceOil;
                 parkObj.totalOil = (parkObj.distance*parkObj.loadDistanceOil)/100;
