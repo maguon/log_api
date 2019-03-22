@@ -792,6 +792,72 @@ function updateRepairStatus(req,res,next){
     })
 }
 
+function getTruckOperateCsv(req,res,next){
+    var csvString = "";
+    var header = "货车牌号" + ',' + "品牌" + ',' + "主驾" + ',' + "电话" + ','+ "所属公司" + ','+ "当前城市"
+        + ','+ "路线起始城市" + ','+ "路线目的城市" + ','+ "运营状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    truckDAO.getTruckOperate(params,function(error,rows){
+        if (error) {
+            logger.error(' queryTruckFirst ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.truckNum = rows[i].truck_num;
+                parkObj.brandName = rows[i].brand_name;
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].mobile == null){
+                    parkObj.mobile = "";
+                }else{
+                    parkObj.mobile = rows[i].mobile;
+                }
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
+                if(rows[i].current_city_name == null){
+                    parkObj.currentCityName = "";
+                }else{
+                    parkObj.currentCityName = rows[i].current_city_name;
+                }
+                if(rows[i].task_start_name == null){
+                    parkObj.taskStartName = "";
+                }else{
+                    parkObj.taskStartName = rows[i].task_start_name;
+                }
+                if(rows[i].task_end_name == null){
+                    parkObj.taskEndName = "";
+                }else{
+                    parkObj.taskEndName = rows[i].task_end_name;
+                }
+                if(rows[i].dispatch_flag == 1){
+                    parkObj.dispatchFlag = "可用";
+                }else{
+                    parkObj.dispatchFlag = "不可用";
+                }
+                csvString = csvString+parkObj.truckNum+","+parkObj.brandName+","+parkObj.driveName+"," +parkObj.mobile+","
+                    +parkObj.companyName+"," +parkObj.currentCityName+"," +parkObj.taskStartName+"," +parkObj.taskEndName+","
+                    +parkObj.dispatchFlag+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 function getTruckFirstCsv(req,res,next){
     var csvString = "";
     var header = "货车牌号" + ',' + "品牌" + ',' + "关联挂车号" + ',' + "挂车货位" + ','+ "联系电话" + ','+ "主驾司机"+ ','+ "副驾司机" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态";
@@ -936,6 +1002,7 @@ module.exports = {
     updateTruckStatusFirst : updateTruckStatusFirst,
     updateTruckStatusTrailer : updateTruckStatusTrailer,
     updateRepairStatus : updateRepairStatus,
+    getTruckOperateCsv : getTruckOperateCsv,
     getTruckFirstCsv : getTruckFirstCsv,
     getTruckTrailerCsv : getTruckTrailerCsv
 }

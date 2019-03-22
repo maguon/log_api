@@ -357,10 +357,11 @@ function getTruckOperateTypeCountTotal(params,callback) {
 }
 
 function getTruckOperate(params,callback) {
-    var query = " select t.id,t.truck_num,d.id as drive_id,d.drive_name,u.mobile,c.id as company_id,c.company_name, " +
+    var query = " select t.id,t.truck_num,t.brand_id,tb.brand_name,d.id as drive_id,d.drive_name,u.mobile,c.id as company_id,c.company_name, " +
         " td.dispatch_flag,td.current_city,td.task_start,td.task_end, " +
         " c1.city_name as current_city_name,c2.city_name as task_start_name,c3.city_name as task_end_name " +
         " from truck_info t " +
+        " left join truck_brand tb on t.brand_id = tb.id " +
         " left join company_info c on t.company_id = c.id " +
         " left join drive_info d on t.drive_id = d.id " +
         " left join user_info u on d.user_id = u.uid " +
@@ -381,6 +382,10 @@ function getTruckOperate(params,callback) {
     if(params.truckType){
         paramsArray[i++] = params.truckType;
         query = query + " and t.truck_type = ? ";
+    }
+    if(params.brandId){
+        paramsArray[i++] = params.brandId;
+        query = query + " and t.brand_id = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
