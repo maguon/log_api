@@ -150,7 +150,8 @@ function removeTruckInsureRel(req,res,next){
 
 function getTruckInsureRelCsv(req,res,next){
     var csvString = "";
-    var header = "保单编号" + ',' + "保险公司" + ',' + "险种" + ','+ "保险金额" + ','+ "货车牌号"+ ','+ "货车类型" + ','+ "经办人" + ','+ "生效日期" + ','+ "终止日期" + ','+ "保险描述";
+    var header = "保单编号" + ',' + "保险公司" + ',' + "险种" + ','+ "保险金额" + ','+ "货车牌号"+ ','+ "货车类型"
+        + ',' + "所属公司"+ ',' + "经办人" + ','+ "生效日期" + ','+ "终止日期" + ','+ "保险描述";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -176,6 +177,11 @@ function getTruckInsureRelCsv(req,res,next){
                 }else{
                     parkObj.truckType = "挂车";
                 }
+                if(rows[i].company_name==null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
                 parkObj.insureUserName = rows[i].insure_user_name;
                 parkObj.startDate = new Date(rows[i].start_date).toLocaleDateString();
                 parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
@@ -185,7 +191,7 @@ function getTruckInsureRelCsv(req,res,next){
                     parkObj.insureExplain = rows[i].insure_explain;
                 }
                 csvString = csvString+parkObj.insureNum+","+parkObj.insureName+","+parkObj.insureType+","
-                    +parkObj.insureMoney+"," +parkObj.truckNum+","+parkObj.truckType+","
+                    +parkObj.insureMoney+"," +parkObj.truckNum+","+parkObj.truckType+","+parkObj.companyName+","
                     +parkObj.insureUserName+","+parkObj.startDate+","+parkObj.endDate+","+parkObj.insureExplain+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
