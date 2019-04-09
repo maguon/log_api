@@ -10273,6 +10273,58 @@
         }
       }
     },
+    "/user/{userId}/city/{cityId}/cityOilFlag/{cityOilFlag}": {
+      "put": {
+        "tags": [
+          "city"
+        ],
+        "summary": "update cityOil flag",
+        "description": "update cityOilFlag",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityId",
+            "in": "path",
+            "description": "city id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityOilFlag",
+            "in": "path",
+            "description": "cityOil flag",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid city id"
+          }
+        }
+      }
+    },
     "/user/{userId}/city/{cityId}/cityStatus/{cityStatus}": {
       "put": {
         "tags": [

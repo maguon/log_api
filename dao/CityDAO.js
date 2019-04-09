@@ -49,6 +49,17 @@ function updateCity(params,callback){
     });
 }
 
+function updateCityOilFlag(params,callback){
+    var query = " update city_info set city_oil_flag = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.cityOilFlag;
+    paramsArray[i] = params.cityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCityOilFlag ');
+        return callback(error,rows);
+    });
+}
+
 function updateCityStatus(params,callback){
     var query = " update city_info set city_status = ? where id = ?";
     var paramsArray=[],i=0;
@@ -66,5 +77,6 @@ module.exports ={
     addCity : addCity,
     getCity : getCity,
     updateCity : updateCity,
-    updateCityStatus : updateCityStatus
+    updateCityStatus : updateCityStatus,
+    updateCityOilFlag : updateCityOilFlag
 }

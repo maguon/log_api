@@ -494,3 +494,8 @@ ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `settle_status`;
 ALTER TABLE `dp_route_task`
 ADD COLUMN `oil_distance`  decimal(10,2) NULL COMMENT '油耗里程' AFTER `distance`,
 ADD COLUMN `oil_load_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '油耗是否满载(0-否,1-是)' AFTER `oil_distance`;
+-- ----------------------------
+-- 2019-04-09 更新
+-- ----------------------------
+ALTER TABLE `city_info`
+ADD COLUMN `city_oil_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '城市是否油补(0-否,1-是)' AFTER `city_name`;

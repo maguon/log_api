@@ -55,6 +55,20 @@ function updateCity(req,res,next){
     })
 }
 
+function updateCityOilFlag (req,res,next){
+    var params = req.params;
+    cityDAO.updateCityOilFlag(params,function(error,result){
+        if (error) {
+            logger.error(' updateCityOilFlag ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateCityOilFlag ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCityStatus (req,res,next){
     var params = req.params;
     cityDAO.updateCityStatus(params,function(error,result){
@@ -74,5 +88,6 @@ module.exports = {
     createCity : createCity,
     queryCity : queryCity,
     updateCity : updateCity,
+    updateCityOilFlag : updateCityOilFlag,
     updateCityStatus : updateCityStatus
 }
