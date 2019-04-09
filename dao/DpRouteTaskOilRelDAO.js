@@ -32,8 +32,9 @@ function addDpRouteTaskOilRel(params,callback){
 }
 
 function getDpRouteTaskOilRel(params,callback) {
-    var query = " select dpror.*,t.truck_num,d.drive_name " +
+    var query = " select dpror.*,t.truck_num,d.drive_name,dpr.task_plan_date,dpr.oil_distance,dpr.oil_load_flag " +
         " from dp_route_task_oil_rel dpror " +
+        " left join dp_route_task dpr on dpror.dp_route_task_id = dpr.id " +
         " left join truck_info t on dpror.truck_id = t.id " +
         " left join drive_info d on dpror.drive_id = d.id " +
         " where dpror.id is not null ";

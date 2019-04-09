@@ -20,9 +20,10 @@ function addDriveDpRouteTaskOilRel(params,callback){
 function getDriveDpRouteTaskOilRel(params,callback) {
     var query = " select dor.*,dpror.dp_route_task_id,t.truck_num,d.drive_name, " +
         " dpror.route_start,dpror.route_end,dpror.distance,dpror.load_flag, " +
-        " dpror.oil,dpror.total_oil,dpror.urea,dpror.total_urea " +
+        " dpror.oil,dpror.total_oil,dpror.urea,dpror.total_urea,dpr.task_plan_date,dpr.oil_distance,dpr.oil_load_flag " +
         " from drive_dp_route_task_oil_rel dor " +
         " left join dp_route_task_oil_rel dpror on dor.dp_route_task_oil_rel_id = dpror.id " +
+        " left join dp_route_task dpr on dpror.dp_route_task_id = dpr.id " +
         " left join drive_exceed_oil deo on dor.drive_exceed_oil_id = deo.id " +
         " left join truck_info t on dpror.truck_id = t.id " +
         " left join drive_info d on dpror.drive_id = d.id " +
