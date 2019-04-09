@@ -28363,6 +28363,9 @@
         "distance": {
           "type": "integer"
         },
+        "oilDistance": {
+          "type": "integer"
+        },
         "taskPlanDate": {
           "type": "string"
         },

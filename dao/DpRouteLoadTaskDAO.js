@@ -255,19 +255,6 @@ function updateDpRouteLoadTaskStatus(params,callback){
     });
 }
 
-/*function resetLoadTaskTruckCount(params,callback){
-    var query = " update truck_dispatch set car_count = " +
-        "GREATEST((car_count-(select real_count from dp_route_load_task where id= ? ))  ,0) where truck_id= ? " ;
-    var paramsArray=[],i=0;
-    paramsArray[i++] = params.dpRouteLoadTaskId;
-    paramsArray[i] = params.truckId;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' resetLoadTaskTruckCount ');
-        return callback(error,rows);
-    });
-}*/
-
-
 
 module.exports ={
     addDpRouteLoadTask : addDpRouteLoadTask,
@@ -276,5 +263,4 @@ module.exports ={
     getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
     getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
     updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
-    //resetLoadTaskTruckCount : resetLoadTaskTruckCount
 }
