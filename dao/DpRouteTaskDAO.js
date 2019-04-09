@@ -543,12 +543,26 @@ function getRouteTaskDayStat(params,callback){
 }
 
 function updateDpRouteLoadFlag(params,callback){
-    var query = " update dp_route_task set load_flag = ? where id = ? " ;
+    var query = " update dp_route_task set distance = ? , car_count = ? , load_flag = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.distance;
+    paramsArray[i++]=params.carCount;
     paramsArray[i++]=params.loadFlag;
     paramsArray[i]=params.dpRouteTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadFlag ');
+        return callback(error,rows);
+    });
+}
+
+function updateDpRouteOilLoadFlag(params,callback){
+    var query = " update dp_route_task set oil_distance = ? , oil_load_flag = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.oilDistance;
+    paramsArray[i++]=params.oilLoadFlag;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteOilLoadFlag ');
         return callback(error,rows);
     });
 }
@@ -570,5 +584,6 @@ module.exports ={
     getRouteTaskMonthStat : getRouteTaskMonthStat ,
     getRouteTaskWeekStat : getRouteTaskWeekStat ,
     getRouteTaskDayStat : getRouteTaskDayStat,
-    updateDpRouteLoadFlag : updateDpRouteLoadFlag
+    updateDpRouteLoadFlag : updateDpRouteLoadFlag,
+    updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag
 }

@@ -898,6 +898,34 @@ function getDriveDistanceLoadCsv(req,res,next){
     })
 }
 
+function updateDpRouteLoadFlag (req,res,next){
+    var params = req.params;
+    dpRouteTaskDAO.updateDpRouteLoadFlag(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteLoadFlag ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteLoadFlag ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDpRouteOilLoadFlag (req,res,next){
+    var params = req.params;
+    dpRouteTaskDAO.updateDpRouteOilLoadFlag(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteOilLoadFlag ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteOilLoadFlag ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -917,5 +945,7 @@ module.exports = {
     queryRouteTaskMonthStat : queryRouteTaskMonthStat,
     getDpRouteTaskCsv : getDpRouteTaskCsv,
     getDriveDistanceLoadStatCsv : getDriveDistanceLoadStatCsv,
-    getDriveDistanceLoadCsv : getDriveDistanceLoadCsv
+    getDriveDistanceLoadCsv : getDriveDistanceLoadCsv,
+    updateDpRouteLoadFlag : updateDpRouteLoadFlag,
+    updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag
 }

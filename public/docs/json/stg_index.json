@@ -17780,6 +17780,112 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteLoadFlag": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteLoadFlag",
+        "description": "update dpRouteLoadFlag",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadFlag",
+            "in": "body",
+            "description": "dpRouteLoadFlag info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteLoadFlag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteOilLoadFlag": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteOilLoadFlag",
+        "description": "update dpRouteOilLoadFlag",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteOilLoadFlag",
+            "in": "body",
+            "description": "dpRouteOilLoadFlag info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteOilLoadFlag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask/{dpRouteTaskId}": {
       "delete": {
         "tags": [
@@ -28133,6 +28239,39 @@
       },
       "xml": {
         "name": "dpRouteTask"
+      }
+    },
+    "dpRouteLoadFlag": {
+      "type": "object",
+      "properties": {
+
+        "distance": {
+          "type": "integer"
+        },
+        "carCount": {
+          "type": "integer"
+        },
+        "loadFlag": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteLoadFlag"
+      }
+    },
+    "dpRouteOilLoadFlag": {
+      "type": "object",
+      "properties": {
+
+        "oilDistance": {
+          "type": "integer"
+        },
+        "oilLoadFlag": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteOilLoadFlag"
       }
     },
     "dpRouteTaskBatch": {

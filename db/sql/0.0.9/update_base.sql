@@ -488,3 +488,9 @@ CREATE TABLE `drive_dp_route_task_oil_rel` (
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil`
 ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `settle_status`;
+-- ----------------------------
+-- 2019-04-09 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `oil_distance`  decimal(10,2) NULL COMMENT '油耗里程' AFTER `distance`,
+ADD COLUMN `oil_load_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '油耗是否满载(0-否,1-是)' AFTER `oil_distance`;
