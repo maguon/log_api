@@ -541,8 +541,26 @@ function updateDpRouteTaskStatus(req,res,next){
 
 function updateDpRouteTaskStatusBack(req,res,next){
     var params = req.params;
-    var dispatchObj = {};
+    var parkObj = {};
     Seq().seq(function() {
+        var that = this;
+        dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteTask ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length > 0) {
+                    parkObj.distance=rows[0].distance;
+                    that();
+                } else {
+                    logger.warn(' getDpRouteTask ' + 'failed');
+                    resUtil.resetFailedRes(res, " 指令路线已被删除 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function() {
         var that = this;
         truckDispatchDAO.getTruckDispatch({truckId:params.truckId}, function (error, rows) {
             if (error) {
@@ -551,9 +569,9 @@ function updateDpRouteTaskStatusBack(req,res,next){
                 return next();
             } else {
                 if (rows && rows.length > 0) {
-                    dispatchObj.current_city=rows[0].current_city;
-                    dispatchObj.taskStart=rows[0].task_start;
-                    dispatchObj.taskEnd=rows[0].task_end;
+                    parkObj.current_city=rows[0].current_city;
+                    parkObj.taskStart=rows[0].task_start;
+                    parkObj.taskEnd=rows[0].task_end;
                     that();
                 } else {
                     logger.warn(' getTruckDispatch ' + 'failed');
@@ -596,8 +614,25 @@ function updateDpRouteTaskStatusBack(req,res,next){
             }
         })
     }).seq(function() {
+        var that = this;
+        params.oilDistance = parkObj.distance;
+        params.oilLoadFlag = sysConst.OIL_LOAD_FLAG.not_loan;
+        dpRouteTaskDAO.updateDpRouteOilLoadFlag(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteOilLoadFlag ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if (result && result.affectedRows > 0) {
+                    logger.info(' updateDpRouteOilLoadFlag ' + 'success');
+                } else {
+                    logger.warn(' updateDpRouteOilLoadFlag ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function() {
         var subParams ={
-            currentCity:dispatchObj.taskStart,
+            currentCity:parkObj.taskStart,
             taskStart:0,
             taskEnd:0,
             truckId:params.truckId

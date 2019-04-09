@@ -77,6 +77,11 @@ var LOAD_FLAG = {  //是否满载
     loan : 1 //是
 };
 
+var OIL_LOAD_FLAG = {  //油耗是否满载
+    not_loan : 0 ,  //否
+    loan : 1 //是
+};
+
 var LOAD_TASK_STATUS  ={
     no_load : 1,
     load : 3,
@@ -205,6 +210,7 @@ module.exports = {
     CAR_STATUS : CAR_STATUS,
     TASK_STATUS : TASK_STATUS,
     LOAD_FLAG : LOAD_FLAG,
+    OIL_LOAD_FLAG : OIL_LOAD_FLAG,
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,
     CLEAN_STATUS : CLEAN_STATUS,
