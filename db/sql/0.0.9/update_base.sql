@@ -519,7 +519,8 @@ IF(new.task_status=4 && old.task_status<>4) THEN
 UPDATE truck_dispatch set current_city= 0 , task_start = old.route_start_id ,task_end=old.route_end_id
 where truck_id=old.truck_id ;
 set new.car_count = (select car_count from truck_dispatch where truck_id = old.truck_id);
-IF((select count(dprl.id) from dp_route_load_task dprl left join city_info c on dprl.route_end_id = c.id where c.city_oil_flag=1 and dprl.route_end_id=old.route_end_id and dprl.load_task_status=3)>1) THEN
+IF((select count(dprl.id) from dp_route_load_task dprl left join city_info c on dprl.route_end_id = c.id
+where c.city_oil_flag=1 and dprl.route_end_id=old.route_end_id and dprl.load_task_status=3)>1) THEN
 set new.oil_distance = old.oil_distance+30;
 END IF;
 IF((select car_count from truck_dispatch where truck_id = old.truck_id)>0) THEN
