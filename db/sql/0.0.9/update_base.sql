@@ -492,10 +492,40 @@ ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `settle_status`;
 -- 2019-04-09 更新
 -- ----------------------------
 ALTER TABLE `dp_route_task`
-ADD COLUMN `oil_distance`  decimal(10,2) NULL COMMENT '油耗里程' AFTER `distance`,
+ADD COLUMN `oil_distance`  decimal(10,2) NULL DEFAULT 0 COMMENT '油耗里程' AFTER `distance`,
 ADD COLUMN `oil_load_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '油耗是否满载(0-否,1-是)' AFTER `oil_distance`;
 -- ----------------------------
 -- 2019-04-09 更新
 -- ----------------------------
 ALTER TABLE `city_info`
 ADD COLUMN `city_oil_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '城市是否油补(0-否,1-是)' AFTER `city_name`;
+-- ----------------------------
+-- 2019-04-09 更新
+-- ----------------------------
+ALTER TABLE `city_route_info`
+ADD COLUMN `oil_distance`  decimal(10,2) NULL DEFAULT 0 COMMENT '油耗公里数' AFTER `distance`;
+-- ----------------------------
+-- ----------------------------
+-- 2019-04-09 更新    更新油耗公里数
+-- ----------------------------
+update city_route_info set oil_distance = distance
+
+-- 2019-04-09 更新    追加经销商大于1 1oil_distance油补30,car_count大于0 oil_load_flag等于重载
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_update_route_task`;
+DELIMITER ;;
+CREATE TRIGGER `trg_update_route_task` BEFORE UPDATE ON `dp_route_task` FOR EACH ROW BEGIN
+IF(new.task_status=4 && old.task_status<>4) THEN
+UPDATE truck_dispatch set current_city= 0 , task_start = old.route_start_id ,task_end=old.route_end_id
+where truck_id=old.truck_id ;
+set new.car_count = (select car_count from truck_dispatch where truck_id = old.truck_id);
+IF((select count(dprl.id) from dp_route_load_task dprl left join city_info c on dprl.route_end_id = c.id where c.city_oil_flag=1 and dprl.route_end_id=old.route_end_id and dprl.load_task_status=3)>1) THEN
+set new.oil_distance = old.oil_distance+30;
+END IF;
+IF((select car_count from truck_dispatch where truck_id = old.truck_id)>0) THEN
+set new.oil_load_flag = 1;
+END IF;
+END IF;
+END
+;;
+DELIMITER ;
