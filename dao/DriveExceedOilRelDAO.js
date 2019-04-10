@@ -34,6 +34,10 @@ function getDriveExceedOilRel(params,callback) {
         paramsArray[i++] = params.relId;
         query = query + " and deor.id = ? ";
     }
+    if(params.exceedOilId){
+        paramsArray[i++] = params.exceedOilId;
+        query = query + " and deor.exceed_oil_id = ? ";
+    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and deor.drive_id = ? ";
