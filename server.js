@@ -35,6 +35,7 @@ var driveSalaryPeccancyRel = require('./bl/DriveSalaryPeccancyRel.js');
 var driveSalaryExceedOilRel = require('./bl/DriveSalaryExceedOilRel.js');
 var drivePeccancy = require('./bl/DrivePeccancy.js');
 var driveExceedOil = require('./bl/DriveExceedOil.js');
+var driveExceedOilRel = require('./bl/driveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
@@ -431,6 +432,13 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveExceedOil',contentType: 'application/json'},driveExceedOil.createDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId/oilStatus/:oilStatus',contentType: 'application/json'} ,driveExceedOil.updateDriveOilStatus);
+
+    /**
+     * DriveExceedOilRel Module
+     */
+    server.get('/api/driveExceedOilRel' , driveExceedOilRel.queryDriveExceedOilRel);
+    server.post({path:'/api/user/:userId/driveExceedOilRel',contentType: 'application/json'},driveExceedOilRel.createDriveExceedOilRel);
+    server.del('/api/user/:userId/driveExceedOilRel/:relId' , driveExceedOilRel.removeDriveExceedOilRel);
 
     /**
      * DriveDpRouteTaskOilRel Module

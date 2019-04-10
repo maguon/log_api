@@ -9734,6 +9734,148 @@
         }
       }
     },
+    "/driveExceedOilRel": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOilRel list",
+        "description": "query driveExceedOilRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOil"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveExceedOilRel": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveExceedOilRel",
+        "description": "user create driveExceedOilRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveExceedOilRel",
+            "in": "body",
+            "description": "driveExceedOilRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveExceedOilRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveExceedOilRel/{relId}": {
+      "delete": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "Deletes a driveExceedOilRel",
+        "description": "",
+        "operationId": "driveExceedOilRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/driveDpRouteTaskOilRel": {
       "get": {
         "tags": [
@@ -27601,6 +27743,36 @@
       },
       "xml": {
         "name": "driveExceedOil"
+      }
+    },
+    "driveExceedOilRel": {
+      "type": "object",
+      "properties": {
+
+        "exceedOilId": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "oilDate": {
+          "type": "string"
+        },
+        "oilAddress": {
+          "type": "string"
+        },
+        "oil": {
+          "type": "integer"
+        },
+        "urea": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveExceedOilRel"
       }
     },
     "driveActualExceedOil": {

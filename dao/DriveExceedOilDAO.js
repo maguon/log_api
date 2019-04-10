@@ -87,6 +87,30 @@ function updateDriveExceedOil(params,callback){
     });
 }
 
+function updateActualOilPlus(params,callback){
+    var query = " update drive_exceed_oil set actual_oil = actual_oil + ? , actual_urea = actual_urea + ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.actualOil;
+    paramsArray[i++]=params.actualUrea;
+    paramsArray[i]=params.exceedOilId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateActualOilPlus ');
+        return callback(error,rows);
+    });
+}
+
+function updateActualOilMinus(params,callback){
+    var query = " update drive_exceed_oil set actual_oil = actual_oil - ? , actual_urea = actual_urea - ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.actualOil;
+    paramsArray[i++]=params.actualUrea;
+    paramsArray[i]=params.exceedOilId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateActualOilMinus ');
+        return callback(error,rows);
+    });
+}
+
 function updateDriveExceedOilStatus(params,callback){
     var query = " update drive_exceed_oil set settle_status = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -115,6 +139,8 @@ module.exports ={
     getDriveExceedOil : getDriveExceedOil,
     getDriveExceedOilCount : getDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
+    updateActualOilPlus : updateActualOilPlus,
+    updateActualOilMinus : updateActualOilMinus,
     updateDriveExceedOilStatus : updateDriveExceedOilStatus,
     updateDriveOilStatus : updateDriveOilStatus
 }
