@@ -237,7 +237,7 @@ function getDpRouteTaskLoanDayStat(params,callback){
 
 function getDpRouteTaskNotLoan(params,callback) {
     var query = " select dpr.id,dpr.drive_id,dpr.truck_id,dpr.route_start_id,dpr.route_start,dpr.route_end_id,dpr.route_end, " +
-        " dpr.distance,dpr.task_status,d.drive_name,t.truck_num " +
+        " dpr.distance,dpr.task_status,d.drive_name,t.truck_num,dpr.task_plan_date " +
         " from dp_route_task dpr " +
         " left join dp_route_task_loan_rel rel on dpr.id = rel.dp_route_task_id " +
         " left join drive_info d on dpr.drive_id = d.id " +
@@ -266,6 +266,14 @@ function getDpRouteTaskNotLoan(params,callback) {
     }
     if(params.taskStatusArr){
         query = query + " and dpr.task_status not in ("+params.taskStatusArr + ") "
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dpr.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dpr.route_end_id = ? ";
     }
     query = query + ' group by dpr.id ';
     query = query + ' order by dpr.id desc ';
