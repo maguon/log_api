@@ -508,7 +508,7 @@ ADD COLUMN `city_oil_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '城市是否油�
 -- ----------------------------
 -- 2019-04-09 更新    更新油耗公里数
 -- ----------------------------
-update dp_route_task set oil_distance = distance;
+update dp_route_task set oil_distance = distance,oil_load_flag = load_flag;
 
 -- 2019-04-09 更新    追加经销商大于1 1oil_distance油补30,car_count大于0 oil_load_flag等于重载
 -- ----------------------------
