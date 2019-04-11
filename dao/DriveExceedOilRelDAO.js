@@ -7,13 +7,14 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilRelDAO.js');
 
 function addDriveExceedOilRel(params,callback){
-    var query = " insert into drive_exceed_oil_rel (exceed_oil_id,drive_id,truck_id,oil_date,oil_address,oil,urea) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into drive_exceed_oil_rel (exceed_oil_id,drive_id,truck_id,oil_date,date_id,oil_address,oil,urea) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.exceedOilId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.oilDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.oilAddress;
     paramsArray[i++]=params.oil;
     paramsArray[i++]=params.urea;
@@ -41,6 +42,18 @@ function getDriveExceedOilRel(params,callback) {
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and deor.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and deor.truck_id = ? ";
+    }
+    if(params.oilDateStart){
+        paramsArray[i++] = params.oilDateStart;
+        query = query + " and deor.oil_date >= ? ";
+    }
+    if(params.oilDateEnd){
+        paramsArray[i++] = params.oilDateEnd;
+        query = query + " and deor.oil_date <= ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

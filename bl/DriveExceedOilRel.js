@@ -12,12 +12,16 @@ var driveExceedOilDAO = require('../dao/DriveExceedOilDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DriveExceedOilRel.js');
 
 function createDriveExceedOilRel(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
+        var oilDate = params.oilDate;
+        var strDate = moment(oilDate).format('YYYYMMDD');
+        params.dateId = parseInt(strDate);
         driveExceedOilRelDAO.addDriveExceedOilRel(params,function(error, result) {
             if (error) {
                 logger.error(' createDriveExceedOilRel ' + error.message);

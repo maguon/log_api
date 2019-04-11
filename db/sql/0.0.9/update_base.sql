@@ -550,3 +550,8 @@ CREATE TABLE `drive_exceed_oil_rel` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-04-11 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_rel`
+ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '加油统计时间' AFTER `oil_date`;

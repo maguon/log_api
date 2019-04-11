@@ -9770,6 +9770,30 @@
 
           },
           {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "oilDateStart",
+            "in": "query",
+            "description": "oilDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "oilDateEnd",
+            "in": "query",
+            "description": "oilDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
