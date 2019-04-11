@@ -530,3 +530,23 @@ END IF;
 END
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2019-04-10 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for drive_exceed_oil_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_exceed_oil_rel`;
+CREATE TABLE `drive_exceed_oil_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exceed_oil_id` int(10) NOT NULL DEFAULT '0' COMMENT '超油ID',
+  `drive_id` int(10) NOT NULL DEFAULT '0' COMMENT '司机ID',
+  `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
+  `oil_date` date DEFAULT NULL COMMENT '加油日期',
+  `oil_address` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '加油地址',
+  `oil` decimal(10,2) DEFAULT '0.00' COMMENT '油',
+  `urea` decimal(10,2) DEFAULT '0.00' COMMENT '尿素',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
