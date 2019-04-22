@@ -90,7 +90,8 @@ function getDpTaskStatBase(params,callback) {
 }
 
 function getDpTaskStatCount(params,callback) {
-    var query = " select sum(pre_count) as pre_count,sum(plan_count) as plan_count from dp_task_stat where id is not null ";
+    var query = " select sum(pre_count) as pre_count,sum(plan_count) as plan_count from dp_task_stat " +
+        " where id is not null and task_stat_status = 1 ";
     var paramsArray=[],i=0;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpTaskStatCount ');
