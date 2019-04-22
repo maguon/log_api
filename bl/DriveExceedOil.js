@@ -129,6 +129,48 @@ function queryDriveOilMoneyMonthStat(req,res,next){
     })
 }
 
+function queryDriveOilWeekStat(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.getDriveOilWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveOilWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveOilWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDriveUreaWeekStat(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.getDriveUreaWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveUreaWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveUreaWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDriveOilMoneyWeekStat(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.getDriveOilMoneyWeekStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveOilMoneyWeekStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveOilMoneyWeekStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDriveExceedOilCsv(req,res,next){
     var csvString = "";
     var header = "超量结算编号" + ',' + "司机" + ',' + "核油日期" + ','+ "计划用油量" + ','+ "计划尿素量"+','+ "实际用油量"
@@ -214,5 +256,8 @@ module.exports = {
     queryDriveOilMonthStat : queryDriveOilMonthStat,
     queryDriveUreaMonthStat : queryDriveUreaMonthStat,
     queryDriveOilMoneyMonthStat : queryDriveOilMoneyMonthStat,
+    queryDriveOilWeekStat : queryDriveOilWeekStat,
+    queryDriveUreaWeekStat : queryDriveUreaWeekStat,
+    queryDriveOilMoneyWeekStat : queryDriveOilMoneyWeekStat,
     getDriveExceedOilCsv : getDriveExceedOilCsv
 }

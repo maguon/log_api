@@ -214,6 +214,87 @@ function getDriveOilMoneyMonthStat(params,callback) {
     });
 }
 
+function getDriveOilWeekStat(params,callback) {
+    var query = " select db.y_week,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_oil end) as actual_oil " +
+        " from date_base db " +
+        " left join drive_exceed_oil deo on db.id = deo.date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.weekStart){
+        paramsArray[i++] = params.weekStart;
+        query = query + ' and db.y_week >= ? '
+    }
+    if(params.weekEnd){
+        paramsArray[i++] = params.weekEnd;
+        query = query + ' and db.y_week <= ? '
+    }
+    query = query + " group by db.y_week " ;
+    query = query + " order by db.y_week desc " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveOilWeekStat ');
+        return callback(error,rows);
+    });
+}
+
+function getDriveUreaWeekStat(params,callback) {
+    var query = " select db.y_week,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_urea end) as actual_urea " +
+        " from date_base db " +
+        " left join drive_exceed_oil deo on db.id = deo.date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.weekStart){
+        paramsArray[i++] = params.weekStart;
+        query = query + ' and db.y_week >= ? '
+    }
+    if(params.weekEnd){
+        paramsArray[i++] = params.weekEnd;
+        query = query + ' and db.y_week <= ? '
+    }
+    query = query + " group by db.y_week " ;
+    query = query + " order by db.y_week desc " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveUreaWeekStat ');
+        return callback(error,rows);
+    });
+}
+
+function getDriveOilMoneyWeekStat(params,callback) {
+    var query = " select db.y_week,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_money end) as actual_money " +
+        " from date_base db " +
+        " left join drive_exceed_oil deo on db.id = deo.date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.weekStart){
+        paramsArray[i++] = params.weekStart;
+        query = query + ' and db.y_week >= ? '
+    }
+    if(params.weekEnd){
+        paramsArray[i++] = params.weekEnd;
+        query = query + ' and db.y_week <= ? '
+    }
+    query = query + " group by db.y_week " ;
+    query = query + " order by db.y_week desc " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveOilMoneyWeekStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDriveExceedOil : addDriveExceedOil,
@@ -226,6 +307,8 @@ module.exports ={
     updateDriveOilStatus : updateDriveOilStatus,
     getDriveOilMonthStat : getDriveOilMonthStat,
     getDriveUreaMonthStat : getDriveUreaMonthStat,
-    getDriveOilMoneyMonthStat : getDriveOilMoneyMonthStat
-
+    getDriveOilMoneyMonthStat : getDriveOilMoneyMonthStat,
+    getDriveOilWeekStat : getDriveOilWeekStat,
+    getDriveUreaWeekStat : getDriveUreaWeekStat,
+    getDriveOilMoneyWeekStat : getDriveOilMoneyWeekStat
 }

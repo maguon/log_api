@@ -431,6 +431,9 @@ function createServer() {
     server.get('/api/driveOilMonthStat' , driveExceedOil.queryDriveOilMonthStat);
     server.get('/api/driveUreaMonthStat' , driveExceedOil.queryDriveUreaMonthStat);
     server.get('/api/driveOilMoneyMonthStat' , driveExceedOil.queryDriveOilMoneyMonthStat);
+    server.get('/api/driveOilWeekStat' , driveExceedOil.queryDriveOilWeekStat);
+    server.get('/api/driveUreaWeekStat' , driveExceedOil.queryDriveUreaWeekStat);
+    server.get('/api/driveOilMoneyWeekStat' , driveExceedOil.queryDriveOilMoneyWeekStat);
     server.get('/api/driveExceedOil.csv' , driveExceedOil.getDriveExceedOilCsv);
     server.post({path:'/api/user/:userId/driveExceedOil',contentType: 'application/json'},driveExceedOil.createDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);
