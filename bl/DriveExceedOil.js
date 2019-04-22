@@ -87,6 +87,34 @@ function updateDriveOilStatus(req,res,next){
     })
 }
 
+function queryDriveOilMonthStat(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.getDriveOilMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveOilMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveOilMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDriveUreaMonthStat(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.getDriveUreaMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveUreaMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveUreaMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDriveExceedOilCsv(req,res,next){
     var csvString = "";
     var header = "超量结算编号" + ',' + "司机" + ',' + "核油日期" + ','+ "计划用油量" + ','+ "计划尿素量"+','+ "实际用油量"
@@ -169,5 +197,7 @@ module.exports = {
     queryDriveExceedOilCount : queryDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
     updateDriveOilStatus : updateDriveOilStatus,
+    queryDriveOilMonthStat : queryDriveOilMonthStat,
+    queryDriveUreaMonthStat : queryDriveUreaMonthStat,
     getDriveExceedOilCsv : getDriveExceedOilCsv
 }
