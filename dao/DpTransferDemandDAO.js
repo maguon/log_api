@@ -113,7 +113,8 @@ function getDpTransferDemandStat(params,callback) {
         paramsArray[i++] = params.transferStatus;
         query = query + " and dptd.transfer_status = ? ";
     }
-    query = query + ' group by dptd.route_start_id,dptd.route_start,dptd.transfer_city_id,dptd.transfer_city,dptd.route_end_id,dptd.route_end,dptd.date_id ';
+    query = query + ' group by dptd.route_start_id,dptd.route_start,dptd.transfer_city_id,' +
+        'dptd.transfer_city,dptd.route_end_id,dptd.route_end,dptd.date_id having pre_count!=plan_count ';
     query = query + ' order by dptd.date_id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
