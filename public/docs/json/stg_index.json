@@ -9659,6 +9659,74 @@
         }
       }
     },
+    "/driveOilMoneyMonthStat": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveOilMoneyMonth stat",
+        "description": "query driveOilMoneyMonthStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "settleStatus",
+            "in": "query",
+            "description": "settle status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOil"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOil id"
+          }
+        }
+      }
+    },
     "/driveExceedOil.csv": {
       "get": {
         "tags": [

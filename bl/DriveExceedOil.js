@@ -115,6 +115,20 @@ function queryDriveUreaMonthStat(req,res,next){
     })
 }
 
+function queryDriveOilMoneyMonthStat(req,res,next){
+    var params = req.params ;
+    driveExceedOilDAO.getDriveOilMoneyMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveOilMoneyMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveOilMoneyMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDriveExceedOilCsv(req,res,next){
     var csvString = "";
     var header = "超量结算编号" + ',' + "司机" + ',' + "核油日期" + ','+ "计划用油量" + ','+ "计划尿素量"+','+ "实际用油量"
@@ -199,5 +213,6 @@ module.exports = {
     updateDriveOilStatus : updateDriveOilStatus,
     queryDriveOilMonthStat : queryDriveOilMonthStat,
     queryDriveUreaMonthStat : queryDriveUreaMonthStat,
+    queryDriveOilMoneyMonthStat : queryDriveOilMoneyMonthStat,
     getDriveExceedOilCsv : getDriveExceedOilCsv
 }
