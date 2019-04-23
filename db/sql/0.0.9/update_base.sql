@@ -555,3 +555,16 @@ CREATE TABLE `drive_exceed_oil_rel` (
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil_rel`
 ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '加油统计时间' AFTER `oil_date`;
+-- ----------------------------
+-- 2019-04-23 更新
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_delete_car`;
+DELIMITER ;;
+CREATE TRIGGER `trg_delete_car` BEFORE DELETE ON `car_info` FOR EACH ROW BEGIN
+IF(old.route_end_id>0 && old.car_status=1&&old.receive_id>0&&old.order_date is not null) THEN
+UPDATE dp_demand_info set pre_count=pre_count-1 where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
+and route_end_id = old.route_end_id and receive_id=old.receive_id and date_id = DATE_FORMAT(old.order_date,'%Y%m%d');
+END IF ;
+END
+;;
+DELIMITER ;
