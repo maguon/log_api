@@ -284,6 +284,104 @@ function updateDriveStatus (req,res,next){
     })
 }
 
+function getDriveCsv(req,res,next){
+    var csvString = "";
+    var header = "姓名" + ',' + "运营状态" + ',' + "性别" + ','+ "所属类型" + ','+ "所属公司"+','+ "主驾货车" + ','+
+        "电话" + ','+ "身份证号" + ','+ "驾驶类型" + ','+ "驾驶证到期时间"+ ','+ "紧急联系人电话" + ','+ "家庭住址" + ','+ "备注";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveDAO.getDrive(params,function(error,rows){
+        if (error) {
+            logger.error(' getDrive ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                if(rows[i].operate_flag == 1){
+                    parkObj.operateFlag = "可用";
+                }else{
+                    parkObj.operateFlag = "不可用";
+                }
+                if(rows[i].gender == 1){
+                    parkObj.gender = "男";
+                }else{
+                    parkObj.gender = "女";
+                }
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else if(rows[i].operate_type == 2){
+                    parkObj.operateType = "外协";
+                }else if(rows[i].operate_type == 3){
+                    parkObj.operateType = "供方";
+                }else{
+                    parkObj.operateType = "承包";
+                }
+                parkObj.companyName = rows[i].company_name;
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                parkObj.mobile = rows[i].mobile;
+                if(rows[i].id_number == null){
+                    parkObj.idNumber = "";
+                }else{
+                    parkObj.idNumber = rows[i].id_number;
+                }
+                if(rows[i].license_type == 1){
+                    parkObj.licenseType = "A1";
+                }else if(rows[i].license_type == 2){
+                    parkObj.licenseType = "A2";
+                }else if(rows[i].license_type == 3){
+                    parkObj.licenseType = "A3";
+                }else if(rows[i].license_type == 4){
+                    parkObj.licenseType = "B1";
+                }else if(rows[i].license_type == 5){
+                    parkObj.licenseType = "B2";
+                }else if(rows[i].license_type == 6){
+                    parkObj.licenseType = "C1";
+                }else if(rows[i].license_type == 7){
+                    parkObj.licenseType = "C2";
+                }else{
+                    parkObj.licenseType = "C3";
+                }
+                if(rows[i].license_date == null){
+                    parkObj.licenseDate = "";
+                }else{
+                    parkObj.licenseDate = new Date(rows[i].license_date).toLocaleDateString();
+                }
+                if(rows[i].sib_tel == null){
+                    parkObj.sibTel = "";
+                }else{
+                    parkObj.sibTel = rows[i].sib_tel;
+                }
+                if(rows[i].address == null){
+                    parkObj.address = "";
+                }else{
+                    parkObj.address = rows[i].address;
+                }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.operateFlag+","+parkObj.gender+","+parkObj.operateType+","+
+                    parkObj.companyName +","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.idNumber+","+parkObj.licenseType +","+
+                    parkObj.licenseDate+","+parkObj.sibTel+","+parkObj.address+","+parkObj.remark+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDrive : createDrive,
@@ -295,5 +393,6 @@ module.exports = {
     updateDrive : updateDrive,
     updateDriveCompany : updateDriveCompany,
     updateDriveImage : updateDriveImage,
-    updateDriveStatus : updateDriveStatus
+    updateDriveStatus : updateDriveStatus,
+    getDriveCsv : getDriveCsv
 }
