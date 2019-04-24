@@ -157,7 +157,7 @@ function getTruckAccidentCsv(req,res,next){
     var csvString = "";
     var header = "事故编号" + ',' + "货车牌号" + ',' + "货车类型" + ','+ "司机" + ','+ "调度编号"+ ','+ "起始城市" + ','+ "目的城市" + ','+
         "发生时间" + ',' + "所属公司" + ',' + "事故类型" + ','+ "事故地点" + ','+ "备注"+ ','+ "负责人"+ ','+ "个人承担金额" + ','+
-        "公司承担金额" + ','+ "盈亏" + ','+ "处理概述" + ','+"状态" ;
+        "公司承担金额" + ','+ "盈亏" + ','+ "处理概述" + ','+"处理人" + ','+"状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -240,6 +240,11 @@ function getTruckAccidentCsv(req,res,next){
                 }else{
                     parkObj.remark = rows[i].remark;
                 }
+                if(rows[i].op_user_name == null){
+                    parkObj.opUserName = "";
+                }else{
+                    parkObj.opUserName = rows[i].op_user_name;
+                }
                 if(rows[i].accident_status == 1){
                     parkObj.accidentStatus = "待处理";
                 }else if(rows[i].accident_status == 2){
@@ -250,7 +255,7 @@ function getTruckAccidentCsv(req,res,next){
                 csvString = csvString+parkObj.id+","+parkObj.truckNum+","+parkObj.truckType+","+parkObj.driveName+","+parkObj.dpRouteTaskId+","+
                     parkObj.cityRouteStart+","+parkObj.cityRouteEnd+","+parkObj.accidentDate+","+ parkObj.companyName+","+parkObj.truckAccidentType+","+
                     parkObj.address+","+ parkObj.accidentExplain+","+parkObj.underUserName+","+parkObj.underCost+","+
-                    parkObj.companyCost+","+parkObj.profit+","+parkObj.remark+","+parkObj.accidentStatus+ '\r\n';
+                    parkObj.companyCost+","+parkObj.profit+","+parkObj.remark+","+parkObj.opUserName+","+parkObj.accidentStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
