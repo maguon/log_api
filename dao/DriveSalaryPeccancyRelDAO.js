@@ -18,7 +18,7 @@ function addDriveSalaryPeccancyRel(params,callback){
 }
 
 function getDriveSalaryPeccancyRel(params,callback) {
-    var query = " select dspr.*,dp.fine_score,dp.fine_money,dp.start_date,dp.end_date,dp.truck_id,t.truck_num " +
+    var query = " select dspr.*,dp.fine_score,dp.fine_money,dp.under_money,dp.under_money,company_money,dp.start_date,dp.end_date,dp.truck_id,t.truck_num " +
         " from drive_salary_peccancy_rel dspr " +
         " left join drive_peccancy dp on dspr.peccancy_id = dp.id " +
         " left join truck_info t on dp.truck_id = t.id " +
