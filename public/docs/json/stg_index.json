@@ -3961,11 +3961,27 @@
         ],
         "parameters": [
           {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
             "required": false,
-            "type": "string"
+            "type": "integer"
 
           },
           {
@@ -3977,9 +3993,25 @@
 
           },
           {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "repairStatus",
             "in": "query",
             "description": "repair status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairType",
+            "in": "query",
+            "description": "repair type",
             "required": false,
             "type": "integer"
 

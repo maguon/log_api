@@ -200,6 +200,12 @@ var SETTLE_STATUS = {
     settle : 2 //已结算
 };
 
+var REPAIR_TYPE = {  //货车维修类型
+    accident : 1,  //事故维修
+    company : 2, //公司维修
+    temporary : 3 //在外临时维修
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -230,7 +236,8 @@ module.exports = {
     TRUCK_INSURE_STATUS : TRUCK_INSURE_STATUS,
     STAT_STATUS : STAT_STATUS,
     RECEIVE_TYPE : RECEIVE_TYPE,
-    SETTLE_STATUS : SETTLE_STATUS
+    SETTLE_STATUS : SETTLE_STATUS,
+    REPAIR_TYPE : REPAIR_TYPE
 }
 
 
