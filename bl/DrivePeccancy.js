@@ -75,8 +75,9 @@ function updateDrivePeccancy(req,res,next){
 
 function getDrivePeccancyCsv(req,res,next){
     var csvString = "";
-    var header = "违章结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "货车类型" + ','+ "扣罚分数" + ','+ "买分金额" + ','+ "交通罚款"
-        + ','+ "罚款金额" + ','+ "违章时间" + ','+ "处理时间"+ ','+ "违章城市"+ ','+ "违章地点" + ','+ "操作人" + ','+ "状态" + ','+ "备注" ;
+    var header = "违章结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "货车类型" + ','+ "扣罚分数" + ','+ "买分金额" + ','+ "交通罚款" + ','+
+        "罚款金额" + ','+ "个人承担金额" + ','+ "公司承担金额"+ ','+ "违章时间" + ','+ "处理时间"+ ','+ "违章城市"+ ','+ "违章地点" + ','+
+        "操作人" + ','+ "状态" + ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -102,6 +103,16 @@ function getDrivePeccancyCsv(req,res,next){
                 }
                 parkObj.trafficFine = rows[i].traffic_fine;
                 parkObj.fineMoney = rows[i].fine_money;
+                if(rows[i].under_money == null){
+                    parkObj.underMoney = "";
+                }else{
+                    parkObj.underMoney = rows[i].under_money;
+                }
+                if(rows[i].company_money == null){
+                    parkObj.companyMoney = "";
+                }else{
+                    parkObj.companyMoney = rows[i].company_money;
+                }
                 if(rows[i].start_date == null){
                     parkObj.startDate = "";
                 }else{
@@ -138,9 +149,10 @@ function getDrivePeccancyCsv(req,res,next){
                     parkObj.remark = rows[i].remark;
                 }
 
-                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.truckType+","+parkObj.fineScore
-                    +","+parkObj.buyScore+","+parkObj.trafficFine+","+parkObj.fineMoney +","+parkObj.startDate +","+parkObj.handleDate
-                    +","+parkObj.cityName+","+parkObj.address+","+parkObj.opUserName +","+parkObj.fineStatus+","+parkObj.remark+ '\r\n';
+                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.truckType+","+parkObj.fineScore+","+
+                    parkObj.buyScore+","+parkObj.trafficFine+","+parkObj.fineMoney +","+parkObj.underMoney +","+parkObj.companyMoney+","+
+                    parkObj.startDate +","+parkObj.handleDate+","+ parkObj.cityName+","+parkObj.address+","+parkObj.opUserName +","+
+                    parkObj.fineStatus+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

@@ -9739,14 +9739,6 @@
 
           },
           {
-            "name": "fineStatus",
-            "in": "query",
-            "description": "fine status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "startDateStart",
             "in": "query",
             "description": "startDate start",
@@ -9779,9 +9771,49 @@
 
           },
           {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "truckType",
             "in": "query",
             "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "fineStatus",
+            "in": "query",
+            "description": "fine status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
             "required": false,
             "type": "integer"
 
