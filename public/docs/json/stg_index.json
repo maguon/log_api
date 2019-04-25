@@ -9602,6 +9602,38 @@
 
           },
           {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "fineStatus",
             "in": "query",
             "description": "fine status",
@@ -9613,14 +9645,6 @@
             "name": "statStatus",
             "in": "query",
             "description": "stat status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckType",
-            "in": "query",
-            "description": "truck type",
             "required": false,
             "type": "integer"
 
@@ -28626,6 +28650,12 @@
           "type": "integer"
         },
         "fineMoney": {
+          "type": "integer"
+        },
+        "underMoney": {
+          "type": "integer"
+        },
+        "companyMoney": {
           "type": "integer"
         },
         "startDate": {

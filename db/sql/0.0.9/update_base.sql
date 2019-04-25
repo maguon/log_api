@@ -568,3 +568,13 @@ END IF ;
 END
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2019-04-25 更新
+-- ----------------------------
+ALTER TABLE `drive_peccancy`
+ADD COLUMN `under_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '个人承担金额' AFTER `fine_money`,
+ADD COLUMN `company_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '公司承担金额' AFTER `under_money`;
+-- ----------------------------
+-- 2019-04-25 更新
+-- ----------------------------
+update drive_peccancy set under_money = fine_money;

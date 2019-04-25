@@ -8,8 +8,8 @@ var logger = serverLogger.createLogger('DrivePeccancyDAO.js');
 
 function addDrivePeccancy(params,callback){
     var query = " insert into drive_peccancy (drive_id,truck_id,truck_type,fine_score,buy_score,traffic_fine,fine_money, " +
-        " start_date,handle_date,city_id,city_name,address,op_user_id,date_id,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " under_money,company_money,start_date,handle_date,city_id,city_name,address,op_user_id,date_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
@@ -18,6 +18,8 @@ function addDrivePeccancy(params,callback){
     paramsArray[i++]=params.buyScore;
     paramsArray[i++]=params.trafficFine;
     paramsArray[i++]=params.fineMoney;
+    paramsArray[i++]=params.underMoney;
+    paramsArray[i++]=params.companyMoney;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.handleDate;
     paramsArray[i++]=params.cityId;
@@ -63,6 +65,18 @@ function getDrivePeccancy(params,callback) {
         paramsArray[i++] = params.handleDateEnd;
         query = query + " and dp.handle_date <= ? ";
     }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and dp.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and dp.created_on <= ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dp.truck_id = ? ";
+    }
     if(params.truckType){
         paramsArray[i++] = params.truckType;
         query = query + " and dp.truck_type = ? ";
@@ -100,7 +114,7 @@ function getDrivePeccancyCount(params,callback) {
 
 function updateDrivePeccancy(params,callback){
     var query = " update drive_peccancy set drive_id = ? , truck_id = ? , truck_type = ? , fine_score = ? , buy_score = ? , " +
-        " traffic_fine = ? , fine_money = ? , start_date = ? , handle_date = ? , city_id = ? , city_name = ? , address = ? , remark = ? where id = ? " ;
+        " traffic_fine = ? , fine_money = ? , under_money = ? , company_money = ? , start_date = ? , handle_date = ? , city_id = ? , city_name = ? , address = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
@@ -109,6 +123,8 @@ function updateDrivePeccancy(params,callback){
     paramsArray[i++]=params.buyScore;
     paramsArray[i++]=params.trafficFine;
     paramsArray[i++]=params.fineMoney;
+    paramsArray[i++]=params.underMoney;
+    paramsArray[i++]=params.companyMoney;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.handleDate;
     paramsArray[i++]=params.cityId;
