@@ -10565,8 +10565,8 @@
         "tags": [
           "drive"
         ],
-        "summary": "update drivePeccancy info",
-        "description": "update drivePeccancy info",
+        "summary": "update driveExceedOil info",
+        "description": "update driveExceedOil info",
         "produces": [
           "application/json"
         ],
@@ -10619,8 +10619,8 @@
         "tags": [
           "drive"
         ],
-        "summary": "user update drive status",
-        "description": "user update drive status",
+        "summary": "user update driveExceedOil status",
+        "description": "user update driveExceedOil status",
         "produces": [
           "application/json"
         ],
