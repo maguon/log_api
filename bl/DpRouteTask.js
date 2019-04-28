@@ -935,12 +935,21 @@ function getDriveDistanceLoadCsv(req,res,next){
 
 function updateDpRouteLoadFlag (req,res,next){
     var params = req.params;
+    var loadFlag = "";
+    if(params.loadFlag==0){
+        loadFlag = "空载";
+    }else{
+        loadFlag = "重载";
+    }
     dpRouteTaskDAO.updateDpRouteLoadFlag(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteLoadFlag ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' updateDpRouteLoadFlag ' + 'success');
+            req.params.routeContent =" 修改结算 里程："+params.distance+" 运载车辆数："+params.carCount+" 载重类型："+loadFlag;
+            req.params.routeId = params.dpRouteTaskId;
+            req.params.routeOp =sysConst.RECORD_OP_TYPE.distance;
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
