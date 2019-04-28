@@ -958,12 +958,21 @@ function updateDpRouteLoadFlag (req,res,next){
 
 function updateDpRouteOilLoadFlag (req,res,next){
     var params = req.params;
+    var oilLoadFlag = "";
+    if(params.oilLoadFlag==0){
+        oilLoadFlag = "空载";
+    }else{
+        oilLoadFlag = "重载";
+    }
     dpRouteTaskDAO.updateDpRouteOilLoadFlag(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteOilLoadFlag ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' updateDpRouteOilLoadFlag ' + 'success');
+            req.params.routeContent =" 修改 油耗里程："+params.oilDistance+" 载重类型："+oilLoadFlag;
+            req.params.routeId = params.dpRouteTaskId;
+            req.params.routeOp =sysConst.RECORD_OP_TYPE.oil_distance;
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
