@@ -947,7 +947,7 @@ function updateDpRouteLoadFlag (req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' updateDpRouteLoadFlag ' + 'success');
-            req.params.routeContent =" 修改结算 里程："+params.distance+" 运载车辆数："+params.carCount+" 载重类型："+loadFlag;
+            req.params.routeContent =" 修改结算 里程："+params.distance+"公里 "+params.carCount+"辆 "+loadFlag;
             req.params.routeId = params.dpRouteTaskId;
             req.params.routeOp =sysConst.RECORD_OP_TYPE.distance;
             resUtil.resetUpdateRes(res,result,null);
@@ -970,7 +970,7 @@ function updateDpRouteOilLoadFlag (req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' updateDpRouteOilLoadFlag ' + 'success');
-            req.params.routeContent =" 修改 油耗里程："+params.oilDistance+" 载重类型："+oilLoadFlag;
+            req.params.routeContent =" 修改 油耗里程："+params.oilDistance+"公里 "+oilLoadFlag;
             req.params.routeId = params.dpRouteTaskId;
             req.params.routeOp =sysConst.RECORD_OP_TYPE.oil_distance;
             resUtil.resetUpdateRes(res,result,null);
