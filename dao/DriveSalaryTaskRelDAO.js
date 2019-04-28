@@ -7,10 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryTaskRelDAO.js');
 
 function addDriveSalaryTaskRel(params,callback){
-    var query = " insert into drive_salary_task_rel (drive_salary_id,dp_route_task_id) values ( ? , ? ) ";
+    var query = " insert into drive_salary_task_rel (drive_salary_id,dp_route_task_id,distance_money,distance_total_money) " +
+        " values ( ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveSalaryId;
-    paramsArray[i]=params.dpRouteTaskId;
+    paramsArray[i++]=params.dpRouteTaskId;
+    paramsArray[i++]=params.distanceMoney;
+    paramsArray[i]=params.distanceTotalMoney;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveSalaryTaskRel ');
         return callback(error,rows);
@@ -19,7 +22,8 @@ function addDriveSalaryTaskRel(params,callback){
 
 function getDriveSalaryTaskRel(params,callback) {
     var query = " select datl.*,c.city_name as city_route_start,ce.city_name as city_route_end, " +
-        "dpr.distance,dpr.car_count,dpr.task_end_date,t.truck_num,t.truck_type,tb.brand_name, " +
+        " dpr.distance,dpr.car_count,dpr.task_end_date,t.truck_num,t.truck_type,tb.brand_name, " +
+        " dpr.load_flag,dpr.truck_number, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
         " from drive_salary_task_rel datl " +

@@ -28609,6 +28609,12 @@
         },
         "dpRouteTaskId": {
           "type": "integer"
+        },
+        "distanceMoney": {
+          "type": "integer"
+        },
+        "distanceTotalMoney": {
+          "type": "integer"
         }
       },
       "xml": {
