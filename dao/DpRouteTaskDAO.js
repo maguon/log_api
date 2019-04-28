@@ -370,6 +370,14 @@ function getNotCompletedTaskStatusCount(params,callback) {
         paramsArray[i++] = params.taskStatus;
         query = query + " and task_status = ? ";
     }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drive_id = ? ";
+    }
+    if(params.statStatus){
+        paramsArray[i++] = params.statStatus;
+        query = query + " and stat_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getNotCompletedTaskStatusCount ');
         return callback(error,rows);

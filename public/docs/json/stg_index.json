@@ -18566,6 +18566,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "statStatus",
+            "in": "query",
+            "description": "stat status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
