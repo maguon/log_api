@@ -8804,9 +8804,25 @@
         ],
         "parameters": [
           {
+            "name": "driveSalaryRelId",
+            "in": "query",
+            "description": "driveSalaryRel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "driveSalaryId",
             "in": "query",
             "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
             "required": false,
             "type": "integer"
 

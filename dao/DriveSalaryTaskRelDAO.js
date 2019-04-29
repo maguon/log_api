@@ -35,9 +35,17 @@ function getDriveSalaryTaskRel(params,callback) {
         " left join truck_brand tb on t.brand_id = tb.id " +
         " where datl.id is not null ";
     var paramsArray=[],i=0;
+    if(params.driveSalaryRelId){
+        paramsArray[i++] = params.driveSalaryRelId;
+        query = query + " and datl.id = ? ";
+    }
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;
         query = query + " and datl.drive_salary_id = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and datl.dp_route_task_id = ? ";
     }
     query = query + ' group by datl.id ';
     if (params.start && params.size) {
