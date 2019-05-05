@@ -7,9 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilDAO.js');
 
 function addDriveExceedOil(params,callback){
-    var query = " insert into drive_exceed_oil (drive_id,oil_date,date_id,remark) values ( ? , ? , ? , ? )";
+    var query = " insert into drive_exceed_oil (drive_id,truck_id,oil_date,date_id,remark) values ( ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.oilDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.remark;
@@ -20,9 +21,11 @@ function addDriveExceedOil(params,callback){
 }
 
 function getDriveExceedOil(params,callback) {
-    var query = " select deo.*,d.drive_name " +
+    var query = " select deo.*,d.drive_name,t.truck_num,c.company_name " +
         " from drive_exceed_oil deo " +
         " left join drive_info d on deo.drive_id = d.id " +
+        " left join truck_info t on deo.truck_id = t.id " +
+        " left join company_info c on d.company_id = c.id " +
         " where deo.id is not null ";
     var paramsArray=[],i=0;
     if(params.exceedOilId){

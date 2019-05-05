@@ -28758,6 +28758,9 @@
         "driveId": {
           "type": "integer"
         },
+        "truckId": {
+          "type": "integer"
+        },
         "oilDate": {
           "type": "string"
         },

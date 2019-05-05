@@ -584,3 +584,8 @@ update drive_peccancy set under_money = fine_money;
 ALTER TABLE `drive_salary_task_rel`
 ADD COLUMN `distance_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '里程金额奖励' AFTER `dp_route_task_id`,
 ADD COLUMN `distance_total_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '里程总金额奖励' AFTER `distance_money`;
+-- ----------------------------
+-- 2019-05-05 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil`
+ADD COLUMN `truck_id`  int(10) NULL DEFAULT 0 COMMENT '货车ID' AFTER `drive_id`;
