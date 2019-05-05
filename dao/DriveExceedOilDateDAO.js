@@ -29,6 +29,10 @@ function getDriveExceedOilDate(params,callback) {
         paramsArray[i++] = params.exceedOilDateId;
         query = query + " and deod.id = ? ";
     }
+    if(params.monthDateId){
+        paramsArray[i++] = params.monthDateId;
+        query = query + " and deod.month_date_id = ? ";
+    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and deod.drive_id = ? ";
