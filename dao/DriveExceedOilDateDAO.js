@@ -18,7 +18,50 @@ function addDriveExceedOilDate(params,callback){
     });
 }
 
+function getDriveExceedOilDate(params,callback) {
+    var query = " select deod.*,d.drive_name,t.truck_num " +
+        " from drive_exceed_oil_date deod " +
+        " left join drive_info d on deod.drive_id = d.id " +
+        " left join truck_info t on deod.truck_id = t.id " +
+        " where deod.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.exceedOilDateId){
+        paramsArray[i++] = params.exceedOilDateId;
+        query = query + " and deod.id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and deod.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and deod.truck_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilDate ');
+        return callback(error,rows);
+    });
+}
+
+function updateDriveExceedOilDate(params,callback){
+    var query = " update drive_exceed_oil_date set actual_money = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.actualMoney;
+    paramsArray[i]=params.exceedOilDateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveExceedOilDate ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDriveExceedOilDate : addDriveExceedOilDate
+    addDriveExceedOilDate : addDriveExceedOilDate,
+    getDriveExceedOilDate : getDriveExceedOilDate,
+    updateDriveExceedOilDate : updateDriveExceedOilDate
 }

@@ -27,7 +27,37 @@ function createDriveExceedOilDate(req,res,next){
     })
 }
 
+function queryDriveExceedOilDate(req,res,next){
+    var params = req.params ;
+    driveExceedOilDateDAO.getDriveExceedOilDate(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveExceedOilDate ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveExceedOilDate ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDriveExceedOilDate(req,res,next){
+    var params = req.params ;
+    driveExceedOilDateDAO.updateDriveExceedOilDate(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveExceedOilDate ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveExceedOilDate ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createDriveExceedOilDate : createDriveExceedOilDate
+    createDriveExceedOilDate : createDriveExceedOilDate,
+    queryDriveExceedOilDate : queryDriveExceedOilDate,
+    updateDriveExceedOilDate : updateDriveExceedOilDate
 }

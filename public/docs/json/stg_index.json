@@ -10722,6 +10722,74 @@
         }
       }
     },
+    "/driveExceedOilDate": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOilDate list",
+        "description": "query driveExceedOilDate",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "exceedOilDateId",
+            "in": "query",
+            "description": "exceedOilDate id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOilDate"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilDate id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveExceedOilDate": {
       "post": {
         "tags": [
@@ -10749,6 +10817,60 @@
             "schema": {
               "$ref": "#/definitions/driveExceedOilDate"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilDate id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/exceedOilDateId/{exceedOilDateId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveExceedOilDate info",
+        "description": "update driveExceedOilDate info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "exceedOilDateId",
+            "in": "path",
+            "description": "exceedOilDate id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveExceedOilActualMoney",
+            "in": "body",
+            "description": "driveExceedOilActualMoney info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveExceedOilActualMoney"
+            }
+
           }
         ],
         "responses": {
@@ -28873,6 +28995,18 @@
       },
       "xml": {
         "name": "driveExceedOilDate"
+      }
+    },
+    "driveExceedOilActualMoney": {
+      "type": "object",
+      "properties": {
+
+        "actualMoney": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveExceedOilActualMoney"
       }
     },
     "driveExceedOilRel": {
