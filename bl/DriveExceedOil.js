@@ -173,8 +173,8 @@ function queryDriveOilMoneyWeekStat(req,res,next){
 
 function getDriveExceedOilCsv(req,res,next){
     var csvString = "";
-    var header = "超量结算编号" + ',' + "司机" + ',' + "核油日期" + ','+ "计划用油量" + ','+ "计划尿素量"+','+ "实际用油量"
-        + ','+ "实际尿素量" + ','+ "超油量" + ','+ "超尿素量" + ','+ "实际超量金额" + ','+ "状态";
+    var header = "超量结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属公司" + ','+"核油日期" + ','+ "计划用油量" + ','+
+        "计划尿素量"+','+ "实际用油量" + ','+ "实际尿素量" + ','+ "超油量" + ','+ "超尿素量" + ','+ "实际超量金额" + ','+ "状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -186,6 +186,16 @@ function getDriveExceedOilCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.id = rows[i].id;
                 parkObj.driveName = rows[i].drive_name;
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
                 if(rows[i].oil_date == null){
                     parkObj.oilDate = "";
                 }else{
@@ -231,8 +241,9 @@ function getDriveExceedOilCsv(req,res,next){
                 }else{
                     parkObj.statStatus = "已扣";
                 }
-                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.oilDate+","+parkObj.planOil+","+parkObj.planUrea
-                    +","+parkObj.actualOil+","+parkObj.actualUrea+","+parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.statStatus+ '\r\n';
+                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.companyName+","+
+                    parkObj.oilDate+","+ parkObj.planOil+","+parkObj.planUrea +","+parkObj.actualOil+","+parkObj.actualUrea+","+
+                    parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.statStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

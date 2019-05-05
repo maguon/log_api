@@ -36,6 +36,14 @@ function getDriveExceedOil(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and deo.drive_id = ? ";
     }
+    if(params.truckId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and deo.truck_id = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and d.company_id = ? ";
+    }
     if(params.oilDateStart){
         paramsArray[i++] = params.oilDateStart;
         query = query + " and deo.oil_date >= ? ";
