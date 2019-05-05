@@ -26,6 +26,7 @@ function getDriveExceedOil(params,callback) {
         " left join drive_info d on deo.drive_id = d.id " +
         " left join truck_info t on deo.truck_id = t.id " +
         " left join company_info c on d.company_id = c.id " +
+        " left join date_base db on deo.date_id = db.id " +
         " where deo.id is not null ";
     var paramsArray=[],i=0;
     if(params.exceedOilId){
@@ -55,6 +56,10 @@ function getDriveExceedOil(params,callback) {
     if(params.settleStatus){
         paramsArray[i++] = params.settleStatus;
         query = query + " and deo.settle_status = ? ";
+    }
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and db.y_month = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

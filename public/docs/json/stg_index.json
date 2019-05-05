@@ -10018,6 +10018,14 @@
 
           },
           {
+            "name": "yMonth",
+            "in": "query",
+            "description": "y month",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -10710,6 +10718,51 @@
           },
           "400": {
             "description": "Invalid token value or invalid exceedOil id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveExceedOilDate": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveExceedOilDate",
+        "description": "user create driveExceedOilDate",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveExceedOilDate",
+            "in": "body",
+            "description": "driveExceedOilDate info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveExceedOilDate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilDate id"
           }
         }
       }
@@ -28802,6 +28855,24 @@
       },
       "xml": {
         "name": "driveExceedOil"
+      }
+    },
+    "driveExceedOilDate": {
+      "type": "object",
+      "properties": {
+
+        "monthDateId": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveExceedOilDate"
       }
     },
     "driveExceedOilRel": {

@@ -35,6 +35,7 @@ var driveSalaryPeccancyRel = require('./bl/DriveSalaryPeccancyRel.js');
 var driveSalaryExceedOilRel = require('./bl/DriveSalaryExceedOilRel.js');
 var drivePeccancy = require('./bl/DrivePeccancy.js');
 var driveExceedOil = require('./bl/DriveExceedOil.js');
+var driveExceedOilDate = require('./bl/DriveExceedOilDate.js');
 var driveExceedOilRel = require('./bl/DriveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
 var company = require('./bl/Company.js');
@@ -441,6 +442,11 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveExceedOil',contentType: 'application/json'},driveExceedOil.createDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId/oilStatus/:oilStatus',contentType: 'application/json'} ,driveExceedOil.updateDriveOilStatus);
+
+    /**
+     * driveExceedOilDate Module
+     */
+    server.post({path:'/api/user/:userId/driveExceedOilDate',contentType: 'application/json'},driveExceedOilDate.createDriveExceedOilDate);
 
     /**
      * DriveExceedOilRel Module

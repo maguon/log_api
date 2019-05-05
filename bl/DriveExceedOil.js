@@ -236,14 +236,14 @@ function getDriveExceedOilCsv(req,res,next){
                 }else{
                     parkObj.actualMoney = rows[i].actual_money;
                 }
-                if(rows[i].stat_status == 1){
-                    parkObj.statStatus = "未扣";
+                if(rows[i].settle_status == 1){
+                    parkObj.settleStatus = "未扣";
                 }else{
-                    parkObj.statStatus = "已扣";
+                    parkObj.settleStatus = "已扣";
                 }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.companyName+","+
                     parkObj.oilDate+","+ parkObj.planOil+","+parkObj.planUrea +","+parkObj.actualOil+","+parkObj.actualUrea+","+
-                    parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.statStatus+ '\r\n';
+                    parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.settleStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
