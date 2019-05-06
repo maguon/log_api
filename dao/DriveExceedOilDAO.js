@@ -74,8 +74,7 @@ function getDriveExceedOil(params,callback) {
 
 function getDriveExceedOilTotal(params,callback) {
     var query = " select sum(deo.plan_oil) as plan_oil,sum(deo.plan_urea) as plan_urea, " +
-        " sum(deo.actual_oil) as actual_oil,sum(deo.actual_urea) as actual_urea, " +
-        " sum(deo.actual_money) as actual_money " +
+        " sum(deo.actual_oil) as actual_oil,sum(deo.actual_urea) as actual_urea " +
         " from drive_exceed_oil deo " +
         " left join date_base db on deo.date_id = db.id " +
         " where deo.id is not null ";
@@ -116,7 +115,7 @@ function getDriveExceedOilCount(params,callback) {
 
 function updateDriveExceedOil(params,callback){
     var query = " update drive_exceed_oil set plan_oil = ? , plan_urea = ? , actual_oil = ? , actual_urea = ? , " +
-        " exceed_oil = ? , exceed_urea = ? , actual_money = ? , remark = ? where id = ? " ;
+        " exceed_oil = ? , exceed_urea = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.planOil;
     paramsArray[i++]=params.planUrea;
@@ -124,7 +123,6 @@ function updateDriveExceedOil(params,callback){
     paramsArray[i++]=params.actualUrea;
     paramsArray[i++]=params.exceedOil;
     paramsArray[i++]=params.exceedUrea;
-    paramsArray[i++]=params.actualMoney;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.exceedOilId;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -157,7 +155,7 @@ function updateActualOilMinus(params,callback){
     });
 }
 
-function updateDriveExceedOilStatus(params,callback){
+/*function updateDriveExceedOilStatus(params,callback){
     var query = " update drive_exceed_oil set settle_status = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.settleStatus;
@@ -166,7 +164,7 @@ function updateDriveExceedOilStatus(params,callback){
         logger.debug(' updateDriveExceedOilStatus ');
         return callback(error,rows);
     });
-}
+}*/
 
 function updateDriveOilStatus(params,callback){
     var query = " update drive_exceed_oil set oil_status = ? where id = ? " ;
@@ -234,9 +232,9 @@ function getDriveUreaMonthStat(params,callback) {
 }
 
 function getDriveOilMoneyMonthStat(params,callback) {
-    var query = " select db.y_month,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_money end) as actual_money " +
+    var query = " select db.y_month,sum(deod.actual_money) as actual_money " +
         " from date_base db " +
-        " left join drive_exceed_oil deo on db.id = deo.date_id " +
+        " left join drive_exceed_oil_date deod on db.y_month = deod.month_date_id " +
         " where db.id is not null " ;
     var paramsArray=[],i=0;
     if(params.monthStart){
@@ -315,9 +313,9 @@ function getDriveUreaWeekStat(params,callback) {
 }
 
 function getDriveOilMoneyWeekStat(params,callback) {
-    var query = " select db.y_week,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_money end) as actual_money " +
+    var query = " select db.y_week,sum(deod.actual_money) as actual_money " +
         " from date_base db " +
-        " left join drive_exceed_oil deo on db.id = deo.date_id " +
+        " left join drive_exceed_oil_date deod on db.y_month = deod.month_date_id " +
         " where db.id is not null " ;
     var paramsArray=[],i=0;
     if(params.weekStart){
@@ -350,7 +348,7 @@ module.exports ={
     updateDriveExceedOil : updateDriveExceedOil,
     updateActualOilPlus : updateActualOilPlus,
     updateActualOilMinus : updateActualOilMinus,
-    updateDriveExceedOilStatus : updateDriveExceedOilStatus,
+    //updateDriveExceedOilStatus : updateDriveExceedOilStatus,
     updateDriveOilStatus : updateDriveOilStatus,
     getDriveOilMonthStat : getDriveOilMonthStat,
     getDriveUreaMonthStat : getDriveUreaMonthStat,

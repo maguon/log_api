@@ -45,7 +45,7 @@ function createDriveSalaryExceedOilRel(req,res,next){
         params.settleStatus = sysConst.SETTLE_STATUS.settle;
         driveExceedOilDateDAO.updateExceedOilDateStatus(params,function(error,result){
             if (error) {
-                logger.error(' updateDriveExceedOilStatus ' + error.message);
+                logger.error(' updateExceedOilDateStatus ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.affectedRows>0){

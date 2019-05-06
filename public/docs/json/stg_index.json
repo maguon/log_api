@@ -10294,14 +10294,7 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "oilStatus",
-            "in": "query",
-            "description": "oil status",
-            "required": true,
-            "type": "integer"
 
-          },
           {
             "name": "monthStart",
             "in": "query",
@@ -10498,14 +10491,7 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "oilStatus",
-            "in": "query",
-            "description": "oil status",
-            "required": true,
-            "type": "integer"
 
-          },
           {
             "name": "weekStart",
             "in": "query",
