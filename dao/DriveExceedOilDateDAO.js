@@ -56,8 +56,10 @@ function getDriveExceedOilDate(params,callback) {
 }
 
 function updateDriveExceedOilDate(params,callback){
-    var query = " update drive_exceed_oil_date set actual_money = ? , remark = ? where id = ? " ;
+    var query = " update drive_exceed_oil_date set exceed_oil_total = ? , exceed_urea_total = ? , actual_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.exceedOilTotal;
+    paramsArray[i++]=params.exceedUreaTotal;
     paramsArray[i++]=params.actualMoney;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.exceedOilDateId;

@@ -29015,6 +29015,12 @@
       "type": "object",
       "properties": {
 
+        "exceedOilTotal": {
+          "type": "integer"
+        },
+        "exceedUreaTotal": {
+          "type": "integer"
+        },
         "actualMoney": {
           "type": "integer"
         },
