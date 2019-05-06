@@ -155,6 +155,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.addrName = rows[0].addr_name;
                         parkObj.routeEndId = rows[0].route_end_id;
                         parkObj.routeEnd = rows[0].route_end;
+                        parkObj.loadTaskStatus = rows[0].load_task_status;
                         parkObj.transferFlag = rows[0].transfer_flag;
                         parkObj.transferCityId = rows[0].transfer_city_id;
                         parkObj.transferCity = rows[0].transfer_city;
@@ -237,7 +238,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&parkObj.cleanFee>0) {
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&params.loadTaskStatus!=parkObj.loadTaskStatus&&parkObj.cleanFee>0) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
@@ -359,12 +360,12 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateDpRouteLoadTaskStatus ' + 'success');
-                if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load){
+                if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load&&params.loadTaskStatus!=parkObj.loadTaskStatus){
                     req.params.routeContent =" 从 " + parkObj.addrName + " 到 " + parkObj.shortName + " 已完成装车   装车数量：" + parkObj.carCount ;
                     req.params.routeId = parkObj.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.on_road;
                 }
-                if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.arrive){
+                if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.arrive&&params.loadTaskStatus!=parkObj.loadTaskStatus){
                     req.params.routeContent =" 运输货车 "+ parkObj.truckNum +" 已到达 " + parkObj.shortName + "   卸车数量：" + parkObj.carCount + "   异常车辆：" + parkObj.carExceptionCount;
                     req.params.routeId = parkObj.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.completed;

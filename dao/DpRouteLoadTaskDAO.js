@@ -248,7 +248,7 @@ function updateDpRouteLoadTaskStatus(params,callback){
         query = query +" ,arrive_date = ? ";
         paramsArray[i++] = params.arriveDate;
     }
-    query = query + ' where id = ' + params.dpRouteLoadTaskId;
+    query = query + " where id = " + params.dpRouteLoadTaskId + " and load_task_status != "+params.loadTaskStatus;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadTaskStatus ');
         return callback(error,rows);
