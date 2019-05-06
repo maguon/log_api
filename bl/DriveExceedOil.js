@@ -237,7 +237,7 @@ function getDriveExceedOilCsv(req,res,next){
                     parkObj.actualMoney = rows[i].actual_money;
                 }
                 if(rows[i].oil_status == 1){
-                    parkObj.oilStatus = "未处理";
+                    parkObj.oilStatus = "处理中";
                 }else{
                     parkObj.oilStatus = "已处理";
                 }
