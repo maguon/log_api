@@ -450,10 +450,8 @@ function getDriveSettleCsv(req,res,next){
 
 function getDriveCostCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "过路费"+ ','+ "燃料费"+ ','+ "保道费"
-        + ','+ "罚款费"+ ','+ "停车费"+ ','+ "打车费" + ','+ "住宿费"+ ','+ "商品车费用"
-        + ','+ "进门费"+ ','+ "地跑费"+ ','+ "拖车费" + ','+ "维修配件费"+ ','+ "保养费"
-        + ','+ "货车维修费"+ ','+ "违章扣款"+ ','+ "超量扣款" ;
+    var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "过路费"+ ','+ "燃料费"+ ','+ "保道费" + ','+ "罚款费"+ ','+"停车费"+ ','+
+        "打车费" + ','+ "住宿费"+ ','+ "商品车费用" + ','+ "进门费"+ ','+ "地跑费"+ ','+ "拖车费" + ','+ "维修配件费"+ ','+ "保养费" + ','+ "货车维修费";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -544,21 +542,11 @@ function getDriveCostCsv(req,res,next){
                 }else{
                     parkObj.repairMoney = rows[i].repair_money;
                 }
-                if(rows[i].peccancy_fine_money == null){
-                    parkObj.peccancyFineMoney = "";
-                }else{
-                    parkObj.peccancyFineMoney = rows[i].peccancy_fine_money;
-                }
-                if(rows[i].exceed_oil_money == null){
-                    parkObj.exceedOilMoney = "";
-                }else{
-                    parkObj.exceedOilMoney = rows[i].exceed_oil_money;
-                }
                 csvString = csvString+parkObj.driveName+","+parkObj.actualPrice+","+parkObj.actualGuardFee
                     +","+parkObj.refundPassingCost+","+parkObj.refundFuelCost+","+parkObj.refundProtectCost +","+parkObj.refundPenaltyCost
                     +","+parkObj.refundParkingCost+","+parkObj.refundTaxiCost+","+parkObj.refundHotelCost+","+parkObj.refundCarCost
                     +","+parkObj.refundEnterCost+","+parkObj.refundRunCost+","+parkObj.refundTrailerCost+","+parkObj.refundRepairCost
-                    +","+parkObj.refundCareCost+","+parkObj.repairMoney+","+parkObj.peccancyFineMoney+","+parkObj.exceedOilMoney+ '\r\n';
+                    +","+parkObj.refundCareCost+","+parkObj.repairMoney+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

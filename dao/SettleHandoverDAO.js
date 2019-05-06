@@ -396,10 +396,7 @@ function getDriveCost(params,callback) {
             " sum(case when task_loan_status = 2 then dprtl.refund_repair_cost end) refund_repair_cost, " +
             " sum(case when task_loan_status = 2 then dprtl.refund_care_cost end) refund_care_cost, " +
             " sum(case when task_loan_status = 2 then dprtl.refund_actual_money end) refund_actual_money, " +
-            " (select sum(repair_money) from truck_repair_rel where drive_id=d.id and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+")repair_money, " +
-            " (select sum(fine_money) from drive_peccancy where drive_id=d.id and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+")peccancy_fine_money, " +
-            " (select sum(exceed_oil_money) from drive_exceed_oil left join dp_route_task on drive_exceed_oil.dp_route_task_id = dp_route_task.id " +
-            " where dp_route_task.drive_id=d.id and drive_exceed_oil.date_id>="+params.dateStart+" and drive_exceed_oil.date_id<="+params.dateEnd+")exceed_oil_money " +
+            " (select sum(repair_money) from truck_repair_rel where drive_id=d.id and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+")repair_money " +
             " from drive_info d " +
             " left join dp_route_task_loan dprtl on d.id = dprtl.drive_id  and date_id>="+params.dateStart+" and date_id<="+params.dateEnd+
             " where d.id is not null ";
@@ -421,10 +418,7 @@ function getDriveCost(params,callback) {
             " sum(case when task_loan_status = 2 then dprtl.refund_repair_cost end) refund_repair_cost, " +
             " sum(case when task_loan_status = 2 then dprtl.refund_care_cost end) refund_care_cost, " +
             " sum(case when task_loan_status = 2 then dprtl.refund_actual_money end) refund_actual_money, " +
-            " (select sum(repair_money) from truck_repair_rel where drive_id=d.id)repair_money, " +
-            " (select sum(fine_money) from drive_peccancy where drive_id=d.id)peccancy_fine_money, " +
-            " (select sum(exceed_oil_money) from drive_exceed_oil left join dp_route_task on drive_exceed_oil.dp_route_task_id = dp_route_task.id " +
-            " where dp_route_task.drive_id=d.id)exceed_oil_money " +
+            " (select sum(repair_money) from truck_repair_rel where drive_id=d.id)repair_money " +
             " from drive_info d " +
             " left join dp_route_task_loan dprtl on d.id = dprtl.drive_id " +
             " where d.id is not null ";
