@@ -10010,6 +10010,14 @@
 
           },
           {
+            "name": "oilStatus",
+            "in": "query",
+            "description": "oil status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "settleStatus",
             "in": "query",
             "description": "settle status",
@@ -10544,6 +10552,14 @@
             "description": "oilDate end",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "oilStatus",
+            "in": "query",
+            "description": "oil status",
+            "required": false,
+            "type": "integer"
 
           },
           {

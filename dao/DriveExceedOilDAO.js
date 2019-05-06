@@ -53,6 +53,10 @@ function getDriveExceedOil(params,callback) {
         paramsArray[i++] = params.oilDateEnd;
         query = query + " and deo.oil_date <= ? ";
     }
+    if(params.oilStatus){
+        paramsArray[i++] = params.oilStatus;
+        query = query + " and deo.oil_status = ? ";
+    }
     if(params.settleStatus){
         paramsArray[i++] = params.settleStatus;
         query = query + " and deo.settle_status = ? ";
