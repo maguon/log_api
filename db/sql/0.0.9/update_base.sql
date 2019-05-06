@@ -599,3 +599,27 @@ CHANGE COLUMN `exceed_oil_id` `exceed_oil_date_id`  int(10) NOT NULL COMMENT '�
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil`
 DROP COLUMN `settle_status`;
+-- ----------------------------
+-- 2019-05-06 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for drive_exceed_oil_date
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_exceed_oil_date`;
+CREATE TABLE `drive_exceed_oil_date` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `month_date_id` int(4) NOT NULL DEFAULT '0' COMMENT '月份',
+  `drive_id` int(10) NOT NULL DEFAULT '0' COMMENT '司机ID',
+  `truck_id` int(10) NOT NULL DEFAULT '0' COMMENT '货车ID',
+  `plan_oil_total` decimal(10,2) DEFAULT '0.00' COMMENT '计划总用油量',
+  `plan_urea_total` decimal(10,2) DEFAULT '0.00' COMMENT '计划总尿素量',
+  `actual_oil_total` decimal(10,2) DEFAULT '0.00' COMMENT '实际总用油量',
+  `actual_urea_total` decimal(10,2) DEFAULT '0.00' COMMENT '实际总尿素量',
+  `actual_money` decimal(10,2) DEFAULT '0.00' COMMENT '实际超量总金额',
+  `settle_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '结算状态(1-未结算,2-已结算)',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`month_date_id`,`drive_id`,`truck_id`),
+  UNIQUE KEY `id` (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

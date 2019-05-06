@@ -471,6 +471,77 @@ function getDamageCsv(req,res,next){
     })
 }
 
+function getDamageBaseCsv(req,res,next){
+    var csvString = "";
+    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "委托方"+ ','+ "经销商" + ','+ "司机" + ','+ "货车牌号" + ','+
+        "申报人" + ','+ "质损说明" + ','+ "处理状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    damageDAO.getDamage(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDamage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                parkObj.vin = rows[i].vin;
+                if(rows[i].make_name==null){
+                    parkObj.makeName = "";
+                }else{
+                    parkObj.makeName = rows[i].make_name;
+                }
+                if(rows[i].en_short_name==null){
+                    parkObj.enShortName = "";
+                }else{
+                    parkObj.enShortName = rows[i].en_short_name;
+                }
+                if(rows[i].re_short_name==null){
+                    parkObj.reShortName = "";
+                }else{
+                    parkObj.reShortName = rows[i].re_short_name;
+                }
+                if(rows[i].drive_name==null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].truck_num==null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                parkObj.declareUserName = rows[i].declare_user_name;
+                if(rows[i].damage_explain==null){
+                    parkObj.damageExplain = "";
+                }else{
+                    parkObj.damageExplain = rows[i].damage_explain;
+                }
+                if(rows[i].damage_status == 1){
+                    parkObj.damageStatus = "待处理";
+                }else if(rows[i].damage_status == 2){
+                    parkObj.damageStatus = "处理中";
+                }else{
+                    parkObj.damageStatus = "已处理";
+                }
+                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+","+parkObj.makeName+","+parkObj.enShortName+","+
+                    parkObj.reShortName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.declareUserName+","+parkObj.damageExplain+","+
+                    parkObj.damageStatus+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
+
 module.exports = {
     createDamage : createDamage,
     queryDamage : queryDamage,
@@ -491,5 +562,6 @@ module.exports = {
     queryDamageMakeTopMonthStat : queryDamageMakeTopMonthStat,
     queryDamageReceiveTopMonthStat : queryDamageReceiveTopMonthStat,
     queryDamageDaseAddrTopMonthStat : queryDamageDaseAddrTopMonthStat,
-    getDamageCsv : getDamageCsv
+    getDamageCsv : getDamageCsv,
+    getDamageBaseCsv : getDamageBaseCsv
 }

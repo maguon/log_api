@@ -23303,6 +23303,82 @@
         }
       }
     },
+    "/damageBase.csv": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageBase csv",
+        "description": "query damageBase csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "damageId",
+            "in": "query",
+            "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "car vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vin code",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/damageBase.csv"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/qualityAssurance": {
       "post": {
         "tags": [
