@@ -29000,6 +29000,9 @@
         "truckId": {
           "type": "integer"
         },
+        "actualMoney": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }
