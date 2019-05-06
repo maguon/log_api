@@ -180,7 +180,7 @@ function updateDriveOilStatus(params,callback){
 }
 
 function getDriveOilMonthStat(params,callback) {
-    var query = " select db.y_month,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_oil end) as actual_oil " +
+    var query = " select db.y_month,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_oil end) as actual_oil " +
         " from date_base db " +
         " left join drive_exceed_oil deo on db.id = deo.date_id " +
         " where db.id is not null " ;
@@ -207,7 +207,7 @@ function getDriveOilMonthStat(params,callback) {
 }
 
 function getDriveUreaMonthStat(params,callback) {
-    var query = " select db.y_month,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_urea end) as actual_urea " +
+    var query = " select db.y_month,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_urea end) as actual_urea " +
         " from date_base db " +
         " left join drive_exceed_oil deo on db.id = deo.date_id " +
         " where db.id is not null " ;
@@ -234,7 +234,7 @@ function getDriveUreaMonthStat(params,callback) {
 }
 
 function getDriveOilMoneyMonthStat(params,callback) {
-    var query = " select db.y_month,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_money end) as actual_money " +
+    var query = " select db.y_month,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_money end) as actual_money " +
         " from date_base db " +
         " left join drive_exceed_oil deo on db.id = deo.date_id " +
         " where db.id is not null " ;
@@ -261,7 +261,7 @@ function getDriveOilMoneyMonthStat(params,callback) {
 }
 
 function getDriveOilWeekStat(params,callback) {
-    var query = " select db.y_week,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_oil end) as actual_oil " +
+    var query = " select db.y_week,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_oil end) as actual_oil " +
         " from date_base db " +
         " left join drive_exceed_oil deo on db.id = deo.date_id " +
         " where db.id is not null " ;
@@ -288,7 +288,7 @@ function getDriveOilWeekStat(params,callback) {
 }
 
 function getDriveUreaWeekStat(params,callback) {
-    var query = " select db.y_week,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_urea end) as actual_urea " +
+    var query = " select db.y_week,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_urea end) as actual_urea " +
         " from date_base db " +
         " left join drive_exceed_oil deo on db.id = deo.date_id " +
         " where db.id is not null " ;
@@ -315,7 +315,7 @@ function getDriveUreaWeekStat(params,callback) {
 }
 
 function getDriveOilMoneyWeekStat(params,callback) {
-    var query = " select db.y_week,sum(case when deo.settle_status = "+params.settleStatus+" then deo.actual_money end) as actual_money " +
+    var query = " select db.y_week,sum(case when deo.oil_status = "+params.oilStatus+" then deo.actual_money end) as actual_money " +
         " from date_base db " +
         " left join drive_exceed_oil deo on db.id = deo.date_id " +
         " where db.id is not null " ;

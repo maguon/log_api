@@ -589,3 +589,8 @@ ADD COLUMN `distance_total_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '里程�
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil`
 ADD COLUMN `truck_id`  int(10) NULL DEFAULT 0 COMMENT '货车ID' AFTER `drive_id`;
+-- ----------------------------
+-- 2019-05-06 更新
+-- ----------------------------
+ALTER TABLE `drive_salary_exceed_oil_rel`
+CHANGE COLUMN `exceed_oil_id` `exceed_oil_date_id`  int(10) NOT NULL COMMENT '超油编号ID' AFTER `drive_salary_id`;

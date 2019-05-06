@@ -10159,9 +10159,9 @@
         ],
         "parameters": [
           {
-            "name": "settleStatus",
+            "name": "oilStatus",
             "in": "query",
-            "description": "settle status",
+            "description": "oil status",
             "required": true,
             "type": "integer"
 
@@ -10227,9 +10227,9 @@
         ],
         "parameters": [
           {
-            "name": "settleStatus",
+            "name": "oilStatus",
             "in": "query",
-            "description": "settle status",
+            "description": "oil status",
             "required": true,
             "type": "integer"
 
@@ -10295,9 +10295,9 @@
         ],
         "parameters": [
           {
-            "name": "settleStatus",
+            "name": "oilStatus",
             "in": "query",
-            "description": "settle status",
+            "description": "oil status",
             "required": true,
             "type": "integer"
 
@@ -10363,9 +10363,9 @@
         ],
         "parameters": [
           {
-            "name": "settleStatus",
+            "name": "oilStatus",
             "in": "query",
-            "description": "settle status",
+            "description": "oil status",
             "required": true,
             "type": "integer"
 
@@ -10431,9 +10431,9 @@
         ],
         "parameters": [
           {
-            "name": "settleStatus",
+            "name": "oilStatus",
             "in": "query",
-            "description": "settle status",
+            "description": "oil status",
             "required": true,
             "type": "integer"
 
@@ -10499,9 +10499,9 @@
         ],
         "parameters": [
           {
-            "name": "settleStatus",
+            "name": "oilStatus",
             "in": "query",
-            "description": "settle status",
+            "description": "oil status",
             "required": true,
             "type": "integer"
 
@@ -10560,7 +10560,7 @@
         "tags": [
           "drive"
         ],
-        "summary": "query  driveExceedOil csv",
+        "summary": "query driveExceedOil csv",
         "description": "query driveExceedOilCsv",
         "produces": [
           "application/json"
