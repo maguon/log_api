@@ -9,7 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var driveSalaryExceedOilRelDAO = require('../dao/DriveSalaryExceedOilRelDAO.js');
-var driveExceedOilDateDAO = require('../dao/DriveExceedOilDateDAO.js');
+var driveExceedOilDAO = require('../dao/DriveExceedOilDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -43,15 +43,15 @@ function createDriveSalaryExceedOilRel(req,res,next){
     }).seq(function () {
         var that = this;
         params.settleStatus = sysConst.SETTLE_STATUS.settle;
-        driveExceedOilDateDAO.updateExceedOilDateStatus(params,function(error,result){
+        driveExceedOilDAO.updateDriveExceedOilStatus(params,function(error,result){
             if (error) {
-                logger.error(' updateExceedOilDateStatus ' + error.message);
+                logger.error(' updateDriveExceedOilStatus ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.affectedRows>0){
-                    logger.info(' updateExceedOilDateStatus ' + 'success');
+                    logger.info(' updateDriveExceedOilStatus ' + 'success');
                 }else{
-                    logger.warn(' updateExceedOilDateStatus ' + 'failed');
+                    logger.warn(' updateDriveExceedOilStatus ' + 'failed');
                 }
                 that();
             }
@@ -98,12 +98,12 @@ function removeDriveSalaryExceedOilRel(req,res,next){
         })
     }).seq(function () {
         params.settleStatus = sysConst.SETTLE_STATUS.not_settle;
-        driveExceedOilDateDAO.updateExceedOilDateStatus(params,function(error,result){
+        driveExceedOilDAO.updateDriveExceedOilStatus(params,function(error,result){
             if (error) {
-                logger.error(' updateExceedOilDateStatus ' + error.message);
+                logger.error(' updateDriveExceedOilStatus ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateExceedOilDateStatus ' + 'success');
+                logger.info(' updateDriveExceedOilStatus ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

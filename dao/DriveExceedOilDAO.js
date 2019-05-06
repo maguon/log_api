@@ -127,7 +127,7 @@ function updateActualOilMinus(params,callback){
     });
 }
 
-/*function updateDriveExceedOilStatus(params,callback){
+function updateDriveExceedOilStatus(params,callback){
     var query = " update drive_exceed_oil set settle_status = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.settleStatus;
@@ -136,7 +136,7 @@ function updateActualOilMinus(params,callback){
         logger.debug(' updateDriveExceedOilStatus ');
         return callback(error,rows);
     });
-}*/
+}
 
 function updateDriveOilStatus(params,callback){
     var query = " update drive_exceed_oil set oil_status = ? where id = ? " ;
