@@ -9514,7 +9514,7 @@
         }
       }
     },
-    "/user/{userId}/driveSalary/{driveSalaryId}/exceedOil/{exceedOilId}": {
+    "/user/{userId}/driveSalary/{driveSalaryId}/exceedOilDate/{exceedOilDateId}": {
       "delete": {
         "tags": [
           "drive"
@@ -9541,9 +9541,9 @@
             "type": "integer"
           },
           {
-            "name": "exceedOilId",
+            "name": "exceedOilDateId",
             "in": "path",
-            "description": "exceedOil id to delete",
+            "description": "exceedOilDate id to delete",
             "required": true,
             "type": "integer"
           }
@@ -11241,9 +11241,9 @@
         "tags": [
           "drive"
         ],
-        "summary": "Deletes a driveSalaryExceedOilRel",
+        "summary": "Deletes a driveDpRouteTaskOilRel",
         "description": "",
-        "operationId": "driveSalaryExceedOilRel",
+        "operationId": "driveDpRouteTaskOilRel",
         "produces": [
           "application/json"
         ],
@@ -28972,7 +28972,7 @@
         "driveSalaryId": {
           "type": "integer"
         },
-        "exceedOilId": {
+        "exceedOilDateId": {
           "type": "integer"
         }
       },

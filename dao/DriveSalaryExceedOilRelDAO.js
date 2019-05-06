@@ -7,10 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryExceedOilRelDAO.js');
 
 function addDriveSalaryExceedOilRel(params,callback){
-    var query = " insert into drive_salary_exceed_oil_rel (drive_salary_id,exceed_oil_id) values ( ? , ? ) ";
+    var query = " insert into drive_salary_exceed_oil_rel (drive_salary_id,exceed_oil_date_id) values ( ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveSalaryId;
-    paramsArray[i]=params.exceedOilId;
+    paramsArray[i]=params.exceedOilDateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveSalaryExceedOilRel ');
         return callback(error,rows);
@@ -18,9 +18,10 @@ function addDriveSalaryExceedOilRel(params,callback){
 }
 
 function getDriveSalaryExceedOilRel(params,callback) {
-    var query = " select dseor.*,deo.exceed_oil,deo.exceed_urea,deo.actual_money,deo.oil_date,deo.settle_status " +
+    var query = " select dseor.*,deod.month_date_id,deod.plan_oil_total,deod.plan_urea_total," +
+        " deod.actual_oil_total,deod.actual_urea_total,deod.actual_money,deod.settle_status " +
         " from drive_salary_exceed_oil_rel dseor " +
-        " left join drive_exceed_oil deo on dseor.exceed_oil_id = deo.id " +
+        " left join drive_exceed_oil_date deod on dseor.exceed_oil_date_id = deod.id " +
         " where dseor.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
@@ -39,10 +40,10 @@ function getDriveSalaryExceedOilRel(params,callback) {
 }
 
 function deleteDriveSalaryExceedOilRel(params,callback){
-    var query = " delete from drive_salary_exceed_oil_rel where drive_salary_id = ? and exceed_oil_id = ? ";
+    var query = " delete from drive_salary_exceed_oil_rel where drive_salary_id = ? and exceed_oil_date_id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveSalaryId;
-    paramsArray[i]=params.exceedOilId;
+    paramsArray[i]=params.exceedOilDateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' deleteDriveSalaryExceedOilRel ');
         return callback(error,rows);

@@ -416,7 +416,7 @@ function createServer() {
      */
     server.get('/api/driveSalaryExceedOilRel' , driveSalaryExceedOilRel.queryDriveSalaryExceedOilRel);
     server.post({path:'/api/user/:userId/driveSalaryExceedOilRel',contentType: 'application/json'},driveSalaryExceedOilRel.createDriveSalaryExceedOilRel);
-    server.del('/api/user/:userId/driveSalary/:driveSalaryId/exceedOil/:exceedOilId' , driveSalaryExceedOilRel.removeDriveSalaryExceedOilRel);
+    server.del('/api/user/:userId/driveSalary/:driveSalaryId/exceedOilDate/:exceedOilDateId' , driveSalaryExceedOilRel.removeDriveSalaryExceedOilRel);
 
     /**
      * DrivePeccancy Module
