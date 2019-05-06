@@ -10018,6 +10018,14 @@
 
           },
           {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
