@@ -10018,14 +10018,6 @@
 
           },
           {
-            "name": "settleStatus",
-            "in": "query",
-            "description": "settle status",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "yMonth",
             "in": "query",
             "description": "y month",
@@ -10561,14 +10553,6 @@
             "required": false,
             "type": "integer"
 
-          },
-          {
-            "name": "settleStatus",
-            "in": "query",
-            "description": "settle status",
-            "required": false,
-            "type": "integer"
-
           }
         ],
         "responses": {
@@ -10782,6 +10766,14 @@
 
           },
           {
+            "name": "settleStatus",
+            "in": "query",
+            "description": "settle status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -10887,12 +10879,12 @@
 
           },
           {
-            "name": "driveExceedOilActualMoney",
+            "name": "driveExceedOilDate",
             "in": "body",
-            "description": "driveExceedOilActualMoney info",
+            "description": "driveExceedOilDate info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/driveExceedOilActualMoney"
+              "$ref": "#/definitions/driveExceedOilDate"
             }
 
           }
@@ -29016,21 +29008,6 @@
         "truckId": {
           "type": "integer"
         },
-        "actualMoney": {
-          "type": "integer"
-        },
-        "remark": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "driveExceedOilDate"
-      }
-    },
-    "driveExceedOilActualMoney": {
-      "type": "object",
-      "properties": {
-
         "exceedOilTotal": {
           "type": "integer"
         },
@@ -29045,7 +29022,7 @@
         }
       },
       "xml": {
-        "name": "driveExceedOilActualMoney"
+        "name": "driveExceedOilDate"
       }
     },
     "driveExceedOilRel": {
