@@ -10018,14 +10018,6 @@
 
           },
           {
-            "name": "yMonth",
-            "in": "query",
-            "description": "y month",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -10037,6 +10029,66 @@
             "name": "size",
             "in": "query",
             "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOil"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOil id"
+          }
+        }
+      }
+    },
+    "/driveExceedOilTotal": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOil total",
+        "description": "query driveExceedOilTotal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "oilStatus",
+            "in": "query",
+            "description": "oil status",
             "required": false,
             "type": "integer"
 
@@ -29008,10 +29060,16 @@
         "truckId": {
           "type": "integer"
         },
-        "exceedOilTotal": {
+        "planOilTotal": {
           "type": "integer"
         },
-        "exceedUreaTotal": {
+        "planUreaTotal": {
+          "type": "integer"
+        },
+        "actualOilTotal": {
+          "type": "integer"
+        },
+        "actualUreaTotal": {
           "type": "integer"
         },
         "actualMoney": {

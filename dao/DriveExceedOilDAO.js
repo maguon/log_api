@@ -57,10 +57,6 @@ function getDriveExceedOil(params,callback) {
         paramsArray[i++] = params.oilStatus;
         query = query + " and deo.oil_status = ? ";
     }
-    if(params.yMonth){
-        paramsArray[i++] = params.yMonth;
-        query = query + " and db.y_month = ? ";
-    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -68,6 +64,36 @@ function getDriveExceedOil(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveExceedOil ');
+        return callback(error,rows);
+    });
+}
+
+function getDriveExceedOilTotal(params,callback) {
+    var query = " select sum(deo.plan_oil) as plan_oil,sum(deo.plan_urea) as plan_urea, " +
+        " sum(deo.actual_oil) as actual_oil,sum(deo.actual_urea) as actual_urea, " +
+        " sum(deo.actual_money) as actual_money " +
+        " from drive_exceed_oil deo " +
+        " left join date_base db on deo.date_id = db.id " +
+        " where deo.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and deo.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and deo.truck_id = ? ";
+    }
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and db.y_month = ? ";
+    }
+    if(params.oilStatus){
+        paramsArray[i++] = params.oilStatus;
+        query = query + " and deo.oil_status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilTotal ');
         return callback(error,rows);
     });
 }
@@ -315,6 +341,7 @@ function getDriveOilMoneyWeekStat(params,callback) {
 module.exports ={
     addDriveExceedOil : addDriveExceedOil,
     getDriveExceedOil : getDriveExceedOil,
+    getDriveExceedOilTotal : getDriveExceedOilTotal,
     getDriveExceedOilCount : getDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
     updateActualOilPlus : updateActualOilPlus,

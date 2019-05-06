@@ -431,6 +431,7 @@ function createServer() {
      * DriveExceedOil Module
      */
     server.get('/api/driveExceedOil' , driveExceedOil.queryDriveExceedOil);
+    server.get('/api/driveExceedOilTotal' , driveExceedOil.queryDriveExceedOilTotal);
     server.get('/api/driveExceedOilCount' , driveExceedOil.queryDriveExceedOilCount);
     server.get('/api/driveOilMonthStat' , driveExceedOil.queryDriveOilMonthStat);
     server.get('/api/driveUreaMonthStat' , driveExceedOil.queryDriveUreaMonthStat);
