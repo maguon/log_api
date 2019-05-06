@@ -10118,35 +10118,6 @@
         }
       }
     },
-    "/driveExceedOilCount": {
-      "get": {
-        "tags": [
-          "drive"
-        ],
-        "summary": "query  driveExceedOil count",
-        "description": "query driveExceedOilCount",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/driveExceedOil"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid driveExceedOil id"
-          }
-        }
-      }
-    },
     "/driveOilMonthStat": {
       "get": {
         "tags": [

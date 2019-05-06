@@ -35,6 +35,8 @@ var RECORD_OP_TYPE  ={
     accept : 32,
     doing : 33,
     on_road : 34,
+    load_back : 36,
+    on_road_back : 37,
     cancel : 38,
     completed : 39,
     distance : 40,

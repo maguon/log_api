@@ -643,6 +643,9 @@ function updateDpRouteTaskStatusBack(req,res,next){
                 throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateTruckDispatch ' + 'success');
+                req.params.routeContent =" 在途调整为执行 ";
+                req.params.routeId = params.dpRouteTaskId;
+                req.params.routeOp = sysConst.RECORD_OP_TYPE.on_road_back;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

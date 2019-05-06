@@ -432,7 +432,6 @@ function createServer() {
      */
     server.get('/api/driveExceedOil' , driveExceedOil.queryDriveExceedOil);
     server.get('/api/driveExceedOilTotal' , driveExceedOil.queryDriveExceedOilTotal);
-    server.get('/api/driveExceedOilCount' , driveExceedOil.queryDriveExceedOilCount);
     server.get('/api/driveOilMonthStat' , driveExceedOil.queryDriveOilMonthStat);
     server.get('/api/driveUreaMonthStat' , driveExceedOil.queryDriveUreaMonthStat);
     server.get('/api/driveOilMoneyMonthStat' , driveExceedOil.queryDriveOilMoneyMonthStat);
@@ -677,7 +676,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
     server.post({path:'/api/user/:userId/dpRouteTaskBatch',contentType: 'application/json'},dpRouteTask.createDpRouteTaskBatch,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus,sysRecord.saveRouteRecord);
-    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatusBack/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatusBack);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatusBack/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatusBack,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteLoadFlag,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteOilLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteOilLoadFlag,sysRecord.saveRouteRecord);
     server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId' , dpRouteTask.removeDpRouteTask,sysRecord.saveRouteRecord);
@@ -696,7 +695,7 @@ function createServer() {
     server.get('/api/dpRouteLoadTaskCount',dpRouteLoadTask.queryDpRouteLoadTaskCount);
     server.post({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadTask',contentType: 'application/json'},dpRouteLoadTask.createDpRouteLoadTask);
     server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatus/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatus,sysRecord.saveRouteRecord);
-    server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatusBack/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatusBack);
+    server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatusBack/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatusBack,sysRecord.saveRouteRecord);
     server.del('/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId' , dpRouteLoadTask.removeDpRouteLoadTask);
 
     /**

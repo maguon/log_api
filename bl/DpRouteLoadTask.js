@@ -558,6 +558,9 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
                 throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateDpTaskStatPlanCountMinus ' + 'success');
+                req.params.routeContent =" 装车调整为未装车 ";
+                req.params.routeId = parkObj.dpRouteTaskId;
+                req.params.routeOp = sysConst.RECORD_OP_TYPE.load_back;
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

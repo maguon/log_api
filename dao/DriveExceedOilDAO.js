@@ -101,18 +101,6 @@ function getDriveExceedOilTotal(params,callback) {
     });
 }
 
-function getDriveExceedOilCount(params,callback) {
-    var query = " select settle_status,count(deo.id)as exceed_oil_count,sum(deo.actual_money)as actual_money " +
-        " from drive_exceed_oil deo " +
-        " where deo.id is not null ";
-    var paramsArray=[],i=0;
-    query = query + ' group by deo.settle_status ';
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDriveExceedOilCount ');
-        return callback(error,rows);
-    });
-}
-
 function updateDriveExceedOil(params,callback){
     var query = " update drive_exceed_oil set plan_oil = ? , plan_urea = ? , actual_oil = ? , actual_urea = ? , " +
         " exceed_oil = ? , exceed_urea = ? , remark = ? where id = ? " ;
@@ -154,17 +142,6 @@ function updateActualOilMinus(params,callback){
         return callback(error,rows);
     });
 }
-
-/*function updateDriveExceedOilStatus(params,callback){
-    var query = " update drive_exceed_oil set settle_status = ? where id = ? " ;
-    var paramsArray=[],i=0;
-    paramsArray[i++]=params.settleStatus;
-    paramsArray[i]=params.exceedOilId;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateDriveExceedOilStatus ');
-        return callback(error,rows);
-    });
-}*/
 
 function updateDriveOilStatus(params,callback){
     var query = " update drive_exceed_oil set oil_status = ? where id = ? " ;
@@ -344,11 +321,9 @@ module.exports ={
     addDriveExceedOil : addDriveExceedOil,
     getDriveExceedOil : getDriveExceedOil,
     getDriveExceedOilTotal : getDriveExceedOilTotal,
-    getDriveExceedOilCount : getDriveExceedOilCount,
     updateDriveExceedOil : updateDriveExceedOil,
     updateActualOilPlus : updateActualOilPlus,
     updateActualOilMinus : updateActualOilMinus,
-    //updateDriveExceedOilStatus : updateDriveExceedOilStatus,
     updateDriveOilStatus : updateDriveOilStatus,
     getDriveOilMonthStat : getDriveOilMonthStat,
     getDriveUreaMonthStat : getDriveUreaMonthStat,
