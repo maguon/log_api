@@ -161,6 +161,82 @@ function updateCleanRelStatus(req,res,next){
     })
 }
 
+function getDpRouteLoadTaskCleanRelCsv(req,res,next){
+    var csvString = "";
+    var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ','+ "电话" + ','+ "品牌"+ ','+ "单价" + ','+ "洗车数" + ','+ "计划洗车费" + ','+
+        "实际洗车费" + ','+ "计划门卫费" + ','+ "实际门卫费"+ ','+ "货车牌号" + ','+ "送达经销商"+ ','+ "装车日期" + ','+ "领取时间" + ','+ "领取状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDamage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.mobile = rows[i].mobile;
+                parkObj.makeName = rows[i].make_name;
+                parkObj.singlePrice = rows[i].single_price;
+                parkObj.carCount = rows[i].car_count;
+                if(rows[i].total_price==null){
+                    parkObj.totalPrice = "";
+                }else{
+                    parkObj.totalPrice = rows[i].total_price;
+                }
+                if(rows[i].actual_price==null){
+                    parkObj.actualPrice = "";
+                }else{
+                    parkObj.actualPrice = rows[i].actual_price;
+                }
+                if(rows[i].guard_fee==null){
+                    parkObj.guardFee = "";
+                }else{
+                    parkObj.guardFee = rows[i].guard_fee;
+                }
+                if(rows[i].actual_guard_fee==null){
+                    parkObj.actualGuardFee = "";
+                }else{
+                    parkObj.actualGuardFee = rows[i].actual_guard_fee;
+                }
+                parkObj.truckNum = rows[i].truck_num;
+                parkObj.shortName = rows[i].short_name;
+                if(rows[i].load_date==null){
+                    parkObj.loadDate = "";
+                }else{
+                    parkObj.loadDate = new Date(rows[i].load_date).toLocaleDateString();
+                }
+                if(rows[i].clean_date==null){
+                    parkObj.cleanDate = "";
+                }else{
+                    parkObj.cleanDate = new Date(rows[i].clean_date).toLocaleDateString();
+                }
+                if(rows[i].status == 0){
+                    parkObj.status = "未通过";
+                }else if(rows[i].status == 1){
+                    parkObj.status = "未领取";
+                }else{
+                    parkObj.status = "已领取";
+                }
+                csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.makeName+","+
+                    parkObj.singlePrice+","+parkObj.carCount+","+parkObj.totalPrice+","+parkObj.actualPrice+","+parkObj.guardFee+","+
+                    parkObj.actualGuardFee+","+parkObj.truckNum+","+parkObj.shortName+","+parkObj.loadDate+","+parkObj.cleanDate+","+
+                    parkObj.status+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     queryDpRouteLoadTaskCleanRel : queryDpRouteLoadTaskCleanRel,
@@ -170,5 +246,6 @@ module.exports = {
     queryDpRouteLoadTaskCleanRelReceiveWeekStat : queryDpRouteLoadTaskCleanRelReceiveWeekStat,
     updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus,
-    updateCleanRelStatus : updateCleanRelStatus
+    updateCleanRelStatus : updateCleanRelStatus,
+    getDpRouteLoadTaskCleanRelCsv : getDpRouteLoadTaskCleanRelCsv
 }
