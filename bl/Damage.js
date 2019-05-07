@@ -16,6 +16,8 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('Damage.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createDamage(req,res,next){
     var params = req.params;
@@ -353,6 +355,51 @@ function queryDamageDaseAddrTopMonthStat(req,res,next){
     })
 }
 
+function uploadDamageFile(req,res,next){
+    var params = req.params;
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                carId : objArray[i].carId,
+                driveId : objArray[i].driveId,
+                driveName : objArray[i].driveName,
+                truckId : objArray[i].truckId,
+                truckNum : objArray[i].truckNum,
+                dateId : parseInt(moment(objArray[i].dateId).format('YYYYMMDD')),
+                damageExplain : objArray[i].damageExplain,
+                userId : params.userId,
+                uploadId : params.uploadId,
+                row : i+1,
+            }
+            damageDAO.addDamage(subParams,function(err,result){
+                if (err) {
+                    logger.error(' createUploadDamage ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.insertId>0){
+                        successedInsert = successedInsert+result.affectedRows;
+                        logger.info(' createUploadDamage ' + 'success');
+                    }else{
+                        logger.warn(' createUploadDamage ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadDamageFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 function getDamageCsv(req,res,next){
     var csvString = "";
     var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+ "司机"
@@ -562,6 +609,7 @@ module.exports = {
     queryDamageMakeTopMonthStat : queryDamageMakeTopMonthStat,
     queryDamageReceiveTopMonthStat : queryDamageReceiveTopMonthStat,
     queryDamageDaseAddrTopMonthStat : queryDamageDaseAddrTopMonthStat,
+    uploadDamageFile : uploadDamageFile,
     getDamageCsv : getDamageCsv,
     getDamageBaseCsv : getDamageBaseCsv
 }
