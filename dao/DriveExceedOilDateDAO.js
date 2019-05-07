@@ -66,7 +66,7 @@ function getDriveExceedOilDate(params,callback) {
 }
 
 function getDriveExceedOilMonth(params,callback) {
-    var query = " select deod.id,deo.drive_id,deo.truck_id,db.y_month, " +
+    var query = " select deod.id,deo.drive_id,d.drive_name,deo.truck_id,t.truck_num,c.company_name,db.y_month, " +
         " sum(deo.plan_oil) as plan_oil,sum(deo.plan_urea) as plan_urea, " +
         " sum(deo.actual_oil) as actual_oil,sum(deo.actual_urea) as actual_urea,sum(deo.actual_money)as actual_money," +
         " deod.settle_status " +
@@ -93,6 +93,10 @@ function getDriveExceedOilMonth(params,callback) {
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and deo.truck_id = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and c.id = ? ";
     }
     query = query + ' group by deo.drive_id,deo.truck_id ';
     if (params.start && params.size) {
