@@ -29336,6 +29336,9 @@
         "oilDate": {
           "type": "string"
         },
+        "oilAddressType": {
+          "type": "integer"
+        },
         "oilAddress": {
           "type": "string"
         },

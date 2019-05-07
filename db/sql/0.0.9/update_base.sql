@@ -623,3 +623,8 @@ CREATE TABLE `drive_exceed_oil_date` (
   PRIMARY KEY (`month_date_id`,`drive_id`,`truck_id`),
   UNIQUE KEY `id` (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-05-07 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_rel`
+ADD COLUMN `oil_address_type`  tinyint(1) NULL COMMENT '加油地类别(1-内部加油,2-外部加油)' AFTER `date_id`;
