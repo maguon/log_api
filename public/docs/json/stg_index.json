@@ -20573,6 +20573,21 @@
             "type": "string"
           },
           {
+            "name": "loadDateStart",
+            "in": "query",
+            "description": "loadDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loadDateEnd",
+            "in": "query",
+            "description": "loadDate end",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

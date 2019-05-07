@@ -85,6 +85,14 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
         paramsArray[i++] = params.cleanDateEnd +" 23:59:59";
         query = query + " and dpcr.clean_date <= ? ";
     }
+    if(params.loadDateStart){
+        paramsArray[i++] = params.loadDateStart +" 00:00:00";
+        query = query + " and dprl.load_date >= ? ";
+    }
+    if(params.loadDateEnd){
+        paramsArray[i++] = params.loadDateEnd +" 23:59:59";
+        query = query + " and dprl.load_date <= ? ";
+    }
     query = query + ' group by dpcr.id ';
     query = query + ' order by dpcr.id desc ';
     if (params.start && params.size) {
