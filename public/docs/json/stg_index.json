@@ -10823,6 +10823,82 @@
         }
       }
     },
+    "/driveExceedOilMonth": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOilMonth list",
+        "description": "query driveExceedOilMonth",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "exceedOilDateId",
+            "in": "query",
+            "description": "exceedOilDate id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOilDate"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilDate id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveExceedOilDate": {
       "post": {
         "tags": [

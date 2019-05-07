@@ -447,6 +447,7 @@ function createServer() {
      * driveExceedOilDate Module
      */
     server.get('/api/driveExceedOilDate' , driveExceedOilDate.queryDriveExceedOilDate);
+    server.get('/api/driveExceedOilMonth' , driveExceedOilDate.queryDriveExceedOilMonth);
     server.post({path:'/api/user/:userId/driveExceedOilDate',contentType: 'application/json'},driveExceedOilDate.createDriveExceedOilDate);
     server.put({path:'/api/user/:userId/exceedOilDateId/:exceedOilDateId',contentType: 'application/json'} ,driveExceedOilDate.updateDriveExceedOilDate);
 
