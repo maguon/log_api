@@ -29347,6 +29347,9 @@
         },
         "urea": {
           "type": "integer"
+        },
+        "oilMoney": {
+          "type": "integer"
         }
       },
       "xml": {

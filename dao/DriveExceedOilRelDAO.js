@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DriveExceedOilRelDAO.js');
 
 function addDriveExceedOilRel(params,callback){
     var query = " insert into drive_exceed_oil_rel (exceed_oil_id,drive_id,truck_id,oil_date,date_id," +
-        " oil_address_type,oil_address,oil,urea) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " oil_address_type,oil_address,oil,urea,oil_money) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.exceedOilId;
     paramsArray[i++]=params.driveId;
@@ -19,6 +19,7 @@ function addDriveExceedOilRel(params,callback){
     paramsArray[i++]=params.oilAddress;
     paramsArray[i++]=params.oil;
     paramsArray[i++]=params.urea;
+    paramsArray[i++]=params.oilMoney;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveExceedOilRel ');
         return callback(error,rows);
