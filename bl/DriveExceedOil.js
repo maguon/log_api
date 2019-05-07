@@ -174,7 +174,7 @@ function queryDriveOilMoneyWeekStat(req,res,next){
 function getDriveExceedOilCsv(req,res,next){
     var csvString = "";
     var header = "超量结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属公司" + ','+"核油日期" + ','+ "计划用油量" + ','+
-        "计划尿素量"+','+ "实际用油量" + ','+ "实际尿素量" + ','+ "超油量" + ','+ "超尿素量" + ','+ "实际超量金额" + ','+ "处理状态";
+        "计划尿素量"+','+ "实际用油量" + ','+ "实际尿素量" + ','+ "超油量" + ','+ "超尿素量" + ','+ "处理状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -231,11 +231,6 @@ function getDriveExceedOilCsv(req,res,next){
                 }else{
                     parkObj.exceedUrea = rows[i].exceed_urea;
                 }
-                if(rows[i].actual_money == null){
-                    parkObj.actualMoney = "";
-                }else{
-                    parkObj.actualMoney = rows[i].actual_money;
-                }
                 if(rows[i].oil_status == 1){
                     parkObj.oilStatus = "处理中";
                 }else{
@@ -243,7 +238,7 @@ function getDriveExceedOilCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.companyName+","+
                     parkObj.oilDate+","+ parkObj.planOil+","+parkObj.planUrea +","+parkObj.actualOil+","+parkObj.actualUrea+","+
-                    parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.oilStatus+ '\r\n';
+                    parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.oilStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
