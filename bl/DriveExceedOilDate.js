@@ -17,8 +17,13 @@ function createDriveExceedOilDate(req,res,next){
     var params = req.params ;
     driveExceedOilDateDAO.addDriveExceedOilDate(params,function(error,result){
         if (error) {
-            logger.error(' createDriveExceedOilDate ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            if(error.message.indexOf("Duplicate") > 0) {
+                resUtil.resetFailedRes(res, "本月已结，操作失败");
+                return next();
+            } else{
+                logger.error(' createDriveExceedOilDate ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            }
         } else {
             logger.info(' createDriveExceedOilDate ' + 'success');
             resUtil.resetCreateRes(res,result,null);
