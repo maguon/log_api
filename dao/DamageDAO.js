@@ -25,12 +25,13 @@ function addDamage(params,callback){
 }
 
 function addUploadDamage(params,callback){
-    var query = " insert into damage_info (declare_user_id,car_id,date_id,upload_id) " +
-        " values ( ? , ? , ? , ? ) ";
+    var query = " insert into damage_info (declare_user_id,car_id,date_id,damage_explain,upload_id) " +
+        " values ( ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.carId;
     paramsArray[i++]=params.dateId;
+    paramsArray[i++]=params.damageExplain;
     paramsArray[i]=params.uploadId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addUploadDamage ');

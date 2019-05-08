@@ -361,16 +361,16 @@ function uploadDamageFile(req,res,next){
     var myDate = new Date();
     var successedInsert = 0;
     var failedCase = 0;
-    var obj={'VIN':'vin','品牌ID':'makeId','委托方ID':'entrustId','起始地ID':'routeStartId','目的地ID':'routeEndId','经销商ID':'receiveId'};
+    //var obj={'VIN':'vin','品牌ID':'makeId','委托方ID':'entrustId','起始地ID':'routeStartId','目的地ID':'routeEndId','经销商ID':'receiveId'};
     var file = req.files.file;
     csv().fromFile(file.path).then(function(objArray) {
         Seq(objArray).seqEach(function(rowObj,i){
             var that = this;
             var subParams ={
                 vin : objArray[i].VIN,
-                makeId : objArray[i].品牌ID,
                 entrustId : objArray[i].委托方ID,
                 routeStartId : objArray[i].起始地ID,
+                baseAddrId : objArray[i].起始装车地ID,
                 routeEndId : objArray[i].目的地ID,
                 receiveId : objArray[i].经销商ID,
                 row : i+1,
@@ -384,7 +384,7 @@ function uploadDamageFile(req,res,next){
                     } else{
                         if(rows&&rows.length==1) {
                             parkObj.carId = rows[0].id;
-                            console.log(parkObj.carId)
+                            parkObj.damageExplain = objArray[i].质损说明;
                         }else{
                             parkObj.carId = 0;
                         }
@@ -398,10 +398,11 @@ function uploadDamageFile(req,res,next){
                         userId : params.userId,
                         carId : parkObj.carId,
                         dateId : parseInt(moment(myDate).format('YYYYMMDD')),
+                        damageExplain : parkObj.damageExplain,
                         uploadId : params.uploadId,
                         row : i+1,
                     }
-                    damageDAO.addDamage(subParams,function(err,result){
+                    damageDAO.addUploadDamage(subParams,function(err,result){
                         if (err) {
                             logger.error(' createUploadDamage ' + err.message);
                             //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
