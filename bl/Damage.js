@@ -357,6 +357,8 @@ function queryDamageDaseAddrTopMonthStat(req,res,next){
 
 function uploadDamageFile(req,res,next){
     var params = req.params;
+    var parkObj = {};
+    var myDate = new Date();
     var successedInsert = 0;
     var failedCase = 0;
     var file = req.files.file;
@@ -364,30 +366,58 @@ function uploadDamageFile(req,res,next){
         Seq(objArray).seqEach(function(rowObj,i){
             var that = this;
             var subParams ={
-                carId : objArray[i].carId,
-                driveId : objArray[i].driveId,
-                driveName : objArray[i].driveName,
-                truckId : objArray[i].truckId,
-                truckNum : objArray[i].truckNum,
-                dateId : parseInt(moment(objArray[i].dateId).format('YYYYMMDD')),
-                damageExplain : objArray[i].damageExplain,
-                userId : params.userId,
-                uploadId : params.uploadId,
+                vin : objArray[i].vin,
+                makeId : objArray[i].makeId,
+                entrustId : objArray[i].entrustId,
+                routeStartId : objArray[i].routeStartId,
+                routeEndId : objArray[i].routeEndId,
+                receiveId : objArray[i].receiveId,
                 row : i+1,
             }
-            damageDAO.addDamage(subParams,function(err,result){
-                if (err) {
-                    logger.error(' createUploadDamage ' + err.message);
-                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if(result&&result.insertId>0){
-                        successedInsert = successedInsert+result.affectedRows;
-                        logger.info(' createUploadDamage ' + 'success');
-                    }else{
-                        logger.warn(' createUploadDamage ' + 'failed');
+            Seq().seq(function(){
+                var that = this;
+                carDAO.getCarList(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getCarList ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length>0) {
+                            parkObj.carId = rows[0].id;
+                        }else{
+                            parkObj.carId = 0;
+                        }
+                        that();
                     }
+                })
+
+            }).seq(function(){
+                if(parkObj.carId>0){
+                    var subParams ={
+                        userId : params.userId,
+                        carId : parkObj.carId,
+                        dateId : parseInt(moment(myDate).format('YYYYMMDD')),
+                        uploadId : params.uploadId,
+                        row : i+1,
+                    }
+                    damageDAO.addDamage(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' createUploadDamage ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result&&result.insertId>0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' createUploadDamage ' + 'success');
+                            }else{
+                                logger.warn(' createUploadDamage ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
                     that(null,i);
                 }
+
             })
 
         }).seq(function(){

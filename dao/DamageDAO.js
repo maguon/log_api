@@ -24,6 +24,20 @@ function addDamage(params,callback){
     });
 }
 
+function addUploadDamage(params,callback){
+    var query = " insert into damage_info (declare_user_id,car_id,date_id,upload_id) " +
+        " values ( ? , ? , ? , ? ) ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.carId;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i]=params.uploadId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addUploadDamage ');
+        return callback(error,rows);
+    });
+}
+
 function getDamage(params,callback) {
     var query = " select da.*,u.real_name as declare_user_name,u.type,u.mobile,c.vin,c.make_id,c.make_name,c.ship_name," +
         " c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name," +
@@ -580,6 +594,7 @@ function getDamageDaseAddrTopMonthStat(params,callback) {
 
 module.exports ={
     addDamage : addDamage,
+    addUploadDamage : addUploadDamage,
     getDamage : getDamage,
     getDamageBase : getDamageBase,
     getDamageCheckCount : getDamageCheckCount,
