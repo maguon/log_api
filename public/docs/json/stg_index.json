@@ -21186,6 +21186,51 @@
         }
       }
     },
+    "/user/{userId}/dpRouteLoadTaskCleanRel": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteLoadTaskCleanRel",
+        "description": "user create dpRouteLoadTaskCleanRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteLoadTaskCleanRel",
+            "in": "body",
+            "description": "dpRouteLoadTaskCleanRel info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteLoadTaskCleanRel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTaskCleanRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/loadTaskCleanRel/{loadTaskCleanRelId}": {
       "put": {
         "tags": [
@@ -30403,6 +30448,45 @@
         "name": "dpRouteLoadTaskDetail"
       }
     },
+    "dpRouteLoadTaskCleanRel": {
+      "type": "object",
+      "properties": {
+
+        "dpRouteTaskId": {
+          "type": "integer"
+        },
+        "dpRouteLoadTaskId": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "receiveId": {
+          "type": "integer"
+        },
+        "singlePrice": {
+          "type": "integer"
+        },
+        "totalPrice": {
+          "type": "integer"
+        },
+        "guardFee": {
+          "type": "integer"
+        },
+        "carCount": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteLoadTaskCleanRel"
+      }
+    },
     "loadTaskCleanRel": {
       "type": "object",
       "properties": {
@@ -30412,6 +30496,9 @@
         },
         "actualGuardFee": {
           "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {

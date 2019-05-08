@@ -634,7 +634,13 @@ ADD COLUMN `oil_address_type`  tinyint(1) NULL COMMENT '加油地类别(1-内部
 ALTER TABLE `drive_exceed_oil_rel`
 ADD COLUMN `oil_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '加油金额' AFTER `urea`;
 -- ----------------------------
--- 2019-05-07 更新
+-- 2019-05-08 更新
 -- ----------------------------
 ALTER TABLE `damage_info`
 ADD COLUMN `upload_id`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '上传ID' AFTER `stat_status`;
+-- ----------------------------
+-- 2019-05-08 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `type`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '类型(0-自动生成,1-手动补发)' AFTER `date_id`,
+ADD COLUMN `remark`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '备注' AFTER `type`;

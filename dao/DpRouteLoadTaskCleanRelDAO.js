@@ -8,7 +8,8 @@ var logger = serverLogger.createLogger('DpRouteLoadTaskCleanRelDAO.js');
 
 function addDpRouteLoadTaskCleanRel(params,callback){
     var query = " insert into dp_route_load_task_clean_rel (dp_route_task_id,dp_route_load_task_id," +
-        " drive_id,truck_id,receive_id,single_price,total_price,guard_fee,car_count) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " drive_id,truck_id,receive_id,single_price,total_price,guard_fee,car_count,type) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.dpRouteLoadTaskId;
@@ -18,7 +19,8 @@ function addDpRouteLoadTaskCleanRel(params,callback){
     paramsArray[i++]=params.singlePrice;
     paramsArray[i++]=params.totalPrice;
     paramsArray[i++]=params.guardFee;
-    paramsArray[i]=params.carCount;
+    paramsArray[i++]=params.carCount;
+    paramsArray[i]=params.type;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteLoadTaskCleanRel ');
         return callback(error,rows);
@@ -230,10 +232,12 @@ function getDpRouteLoadTaskCleanRelReceiveWeekStat(params,callback) {
 }
 
 function updateDpRouteLoadTaskCleanRel(params,callback){
-    var query = " update dp_route_load_task_clean_rel set actual_price = ? , actual_guard_fee = ? where id = ? " ;
+    var query = " update dp_route_load_task_clean_rel set actual_price = ? , actual_guard_fee = ? , " +
+        " remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++] = params.actualPrice;
     paramsArray[i++] = params.actualGuardFee;
+    paramsArray[i++] = params.remark;
     paramsArray[i] = params.loadTaskCleanRelId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadTaskCleanRel ');

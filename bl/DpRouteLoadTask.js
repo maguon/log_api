@@ -247,6 +247,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.totalPrice = parkObj.cleanFee * parkObj.carCount;
             params.guardFee = parkObj.guardFee;
             params.carCount = parkObj.carCount;
+            params.type = 0;
             dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params, function (error, result) {
                 if (error) {
                     logger.error(' addDpRouteLoadTaskCleanRel ' + error.message);

@@ -15,6 +15,20 @@ var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskCleanRel.js');
 
+function createDpRouteLoadTaskCleanRel(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params,function(error,result){
+        if (error) {
+            logger.error(' createDpRouteLoadTaskCleanRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createDpRouteLoadTaskCleanRel ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDpRouteLoadTaskCleanRel(req,res,next){
     var params = req.params ;
     dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel(params,function(error,result){
@@ -239,6 +253,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
 
 
 module.exports = {
+    createDpRouteLoadTaskCleanRel : createDpRouteLoadTaskCleanRel,
     queryDpRouteLoadTaskCleanRel : queryDpRouteLoadTaskCleanRel,
     queryDpRouteLoadTaskCleanRelMonthStat : queryDpRouteLoadTaskCleanRelMonthStat,
     queryDpRouteLoadTaskCleanRelReceiveMonthStat : queryDpRouteLoadTaskCleanRelReceiveMonthStat,
