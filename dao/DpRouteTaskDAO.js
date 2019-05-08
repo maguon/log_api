@@ -278,30 +278,17 @@ function getDpRouteTaskBase(params,callback) {
     });
 }
 
-function getDriveDistanceCount(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,u.mobile,dpr.truck_id,t.truck_num, " +
-        " count(case when dpr.task_status = " + params.taskStatus + " then dpr.id end) as complete_count, " +
-        " sum(case when dpr.car_count >= " + params.loadDistance + " then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.car_count < " + params.noLoadDistance + " then dpr.distance end) as no_load_distance, " +
-        " td.dispatch_flag,td.current_city,td.task_start,td.task_end " +
-        " from dp_route_task dpr " +
-        " left join drive_info d on dpr.drive_id = d.id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
-        " left join truck_dispatch td on dpr.truck_id = td.truck_id " +
-        " left join user_info u on d.user_id = u.uid " +
+function getDriveDistanceMoney(params,callback) {
+    var query = " select dpr.* from dp_route_task dpr " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status >= ? ";
+    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and dpr.drive_id = ? ";
-    }
-    if(params.driveName){
-        paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
-    }
-    if(params.truckNum){
-        paramsArray[i++] = params.truckNum;
-        query = query + " and t.truck_num = ? ";
     }
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
@@ -311,7 +298,33 @@ function getDriveDistanceCount(params,callback) {
         paramsArray[i++] = params.dateIdEnd;
         query = query + " and dpr.date_id <= ? ";
     }
-    query = query + ' group by d.id,dpr.truck_id,td.dispatch_flag,td.current_city,td.task_start,td.task_end ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveDistanceMoney ');
+        return callback(error,rows);
+    });
+}
+
+function getDriveDistanceCount(params,callback) {
+    var query = " select sum(dpr.distance) as distance,sum(dpr.car_count) as car_count " +
+        " from dp_route_task dpr " +
+        " where dpr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status >= ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dpr.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dpr.date_id <= ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveDistanceCount ');
         return callback(error,rows);
@@ -583,6 +596,7 @@ module.exports ={
     getDpRouteTaskList : getDpRouteTaskList,
     getDpRouteTaskBase : getDpRouteTaskBase,
     getNotCompletedTaskStatusCount : getNotCompletedTaskStatusCount,
+    getDriveDistanceMoney : getDriveDistanceMoney,
     getDriveDistanceCount : getDriveDistanceCount,
     getDriveDistanceLoadStat : getDriveDistanceLoadStat,
     getTaskStatusCount : getTaskStatusCount,

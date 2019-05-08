@@ -18627,6 +18627,66 @@
         }
       }
     },
+    "/driveDistanceMoney": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  driveDistanceMoney list",
+        "description": "query driveDistanceMoney",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/driveDistanceCount": {
       "get": {
         "tags": [
@@ -18647,41 +18707,9 @@
 
           },
           {
-            "name": "loadDistance",
-            "in": "query",
-            "description": "load distance",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "noLoadDistance",
-            "in": "query",
-            "description": "noLoad distance",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
             "name": "driveId",
             "in": "query",
             "description": "drive id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "driveName",
-            "in": "query",
-            "description": "drive name",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckNum",
-            "in": "query",
-            "description": "truck num",
             "required": false,
             "type": "integer"
 

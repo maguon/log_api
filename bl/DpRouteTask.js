@@ -246,7 +246,83 @@ function queryDpRouteTaskList(req,res,next){
         }
     })
 }
-//app不使用可废除
+
+function queryDpRouteTaskBase(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getDpRouteTaskBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDriveDistanceMoney(req,res,next){
+    var params = req.params ;
+    var distanceMoney = 0;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
+    dpRouteTaskDAO.getDriveDistanceMoney(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDriveDistanceMoney ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                if(rows[i].truck_number==8&&rows[i].car_count<=4){
+                    distanceMoney = distanceMoney +(rows[i].distance*0.6);
+                }
+                if(rows[i].truck_number==8&&rows[i].car_count<=5){
+                    distanceMoney = distanceMoney +(rows[i].distance*0.7);
+                }
+                if(rows[i].truck_number==8&&rows[i].car_count<=6){
+                    distanceMoney = distanceMoney +(rows[i].distance*0.8);
+                }
+                if(rows[i].truck_number==8&&rows[i].car_count<=7){
+                    distanceMoney = distanceMoney +(rows[i].distance*0.9);
+                }
+                if(rows[i].truck_number==8&&rows[i].car_count<=8){
+                    distanceMoney = distanceMoney +(rows[i].distance*1);
+                }
+                if(rows[i].truck_number==8&&rows[i].car_count<=9){
+                    distanceMoney = distanceMoney +(rows[i].distance*1.1);
+                }
+                if(rows[i].truck_number==8&&rows[i].car_count<=10){
+                    distanceMoney = distanceMoney +(rows[i].distance*1.2);
+                }
+                if(rows[i].truck_number==8&&rows[i].car_count<=11){
+                    distanceMoney = distanceMoney +(rows[i].distance*1.3);
+                }
+                if(rows[i].truck_number==6&&rows[i].car_count<=4){
+                    distanceMoney = distanceMoney +(rows[i].distance*0.7);
+                }
+                if(rows[i].truck_number==6&&rows[i].car_count<=5){
+                    distanceMoney = distanceMoney +(rows[i].distance*0.8);
+                }
+                if(rows[i].truck_number==6&&rows[i].car_count<=6){
+                    distanceMoney = distanceMoney +(rows[i].distance*0.9);
+                }
+            }
+            logger.info(' queryDriveDistanceMoney ' + 'success');
+            resUtil.resetQueryRes(res,distanceMoney);
+            return next();
+        }
+    })
+}
+
 function queryDriveDistanceCount(req,res,next){
     var params = req.params ;
     if(params.dateIdStart !=null || params.dateIdStart !=""){
@@ -272,7 +348,7 @@ function queryDriveDistanceCount(req,res,next){
         }
     })
 }
-//web,app司机里程共用
+
 function queryDriveDistanceLoadStat(req,res,next){
     var params = req.params ;
     if(params.dateIdStart !=null || params.dateIdStart !=""){
@@ -307,20 +383,6 @@ function queryNotCompletedTaskStatusCount(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' queryNotCompletedTaskStatusCount ' + 'success');
-            resUtil.resetQueryRes(res,result,null);
-            return next();
-        }
-    })
-}
-
-function queryDpRouteTaskBase(req,res,next){
-    var params = req.params ;
-    dpRouteTaskDAO.getDpRouteTaskBase(params,function(error,result){
-        if (error) {
-            logger.error(' queryDpRouteTaskBase ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' queryDpRouteTaskBase ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -989,6 +1051,7 @@ module.exports = {
     queryDpRouteTask : queryDpRouteTask,
     queryDpRouteTaskList : queryDpRouteTaskList,
     queryDpRouteTaskBase : queryDpRouteTaskBase,
+    queryDriveDistanceMoney : queryDriveDistanceMoney,
     queryDriveDistanceCount : queryDriveDistanceCount,
     queryDriveDistanceLoadStat : queryDriveDistanceLoadStat,
     queryNotCompletedTaskStatusCount : queryNotCompletedTaskStatusCount,
