@@ -86,6 +86,11 @@ var OIL_LOAD_FLAG = {  //油耗是否满载
     loan : 1 //是
 };
 
+var REVERSE_FLAG = {  //是否倒板
+    not_reverse : 0 ,  //否
+    reverse : 1 //是
+};
+
 var LOAD_TASK_STATUS  ={
     no_load : 1,
     load : 3,
@@ -221,6 +226,7 @@ module.exports = {
     TASK_STATUS : TASK_STATUS,
     LOAD_FLAG : LOAD_FLAG,
     OIL_LOAD_FLAG : OIL_LOAD_FLAG,
+    REVERSE_FLAG : REVERSE_FLAG,
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,
     CLEAN_STATUS : CLEAN_STATUS,

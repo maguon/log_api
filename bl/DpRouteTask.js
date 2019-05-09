@@ -1046,6 +1046,9 @@ function updateDpRouteOilLoadFlag (req,res,next){
 
 function updateDpRouteReverseFlag (req,res,next){
     var params = req.params;
+    if(params.reverseFlag==sysConst.REVERSE_FLAG.not_reverse){
+        params.reverseMoney = 0;
+    }
     dpRouteTaskDAO.updateDpRouteReverseFlag(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteReverseFlag ' + error.message);
