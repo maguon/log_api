@@ -27,7 +27,7 @@ function uploadTruckEtcFile(req,res,next){
         Seq(objArray).seqEach(function(rowObj,i){
             var that = this;
             var subParams ={
-                truckNum : objArray[i].货车号,
+                truckNum : objArray[i].车牌号,
                 row : i+1,
             }
             Seq().seq(function(){
@@ -49,7 +49,7 @@ function uploadTruckEtcFile(req,res,next){
                 if(parkObj.truckId>0){
                     var subParams ={
                         truckId : parkObj.truckId,
-                        truckNum : objArray[i].货车号,
+                        truckNum : objArray[i].车牌号,
                         driveId : parkObj.driveId,
                         driveName : parkObj.driveName,
                         etcFee : objArray[i].费用,
