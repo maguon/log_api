@@ -6938,6 +6938,141 @@
         }
       }
     },
+    "/truckEtc": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckEtc list",
+        "description": "query truckEtc",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckEtcId",
+            "in": "query",
+            "description": "truckEtc id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "etcDateStart",
+            "in": "query",
+            "description": "etcDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "etcDatenEnd",
+            "in": "query",
+            "description": "etcDaten end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckSecurityCheck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckSecurityCheck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckEtcFile": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user upload truckEtcFile ",
+        "description": "user upload truckEtcFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [

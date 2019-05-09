@@ -24,6 +24,7 @@ var truckAccidentInsure = require('./bl/TruckAccidentInsure.js');
 var truckAccidentInsureRel = require('./bl/TruckAccidentInsureRel.js');
 var truckAccidentInsureLoan = require('./bl/TruckAccidentInsureLoan.js');
 var truckSecurityCheck = require('./bl/TruckSecurityCheck.js');
+var truckEtc = require('./bl/TruckEtc.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
@@ -339,6 +340,12 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckSecurityCheck',contentType: 'application/json'},truckSecurityCheck.createTruckSecurityCheck);
     server.put({path:'/api/user/:userId/truckSecurityCheck/:securityCheckId',contentType: 'application/json'} ,truckSecurityCheck.updateTruckSecurityCheck);
     server.get('/api/truckSecurityCheck.csv', truckSecurityCheck.getTruckSecurityCheckCsv);
+
+    /**
+     * TruckEtc Module
+     */
+    server.get('/api/truckEtc' ,truckEtc.queryTruckEtc);
+    server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
 
     /**
      * Brand Module

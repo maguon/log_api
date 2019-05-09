@@ -656,3 +656,26 @@ ADD COLUMN `reverse_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '倒板金额' 
 ALTER TABLE `dp_route_task_oil_rel`
 DROP COLUMN `distance`,
 DROP COLUMN `load_flag`;
+-- ----------------------------
+-- 2019-05-09 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for truck_etc
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_etc`;
+CREATE TABLE `truck_etc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `truck_id` int(10) DEFAULT '0' COMMENT '货车ID',
+  `truck_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '货车牌号',
+  `drive_id` int(10) DEFAULT '0' COMMENT '司机ID',
+  `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
+  `etc_fee` decimal(10,2) DEFAULT '0.00' COMMENT '费用',
+  `etc_date` datetime DEFAULT NULL COMMENT '加油时间',
+  `date_id` int(4) DEFAULT NULL COMMENT 'ETC统计时间',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `op_user_id` int(10) DEFAULT '0' COMMENT '操作人ID',
+  `upload_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上传ID',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
