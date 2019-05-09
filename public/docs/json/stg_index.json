@@ -19496,6 +19496,59 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteReverseFlag": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteReverseFlag",
+        "description": "update dpRouteReverseFlag",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteReverseFlag",
+            "in": "body",
+            "description": "dpRouteReverseFlag info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteReverseFlag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask/{dpRouteTaskId}": {
       "delete": {
         "tags": [
@@ -30305,6 +30358,21 @@
       },
       "xml": {
         "name": "dpRouteOilLoadFlag"
+      }
+    },
+    "dpRouteReverseFlag": {
+      "type": "object",
+      "properties": {
+
+        "reverseFlag": {
+          "type": "integer"
+        },
+        "reverseMoney": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteReverseFlag"
       }
     },
     "dpRouteTaskBatch": {

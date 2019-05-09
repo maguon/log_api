@@ -682,6 +682,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatusBack/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatusBack,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteLoadFlag,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteOilLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteOilLoadFlag,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteReverseFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteReverseFlag);
     server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId' , dpRouteTask.removeDpRouteTask,sysRecord.saveRouteRecord);
 
     /**

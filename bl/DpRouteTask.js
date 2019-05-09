@@ -1044,6 +1044,20 @@ function updateDpRouteOilLoadFlag (req,res,next){
     })
 }
 
+function updateDpRouteReverseFlag (req,res,next){
+    var params = req.params;
+    dpRouteTaskDAO.updateDpRouteReverseFlag(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteReverseFlag ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteReverseFlag ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -1066,5 +1080,6 @@ module.exports = {
     getDriveDistanceLoadStatCsv : getDriveDistanceLoadStatCsv,
     getDriveDistanceLoadCsv : getDriveDistanceLoadCsv,
     updateDpRouteLoadFlag : updateDpRouteLoadFlag,
-    updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag
+    updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
+    updateDpRouteReverseFlag : updateDpRouteReverseFlag
 }

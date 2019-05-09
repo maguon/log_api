@@ -644,3 +644,9 @@ ADD COLUMN `upload_id`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicod
 ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `type`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '类型(0-自动生成,1-手动补发)' AFTER `date_id`,
 ADD COLUMN `remark`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '备注' AFTER `type`;
+-- ----------------------------
+-- 2019-05-09 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `reverse_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否倒板(0-否,1-是)' AFTER `load_flag`,
+ADD COLUMN `reverse_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '倒板金额' AFTER `reverse_flag`;

@@ -589,6 +589,18 @@ function updateDpRouteOilLoadFlag(params,callback){
     });
 }
 
+function updateDpRouteReverseFlag(params,callback){
+    var query = " update dp_route_task set reverse_flag = ? , reverse_money = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.reverseFlag;
+    paramsArray[i++]=params.reverseMoney;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteReverseFlag ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTask : addDpRouteTask,
@@ -608,5 +620,6 @@ module.exports ={
     getRouteTaskWeekStat : getRouteTaskWeekStat ,
     getRouteTaskDayStat : getRouteTaskDayStat,
     updateDpRouteLoadFlag : updateDpRouteLoadFlag,
-    updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag
+    updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
+    updateDpRouteReverseFlag : updateDpRouteReverseFlag
 }
