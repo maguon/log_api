@@ -8,8 +8,8 @@ var logger = serverLogger.createLogger('DpRouteTaskOilRelDAO.js');
 
 function addDpRouteTaskOilRel(params,callback){
     var query = " insert into dp_route_task_oil_rel(dp_route_task_id,truck_id,drive_id,route_id," +
-        " route_start_id,route_start,route_end_id,route_end,distance,load_flag,oil,total_oil,urea,total_urea)" +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " route_start_id,route_start,route_end_id,route_end,oil,total_oil,urea,total_urea)" +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.truckId;
@@ -19,8 +19,6 @@ function addDpRouteTaskOilRel(params,callback){
     paramsArray[i++]=params.routeStart;
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
-    paramsArray[i++]=params.distance;
-    paramsArray[i++]=params.loadFlag;
     paramsArray[i++]=params.oil;
     paramsArray[i++]=params.totalOil;
     paramsArray[i++]=params.urea;
@@ -32,7 +30,7 @@ function addDpRouteTaskOilRel(params,callback){
 }
 
 function getDpRouteTaskOilRel(params,callback) {
-    var query = " select dpror.*,t.truck_num,d.drive_name,dpr.task_plan_date,dpr.oil_distance,dpr.oil_load_flag " +
+    var query = " select dpror.*,t.truck_num,d.drive_name,dpr.task_plan_date,dpr.distance,dpr.load_flag,dpr.oil_distance,dpr.oil_load_flag " +
         " from dp_route_task_oil_rel dpror " +
         " left join dp_route_task dpr on dpror.dp_route_task_id = dpr.id " +
         " left join truck_info t on dpror.truck_id = t.id " +
@@ -70,6 +68,18 @@ function getDpRouteTaskOilRel(params,callback) {
     });
 }
 
+function updateDpRouteTaskOilReltotalOil(params,callback){
+    var query = " update dp_route_task_oil_rel set oil = ? , total_oil = ? where dp_route_task_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.oil;
+    paramsArray[i++] = params.totalOil;
+    paramsArray[i] = params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskOilReltotalOil ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskOilRelStatus(params,callback){
     var query = " update dp_route_task_oil_rel set settle_status = ? where id = ?";
     var paramsArray=[],i=0;
@@ -85,5 +95,6 @@ function updateDpRouteTaskOilRelStatus(params,callback){
 module.exports ={
     addDpRouteTaskOilRel : addDpRouteTaskOilRel,
     getDpRouteTaskOilRel : getDpRouteTaskOilRel,
+    updateDpRouteTaskOilReltotalOil : updateDpRouteTaskOilReltotalOil,
     updateDpRouteTaskOilRelStatus : updateDpRouteTaskOilRelStatus
 }

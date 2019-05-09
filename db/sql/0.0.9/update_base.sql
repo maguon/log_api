@@ -650,3 +650,9 @@ ADD COLUMN `remark`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL
 ALTER TABLE `dp_route_task`
 ADD COLUMN `reverse_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否倒板(0-否,1-是)' AFTER `load_flag`,
 ADD COLUMN `reverse_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '倒板金额' AFTER `reverse_flag`;
+-- ----------------------------
+-- 2019-05-09 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_oil_rel`
+DROP COLUMN `distance`,
+DROP COLUMN `load_flag`;

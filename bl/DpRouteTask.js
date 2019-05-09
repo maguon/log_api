@@ -519,8 +519,6 @@ function updateDpRouteTaskStatus(req,res,next){
                 routeStart:parkObj.routeStart,
                 routeEndId:parkObj.routeEndId,
                 routeEnd:parkObj.routeEnd,
-                distance:parkObj.distance,
-                loadFlag:parkObj.loadFlag,
                 oil:parkObj.oil,
                 totalOil:parkObj.totalOil,
                 urea:parkObj.urea,
@@ -1001,7 +999,7 @@ function getDriveDistanceLoadCsv(req,res,next){
 function updateDpRouteLoadFlag (req,res,next){
     var params = req.params;
     var loadFlag = "";
-    if(params.loadFlag==0){
+    if(params.loadFlag==sysConst.LOAD_FLAG.not_loan){
         loadFlag = "空载";
     }else{
         loadFlag = "重载";
@@ -1023,24 +1021,68 @@ function updateDpRouteLoadFlag (req,res,next){
 
 function updateDpRouteOilLoadFlag (req,res,next){
     var params = req.params;
+    var parkObj = {};
     var oilLoadFlag = "";
-    if(params.oilLoadFlag==0){
-        oilLoadFlag = "空载";
-    }else{
-        oilLoadFlag = "重载";
-    }
-    dpRouteTaskDAO.updateDpRouteOilLoadFlag(params,function(error,result){
-        if (error) {
-            logger.error(' updateDpRouteOilLoadFlag ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDpRouteOilLoadFlag ' + 'success');
-            req.params.routeContent =" 修改油耗里程："+params.oilDistance+"公里  "+oilLoadFlag;
-            req.params.routeId = params.dpRouteTaskId;
-            req.params.routeOp =sysConst.RECORD_OP_TYPE.oil_distance;
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
+    Seq().seq(function () {
+        var that = this;
+        dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteTask ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length > 0) {
+                    parkObj.loadDistanceOil=rows[0].load_distance_oil;
+                    parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
+                    that();
+                } else {
+                    logger.warn(' getDpRouteTask ' + 'failed');
+                    resUtil.resetFailedRes(res, " 指令路线已被删除 ");
+                    return next();
+                }
+            }
+        })
+        }).seq(function(){
+            var that = this;
+            if(params.oilLoadFlag==sysConst.OIL_LOAD_FLAG.loan){
+                params.oil = parkObj.loadDistanceOil;
+                params.totalOil = (params.oilDistance*parkObj.loadDistanceOil)/100;
+            }else{
+                params.oil = parkObj.noLoadDistanceOil;
+                params.totalOil = (params.oilDistance*parkObj.noLoadDistanceOil)/100;
+            }
+            dpRouteTaskOilRelDAO.updateDpRouteTaskOilReltotalOil(params, function (error, result) {
+                if (error) {
+                    logger.error(' updateDpRouteTaskOilReltotalOil ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.affectedRows > 0) {
+                        logger.info(' updateDpRouteTaskOilReltotalOil ' + 'success');
+                    } else {
+                        logger.warn(' updateDpRouteTaskOilReltotalOil ' + 'failed');
+                    }
+                    that();
+                }
+            })
+    }).seq(function () {
+        if(params.oilLoadFlag==sysConst.OIL_LOAD_FLAG.not_loan){
+            oilLoadFlag = "空载";
+        }else{
+            oilLoadFlag = "重载";
         }
+        dpRouteTaskDAO.updateDpRouteOilLoadFlag(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteOilLoadFlag ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpRouteOilLoadFlag ' + 'success');
+                req.params.routeContent =" 修改油耗里程："+params.oilDistance+"公里  "+oilLoadFlag;
+                req.params.routeId = params.dpRouteTaskId;
+                req.params.routeOp =sysConst.RECORD_OP_TYPE.oil_distance;
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
