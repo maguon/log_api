@@ -41,6 +41,8 @@ function uploadTruckEtcFile(req,res,next){
                             parkObj.truckId = rows[0].id;
                             parkObj.driveId = rows[0].drive_id;
                             parkObj.driveName = rows[0].drive_name;
+                        }else{
+                            parkObj.truckId = 0;
                         }
                         that();
                     }

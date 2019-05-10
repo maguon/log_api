@@ -480,6 +480,7 @@ function createServer() {
     server.get('/api/driveSocialSecurity' , driveSocialSecurity.queryDriveSocialSecurity);
     server.post({path:'/api/user/:userId/driveSocialSecurity',contentType: 'application/json'},driveSocialSecurity.createDriveSocialSecurity);
     server.put({path:'/api/user/:userId/driveSocialSecurity/:driveSocialSecurityId',contentType: 'application/json'} ,driveSocialSecurity.updateDriveSocialSecurity);
+    server.post({path:'/api/user/:userId/driveSocialSecurityFile',contentType: 'multipart/form-data'},driveSocialSecurity.uploadDriveSocialSecurityFile);
 
     /**
      * Company Module

@@ -33,6 +33,10 @@ function getDriveSocialSecurity(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and dss.drive_id = ? ";
     }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dss.drive_id = ? ";
+    }
     if(params.mobile){
         paramsArray[i++] = params.mobile;
         query = query + " and dss.mobile = ? ";

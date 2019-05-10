@@ -8,10 +8,13 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var driveSocialSecurityDAO = require('../dao/DriveSocialSecurityDAO.js');
+var driveDAO = require('../dao/DriveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSocialSecurity.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createDriveSocialSecurity(req,res,next){
     var params = req.params ;
@@ -60,6 +63,123 @@ function createDriveSocialSecurity(req,res,next){
     })
 }
 
+function uploadDriveSocialSecurityFile(req,res,next){
+    var params = req.params;
+    var driveFlag  = true;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    driveName : objArray[i].司机姓名,
+                    mobile : objArray[i].电话,
+                    row : i+1,
+                }
+                driveDAO.getDrive(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getDrive ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.driveId = rows[0].id;
+                        }else{
+                            parkObj.driveId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    driveId : parkObj.driveId,
+                    mobile : objArray[i].电话,
+                    yMonth : objArray[i].月份,
+                    row : i+1,
+                }
+                driveSocialSecurityDAO.getDriveSocialSecurity(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getDriveSocialSecurity ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1){
+                            driveFlag = false;
+                        }else{
+                            driveFlag = true;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(parkObj.driveId>0){
+                    if(driveFlag){
+                        var subParams ={
+                            driveId : parkObj.driveId,
+                            driveName : objArray[i].司机姓名,
+                            mobile : objArray[i].电话,
+                            yMonth : objArray[i].月份,
+                            socialSecurityFee : objArray[i].金额,
+                            row : i+1
+                        }
+                        driveSocialSecurityDAO.addDriveSocialSecurity(subParams,function(err,result){
+                            if (err) {
+                                logger.error(' createUploadDriveSocialSecurity ' + err.message);
+                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                                that(null,i);
+                            } else {
+                                if(result&&result.insertId>0){
+                                    successedInsert = successedInsert+result.affectedRows;
+                                    logger.info(' createUploadDriveSocialSecurity ' + 'success');
+                                }else{
+                                    logger.warn(' createUploadDriveSocialSecurity ' + 'failed');
+                                }
+                                that(null,i);
+                            }
+                        })
+                    }else{
+                        var subParams ={
+                            driveId : parkObj.driveId,
+                            mobile : objArray[i].电话,
+                            yMonth : objArray[i].月份,
+                            socialSecurityFee : objArray[i].金额,
+                            row : i+1
+                        }
+                        driveSocialSecurityDAO.updateDriveSocialSecurity(subParams,function(err,result){
+                            if (err) {
+                                logger.error(' updateDriveSocialSecurity ' + err.message);
+                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                                that(null,i);
+                            } else {
+                                if(result && result.affectedRows > 0){
+                                    successedInsert = successedInsert+result.affectedRows;
+                                    logger.info(' updateDriveSocialSecurity ' + 'success');
+                                }else{
+                                    logger.warn(' updateDriveSocialSecurity ' + 'failed');
+                                }
+                                that(null,i);
+                            }
+                        })
+                    }
+                }else{
+                    that(null,i);
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadDriveSocialSecurityFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 function queryDriveSocialSecurity(req,res,next){
     var params = req.params ;
     driveSocialSecurityDAO.getDriveSocialSecurity(params,function(error,result){
@@ -91,6 +211,7 @@ function updateDriveSocialSecurity(req,res,next){
 
 module.exports = {
     createDriveSocialSecurity : createDriveSocialSecurity,
+    uploadDriveSocialSecurityFile : uploadDriveSocialSecurityFile,
     queryDriveSocialSecurity : queryDriveSocialSecurity,
     updateDriveSocialSecurity : updateDriveSocialSecurity
 }
