@@ -138,6 +138,7 @@ function getDpDemandBase(params,callback) {
         paramsArray[i++] = params.demandStatus;
         query = query + " and dpd.demand_status = ? ";
     }
+    query = query + ' order by dpd.id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpDemandBase ');
         return callback(error,rows);
