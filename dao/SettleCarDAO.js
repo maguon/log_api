@@ -207,7 +207,11 @@ function updateSettleCar(params,callback){
 }
 
 function updateUploadSettleCar(params,callback){
-    var query = " update settle_car set price = ? , settle_status = ? , user_id = ? , upload_id = ? " +
+    var priceQueryString = "price";
+    if (params.seq &&params.seq!=1 &&params.seq<6) {
+        priceQueryString = "price_"+params.seq;
+    }
+    var query = " update settle_car set "+priceQueryString+" = ? , settle_status = ? , user_id = ? , upload_id = ? " +
         " where vin = ? and entrust_id = ? and route_start_id = ? and route_end_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.price;

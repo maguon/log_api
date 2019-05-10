@@ -679,3 +679,11 @@ CREATE TABLE `truck_etc` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-05-10 更新
+-- ----------------------------
+ALTER TABLE `settle_car`
+ADD COLUMN `price_2`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格2次结算' AFTER `price`,
+ADD COLUMN `price_3`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格3次结算' AFTER `price_2`,
+ADD COLUMN `price_4`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格4次结算' AFTER `price_3`,
+ADD COLUMN `price_5`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格5次结算' AFTER `price_4`;

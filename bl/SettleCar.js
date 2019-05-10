@@ -101,6 +101,7 @@ function uploadSettleCarFile(req,res,next){
                 routeStartId : objArray[i].routeStartId,
                 routeEndId : objArray[i].routeEndId,
                 price : objArray[i].price,
+                seq : objArray[i].seq,
                 settleStatus : sysConst.SETTLE_STATUS.settle,
                 userId : params.userId,
                 uploadId : params.uploadId,
