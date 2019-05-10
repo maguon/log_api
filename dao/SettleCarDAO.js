@@ -104,7 +104,8 @@ function getSettleCar(params,callback) {
 }
 
 function getSettleCarCount(params,callback) {
-    var query = " select count(sc.id) as settle_car_count,sum(sc.price) as price " +
+    var query = " select count(sc.id) as settle_car_count,sum(sc.price) as price," +
+        " sum(sc.price_2) as price_2,sum(sc.price_3) as price_3,sum(sc.price_4) as price_4,sum(sc.price_5) as price_5 " +
         " from settle_car sc " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
