@@ -11524,6 +11524,119 @@
         }
       }
     },
+    "/driveSocialSecurity": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveSocialSecurity list",
+        "description": "query driveSocialSecurity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSocialSecurityId",
+            "in": "query",
+            "description": "driveSocialSecurity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSocialSecurity"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSocialSecurity id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSocialSecurity": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSocialSecurity",
+        "description": "user create driveSocialSecurity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSocialSecurity",
+            "in": "body",
+            "description": "driveSocialSecurity info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSocialSecurity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSocialSecurity id"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [
@@ -29835,6 +29948,30 @@
       },
       "xml": {
         "name": "checkReason"
+      }
+    },
+    "driveSocialSecurity": {
+      "type": "object",
+      "properties": {
+
+        "driveId": {
+          "type": "integer"
+        },
+        "driveName": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "yMonth": {
+          "type": "integer"
+        },
+        "socialSecurityFee": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSocialSecurity"
       }
     },
     "company": {

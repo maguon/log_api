@@ -39,6 +39,7 @@ var driveExceedOil = require('./bl/DriveExceedOil.js');
 var driveExceedOilDate = require('./bl/DriveExceedOilDate.js');
 var driveExceedOilRel = require('./bl/DriveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
+var driveSocialSecurity = require('./bl/DriveSocialSecurity.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -472,6 +473,12 @@ function createServer() {
     server.get('/api/driveDpRouteTaskOilRel' , driveDpRouteTaskOilRel.queryDriveDpRouteTaskOilRel);
     server.post({path:'/api/user/:userId/driveDpRouteTaskOilRel',contentType: 'application/json'},driveDpRouteTaskOilRel.createDriveDpRouteTaskOilRel);
     server.del('/api/user/:userId/dpRouteTaskOilRel/:dpRouteTaskOilRelId/driveExceedOil/:driveExceedOilId' , driveDpRouteTaskOilRel.removeDriveDpRouteTaskOilRel);
+
+    /**
+     * DriveSocialSecurity Module
+     */
+    server.get('/api/driveSocialSecurity' , driveSocialSecurity.queryDriveSocialSecurity);
+    server.post({path:'/api/user/:userId/driveSocialSecurity',contentType: 'application/json'},driveSocialSecurity.createDriveSocialSecurity);
 
     /**
      * Company Module
