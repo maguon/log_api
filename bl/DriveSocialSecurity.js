@@ -74,8 +74,23 @@ function queryDriveSocialSecurity(req,res,next){
     })
 }
 
+function updateDriveSocialSecurity(req,res,next){
+    var params = req.params ;
+    driveSocialSecurityDAO.updateDriveSocialSecurity(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveSocialSecurity ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveSocialSecurity ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDriveSocialSecurity : createDriveSocialSecurity,
-    queryDriveSocialSecurity : queryDriveSocialSecurity
+    queryDriveSocialSecurity : queryDriveSocialSecurity,
+    updateDriveSocialSecurity : updateDriveSocialSecurity
 }

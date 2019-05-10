@@ -479,6 +479,7 @@ function createServer() {
      */
     server.get('/api/driveSocialSecurity' , driveSocialSecurity.queryDriveSocialSecurity);
     server.post({path:'/api/user/:userId/driveSocialSecurity',contentType: 'application/json'},driveSocialSecurity.createDriveSocialSecurity);
+    server.put({path:'/api/user/:userId/driveSocialSecurity/:driveSocialSecurityId',contentType: 'application/json'} ,driveSocialSecurity.updateDriveSocialSecurity);
 
     /**
      * Company Module

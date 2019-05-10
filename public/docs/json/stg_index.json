@@ -11637,6 +11637,60 @@
         }
       }
     },
+    "/user/{userId}/driveSocialSecurity/{driveSocialSecurityId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveSocialSecurity info",
+        "description": "update driveSocialSecurity info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSocialSecurityId",
+            "in": "path",
+            "description": "driveSocialSecurity id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSocialSecurity",
+            "in": "body",
+            "description": "driveSocialSecurity info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSocialSecurity"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSocialSecurity id"
+          }
+        }
+      }
+    },
     "/company": {
       "get": {
         "tags": [

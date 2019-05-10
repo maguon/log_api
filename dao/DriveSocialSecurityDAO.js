@@ -54,13 +54,25 @@ function getDriveSocialSecurity(params,callback) {
 }
 
 function updateDriveSocialSecurity(params,callback){
-    var query = " update drive_social_security set social_security_fee = ? " +
-        " where drive_id = ? and mobile = ? and y_month = ? " ;
+    var query = " update drive_social_security set social_security_fee = ? where id is not null " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.socialSecurityFee;
-    paramsArray[i++]=params.driveId;
-    paramsArray[i++]=params.mobile;
-    paramsArray[i++]=params.yMonth;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drive_id = ? ";
+    }
+    if(params.mobile){
+        paramsArray[i++] = params.mobile;
+        query = query + " and mobile = ? ";
+    }
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and y_month = ? ";
+    }
+    if(params.driveSocialSecurityId){
+        paramsArray[i++] = params.driveSocialSecurityId;
+        query = query + " and id = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveSocialSecurity ');
         return callback(error,rows);
