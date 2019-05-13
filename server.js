@@ -368,6 +368,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/driveCompany',contentType: 'application/json'} ,drive.updateDriveCompany,sysRecord.saveDriverRecord);
+    server.put({path:'/api/user/:userId/drive/:driveId/driveBankNumber',contentType: 'application/json'} ,drive.updateDriveBankNumber);
     server.put({path:'/api/user/:userId/drive/:driveId/image',contentType: 'application/json'} ,drive.updateDriveImage);
     server.put({path:'/api/user/:userId/drive/:driveId/driveStatus/:driveStatus',contentType: 'application/json'} ,drive.updateDriveStatus);
 

@@ -7870,6 +7870,60 @@
         }
       }
     },
+    "/user/{userId}/drive/{driveId}/driveBankNumber": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveBankNumber info",
+        "description": "update driveBankNumber info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveBankNumber",
+            "in": "body",
+            "description": "driveBankNumber info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveBankNumber"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
     "/user/{userId}/drive/{driveId}/image": {
       "put": {
         "tags": [
@@ -29630,15 +29684,6 @@
         "sibTel": {
           "type": "string"
         },
-        "bankNumber": {
-          "type": "string"
-        },
-        "bankName": {
-          "type": "string"
-        },
-        "bankUserName": {
-          "type": "string"
-        },
         "licenseDate": {
           "type": "string"
         },
@@ -29663,6 +29708,24 @@
       },
       "xml": {
         "name": "driveCompany"
+      }
+    },
+    "driveBankNumber": {
+      "type": "object",
+      "properties": {
+
+        "bankNumber": {
+          "type": "string"
+        },
+        "bankName": {
+          "type": "string"
+        },
+        "bankUserName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "driveBankNumber"
       }
     },
     "driveImage": {

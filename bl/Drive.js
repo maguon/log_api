@@ -183,6 +183,20 @@ function updateDriveCompany(req,res,next){
     })
 }
 
+function updateDriveBankNumber(req,res,next){
+    var params = req.params ;
+    driveDAO.updateDriveBankNumber(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveBankNumber ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveBankNumber ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDriveImage(req,res,next){
     var params = req.params ;
     if(params.imageType==1){
@@ -392,6 +406,7 @@ module.exports = {
     queryDriveTruckCount : queryDriveTruckCount,
     updateDrive : updateDrive,
     updateDriveCompany : updateDriveCompany,
+    updateDriveBankNumber : updateDriveBankNumber,
     updateDriveImage : updateDriveImage,
     updateDriveStatus : updateDriveStatus,
     getDriveCsv : getDriveCsv

@@ -8,8 +8,7 @@ var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
     var query = " insert into drive_info (user_id,drive_name,gender,id_number,tel,company_id,license_type," +
-        " address,sib_tel,bank_number,bank_name,bank_user_name,license_date,remark) " +
-        " values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.driveName;
@@ -20,9 +19,6 @@ function addDrive(params,callback){
     paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
-    paramsArray[i++]=params.bankNumber;
-    paramsArray[i++]=params.bankName;
-    paramsArray[i++]=params.bankUserName;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -180,8 +176,7 @@ function getDriveTruckCount(params,callback) {
 
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , license_type = ? , " +
-        " address = ? , sib_tel = ? , bank_number = ? , bank_name = ? , bank_user_name = ? , license_date = ? , " +
-        " remark= ?  where id = ? ";
+        " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -189,9 +184,6 @@ function updateDrive(params,callback){
     paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
-    paramsArray[i++]=params.bankNumber;
-    paramsArray[i++]=params.bankName;
-    paramsArray[i++]=params.bankUserName;
     paramsArray[i++]=params.licenseDate;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.driveId;
@@ -208,6 +200,19 @@ function updateDriveCompany(params,callback){
     paramsArray[i]=params.driveId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveCompany ');
+        return callback(error,rows);
+    });
+}
+
+function updateDriveBankNumber(params,callback){
+    var query = " update drive_info set bank_number = ? , bank_name = ? , bank_user_name = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.bankNumber;
+    paramsArray[i++]=params.bankName;
+    paramsArray[i++]=params.bankUserName;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveBankNumber ');
         return callback(error,rows);
     });
 }
@@ -288,6 +293,7 @@ module.exports ={
     getDriveTruckCount : getDriveTruckCount,
     updateDrive : updateDrive,
     updateDriveCompany : updateDriveCompany,
+    updateDriveBankNumber : updateDriveBankNumber,
     updateDriveImage : updateDriveImage,
     updateDriveImageRe : updateDriveImageRe,
     updateLicenseImage : updateLicenseImage,
