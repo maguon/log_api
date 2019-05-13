@@ -47,3 +47,12 @@ ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `make_name`;
 -- ----------------------------
 ALTER TABLE `car_info`
 ADD COLUMN `size_type`  tinyint(1) NULL DEFAULT NULL COMMENT '大小车类型(0-小车,1-大车)' AFTER `port_time`;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+ALTER TABLE `truck_info`
+ADD COLUMN `operate_type`  tinyint(1) NULL DEFAULT NULL COMMENT '所属类型(1-自营,2-外协,3-供方,4-承包)' AFTER `vice_drive_id`;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+update truck_info set operate_type = 1;

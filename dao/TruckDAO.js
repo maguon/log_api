@@ -7,14 +7,15 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckDAO.js');
 
 function addTruckFirst(params,callback){
-    var query = "insert into truck_info (truck_num,brand_id,hp,truck_tel,the_code,company_id,output_company_id,output_company_name, " +
-        " truck_type,driving_date,license_date,two_date,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = "insert into truck_info (truck_num,brand_id,hp,truck_tel,the_code,operate_type,company_id,output_company_id,output_company_name, " +
+        " truck_type,driving_date,license_date,two_date,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
     paramsArray[i++]=params.hp;
     paramsArray[i++]=params.truckTel;
     paramsArray[i++]=params.theCode;
+    paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.outputCompanyId;
     paramsArray[i++]=params.outputCompanyName;
@@ -30,12 +31,13 @@ function addTruckFirst(params,callback){
 }
 
 function addTruckTrailer(params,callback){
-    var query = "insert into truck_info (truck_num,brand_id,the_code,company_id,output_company_id,output_company_name,truck_type,number,driving_date,license_date,two_date,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = "insert into truck_info (truck_num,brand_id,the_code,operate_type,company_id,output_company_id,output_company_name,truck_type,number,driving_date,license_date,two_date,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
     paramsArray[i++]=params.theCode;
+    paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.outputCompanyId;
     paramsArray[i++]=params.outputCompanyName;
@@ -441,8 +443,9 @@ function updateTruck(params,callback){
 }
 
 function updateTruckCompany(params,callback){
-    var query = " update truck_info set company_id = ? , output_company_id = ? , output_company_name = ? where id = ? " ;
+    var query = " update truck_info set operate_type = ? , company_id = ? , output_company_id = ? , output_company_name = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.outputCompanyId;
     paramsArray[i++]=params.outputCompanyName;
