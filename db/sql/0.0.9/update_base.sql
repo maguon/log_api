@@ -693,3 +693,8 @@ ADD COLUMN `price_5`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格5次结
 ALTER TABLE `truck_info`
 ADD COLUMN `output_company_id`  int(10) NULL DEFAULT 0 COMMENT '产值公司' AFTER `company_id`,
 ADD COLUMN `output_company_name`  varchar(50) NULL DEFAULT NULL COMMENT '产值公司名称' AFTER `output _company_id`;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+ALTER TABLE `city_route_info`
+ADD COLUMN `reverse_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '倒板金额' AFTER `protect_fee`;

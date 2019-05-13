@@ -90,10 +90,11 @@ function getCityRouteDispatch(params,callback) {
 }
 
 function updateCityRoute(params,callback){
-    var query = " update city_route_info set distance = ? , protect_fee = ? where id = ? ";
+    var query = " update city_route_info set distance = ? , protect_fee = ? , reverse_money = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.protectFee;
+    paramsArray[i++]=params.reverseMoney;
     paramsArray[i]=params.routeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCityRoute ');
