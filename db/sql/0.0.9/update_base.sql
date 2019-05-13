@@ -687,3 +687,9 @@ ADD COLUMN `price_2`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格2次结
 ADD COLUMN `price_3`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格3次结算' AFTER `price_2`,
 ADD COLUMN `price_4`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格4次结算' AFTER `price_3`,
 ADD COLUMN `price_5`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格5次结算' AFTER `price_4`;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+ALTER TABLE `truck_info`
+ADD COLUMN `output_company_id`  int(10) NULL DEFAULT 0 COMMENT '产值公司' AFTER `company_id`,
+ADD COLUMN `output_company_name`  varchar(50) NULL DEFAULT NULL COMMENT '产值公司名称' AFTER `output _company_id`;
