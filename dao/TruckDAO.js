@@ -56,7 +56,7 @@ function addTruckTrailer(params,callback){
 function getTruckFirst(params,callback) {
     var query = " select h.*,t.id as trail_id,t.truck_num as trail_num,t.number as trail_number," +
         " b.brand_name,b.load_distance_oil,b.no_load_distance_oil,d.drive_name,u.mobile," +
-        " d1.drive_name as vice_drive_name,c.company_name,c.operate_type " +
+        " d1.drive_name as vice_drive_name,c.company_name " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
         " left join truck_brand b on h.brand_id = b.id  " +
         " left join drive_info d on h.drive_id = d.id  " +
@@ -102,7 +102,7 @@ function getTruckFirst(params,callback) {
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and c.operate_type = ? ";
+        query = query + " and h.operate_type = ? ";
     }
     if(params.drivingDateStart){
         paramsArray[i++] = params.drivingDateStart;
@@ -134,7 +134,7 @@ function getTruckFirst(params,callback) {
 
 function getTruckTrailer(params,callback) {
     var query = " select h.*,t.id as first_id,t.truck_num as first_num, " +
-        " d.id as driveId,d.drive_name,u.mobile,c.company_name,c.operate_type,b.brand_name " +
+        " d.id as driveId,d.drive_name,u.mobile,c.company_name,b.brand_name " +
         " from truck_info h left join truck_info t on h.id = t.rel_id " +
         " left join truck_brand b on h.brand_id = b.id  " +
         " left join drive_info d on t.drive_id = d.id  " +
@@ -171,7 +171,7 @@ function getTruckTrailer(params,callback) {
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and c.operate_type = ? ";
+        query = query + " and h.operate_type = ? ";
     }
     if(params.numberStart){
         paramsArray[i++] = params.numberStart;
