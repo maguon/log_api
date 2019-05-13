@@ -17612,6 +17612,195 @@
         }
       }
     },
+    "/carMatch": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "query  carMatch list",
+        "description": "query carMatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "carMatchId",
+            "in": "query",
+            "description": "carMatch id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/carMatch"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid carMatch id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/carMatch": {
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "user create carMatch",
+        "description": "user create carMatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carMatch",
+            "in": "body",
+            "description": "carMatch info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carMatch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid carMatch id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/carMatch/{carMatchId}": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "update carMatch info",
+        "description": "update carMatch info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carMatchId",
+            "in": "path",
+            "description": "carMatch id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carMatch",
+            "in": "body",
+            "description": "carMatch info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carMatch"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid carMatch id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/carMatch/{carMatchId}": {
+      "delete": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Deletes a carMatch",
+        "description": "",
+        "operationId": "deleteCarMatch",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "carMatchId",
+            "in": "path",
+            "description": "carMatch id",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
+      }
+    },
     "/user/{userId}/carExceptionRel": {
       "post": {
         "tags": [
@@ -30647,6 +30836,24 @@
       },
       "xml": {
         "name": "carModel"
+      }
+    },
+    "carMatch": {
+      "type": "object",
+      "properties": {
+
+        "vin": {
+          "type": "string"
+        },
+        "makeId": {
+          "type": "integer"
+        },
+        "makeName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "carMatch"
       }
     },
     "carExceptionRel": {

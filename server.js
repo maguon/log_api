@@ -57,6 +57,7 @@ var car = require('./bl/Car.js');
 var carStorageRel = require('./bl/CarStorageRel.js');
 var carMake = require('./bl/CarMake.js');
 var carModel = require('./bl/CarModel.js');
+var carMatch = require('./bl/CarMatch.js');
 var carExceptionRel = require('./bl/CarExceptionRel.js');
 var dpDemand = require('./bl/DpDemand.js');
 var dpTaskStat = require('./bl/DpTaskStat.js');
@@ -644,6 +645,14 @@ function createServer() {
     server.post({path:'/api/user/:userId/carMake/:makeId/carModel',contentType: 'application/json'},carModel.createCarModel);
     server.put({path:'/api/user/:userId/carModel/:modelId',contentType: 'application/json'} ,carModel.updateCarModel);
     server.put({path:'/api/user/:userId/carModel/:modelId/modelStatus/:modelStatus',contentType: 'application/json'} ,carModel.updateModelStatus);
+
+    /**
+     * CarMatch Module
+     */
+    server.get('/api/carMatch',carMatch.queryCarMatch);
+    server.post({path:'/api/user/:userId/carMatch',contentType: 'application/json'},carMatch.createCarMatch);
+    server.put({path:'/api/user/:userId/carMatch/:carMatchId',contentType: 'application/json'} ,carMatch.updateCarMatch);
+    server.del('/api/user/:userId/carMatch/:carMatchId' , carMatch.removeCarMatch);
 
     /**
      * CarExceptionRel Module
