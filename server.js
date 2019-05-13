@@ -39,7 +39,7 @@ var driveExceedOil = require('./bl/DriveExceedOil.js');
 var driveExceedOilDate = require('./bl/DriveExceedOilDate.js');
 var driveExceedOilRel = require('./bl/DriveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
-var driveSocialSecurity = require('./bl/DriveSocialSecurity.js');
+var driveWork = require('./bl/DriveWork.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -475,12 +475,12 @@ function createServer() {
     server.del('/api/user/:userId/dpRouteTaskOilRel/:dpRouteTaskOilRelId/driveExceedOil/:driveExceedOilId' , driveDpRouteTaskOilRel.removeDriveDpRouteTaskOilRel);
 
     /**
-     * DriveSocialSecurity Module
+     * DriveWork Module
      */
-    server.get('/api/driveSocialSecurity' , driveSocialSecurity.queryDriveSocialSecurity);
-    server.post({path:'/api/user/:userId/driveSocialSecurity',contentType: 'application/json'},driveSocialSecurity.createDriveSocialSecurity);
-    server.put({path:'/api/user/:userId/driveSocialSecurity/:driveSocialSecurityId',contentType: 'application/json'} ,driveSocialSecurity.updateDriveSocialSecurity);
-    server.post({path:'/api/user/:userId/driveSocialSecurityFile',contentType: 'multipart/form-data'},driveSocialSecurity.uploadDriveSocialSecurityFile);
+    server.get('/api/driveWork' , driveWork.queryDriveWork);
+    server.post({path:'/api/user/:userId/driveWork',contentType: 'application/json'},driveWork.createDriveWork);
+    server.put({path:'/api/user/:userId/driveWork/:driveWorkId',contentType: 'application/json'} ,driveWork.updateDriveWork);
+    server.post({path:'/api/user/:userId/driveWorkFile',contentType: 'multipart/form-data'},driveWork.uploadDriveWorkFile);
 
     /**
      * Company Module

@@ -11524,21 +11524,21 @@
         }
       }
     },
-    "/driveSocialSecurity": {
+    "/driveWork": {
       "get": {
         "tags": [
           "drive"
         ],
-        "summary": "query  driveSocialSecurity list",
-        "description": "query driveSocialSecurity",
+        "summary": "query  driveWork list",
+        "description": "query driveWork",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "driveSocialSecurityId",
+            "name": "driveWorkId",
             "in": "query",
-            "description": "driveSocialSecurity id",
+            "description": "driveWork id",
             "required": false,
             "type": "integer"
 
@@ -11547,6 +11547,14 @@
             "name": "driveId",
             "in": "query",
             "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
             "required": false,
             "type": "integer"
 
@@ -11582,23 +11590,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/driveSocialSecurity"
+                "$ref": "#/definitions/driveWork"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid driveSocialSecurity id"
+            "description": "Invalid token value or invalid driveWork id"
           }
         }
       }
     },
-    "/user/{userId}/driveSocialSecurity": {
+    "/user/{userId}/driveWork": {
       "post": {
         "tags": [
           "drive"
         ],
-        "summary": "user create driveSocialSecurity",
-        "description": "user create driveSocialSecurity",
+        "summary": "user create driveWork",
+        "description": "user create driveWork",
         "produces": [
           "application/json"
         ],
@@ -11612,12 +11620,12 @@
 
           },
           {
-            "name": "driveSocialSecurity",
+            "name": "driveWork",
             "in": "body",
-            "description": "driveSocialSecurity info",
+            "description": "driveWork info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/driveSocialSecurity"
+              "$ref": "#/definitions/driveWork"
             }
           }
         ],
@@ -11632,18 +11640,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid driveSocialSecurity id"
+            "description": "Invalid token value or invalid driveWork id"
           }
         }
       }
     },
-    "/user/{userId}/driveSocialSecurityFile": {
+    "/user/{userId}/driveWorkFile": {
       "post": {
         "tags": [
           "drive"
         ],
-        "summary": "user upload driveSocialSecurityFile ",
-        "description": "user upload driveSocialSecurityFile",
+        "summary": "user upload driveWorkFile ",
+        "description": "user upload driveWorkFile",
         "produces": [
           "application/json"
         ],
@@ -11675,18 +11683,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid driveSocialSecurity id"
+            "description": "Invalid token value or invalid driveWork id"
           }
         }
       }
     },
-    "/user/{userId}/driveSocialSecurity/{driveSocialSecurityId}": {
+    "/user/{userId}/driveWork/{driveWorkId}": {
       "put": {
         "tags": [
           "drive"
         ],
-        "summary": "update driveSocialSecurity info",
-        "description": "update driveSocialSecurity info",
+        "summary": "update driveWork info",
+        "description": "update driveWork info",
         "produces": [
           "application/json"
         ],
@@ -11700,20 +11708,20 @@
 
           },
           {
-            "name": "driveSocialSecurityId",
+            "name": "driveWorkId",
             "in": "path",
-            "description": "driveSocialSecurity id",
+            "description": "driveWork id",
             "required": true,
             "type": "integer"
 
           },
           {
-            "name": "driveSocialSecurity",
+            "name": "driveWork",
             "in": "body",
-            "description": "driveSocialSecurity info",
+            "description": "driveWork info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/driveSocialSecurity"
+              "$ref": "#/definitions/driveWork"
             }
 
           }
@@ -11729,7 +11737,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid driveSocialSecurity id"
+            "description": "Invalid token value or invalid driveWork id"
           }
         }
       }
@@ -30068,7 +30076,7 @@
         "name": "checkReason"
       }
     },
-    "driveSocialSecurity": {
+    "driveWork": {
       "type": "object",
       "properties": {
 
@@ -30078,18 +30086,24 @@
         "driveName": {
           "type": "string"
         },
+        "truckId": {
+          "type": "integer"
+        },
+        "truckNum": {
+          "type": "string"
+        },
         "mobile": {
           "type": "string"
         },
         "yMonth": {
           "type": "integer"
         },
-        "socialSecurityFee": {
+        "workCount": {
           "type": "integer"
         }
       },
       "xml": {
-        "name": "driveSocialSecurity"
+        "name": "driveWork"
       }
     },
     "company": {
