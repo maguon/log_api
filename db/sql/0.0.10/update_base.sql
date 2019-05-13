@@ -56,3 +56,18 @@ ADD COLUMN `operate_type`  tinyint(1) NULL DEFAULT NULL COMMENT '所属类型(1-
 -- 2019-05-13 更新
 -- ----------------------------
 update truck_info set operate_type = 1;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_new_car_size_type`;
+DELIMITER ;;
+CREATE TRIGGER `trg_update_car_size_type` BEFORE INSERT ON `car_info` FOR EACH ROW BEGIN
+set @count =(select count(id) from car_vin_match where make_id = new.make_id and vin = substring(new.vin,4,5));
+IF(@count>0) THEN
+set new.size_type = 1;
+ELSEIF(@count=0) THEN
+set new.size_type = 0;
+END IF;
+END
+;;
+DELIMITER ;
