@@ -40,8 +40,21 @@ CREATE TABLE `drive_work` (
 -- ----------------------------
 -- 2019-05-13 更新
 -- ----------------------------
-ALTER TABLE `car_vin_match`
-ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `make_name`;
+-- ----------------------------
+-- Table structure for car_vin_match
+-- ----------------------------
+DROP TABLE IF EXISTS `car_vin_match`;
+CREATE TABLE `car_vin_match` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vin` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'VIN码匹配',
+  `make_id` int(10) DEFAULT '0' COMMENT '品牌ID',
+  `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '品牌名称',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vin` (`vin`,`make_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ----------------------------
 -- 2019-05-13 更新
 -- ----------------------------
