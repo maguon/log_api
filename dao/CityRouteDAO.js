@@ -7,7 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
-    var query = " insert into city_route_info (route_id,route_start_id,route_start,route_end_id,route_end,distance,protect_fee) values ( ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into city_route_info (route_id,route_start_id,route_start,route_end_id,route_end, " +
+        " distance,protect_fee,reverse_money) values ( ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     if(params.routeStartId>params.routeEndId){
         paramsArray[i++] = params.routeEndId+''+params.routeStartId;
@@ -19,7 +20,8 @@ function addCityRoute(params,callback){
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.distance;
-    paramsArray[i]=params.protectFee;
+    paramsArray[i++]=params.protectFee;
+    paramsArray[i]=params.reverseMoney;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCityRoute ');
         return callback(error,rows);

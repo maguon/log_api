@@ -29160,6 +29160,12 @@
         "companyId": {
           "type": "integer"
         },
+        "outputCompanyId": {
+          "type": "integer"
+        },
+        "outputCompanyName": {
+          "type": "string"
+        },
         "truckType": {
           "type": "integer"
         },
@@ -29190,7 +29196,10 @@
         "companyId": {
           "type": "integer"
         },
-        "companyName": {
+        "outputCompanyId": {
+          "type": "integer"
+        },
+        "outputCompanyName": {
           "type": "string"
         }
       },
@@ -29601,6 +29610,9 @@
         "tel": {
           "type": "string"
         },
+        "companyId": {
+          "type": "integer"
+        },
         "licenseType": {
           "type": "string"
         },
@@ -29608,6 +29620,15 @@
           "type": "string"
         },
         "sibTel": {
+          "type": "string"
+        },
+        "bankNumber": {
+          "type": "string"
+        },
+        "bankName": {
+          "type": "string"
+        },
+        "bankUserName": {
           "type": "string"
         },
         "licenseDate": {
@@ -30130,6 +30151,9 @@
           "type": "integer"
         },
         "protectFee": {
+          "type": "integer"
+        },
+        "reverseMoney": {
           "type": "integer"
         }
       },
