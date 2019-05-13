@@ -84,3 +84,8 @@ END IF;
 END
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `up_distance_count`  int(10) NULL DEFAULT 0 COMMENT '修改里程次数' AFTER `stat_status`;

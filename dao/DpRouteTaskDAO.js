@@ -601,6 +601,16 @@ function updateDpRouteReverseFlag(params,callback){
     });
 }
 
+function updateDistanceRecordCount(params,callback){
+    var query = " update dp_route_task set up_distance_count = up_distance_count + 1 where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDistanceRecordCount ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTask : addDpRouteTask,
@@ -621,5 +631,6 @@ module.exports ={
     getRouteTaskDayStat : getRouteTaskDayStat,
     updateDpRouteLoadFlag : updateDpRouteLoadFlag,
     updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
-    updateDpRouteReverseFlag : updateDpRouteReverseFlag
+    updateDpRouteReverseFlag : updateDpRouteReverseFlag,
+    updateDistanceRecordCount : updateDistanceRecordCount
 }
