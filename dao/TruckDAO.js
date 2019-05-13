@@ -441,7 +441,7 @@ function updateTruck(params,callback){
 }
 
 function updateTruckCompany(params,callback){
-    var query = " update truck_info set company_id = ? output_company_id = ? , output_company_name = ? where id = ? " ;
+    var query = " update truck_info set company_id = ? , output_company_id = ? , output_company_name = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.outputCompanyId;
