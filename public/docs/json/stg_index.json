@@ -17612,21 +17612,21 @@
         }
       }
     },
-    "/carMatch": {
+    "/carVinMatch": {
       "get": {
         "tags": [
           "car"
         ],
-        "summary": "query  carMatch list",
-        "description": "query carMatch",
+        "summary": "query  carVinMatch list",
+        "description": "query carVinMatch",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "carMatchId",
+            "name": "carVinMatchId",
             "in": "query",
-            "description": "carMatch id",
+            "description": "carVinMatch id",
             "required": false,
             "type": "integer"
 
@@ -17654,23 +17654,23 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/carMatch"
+                "$ref": "#/definitions/carVinMatch"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid carMatch id"
+            "description": "Invalid token value or invalid carVinMatch id"
           }
         }
       }
     },
-    "/user/{userId}/carMatch": {
+    "/user/{userId}/carVinMatch": {
       "post": {
         "tags": [
           "car"
         ],
-        "summary": "user create carMatch",
-        "description": "user create carMatch",
+        "summary": "user create carVinMatch",
+        "description": "user create carVinMatch",
         "produces": [
           "application/json"
         ],
@@ -17684,12 +17684,12 @@
 
           },
           {
-            "name": "carMatch",
+            "name": "carVinMatch",
             "in": "body",
-            "description": "carMatch info",
+            "description": "carVinMatch info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/carMatch"
+              "$ref": "#/definitions/carVinMatch"
             }
           }
         ],
@@ -17704,18 +17704,18 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid carMatch id"
+            "description": "Invalid token value or invalid carVinMatch id"
           }
         }
       }
     },
-    "/user/{userId}/carMatch/{carMatchId}": {
+    "/user/{userId}/carVinMatch/{carVinMatchId}": {
       "put": {
         "tags": [
           "car"
         ],
-        "summary": "update carMatch info",
-        "description": "update carMatch info",
+        "summary": "update carVinMatch info",
+        "description": "update carVinMatch info",
         "produces": [
           "application/json"
         ],
@@ -17729,20 +17729,20 @@
 
           },
           {
-            "name": "carMatchId",
+            "name": "carVinMatchId",
             "in": "path",
-            "description": "carMatch id",
+            "description": "carVinMatch id",
             "required": true,
             "type": "integer"
 
           },
           {
-            "name": "carMatch",
+            "name": "carVinMatch",
             "in": "body",
-            "description": "carMatch info",
+            "description": "carVinMatch info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/carMatch"
+              "$ref": "#/definitions/carVinMatch"
             }
 
           }
@@ -17758,19 +17758,17 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid carMatch id"
+            "description": "Invalid token value or invalid carVinMatch id"
           }
         }
-      }
-    },
-    "/user/{userId}/carMatch/{carMatchId}": {
+      },
       "delete": {
         "tags": [
           "car"
         ],
-        "summary": "Deletes a carMatch",
+        "summary": "Deletes a carVinMatch",
         "description": "",
-        "operationId": "deleteCarMatch",
+        "operationId": "deletecarVinMatch",
         "produces": [
           "application/json"
         ],
@@ -17783,9 +17781,9 @@
             "type": "integer"
           },
           {
-            "name": "carMatchId",
+            "name": "carVinMatchId",
             "in": "path",
-            "description": "carMatch id",
+            "description": "carVinMatch id",
             "required": true,
             "type": "integer"
 
@@ -30838,7 +30836,7 @@
         "name": "carModel"
       }
     },
-    "carMatch": {
+    "carVinMatch": {
       "type": "object",
       "properties": {
 
@@ -30853,7 +30851,7 @@
         }
       },
       "xml": {
-        "name": "carMatch"
+        "name": "carVinMatch"
       }
     },
     "carExceptionRel": {

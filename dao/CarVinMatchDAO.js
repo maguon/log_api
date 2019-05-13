@@ -4,25 +4,25 @@
 
 var db=require('../db/connection/MysqlDb.js');
 var serverLogger = require('../util/ServerLogger.js');
-var logger = serverLogger.createLogger('CarMatchDAO.js');
+var logger = serverLogger.createLogger('CarVinMatchDAO.js');
 
-function addCarMatch(params,callback){
-    var query = " insert into car_match (vin,make_id,make_name)  values ( ? , ? , ? )";
+function addCarVinMatch(params,callback){
+    var query = " insert into car_vin_match (vin,make_id,make_name)  values ( ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' addCarMatch ');
+        logger.debug(' addCarVinMatch ');
         return callback(error,rows);
     });
 }
 
-function getCarMatch(params,callback) {
-    var query = " select * from car_match where id is not null ";
+function getCarVinMatch(params,callback) {
+    var query = " select * from car_vin_match where id is not null ";
     var paramsArray=[],i=0;
-    if(params.carMatchId){
-        paramsArray[i++] = params.carMatchId;
+    if(params.carVinMatchId){
+        paramsArray[i++] = params.carVinMatchId;
         query = query + " and id = ? ";
     }
     if(params.vin){
@@ -39,38 +39,38 @@ function getCarMatch(params,callback) {
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getCarMatch ');
+        logger.debug(' getCarVinMatch ');
         return callback(error,rows);
     });
 }
 
-function updateCarMatch(params,callback){
-    var query = " update car_match set vin = ? , make_id = ? , make_name = ? where id = ? " ;
+function updateCarVinMatch(params,callback){
+    var query = " update car_vin_match set vin = ? , make_id = ? , make_name = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
-    paramsArray[i++]=params.carMatchId;
+    paramsArray[i++]=params.carVinMatchId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateCarMatch ');
+        logger.debug(' updateCarVinMatch ');
         return callback(error,rows);
     });
 }
 
-function deleteCarMatch(params,callback){
-    var query = " delete from car_match where id = ? ";
+function deleteCarVinMatch(params,callback){
+    var query = " delete from car_vin_match where id = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.carMatchId;
+    paramsArray[i++] = params.carVinMatchId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' deleteCarMatch ');
+        logger.debug(' deleteCarVinMatch ');
         return callback(error,rows);
     });
 }
 
 
 module.exports ={
-    addCarMatch : addCarMatch,
-    getCarMatch : getCarMatch,
-    updateCarMatch : updateCarMatch,
-    deleteCarMatch : deleteCarMatch
+    addCarVinMatch : addCarVinMatch,
+    getCarVinMatch : getCarVinMatch,
+    updateCarVinMatch : updateCarVinMatch,
+    deleteCarVinMatch : deleteCarVinMatch
 }
