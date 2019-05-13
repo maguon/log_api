@@ -7,11 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CarVinMatchDAO.js');
 
 function addCarVinMatch(params,callback){
-    var query = " insert into car_vin_match (vin,make_id,make_name)  values ( ? , ? , ? )";
+    var query = " insert into car_vin_match (vin,make_id,make_name,remark)  values ( ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
+    paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCarVinMatch ');
         return callback(error,rows);
@@ -45,11 +46,12 @@ function getCarVinMatch(params,callback) {
 }
 
 function updateCarVinMatch(params,callback){
-    var query = " update car_vin_match set vin = ? , make_id = ? , make_name = ? where id = ? " ;
+    var query = " update car_vin_match set vin = ? , make_id = ? , make_name = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
+    paramsArray[i++]=params.remark;
     paramsArray[i++]=params.carVinMatchId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCarVinMatch ');

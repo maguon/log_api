@@ -37,3 +37,13 @@ CREATE TABLE `drive_work` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+ALTER TABLE `car_vin_match`
+ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `make_name`;
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+ALTER TABLE `car_info`
+ADD COLUMN `size_type`  tinyint(1) NULL DEFAULT NULL COMMENT '大小车类型(0-小车,1-大车)' AFTER `port_time`;

@@ -30848,6 +30848,9 @@
         },
         "makeName": {
           "type": "string"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {
