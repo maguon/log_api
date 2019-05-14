@@ -54,10 +54,10 @@ function getCityRoute(params,callback) {
 }
 
 function getCityRouteBase(params,callback) {
-    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.distance,cd.protect_fee from city_info ci left join " +
-        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.distance,cri.protect_fee from city_route_info cri where cri.route_start_id = " + params.routeStartId +
+    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.distance from city_info ci left join " +
+        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.distance from city_route_info cri where cri.route_start_id = " + params.routeStartId +
         " union " +
-        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.distance,cri2.protect_fee from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
+        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.distance from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
         " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id ";
     var paramsArray=[],i=0;
     query = query + '  order by end_id  ';
@@ -78,10 +78,10 @@ function getCityRouteCheck(params,callback) {
 }
 
 function getCityRouteDispatch(params,callback) {
-    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.route_id,cd.distance,cd.protect_fee,cd.id from city_info ci left join " +
-        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.route_id,cri.distance,cri.protect_fee,cri.id from city_route_info cri where cri.route_start_id = " + params.routeStartId +
+    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.route_id,cd.distance,cd.id from city_info ci left join " +
+        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.route_id,cri.distance,cri.id from city_route_info cri where cri.route_start_id = " + params.routeStartId +
         " union " +
-        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.route_id,cri2.distance,cri2.protect_fee,cri2.id from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
+        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.route_id,cri2.distance,cri2.id from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
         " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id where  cd.distance >= 0 ";
     var paramsArray=[],i=0;
     query = query + '  order by end_id  ';
