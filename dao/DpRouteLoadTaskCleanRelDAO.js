@@ -249,21 +249,16 @@ function updateDpRouteLoadTaskCleanRel(params,callback){
 
 function updateDpRouteLoadTaskCleanRelStatus(params,callback){
     if(params.status==2){
-        var query = " update dp_route_load_task_clean_rel set grant_user_id = ? , actual_price = ? , actual_guard_fee = ? , " +
-            " clean_date = ? , date_id = ? , remark = ? , status = ? where id = ? ";
+        var query = " update dp_route_load_task_clean_rel set grant_user_id = ? , clean_date = ? , date_id = ? , status = ? where id = ? ";
     }else{
-        var query = " update dp_route_load_task_clean_rel set grant_user_id = ? , actual_price = ? , actual_guard_fee = ? , " +
-            " remark = ? , status = ? where id = ? ";
+        var query = " update dp_route_load_task_clean_rel set grant_user_id = ? , status = ? where id = ? ";
     }
     var paramsArray=[],i=0;
     paramsArray[i++] = params.userId;
-    paramsArray[i++] = params.actualPrice;
-    paramsArray[i++] = params.actualGuardFee;
     if(params.cleanDate){
         paramsArray[i++] = params.cleanDate;
         paramsArray[i++] = params.dateId;
     }
-    paramsArray[i++] = params.remark;
     paramsArray[i++] = params.status;
     paramsArray[i] = params.loadTaskCleanRelId;
     db.dbQuery(query,paramsArray,function(error,rows){

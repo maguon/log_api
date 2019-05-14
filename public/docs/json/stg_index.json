@@ -22027,15 +22027,6 @@
             "required": true,
             "type": "integer"
 
-          },
-          {
-            "name": "loadTaskCleanRel",
-            "in": "body",
-            "description": "loadTaskCleanRel info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/loadTaskCleanRel"
-            }
           }
         ],
         "responses": {
