@@ -109,3 +109,8 @@ ADD COLUMN `maintain_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '保养金额'
 -- ----------------------------
 ALTER TABLE `drive_work`
 ADD COLUMN `hotel_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '住宿费' AFTER `work_count`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `city_route_info`
+DROP COLUMN `protect_fee`;
