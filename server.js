@@ -549,6 +549,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
     server.get('/api/settleCarBatch',entrust.createSettleCarBatch);
     server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);
+    server.put({path:'/api/user/:userId/entrust/:entrustId/entrustCarParkingFee',contentType: 'application/json'} ,entrust.updateEntrustCarParkingFee);
 
     /**
      * EntrustContacts Module

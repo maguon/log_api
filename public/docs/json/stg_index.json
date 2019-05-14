@@ -13964,6 +13964,60 @@
         }
       }
     },
+    "/user/{userId}/entrust/{entrustId}/entrustCarParkingFee": {
+      "put": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "update entrust carParkingFee",
+        "description": "update entrustCarParkingFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "path",
+            "description": "entrust id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustCarParkingFee",
+            "in": "body",
+            "description": "entrustCarParkingFee info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entrustCarParkingFee"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrust id"
+          }
+        }
+      }
+    },
     "/entrust/{entrustId}/contacts": {
       "get": {
         "tags": [
@@ -30537,6 +30591,18 @@
       },
       "xml": {
         "name": "entrust"
+      }
+    },
+    "entrustCarParkingFee": {
+      "type": "object",
+      "properties": {
+
+        "carParkingFee": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "entrustCarParkingFee"
       }
     },
     "contacts": {

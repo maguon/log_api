@@ -283,6 +283,17 @@ function updateEntrust(params,callback){
     });
 }
 
+function updateEntrustCarParkingFee(params,callback){
+    var query = " update entrust_info set car_parking_fee = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.carParkingFee;
+    paramsArray[i]=params.entrustId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateEntrustCarParkingFee ');
+        return callback(error,rows);
+    });
+}
+
 function addSettleCarBatch(params,callback) {
     var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,distance,fee,plan_price) " +
         " select c.vin,c.entrust_id,c.route_start_id,c.route_end_id,ecrr.distance,ecrr.fee,(ecrr.distance*ecrr.fee) as plan_price " +
@@ -343,5 +354,6 @@ module.exports ={
     getEntrustCarCount : getEntrustCarCount,
     getEntrustCarNotCount : getEntrustCarNotCount,
     updateEntrust : updateEntrust,
+    updateEntrustCarParkingFee : updateEntrustCarParkingFee,
     addSettleCarBatch : addSettleCarBatch
 }

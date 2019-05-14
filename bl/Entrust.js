@@ -117,6 +117,20 @@ function updateEntrust(req,res,next){
     })
 }
 
+function updateEntrustCarParkingFee(req,res,next){
+    var params = req.params ;
+    entrustDAO.updateEntrustCarParkingFee(params,function(error,result){
+        if (error) {
+            logger.error(' updateEntrustCarParkingFee ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateEntrustCarParkingFee ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getEntrustCarCsv(req,res,next){
     var csvString = "";
     var header = "VIN" + ',' + "品牌" + ',' + "委托方"+ ',' + "始发城市" + ','+ "装车地点" + ','+ "目的城市"+ ','+ "经销商" + ','+ "指令时间" + ','+ "公里数(公里)" + ','+ "价格(元)/公里" + ','+ "金额(元)" ;
@@ -271,6 +285,7 @@ module.exports = {
     queryEntrustCarCount : queryEntrustCarCount,
     queryEntrustCarNotCount : queryEntrustCarNotCount,
     updateEntrust : updateEntrust,
+    updateEntrustCarParkingFee : updateEntrustCarParkingFee,
     getEntrustCarCsv : getEntrustCarCsv,
     getEntrustNotCarCsv : getEntrustNotCarCsv,
     createSettleCarBatch : createSettleCarBatch

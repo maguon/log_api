@@ -133,3 +133,8 @@ update receive_info set big_clean_fee = clean_fee;
 -- ----------------------------
 ALTER TABLE `receive_info`
 ADD COLUMN `trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '拖车费' AFTER `big_clean_fee`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `entrust_info`
+ADD COLUMN `car_parking_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停车费' AFTER `secret_key`;
