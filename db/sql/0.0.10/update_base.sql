@@ -114,3 +114,8 @@ ADD COLUMN `hotel_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '住宿费' AFTER `
 -- ----------------------------
 ALTER TABLE `city_route_info`
 DROP COLUMN `protect_fee`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+DROP COLUMN `guard_fee`;
