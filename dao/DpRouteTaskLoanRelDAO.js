@@ -18,7 +18,7 @@ function addDpRouteTaskLoanRel(params,callback){
 }
 
 function getDpRouteTaskLoanRel(params,callback) {
-    var query = " select dprel.*,c.city_name as city_route_start,ce.city_name as city_route_end,dpr.distance,cr.protect_fee, " +
+    var query = " select dprel.*,c.city_name as city_route_start,ce.city_name as city_route_end,dpr.distance,cr.reverse_money, " +
         " sum(dprl.plan_count) as plan_count,dpr.task_plan_date,dpr.task_status " +
         " from dp_route_task_loan_rel dprel " +
         "  left join dp_route_task dpr on dprel.dp_route_task_id = dpr.id " +

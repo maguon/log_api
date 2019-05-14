@@ -30435,9 +30435,6 @@
         "distance": {
           "type": "integer"
         },
-        "protectFee": {
-          "type": "integer"
-        },
         "reverseMoney": {
           "type": "integer"
         }
