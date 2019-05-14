@@ -54,26 +54,6 @@ function createInsure(req,res,next){
             }
         })
     }).seq(function(){
-        var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
-            params.damageInsureId = damageInsureId;
-            damageInsureLoanDAO.addDamageInsureLoan(params,function(error,result){
-                if (error) {
-                    logger.error(' createDamageInsureLoan ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if(result&&result.insertId>0){
-                        logger.info(' createDamageInsureLoan ' + 'success');
-                    }else{
-                        resUtil.resetFailedRes(res,"create DamageInsureLoan failed");
-                    }
-                    that();
-                }
-            })
-        }else{
-            that();
-        }
-    }).seq(function(){
         logger.info(' createInsure ' + 'success');
         resUtil.resetCreateRes(res,{insertId:damageInsureId},null);
         return next();
@@ -128,26 +108,6 @@ function createDamageInsure(req,res,next){
         }).seq(function(){
             that();
         })
-    }).seq(function(){
-        var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
-            params.damageInsureId = damageInsureId;
-            damageInsureLoanDAO.addDamageInsureLoan(params,function(error,result){
-                if (error) {
-                    logger.error(' createDamageInsureLoan ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if(result&&result.insertId>0){
-                        logger.info(' createDamageInsureLoan ' + 'success');
-                    }else{
-                        resUtil.resetFailedRes(res,"create DamageInsureLoan failed");
-                    }
-                    that();
-                }
-            })
-        }else{
-            that();
-        }
     }).seq(function(){
         logger.info(' createDamageInsure ' + 'success');
         resUtil.resetCreateRes(res,{insertId:damageInsureId},null);
