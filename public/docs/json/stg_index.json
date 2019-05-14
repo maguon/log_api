@@ -30489,6 +30489,9 @@
         "cleanFee": {
           "type": "integer"
         },
+        "bigCleanFee": {
+          "type": "integer"
+        },
         "lng": {
           "type": "integer"
         },

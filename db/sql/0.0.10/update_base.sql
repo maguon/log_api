@@ -119,3 +119,12 @@ DROP COLUMN `protect_fee`;
 -- ----------------------------
 ALTER TABLE `receive_info`
 DROP COLUMN `guard_fee`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `big_clean_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '大车洗车费' AFTER `clean_fee`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+update receive_info set big_clean_fee = clean_fee;
