@@ -59,7 +59,7 @@ CREATE TABLE `car_vin_match` (
 -- 2019-05-13 更新
 -- ----------------------------
 ALTER TABLE `car_info`
-ADD COLUMN `size_type`  tinyint(1) NULL DEFAULT NULL COMMENT '大小车类型(0-小车,1-大车)' AFTER `port_time`;
+ADD COLUMN `size_type`  tinyint(1) NULL DEFAULT 0 COMMENT '大小车类型(0-小车,1-大车)' AFTER `port_time`;
 -- ----------------------------
 -- 2019-05-13 更新
 -- ----------------------------
