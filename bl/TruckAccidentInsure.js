@@ -10,7 +10,6 @@ var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var truckAccidentInsureDAO = require('../dao/TruckAccidentInsureDAO.js');
 var truckAccidentInsureRelDAO = require('../dao/TruckAccidentInsureRelDAO.js');
-var truckAccidentInsureLoanDAO = require('../dao/TruckAccidentInsureLoanDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -53,26 +52,6 @@ function createTruckAccidentInsureBase(req,res,next){
                 that();
             }
         })
-    }).seq(function(){
-        var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
-            params.accidentInsureId = accidentInsureId;
-            truckAccidentInsureLoanDAO.addTruckAccidentInsureLoan(params,function(error,result){
-                if (error) {
-                    logger.error(' createTruckAccidentInsureLoan ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if(result&&result.insertId>0){
-                        logger.info(' createTruckAccidentInsureLoan ' + 'success');
-                    }else{
-                        resUtil.resetFailedRes(res,"create TruckAccidentInsureLoan failed");
-                    }
-                    that();
-                }
-            })
-        }else{
-            that();
-        }
     }).seq(function(){
         logger.info(' createInsure ' + 'success');
         resUtil.resetCreateRes(res,{insertId:accidentInsureId},null);
@@ -128,26 +107,6 @@ function createTruckAccidentInsure(req,res,next){
         }).seq(function(){
             that();
         })
-    }).seq(function(){
-        var that = this;
-        if(params.financialLoanStatus==sysConst.LOAN_STATUS.yes){
-            params.accidentInsureId = accidentInsureId;
-            truckAccidentInsureLoanDAO.addTruckAccidentInsureLoan(params,function(error,result){
-                if (error) {
-                    logger.error(' createTruckAccidentInsureLoan ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if(result&&result.insertId>0){
-                        logger.info(' createTruckAccidentInsureLoan ' + 'success');
-                    }else{
-                        resUtil.resetFailedRes(res,"create TruckAccidentInsureLoan failed");
-                    }
-                    that();
-                }
-            })
-        }else{
-            that();
-        }
     }).seq(function(){
         logger.info(' createTruckAccidentInsureRel ' + 'success');
         resUtil.resetCreateRes(res,{insertId:accidentInsureId},null);
