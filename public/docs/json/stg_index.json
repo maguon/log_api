@@ -30368,6 +30368,9 @@
         },
         "workCount": {
           "type": "integer"
+        },
+        "hotelFee": {
+          "type": "integer"
         }
       },
       "xml": {

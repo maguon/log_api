@@ -144,6 +144,7 @@ function uploadDriveWorkFile(req,res,next){
                             mobile : objArray[i].电话,
                             yMonth : objArray[i].月份,
                             workCount : objArray[i].出勤天数,
+                            hotelFee : objArray[i].住宿费,
                             row : i+1
                         }
                         driveWorkDAO.addDriveWork(subParams,function(err,result){
@@ -168,6 +169,7 @@ function uploadDriveWorkFile(req,res,next){
                             mobile : objArray[i].电话,
                             yMonth : objArray[i].月份,
                             workCount : objArray[i].出勤天数,
+                            hotelFee : objArray[i].住宿费,
                             row : i+1
                         }
                         driveWorkDAO.updateDriveWork(subParams,function(err,result){
