@@ -94,7 +94,7 @@ function updateReceiveCleanFee(req,res,next){
             logger.error(' updateReceiveCleanFee ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            req.params.receiverContent ="调整洗车费单价("+params.cleanFee+")     调整门卫费单价("+params.guardFee+")";
+            req.params.receiverContent ="调整小车洗车费单价("+params.cleanFee+")     大车洗车费单价("+params.bigCleanFee+")";
             logger.info(' updateReceiveCleanFee ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();

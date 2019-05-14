@@ -128,3 +128,8 @@ ADD COLUMN `big_clean_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '大车洗车�
 -- 2019-05-14 更新
 -- ----------------------------
 update receive_info set big_clean_fee = clean_fee;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '拖车费' AFTER `big_clean_fee`;

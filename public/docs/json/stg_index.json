@@ -30492,6 +30492,9 @@
         "bigCleanFee": {
           "type": "integer"
         },
+        "trailerFee": {
+          "type": "integer"
+        },
         "lng": {
           "type": "integer"
         },
