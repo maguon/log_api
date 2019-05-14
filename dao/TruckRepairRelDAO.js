@@ -169,11 +169,14 @@ function getTruckRepairMoneyTotal(params,callback) {
 }
 
 function updateTruckRepairRel(params,callback){
-    var query = " update truck_repair_rel set repair_station_id = ? , repair_user = ? , repair_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
+    var query = " update truck_repair_rel set repair_station_id = ? , repair_user = ? , repair_money = ? , " +
+        " parts_money = ? , maintain_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.repairStationId;
     paramsArray[i++]=params.repairUser;
     paramsArray[i++]=params.repairMoney;
+    paramsArray[i++]=params.partsMoney;
+    paramsArray[i++]=params.maintainMoney;
     paramsArray[i++]=params.endDate;
     paramsArray[i++]=params.repairStatus;
     paramsArray[i++]=params.remark;

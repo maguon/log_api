@@ -29564,6 +29564,12 @@
         },
         "repairMoney": {
           "type": "integer"
+        },
+        "partsMoney": {
+          "type": "integer"
+        },
+        "maintainMoney": {
+          "type": "integer"
         }
       },
       "xml": {

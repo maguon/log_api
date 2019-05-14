@@ -98,3 +98,9 @@ ADD COLUMN `operate_type`  tinyint(1) NULL DEFAULT NULL COMMENT '所属类型(1-
 -- 2019-05-14 更新
 -- ----------------------------
 update drive_info set operate_type = 1;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `truck_repair_rel`
+ADD COLUMN `parts_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '配件金额' AFTER `repair_money`,
+ADD COLUMN `maintain_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '保养金额' AFTER `parts_money`;
