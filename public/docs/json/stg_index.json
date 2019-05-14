@@ -29865,6 +29865,9 @@
         "tel": {
           "type": "string"
         },
+        "operateType": {
+          "type": "integer"
+        },
         "companyId": {
           "type": "integer"
         },
@@ -29892,6 +29895,9 @@
       "type": "object",
       "properties": {
 
+        "operateType": {
+          "type": "integer"
+        },
         "companyId": {
           "type": "integer"
         },

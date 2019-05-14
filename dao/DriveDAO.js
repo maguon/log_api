@@ -7,14 +7,15 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
-    var query = " insert into drive_info (user_id,drive_name,gender,id_number,tel,company_id,license_type," +
-        " address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into drive_info (user_id,drive_name,gender,id_number,tel,operate_type,company_id,license_type," +
+        " address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
     paramsArray[i++]=params.idNumber;
     paramsArray[i++]=params.tel;
+    paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.address;
@@ -28,7 +29,7 @@ function addDrive(params,callback){
 }
 
 function getDrive(params,callback) {
-    var query = " select d.*,ti1.id as truck_id,ti1.truck_num,ti2.id as vice_truck_id,ti2.truck_num as vice,c.company_name,c.operate_type, " +
+    var query = " select d.*,ti1.id as truck_id,ti1.truck_num,ti2.id as vice_truck_id,ti2.truck_num as vice,c.company_name, " +
         " h.truck_num as trail_num,h.number,u.mobile,if(isnull(ti1.id),0,1) as operate_flag " +
         " from drive_info d " +
         " left join truck_info ti1 on d.id=ti1.drive_id " +
@@ -78,7 +79,7 @@ function getDrive(params,callback) {
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and c.operate_type = ? ";
+        query = query + " and d.operate_type = ? ";
     }
     if(params.driveStatus){
         paramsArray[i++] = params.driveStatus;
@@ -194,8 +195,9 @@ function updateDrive(params,callback){
 }
 
 function updateDriveCompany(params,callback){
-    var query = " update drive_info set company_id = ? where id = ? ";
+    var query = " update drive_info set operate_type = ? , company_id = ? where id = ? ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.companyId;
     paramsArray[i]=params.driveId;
     db.dbQuery(query,paramsArray,function(error,rows){

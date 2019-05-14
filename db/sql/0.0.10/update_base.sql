@@ -89,3 +89,12 @@ DELIMITER ;
 -- ----------------------------
 ALTER TABLE `dp_route_task`
 ADD COLUMN `up_distance_count`  int(10) NULL DEFAULT 0 COMMENT '修改里程次数' AFTER `stat_status`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `drive_info`
+ADD COLUMN `operate_type`  tinyint(1) NULL DEFAULT NULL COMMENT '所属类型(1-自营,2-外协,3-供方,4-承包)' AFTER `tel`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+update drive_info set operate_type = 1;
