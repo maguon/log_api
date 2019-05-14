@@ -204,6 +204,11 @@ var RECEIVE_TYPE = {  //经销商类型
     temporary : 3 //临时停放地
 };
 
+var RECEIVE_FLAG = {  //经销商是否为库
+    no : 0 ,  //非库
+    yes : 1 //是库
+};
+
 var SETTLE_STATUS = {
     not_settle : 1 ,  //未结算
     settle : 2 //已结算
@@ -246,6 +251,7 @@ module.exports = {
     TRUCK_INSURE_STATUS : TRUCK_INSURE_STATUS,
     STAT_STATUS : STAT_STATUS,
     RECEIVE_TYPE : RECEIVE_TYPE,
+    RECEIVE_FLAG : RECEIVE_FLAG,
     SETTLE_STATUS : SETTLE_STATUS,
     REPAIR_TYPE : REPAIR_TYPE
 }

@@ -7,8 +7,8 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('ReceiveDAO.js');
 
 function addReceive(params,callback){
-    var query = " insert into receive_info (short_name,receive_name,receive_type,address,lng,lat,city_id,make_id,make_name,remark) " +
-        " values (? , ? ,  ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into receive_info (short_name,receive_name,receive_type,address,lng,lat,city_id,make_id,make_name," +
+        " receive_flag,remark) values (? , ? ,  ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.receiveName;
@@ -19,6 +19,7 @@ function addReceive(params,callback){
     paramsArray[i++]=params.cityId;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
+    paramsArray[i++]=params.receiveFlag;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addReceive ');
@@ -85,7 +86,7 @@ function getReceiveCount(params,callback) {
 
 function updateReceive(params,callback){
     var query = " update receive_info set short_name = ?, receive_name = ? , receive_type = ? , address = ?, lng = ?, lat = ?," +
-        " city_id = ?, make_id = ?, make_name = ?, remark = ? where id = ? " ;
+        " city_id = ?, make_id = ?, make_name = ?, receive_flag = ?, remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.shortName;
     paramsArray[i++]=params.receiveName;
@@ -96,6 +97,7 @@ function updateReceive(params,callback){
     paramsArray[i++]=params.cityId;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
+    paramsArray[i++]=params.receiveFlag;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.receiveId;
     db.dbQuery(query,paramsArray,function(error,rows){

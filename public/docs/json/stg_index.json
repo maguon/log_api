@@ -30564,6 +30564,9 @@
         "makeName": {
           "type": "string"
         },
+        "receiveFlag": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }
