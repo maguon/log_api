@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var driveExceedOilRelDAO = require('../dao/DriveExceedOilRelDAO.js');
 var driveExceedOilDAO = require('../dao/DriveExceedOilDAO.js');
 var truckDAO = require('../dao/TruckDAO.js');
@@ -185,6 +186,7 @@ function uploadDriveExceedOilRelFile(req,res,next){
                         driveId : parkObj.driveId,
                         oilDate : objArray[i].时间,
                         dateId : parseInt(moment(objArray[i].时间).format('YYYYMMDD')),
+                        oilAddressType : sysConst.OIL_ADDRESS_TYPE.outside,
                         oilAddress : objArray[i].地点,
                         oil : objArray[i].加油升数,
                         urea : objArray[i].加尿素量,

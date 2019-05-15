@@ -135,6 +135,11 @@ var DAMAGE_TYPE = {
     retreat_car : 8 //退库车
 };
 
+var OIL_ADDRESS_TYPE = {
+    inner : 1,  //内部
+    outside : 2 //外部
+};
+
 var DAMAGE_STEP_TYPE = {
     SYS_OUT : 1, //短驳移库
     PARK_DAMAGE :2 ,//公路运输
@@ -241,6 +246,7 @@ module.exports = {
     UNLOAD_CAR_COUNT  : UNLOAD_CAR_COUNT ,
     DISTANCE_PRICE : DISTANCE_PRICE,
     DAMAGE_TYPE : DAMAGE_TYPE ,
+    OIL_ADDRESS_TYPE : OIL_ADDRESS_TYPE,
     DAMAGE_STEP_TYPE : DAMAGE_STEP_TYPE ,
     LIABILITY_TYPE : LIABILITY_TYPE,
     ACCIDENT_STATUS : ACCIDENT_STATUS,
