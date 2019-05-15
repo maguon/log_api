@@ -227,7 +227,7 @@ function getTruckRepairCsv(req,res,next){
                 }
                 if(rows[i].repair_type == 1){
                     parkObj.repairType = "事故维修";
-                }else if(rows[i].truck_type == 2){
+                }else if(rows[i].repair_type == 2){
                     parkObj.repairType = "公司维修";
                 }else{
                     parkObj.repairType = "在外临时维修";
