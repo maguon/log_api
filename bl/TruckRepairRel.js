@@ -215,7 +215,7 @@ function uploadTruckRepairRelFile(req,res,next){
             Seq().seq(function(){
                 var that = this;
                 var subParams ={
-                    truckNum : objArray[i].货车,
+                    truckNum : objArray[i].车号,
                     row : i+1,
                 }
                 truckDAO.getTruckBase(subParams,function(error,rows){

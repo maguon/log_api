@@ -22,6 +22,7 @@ var fs = require('fs');
 
 function createDriveExceedOilRel(req,res,next){
     var params = req.params ;
+    var relId = 0;
     Seq().seq(function(){
         var that = this;
         var oilDate = params.oilDate;
@@ -33,7 +34,9 @@ function createDriveExceedOilRel(req,res,next){
                 throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.insertId>0){
+
                     logger.info(' createDriveExceedOilRel ' + 'success');
+                    relId = result.insertId;
                     that();
                 }else{
                     resUtil.resetFailedRes(res," 新增操作失败 ");
@@ -53,7 +56,7 @@ function createDriveExceedOilRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateDriveExceedActualOil ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
+                resUtil.resetQueryRes(res,{relId:relId},null);
                 return next();
             }
         })
@@ -69,6 +72,22 @@ function queryDriveExceedOilRel(req,res,next){
         } else {
             logger.info(' queryDriveExceedOilRel ' + 'success');
             resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDriveExceedOilRel(req,res,next){
+    var params = req.params ;
+    var strDate = moment(params.oilDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
+    driveExceedOilRelDAO.updateDriveExceedOilRel(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveExceedOilRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveExceedOilRel ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
             return next();
         }
     })
@@ -231,6 +250,7 @@ function uploadDriveExceedOilRelFile(req,res,next){
 module.exports = {
     createDriveExceedOilRel : createDriveExceedOilRel,
     queryDriveExceedOilRel : queryDriveExceedOilRel,
+    updateDriveExceedOilRel : updateDriveExceedOilRel,
     removeDriveExceedOilRel : removeDriveExceedOilRel,
     uploadDriveExceedOilRelFile : uploadDriveExceedOilRelFile
 }

@@ -72,6 +72,28 @@ function getDriveExceedOilRel(params,callback) {
     });
 }
 
+function updateDriveExceedOilRel(params,callback){
+    var query = " update drive_exceed_oil_rel set oil_date = ? , date_id = ? , " +
+        " oil_address_type = ? , oil_address = ? , oil = ? , urea = ? , oil_single_price = ? , " +
+        " urea_single_price = ? , oil_money = ? , urea_money = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.oilDate;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i++]=params.oilAddressType;
+    paramsArray[i++]=params.oilAddress;
+    paramsArray[i++]=params.oil;
+    paramsArray[i++]=params.urea;
+    paramsArray[i++]=params.oilSinglePrice;
+    paramsArray[i++]=params.ureaSinglePrice;
+    paramsArray[i++]=params.oilMoney;
+    paramsArray[i++]=params.ureaMoney;
+    paramsArray[i++]=params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveExceedOilRel ');
+        return callback(error,rows);
+    });
+}
+
 function deleteDriveExceedOilRel(params,callback){
     var query = " delete from drive_exceed_oil_rel where id = ? ";
     var paramsArray=[],i=0;
@@ -86,5 +108,6 @@ function deleteDriveExceedOilRel(params,callback){
 module.exports ={
     addDriveExceedOilRel : addDriveExceedOilRel,
     getDriveExceedOilRel : getDriveExceedOilRel,
+    updateDriveExceedOilRel : updateDriveExceedOilRel,
     deleteDriveExceedOilRel : deleteDriveExceedOilRel
 }
