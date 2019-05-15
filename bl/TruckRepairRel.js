@@ -269,8 +269,8 @@ function uploadTruckRepairRelFile(req,res,next){
                         repairMoney: objArray[i].维修费,
                         maintainMoney: objArray[i].保养费,
                         repairStatus: listOfValue.REPAIR_STATUS_ACTIVE,
-                        repairReason: objArray[i].维修原因,
-                        remark: objArray[i].维修描述,
+                        repairReason: objArray[i].维修内容,
+                        remark: objArray[i].备注,
                         row: i + 1
                     }
                     truckRepairRelDAO.addUploadTruckRepairRel(subParams, function (err, result) {

@@ -103,7 +103,7 @@ function getTruckRepairRel(params,callback) {
         paramsArray[i++] = params.accidentId;
         query = query + " and trr.accident_id = ? ";
     }
-    query = query + ' order by trr.repair_status ';
+    query = query + ' order by trr.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
