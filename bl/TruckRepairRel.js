@@ -7,13 +7,17 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var truckRepairRelDAO = require('../dao/TruckRepairRelDAO.js');
 var truckDAO = require('../dao/TruckDAO.js');
+var driveDAO = require('../dao/DriveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('TruckRepairRel.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createTruckRepairRel(req,res,next){
     var params = req.params ;
@@ -199,6 +203,130 @@ function updateTruckRepairRelBase(req,res,next){
     })
 }
 
+function uploadTruckRepairRelFile(req,res,next){
+    var params = req.params;
+    var parkObj = {};
+    var repairFlag = true;
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    truckNum : objArray[i].货车,
+                    row : i+1,
+                }
+                truckDAO.getTruckBase(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getTruckBase ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.truckId = rows[0].id;
+                        }else{
+                            parkObj.truckId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    driveName : objArray[i].司机,
+                    row : i+1,
+                }
+                driveDAO.getDrive(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getDrive ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length>0) {
+                            parkObj.driveId = rows[0].id;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    truckId : parkObj.truckId,
+                    row : i+1,
+                }
+                truckRepairRelDAO.getTruckRepairRel(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getTruckRepairRel ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length>0&&rows[0].repair_status==listOfValue.REPAIR_STATUS_ACTIVE){
+                            repairFlag = true;
+                        }else{
+                            repairFlag = false;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(parkObj.truckId>0){
+                    if(repairFlag) {
+                        if (objArray[i].维修描述 == "事故维修") {
+                            parkObj.repairType = sysConst.REPAIR_TYPE.accident;
+                        } else if (objArray[i].维修描述 == "公司维修") {
+                            parkObj.repairType = sysConst.REPAIR_TYPE.company;
+                        } else {
+                            parkObj.repairType = sysConst.REPAIR_TYPE.temporary;
+                        }
+                        var subParams = {
+                            truckId: parkObj.truckId,
+                            driveId: parkObj.driveId,
+                            driveName: objArray[i].司机,
+                            repairDate: objArray[i].维修开始时间,
+                            endDate: objArray[i].维修结束时间,
+                            repairMoney: objArray[i].维修费,
+                            maintainMoney: objArray[i].保养费,
+                            partsMoney: objArray[i].配件费,
+                            repairType: parkObj.repairType,
+                            repairStatus: listOfValue.REPAIR_STATUS_ACTIVE,
+                            dateId: parseInt(moment(objArray[i].维修开始时间).format('YYYYMMDD')),
+                            remark: objArray[i].维修描述,
+                            row: i + 1
+                        }
+                        truckRepairRelDAO.addUploadTruckRepairRel(subParams, function (err, result) {
+                            if (err) {
+                                logger.error(' createUploadTruckRepairRel ' + err.message);
+                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                                that(null, i);
+                            } else {
+                                if (result && result.insertId > 0) {
+                                    successedInsert = successedInsert + result.affectedRows;
+                                    logger.info(' createUploadTruckRepairRel ' + 'success');
+                                } else {
+                                    logger.warn(' createUploadTruckRepairRel ' + 'failed');
+                                }
+                                that(null, i);
+                            }
+                        })
+                    }else{
+                        that(null, i);
+                    }
+                }else{
+                    that(null,i);
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadTruckRepairRelFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 
 function getTruckRepairCsv(req,res,next){
     var csvString = "";
@@ -302,5 +430,6 @@ module.exports = {
     queryTruckRepairMoneyTotal : queryTruckRepairMoneyTotal,
     updateTruckRepairRel : updateTruckRepairRel,
     updateTruckRepairRelBase : updateTruckRepairRelBase,
+    uploadTruckRepairRelFile : uploadTruckRepairRelFile,
     getTruckRepairCsv : getTruckRepairCsv
 }

@@ -22,6 +22,28 @@ function addTruckRepairRel(params,callback){
     });
 }
 
+function addUploadTruckRepairRel(params,callback){
+    var query = " insert into truck_repair_rel (truck_id,drive_id,drive_name,repair_money,parts_money,maintain_money," +
+        " repair_date,repair_type,end_date,repair_status,date_id,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.driveName;
+    paramsArray[i++]=params.repairMoney;
+    paramsArray[i++]=params.partsMoney;
+    paramsArray[i++]=params.maintainMoney;
+    paramsArray[i++]=params.repairDate;
+    paramsArray[i++]=params.repairType;
+    paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.repairStatus;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i]=params.remark;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addUploadTruckRepairRel ');
+        return callback(error,rows);
+    });
+}
+
 function getTruckRepairRel(params,callback) {
     var query = " select trr.*,ti.truck_num,ti.truck_type,ri.repair_station_name,ta.address as accident_address,c.company_name " +
         " from truck_repair_rel trr" +
@@ -203,6 +225,7 @@ function updateTruckRepairRelBase(params,callback){
 
 module.exports ={
     addTruckRepairRel : addTruckRepairRel,
+    addUploadTruckRepairRel : addUploadTruckRepairRel,
     getTruckRepairRel: getTruckRepairRel,
     getTruckRepairRelCount : getTruckRepairRelCount,
     getTruckRepairCountTotal : getTruckRepairCountTotal,

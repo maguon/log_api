@@ -273,6 +273,7 @@ function createServer() {
     server.get('/api/truckRepairMoneyTotal' , truckRepairRel.queryTruckRepairMoneyTotal);
     server.get('/api/truckRepair.csv', truckRepairRel.getTruckRepairCsv);
     server.post({path:'/api/user/:userId/truck/:truckId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
+    server.post({path:'/api/user/:userId/truckRepairRelFile',contentType: 'multipart/form-data'},truckRepairRel.uploadTruckRepairRelFile);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRelBase/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRelBase);
 
