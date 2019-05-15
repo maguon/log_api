@@ -282,14 +282,15 @@ function uploadTruckRepairRelFile(req,res,next){
                             truckId: parkObj.truckId,
                             driveId: parkObj.driveId,
                             driveName: objArray[i].司机,
+                            repairType: parkObj.repairType,
                             repairDate: objArray[i].维修开始时间,
+                            dateId: parseInt(moment(objArray[i].维修开始时间).format('YYYYMMDD')),
                             endDate: objArray[i].维修结束时间,
+                            partsMoney: objArray[i].配件费,
                             repairMoney: objArray[i].维修费,
                             maintainMoney: objArray[i].保养费,
-                            partsMoney: objArray[i].配件费,
-                            repairType: parkObj.repairType,
                             repairStatus: listOfValue.REPAIR_STATUS_ACTIVE,
-                            dateId: parseInt(moment(objArray[i].维修开始时间).format('YYYYMMDD')),
+                            repairReason: objArray[i].维修原因,
                             remark: objArray[i].维修描述,
                             row: i + 1
                         }

@@ -24,7 +24,8 @@ function addTruckRepairRel(params,callback){
 
 function addUploadTruckRepairRel(params,callback){
     var query = " insert into truck_repair_rel (truck_id,drive_id,drive_name,repair_money,parts_money,maintain_money," +
-        " repair_date,repair_type,end_date,repair_status,date_id,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " repair_date,repair_type,end_date,repair_status,date_id,repair_reason,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.driveId;
@@ -37,6 +38,7 @@ function addUploadTruckRepairRel(params,callback){
     paramsArray[i++]=params.endDate;
     paramsArray[i++]=params.repairStatus;
     paramsArray[i++]=params.dateId;
+    paramsArray[i++]=params.repairReason;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addUploadTruckRepairRel ');
