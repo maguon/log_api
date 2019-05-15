@@ -164,5 +164,5 @@ ADD COLUMN `total_trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总拖车�
 -- ----------------------------
 -- 2019-05-15 更新
 -- ----------------------------
-ALTER TABLE `truck_repair_rel`
-MODIFY COLUMN `repair_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '维修金额' AFTER `repair_user`;
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `car_parking_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停车费' AFTER `total_trailer_fee`;

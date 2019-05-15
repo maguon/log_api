@@ -31345,13 +31345,10 @@
         "receiveId": {
           "type": "integer"
         },
-        "singlePrice": {
+        "smallSinglePrice": {
           "type": "integer"
         },
         "totalPrice": {
-          "type": "integer"
-        },
-        "guardFee": {
           "type": "integer"
         },
         "carCount": {

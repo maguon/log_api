@@ -68,6 +68,7 @@ function getDpRouteLoadTask(params,callback) {
         " t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
         " count(case when c.size_type = 0 then dpdtl.id end) as small_car_count, " +
         " count(case when c.size_type = 1 then dpdtl.id end) as big_car_count, " +
+        " sum(e.car_parking_fee) as car_parking_fee, " +
         " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end,dpd.remark as demand_remark " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
@@ -76,6 +77,7 @@ function getDpRouteLoadTask(params,callback) {
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join dp_route_load_task_detail dpdtl on dprl.id = dpdtl.dp_route_load_task_id " +
         " left join car_info c on dpdtl.car_id = c.id " +
+        " left join entrust_info e on c.entrust_id = e.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join receive_info r on dprl.receive_id = r.id " +

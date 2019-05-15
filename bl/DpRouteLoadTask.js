@@ -167,6 +167,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.bigCleanFee = rows[0].big_clean_fee;
                         parkObj.trailerFee = rows[0].trailer_fee;
                         parkObj.receiveFlag = rows[0].receive_flag;
+                        parkObj.carParkingFee = rows[0].car_parking_fee;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.smallCarCount = rows[0].small_car_count;
                         parkObj.bigCarCount = rows[0].big_car_count;
@@ -252,6 +253,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.bigCarCount = parkObj.bigCarCount;
             params.trailerFee = parkObj.trailerFee;
             params.totalTrailerFee = parkObj.trailerFee*parkObj.carCount;
+            params.carParkingFee = parkObj.carParkingFee;
             params.totalPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
             params.carCount = parkObj.carCount;
             params.type = 0;
