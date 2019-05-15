@@ -206,7 +206,6 @@ function updateTruckRepairRelBase(req,res,next){
 function uploadTruckRepairRelFile(req,res,next){
     var params = req.params;
     var parkObj = {};
-    var repairFlag = true;
     var successedInsert = 0;
     var failedCase = 0;
     var file = req.files.file;
@@ -250,68 +249,45 @@ function uploadTruckRepairRelFile(req,res,next){
                     }
                 })
             }).seq(function(){
-                var that = this;
-                var subParams ={
-                    truckId : parkObj.truckId,
-                    row : i+1,
-                }
-                truckRepairRelDAO.getTruckRepairRel(subParams,function(error,rows){
-                    if (error) {
-                        logger.error(' getTruckRepairRel ' + error.message);
-                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    } else{
-                        if(rows&&rows.length>0&&rows[0].repair_status==listOfValue.REPAIR_STATUS_ACTIVE){
-                            repairFlag = true;
-                        }else{
-                            repairFlag = false;
-                        }
-                        that();
-                    }
-                })
-            }).seq(function(){
                 if(parkObj.truckId>0){
-                    if(repairFlag) {
-                        if (objArray[i].维修描述 == "事故维修") {
-                            parkObj.repairType = sysConst.REPAIR_TYPE.accident;
-                        } else if (objArray[i].维修描述 == "公司维修") {
-                            parkObj.repairType = sysConst.REPAIR_TYPE.company;
-                        } else {
-                            parkObj.repairType = sysConst.REPAIR_TYPE.temporary;
-                        }
-                        var subParams = {
-                            truckId: parkObj.truckId,
-                            driveId: parkObj.driveId,
-                            driveName: objArray[i].司机,
-                            repairType: parkObj.repairType,
-                            repairDate: objArray[i].维修开始时间,
-                            dateId: parseInt(moment(objArray[i].维修开始时间).format('YYYYMMDD')),
-                            endDate: objArray[i].维修结束时间,
-                            partsMoney: objArray[i].配件费,
-                            repairMoney: objArray[i].维修费,
-                            maintainMoney: objArray[i].保养费,
-                            repairStatus: listOfValue.REPAIR_STATUS_ACTIVE,
-                            repairReason: objArray[i].维修原因,
-                            remark: objArray[i].维修描述,
-                            row: i + 1
-                        }
-                        truckRepairRelDAO.addUploadTruckRepairRel(subParams, function (err, result) {
-                            if (err) {
-                                logger.error(' createUploadTruckRepairRel ' + err.message);
-                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                                that(null, i);
-                            } else {
-                                if (result && result.insertId > 0) {
-                                    successedInsert = successedInsert + result.affectedRows;
-                                    logger.info(' createUploadTruckRepairRel ' + 'success');
-                                } else {
-                                    logger.warn(' createUploadTruckRepairRel ' + 'failed');
-                                }
-                                that(null, i);
-                            }
-                        })
-                    }else{
-                        that(null, i);
+                    if (objArray[i].维修描述 == "事故维修") {
+                        parkObj.repairType = sysConst.REPAIR_TYPE.accident;
+                    } else if (objArray[i].维修描述 == "公司维修") {
+                        parkObj.repairType = sysConst.REPAIR_TYPE.company;
+                    } else {
+                        parkObj.repairType = sysConst.REPAIR_TYPE.temporary;
                     }
+                    var subParams = {
+                        truckId: parkObj.truckId,
+                        driveId: parkObj.driveId,
+                        driveName: objArray[i].司机,
+                        repairType: parkObj.repairType,
+                        repairDate: objArray[i].维修开始时间,
+                        dateId: parseInt(moment(objArray[i].维修开始时间).format('YYYYMMDD')),
+                        endDate: objArray[i].维修结束时间,
+                        partsMoney: objArray[i].配件费,
+                        repairMoney: objArray[i].维修费,
+                        maintainMoney: objArray[i].保养费,
+                        repairStatus: listOfValue.REPAIR_STATUS_ACTIVE,
+                        repairReason: objArray[i].维修原因,
+                        remark: objArray[i].维修描述,
+                        row: i + 1
+                    }
+                    truckRepairRelDAO.addUploadTruckRepairRel(subParams, function (err, result) {
+                        if (err) {
+                            logger.error(' createUploadTruckRepairRel ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null, i);
+                        } else {
+                            if (result && result.insertId > 0) {
+                                successedInsert = successedInsert + result.affectedRows;
+                                logger.info(' createUploadTruckRepairRel ' + 'success');
+                            } else {
+                                logger.warn(' createUploadTruckRepairRel ' + 'failed');
+                            }
+                            that(null, i);
+                        }
+                    })
                 }else{
                     that(null,i);
                 }
