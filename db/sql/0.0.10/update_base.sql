@@ -166,3 +166,10 @@ ADD COLUMN `total_trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总拖车�
 -- ----------------------------
 ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `car_parking_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停车费' AFTER `total_trailer_fee`;
+-- ----------------------------
+-- 2019-05-15 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_rel`
+ADD COLUMN `oil_single_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '油单价' AFTER `urea`,
+ADD COLUMN `urea_single_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '尿素单价' AFTER `oil_single_price`,
+ADD COLUMN `urea_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '加油金额' AFTER `oil_money`;

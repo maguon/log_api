@@ -30364,7 +30364,16 @@
         "urea": {
           "type": "integer"
         },
+        "oilSinglePrice": {
+          "type": "integer"
+        },
+        "ureaSinglePrice": {
+          "type": "integer"
+        },
         "oilMoney": {
+          "type": "integer"
+        },
+        "ureaMoney": {
           "type": "integer"
         }
       },
