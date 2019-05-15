@@ -162,7 +162,7 @@ var LIABILITY_TYPE = {
     three_seven : 4 //三七
 };
 
-var UNLOAD_CAR_COUNT = 3;//>=3重载,<=3空载
+var UNLOAD_CAR_COUNT = 4;//>=4重载,<=4空载
 var DISTANCE_PRICE = 1.6;//里程单价(过路费=路程*单价)
 
 var ACCIDENT_STATUS  ={ //事故状态

@@ -496,7 +496,7 @@ function updateDpRouteTaskStatus(req,res,next){
     }).seq(function() {
         var that = this;
         if (params.taskStatus == sysConst.TASK_STATUS.completed) {
-            if(parkObj.carCount/parkObj.truckNumber>0.3){
+            if(parkObj.carCount>=4){
                 parkObj.loadFlag = sysConst.LOAD_FLAG.loan;
             }else{
                 parkObj.loadFlag = sysConst.LOAD_FLAG.not_loan;
@@ -549,7 +549,7 @@ function updateDpRouteTaskStatus(req,res,next){
         if(params.taskStatus == sysConst.TASK_STATUS.completed){
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
-            if(parkObj.carCount/parkObj.truckNumber>0.3){
+            if(parkObj.carCount>=4){
                 params.loadFlag = sysConst.LOAD_FLAG.loan;
             }
         }
