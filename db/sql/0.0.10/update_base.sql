@@ -143,3 +143,21 @@ ADD COLUMN `car_parking_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停
 -- ----------------------------
 ALTER TABLE `receive_info`
 ADD COLUMN `receive_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否为库(0-非库,1-是库)' AFTER `trailer_fee`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+CHANGE COLUMN `single_price` `small_single_price`  decimal(10,2) NULL DEFAULT NULL COMMENT '小车洗车单价' AFTER `receive_id`,
+ADD COLUMN `big_single_price`  decimal(10,2) NULL DEFAULT NULL COMMENT '大车洗车单价' AFTER `small_single_price`,
+ADD COLUMN `small_car_count`  int(10) NULL DEFAULT 0 COMMENT '小车台数' AFTER `big_single_price`,
+ADD COLUMN `big_car_count`  int(10) NULL DEFAULT 0 COMMENT '大车台数' AFTER `small_car_count`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '拖车费' AFTER `big_car_count`;
+-- ----------------------------
+-- 2019-05-14 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `total_trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总拖车费' AFTER `trailer_fee`;

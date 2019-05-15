@@ -164,8 +164,12 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.receiveId = rows[0].receive_id;
                         parkObj.shortName = rows[0].short_name;
                         parkObj.cleanFee = rows[0].clean_fee;
+                        parkObj.bigCleanFee = rows[0].big_clean_fee;
+                        parkObj.trailerFee = rows[0].trailer_fee;
+                        parkObj.receiveFlag = rows[0].receive_flag;
                         parkObj.carCount = rows[0].car_count;
-                        parkObj.carExceptionCount = rows[0].car_exception_count;
+                        parkObj.smallCarCount = rows[0].small_car_count;
+                        parkObj.bigCarCount = rows[0].big_car_count;
                         parkObj.truckNum = rows[0].truck_num;
                         parkObj.truckId = rows[0].truck_id;
                         parkObj.driveId = rows[0].drive_id;
@@ -242,8 +246,13 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
             params.receiveId = parkObj.receiveId;
-            params.singlePrice = parkObj.cleanFee;
-            params.totalPrice = parkObj.cleanFee * parkObj.carCount;
+            params.smallSinglePrice = parkObj.cleanFee;
+            params.bigSinglePrice = parkObj.bigCleanFee;
+            params.smallCarCount = parkObj.smallCarCount;
+            params.bigCarCount = parkObj.bigCarCount;
+            params.trailerFee = parkObj.trailerFee;
+            params.totalTrailerFee = parkObj.trailerFee*parkObj.carCount;
+            params.totalPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
             params.carCount = parkObj.carCount;
             params.type = 0;
             dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params, function (error, result) {

@@ -8,17 +8,22 @@ var logger = serverLogger.createLogger('DpRouteLoadTaskCleanRelDAO.js');
 
 function addDpRouteLoadTaskCleanRel(params,callback){
     var query = " insert into dp_route_load_task_clean_rel (dp_route_task_id,dp_route_load_task_id," +
-        " drive_id,truck_id,receive_id,single_price,total_price,guard_fee,car_count,type) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " drive_id,truck_id,receive_id,small_single_price,big_single_price,small_car_count,big_car_count," +
+        " trailer_fee,total_trailer_fee,total_price,car_count,type) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.dpRouteLoadTaskId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.receiveId;
-    paramsArray[i++]=params.singlePrice;
+    paramsArray[i++]=params.smallSinglePrice;
+    paramsArray[i++]=params.bigSinglePrice;
+    paramsArray[i++]=params.smallCarCount;
+    paramsArray[i++]=params.bigCarCount;
+    paramsArray[i++]=params.trailerFee;
+    paramsArray[i++]=params.totalTrailerFee;
     paramsArray[i++]=params.totalPrice;
-    paramsArray[i++]=params.guardFee;
     paramsArray[i++]=params.carCount;
     paramsArray[i]=params.type;
     db.dbQuery(query,paramsArray,function(error,rows){

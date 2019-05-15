@@ -63,9 +63,11 @@ function addDpRouteLoadTaskBatch(params,callback){
 
 function getDpRouteLoadTask(params,callback) {
     var query = " select dprl.*,dprl.route_start as city_start_name,dprl.route_end as city_name,dprl.transfer_city as transfer_city_name, " +
-        " u.real_name as task_op_name,u1.real_name as field_op_name,r.make_name,r.clean_fee,dpd.pre_count,dpr.task_status, " +
-        " dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date,t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
-        " count(case when cer.exception_status = 1 then cer.id end) as car_exception_count, " +
+        " u.real_name as task_op_name,u1.real_name as field_op_name,r.make_name,r.clean_fee,r.big_clean_fee,r.trailer_fee,r.receive_flag, " +
+        " dpd.pre_count,dpr.task_status,dpr.truck_id,dpr.drive_id,dpr.task_plan_date,dpr.task_start_date,dpr.date_id as task_end_date, " +
+        " t.truck_num,d.drive_name,u2.mobile,count(dpdtl.id) as car_count, " +
+        " count(case when c.size_type = 0 then dpdtl.id end) as small_car_count, " +
+        " count(case when c.size_type = 1 then dpdtl.id end) as big_car_count, " +
         " dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end,dpd.remark as demand_remark " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
@@ -73,7 +75,7 @@ function getDpRouteLoadTask(params,callback) {
         " left join user_info u1 on dprl.field_op_id = u1.uid " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " left join dp_route_load_task_detail dpdtl on dprl.id = dpdtl.dp_route_load_task_id " +
-        " left join car_exception_rel cer on dpdtl.car_id = cer.car_id " +
+        " left join car_info c on dpdtl.car_id = c.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join receive_info r on dprl.receive_id = r.id " +
