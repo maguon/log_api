@@ -179,3 +179,8 @@ ADD COLUMN `urea_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '加油金额' 
 ALTER TABLE `truck_insure_rel`
 ADD COLUMN `tax_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '税金额' AFTER `insure_money`,
 ADD COLUMN `total_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '合计金额' AFTER `tax_money`;
+-- ----------------------------
+-- 2019-05-16 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_detail`
+ADD UNIQUE INDEX `car_id` (`dp_route_load_task_id`, `car_id`) USING BTREE ;
