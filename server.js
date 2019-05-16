@@ -698,6 +698,7 @@ function createServer() {
     server.get('/api/driveDistanceMoney' , dpRouteTask.queryDriveDistanceMoney);
     server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
     server.get('/api/driveDistanceLoadStat' , dpRouteTask.queryDriveDistanceLoadStat);
+    server.get('/api/driveDistanceLoad' , dpRouteTask.queryDriveDistanceLoad);
     server.get('/api/driveDistanceLoadStat.csv', dpRouteTask.getDriveDistanceLoadStatCsv);
     server.get('/api/driveDistanceLoad.csv', dpRouteTask.getDriveDistanceLoadCsv);
     server.get('/api/distanceMonthStat' , dpRouteTask.queryRouteTaskMonthStat);

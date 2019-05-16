@@ -375,6 +375,20 @@ function queryDriveDistanceLoadStat(req,res,next){
     })
 }
 
+function queryDriveDistanceLoad(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getDriveDistanceLoad(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveDistanceLoad ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveDistanceLoad ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryNotCompletedTaskStatusCount(req,res,next){
     var params = req.params ;
     dpRouteTaskDAO.getNotCompletedTaskStatusCount(params,function(error,result){
@@ -949,7 +963,7 @@ function getDriveDistanceLoadCsv(req,res,next){
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    dpRouteTaskDAO.getDpRouteTaskList(params,function(error,rows){
+    dpRouteTaskDAO.getDriveDistanceLoad(params,function(error,rows){
         if (error) {
             logger.error(' getDriveDistanceLoadStatCsv ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
@@ -1175,6 +1189,7 @@ module.exports = {
     queryDriveDistanceMoney : queryDriveDistanceMoney,
     queryDriveDistanceCount : queryDriveDistanceCount,
     queryDriveDistanceLoadStat : queryDriveDistanceLoadStat,
+    queryDriveDistanceLoad : queryDriveDistanceLoad,
     queryNotCompletedTaskStatusCount : queryNotCompletedTaskStatusCount,
     queryTaskStatusCount : queryTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,

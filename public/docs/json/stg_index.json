@@ -19617,6 +19617,146 @@
         }
       }
     },
+    "/driveDistanceLoad": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTask list",
+        "description": "query dpRouteTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskStatusArr",
+            "in": "query",
+            "description": "task statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "loadFlag",
+            "in": "query",
+            "description": "load flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTask"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/driveDistanceLoadStat.csv": {
       "get": {
         "tags": [
