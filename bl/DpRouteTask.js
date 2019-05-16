@@ -944,23 +944,11 @@ function getDriveDistanceLoadStatCsv(req,res,next){
 
 function getDriveDistanceLoadCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "联系电话" + ',' + "指令编号"+ ',' + "指令完成时间" + ','+ "起始城市" + ','+ "目的城市"
-        + ','+ "装载车辆数" + ','+ "公里数" ;
+    var header = "司机" + ',' +"货车牌号" + ',' + "联系电话" + ',' + "调度编号"+ ',' + "计划执行时间" + ','+ "起始城市" + ','+ "目的城市"+ ','+
+        "起始装车地" + ','+ "经销商" + ','+ "装载车辆" + ','+ "公里数";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    if(params.dateIdStart !=null || params.dateIdStart !=""){
-        var dateIdStart = params.dateIdStart;
-        var d = new Date(dateIdStart);
-        var currentDateStr = moment(d).format('YYYYMMDD');
-        params.dateIdStart = parseInt(currentDateStr);
-    }
-    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
-        var dateIdEnd = params.dateIdEnd;
-        var d = new Date(dateIdEnd);
-        var currentDateStr = moment(d).format('YYYYMMDD');
-        params.dateIdEnd = parseInt(currentDateStr);
-    }
     dpRouteTaskDAO.getDpRouteTaskList(params,function(error,rows){
         if (error) {
             logger.error(' getDriveDistanceLoadStatCsv ' + error.message);
@@ -971,18 +959,34 @@ function getDriveDistanceLoadCsv(req,res,next){
                 parkObj.truckNum = rows[i].truck_num;
                 parkObj.mobile = rows[i].mobile;
                 parkObj.id = rows[i].id;
-                if(rows[i].task_end_date == null){
-                    parkObj.taskEndDate = "";
+                if(rows[i].task_plan_date == null){
+                    parkObj.taskPlanDate = "";
                 }else{
-                    parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
+                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
                 }
                 parkObj.routeStart = rows[i].route_start;
                 parkObj.routeEnd = rows[i].route_end;
-                parkObj.carCount = rows[i].car_count;
+
+                if(rows[i].addr_name == null){
+                    parkObj.addrName = "";
+                }else{
+                    parkObj.addrName = rows[i].addr_name;
+                }
+                if(rows[i].short_name == null){
+                    parkObj.shortName = "";
+                }else{
+                    parkObj.shortName = rows[i].short_name;
+                }
+                if(rows[i].real_count == null){
+                    parkObj.realCount = "";
+                }else{
+                    parkObj.realCount = rows[i].real_count;
+                }
+
                 parkObj.distance = rows[i].distance;
 
-                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.id+","
-                    +parkObj.taskEndDate+","+parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.carCount+","+parkObj.distance+ '\r\n';
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.id+"," +parkObj.taskPlanDate+","+
+                    parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.addrName+","+parkObj.shortName+","+parkObj.realCount+","+parkObj.distance+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
