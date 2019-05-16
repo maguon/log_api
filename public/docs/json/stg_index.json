@@ -29812,6 +29812,12 @@
         },
         "urea": {
           "type": "integer"
+        },
+        "loadReverseOil": {
+          "type": "integer"
+        },
+        "noLoadReverseOil": {
+          "type": "integer"
         }
       },
       "xml": {

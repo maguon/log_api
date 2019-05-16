@@ -50,11 +50,14 @@ function updateBrand(params,callback){
 }
 
 function updateTruckLoadDistanceOil(params,callback){
-    var query = " update truck_brand set load_distance_oil = ? , no_load_distance_oil = ? , urea = ? where id = ? ";
+    var query = " update truck_brand set load_distance_oil = ? , no_load_distance_oil = ? , urea = ? , " +
+        " load_reverse_oil = ? , no_load_reverse_oil = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.loadDistanceOil;
     paramsArray[i++] = params.noLoadDistanceOil;
     paramsArray[i++] = params.urea;
+    paramsArray[i++] = params.loadReverseOil;
+    paramsArray[i++] = params.noLoadReverseOil;
     paramsArray[i]=params.brandId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckLoadDistanceOil ');

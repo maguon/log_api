@@ -184,3 +184,9 @@ ADD COLUMN `total_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '合计金额' AF
 -- ----------------------------
 ALTER TABLE `dp_route_load_task_detail`
 ADD UNIQUE INDEX `car_id` (`dp_route_load_task_id`, `car_id`) USING BTREE ;
+-- ----------------------------
+-- 2019-05-16 更新
+-- ----------------------------
+ALTER TABLE `truck_brand`
+ADD COLUMN `load_reverse_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '重载倒板油量' AFTER `urea`,
+ADD COLUMN `no_load_reverse_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '空载倒板油量' AFTER `load_reverse_oil`;
