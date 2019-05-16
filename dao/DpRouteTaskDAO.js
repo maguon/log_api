@@ -342,6 +342,14 @@ function getDriveDistanceLoadStat(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and dpr.truck_id = ? ";
     }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
         query = query + " and dpr.date_id >= ? ";
