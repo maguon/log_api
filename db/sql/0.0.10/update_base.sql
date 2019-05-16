@@ -193,6 +193,10 @@ ADD COLUMN `no_load_reverse_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '空载�
 -- ----------------------------
 -- 2019-05-16 更新
 -- ----------------------------
+update truck_brand set load_reverse_oil = load_distance_oil , no_load_reverse_oil = no_load_distance_oil;
+-- ----------------------------
+-- 2019-05-16 更新
+-- ----------------------------
 ALTER TABLE `dp_route_task_oil_rel`
 ADD COLUMN `load_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '重载倒板油量' AFTER `total_urea`,
 ADD COLUMN `no_load_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '空载倒板油量' AFTER `load_reverse_oil`;
@@ -200,4 +204,9 @@ ADD COLUMN `no_load_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '空�
 -- 2019-05-16 更新
 -- ----------------------------
 ALTER TABLE `dp_route_load_task`
+ADD COLUMN `receive_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否为库(0-非库,1-是库)' AFTER `short_name`;
+-- ----------------------------
+-- 2019-05-16 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_tmp`
 ADD COLUMN `receive_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否为库(0-非库,1-是库)' AFTER `short_name`;

@@ -8,7 +8,8 @@ var logger = serverLogger.createLogger('DpRouteLoadTaskTmpDAO.js');
 
 function addDpRouteLoadTaskTmp(params,callback){
     var query = " insert into dp_route_load_task_tmp (user_id,load_task_type,demand_id,transfer_demand_id, " +
-        " dp_route_task_id,route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end,receive_id,short_name,date_id," +
+        " dp_route_task_id,route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end," +
+        " receive_id,short_name,receive_flag,date_id," +
         " plan_date,plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id,transfer_addr_name) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
@@ -25,6 +26,7 @@ function addDpRouteLoadTaskTmp(params,callback){
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.shortName;
+    paramsArray[i++]=params.receiveFlag;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.planDate;
     paramsArray[i++]=params.planCount;
