@@ -15,7 +15,8 @@ var USER_TYPE  ={
     finance_op : 51, //财务部操作员
     finance_admin : 59, //财务部管理员
     settle_op : 61, //结算部操作员
-    settle_admin : 69 //结算部管理员
+    settle_admin : 69, //结算部管理员
+    audit : 90   //审计
 };
 var CAR_OP_TYPE = {
     CREATE_CAR : 1, //新增商品车
