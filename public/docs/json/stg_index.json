@@ -19653,17 +19653,17 @@
 
           },
           {
-            "name": "dateIdStart",
+            "name": "taskPlanDateStart",
             "in": "query",
-            "description": "dateId start",
+            "description": "taskPlanDate start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "dateIdEnd",
+            "name": "taskPlanDateEnd",
             "in": "query",
-            "description": "dateId end",
+            "description": "taskPlanDate end",
             "required": false,
             "type": "string"
 
@@ -19722,17 +19722,17 @@
 
           },
           {
-            "name": "dateIdStart",
+            "name": "taskPlanDateStart",
             "in": "query",
-            "description": "dateId start",
+            "description": "taskPlanDate start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "dateIdEnd",
+            "name": "taskPlanDateEnd",
             "in": "query",
-            "description": "dateId end",
+            "description": "taskPlanDate end",
             "required": false,
             "type": "string"
 
@@ -29695,6 +29695,12 @@
           "type": "string"
         },
         "insureMoney": {
+          "type": "integer"
+        },
+        "taxMoney": {
+          "type": "integer"
+        },
+        "totalMoney": {
           "type": "integer"
         },
         "startDate": {

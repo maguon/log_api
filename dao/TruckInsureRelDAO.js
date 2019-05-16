@@ -7,14 +7,17 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckInsureRelDAO.js');
 
 function addTruckInsureRel(params,callback){
-    var query = " insert into truck_insure_rel (truck_id,insure_id,insure_type,insure_num,insure_money," +
-        " insure_date,start_date,end_date,date_id,insure_explain,insure_user_id)  values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into truck_insure_rel (truck_id,insure_id,insure_type,insure_num,insure_money,tax_money,total_money," +
+        " insure_date,start_date,end_date,date_id,insure_explain,insure_user_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.insureNum;
     paramsArray[i++]=params.insureMoney;
+    paramsArray[i++]=params.taxMoney;
+    paramsArray[i++]=params.totalMoney;
     paramsArray[i++]=params.insureDate;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
@@ -205,13 +208,15 @@ function getTruckInsureCountTotal(params,callback) {
 
 function updateTruckInsureRel(params,callback){
     var query = " update truck_insure_rel set truck_id = ? , insure_id = ? , insure_type = ? , insure_num = ? , insure_money = ? ," +
-        " start_date = ? , end_date = ? , insure_explain = ? where id = ? " ;
+        " tax_money = ? , total_money = ? , start_date = ? , end_date = ? , insure_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.insureNum;
     paramsArray[i++]=params.insureMoney;
+    paramsArray[i++]=params.taxMoney;
+    paramsArray[i++]=params.totalMoney;
     paramsArray[i++]=params.startDate;
     paramsArray[i++]=params.endDate;
     paramsArray[i++]=params.insureExplain;

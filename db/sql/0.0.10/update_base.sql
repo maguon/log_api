@@ -173,3 +173,9 @@ ALTER TABLE `drive_exceed_oil_rel`
 ADD COLUMN `oil_single_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '油单价' AFTER `urea`,
 ADD COLUMN `urea_single_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '尿素单价' AFTER `oil_single_price`,
 ADD COLUMN `urea_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '加油金额' AFTER `oil_money`;
+-- ----------------------------
+-- 2019-05-16 更新
+-- ----------------------------
+ALTER TABLE `truck_insure_rel`
+ADD COLUMN `tax_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '税金额' AFTER `insure_money`,
+ADD COLUMN `total_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '合计金额' AFTER `tax_money`;

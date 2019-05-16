@@ -150,8 +150,8 @@ function removeTruckInsureRel(req,res,next){
 
 function getTruckInsureRelCsv(req,res,next){
     var csvString = "";
-    var header = "保单编号" + ',' + "保险公司" + ',' + "险种" + ','+ "保险金额" + ','+ "货车牌号"+ ','+ "货车类型"
-        + ',' + "所属公司"+ ',' + "经办人" + ','+ "生效日期" + ','+ "终止日期" + ','+ "保险描述";
+    var header = "保单编号" + ',' + "保险公司" + ',' + "险种" + ','+ "保险金额" + ','+ "税金额"+ ','+ "合计金额"+ ','+
+        "货车牌号"+ ','+ "货车类型"+ ',' + "所属公司"+ ',' + "经办人" + ','+ "生效日期" + ','+ "终止日期" + ','+ "保险描述";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -171,6 +171,8 @@ function getTruckInsureRelCsv(req,res,next){
                     parkObj.insureType = "货运险";
                 }
                 parkObj.insureMoney = rows[i].insure_money;
+                parkObj.taxMoney = rows[i].tax_money;
+                parkObj.totalMoney = rows[i].total_money;
                 parkObj.truckNum = rows[i].truck_num;
                 if(rows[i].truck_type == 1){
                     parkObj.truckType = "车头";
@@ -190,9 +192,9 @@ function getTruckInsureRelCsv(req,res,next){
                 }else{
                     parkObj.insureExplain = rows[i].insure_explain;
                 }
-                csvString = csvString+parkObj.insureNum+","+parkObj.insureName+","+parkObj.insureType+","
-                    +parkObj.insureMoney+"," +parkObj.truckNum+","+parkObj.truckType+","+parkObj.companyName+","
-                    +parkObj.insureUserName+","+parkObj.startDate+","+parkObj.endDate+","+parkObj.insureExplain+ '\r\n';
+                csvString = csvString+parkObj.insureNum+","+parkObj.insureName+","+parkObj.insureType+","+parkObj.insureMoney+","+
+                    parkObj.taxMoney+","+parkObj.totalMoney+","+ parkObj.truckNum+","+parkObj.truckType+","+parkObj.companyName+","+
+                    parkObj.insureUserName+","+parkObj.startDate+","+parkObj.endDate+","+parkObj.insureExplain+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
