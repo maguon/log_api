@@ -19994,7 +19994,7 @@
             "in": "query",
             "description": "taskEndDate start",
             "required": false,
-            "type": "integer"
+            "type": "string"
 
           },
           {
@@ -20002,7 +20002,7 @@
             "in": "query",
             "description": "taskEndDate end",
             "required": false,
-            "type": "integer"
+            "type": "string"
 
           }
         ],
