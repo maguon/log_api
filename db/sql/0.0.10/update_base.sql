@@ -198,8 +198,8 @@ update truck_brand set load_reverse_oil = load_distance_oil , no_load_reverse_oi
 -- 2019-05-16 更新
 -- ----------------------------
 ALTER TABLE `dp_route_task_oil_rel`
-ADD COLUMN `load_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '重载倒板油量' AFTER `total_urea`,
-ADD COLUMN `no_load_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '空载倒板油量' AFTER `load_reverse_oil`;
+ADD COLUMN `reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '倒板油量' AFTER `total_urea`,
+ADD COLUMN `total_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '总倒板油量' AFTER `reverse_oil`;
 -- ----------------------------
 -- 2019-05-16 更新
 -- ----------------------------

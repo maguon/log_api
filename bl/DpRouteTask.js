@@ -440,6 +440,8 @@ function updateDpRouteTaskStatus(req,res,next){
                         parkObj.loadDistanceOil=rows[0].load_distance_oil;
                         parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
                         parkObj.urea=rows[0].urea;
+                        parkObj.loadReverseOil=rows[0].load_reverse_oil;
+                        parkObj.noLoadReverseOil=rows[0].no_load_reverse_oil;
                         that();
                     } else {
                         logger.warn(' getDpRouteTask ' + 'failed');
@@ -517,12 +519,16 @@ function updateDpRouteTaskStatus(req,res,next){
             }
             if(parkObj.loadFlag==sysConst.LOAD_FLAG.loan){
                 parkObj.oil = parkObj.loadDistanceOil;
+                parkObj.reverseOil = parkObj.loadReverseOil;
                 parkObj.totalOil = (parkObj.distance*parkObj.loadDistanceOil)/100;
                 parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
+                parkObj.totalReverseOil = (parkObj.distance*parkObj.loadReverseOil)/100;
             }else{
                 parkObj.oil = parkObj.noLoadDistanceOil;
+                parkObj.reverseOil = parkObj.noLoadReverseOil;
                 parkObj.totalOil = (parkObj.distance*parkObj.noLoadDistanceOil)/100;
                 parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
+                parkObj.totalReverseOil = (parkObj.distance*parkObj.noLoadReverseOil)/100;
             }
             var subParams ={
                 dpRouteTaskId:params.dpRouteTaskId,
@@ -536,7 +542,9 @@ function updateDpRouteTaskStatus(req,res,next){
                 oil:parkObj.oil,
                 totalOil:parkObj.totalOil,
                 urea:parkObj.urea,
-                totalUrea:parkObj.totalUrea
+                totalUrea:parkObj.totalUrea,
+                reverseOil:parkObj.reverseOil,
+                totalReverseOil:parkObj.totalReverseOil
             }
             dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
                 if (error) {
