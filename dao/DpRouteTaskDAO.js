@@ -152,16 +152,13 @@ function getDpRouteTask(params,callback) {
         return callback(error,rows);
     });
 }
-
+//调度司机里程详情list，可查询重复调度编号
 function getDpRouteTaskList(params,callback) {
-    var query = " select dpr.*,dpr.route_start as city_route_start,dpr.route_end as city_route_end,u.real_name as route_op_name, " +
-        " t.truck_num,tl.id as trail_id,tl.truck_num as trail_num,tl.number as trail_number,d.drive_name,u1.mobile, " +
-        " (select sum(plan_count) from dp_route_load_task where dp_route_task_id=dpr.id and load_task_status!=8 )plan_count, " +
-        " (select sum(real_count) from dp_route_load_task where dp_route_task_id=dpr.id and load_task_status!=8 )real_count " +
+    var query = " select dpr.*,dprl.addr_name,dprl.short_name,dprl.plan_count,real_count," +
+        " t.truck_num,d.drive_name,u1.mobile " +
         " from dp_route_task dpr " +
-        " left join user_info u on dpr.user_id = u.uid " +
+        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " left join truck_info t on dpr.truck_id = t.id " +
-        " left join truck_info tl on t.rel_id = tl.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join user_info u1 on d.user_id = u1.uid " +
         " where dpr.id is not null ";
@@ -182,17 +179,9 @@ function getDpRouteTaskList(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and dpr.drive_id = ? ";
     }
-    if(params.driveName){
-        paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
-    }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and dpr.truck_id = ? ";
-    }
-    if(params.truckNum){
-        paramsArray[i++] = params.truckNum;
-        query = query + " and t.truck_num = ? ";
     }
     if(params.routeStartId){
         paramsArray[i++] = params.routeStartId;
@@ -221,7 +210,6 @@ function getDpRouteTaskList(params,callback) {
         paramsArray[i++] = params.loadFlag;
         query = query + " and dpr.load_flag = ? ";
     }
-    query = query + ' group by dpr.id ';
     query = query + " order by dpr.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

@@ -828,7 +828,7 @@ function getDpRouteTaskCsv(req,res,next){
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    dpRouteTaskDAO.getDpRouteTaskList(params,function(error,rows){
+    dpRouteTaskDAO.getDpRouteTask(params,function(error,rows){
         if (error) {
             logger.error(' queryDpRouteTaskCsv ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
