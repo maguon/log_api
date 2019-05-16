@@ -190,3 +190,14 @@ ADD UNIQUE INDEX `car_id` (`dp_route_load_task_id`, `car_id`) USING BTREE ;
 ALTER TABLE `truck_brand`
 ADD COLUMN `load_reverse_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '重载倒板油量' AFTER `urea`,
 ADD COLUMN `no_load_reverse_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '空载倒板油量' AFTER `load_reverse_oil`;
+-- ----------------------------
+-- 2019-05-16 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_oil_rel`
+ADD COLUMN `load_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '重载倒板油量' AFTER `total_urea`,
+ADD COLUMN `no_load_reverse_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '空载倒板油量' AFTER `load_reverse_oil`;
+-- ----------------------------
+-- 2019-05-16 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task`
+ADD COLUMN `receive_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否为库(0-非库,1-是库)' AFTER `short_name`;

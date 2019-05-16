@@ -104,7 +104,8 @@ function getDpDemand(params,callback) {
 }
 
 function getDpDemandBase(params,callback) {
-    var query = " select dpd.*,u.real_name as demand_op_name,ba.addr_name,r.short_name from dp_demand_info dpd " +
+    var query = " select dpd.*,u.real_name as demand_op_name,ba.addr_name,r.short_name,r.receive_flag " +
+        " from dp_demand_info dpd " +
         " left join user_info u on dpd.user_id = u.uid " +
         " left join base_addr ba on dpd.base_addr_id = ba.id " +
         " left join receive_info r on dpd.receive_id = r.id" +

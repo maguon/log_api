@@ -31526,6 +31526,9 @@
         "shortName": {
           "type": "string"
         },
+        "receiveFlag": {
+          "type": "integer"
+        },
         "dateId": {
           "type": "integer"
         },
