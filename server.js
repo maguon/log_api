@@ -796,6 +796,7 @@ function createServer() {
     /**
      * DpRouteTaskFee Module
      */
+    server.get('/api/dpRouteTaskFee',dpRouteTaskFee.queryDpRouteTaskFee);
     server.post({path:'/api/user/:userId/dpRouteTaskFee',contentType: 'application/json'},dpRouteTaskFee.createDpRouteTaskFee);
 
     /**

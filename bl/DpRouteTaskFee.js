@@ -27,7 +27,22 @@ function createDpRouteTaskFee(req,res,next){
     })
 }
 
+function queryDpRouteTaskFee(req,res,next){
+    var params = req.params ;
+    dpRouteTaskFeeDAO.getDpRouteTaskFee(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskFee ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskFee ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    createDpRouteTaskFee : createDpRouteTaskFee
+    createDpRouteTaskFee : createDpRouteTaskFee,
+    queryDpRouteTaskFee : queryDpRouteTaskFee
 }

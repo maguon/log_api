@@ -24,7 +24,46 @@ function addDpRouteTaskFee(params,callback){
     });
 }
 
+function getDpRouteTaskFee(params,callback) {
+    var query = " select * from dp_route_task_fee where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskFeeId){
+        paramsArray[i++] = params.dpRouteTaskFeeId;
+        query = query + " and id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and truck_id = ? ";
+    }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and created_on <= ? ";
+    }
+    if(params.status){
+        paramsArray[i++] = params.status;
+        query = query + " and status = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskFee ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addDpRouteTaskFee : addDpRouteTaskFee
+    addDpRouteTaskFee : addDpRouteTaskFee,
+    getDpRouteTaskFee : getDpRouteTaskFee
 }
