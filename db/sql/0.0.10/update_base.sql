@@ -210,3 +210,9 @@ ADD COLUMN `receive_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否为库(0-非
 -- ----------------------------
 ALTER TABLE `dp_route_load_task_tmp`
 ADD COLUMN `receive_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否为库(0-非库,1-是库)' AFTER `short_name`;
+-- ----------------------------
+-- 2019-05-17 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '地跑费' AFTER `trailer_fee`,
+ADD COLUMN `lead_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '带路费' AFTER `run_fee`;
