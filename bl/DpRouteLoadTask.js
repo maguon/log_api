@@ -138,6 +138,7 @@ function queryDpRouteLoadTaskCount(req,res,next){
 function updateDpRouteLoadTaskStatus(req,res,next){
     var params = req.params;
     var parkObj = {};
+    var leadFee = 0;
     var newTransferDemandFlag  = false;
     Seq().seq(function() {
         var that = this;
@@ -186,6 +187,29 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     }
                 }
             })
+    }).seq(function() {
+        var that = this;
+        var subParams = {
+            dpRouteTaskId : parkObj.dpRouteTaskId,
+            routeStartId : parkObj.routeStartId,
+            routeEndId : parkObj.routeEndId,
+        }
+        dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel(subParams, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteLoadTaskCleanRel ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length >0) {
+                    for(var i=0;i<rows.length;i++){
+                        leadFee = leadFee + rows[i].lead_fee;
+                    }
+                    that();
+                } else {
+                    that();
+                }
+            }
+        })
     }).seq(function() {
         var that = this;
         var subParams = {
@@ -258,7 +282,11 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.carParkingFee = parkObj.carParkingFee;
             params.runFee = parkObj.runFee;
             params.totalRunFee = parkObj.runFee*parkObj.carCount;
-            params.leadFee = parkObj.leadFee;
+            if(leadFee>0){
+                params.leadFee = 0;
+            }else{
+                params.leadFee = parkObj.leadFee;
+            }
             params.totalPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
             params.carCount = parkObj.carCount;
             params.type = 0;
