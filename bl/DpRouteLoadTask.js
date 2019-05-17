@@ -464,7 +464,7 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
                 resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if (rows && rows.length>0) {
+                if (rows && rows.length==1) {
                     cleanFlag = true;
                     that();
                 } else {
