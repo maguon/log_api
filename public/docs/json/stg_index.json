@@ -14368,6 +14368,22 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "distance",
+            "in": "query",
+            "description": "distance",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "fee",
+            "in": "query",
+            "description": "fee",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

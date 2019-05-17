@@ -81,6 +81,14 @@ function getEntrustCityRouteRel(params,callback) {
         paramsArray[i++] = params.makeId;
         query = query + " and ecrr.make_id = ? ";
     }
+    if(params.distance){
+        paramsArray[i++] = params.distance;
+        query = query + " and ecrr.distance = ? ";
+    }
+    if(params.fee){
+        paramsArray[i++] = params.fee;
+        query = query + " and ecrr.fee = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getEntrustCityRouteRel ');
         return callback(error,rows);
