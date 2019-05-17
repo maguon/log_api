@@ -291,7 +291,8 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() { //生成洗车费
         var that = this;
-        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&params.loadTaskStatus!=parkObj.loadTaskStatus&&parkObj.cleanFee>0&&cleanStatusFlag) {
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&params.loadTaskStatus!=parkObj.loadTaskStatus&&
+            parkObj.transferFlag==0&&parkObj.cleanFee>0&&cleanStatusFlag) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
