@@ -175,8 +175,8 @@ function updateCleanRelStatus(req,res,next){
 function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     var csvString = "";
     var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ','+ "电话" + ','+ "小车单价" + ','+ "大车单价" + ','+ "小车台数" + ','+
-        "大车台数" + ','+ "洗车数" + ','+"洗车费" + ','+ "拖车费" + ','+ "停车费"+ ','+ "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+
-        "装车日期" + ','+ "领取时间" + ','+ "领取状态";
+        "大车台数" + ','+ "洗车数" + ','+"洗车费" + ','+ "拖车费" + ','+ "停车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
+        "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+ "领取时间" + ','+ "领取状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -226,6 +226,21 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.carParkingFee = rows[i].car_parking_fee;
                 }
+                if(rows[i].run_fee==null){
+                    parkObj.runFee = "";
+                }else{
+                    parkObj.runFee = rows[i].run_fee;
+                }
+                if(rows[i].total_run_fee==null){
+                    parkObj.totalRunFee = "";
+                }else{
+                    parkObj.totalRunFee = rows[i].total_run_fee;
+                }
+                if(rows[i].lead_fee==null){
+                    parkObj.leadFee = "";
+                }else{
+                    parkObj.leadFee = rows[i].lead_fee;
+                }
                 if(rows[i].truck_num==null){
                     parkObj.truckNum = "";
                 }else{
@@ -256,7 +271,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+
                     parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+ parkObj.carCount+","+
-                    parkObj.totalPrice+","+parkObj.totalTrailerFee+","+ parkObj.carParkingFee+","+
+                    parkObj.totalPrice+","+parkObj.totalTrailerFee+","+ parkObj.carParkingFee+","+parkObj.runFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","+
                     parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.loadDate+","+parkObj.cleanDate+","+ parkObj.status+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
