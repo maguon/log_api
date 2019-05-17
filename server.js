@@ -71,6 +71,7 @@ var dpRouteLoadTaskCleanRel = require('./bl/DpRouteLoadTaskCleanRel.js');
 var dpRouteTaskLoan = require('./bl/DpRouteTaskLoan.js');
 var dpRouteTaskLoanRel = require('./bl/DpRouteTaskLoanRel.js');
 var dpRouteTaskOilRel = require('./bl/DpRouteTaskOilRel.js');
+var dpRouteTaskFee = require('./bl/DpRouteTaskFee.js');
 var damage = require('./bl/Damage.js');
 var damageCheck = require('./bl/DamageCheck.js');
 var damageCheckIndemnity = require('./bl/DamageCheckIndemnity.js');
@@ -791,6 +792,11 @@ function createServer() {
      * DpRouteTaskOilRel Module
      */
     server.get('/api/dpRouteTaskOilRel',dpRouteTaskOilRel.queryDpRouteTaskOilRel);
+
+    /**
+     * DpRouteTaskFee Module
+     */
+    server.post({path:'/api/user/:userId/dpRouteTaskFee',contentType: 'application/json'},dpRouteTaskFee.createDpRouteTaskFee);
 
     /**
      * Damage Module

@@ -23471,6 +23471,51 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTaskFee": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create dpRouteTaskFee",
+        "description": "user create dpRouteTaskFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskFee",
+            "in": "body",
+            "description": "dpRouteTaskFee info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskFee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskFee id"
+          }
+        }
+      }
+    },
     "/damage": {
       "get": {
         "tags": [
@@ -31785,6 +31830,36 @@
       },
       "xml": {
         "name": "dpRouteTaskLoanRel"
+      }
+    },
+    "dpRouteTaskFee": {
+      "type": "object",
+      "properties": {
+
+        "driveId": {
+          "type": "integer"
+        },
+        "driveName": {
+          "type": "string"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "truckNum": {
+          "type": "string"
+        },
+        "dayCount": {
+          "type": "integer"
+        },
+        "singlePrice": {
+          "type": "integer"
+        },
+        "totalPrice": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTaskFee"
       }
     },
     "damage": {
