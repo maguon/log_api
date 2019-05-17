@@ -216,3 +216,10 @@ ADD COLUMN `receive_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否为库(0-非
 ALTER TABLE `receive_info`
 ADD COLUMN `run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '地跑费' AFTER `trailer_fee`,
 ADD COLUMN `lead_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '带路费' AFTER `run_fee`;
+-- ----------------------------
+-- 2019-05-17 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '地跑费单价' AFTER `car_parking_fee`,
+ADD COLUMN `total_run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总地跑费' AFTER `run_fee`,
+ADD COLUMN `lead_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '带路费' AFTER `total_run_fee`;

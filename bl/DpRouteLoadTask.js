@@ -168,6 +168,8 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                         parkObj.trailerFee = rows[0].trailer_fee;
                         parkObj.receiveFlag = rows[0].receive_flag;
                         parkObj.carParkingFee = rows[0].car_parking_fee;
+                        parkObj.runFee = rows[0].run_fee;
+                        parkObj.leadFee = rows[0].lead_fee;
                         parkObj.carCount = rows[0].car_count;
                         parkObj.smallCarCount = rows[0].small_car_count;
                         parkObj.bigCarCount = rows[0].big_car_count;
@@ -240,7 +242,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }else{
             that();
         }
-    }).seq(function() {
+    }).seq(function() { //生成洗车费
         var that = this;
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&params.loadTaskStatus!=parkObj.loadTaskStatus&&parkObj.cleanFee>0) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
@@ -254,6 +256,9 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.trailerFee = parkObj.trailerFee;
             params.totalTrailerFee = parkObj.trailerFee*parkObj.carCount;
             params.carParkingFee = parkObj.carParkingFee;
+            params.runFee = parkObj.runFee;
+            params.totalRunFee = parkObj.runFee*parkObj.carCount;
+            params.leadFee = parkObj.leadFee;
             params.totalPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
             params.carCount = parkObj.carCount;
             params.type = 0;
@@ -273,7 +278,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }else{
             that();
         }
-    }).seq(function() {
+    }).seq(function() { //生成中转需求
         var that = this;
         if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.load&&parkObj.transferFlag>0&&newTransferDemandFlag==false) {
             params.demandId = parkObj.demandId;
