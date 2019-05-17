@@ -214,7 +214,6 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         var that = this;
         var subParams = {
             dpRouteTaskId : parkObj.dpRouteTaskId,
-            dpRouteLoadTaskId : params.dpRouteLoadTaskId,
             routeStartId : parkObj.routeStartId,
             routeEndId : parkObj.routeEndId,
         }
