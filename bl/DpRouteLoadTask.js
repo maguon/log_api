@@ -423,6 +423,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
 function updateDpRouteLoadTaskStatusBack(req,res,next){
     var params = req.params;
     var parkObj = {};
+    var cleanFlag = false;
     Seq().seq(function() {
         var that = this;
         dpRouteLoadTaskDAO.getDpRouteLoadTask({dpRouteLoadTaskId:params.dpRouteLoadTaskId}, function (error, rows) {
@@ -452,6 +453,28 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
         })
     }).seq(function() {
         var that = this;
+        var subParams = {
+            dpRouteLoadTaskId : params.dpRouteLoadTaskId,
+            dpRouteTaskId : parkObj.dpRouteTaskId,
+            status : sysConst.CLEAN_STATUS.not_completed,
+        }
+        dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel(subParams, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteLoadTaskCleanRel ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length>0) {
+                    cleanFlag = true;
+                    that();
+                } else {
+                    cleanFlag = false;
+                    that();
+                }
+            }
+        })
+    }).seq(function() {
+        var that = this;
         if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.no_load){
             params.loadDate = null;
             params.realCount = 0;
@@ -473,19 +496,23 @@ function updateDpRouteLoadTaskStatusBack(req,res,next){
         })
     }).seq(function() {
         var that = this;
-        dpRouteLoadTaskCleanRelDAO.deleteDpRouteLoadTaskCleanRel(params,function(error,result){ //删除生成的洗车费
-            if (error) {
-                logger.error(' removeDpRouteLoadTaskCleanRel ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' removeDpRouteLoadTaskCleanRel ' + 'success');
-                }else{
-                    logger.warn(' removeDpRouteLoadTaskCleanRel ' + 'failed');
+        if(cleanFlag){
+            dpRouteLoadTaskCleanRelDAO.deleteDpRouteLoadTaskCleanRel(params,function(error,result){ //删除生成的洗车费
+                if (error) {
+                    logger.error(' removeDpRouteLoadTaskCleanRel ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' removeDpRouteLoadTaskCleanRel ' + 'success');
+                    }else{
+                        logger.warn(' removeDpRouteLoadTaskCleanRel ' + 'failed');
+                    }
+                    that();
                 }
-                that();
-            }
-        })
+            })
+        }else{
+            that();
+        }
     }).seq(function() {
         var that = this;
         var subParams ={
