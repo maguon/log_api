@@ -23608,6 +23608,111 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTaskFee/{dpRouteTaskFeeId}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTaskFee",
+        "description": "update dpRouteTaskFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskFeeId",
+            "in": "path",
+            "description": "dpRouteTaskFee id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskFee",
+            "in": "body",
+            "description": "dpRouteTaskFee info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskFee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/dpRouteTaskFee/{dpRouteTaskFeeId}/status/{status}": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTaskFee status",
+        "description": "update dpRouteTaskFee status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskFeeId",
+            "in": "path",
+            "description": "dpRouteTaskFee id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskFee id"
+          }
+        }
+      }
+    },
     "/damage": {
       "get": {
         "tags": [

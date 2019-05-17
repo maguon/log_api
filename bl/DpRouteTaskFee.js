@@ -41,8 +41,38 @@ function queryDpRouteTaskFee(req,res,next){
     })
 }
 
+function updateDpRouteTaskFee (req,res,next){
+    var params = req.params;
+    dpRouteTaskFeeDAO.updateDpRouteTaskFee(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteTaskFee ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteTaskFee ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function updateDpRouteTaskFeeStatus (req,res,next){
+    var params = req.params;
+    dpRouteTaskFeeDAO.updateDpRouteTaskFeeStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteTaskFeeStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteTaskFeeStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTaskFee : createDpRouteTaskFee,
-    queryDpRouteTaskFee : queryDpRouteTaskFee
+    queryDpRouteTaskFee : queryDpRouteTaskFee,
+    updateDpRouteTaskFee : updateDpRouteTaskFee,
+    updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus
 }

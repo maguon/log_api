@@ -798,6 +798,8 @@ function createServer() {
      */
     server.get('/api/dpRouteTaskFee',dpRouteTaskFee.queryDpRouteTaskFee);
     server.post({path:'/api/user/:userId/dpRouteTaskFee',contentType: 'application/json'},dpRouteTaskFee.createDpRouteTaskFee);
+    server.put({path:'/api/user/:userId/dpRouteTaskFee/:dpRouteTaskFeeId',contentType: 'application/json'} ,dpRouteTaskFee.updateDpRouteTaskFee);
+    server.put({path:'/api/user/:userId/dpRouteTaskFee/:dpRouteTaskFeeId/status/:status',contentType: 'application/json'} ,dpRouteTaskFee.updateDpRouteTaskFeeStatus);
 
     /**
      * Damage Module
