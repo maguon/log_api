@@ -61,6 +61,10 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dprl.dp_route_task_id = ? ";
     }
+    if(params.dpRouteLoadTaskId){
+        paramsArray[i++] = params.dpRouteLoadTaskId;
+        query = query + " and dpcr.dp_route_load_task_id = ? ";
+    }
     if(params.dpRouteTaskLoanId){
         paramsArray[i++] = params.dpRouteTaskLoanId;
         query = query + " and dplr.dp_route_task_loan_id = ? ";
@@ -117,6 +121,40 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTaskCleanRel ');
+        return callback(error,rows);
+    });
+}
+
+function getDpRouteLoadTaskCleanRelBase(params,callback) {
+    var query = " select dpcr.* " +
+        " from dp_route_load_task_clean_rel dpcr " +
+        " where dpcr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.loadTaskCleanRelId){
+        paramsArray[i++] = params.loadTaskCleanRelId;
+        query = query + " and dpcr.id = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dpcr.dp_route_task_id = ? ";
+    }
+    if(params.dpRouteLoadTaskId){
+        paramsArray[i++] = params.dpRouteLoadTaskId;
+        query = query + " and dpcr.dp_route_load_task_id = ? ";
+    }
+    if(params.status){
+        paramsArray[i++] = params.status;
+        query = query + " and dpcr.status = ? ";
+    }
+    query = query + ' group by dpcr.id ';
+    query = query + ' order by dpcr.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskCleanRelBase ');
         return callback(error,rows);
     });
 }
@@ -309,6 +347,7 @@ function deleteDpRouteLoadTaskCleanRel(params,callback){    //装车回退删除
 module.exports ={
     addDpRouteLoadTaskCleanRel : addDpRouteLoadTaskCleanRel,
     getDpRouteLoadTaskCleanRel : getDpRouteLoadTaskCleanRel,
+    getDpRouteLoadTaskCleanRelBase : getDpRouteLoadTaskCleanRelBase,
     getDpRouteLoadTaskCleanRelMonthStat : getDpRouteLoadTaskCleanRelMonthStat,
     getDpRouteLoadTaskCleanRelReceiveMonthStat : getDpRouteLoadTaskCleanRelReceiveMonthStat,
     getDpRouteLoadTaskCleanRelWeekStat  : getDpRouteLoadTaskCleanRelWeekStat,

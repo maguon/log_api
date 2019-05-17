@@ -139,6 +139,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
     var params = req.params;
     var parkObj = {};
     var leadFee = 0;
+    var cleanStatusFlag = false;
     var newTransferDemandFlag  = false;
     Seq().seq(function() {
         var that = this;
@@ -191,6 +192,29 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         var that = this;
         var subParams = {
             dpRouteTaskId : parkObj.dpRouteTaskId,
+            dpRouteLoadTaskId : params.dpRouteLoadTaskId,
+            status : sysConst.CLEAN_STATUS.completed,
+        }
+        dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRelBase(subParams, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteLoadTaskCleanRelBase ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length >0) {
+                    cleanStatusFlag = false;
+                    that();
+                } else {
+                    cleanStatusFlag = true;
+                    that();
+                }
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        var subParams = {
+            dpRouteTaskId : parkObj.dpRouteTaskId,
+            dpRouteLoadTaskId : params.dpRouteLoadTaskId,
             routeStartId : parkObj.routeStartId,
             routeEndId : parkObj.routeEndId,
         }
@@ -268,7 +292,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() { //生成洗车费
         var that = this;
-        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&params.loadTaskStatus!=parkObj.loadTaskStatus&&parkObj.cleanFee>0) {
+        if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&params.loadTaskStatus!=parkObj.loadTaskStatus&&parkObj.cleanFee>0&&cleanStatusFlag) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
