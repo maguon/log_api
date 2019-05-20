@@ -69,10 +69,75 @@ function updateDpRouteTaskFeeStatus (req,res,next){
     })
 }
 
+function getDpRouteTaskFeeCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' +"货车" + ',' + "申请时间" + ',' + "天数" + ','+ "单价" + ','+ "总价"+ ','+ "状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskFeeDAO.getDpRouteTaskFee(params,function(error,rows){
+        if (error) {
+            logger.error(' getDpRouteTaskFee ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].created_on == null){
+                    parkObj.createdOn = "";
+                }else{
+                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                }
+                if(rows[i].day_count == null){
+                    parkObj.dayCount = "";
+                }else{
+                    parkObj.dayCount = rows[i].day_count;
+                }
+                if(rows[i].single_price == null){
+                    parkObj.singlePrice = "";
+                }else{
+                    parkObj.singlePrice = rows[i].single_price;
+                }
+                if(rows[i].total_price == null){
+                    parkObj.totalPrice = "";
+                }else{
+                    parkObj.totalPrice = rows[i].total_price;
+                }
+                if(rows[i].status == 1){
+                    parkObj.status = "未发放";
+                }else if(rows[i].status == 2){
+                    parkObj.status = "已发放";
+                }else{
+                    parkObj.status = "驳回";
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.createdOn+","+parkObj.dayCount+","+
+                    parkObj.singlePrice+","+ parkObj.totalPrice+","+parkObj.status+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTaskFee : createDpRouteTaskFee,
     queryDpRouteTaskFee : queryDpRouteTaskFee,
     updateDpRouteTaskFee : updateDpRouteTaskFee,
-    updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus
+    updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus,
+    getDpRouteTaskFeeCsv : getDpRouteTaskFeeCsv
 }
