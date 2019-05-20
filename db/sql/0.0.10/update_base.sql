@@ -223,3 +223,24 @@ ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '地跑费单价' AFTER `car_parking_fee`,
 ADD COLUMN `total_run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总地跑费' AFTER `run_fee`,
 ADD COLUMN `lead_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '带路费' AFTER `total_run_fee`;
+-- ----------------------------
+-- 2019-05-20 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for dp_route_task_fee
+-- ----------------------------
+DROP TABLE IF EXISTS `dp_route_task_fee`;
+CREATE TABLE `dp_route_task_fee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_id` int(10) DEFAULT NULL COMMENT '司机ID',
+  `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
+  `truck_id` int(10) DEFAULT NULL COMMENT '货车ID',
+  `truck_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '货车牌号',
+  `day_count` int(4) DEFAULT '0' COMMENT '天数',
+  `single_price` decimal(10,2) DEFAULT '0.00' COMMENT '单价',
+  `total_price` decimal(10,2) DEFAULT '0.00' COMMENT '总价',
+  `status` tinyint(1) DEFAULT '1' COMMENT '发放状态(0-取消 ,1-未发放,2-已发放)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
