@@ -226,6 +226,12 @@ var REPAIR_TYPE = {  //货车维修类型
     temporary : 3 //在外临时维修
 };
 
+var TASK_FEE_STATUS  ={ //调度费用申请
+    cancel : 0, //驳回
+    not_grant : 1,  //未发放
+    grant : 2   //已发放
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -260,7 +266,8 @@ module.exports = {
     RECEIVE_TYPE : RECEIVE_TYPE,
     RECEIVE_FLAG : RECEIVE_FLAG,
     SETTLE_STATUS : SETTLE_STATUS,
-    REPAIR_TYPE : REPAIR_TYPE
+    REPAIR_TYPE : REPAIR_TYPE,
+    TASK_FEE_STATUS : TASK_FEE_STATUS
 }
 
 

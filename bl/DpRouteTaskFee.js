@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var dpRouteTaskFeeDAO = require('../dao/DpRouteTaskFeeDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -43,15 +44,34 @@ function queryDpRouteTaskFee(req,res,next){
 
 function updateDpRouteTaskFee (req,res,next){
     var params = req.params;
-    dpRouteTaskFeeDAO.updateDpRouteTaskFee(params,function(error,result){
-        if (error) {
-            logger.error(' updateDpRouteTaskFee ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDpRouteTaskFee ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function(){
+        var that = this;
+        dpRouteTaskFeeDAO.getDpRouteTaskFee({dpRouteTaskFeeId:params.dpRouteTaskFeeId},function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteTaskFee ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].status != sysConst.TASK_FEE_STATUS.grant){
+                    that();
+                }else{
+                    logger.warn(' getDpRouteTaskFee ' + 'failed');
+                    resUtil.resetFailedRes(res," 费用已发放，不能再进行修改 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        dpRouteTaskFeeDAO.updateDpRouteTaskFee(params,function(error,result){
+            if (error) {
+                logger.error(' updateDpRouteTaskFee ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDpRouteTaskFee ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
