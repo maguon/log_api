@@ -250,18 +250,11 @@ function uploadTruckRepairRelFile(req,res,next){
                 })
             }).seq(function(){
                 if(parkObj.truckId>0){
-                    if (objArray[i].维修描述 == "事故维修") {
-                        parkObj.repairType = sysConst.REPAIR_TYPE.accident;
-                    } else if (objArray[i].维修描述 == "公司维修") {
-                        parkObj.repairType = sysConst.REPAIR_TYPE.company;
-                    } else {
-                        parkObj.repairType = sysConst.REPAIR_TYPE.temporary;
-                    }
                     var subParams = {
                         truckId: parkObj.truckId,
                         driveId: parkObj.driveId,
                         driveName: objArray[i].司机,
-                        repairType: parkObj.repairType,
+                        repairType: objArray[i].维修类型,
                         repairDate: objArray[i].维修开始时间,
                         dateId: parseInt(moment(objArray[i].维修开始时间).format('YYYYMMDD')),
                         endDate: objArray[i].维修结束时间,
