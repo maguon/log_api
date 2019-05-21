@@ -270,3 +270,23 @@ set dprl.output_ratio = 1 where dprl.load_task_status = 7 and dprl.transfer_flag
 -- ----------------------------
 ALTER TABLE `dp_route_task_fee`
 ADD COLUMN `car_oil_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车加油费' AFTER `total_price`;
+-- ----------------------------
+-- 2019-05-21 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for truck_depreciation
+-- ----------------------------
+DROP TABLE IF EXISTS `truck_depreciation`;
+CREATE TABLE `truck_depreciation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_id` int(10) DEFAULT '0' COMMENT '司机ID',
+  `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
+  `truck_id` int(10) DEFAULT '0' COMMENT '货车ID',
+  `truck_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '货车牌号',
+  `y_month` int(4) DEFAULT '0' COMMENT '月份',
+  `depreciation_fee` decimal(10,2) DEFAULT '0.00' COMMENT '折旧费',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `drive_id` (`drive_id`,`truck_id`,`y_month`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
