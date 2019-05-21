@@ -25,6 +25,7 @@ var truckAccidentInsureRel = require('./bl/TruckAccidentInsureRel.js');
 var truckAccidentInsureLoan = require('./bl/TruckAccidentInsureLoan.js');
 var truckSecurityCheck = require('./bl/TruckSecurityCheck.js');
 var truckEtc = require('./bl/TruckEtc.js');
+var truckDepreciation = require('./bl/TruckDepreciation.js');
 var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
@@ -350,6 +351,11 @@ function createServer() {
      */
     server.get('/api/truckEtc' ,truckEtc.queryTruckEtc);
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
+
+    /**
+     * TruckDepreciation Module
+     */
+    server.post({path:'/api/user/:userId/truckDepreciationFile',contentType: 'multipart/form-data'},truckDepreciation.uploadTruckDepreciationFile);
 
     /**
      * Brand Module
