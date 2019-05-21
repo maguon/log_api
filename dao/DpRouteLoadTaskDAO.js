@@ -212,6 +212,19 @@ function getDpRouteLoadTaskBase(params,callback) {
     });
 }
 
+function getDpRouteLoadTaskList(params,callback) {
+    var query = " select c2.distance/c1.distance as output_ratio from city_route_info c1,city_route_info c2, " +
+        " (select concat(LEAST(ddi.route_start_id,ddi.route_end_id),GREATEST(ddi.route_start_id,ddi.route_end_id)) as demand_route_id," +
+        " concat(LEAST(drlt.route_start_id,drlt.transfer_city_id),GREATEST(drlt.route_start_id,drlt.transfer_city_id)) as load_route_id" +
+        " from dp_route_load_task drlt left join dp_demand_info ddi on drlt.demand_id = ddi.id where drlt.id = "+ params.dpRouteLoadTaskId +") drtt " +
+        " where c1.route_id= drtt.demand_route_id and c2.route_id = drtt.load_route_id ";
+    var paramsArray=[],i=0;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskList ');
+        return callback(error,rows);
+    });
+}
+
 function getDpRouteLoadTaskCount(params,callback) {
     var query = " select count(dprl.id) as load_number,sum(dprl.real_count) as load_count from dp_route_load_task dprl where dprl.id is not null ";
     var paramsArray=[],i=0;
@@ -252,8 +265,9 @@ function updateDpRouteLoadTaskStatus(params,callback){
         paramsArray[i++] = params.realCount;
     }
     if(params.loadTaskStatus == 7){
-        query = query +" ,arrive_date = ? ";
+        query = query +" ,arrive_date = ? , output_ratio = ? ";
         paramsArray[i++] = params.arriveDate;
+        paramsArray[i++] = params.outputRatio;
     }
     query = query + " where id = " + params.dpRouteLoadTaskId + " and load_task_status != "+params.loadTaskStatus;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -268,6 +282,7 @@ module.exports ={
     addDpRouteLoadTaskBatch : addDpRouteLoadTaskBatch,
     getDpRouteLoadTask : getDpRouteLoadTask,
     getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
+    getDpRouteLoadTaskList : getDpRouteLoadTaskList,
     getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
     updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
 }

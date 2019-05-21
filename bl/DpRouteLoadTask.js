@@ -143,51 +143,68 @@ function updateDpRouteLoadTaskStatus(req,res,next){
     var newTransferDemandFlag  = false;
     Seq().seq(function() {
         var that = this;
-            dpRouteLoadTaskDAO.getDpRouteLoadTask({dpRouteLoadTaskId:params.dpRouteLoadTaskId}, function (error, rows) {
-                if (error) {
-                    logger.error(' getDpRouteLoadTask ' + error.message);
-                    resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    return next();
+        dpRouteLoadTaskDAO.getDpRouteLoadTask({dpRouteLoadTaskId:params.dpRouteLoadTaskId}, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteLoadTask ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length >0&&rows[0].task_status>rows[0].load_task_status) {
+                    parkObj.demandId = rows[0].demand_id;
+                    parkObj.routeStartId = rows[0].route_start_id;
+                    parkObj.routeStart = rows[0].route_start;
+                    parkObj.baseAddrId = rows[0].base_addr_id;
+                    parkObj.addrName = rows[0].addr_name;
+                    parkObj.routeEndId = rows[0].route_end_id;
+                    parkObj.routeEnd = rows[0].route_end;
+                    parkObj.loadTaskStatus = rows[0].load_task_status;
+                    parkObj.transferFlag = rows[0].transfer_flag;
+                    parkObj.transferCityId = rows[0].transfer_city_id;
+                    parkObj.transferCity = rows[0].transfer_city;
+                    parkObj.transferAddrId = rows[0].transfer_addr_id;
+                    parkObj.transferAddrName = rows[0].transfer_addr_name;
+                    parkObj.receiveId = rows[0].receive_id;
+                    parkObj.shortName = rows[0].short_name;
+                    parkObj.cleanFee = rows[0].clean_fee;
+                    parkObj.bigCleanFee = rows[0].big_clean_fee;
+                    parkObj.trailerFee = rows[0].trailer_fee;
+                    parkObj.receiveFlag = rows[0].receive_flag;
+                    parkObj.carParkingFee = rows[0].car_parking_fee;
+                    parkObj.runFee = rows[0].run_fee;
+                    parkObj.leadFee = rows[0].lead_fee;
+                    parkObj.carCount = rows[0].car_count;
+                    parkObj.smallCarCount = rows[0].small_car_count;
+                    parkObj.bigCarCount = rows[0].big_car_count;
+                    parkObj.truckNum = rows[0].truck_num;
+                    parkObj.truckId = rows[0].truck_id;
+                    parkObj.driveId = rows[0].drive_id;
+                    parkObj.dpRouteTaskId = rows[0].dp_route_task_id;
+                    parkObj.dateId = rows[0].date_id;
+                    that();
                 } else {
-                    if (rows && rows.length > 0 && rows[0].task_status>rows[0].load_task_status) {
-                        parkObj.demandId = rows[0].demand_id;
-                        parkObj.routeStartId = rows[0].route_start_id;
-                        parkObj.routeStart = rows[0].route_start;
-                        parkObj.baseAddrId = rows[0].base_addr_id;
-                        parkObj.addrName = rows[0].addr_name;
-                        parkObj.routeEndId = rows[0].route_end_id;
-                        parkObj.routeEnd = rows[0].route_end;
-                        parkObj.loadTaskStatus = rows[0].load_task_status;
-                        parkObj.transferFlag = rows[0].transfer_flag;
-                        parkObj.transferCityId = rows[0].transfer_city_id;
-                        parkObj.transferCity = rows[0].transfer_city;
-                        parkObj.transferAddrId = rows[0].transfer_addr_id;
-                        parkObj.transferAddrName = rows[0].transfer_addr_name;
-                        parkObj.receiveId = rows[0].receive_id;
-                        parkObj.shortName = rows[0].short_name;
-                        parkObj.cleanFee = rows[0].clean_fee;
-                        parkObj.bigCleanFee = rows[0].big_clean_fee;
-                        parkObj.trailerFee = rows[0].trailer_fee;
-                        parkObj.receiveFlag = rows[0].receive_flag;
-                        parkObj.carParkingFee = rows[0].car_parking_fee;
-                        parkObj.runFee = rows[0].run_fee;
-                        parkObj.leadFee = rows[0].lead_fee;
-                        parkObj.carCount = rows[0].car_count;
-                        parkObj.smallCarCount = rows[0].small_car_count;
-                        parkObj.bigCarCount = rows[0].big_car_count;
-                        parkObj.truckNum = rows[0].truck_num;
-                        parkObj.truckId = rows[0].truck_id;
-                        parkObj.driveId = rows[0].drive_id;
-                        parkObj.dpRouteTaskId = rows[0].dp_route_task_id;
-                        parkObj.dateId = rows[0].date_id;
-                        that();
-                    } else {
-                        logger.warn(' getDpRouteLoadTask ' + 'failed');
-                        resUtil.resetFailedRes(res, " 路线状态错误，操作失败 ");
-                        return next();
-                    }
+                    logger.warn(' getDpRouteLoadTask ' + 'failed');
+                    resUtil.resetFailedRes(res, " 路线状态错误，操作失败 ");
+                    return next();
                 }
-            })
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        dpRouteLoadTaskDAO.getDpRouteLoadTaskList({dpRouteLoadTaskId:params.dpRouteLoadTaskId}, function (error, rows) {
+            if (error) {
+                logger.error(' getDpRouteLoadTask ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length>0&&rows[0].output_ratio<1) {
+                    parkObj.outputRatio = rows[0].output_ratio;
+                    that();
+                } else {
+                    parkObj.outputRatio = 1;
+                    that();
+                }
+            }
+        })
     }).seq(function() {
         var that = this;
         var subParams = {
@@ -420,6 +437,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.arrive){
             var myDate = new Date();
             params.arriveDate = myDate;
+            params.outputRatio = parkObj.outputRatio;
         }
         dpRouteLoadTaskDAO.updateDpRouteLoadTaskStatus(params,function(error,result){
             if (error) {
@@ -433,7 +451,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.on_road;
                 }
                 if(params.loadTaskStatus==sysConst.LOAD_TASK_STATUS.arrive&&params.loadTaskStatus!=parkObj.loadTaskStatus){
-                    req.params.routeContent =" 运输货车 "+ parkObj.truckNum +" 已到达 " + parkObj.shortName + "   卸车数量：" + parkObj.carCount + "   异常车辆：" + parkObj.carExceptionCount;
+                    req.params.routeContent =" 运输货车 "+ parkObj.truckNum +" 已到达 " + parkObj.shortName + "   卸车数量：" + parkObj.carCount;
                     req.params.routeId = parkObj.dpRouteTaskId;
                     req.params.routeOp = sysConst.RECORD_OP_TYPE.completed;
                 }

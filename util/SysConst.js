@@ -99,6 +99,11 @@ var LOAD_TASK_STATUS  ={
     cancel : 8,
     completed : 9
 };
+
+var TRANSFER_FLAG ={
+    not_transfer : 0,
+    transfer : 1
+}
 var CAR_LOAD_STATUS  ={
     load : 1,
     arrive : 2
@@ -245,6 +250,7 @@ module.exports = {
     OIL_LOAD_FLAG : OIL_LOAD_FLAG,
     REVERSE_FLAG : REVERSE_FLAG,
     LOAD_TASK_STATUS : LOAD_TASK_STATUS,
+    TRANSFER_FLAG : TRANSFER_FLAG,
     CAR_LOAD_STATUS : CAR_LOAD_STATUS,
     CLEAN_STATUS : CLEAN_STATUS,
     USER_LOGIN_APP_TYPE : USER_LOGIN_APP_TYPE,
