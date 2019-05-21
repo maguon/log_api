@@ -7192,6 +7192,51 @@
         }
       }
     },
+    "/user/{userId}/truckDepreciation": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckDepreciation",
+        "description": "user create truckDepreciation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckDepreciation",
+            "in": "body",
+            "description": "truckDepreciation info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckDepreciation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDepreciation id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckDepreciationFile": {
       "post": {
         "tags": [
@@ -30653,6 +30698,33 @@
       },
       "xml": {
         "name": "truckSecurityCheck"
+      }
+    },
+    "truckDepreciation": {
+      "type": "object",
+      "properties": {
+
+        "driveId": {
+          "type": "integer"
+        },
+        "driveName": {
+          "type": "string"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "truckNum": {
+          "type": "string"
+        },
+        "yMonth": {
+          "type": "integer"
+        },
+        "depreciationFee": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "truckDepreciation"
       }
     },
     "brand": {

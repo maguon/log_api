@@ -17,6 +17,25 @@ var logger = serverLogger.createLogger('TruckDepreciation.js');
 var csv=require('csvtojson');
 var fs = require('fs');
 
+function createTruckDepreciation(req,res,next){
+    var params = req.params ;
+    truckDepreciationDAO.addTruckDepreciation(params,function(error,result){
+        if (error) {
+            if(error.message.indexOf("Duplicate") > 0) {
+                resUtil.resetFailedRes(res, "数据已经存在，操作失败");
+                return next();
+            } else{
+                logger.error(' createTruckDepreciation ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            }
+        } else {
+            logger.info(' createTruckDepreciation ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function uploadTruckDepreciationFile(req,res,next){
     var params = req.params;
     var parkObj = {};
@@ -122,6 +141,7 @@ function queryTruckDepreciation(req,res,next){
 
 
 module.exports = {
+    createTruckDepreciation : createTruckDepreciation,
     uploadTruckDepreciationFile : uploadTruckDepreciationFile,
     queryTruckDepreciation : queryTruckDepreciation
 }
