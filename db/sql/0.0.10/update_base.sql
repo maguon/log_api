@@ -264,4 +264,4 @@ set dprl.output_ratio = drttl.output_ratio where dprl.load_task_status = 7 and d
 -- 2019-05-20 更新 output_ratio产值比例为1，状态是已送达并且不是中转任务
 -- ----------------------------
 update dp_route_load_task dprl inner join (select id from dp_route_load_task) drtt on dprl.id = drtt.id
-set dprl.output_ratio = 1 where dprl.load_task_status = 7 and dprl.transfer_flag = 0
+set dprl.output_ratio = 1 where dprl.load_task_status = 7 and dprl.transfer_flag = 0;
