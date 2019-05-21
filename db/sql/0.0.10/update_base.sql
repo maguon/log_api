@@ -249,3 +249,19 @@ CREATE TABLE `dp_route_task_fee` (
 -- ----------------------------
 ALTER TABLE `dp_route_load_task`
 ADD COLUMN `output_ratio`  decimal(10,2) NULL DEFAULT 0 COMMENT '产值比例' AFTER `transfer_addr_name`;
+-- ----------------------------
+-- 2019-05-20 更新 output_ratio产值比例，状态是已送达并且是中转任务
+-- ----------------------------
+update dp_route_load_task dprl inner join
+(select c2.distance/c1.distance as output_ratio,drtt.id from city_route_info c1 ,city_route_info c2 ,
+(select concat(LEAST(ddi.route_start_id,ddi.route_end_id),GREATEST(ddi.route_start_id,ddi.route_end_id)) as demand_route_id,
+concat(LEAST(drlt.route_start_id,drlt.transfer_city_id),GREATEST(drlt.route_start_id,drlt.transfer_city_id)) as load_route_id,
+drlt.id
+from dp_route_load_task drlt left join dp_demand_info ddi on drlt.demand_id = ddi.id) drtt
+where c1.route_id= drtt.demand_route_id and c2.route_id = drtt.load_route_id) drttl on dprl.id = drttl.id
+set dprl.output_ratio = drttl.output_ratio where dprl.load_task_status = 7 and dprl.transfer_flag = 1;
+-- ----------------------------
+-- 2019-05-20 更新 output_ratio产值比例为1，状态是已送达并且不是中转任务
+-- ----------------------------
+update dp_route_load_task dprl inner join (select id from dp_route_load_task) drtt on dprl.id = drtt.id
+set dprl.output_ratio = 1 where dprl.load_task_status = 7 and dprl.transfer_flag = 0
