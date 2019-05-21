@@ -340,17 +340,23 @@ function getDriveDistanceCount(params,callback) {
 }
 
 function getDriveDistanceLoadStat(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,d.operate_type,u.mobile,t.id as truck_id,t.truck_num," +
-        " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
-        " count(case when dpr.reverse_flag = 1 and dpr.task_status >=" + params.taskStatus + " then dpr.id end) as reverse_count, " +
+    var query = " select d.id as drive_id,d.drive_name,d.operate_type,u.mobile,t.id as truck_id,t.truck_num, " +
+        " count(dpr.id) as complete_count, " +
+        " sum(dpr.reverse_flag) as reverse_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
+        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
+        " sum(case when dpr.oil_load_flag = 1 then dpr.distance end) as load_oil_distance, " +
+        " sum(case when dpr.oil_load_flag = 0 then dpr.distance end) as no_oil_distance " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join user_info u on d.user_id = u.uid " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status >= ? ";
+    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and dpr.drive_id = ? ";
@@ -531,6 +537,10 @@ function updateDpRouteTaskStatus(params,callback){
     if(params.loadFlag){
         paramsArray[i++] = params.loadFlag;
         query = query + " ,load_flag = ? ";
+    }
+    if(params.oilLoadFlag){
+        paramsArray[i++] = params.oilLoadFlag;
+        query = query + " ,oil_load_flag = ? ";
     }
     query = query + ' where id = ' + params.dpRouteTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){

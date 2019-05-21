@@ -573,6 +573,7 @@ function updateDpRouteTaskStatus(req,res,next){
             params.dateId = parseInt(strDate);
             if(parkObj.carCount>=4){
                 params.loadFlag = sysConst.LOAD_FLAG.loan;
+                params.oilLoadFlag = sysConst.OIL_LOAD_FLAG.loan;
             }
         }
         dpRouteTaskDAO.updateDpRouteTaskStatus(params,function(error,result){
