@@ -265,3 +265,8 @@ set dprl.output_ratio = drttl.output_ratio where dprl.load_task_status = 7 and d
 -- ----------------------------
 update dp_route_load_task dprl inner join (select id from dp_route_load_task) drtt on dprl.id = drtt.id
 set dprl.output_ratio = 1 where dprl.load_task_status = 7 and dprl.transfer_flag = 0;
+-- ----------------------------
+-- 2019-05-21 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_fee`
+ADD COLUMN `car_oil_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车加油费' AFTER `total_price`;

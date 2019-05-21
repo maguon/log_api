@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DpRouteTaskFeeDAO.js');
 
 function addDpRouteTaskFee(params,callback){
     var query = " insert into dp_route_task_fee (drive_id,drive_name,truck_id,truck_num," +
-        " day_count,single_price,total_price) values ( ? , ? , ? , ? , ? , ? , ? ) ";
+        " day_count,single_price,total_price,car_oil_fee) values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
@@ -17,6 +17,7 @@ function addDpRouteTaskFee(params,callback){
     paramsArray[i++]=params.dayCount;
     paramsArray[i++]=params.singlePrice;
     paramsArray[i++]=params.totalPrice;
+    paramsArray[i++]=params.carOilFee;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTaskFee ');
         return callback(error,rows);
@@ -62,11 +63,12 @@ function getDpRouteTaskFee(params,callback) {
 }
 
 function updateDpRouteTaskFee(params,callback){
-    var query = " update dp_route_task_fee set day_count = ? , single_price = ? , total_price = ? where id = ? ";
+    var query = " update dp_route_task_fee set day_count = ? , single_price = ? , total_price = ? , car_oil_fee = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dayCount;
     paramsArray[i++]=params.singlePrice;
     paramsArray[i++]=params.totalPrice;
+    paramsArray[i++]=params.carOilFee;
     paramsArray[i++] = params.dpRouteTaskFeeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskFee ');
