@@ -175,7 +175,7 @@ function updateCleanRelStatus(req,res,next){
 function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     var csvString = "";
     var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ','+ "电话" + ','+ "小车单价" + ','+ "大车单价" + ','+ "小车台数" + ','+
-        "大车台数" + ','+ "洗车数" + ','+"洗车费" + ','+ "拖车费" + ','+ "停车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
+        "大车台数" + ','+ "洗车数" + ','+"洗车费" + ','+ "拖车费" + ','+ "提车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
         "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+ "领取时间" + ','+ "领取状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
