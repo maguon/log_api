@@ -7116,6 +7116,82 @@
         }
       }
     },
+    "/truckDepreciation": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckDepreciation list",
+        "description": "query truckDepreciation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckDepreciationId",
+            "in": "query",
+            "description": "truckDepreciation id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckDepreciation"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDepreciation id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckDepreciationFile": {
       "post": {
         "tags": [
