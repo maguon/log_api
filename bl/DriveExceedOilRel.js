@@ -193,12 +193,14 @@ function uploadDriveExceedOilRelFile(req,res,next){
                     } else{
                         if(rows&&rows.length>0) {
                             parkObj.driveId = rows[0].id;
+                        }else{
+                            parkObj.driveId = 0;
                         }
                         that();
                     }
                 })
             }).seq(function(){
-                if(parkObj.truckId>0){
+                if(parkObj.truckId>0&&parkObj.driveId>0){
                     var subParams = {
                         exceedOilId : 0,
                         truckId : parkObj.truckId,

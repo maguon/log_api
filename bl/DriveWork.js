@@ -107,6 +107,8 @@ function uploadDriveWorkFile(req,res,next){
                     } else{
                         if(rows&&rows.length==1) {
                             parkObj.truckId = rows[0].id;
+                        }else{
+                            parkObj.truckId = 0;
                         }
                         that();
                     }
@@ -134,7 +136,7 @@ function uploadDriveWorkFile(req,res,next){
                     }
                 })
             }).seq(function(){
-                if(parkObj.driveId>0){
+                if(parkObj.driveId>0&&parkObj.truckId>0){
                     if(driveFlag){
                         var subParams ={
                             driveId : parkObj.driveId,
