@@ -140,6 +140,10 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.statStatus;
         query = query + " and dpr.stat_status = ? ";
     }
+    if(params.reverseFlag){
+        paramsArray[i++] = params.reverseFlag;
+        query = query + " and dpr.reverse_flag = ? ";
+    }
     query = query + ' group by dpr.id ';
     query = query + " order by dpr.id desc";
     if (params.start && params.size) {
@@ -220,6 +224,10 @@ function getDpRouteTaskList(params,callback) {
     if(params.loadFlag){
         paramsArray[i++] = params.loadFlag;
         query = query + " and dpr.load_flag = ? ";
+    }
+    if(params.reverseFlag){
+        paramsArray[i++] = params.reverseFlag;
+        query = query + " and dpr.reverse_flag = ? ";
     }
     query = query + ' group by dpr.id ';
     query = query + " order by dpr.id desc";
@@ -332,7 +340,7 @@ function getDriveDistanceCount(params,callback) {
 }
 
 function getDriveDistanceLoadStat(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,u.mobile,t.id as truck_id,t.truck_num," +
+    var query = " select d.id as drive_id,d.drive_name,d.operate_type,u.mobile,t.id as truck_id,t.truck_num," +
         " count(case when dpr.task_status >= " + params.taskStatus + " then dpr.id end) as complete_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance " +
@@ -349,6 +357,10 @@ function getDriveDistanceLoadStat(params,callback) {
     if(params.driveName){
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and d.operate_type = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;

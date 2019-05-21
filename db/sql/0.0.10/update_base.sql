@@ -244,3 +244,8 @@ CREATE TABLE `dp_route_task_fee` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-05-20 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task`
+ADD COLUMN `output_ratio`  decimal(10,2) NULL DEFAULT 0 COMMENT '产值比例' AFTER `transfer_addr_name`;
