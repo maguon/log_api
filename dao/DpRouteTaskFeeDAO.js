@@ -77,9 +77,17 @@ function updateDpRouteTaskFee(params,callback){
 }
 
 function updateDpRouteTaskFeeStatus(params,callback){
-    var query = " update dp_route_task_fee set status = ? where id = ? ";
+    if(params.status==2){
+        var query = " update dp_route_task_fee set status = ? , grant_date = ? , date_id = ? where id = ? ";
+    }else{
+        var query = " update dp_route_task_fee set status = ? where id = ? ";
+    }
     var paramsArray=[],i=0;
     paramsArray[i++] = params.status;
+    if(params.grantDate){
+        paramsArray[i++] = params.grantDate;
+        paramsArray[i++] = params.dateId;
+    }
     paramsArray[i] = params.dpRouteTaskFeeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskFeeStatus ');

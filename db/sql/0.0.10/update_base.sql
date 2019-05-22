@@ -290,3 +290,9 @@ CREATE TABLE `truck_depreciation` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `drive_id` (`drive_id`,`truck_id`,`y_month`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-05-22 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_fee`
+ADD COLUMN `grant_date`  datetime NULL DEFAULT NULL COMMENT '发放时间' AFTER `status`,
+ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '发放统计时间' AFTER `grant_date`;

@@ -12,6 +12,7 @@ var dpRouteTaskFeeDAO = require('../dao/DpRouteTaskFeeDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
+var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteTaskFee.js');
 
 function createDpRouteTaskFee(req,res,next){
@@ -77,6 +78,12 @@ function updateDpRouteTaskFee (req,res,next){
 
 function updateDpRouteTaskFeeStatus (req,res,next){
     var params = req.params;
+    if(params.status==sysConst.TASK_FEE_STATUS.grant){
+        var myDate = new Date();
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.grantDate = myDate;
+        params.dateId = parseInt(strDate);
+    }
     dpRouteTaskFeeDAO.updateDpRouteTaskFeeStatus(params,function(error,result){
         if (error) {
             logger.error(' updateDpRouteTaskFeeStatus ' + error.message);
