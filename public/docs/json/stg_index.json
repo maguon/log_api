@@ -7280,6 +7280,59 @@
         }
       }
     },
+    "/user/{userId}/truckDepreciation/{truckDepreciationId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update truckDepreciation",
+        "description": "update truckDepreciation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckDepreciationId",
+            "in": "path",
+            "description": "truckDepreciation id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckDepreciation",
+            "in": "body",
+            "description": "truckDepreciation info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckDepreciation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDepreciation id"
+          }
+        }
+      }
+    },
     "/brand": {
       "get": {
         "tags": [

@@ -358,6 +358,7 @@ function createServer() {
     server.get('/api/truckDepreciation' ,truckDepreciation.queryTruckDepreciation);
     server.post({path:'/api/user/:userId/truckDepreciation',contentType: 'application/json'},truckDepreciation.createTruckDepreciation);
     server.post({path:'/api/user/:userId/truckDepreciationFile',contentType: 'multipart/form-data'},truckDepreciation.uploadTruckDepreciationFile);
+    server.put({path:'/api/user/:userId/truckDepreciation/:truckDepreciationId',contentType: 'application/json'} ,truckDepreciation.updateTruckDepreciation);
 
     /**
      * Brand Module

@@ -139,9 +139,24 @@ function queryTruckDepreciation(req,res,next){
     })
 }
 
+function updateTruckDepreciation(req,res,next){
+    var params = req.params ;
+    truckDepreciationDAO.updateTruckDepreciation(params,function(error,result){
+        if (error) {
+            logger.error(' updateTruckDepreciation ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateTruckDepreciation ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckDepreciation : createTruckDepreciation,
     uploadTruckDepreciationFile : uploadTruckDepreciationFile,
-    queryTruckDepreciation : queryTruckDepreciation
+    queryTruckDepreciation : queryTruckDepreciation,
+    updateTruckDepreciation : updateTruckDepreciation
 }

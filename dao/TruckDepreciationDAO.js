@@ -54,8 +54,20 @@ function getTruckDepreciation(params,callback) {
     });
 }
 
+function updateTruckDepreciation(params,callback){
+    var query = " update truck_depreciation set depreciation_fee = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.depreciationFee;
+    paramsArray[i++]=params.truckDepreciationId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckDepreciation ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckDepreciation : addTruckDepreciation,
-    getTruckDepreciation : getTruckDepreciation
+    getTruckDepreciation : getTruckDepreciation,
+    updateTruckDepreciation : updateTruckDepreciation
 }
