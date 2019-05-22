@@ -7055,12 +7055,57 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/truckSecurityCheck"
+                "$ref": "#/definitions/truckEtc"
               }
             }
           },
           "400": {
-            "description": "Invalid token value or invalid truckSecurityCheck id"
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckEtc": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckEtc",
+        "description": "user create truckEtc",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckEtc",
+            "in": "body",
+            "description": "truckEtc info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckEtc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
           }
         }
       }
@@ -30751,6 +30796,36 @@
       },
       "xml": {
         "name": "truckSecurityCheck"
+      }
+    },
+    "truckEtc": {
+      "type": "object",
+      "properties": {
+
+        "driveId": {
+          "type": "integer"
+        },
+        "driveName": {
+          "type": "string"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "truckNum": {
+          "type": "string"
+        },
+        "etcFee": {
+          "type": "integer"
+        },
+        "etcDate": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckEtc"
       }
     },
     "truckDepreciation": {

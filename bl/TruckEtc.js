@@ -17,6 +17,22 @@ var logger = serverLogger.createLogger('TruckEtc.js');
 var csv=require('csvtojson');
 var fs = require('fs');
 
+function createTruckEtc(req,res,next){
+    var params = req.params ;
+    var strDate = moment(params.etcDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
+    truckEtcDAO.addUploadTruckEtc(params,function(error,result){
+        if (error) {
+            logger.error(' createTruckEtc ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' createTruckEtc ' + 'success');
+            resUtil.resetCreateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function uploadTruckEtcFile(req,res,next){
     var params = req.params;
     var parkObj = {};
@@ -109,6 +125,7 @@ function queryTruckEtc(req,res,next){
 
 
 module.exports = {
+    createTruckEtc : createTruckEtc,
     uploadTruckEtcFile : uploadTruckEtcFile,
     queryTruckEtc : queryTruckEtc
 }

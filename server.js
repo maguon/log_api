@@ -350,6 +350,7 @@ function createServer() {
      * TruckEtc Module
      */
     server.get('/api/truckEtc' ,truckEtc.queryTruckEtc);
+    server.post({path:'/api/user/:userId/truckEtc',contentType: 'application/json'},truckEtc.createTruckEtc);
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
 
     /**
