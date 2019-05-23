@@ -99,6 +99,14 @@ function getTruckRepairRel(params,callback) {
         paramsArray[i++] = params.endDateEnd +" 23:59:59";
         query = query + " and trr.end_date <= ? ";
     }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and trr.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and trr.created_on <= ? ";
+    }
     if(params.accidentId){
         paramsArray[i++] = params.accidentId;
         query = query + " and trr.accident_id = ? ";
@@ -116,11 +124,70 @@ function getTruckRepairRel(params,callback) {
 }
 
 function getTruckRepairRelCount(params,callback) {
-    var query = " select count(id) repair_count from truck_repair_rel where id is not null ";
+    var query = " select count(trr.id) as repair_count,sum(trr.repair_money) as repair_money," +
+        " sum(trr.parts_money) as parts_money, sum(trr.maintain_money) as maintain_money " +
+        " from truck_repair_rel trr" +
+        " left join truck_info ti on trr.truck_id = ti.id " +
+        " left join repair_station_info ri on trr.repair_station_id = ri.id " +
+        " left join truck_accident_info ta on ta.id = trr.accident_id " +
+        " left join company_info c on ti.company_id = c.id " +
+        " where trr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.relId){
+        paramsArray[i++] = params.relId;
+        query = query + " and trr.id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and trr.truck_id = ? ";
+    }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and ti.truck_num = ? ";
+    }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and ti.truck_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and ti.company_id = ? ";
+    }
     if(params.repairStatus){
         paramsArray[i++] = params.repairStatus;
-        query = query + " and repair_status = ? ";
+        query = query + " and trr.repair_status = ? ";
+    }
+    if(params.repairType){
+        paramsArray[i++] = params.repairType;
+        query = query + " and trr.repair_type = ? ";
+    }
+    if(params.repairDateStart){
+        paramsArray[i++] = params.repairDateStart +" 00:00:00";
+        query = query + " and trr.repair_date >= ? ";
+    }
+    if(params.repairDateEnd){
+        paramsArray[i++] = params.repairDateEnd +" 23:59:59";
+        query = query + " and trr.repair_date <= ? ";
+    }
+    if(params.endDateStart){
+        paramsArray[i++] = params.endDateStart +" 00:00:00";
+        query = query + " and trr.end_date >= ? ";
+    }
+    if(params.endDateEnd){
+        paramsArray[i++] = params.endDateEnd +" 23:59:59";
+        query = query + " and trr.end_date <= ? ";
+    }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and trr.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and trr.created_on <= ? ";
+    }
+    if(params.accidentId){
+        paramsArray[i++] = params.accidentId;
+        query = query + " and trr.accident_id = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairRelCount ');

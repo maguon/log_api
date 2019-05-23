@@ -3737,6 +3737,22 @@
 
           },
           {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "accidentId",
             "in": "query",
             "description": "accident id",
@@ -3789,9 +3805,113 @@
         ],
         "parameters": [
           {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckType",
+            "in": "query",
+            "description": "truck type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "repairStatus",
             "in": "query",
             "description": "repair status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairType",
+            "in": "query",
+            "description": "repair type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairDateStart",
+            "in": "query",
+            "description": "repairDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "repairDateEnd",
+            "in": "query",
+            "description": "repairDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateStart",
+            "in": "query",
+            "description": "endDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "accidentId",
+            "in": "query",
+            "description": "accident id",
             "required": false,
             "type": "integer"
 
