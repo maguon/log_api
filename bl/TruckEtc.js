@@ -123,9 +123,24 @@ function queryTruckEtc(req,res,next){
     })
 }
 
+function queryTruckEtcFeeCount(req,res,next){
+    var params = req.params ;
+    truckEtcDAO.getTruckEtcFeeCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckEtcFeeCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckEtcFeeCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createTruckEtc : createTruckEtc,
     uploadTruckEtcFile : uploadTruckEtcFile,
-    queryTruckEtc : queryTruckEtc
+    queryTruckEtc : queryTruckEtc,
+    queryTruckEtcFeeCount : queryTruckEtcFeeCount
 }

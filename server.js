@@ -350,6 +350,7 @@ function createServer() {
      * TruckEtc Module
      */
     server.get('/api/truckEtc' ,truckEtc.queryTruckEtc);
+    server.get('/api/truckEtcFeeCount' ,truckEtc.queryTruckEtcFeeCount);
     server.post({path:'/api/user/:userId/truckEtc',contentType: 'application/json'},truckEtc.createTruckEtc);
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
 
@@ -478,6 +479,7 @@ function createServer() {
      * DriveExceedOilRel Module
      */
     server.get('/api/driveExceedOilRel' , driveExceedOilRel.queryDriveExceedOilRel);
+    server.get('/api/driveExceedOilRelCount' , driveExceedOilRel.queryDriveExceedOilRelCount);
     server.post({path:'/api/user/:userId/driveExceedOilRel',contentType: 'application/json'},driveExceedOilRel.createDriveExceedOilRel);
     server.post({path:'/api/user/:userId/driveExceedOilRelFile',contentType: 'multipart/form-data'},driveExceedOilRel.uploadDriveExceedOilRelFile);
     server.put({path:'/api/user/:userId/driveExceedOilRel/:relId',contentType: 'application/json'} ,driveExceedOilRel.updateDriveExceedOilRel);

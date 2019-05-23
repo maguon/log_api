@@ -61,6 +61,14 @@ function getDriveExceedOilRel(params,callback) {
         paramsArray[i++] = params.oilDateEnd;
         query = query + " and deor.oil_date <= ? ";
     }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and deor.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and deor.created_on <= ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -68,6 +76,41 @@ function getDriveExceedOilRel(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveExceedOilRel ');
+        return callback(error,rows);
+    });
+}
+
+function getDriveExceedOilRelCount(params,callback) {
+    var query = " select sum(deor.oil_money) as oil_money,sum(deor.urea_money) as urea_money " +
+        " from drive_exceed_oil_rel deor " +
+        " where deor.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and deor.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and deor.truck_id = ? ";
+    }
+    if(params.oilDateStart){
+        paramsArray[i++] = params.oilDateStart;
+        query = query + " and deor.oil_date >= ? ";
+    }
+    if(params.oilDateEnd){
+        paramsArray[i++] = params.oilDateEnd;
+        query = query + " and deor.oil_date <= ? ";
+    }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and deor.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and deor.created_on <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilRelCount ');
         return callback(error,rows);
     });
 }
@@ -108,6 +151,7 @@ function deleteDriveExceedOilRel(params,callback){
 module.exports ={
     addDriveExceedOilRel : addDriveExceedOilRel,
     getDriveExceedOilRel : getDriveExceedOilRel,
+    getDriveExceedOilRelCount : getDriveExceedOilRelCount,
     updateDriveExceedOilRel : updateDriveExceedOilRel,
     deleteDriveExceedOilRel : deleteDriveExceedOilRel
 }

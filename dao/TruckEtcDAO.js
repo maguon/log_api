@@ -51,6 +51,14 @@ function getTruckEtc(params,callback) {
         paramsArray[i++] = params.etcDatenEnd +" 23:59:59";
         query = query + " and te.etc_date <= ? ";
     }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and te.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and te.created_on <= ? ";
+    }
     query = query + ' order by te.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -63,8 +71,43 @@ function getTruckEtc(params,callback) {
     });
 }
 
+function getTruckEtcFeeCount(params,callback) {
+    var query = " select sum(te.etc_fee) as etc_fee from truck_etc te " +
+        " where te.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and te.truck_id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and te.drive_id = ? ";
+    }
+    if(params.etcDateStart){
+        paramsArray[i++] = params.etcDateStart +" 00:00:00";
+        query = query + " and te.etc_date >= ? ";
+    }
+    if(params.etcDatenEnd){
+        paramsArray[i++] = params.etcDatenEnd +" 23:59:59";
+        query = query + " and te.etc_date <= ? ";
+    }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and te.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and te.created_on <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckEtcFeeCount ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUploadTruckEtc : addUploadTruckEtc,
-    getTruckEtc : getTruckEtc
+    getTruckEtc : getTruckEtc,
+    getTruckEtcFeeCount : getTruckEtcFeeCount
 }

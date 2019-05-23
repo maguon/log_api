@@ -7033,6 +7033,22 @@
 
           },
           {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -7046,6 +7062,82 @@
             "description": "list size for pagination",
             "required": false,
             "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckEtc"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
+    "/truckEtcFeeCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckEtcFee count",
+        "description": "query truckEtcFeeCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "etcDateStart",
+            "in": "query",
+            "description": "etcDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "etcDatenEnd",
+            "in": "query",
+            "description": "etcDaten end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
 
           }
         ],
@@ -11628,6 +11720,22 @@
 
           },
           {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -11650,7 +11758,84 @@
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/driveExceedOil"
+                "$ref": "#/definitions/driveExceedOilRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilRel id"
+          }
+        }
+      }
+    },
+    "/driveExceedOilRelCount": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveExceedOilRel count",
+        "description": "query driveExceedOilRelCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "oilDateStart",
+            "in": "query",
+            "description": "oilDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "oilDateEnd",
+            "in": "query",
+            "description": "oilDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOilRel"
               }
             }
           },

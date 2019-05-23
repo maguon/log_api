@@ -77,6 +77,20 @@ function queryDriveExceedOilRel(req,res,next){
     })
 }
 
+function queryDriveExceedOilRelCount(req,res,next){
+    var params = req.params ;
+    driveExceedOilRelDAO.getDriveExceedOilRelCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveExceedOilRelCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveExceedOilRelCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDriveExceedOilRel(req,res,next){
     var params = req.params ;
     var strDate = moment(params.oilDate).format('YYYYMMDD');
@@ -252,6 +266,7 @@ function uploadDriveExceedOilRelFile(req,res,next){
 module.exports = {
     createDriveExceedOilRel : createDriveExceedOilRel,
     queryDriveExceedOilRel : queryDriveExceedOilRel,
+    queryDriveExceedOilRelCount : queryDriveExceedOilRelCount,
     updateDriveExceedOilRel : updateDriveExceedOilRel,
     removeDriveExceedOilRel : removeDriveExceedOilRel,
     uploadDriveExceedOilRelFile : uploadDriveExceedOilRelFile
