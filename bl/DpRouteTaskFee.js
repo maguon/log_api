@@ -43,6 +43,20 @@ function queryDpRouteTaskFee(req,res,next){
     })
 }
 
+function queryDpRouteTaskFeeCount(req,res,next){
+    var params = req.params ;
+    dpRouteTaskFeeDAO.getDpRouteTaskFeeCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskFeeCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskFeeCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDpRouteTaskFee (req,res,next){
     var params = req.params;
     Seq().seq(function(){
@@ -164,6 +178,7 @@ function getDpRouteTaskFeeCsv(req,res,next){
 module.exports = {
     createDpRouteTaskFee : createDpRouteTaskFee,
     queryDpRouteTaskFee : queryDpRouteTaskFee,
+    queryDpRouteTaskFeeCount : queryDpRouteTaskFeeCount,
     updateDpRouteTaskFee : updateDpRouteTaskFee,
     updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus,
     getDpRouteTaskFeeCsv : getDpRouteTaskFeeCsv

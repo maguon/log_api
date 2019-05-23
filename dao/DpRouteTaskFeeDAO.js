@@ -62,6 +62,36 @@ function getDpRouteTaskFee(params,callback) {
     });
 }
 
+function getDpRouteTaskFeeCount(params,callback) {
+    var query = " select sum(total_price) as truck_parking_fee,sum(car_oil_fee) as car_oil_fee " +
+        " from dp_route_task_fee where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and truck_id = ? ";
+    }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and created_on <= ? ";
+    }
+    if(params.status){
+        paramsArray[i++] = params.status;
+        query = query + " and status = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskFeeCount ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskFee(params,callback){
     var query = " update dp_route_task_fee set day_count = ? , single_price = ? , total_price = ? , car_oil_fee = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -99,6 +129,7 @@ function updateDpRouteTaskFeeStatus(params,callback){
 module.exports ={
     addDpRouteTaskFee : addDpRouteTaskFee,
     getDpRouteTaskFee : getDpRouteTaskFee,
+    getDpRouteTaskFeeCount : getDpRouteTaskFeeCount,
     updateDpRouteTaskFee : updateDpRouteTaskFee,
     updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus
 }
