@@ -718,6 +718,7 @@ function createServer() {
     server.get('/api/notCompletedTaskStatusCount' , dpRouteTask.queryNotCompletedTaskStatusCount);
     server.get('/api/taskStatusCount' , dpRouteTask.queryTaskStatusCount);
     server.get('/api/dpRouteTask.csv', dpRouteTask.getDpRouteTaskCsv);
+    server.get('/api/driveCost', dpRouteTask.queryDriveCost);
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
     server.post({path:'/api/user/:userId/dpRouteTaskBatch',contentType: 'application/json'},dpRouteTask.createDpRouteTaskBatch,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus,sysRecord.saveRouteRecord);

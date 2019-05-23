@@ -453,6 +453,10 @@ function getDriveDistanceLoad(params,callback) {
         paramsArray[i++] = params.taskStatus;
         query = query + " and dpr.task_status = ? ";
     }
+    if(params.loadTaskStatus){
+        paramsArray[i++] = params.loadTaskStatus;
+        query = query + " and dprl.load_task_status = ? ";
+    }
     if(params.loadFlag){
         paramsArray[i++] = params.loadFlag;
         query = query + " and dpr.load_flag = ? ";
@@ -710,6 +714,79 @@ function updateDistanceRecordCount(params,callback){
         return callback(error,rows);
     });
 }
+//最新司机成本
+function getDriveCost(params,callback) {
+    var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num, " +
+        " drcrm.total_clean_fee,drcrm.total_trailer_fee,drcrm.car_parking_fee,drcrm.total_run_fee,drcrm.lead_fee, " +
+        " dprtfm.truck_parking_fee,dprtfm.car_oil_fee, " +
+        " deorm.oil_fee,deorm.urea_fee, " +
+        " dpm.peccancy_under_fee,dpm.peccancy_company_fee, " +
+        " tem.etc_fee, " +
+        " trrm.parts_fee,trrm.repair_fee,trrm.maintain_fee, " +
+        " taim.accident_under_fee,taim.accident_company_fee " +
+        " from (select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,t.company_id " +
+        " from dp_route_task dpr " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " where dpr.date_id>="+params.dateIdStart+" and dpr.date_id<="+params.dateIdEnd+" and dpr.task_status>=9 " +
+        " group by dpr.drive_id ,dpr.truck_id) dprm " +
+        " left join (select drcr.drive_id,drcr.truck_id,sum(drcr.total_price) total_clean_fee, " +
+        " sum(drcr.total_trailer_fee) total_trailer_fee,sum(drcr.car_parking_fee) car_parking_fee, " +
+        " sum(drcr.total_run_fee) total_run_fee,sum(drcr.lead_fee) lead_fee " +
+        " from dp_route_load_task_clean_rel drcr " +
+        " where drcr.date_id>="+params.dateIdStart+" and drcr.date_id<="+params.dateIdEnd+" and drcr.status=2 " +
+        " group by drcr.drive_id,drcr.truck_id) drcrm  on dprm.drive_id = drcrm.drive_id and dprm.truck_id = drcrm.truck_id " +
+        " left join(select dprtf.drive_id,dprtf.truck_id,sum(dprtf.total_price) truck_parking_fee,sum(dprtf.car_oil_fee) car_oil_fee " +
+        " from dp_route_task_fee dprtf " +
+        " where dprtf.date_id>="+params.dateIdStart+" and dprtf.date_id<="+params.dateIdEnd+" and dprtf.status=2 " +
+        " group by dprtf.drive_id,dprtf.truck_id) dprtfm on dprm.drive_id = dprtfm.drive_id and dprm.truck_id = dprtfm.truck_id " +
+        " left join (select deor.drive_id,deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
+        " from drive_exceed_oil_rel deor " +
+        " where deor.date_id>="+params.dateIdStart+" and deor.date_id<=" +params.dateIdEnd+
+        " group by deor.drive_id,deor.truck_id) deorm on dprm.drive_id = deorm.drive_id and dprm.truck_id = deorm.truck_id " +
+        " left join (select dp.drive_id,dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
+        " from drive_peccancy dp " +
+        " where dp.date_id>="+params.dateIdStart+" and dp.date_id<= " +params.dateIdEnd+
+        " group by dp.drive_id,dp.truck_id) dpm on dprm.drive_id = dpm.drive_id and dprm.truck_id = dpm.truck_id " +
+        " left join(select te.drive_id,te.truck_id,sum(te.etc_fee) etc_fee " +
+        " from truck_etc te " +
+        " where te.date_id>="+params.dateIdStart+" and te.date_id<= " +params.dateIdEnd+
+        " group by te.drive_id,te.truck_id) tem on dprm.drive_id = tem.drive_id and dprm.truck_id = tem.truck_id " +
+        " left join(select trr.drive_id,trr.truck_id,sum(trr.parts_money) parts_fee, " +
+        " sum(trr.repair_money) repair_fee,sum(trr.maintain_money) maintain_fee " +
+        " from truck_repair_rel trr " +
+        " where trr.date_id>="+params.dateIdStart+" and trr.date_id<="+params.dateIdEnd+"  and trr.repair_status =1 " +
+        " group by trr.drive_id,trr.truck_id) trrm on dprm.drive_id = trrm.drive_id and dprm.truck_id = trrm.truck_id " +
+        " left join (select tai.drive_id,tai.truck_id,sum(tac.under_cost) accident_under_fee,sum(tac.company_cost) accident_company_fee " +
+        " from truck_accident_check tac " +
+        " left join truck_accident_info tai on tac.truck_accident_id = tai.id " +
+        " where tac.date_id>="+params.dateIdStart+" and tac.date_id<="+params.dateIdEnd+"  and tai.accident_status =3 " +
+        " group by tai.drive_id,tai.truck_id) taim on dprm.drive_id = taim.drive_id and dprm.truck_id = taim.truck_id " +
+        " where dprm.drive_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dprm.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dprm.truck_id = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and dprm.company_id = ? ";
+    }
+
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveCost ');
+        return callback(error,rows);
+    });
+}
 
 
 module.exports ={
@@ -733,5 +810,6 @@ module.exports ={
     updateDpRouteLoadFlag : updateDpRouteLoadFlag,
     updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
     updateDpRouteReverseFlag : updateDpRouteReverseFlag,
-    updateDistanceRecordCount : updateDistanceRecordCount
+    updateDistanceRecordCount : updateDistanceRecordCount,
+    getDriveCost : getDriveCost
 }

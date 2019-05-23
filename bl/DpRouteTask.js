@@ -1205,6 +1205,20 @@ function updateDpRouteReverseFlag (req,res,next){
     })
 }
 
+function queryDriveCost(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getDriveCost(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveCost ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveCost ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -1229,5 +1243,6 @@ module.exports = {
     getDriveDistanceLoadCsv : getDriveDistanceLoadCsv,
     updateDpRouteLoadFlag : updateDpRouteLoadFlag,
     updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
-    updateDpRouteReverseFlag : updateDpRouteReverseFlag
+    updateDpRouteReverseFlag : updateDpRouteReverseFlag,
+    queryDriveCost : queryDriveCost
 }
