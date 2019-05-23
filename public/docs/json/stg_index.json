@@ -20508,6 +20508,74 @@
         }
       }
     },
+    "/driveCost.csv": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  driveCost csv",
+        "description": "query driveCostCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/drive"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask": {
       "post": {
         "tags": [
@@ -29038,58 +29106,6 @@
             "name": "companyId",
             "in": "query",
             "description": "company id",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/drive"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid drive id"
-          }
-        }
-      }
-    },
-    "/driveCost.csv": {
-      "get": {
-        "tags": [
-          "settle"
-        ],
-        "summary": "query  driveCost csv",
-        "description": "query driveCostCsv",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "driveId",
-            "in": "query",
-            "description": "drive id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "dateStart",
-            "in": "query",
-            "description": "date start",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "dateEnd",
-            "in": "query",
-            "description": "date end",
             "required": false,
             "type": "integer"
 

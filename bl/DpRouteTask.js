@@ -1219,6 +1219,124 @@ function queryDriveCost(req,res,next){
     })
 }
 
+function getDriveCostCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' + "货车" + ',' +"洗车费" + ',' + "拖车费" + ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费" + ','+ "停车费"+ ','+
+        "商品车加油费"+ ','+ "货车油费" + ','+ "货车尿素费"+ ','+ "违章罚款司机" + ','+ "违章罚款公司"+ ','+ "过路费"+ ','+
+        "配件费" + ','+ "维修费"+ ','+ "保养费" + ','+ "货车事故个人"+ ','+ "货车事故公司";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskDAO.getDriveCost(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveCost ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].total_clean_fee == null){
+                    parkObj.totalCleanFee = "";
+                }else{
+                    parkObj.totalCleanFee = rows[i].total_clean_fee;
+                }
+                if(rows[i].total_trailer_fee == null){
+                    parkObj.totalTrailerFee = "";
+                }else{
+                    parkObj.totalTrailerFee = rows[i].total_trailer_fee;
+                }
+                if(rows[i].car_parking_fee == null){
+                    parkObj.carParkingFee = "";
+                }else{
+                    parkObj.carParkingFee = rows[i].car_parking_fee;
+                }
+                if(rows[i].total_run_fee == null){
+                    parkObj.totalRunFee = "";
+                }else{
+                    parkObj.totalRunFee = rows[i].total_run_fee;
+                }
+                if(rows[i].lead_fee == null){
+                    parkObj.leadFee = "";
+                }else{
+                    parkObj.leadFee = rows[i].lead_fee;
+                }
+                if(rows[i].truck_parking_fee == null){
+                    parkObj.truckParkingFee = "";
+                }else{
+                    parkObj.truckParkingFee = rows[i].truck_parking_fee;
+                }
+                if(rows[i].car_oil_fee == null){
+                    parkObj.carOilFee = "";
+                }else{
+                    parkObj.carOilFee = rows[i].car_oil_fee;
+                }
+                if(rows[i].oil_fee == null){
+                    parkObj.oilFee = "";
+                }else{
+                    parkObj.oilFee = rows[i].oil_fee;
+                }
+                if(rows[i].urea_fee == null){
+                    parkObj.ureaFee = "";
+                }else{
+                    parkObj.ureaFee = rows[i].urea_fee;
+                }
+                if(rows[i].peccancy_under_fee == null){
+                    parkObj.peccancyUnderFee = "";
+                }else{
+                    parkObj.peccancyUnderFee = rows[i].peccancy_under_fee;
+                }
+                if(rows[i].peccancy_company_fee == null){
+                    parkObj.peccancyCompanyFee = "";
+                }else{
+                    parkObj.peccancyCompanyFee = rows[i].peccancy_company_fee;
+                }
+                if(rows[i].etc_fee == null){
+                    parkObj.etcFee = "";
+                }else{
+                    parkObj.etcFee = rows[i].etc_fee;
+                }
+                if(rows[i].parts_fee == null){
+                    parkObj.partsFee = "";
+                }else{
+                    parkObj.partsFee = rows[i].parts_fee;
+                }
+                if(rows[i].repair_fee == null){
+                    parkObj.repairFee = "";
+                }else{
+                    parkObj.repairFee = rows[i].repair_fee;
+                }
+                if(rows[i].maintain_fee == null){
+                    parkObj.maintainFee = "";
+                }else{
+                    parkObj.maintainFee = rows[i].maintain_fee;
+                }
+                if(rows[i].accident_under_fee == null){
+                    parkObj.accidentUnderFee = "";
+                }else{
+                    parkObj.accidentUnderFee = rows[i].accident_under_fee;
+                }
+                if(rows[i].accident_company_fee == null){
+                    parkObj.accidentCompanyFee = "";
+                }else{
+                    parkObj.accidentCompanyFee = rows[i].accident_company_fee;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.totalCleanFee+","+parkObj.totalTrailerFee +","+
+                    parkObj.carParkingFee+","+parkObj.totalRunFee+","+parkObj.leadFee +","+parkObj.truckParkingFee +","+parkObj.carOilFee+","+
+                    parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee +","+parkObj.peccancyCompanyFee+","+parkObj.etcFee+","+
+                    parkObj.partsFee+","+parkObj.repairFee +","+parkObj.maintainFee+","+parkObj.accidentUnderFee+","+parkObj.accidentCompanyFee+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -1244,5 +1362,6 @@ module.exports = {
     updateDpRouteLoadFlag : updateDpRouteLoadFlag,
     updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
     updateDpRouteReverseFlag : updateDpRouteReverseFlag,
-    queryDriveCost : queryDriveCost
+    queryDriveCost : queryDriveCost,
+    getDriveCostCsv : getDriveCostCsv
 }

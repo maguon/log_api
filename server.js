@@ -719,6 +719,7 @@ function createServer() {
     server.get('/api/taskStatusCount' , dpRouteTask.queryTaskStatusCount);
     server.get('/api/dpRouteTask.csv', dpRouteTask.getDpRouteTaskCsv);
     server.get('/api/driveCost', dpRouteTask.queryDriveCost);
+    server.get('/api/driveCost.csv' , dpRouteTask.getDriveCostCsv);
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
     server.post({path:'/api/user/:userId/dpRouteTaskBatch',contentType: 'application/json'},dpRouteTask.createDpRouteTaskBatch,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus,sysRecord.saveRouteRecord);
@@ -913,8 +914,6 @@ function createServer() {
     server.get('/api/notSettleHandover.csv', settleHandover.getNotSettleHandoverCsv);
     server.get('/api/driveSettle' , settleHandover.queryDriveSettle);
     server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
-    server.get('/api/driveCost' , settleHandover.queryDriveCost);
-    server.get('/api/driveCost.csv' , settleHandover.getDriveCostCsv);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId',contentType: 'application/json'} ,settleHandover.updateSettleHandover);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId/image',contentType: 'application/json'} ,settleHandover.updateHandoveImage);
