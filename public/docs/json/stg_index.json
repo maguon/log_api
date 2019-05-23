@@ -20463,7 +20463,7 @@
             "name": "dateIdStart",
             "in": "query",
             "description": "dateId start",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
@@ -20471,7 +20471,7 @@
             "name": "dateIdEnd",
             "in": "query",
             "description": "dateId end",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
