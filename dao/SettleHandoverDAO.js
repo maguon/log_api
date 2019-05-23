@@ -324,7 +324,7 @@ function getSettleHandoverMonthCount(params,callback) {
 
 function getDriveSettle(params,callback) {
     var query = " select dt.*,dd.load_distance,dd.no_load_distance from " +
-        " (select d.id,d.drive_name,cp.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
+        " (select d.id,d.drive_name,d.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
         " count(dpdtl.id) as car_count,sum(ecrr.distance*ecrr.fee) as value_total from drive_info d " +
         " left join company_info cp on d.company_id = cp.id " +
         " left join dp_route_task dpr on d.id = dpr.drive_id " +

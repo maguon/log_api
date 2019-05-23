@@ -769,6 +769,7 @@ function createServer() {
      * DpRouteLoadTaskCleanRel Module
      */
     server.get('/api/dpRouteLoadTaskCleanRel',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRel);
+    server.get('/api/dpRouteLoadTaskCleanRelCount',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelCount);
     server.get('/api/dpRouteLoadTaskCleanRelMonthStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelMonthStat);
     server.get('/api/dpRouteLoadTaskCleanRelReceiveMonthStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelReceiveMonthStat);
     server.get('/api/dpRouteLoadTaskCleanRelWeekStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelWeekStat);

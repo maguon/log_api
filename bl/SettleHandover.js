@@ -407,7 +407,11 @@ function getDriveSettleCsv(req,res,next){
                 }else{
                     parkObj.operateType = "承包";
                 }
-                parkObj.companyName = rows[i].company_name;
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
                 if(rows[i].truck_num == null){
                     parkObj.truckNum = "";
                 }else{

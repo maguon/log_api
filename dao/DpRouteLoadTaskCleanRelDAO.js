@@ -159,6 +159,66 @@ function getDpRouteLoadTaskCleanRelBase(params,callback) {
     });
 }
 
+function getDpRouteLoadTaskCleanRelCount(params,callback) {
+    var query = " select sum(dpcr.total_price) as total_clean_fee,sum(dpcr.total_trailer_fee) as total_trailer_fee, " +
+        " sum(dpcr.car_parking_fee) as car_parking_fee,sum(dpcr.total_run_fee) as total_run_fee,sum(dpcr.lead_fee) as lead_fee " +
+        " from dp_route_load_task_clean_rel dpcr " +
+        " left join dp_route_load_task dprl on dpcr.dp_route_load_task_id = dprl.id " +
+        " where dpcr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.loadTaskCleanRelId){
+        paramsArray[i++] = params.loadTaskCleanRelId;
+        query = query + " and dpcr.id = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dprl.dp_route_task_id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpcr.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpcr.truck_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dprl.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and dpcr.receive_id = ? ";
+    }
+    if(params.status){
+        paramsArray[i++] = params.status;
+        query = query + " and dpcr.status = ? ";
+    }
+    if(params.statusArr){
+        query = query + " and dpcr.status in ("+params.statusArr + ") "
+    }
+    if(params.cleanDateStart){
+        paramsArray[i++] = params.cleanDateStart +" 00:00:00";
+        query = query + " and dpcr.clean_date >= ? ";
+    }
+    if(params.cleanDateEnd){
+        paramsArray[i++] = params.cleanDateEnd +" 23:59:59";
+        query = query + " and dpcr.clean_date <= ? ";
+    }
+    if(params.loadDateStart){
+        paramsArray[i++] = params.loadDateStart +" 00:00:00";
+        query = query + " and dprl.load_date >= ? ";
+    }
+    if(params.loadDateEnd){
+        paramsArray[i++] = params.loadDateEnd +" 23:59:59";
+        query = query + " and dprl.load_date <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskCleanRelCount ');
+        return callback(error,rows);
+    });
+}
+
 function getDpRouteLoadTaskCleanRelMonthStat(params,callback) {
     var query = " select DISTINCT(db.y_month), " ;
     var paramsArray=[],i=0;
@@ -348,6 +408,7 @@ module.exports ={
     addDpRouteLoadTaskCleanRel : addDpRouteLoadTaskCleanRel,
     getDpRouteLoadTaskCleanRel : getDpRouteLoadTaskCleanRel,
     getDpRouteLoadTaskCleanRelBase : getDpRouteLoadTaskCleanRelBase,
+    getDpRouteLoadTaskCleanRelCount : getDpRouteLoadTaskCleanRelCount,
     getDpRouteLoadTaskCleanRelMonthStat : getDpRouteLoadTaskCleanRelMonthStat,
     getDpRouteLoadTaskCleanRelReceiveMonthStat : getDpRouteLoadTaskCleanRelReceiveMonthStat,
     getDpRouteLoadTaskCleanRelWeekStat  : getDpRouteLoadTaskCleanRelWeekStat,

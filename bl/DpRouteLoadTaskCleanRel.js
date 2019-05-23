@@ -43,6 +43,20 @@ function queryDpRouteLoadTaskCleanRel(req,res,next){
     })
 }
 
+function queryDpRouteLoadTaskCleanRelCount(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRelCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteLoadTaskCleanRelCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteLoadTaskCleanRelCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDpRouteLoadTaskCleanRelMonthStat(req,res,next){
     var params = req.params ;
     dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRelMonthStat(params,function(error,result){
@@ -290,6 +304,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
 module.exports = {
     createDpRouteLoadTaskCleanRel : createDpRouteLoadTaskCleanRel,
     queryDpRouteLoadTaskCleanRel : queryDpRouteLoadTaskCleanRel,
+    queryDpRouteLoadTaskCleanRelCount : queryDpRouteLoadTaskCleanRelCount,
     queryDpRouteLoadTaskCleanRelMonthStat : queryDpRouteLoadTaskCleanRelMonthStat,
     queryDpRouteLoadTaskCleanRelReceiveMonthStat : queryDpRouteLoadTaskCleanRelReceiveMonthStat,
     queryDpRouteLoadTaskCleanRelWeekStat : queryDpRouteLoadTaskCleanRelWeekStat,
