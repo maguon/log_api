@@ -296,3 +296,8 @@ CREATE TABLE `truck_depreciation` (
 ALTER TABLE `dp_route_task_fee`
 ADD COLUMN `grant_date`  datetime NULL DEFAULT NULL COMMENT '发放时间' AFTER `status`,
 ADD COLUMN `date_id`  int(4) NULL DEFAULT NULL COMMENT '发放统计时间' AFTER `grant_date`;
+-- ----------------------------
+-- 2019-05-23 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+ADD COLUMN `size_type`  tinyint(1) NULL DEFAULT 0 COMMENT '大小车类型(0-小车,1-大车)' AFTER `make_name`;

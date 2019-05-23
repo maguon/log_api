@@ -32151,6 +32151,9 @@
         "makeName": {
           "type": "string"
         },
+        "sizeType": {
+          "type": "integer"
+        },
         "distance": {
           "type": "integer"
         },
