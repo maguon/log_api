@@ -40,13 +40,16 @@ function addUploadSettleCar(params,callback){
 }
 
 function getSettleCar(params,callback) {
-    var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date " +
+    var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date," +
+        " ecrr.distance as current_distance,ecrr.fee as current_fee " +
         " from settle_car sc " +
         " left join entrust_info e on sc.entrust_id = e.id " +
         " left join city_info c1 on sc.route_start_id = c1.id " +
         " left join city_info c2 on sc.route_end_id = c2.id " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
+        " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id and c.make_id = ecrr.make_id " +
+        " and c.route_id = ecrr.city_route_id and c.size_type = ecrr.size_type " +
         " where sc.id is not null ";
     var paramsArray=[],i=0;
     if(params.settleCarId){
