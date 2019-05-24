@@ -374,23 +374,11 @@ function getNotSettleHandoverCsv(req,res,next){
 
 function getDriveSettleCsv(req,res,next){
     var csvString = "";
-    var header = "司机姓名" + ',' + "所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "商品车台数"+ ','+ "产值"
-        + ','+ "重载公里数"+ ','+ "空载公里数" ;
+    var header = "司机" + ',' + "货车牌号" + ',' + "所属类型" + ','+ "所属公司" + ','+ "商品车到库数"+ ','+ "商品车非到库数" + ','+
+        "工资"+ ','+ "产值" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    if(params.orderStart !=null || params.orderStart !=""){
-        var orderStart = params.orderStart;
-        var d = new Date(orderStart);
-        var currentDateStr = moment(d).format('YYYYMMDD');
-        params.dateIdStart = parseInt(currentDateStr);
-    }
-    if(params.orderEnd !=null || params.orderEnd !=""){
-        var orderEnd = params.orderEnd;
-        var d = new Date(orderEnd);
-        var currentDateStr = moment(d).format('YYYYMMDD');
-        params.dateIdEnd = parseInt(currentDateStr);
-    }
     settleHandoverDAO.getDriveSettle(params,function(error,rows){
         if (error) {
             logger.error(' getDriveSettle ' + error.message);
@@ -398,6 +386,7 @@ function getDriveSettleCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
                 if(rows[i].operate_type == 1){
                     parkObj.operateType = "自营";
                 }else if(rows[i].operate_type == 2){
@@ -412,33 +401,28 @@ function getDriveSettleCsv(req,res,next){
                 }else{
                     parkObj.companyName = rows[i].company_name;
                 }
-                if(rows[i].truck_num == null){
-                    parkObj.truckNum = "";
+                if(rows[i].storage_car_count == null){
+                    parkObj.storageCarCount = "";
                 }else{
-                    parkObj.truckNum = rows[i].truck_num;
+                    parkObj.storageCarCount = rows[i].storage_car_count;
                 }
-                if(rows[i].car_count == null){
-                    parkObj.carCount = "";
+                if(rows[i].not_storage_car_count == null){
+                    parkObj.notStorageCarCount = "";
                 }else{
-                    parkObj.carCount = rows[i].car_count;
+                    parkObj.notStorageCarCount = rows[i].not_storage_car_count;
                 }
-                if(rows[i].value_total == null){
-                    parkObj.valueTotal = "";
+                if(rows[i].distance_salary == null){
+                    parkObj.distanceSalary = "";
                 }else{
-                    parkObj.valueTotal = rows[i].value_total;
+                    parkObj.distanceSalary = rows[i].distance_salary;
                 }
-                if(rows[i].load_distance == null){
-                    parkObj.loadDistance = "";
+                if(rows[i].output == null){
+                    parkObj.output = "";
                 }else{
-                    parkObj.loadDistance = rows[i].load_distance;
+                    parkObj.output = rows[i].output;
                 }
-                if(rows[i].no_load_distance == null){
-                    parkObj.noLoadDistance = "";
-                }else{
-                    parkObj.noLoadDistance = rows[i].no_load_distance;
-                }
-                csvString = csvString+parkObj.driveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckNum+","+parkObj.carCount+","+parkObj.valueTotal
-                    +","+parkObj.loadDistance+","+parkObj.noLoadDistance+ '\r\n';
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
+                    parkObj.storageCarCount+","+parkObj.notStorageCarCount +","+parkObj.distanceSalary+","+parkObj.output+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

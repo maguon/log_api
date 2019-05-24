@@ -325,7 +325,7 @@ function getSettleHandoverMonthCount(params,callback) {
 function getDriveSettle(params,callback) {
     var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name, " +
         " drtm.distance_salary,dprm.storage_car_count,dprm.not_storage_car_count,dprtm.output " +
-        " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,d.operate_type,d.company_id,c.company_name, " +
+        " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name, " +
         " sum( case " +
         " when drt.truck_number=6 and drt.car_count<3 then drt.distance*0.6 " +
         " when drt.truck_number=6 and drt.car_count=4 then drt.distance*0.7 " +
@@ -343,7 +343,7 @@ function getDriveSettle(params,callback) {
         " from dp_route_task drt " +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
-        " left join company_info c on d.company_id = c.id " +
+        " left join company_info c on t.company_id = c.id " +
         " where drt.task_plan_date>="+params.taskPlanDateStart+" and drt.task_plan_date<="+params.taskPlanDateEnd+" and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +

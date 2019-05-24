@@ -29521,24 +29521,24 @@
           "settle"
         ],
         "summary": "query  driveSettle csv",
-        "description": "query driveSettleCsv",
+        "description": "query driveSettleCSV",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "orderStart",
+            "name": "taskPlanDateStart",
             "in": "query",
-            "description": "order start",
-            "required": false,
+            "description": "taskPlanDate start",
+            "required": true,
             "type": "string"
 
           },
           {
-            "name": "orderEnd",
+            "name": "taskPlanDateEnd",
             "in": "query",
-            "description": "order end",
-            "required": false,
+            "description": "taskPlanDate end",
+            "required": true,
             "type": "string"
 
           },
@@ -29551,27 +29551,11 @@
 
           },
           {
-            "name": "driveName",
-            "in": "query",
-            "description": "drive name",
-            "required": false,
-            "type": "string"
-
-          },
-          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
             "required": false,
             "type": "integer"
-
-          },
-          {
-            "name": "truckNum",
-            "in": "query",
-            "description": "truck num",
-            "required": false,
-            "type": "string"
 
           },
           {
