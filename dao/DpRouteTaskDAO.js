@@ -723,7 +723,8 @@ function getDriveCost(params,callback) {
         " dpm.peccancy_under_fee,dpm.peccancy_company_fee, " +
         " tem.etc_fee, " +
         " trrm.parts_fee,trrm.repair_fee,trrm.maintain_fee, " +
-        " taim.accident_under_fee,taim.accident_company_fee " +
+        " taim.accident_under_fee,taim.accident_company_fee," +
+        " dim.damage_under_fee,dim.damage_company_fee " +
         " from (select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,t.company_id " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
@@ -762,6 +763,10 @@ function getDriveCost(params,callback) {
         " left join truck_accident_info tai on tac.truck_accident_id = tai.id " +
         " where tac.date_id>="+params.dateIdStart+" and tac.date_id<="+params.dateIdEnd+"  and tai.accident_status =3 " +
         " group by tai.drive_id,tai.truck_id) taim on dprm.drive_id = taim.drive_id and dprm.truck_id = taim.truck_id " +
+        " left join (select di.drive_id,di.truck_id,sum(dc.under_cost) damage_under_fee,sum(dc.company_cost) damage_company_fee " +
+        " from damage_check dc left join damage_info di on dc.damage_id = di.id " +
+        " where dc.date_id>="+params.dateIdStart+" and dc.date_id<="+params.dateIdEnd+" and di.damage_status =3 " +
+        " group by di.drive_id,di.truck_id) dim on dprm.drive_id = dim.drive_id and dprm.truck_id = dim.truck_id " +
         " where dprm.drive_id is not null ";
     var paramsArray=[],i=0;
     if(params.driveId){

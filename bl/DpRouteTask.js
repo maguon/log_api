@@ -1223,7 +1223,7 @@ function getDriveCostCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' + "货车" + ',' +"洗车费" + ',' + "拖车费" + ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费" + ','+ "停车费"+ ','+
         "商品车加油费"+ ','+ "货车油费" + ','+ "货车尿素费"+ ','+ "违章罚款司机" + ','+ "违章罚款公司"+ ','+ "过路费"+ ','+
-        "配件费" + ','+ "维修费"+ ','+ "保养费" + ','+ "货车事故个人"+ ','+ "货车事故公司";
+        "质损个人" + ','+ "质损公司"+ ','+ "配件费" + ','+ "维修费"+ ','+ "保养费" + ','+ "货车事故个人"+ ','+ "货车事故公司";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -1295,6 +1295,16 @@ function getDriveCostCsv(req,res,next){
                 }else{
                     parkObj.etcFee = rows[i].etc_fee;
                 }
+                if(rows[i].damage_under_fee == null){
+                    parkObj.damageUnderFee = "";
+                }else{
+                    parkObj.damageUnderFee = rows[i].damage_under_fee;
+                }
+                if(rows[i].damage_company_fee == null){
+                    parkObj.damageCompanyFee = "";
+                }else{
+                    parkObj.damageCompanyFee = rows[i].damage_company_fee;
+                }
                 if(rows[i].parts_fee == null){
                     parkObj.partsFee = "";
                 }else{
@@ -1323,6 +1333,7 @@ function getDriveCostCsv(req,res,next){
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.totalCleanFee+","+parkObj.totalTrailerFee +","+
                     parkObj.carParkingFee+","+parkObj.totalRunFee+","+parkObj.leadFee +","+parkObj.truckParkingFee +","+parkObj.carOilFee+","+
                     parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee +","+parkObj.peccancyCompanyFee+","+parkObj.etcFee+","+
+                    parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+
                     parkObj.partsFee+","+parkObj.repairFee +","+parkObj.maintainFee+","+parkObj.accidentUnderFee+","+parkObj.accidentCompanyFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
