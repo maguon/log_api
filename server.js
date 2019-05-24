@@ -918,6 +918,7 @@ function createServer() {
     server.get('/api/notSettleHandover.csv', settleHandover.getNotSettleHandoverCsv);
     server.get('/api/driveSettle' , settleHandover.queryDriveSettle);
     server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
+    server.get('/api/driveSettleDetail.csv' , settleHandover.getDriveSettleDetailCsv);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId',contentType: 'application/json'} ,settleHandover.updateSettleHandover);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId/image',contentType: 'application/json'} ,settleHandover.updateHandoveImage);

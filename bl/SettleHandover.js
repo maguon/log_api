@@ -442,6 +442,83 @@ function getDriveSettleCsv(req,res,next){
     })
 }
 
+function getDriveSettleDetailCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' + "货车牌号" + ',' + "VIN" + ','+ "委托方" + ','+ "品牌"+ ','+ "起始城市" + ','+
+        "目的城市"+ ','+ "车型"+ ','+ "产值率"+ ','+ "预估公里数"+ ','+ "预估单价"+ ','+ "产值" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    settleHandoverDAO.getDriveSettleDetail(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSettle ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                parkObj.vin = rows[i].vin;
+                if(rows[i].short_name == null){
+                    parkObj.shortName = "";
+                }else{
+                    parkObj.shortName = rows[i].short_name;
+                }
+                if(rows[i].make_name == null){
+                    parkObj.makeName = "";
+                }else{
+                    parkObj.makeName = rows[i].make_name;
+                }
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                if(rows[i].size_type == 0){
+                    parkObj.sizeType = "小车";
+                }else{
+                    parkObj.sizeType = "大车";
+                }
+                if(rows[i].output_ratio == null){
+                    parkObj.outputRatio = "";
+                }else{
+                    parkObj.outputRatio = rows[i].output_ratio;
+                }
+                if(rows[i].distance == null){
+                    parkObj.distance = "";
+                }else{
+                    parkObj.distance = rows[i].distance;
+                }
+                if(rows[i].fee == null){
+                    parkObj.fee = "";
+                }else{
+                    parkObj.fee = rows[i].fee;
+                }
+                if(rows[i].output == null){
+                    parkObj.output = "";
+                }else{
+                    parkObj.output = rows[i].output;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.vin+","+parkObj.shortName+","+
+                    parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+parkObj.sizeType+","+
+                    parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 function getDriveCostCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' + "洗车费" + ',' + "门卫费" + ','+ "过路费"+ ','+ "燃料费"+ ','+ "保道费" + ','+ "罚款费"+ ','+"停车费"+ ','+
@@ -569,5 +646,6 @@ module.exports = {
     getSettleHandoverCsv : getSettleHandoverCsv,
     getNotSettleHandoverCsv : getNotSettleHandoverCsv,
     getDriveSettleCsv : getDriveSettleCsv,
+    getDriveSettleDetailCsv : getDriveSettleDetailCsv,
     getDriveCostCsv : getDriveCostCsv
 }

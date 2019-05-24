@@ -392,6 +392,49 @@ function getDriveSettle(params,callback) {
     });
 }
 
+function getDriveSettleDetail(params,callback) {
+    var query = " select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num, " +
+        " drltd.car_id,drltd.vin,e.short_name,c.make_name,c.route_start,c.route_end,c.size_type,dprl.output_ratio, " +
+        " ecrr.distance,ecrr.fee,(ecrr.fee*ecrr.distance*dprl.output_ratio)output " +
+        " from dp_route_load_task_detail drltd " +
+        " left join dp_route_load_task dprl on drltd.dp_route_load_task_id = dprl.id " +
+        " left join dp_route_task dpr on drltd.dp_route_task_id = dpr.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join car_info c on drltd.car_id = c.id " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id " +
+        " and c.make_id = ecrr.make_id and c.route_id = ecrr.city_route_id " +
+        " and c.size_type =ecrr.size_type  where dpr.task_plan_date>="+params.taskPlanDateStart+" " +
+        " and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status >=9 ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpr.truck_id = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and t.company_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveSettleDetail ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveCost(params,callback) {
     if(params.dateStart&&params.dateEnd){
         var query = " select d.id,d.drive_name, " +
@@ -523,6 +566,7 @@ module.exports ={
     getSettleHandoverDayCount : getSettleHandoverDayCount,
     getSettleHandoverMonthCount : getSettleHandoverMonthCount,
     getDriveSettle : getDriveSettle,
+    getDriveSettleDetail : getDriveSettleDetail,
     getDriveCost : getDriveCost,
     updateSettleHandover : updateSettleHandover,
     updateSettleHandoverRoute : updateSettleHandoverRoute,
