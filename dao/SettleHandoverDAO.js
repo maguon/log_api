@@ -323,48 +323,62 @@ function getSettleHandoverMonthCount(params,callback) {
 }
 
 function getDriveSettle(params,callback) {
-    var query = " select dt.*,dd.load_distance,dd.no_load_distance from " +
-        " (select d.id,d.drive_name,d.operate_type,cp.id as company_id,cp.company_name,t.id as truck_id,t.truck_num, " +
-        " count(dpdtl.id) as car_count,sum(ecrr.distance*ecrr.fee) as value_total from drive_info d " +
-        " left join company_info cp on d.company_id = cp.id " +
-        " left join dp_route_task dpr on d.id = dpr.drive_id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
-        " left join dp_route_load_task_detail dpdtl on dpr.id = dpdtl.dp_route_task_id " +
-        " left join car_info c on dpdtl.car_id = c.id " +
-        " left join city_route_info cr on c.route_id = cr.route_id " +
-        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
-        " where d.id is not null and dpdtl.car_load_status = 2 and dpr.date_id>="+params.dateIdStart+" and dpr.date_id<= " +params.dateIdEnd+
-        " group by d.id,t.id)dt left join(select d.id,t.id as truck_id,t.truck_num," +
-        " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
-        " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance from drive_info d " +
-        " left join dp_route_task dpr on d.id = dpr.drive_id " +
-        " left join truck_info t on dpr.truck_id = t.id " +
-        " where d.id is not null and dpr.date_id>="+params.dateIdStart+" and dpr.date_id<= " +params.dateIdEnd+
-        " group by d.id,t.id )dd on dd.id = dt.id and dd.truck_id = dt.truck_id where dd.id is not null ";
+    var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name, " +
+        " drtm.distance_salary,dprm.storage_car_count,dprm.not_storage_car_count,dprtm.output " +
+        " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,d.operate_type,d.company_id,c.company_name, " +
+        " sum( case " +
+        " when drt.truck_number=6 and drt.car_count<3 then drt.distance*0.6 " +
+        " when drt.truck_number=6 and drt.car_count=4 then drt.distance*0.7 " +
+        " when drt.truck_number=6 and drt.car_count=5 then drt.distance*0.8 " +
+        " when drt.truck_number=6 and drt.car_count=6 then drt.distance*0.9 " +
+        " when drt.truck_number=6 and drt.car_count>7 then drt.distance " +
+        " when drt.truck_number=8 and drt.car_count<5 then drt.distance*0.6 " +
+        " when drt.truck_number=8 and drt.car_count=5 then drt.distance*0.7 " +
+        " when drt.truck_number=8 and drt.car_count=6 then drt.distance*0.8 " +
+        " when drt.truck_number=8 and drt.car_count=7 then drt.distance*0.9 " +
+        " when drt.truck_number=8 and drt.car_count=8 then drt.distance " +
+        " when drt.truck_number=8 and drt.car_count=9 then drt.distance*1.1 " +
+        " when drt.truck_number=8 and drt.car_count>10 then drt.distance*1.2 " +
+        " end) distance_salary " +
+        " from dp_route_task drt " +
+        " left join drive_info d on drt.drive_id = d.id " +
+        " left join truck_info t on drt.truck_id = t.id " +
+        " left join company_info c on d.company_id = c.id " +
+        " where drt.task_plan_date>="+params.taskPlanDateStart+" and drt.task_plan_date<="+params.taskPlanDateEnd+" and drt.task_status>=9 " +
+        " group by drt.drive_id,drt.truck_id) drtm " +
+        " left join (select dpr.drive_id,dpr.truck_id, " +
+        " sum( case when dpr.reverse_flag=0 and dprl.transfer_flag=0 then dpr.car_count end) storage_car_count, " +
+        " sum( case when dpr.reverse_flag=1 or dprl.transfer_flag=1 then dpr.car_count end) not_storage_car_count " +
+        " from dp_route_task dpr " +
+        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " where dpr.task_plan_date>="+params.taskPlanDateStart+" and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status>=9 " +
+        " group by dpr.drive_id,dpr.truck_id) dprm  on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
+        " left join (select dprt.drive_id,dprt.truck_id,sum(ecrr.fee*ecrr.distance*drlt.output_ratio) output " +
+        " from dp_route_load_task_detail drltd " +
+        " left join dp_route_load_task drlt on drlt.id = drltd.dp_route_load_task_id " +
+        " left join dp_route_task dprt on drltd.dp_route_task_id = dprt.id " +
+        " left join car_info ci on drltd.car_id = ci.id " +
+        " left join entrust_city_route_rel ecrr on ci.entrust_id = ecrr.entrust_id and " +
+        " ci.make_id = ecrr.make_id and ci.route_id = ecrr.city_route_id and ci.size_type =ecrr.size_type " +
+        " where dprt.task_plan_date>="+params.taskPlanDateStart+" and dprt.task_plan_date<="+params.taskPlanDateEnd+" and dprt.task_status >=9 " +
+        " group by dprt.drive_id,dprt.truck_id) dprtm on drtm.drive_id = dprtm.drive_id and drtm.truck_id = dprtm.truck_id " +
+        " where drtm.drive_id is not null ";
     var paramsArray=[],i=0;
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and dt.id = ? ";
-    }
-    if(params.driveName){
-        paramsArray[i++] = params.driveName;
-        query = query + " and dt.drive_name = ? ";
+        query = query + " and drtm.drive_id = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and dt.truck_id = ? ";
-    }
-    if(params.truckNum){
-        paramsArray[i++] = params.truckNum;
-        query = query + " and dt.truck_num = ? ";
+        query = query + " and drtm.truck_id = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and dt.operate_type = ? ";
+        query = query + " and drtm.operate_type = ? ";
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
-        query = query + " and dt.company_id = ? ";
+        query = query + " and drtm.company_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
