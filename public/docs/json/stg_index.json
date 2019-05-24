@@ -29435,17 +29435,17 @@
         ],
         "parameters": [
           {
-            "name": "dateIdStart",
+            "name": "taskPlanDateStart",
             "in": "query",
-            "description": "dateId start",
+            "description": "taskPlanDate start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "dateIdEnd",
+            "name": "taskPlanDateEnd",
             "in": "query",
-            "description": "dateId end",
+            "description": "taskPlanDate end",
             "required": false,
             "type": "string"
 
@@ -29459,27 +29459,11 @@
 
           },
           {
-            "name": "driveName",
-            "in": "query",
-            "description": "drive name",
-            "required": false,
-            "type": "string"
-
-          },
-          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
             "required": false,
             "type": "integer"
-
-          },
-          {
-            "name": "truckNum",
-            "in": "query",
-            "description": "truck num",
-            "required": false,
-            "type": "string"
 
           },
           {
