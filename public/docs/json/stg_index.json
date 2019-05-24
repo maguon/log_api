@@ -29438,7 +29438,7 @@
             "name": "taskPlanDateStart",
             "in": "query",
             "description": "taskPlanDate start",
-            "required": false,
+            "required": true,
             "type": "string"
 
           },
@@ -29446,7 +29446,7 @@
             "name": "taskPlanDateEnd",
             "in": "query",
             "description": "taskPlanDate end",
-            "required": false,
+            "required": true,
             "type": "string"
 
           },
