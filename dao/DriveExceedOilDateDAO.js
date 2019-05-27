@@ -27,28 +27,31 @@ function addDriveExceedOilDate(params,callback){
 }
 
 function getDriveExceedOilDate(params,callback) {
-    var query = " select deod.*,d.drive_name,t.truck_num,t.operate_type,c.company_name " +
-        " from drive_exceed_oil_date deod " +
-        " left join drive_info d on deod.drive_id = d.id " +
-        " left join truck_info t on deod.truck_id = t.id " +
-        " left join company_info c on d.company_id = c.id " +
-        " where deod.id is not null ";
+    var query = " select deod.*,deor.drive_id,d.drive_name,deor.truck_id,t.truck_num,t.operate_type,c.company_name " +
+        " from drive_exceed_oil_rel deor " +
+        " left join date_base db on deor.date_id = db.id " +
+        " left join drive_exceed_oil_date deod on deod.drive_id=deor.drive_id " +
+        " and deod.truck_id = deor.truck_id and deod.month_date_id =db.y_month " +
+        " left join drive_info d on deor.drive_id = d.id " +
+        " left join truck_info t on deor.truck_id = t.id " +
+        " left join company_info c on t.company_id = c.id " +
+        " where deor.id is not null ";
     var paramsArray=[],i=0;
     if(params.exceedOilDateId){
         paramsArray[i++] = params.exceedOilDateId;
         query = query + " and deod.id = ? ";
     }
-    if(params.monthDateId){
-        paramsArray[i++] = params.monthDateId;
-        query = query + " and deod.month_date_id = ? ";
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and db.y_month = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and deod.drive_id = ? ";
+        query = query + " and deor.drive_id = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and deod.truck_id = ? ";
+        query = query + " and deor.truck_id = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
@@ -62,6 +65,7 @@ function getDriveExceedOilDate(params,callback) {
         paramsArray[i++] = params.settleStatus;
         query = query + " and deod.settle_status = ? ";
     }
+    query = query + ' group by deor.drive_id,deor.truck_id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
