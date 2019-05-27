@@ -11489,6 +11489,14 @@
 
           },
           {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "companyId",
             "in": "query",
             "description": "company id",

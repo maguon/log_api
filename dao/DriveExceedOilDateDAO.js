@@ -27,7 +27,7 @@ function addDriveExceedOilDate(params,callback){
 }
 
 function getDriveExceedOilDate(params,callback) {
-    var query = " select deod.*,d.drive_name,t.truck_num,c.company_name " +
+    var query = " select deod.*,d.drive_name,t.truck_num,t.operate_type,c.company_name " +
         " from drive_exceed_oil_date deod " +
         " left join drive_info d on deod.drive_id = d.id " +
         " left join truck_info t on deod.truck_id = t.id " +
@@ -49,6 +49,10 @@ function getDriveExceedOilDate(params,callback) {
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and deod.truck_id = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
