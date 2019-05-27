@@ -11796,6 +11796,58 @@
         }
       }
     },
+    "/user/{userId}/exceedOilDate/{exceedOilDateId}/checkStatus/{checkStatus}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user update driveExceedOil checkStatus",
+        "description": "user update driveExceedOil checkStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "exceedOilDateId",
+            "in": "path",
+            "description": "exceedOilDate id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "checkStatus",
+            "in": "path",
+            "description": "check status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid exceedOilDate id"
+          }
+        }
+      }
+    },
     "/driveExceedOilRel": {
       "get": {
         "tags": [

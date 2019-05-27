@@ -74,6 +74,20 @@ function updateDriveExceedOilDate(req,res,next){
     })
 }
 
+function updateExceedOilDateCheckStatus(req,res,next){
+    var params = req.params ;
+    driveExceedOilDateDAO.updateExceedOilDateCheckStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateExceedOilDateCheckStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateExceedOilDateCheckStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDriveExceedOilMonthCsv(req,res,next){
     var csvString = "";
     var header = "月结编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属公司" + ','+"月份" + ','+ "计划用油量" + ','+
@@ -163,5 +177,6 @@ module.exports = {
     queryDriveExceedOilDate : queryDriveExceedOilDate,
     queryDriveExceedOilMonth : queryDriveExceedOilMonth,
     updateDriveExceedOilDate : updateDriveExceedOilDate,
+    updateExceedOilDateCheckStatus : updateExceedOilDateCheckStatus,
     getDriveExceedOilMonthCsv : getDriveExceedOilMonthCsv
 }
