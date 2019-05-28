@@ -300,6 +300,102 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     })
 }
 
+function getDpRouteLoadTaskProtectCsv(req,res,next){
+    var csvString = "";
+    var header = "编号" + ',' + "调度编号" + ',' + "司机" + ','+ "电话" + ','+"货车牌号" + ','+
+        "装车数" + ','+ "拖车费" + ','+ "提车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
+        "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+ "领取时间" + ','+ "领取状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDamage ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
+                if(rows[i].drive_name==null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].mobile==null){
+                    parkObj.mobile = "";
+                }else{
+                    parkObj.mobile = rows[i].mobile;
+                }
+                parkObj.carCount = rows[i].car_count;
+                if(rows[i].total_trailer_fee==null){
+                    parkObj.totalTrailerFee = "";
+                }else{
+                    parkObj.totalTrailerFee = rows[i].total_trailer_fee;
+                }
+                if(rows[i].car_parking_fee==null){
+                    parkObj.carParkingFee = "";
+                }else{
+                    parkObj.carParkingFee = rows[i].car_parking_fee;
+                }
+                if(rows[i].run_fee==null){
+                    parkObj.runFee = "";
+                }else{
+                    parkObj.runFee = rows[i].run_fee;
+                }
+                if(rows[i].total_run_fee==null){
+                    parkObj.totalRunFee = "";
+                }else{
+                    parkObj.totalRunFee = rows[i].total_run_fee;
+                }
+                if(rows[i].lead_fee==null){
+                    parkObj.leadFee = "";
+                }else{
+                    parkObj.leadFee = rows[i].lead_fee;
+                }
+                if(rows[i].truck_num==null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                parkObj.shortName = rows[i].short_name;
+                if(rows[i].make_name==null){
+                    parkObj.makeName = "";
+                }else{
+                    parkObj.makeName = rows[i].make_name;
+                }
+                if(rows[i].load_date==null){
+                    parkObj.loadDate = "";
+                }else{
+                    parkObj.loadDate = new Date(rows[i].load_date).toLocaleDateString();
+                }
+                if(rows[i].clean_date==null){
+                    parkObj.cleanDate = "";
+                }else{
+                    parkObj.cleanDate = new Date(rows[i].clean_date).toLocaleDateString();
+                }
+                if(rows[i].status == 0){
+                    parkObj.status = "未通过";
+                }else if(rows[i].status == 1){
+                    parkObj.status = "未领取";
+                }else{
+                    parkObj.status = "已领取";
+                }
+                csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.truckNum+","+
+                    parkObj.carCount+","+ parkObj.totalTrailerFee+","+ parkObj.carParkingFee+","+parkObj.runFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","+
+                    parkObj.shortName+","+parkObj.makeName+","+parkObj.loadDate+","+parkObj.cleanDate+","+ parkObj.status+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteLoadTaskCleanRel : createDpRouteLoadTaskCleanRel,
@@ -312,5 +408,6 @@ module.exports = {
     updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus,
     updateCleanRelStatus : updateCleanRelStatus,
-    getDpRouteLoadTaskCleanRelCsv : getDpRouteLoadTaskCleanRelCsv
+    getDpRouteLoadTaskCleanRelCsv : getDpRouteLoadTaskCleanRelCsv,
+    getDpRouteLoadTaskProtectCsv : getDpRouteLoadTaskProtectCsv
 }

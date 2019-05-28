@@ -777,6 +777,7 @@ function createServer() {
     server.get('/api/dpRouteLoadTaskCleanRelWeekStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelWeekStat);
     server.get('/api/dpRouteLoadTaskCleanRelReceiveWeekStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelReceiveWeekStat);
     server.get('/api/dpRouteLoadTaskCleanRel.csv',dpRouteLoadTaskCleanRel.getDpRouteLoadTaskCleanRelCsv);
+    server.get('/api/dpRouteLoadTaskProtect.csv',dpRouteLoadTaskCleanRel.getDpRouteLoadTaskProtectCsv);
     server.post({path:'/api/user/:userId/dpRouteLoadTaskCleanRel',contentType: 'application/json'},dpRouteLoadTaskCleanRel.createDpRouteLoadTaskCleanRel);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRel);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId/status/:status',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRelStatus);

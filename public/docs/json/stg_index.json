@@ -23116,6 +23116,136 @@
         }
       }
     },
+    "/dpRouteLoadTaskProtect.csv": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteLoadTaskProtect csv",
+        "description": "query dpRouteLoadTaskProtect csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "loadTaskCleanRelId",
+            "in": "query",
+            "description": "loadTaskCleanRel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskLoanId",
+            "in": "query",
+            "description": "dpRouteTaskLoan id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "statusArr",
+            "in": "query",
+            "description": "status arr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "cleanDateStart",
+            "in": "query",
+            "description": "cleanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "cleanDateEnd",
+            "in": "query",
+            "description": "cleanDate end",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "loadDateStart",
+            "in": "query",
+            "description": "loadDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loadDateEnd",
+            "in": "query",
+            "description": "loadDate end",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteLoadTaskCleanRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteLoadTaskCleanRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteLoadTaskCleanRel": {
       "post": {
         "tags": [
