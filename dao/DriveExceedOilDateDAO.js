@@ -71,12 +71,14 @@ function getDriveExceedOilDate(params,callback) {
         paramsArray[i++] = params.companyId;
         query = query + " and c.id = ? ";
     }
-    if(params.checkStatus==1){
-        paramsArray[i++] = params.checkStatus;
-        query = query + " and deod.check_status is null ";
-    }else{
-        paramsArray[i++] = params.checkStatus;
-        query = query + " and deod.check_status = ? ";
+    if(params.checkStatus){
+        if(params.checkStatus==1){
+            paramsArray[i++] = params.checkStatus;
+            query = query + " and deod.check_status is null ";
+        }else{
+            paramsArray[i++] = params.checkStatus;
+            query = query + " and deod.check_status = ? ";
+        }
     }
     query = query + ' group by deor.drive_id,deor.truck_id ';
     if (params.start && params.size) {
