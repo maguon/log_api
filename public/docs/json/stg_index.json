@@ -11468,7 +11468,7 @@
             "name": "yMonth",
             "in": "query",
             "description": "yMonth",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
