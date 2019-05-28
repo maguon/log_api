@@ -105,8 +105,8 @@ function updateExceedOilDateCheckStatus(req,res,next){
 function getDriveExceedOilDateCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属类型" + ','+"所属公司" + ','+ "计划用油量" + ','+
-        "计划尿素量"+','+ "实际用油量" + ','+ "实际尿素量" + ','+ "超油量" + ','+ "超尿素量" + ','+ "超量金额" + ','+
-        "处理状态";
+        "实际用油量" + ','+"计划尿素量"+','+ "实际尿素量" + ','+ "结余油量" + ','+ "结余尿素量" + ','+
+        "本月油补" + ','+"本月尿素补" + ','+ "超油量" + ','+ "超尿素量" + ','+ "超量金额" + ','+ "处理状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -121,7 +121,11 @@ function getDriveExceedOilDateCsv(req,res,next){
                 }else{
                     parkObj.yMonth = rows[i].y_month;
                 }
-                parkObj.driveName = rows[i].drive_name;
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
                 if(rows[i].truck_num == null){
                     parkObj.truckNum = "";
                 }else{
@@ -142,20 +146,40 @@ function getDriveExceedOilDateCsv(req,res,next){
                 }else{
                     parkObj.planOilTotal = rows[i].plan_oil_total;
                 }
-                if(rows[i].plan_urea_total == null){
-                    parkObj.planUreaTotal = "";
-                }else{
-                    parkObj.planUreaTotal = rows[i].plan_urea_total;
-                }
                 if(rows[i].actual_oil_total == null){
                     parkObj.actualOilTotal = "";
                 }else{
                     parkObj.actualOilTotal = rows[i].actual_oil_total;
                 }
+                if(rows[i].plan_urea_total == null){
+                    parkObj.planUreaTotal = "";
+                }else{
+                    parkObj.planUreaTotal = rows[i].plan_urea_total;
+                }
                 if(rows[i].actual_urea_total == null){
                     parkObj.actualUreaTotal = "";
                 }else{
                     parkObj.actualUreaTotal = rows[i].actual_urea_total;
+                }
+                if(rows[i].surplus_oil == null){
+                    parkObj.surplusOil = "";
+                }else{
+                    parkObj.surplusOil = rows[i].surplus_oil;
+                }
+                if(rows[i].surplus_urea == null){
+                    parkObj.surplusUrea = "";
+                }else{
+                    parkObj.surplusUrea = rows[i].surplus_urea;
+                }
+                if(rows[i].subsidy_oil == null){
+                    parkObj.subsidyOil = "";
+                }else{
+                    parkObj.subsidyOil = rows[i].subsidy_oil;
+                }
+                if(rows[i].subsidy_urea == null){
+                    parkObj.subsidyUrea = "";
+                }else{
+                    parkObj.subsidyUrea = rows[i].subsidy_urea;
                 }
                 if(rows[i].exceed_oil == null){
                     parkObj.exceedOil = "";
@@ -180,7 +204,8 @@ function getDriveExceedOilDateCsv(req,res,next){
                     parkObj.settleStatus = "未处理";
                 }
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+
-                    parkObj.companyName+","+ parkObj.planOilTotal+","+parkObj.planUreaTotal +","+parkObj.actualOilTotal+","+parkObj.actualUreaTotal+","+
+                    parkObj.companyName+","+ parkObj.planOilTotal+","+parkObj.actualOilTotal +","+parkObj.planUreaTotal+","+parkObj.actualUreaTotal+","+
+                    parkObj.surplusOil+","+parkObj.surplusUrea +","+parkObj.subsidyOil+","+parkObj.subsidyUrea+","+
                     parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.settleStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
