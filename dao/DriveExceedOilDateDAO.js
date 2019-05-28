@@ -153,6 +153,17 @@ function updateDriveExceedOilDate(params,callback){
     });
 }
 
+function updateDriveExceedOilDateMoney(params,callback){
+    var query = " update drive_exceed_oil_date set actual_money = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.actualMoney;
+    paramsArray[i]=params.exceedOilDateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveExceedOilDateMoney ');
+        return callback(error,rows);
+    });
+}
+
 function updateExceedOilDateCheckStatus(params,callback){
     var query = " update drive_exceed_oil_date set check_status = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -182,6 +193,7 @@ module.exports ={
     getDriveExceedOilDate : getDriveExceedOilDate,
     getDriveExceedOilMonth : getDriveExceedOilMonth,
     updateDriveExceedOilDate : updateDriveExceedOilDate,
+    updateDriveExceedOilDateMoney : updateDriveExceedOilDateMoney,
     updateExceedOilDateCheckStatus : updateExceedOilDateCheckStatus,
     updateExceedOilDateStatus : updateExceedOilDateStatus
 }

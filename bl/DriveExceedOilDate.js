@@ -74,6 +74,20 @@ function updateDriveExceedOilDate(req,res,next){
     })
 }
 
+function updateDriveExceedOilDateMoney(req,res,next){
+    var params = req.params ;
+    driveExceedOilDateDAO.updateDriveExceedOilDateMoney(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveExceedOilDateMoney ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveExceedOilDateMoney ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateExceedOilDateCheckStatus(req,res,next){
     var params = req.params ;
     driveExceedOilDateDAO.updateExceedOilDateCheckStatus(params,function(error,result){
@@ -187,6 +201,7 @@ module.exports = {
     queryDriveExceedOilDate : queryDriveExceedOilDate,
     queryDriveExceedOilMonth : queryDriveExceedOilMonth,
     updateDriveExceedOilDate : updateDriveExceedOilDate,
+    updateDriveExceedOilDateMoney : updateDriveExceedOilDateMoney,
     updateExceedOilDateCheckStatus : updateExceedOilDateCheckStatus,
     getDriveExceedOilDateCsv : getDriveExceedOilDateCsv
 }
