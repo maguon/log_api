@@ -312,3 +312,9 @@ ADD COLUMN `check_status`  tinyint(1) NULL DEFAULT 1 COMMENT '处理状态(1-未
 ALTER TABLE `drive_exceed_oil_date`
 ADD COLUMN `surplus_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '本月结余油量' AFTER `actual_urea_total`,
 ADD COLUMN `surplus_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '本月结余尿素' AFTER `surplus_oil`;
+-- ----------------------------
+-- 2019-05-28 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_date`
+ADD COLUMN `subsidy_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '本次油补助' AFTER `surplus_urea`,
+ADD COLUMN `subsidy_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '本次尿素补助' AFTER `subsidy_oil`;

@@ -31919,6 +31919,12 @@
         "surplusUrea": {
           "type": "integer"
         },
+        "subsidyOil": {
+          "type": "integer"
+        },
+        "subsidyUrea": {
+          "type": "integer"
+        },
         "actualMoney": {
           "type": "integer"
         },
