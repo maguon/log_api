@@ -471,7 +471,7 @@ function createServer() {
      */
     server.get('/api/driveExceedOilDate' , driveExceedOilDate.queryDriveExceedOilDate);
     server.get('/api/driveExceedOilMonth' , driveExceedOilDate.queryDriveExceedOilMonth);
-    server.get('/api/driveExceedOilMonth.csv' , driveExceedOilDate.getDriveExceedOilMonthCsv);
+    server.get('/api/driveExceedOilData.csv' , driveExceedOilDate.getDriveExceedOilDateCsv);
     server.post({path:'/api/user/:userId/driveExceedOilDate',contentType: 'application/json'},driveExceedOilDate.createDriveExceedOilDate);
     server.put({path:'/api/user/:userId/exceedOilDateId/:exceedOilDateId',contentType: 'application/json'} ,driveExceedOilDate.updateDriveExceedOilDate);
     server.put({path:'/api/user/:userId/exceedOilDate/:exceedOilDateId/checkStatus/:checkStatus',contentType: 'application/json'} ,driveExceedOilDate.updateExceedOilDateCheckStatus);

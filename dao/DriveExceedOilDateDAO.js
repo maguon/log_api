@@ -34,7 +34,7 @@ function addDriveExceedOilDate(params,callback){
 }
 
 function getDriveExceedOilDate(params,callback) {
-    var query = " select deod.*,deor.drive_id,d.drive_name,deor.truck_id,t.truck_num,t.operate_type,c.company_name " +
+    var query = " select deod.*,deor.drive_id,d.drive_name,deor.truck_id,t.truck_num,t.operate_type,c.company_name,db.y_month " +
         " from drive_exceed_oil_rel deor " +
         " left join date_base db on deor.date_id = db.id " +
         " left join drive_exceed_oil_date deod on deod.drive_id=deor.drive_id " +

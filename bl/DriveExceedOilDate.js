@@ -88,24 +88,24 @@ function updateExceedOilDateCheckStatus(req,res,next){
     })
 }
 
-function getDriveExceedOilMonthCsv(req,res,next){
+function getDriveExceedOilDateCsv(req,res,next){
     var csvString = "";
-    var header = "月结编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属公司" + ','+"月份" + ','+ "计划用油量" + ','+
+    var header = "月份" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属类型" + ','+"所属公司" + ','+ "计划用油量" + ','+
         "计划尿素量"+','+ "实际用油量" + ','+ "实际尿素量" + ','+ "超油量" + ','+ "超尿素量" + ','+ "超量金额" + ','+
-        "扣款状态";
+        "处理状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    driveExceedOilDateDAO.getDriveExceedOilMonth(params,function(error,rows){
+    driveExceedOilDateDAO.getDriveExceedOilDate(params,function(error,rows){
         if (error) {
-            logger.error(' getDriveExceedOilMonth ' + error.message);
+            logger.error(' getDriveExceedOilDate ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
-                if(rows[i].id == null){
-                    parkObj.id = "";
+                if(rows[i].y_month == null){
+                    parkObj.yMonth = "";
                 }else{
-                    parkObj.id = rows[i].id;
+                    parkObj.yMonth = rows[i].y_month;
                 }
                 parkObj.driveName = rows[i].drive_name;
                 if(rows[i].truck_num == null){
@@ -113,50 +113,60 @@ function getDriveExceedOilMonthCsv(req,res,next){
                 }else{
                     parkObj.truckNum = rows[i].truck_num;
                 }
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else{
+                    parkObj.operateType = "外协";
+                }
                 if(rows[i].company_name == null){
                     parkObj.companyName = "";
                 }else{
                     parkObj.companyName = rows[i].company_name;
                 }
-                if(rows[i].y_month == null){
-                    parkObj.yMonth = "";
+                if(rows[i].plan_oil_total == null){
+                    parkObj.planOilTotal = "";
                 }else{
-                    parkObj.yMonth = rows[i].y_month;
+                    parkObj.planOilTotal = rows[i].plan_oil_total;
                 }
-                if(rows[i].plan_oil == null){
-                    parkObj.planOil = "";
+                if(rows[i].plan_urea_total == null){
+                    parkObj.planUreaTotal = "";
                 }else{
-                    parkObj.planOil = rows[i].plan_oil;
+                    parkObj.planUreaTotal = rows[i].plan_urea_total;
                 }
-                if(rows[i].plan_urea == null){
-                    parkObj.planUrea = "";
+                if(rows[i].actual_oil_total == null){
+                    parkObj.actualOilTotal = "";
                 }else{
-                    parkObj.planUrea = rows[i].plan_urea;
+                    parkObj.actualOilTotal = rows[i].actual_oil_total;
                 }
-                if(rows[i].actual_oil == null){
-                    parkObj.actualOil = "";
+                if(rows[i].actual_urea_total == null){
+                    parkObj.actualUreaTotal = "";
                 }else{
-                    parkObj.actualOil = rows[i].actual_oil;
+                    parkObj.actualUreaTotal = rows[i].actual_urea_total;
                 }
-                if(rows[i].actual_urea == null){
-                    parkObj.actualUrea = "";
+                if(rows[i].exceed_oil == null){
+                    parkObj.exceedOil = "";
                 }else{
-                    parkObj.actualUrea = rows[i].actual_urea;
+                    parkObj.exceedOil = rows[i].exceed_oil;
                 }
-                parkObj.exceedOil = rows[i].actual_oil - rows[i].plan_oil;
-                parkObj.exceedUrea = rows[i].actual_urea - rows[i].plan_urea;
+                if(rows[i].exceed_urea == null){
+                    parkObj.exceedUrea = "";
+                }else{
+                    parkObj.exceedUrea = rows[i].exceed_urea;
+                }
                 if(rows[i].actual_money == null){
                     parkObj.actualMoney = "";
                 }else{
                     parkObj.actualMoney = rows[i].actual_money;
                 }
-                if(rows[i].settle_status == 2){
-                    parkObj.settleStatus = "已扣";
+                if(rows[i].check_status == 1){
+                    parkObj.settleStatus = "未处理";
+                }else if(rows[i].check_status == 2){
+                    parkObj.settleStatus = "处理中";
                 }else{
-                    parkObj.settleStatus = "未扣";
+                    parkObj.settleStatus = "已处理";
                 }
-                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.companyName+","+
-                    parkObj.yMonth+","+ parkObj.planOil+","+parkObj.planUrea +","+parkObj.actualOil+","+parkObj.actualUrea+","+
+                csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+
+                    parkObj.companyName+","+ parkObj.planOilTotal+","+parkObj.planUreaTotal +","+parkObj.actualOilTotal+","+parkObj.actualUreaTotal+","+
                     parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.settleStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
@@ -178,5 +188,5 @@ module.exports = {
     queryDriveExceedOilMonth : queryDriveExceedOilMonth,
     updateDriveExceedOilDate : updateDriveExceedOilDate,
     updateExceedOilDateCheckStatus : updateExceedOilDateCheckStatus,
-    getDriveExceedOilMonthCsv : getDriveExceedOilMonthCsv
+    getDriveExceedOilDateCsv : getDriveExceedOilDateCsv
 }
