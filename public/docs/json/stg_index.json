@@ -11545,7 +11545,7 @@
         }
       }
     },
-    "/driveExceedOilData.csv": {
+    "/driveExceedOilDate.csv": {
       "get": {
         "tags": [
           "drive"
@@ -32977,6 +32977,24 @@
           "type": "integer"
         },
         "carCount": {
+          "type": "integer"
+        },
+        "trailerFee": {
+          "type": "integer"
+        },
+        "totalTrailerFee": {
+          "type": "integer"
+        },
+        "carParkingFee": {
+          "type": "integer"
+        },
+        "runFee": {
+          "type": "integer"
+        },
+        "totalRunFee": {
+          "type": "integer"
+        },
+        "leadFee": {
           "type": "integer"
         },
         "type": {
