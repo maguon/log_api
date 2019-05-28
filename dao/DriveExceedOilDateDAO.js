@@ -39,12 +39,12 @@ function getDriveExceedOilDate(params,callback) {
         " deorm.subsidy_oil, deorm.subsidy_urea,deorm.exceed_oil,deorm.exceed_urea, " +
         " deorm.actual_money,deorm.check_status,deorm.settle_status,deorm.remark, " +
         " deorm.drive_id,deorm.drive_name,deorm.truck_id,deorm.truck_num,deorm.operate_type,deorm.company_name,deorm.y_month, " +
-        " dprorm.plan_oil,dprorm.plan_urea,deorm.actual_oil,deorm.actual_rea " +
+        " dprorm.plan_oil,dprorm.plan_urea,deorm.actual_oil,deorm.actual_urea " +
         " from (select deod.id,deod.month_date_id,deod.plan_oil_total,deod.plan_urea_total, " +
         " deod.actual_oil_total,deod.actual_urea_total,deod.surplus_oil,deod.surplus_urea,deod.subsidy_oil, " +
         " deod.subsidy_urea,deod.exceed_oil,deod.exceed_urea,deod.actual_money,deod.check_status,deod.settle_status,deod.remark, " +
         " deor.drive_id,d.drive_name,deor.truck_id,t.truck_num,t.operate_type,t.company_id,c.company_name,db.y_month, " +
-        " sum(deor.oil) actual_oil, sum(deor.urea) actual_rea " +
+        " sum(deor.oil) actual_oil, sum(deor.urea) actual_urea " +
         " from drive_exceed_oil_rel deor " +
         " left join date_base db on deor.date_id = db.id " +
         " left join drive_exceed_oil_date deod on deod.drive_id=deor.drive_id " +
