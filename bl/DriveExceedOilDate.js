@@ -141,26 +141,50 @@ function getDriveExceedOilDateCsv(req,res,next){
                 }else{
                     parkObj.companyName = rows[i].company_name;
                 }
-                if(rows[i].plan_oil_total == null){
-                    parkObj.planOilTotal = "";
+                if(rows[i].id == null){
+                    if(rows[i].plan_oil == null){
+                        parkObj.planOilTotal = "";
+                    }else{
+                        parkObj.planOilTotal = rows[i].plan_oil;
+                    }
+                    if(rows[i].actual_oil == null){
+                        parkObj.actualOilTotal = "";
+                    }else{
+                        parkObj.actualOilTotal = rows[i].actual_oil;
+                    }
+                    if(rows[i].plan_urea == null){
+                        parkObj.planUreaTotal = "";
+                    }else{
+                        parkObj.planUreaTotal = rows[i].plan_urea;
+                    }
+                    if(rows[i].actual_urea == null){
+                        parkObj.actualUreaTotal = "";
+                    }else{
+                        parkObj.actualUreaTotal = rows[i].actual_urea;
+                    }
                 }else{
-                    parkObj.planOilTotal = rows[i].plan_oil_total;
+                    if(rows[i].plan_oil_total == null){
+                        parkObj.planOilTotal = "";
+                    }else{
+                        parkObj.planOilTotal = rows[i].plan_oil_total;
+                    }
+                    if(rows[i].actual_oil_total == null){
+                        parkObj.actualOilTotal = "";
+                    }else{
+                        parkObj.actualOilTotal = rows[i].actual_oil_total;
+                    }
+                    if(rows[i].plan_urea_total == null){
+                        parkObj.planUreaTotal = "";
+                    }else{
+                        parkObj.planUreaTotal = rows[i].plan_urea_total;
+                    }
+                    if(rows[i].actual_urea_total == null){
+                        parkObj.actualUreaTotal = "";
+                    }else{
+                        parkObj.actualUreaTotal = rows[i].actual_urea_total;
+                    }
                 }
-                if(rows[i].actual_oil_total == null){
-                    parkObj.actualOilTotal = "";
-                }else{
-                    parkObj.actualOilTotal = rows[i].actual_oil_total;
-                }
-                if(rows[i].plan_urea_total == null){
-                    parkObj.planUreaTotal = "";
-                }else{
-                    parkObj.planUreaTotal = rows[i].plan_urea_total;
-                }
-                if(rows[i].actual_urea_total == null){
-                    parkObj.actualUreaTotal = "";
-                }else{
-                    parkObj.actualUreaTotal = rows[i].actual_urea_total;
-                }
+
                 if(rows[i].surplus_oil == null){
                     parkObj.surplusOil = "";
                 }else{
