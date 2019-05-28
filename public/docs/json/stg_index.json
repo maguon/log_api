@@ -31925,6 +31925,12 @@
         "subsidyUrea": {
           "type": "integer"
         },
+        "exceedOil": {
+          "type": "integer"
+        },
+        "exceedUrea": {
+          "type": "integer"
+        },
         "actualMoney": {
           "type": "integer"
         },

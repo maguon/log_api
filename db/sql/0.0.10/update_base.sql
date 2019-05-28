@@ -318,3 +318,9 @@ ADD COLUMN `surplus_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '本月结余尿
 ALTER TABLE `drive_exceed_oil_date`
 ADD COLUMN `subsidy_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '本次油补助' AFTER `surplus_urea`,
 ADD COLUMN `subsidy_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '本次尿素补助' AFTER `subsidy_oil`;
+-- ----------------------------
+-- 2019-05-28 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_date`
+ADD COLUMN `exceed_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '超油' AFTER `subsidy_urea`,
+ADD COLUMN `exceed_urea`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '超尿素' AFTER `exceed_oil`;
