@@ -11505,9 +11505,9 @@
 
           },
           {
-            "name": "settleStatus",
+            "name": "checkStatus",
             "in": "query",
-            "description": "settle status",
+            "description": "check status",
             "required": false,
             "type": "integer"
 
