@@ -158,12 +158,12 @@ function getDriveExceedOilDateCsv(req,res,next){
                 }else{
                     parkObj.actualMoney = rows[i].actual_money;
                 }
-                if(rows[i].check_status == 1){
-                    parkObj.settleStatus = "未处理";
+                if(rows[i].check_status == 3){
+                    parkObj.settleStatus = "已处理";
                 }else if(rows[i].check_status == 2){
                     parkObj.settleStatus = "处理中";
                 }else{
-                    parkObj.settleStatus = "已处理";
+                    parkObj.settleStatus = "未处理";
                 }
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+
                     parkObj.companyName+","+ parkObj.planOilTotal+","+parkObj.planUreaTotal +","+parkObj.actualOilTotal+","+parkObj.actualUreaTotal+","+
