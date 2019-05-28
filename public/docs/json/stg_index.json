@@ -31913,6 +31913,12 @@
         "actualUreaTotal": {
           "type": "integer"
         },
+        "surplusOil": {
+          "type": "integer"
+        },
+        "surplusUrea": {
+          "type": "integer"
+        },
         "actualMoney": {
           "type": "integer"
         },

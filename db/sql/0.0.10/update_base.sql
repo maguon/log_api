@@ -306,3 +306,9 @@ ADD COLUMN `size_type`  tinyint(1) NULL DEFAULT 0 COMMENT '大小车类型(0-小
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil_date`
 ADD COLUMN `check_status`  tinyint(1) NULL DEFAULT 1 COMMENT '处理状态(1-未处理,2-处理中,3-已处理)' AFTER `actual_money`;
+-- ----------------------------
+-- 2019-05-28 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_date`
+ADD COLUMN `surplus_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '本月结余油量' AFTER `actual_urea_total`,
+ADD COLUMN `surplus_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '本月结余尿素' AFTER `surplus_oil`;
