@@ -130,9 +130,22 @@ function getDriveExceedOilMonth(params,callback) {
 }
 
 function updateDriveExceedOilDate(params,callback){
-    var query = " update drive_exceed_oil_date set actual_money = ? where id = ? " ;
+    var query = " update drive_exceed_oil_date set plan_oil_total = ? , plan_urea_total = ? , actual_oil_total = ? , actual_urea_total = ? , " +
+        " surplus_oil = ? , surplus_urea = ? , subsidy_oil = ? , subsidy_urea = ? , exceed_oil = ? , exceed_urea = ? , " +
+        " actual_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.planOilTotal;
+    paramsArray[i++]=params.planUreaTotal;
+    paramsArray[i++]=params.actualOilTotal;
+    paramsArray[i++]=params.actualUreaTotal;
+    paramsArray[i++]=params.surplusOil;
+    paramsArray[i++]=params.surplusUrea;
+    paramsArray[i++]=params.subsidyOil;
+    paramsArray[i++]=params.subsidyUrea;
+    paramsArray[i++]=params.exceedOil;
+    paramsArray[i++]=params.exceedUrea;
     paramsArray[i++]=params.actualMoney;
+    paramsArray[i++]=params.remark;
     paramsArray[i]=params.exceedOilDateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveExceedOilDate ');
