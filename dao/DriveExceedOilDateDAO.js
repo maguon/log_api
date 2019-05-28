@@ -34,7 +34,10 @@ function addDriveExceedOilDate(params,callback){
 }
 
 function getDriveExceedOilDate(params,callback) {
-    var query = " select deod.*,deor.drive_id,d.drive_name,deor.truck_id,t.truck_num,t.operate_type,c.company_name,db.y_month " +
+    var query = " select deod.id,deod.month_date_id,deod.plan_oil_total,deod.plan_urea_total, " +
+        " deod.actual_oil_total,deod.actual_urea_total,deod.surplus_oil,deod.surplus_urea,deod.subsidy_oil, " +
+        " deod.subsidy_urea,deod.exceed_oil,deod.exceed_urea,deod.actual_money,deod.check_status,deod.settle_status,deod.remark, " +
+        " deor.drive_id,d.drive_name,deor.truck_id,t.truck_num,t.operate_type,c.company_name,db.y_month " +
         " from drive_exceed_oil_rel deor " +
         " left join date_base db on deor.date_id = db.id " +
         " left join drive_exceed_oil_date deod on deod.drive_id=deor.drive_id " +
