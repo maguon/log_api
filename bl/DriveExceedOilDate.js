@@ -116,11 +116,7 @@ function getDriveExceedOilDateCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
-                if(rows[i].y_month == null){
-                    parkObj.yMonth = "";
-                }else{
-                    parkObj.yMonth = rows[i].y_month;
-                }
+                parkObj.yMonth = params.yMonth;
                 if(rows[i].drive_name == null){
                     parkObj.driveName = "";
                 }else{
