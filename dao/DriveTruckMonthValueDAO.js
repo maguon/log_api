@@ -51,8 +51,9 @@ function updateTruckDepreciationFee(params,callback){
 }
 
 function updateDepreciationFee(params,callback){
-    var query = " update drive_truck_month_value set depreciation_fee = ? where id = ? " ;
+    var query = " update drive_truck_month_value set insure_fee = ? , depreciation_fee = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.insureFee;
     paramsArray[i++]=params.depreciationFee;
     paramsArray[i++]=params.driveTruckMonthValueId;
     db.dbQuery(query,paramsArray,function(error,rows){

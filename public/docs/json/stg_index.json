@@ -31720,6 +31720,9 @@
       "type": "object",
       "properties": {
 
+        "insureFee": {
+          "type": "integer"
+        },
         "depreciationFee": {
           "type": "integer"
         }
