@@ -442,6 +442,7 @@ function updateDpRouteTaskStatus(req,res,next){
                         parkObj.urea=rows[0].urea;
                         parkObj.loadReverseOil=rows[0].load_reverse_oil;
                         parkObj.noLoadReverseOil=rows[0].no_load_reverse_oil;
+                        parkObj.reverseFlag=rows[0].reverse_flag;
                         that();
                     } else {
                         logger.warn(' getDpRouteTask ' + 'failed');
@@ -523,12 +524,18 @@ function updateDpRouteTaskStatus(req,res,next){
                 parkObj.totalOil = (parkObj.distance*parkObj.loadDistanceOil)/100;
                 parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
                 parkObj.totalReverseOil = (parkObj.distance*parkObj.loadReverseOil)/100;
+                if(parkObj.reverseFlag==1){
+                    parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
+                }
             }else{
                 parkObj.oil = parkObj.noLoadDistanceOil;
                 parkObj.reverseOil = parkObj.noLoadReverseOil;
                 parkObj.totalOil = (parkObj.distance*parkObj.noLoadDistanceOil)/100;
                 parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
                 parkObj.totalReverseOil = (parkObj.distance*parkObj.noLoadReverseOil)/100;
+                if(parkObj.reverseFlag==1){
+                    parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
+                }
             }
             var subParams ={
                 dpRouteTaskId:params.dpRouteTaskId,
