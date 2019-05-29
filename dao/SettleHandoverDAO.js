@@ -348,8 +348,8 @@ function getDriveSettle(params,callback) {
         " where drt.task_plan_date>="+params.taskPlanDateStart+" and drt.task_plan_date<="+params.taskPlanDateEnd+" and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +
-        " sum( case when dpr.reverse_flag=0 and dprl.transfer_flag=0 then dpr.car_count end) storage_car_count, " +
-        " sum( case when dpr.reverse_flag=1 or dprl.transfer_flag=1 then dpr.car_count end) not_storage_car_count " +
+        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end) storage_car_count, " +
+        " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dpr.car_count end) not_storage_car_count " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_plan_date>="+params.taskPlanDateStart+" and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status>=9 " +
