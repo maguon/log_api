@@ -34,18 +34,19 @@ function addDriveExceedOilDate(params,callback){
 }
 
 function getDriveExceedOilDate(params,callback) {
-    var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num,dprm.operate_type,dprm.company_name, " +
+    var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num,dprm.brand_name,dprm.operate_type,dprm.company_name, " +
         " dprm.plan_oil,dprm.plan_urea,deorm.actual_oil,deorm.actual_urea, " +
         " deorm.id,deorm.month_date_id,deorm.plan_oil_total,deorm.plan_urea_total, " +
         " deorm.actual_oil_total,deorm.actual_urea_total,deorm.surplus_oil,deorm.surplus_urea, " +
         " deorm.subsidy_oil, deorm.subsidy_urea,deorm.exceed_oil,deorm.exceed_urea, " +
         " deorm.actual_money,deorm.check_status,deorm.settle_status,deorm.remark,deorm.y_month " +
-        " from(select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,t.operate_type,t.company_id,c.company_name, " +
+        " from(select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,tb.brand_name,t.operate_type,t.company_id,c.company_name, " +
         " sum(drtor.total_oil) plan_oil,sum(drtor.total_urea) plan_urea " +
         " from dp_route_task dpr " +
         " left join dp_route_task_oil_rel drtor on drtor.dp_route_task_id = dpr.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
+        " left join truck_brand tb on t.brand_id = tb.id " +
         " left join company_info c on t.company_id = c.id " +
         " where dpr.task_plan_date>="+params.taskPlanDateStart+" and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status>=9 " +
         " group by dpr.drive_id ,dpr.truck_id) dprm " +
