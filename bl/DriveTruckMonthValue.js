@@ -120,10 +120,24 @@ function uploadDepreciationFeeFile(req,res,next){
     })
 }
 
+function updateDepreciationFee(req,res,next){
+    var params = req.params ;
+    driveTruckMonthValueDAO.updateDepreciationFee(params,function(error,result){
+        if (error) {
+            logger.error(' updateDepreciationFee ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDepreciationFee ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
 
 
 
 module.exports = {
     queryDriveTruckMonthValue : queryDriveTruckMonthValue,
     uploadDepreciationFeeFile : uploadDepreciationFeeFile,
+    updateDepreciationFee : updateDepreciationFee
 }

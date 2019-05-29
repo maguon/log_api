@@ -360,7 +360,6 @@ function createServer() {
      */
     server.get('/api/truckDepreciation' ,truckDepreciation.queryTruckDepreciation);
     server.post({path:'/api/user/:userId/truckDepreciation',contentType: 'application/json'},truckDepreciation.createTruckDepreciation);
-    server.put({path:'/api/user/:userId/truckDepreciation/:truckDepreciationId',contentType: 'application/json'} ,truckDepreciation.updateTruckDepreciation);
 
     /**
      * Brand Module
@@ -507,6 +506,7 @@ function createServer() {
      */
     server.get('/api/driveTruckMonthValue' , driveTruckMonthValue.queryDriveTruckMonthValue);
     server.post({path:'/api/user/:userId/depreciationFeeFile',contentType: 'multipart/form-data'},driveTruckMonthValue.uploadDepreciationFeeFile);
+    server.put({path:'/api/user/:userId/driveTruckMonthValue/:driveTruckMonthValueId',contentType: 'application/json'} ,driveTruckMonthValue.updateDepreciationFee);
 
     /**
      * Company Module

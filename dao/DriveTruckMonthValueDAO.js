@@ -10,8 +10,8 @@ function getDriveTruckMonthValue(params,callback) {
     var query = " select dtmv.* from drive_truck_month_value dtmv " +
         " where dtmv.id is not null ";
     var paramsArray=[],i=0;
-    if(params.valueId){
-        paramsArray[i++] = params.valueId;
+    if(params.driveTruckMonthValueId){
+        paramsArray[i++] = params.driveTruckMonthValueId;
         query = query + " and dtmv.id = ? ";
     }
     if(params.driveId){
@@ -50,8 +50,20 @@ function updateTruckDepreciationFee(params,callback){
     });
 }
 
+function updateDepreciationFee(params,callback){
+    var query = " update drive_truck_month_value set depreciation_fee = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.depreciationFee;
+    paramsArray[i++]=params.driveTruckMonthValueId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDepreciationFee ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     getDriveTruckMonthValue : getDriveTruckMonthValue,
-    updateTruckDepreciationFee : updateTruckDepreciationFee
+    updateTruckDepreciationFee : updateTruckDepreciationFee,
+    updateDepreciationFee : updateDepreciationFee
 }

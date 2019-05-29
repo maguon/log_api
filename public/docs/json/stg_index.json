@@ -7494,59 +7494,6 @@
         }
       }
     },
-    "/user/{userId}/truckDepreciation/{truckDepreciationId}": {
-      "put": {
-        "tags": [
-          "truck"
-        ],
-        "summary": "update truckDepreciation",
-        "description": "update truckDepreciation",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckDepreciationId",
-            "in": "path",
-            "description": "truckDepreciation id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "truckDepreciation",
-            "in": "body",
-            "description": "truckDepreciation info",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/truckDepreciation"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid truckDepreciation id"
-          }
-        }
-      }
-    },
     "/brand": {
       "get": {
         "tags": [
@@ -12556,9 +12503,9 @@
         ],
         "parameters": [
           {
-            "name": "valueId",
+            "name": "driveTruckMonthValueId",
             "in": "query",
-            "description": "value id",
+            "description": "driveTruckMonthValue id",
             "required": false,
             "type": "integer"
 
@@ -12645,6 +12592,59 @@
             "description": "file to upload",
             "required": true,
             "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveTruckMonthValue id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveTruckMonthValue/{driveTruckMonthValueId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update truckDepreciation",
+        "description": "update truckDepreciation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveTruckMonthValueId",
+            "in": "path",
+            "description": "driveTruckMonthValue id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckDepreciation",
+            "in": "body",
+            "description": "truckDepreciation info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckDepreciation"
+            }
           }
         ],
         "responses": {
@@ -31720,21 +31720,6 @@
       "type": "object",
       "properties": {
 
-        "driveId": {
-          "type": "integer"
-        },
-        "driveName": {
-          "type": "string"
-        },
-        "truckId": {
-          "type": "integer"
-        },
-        "truckNum": {
-          "type": "string"
-        },
-        "yMonth": {
-          "type": "integer"
-        },
         "depreciationFee": {
           "type": "integer"
         }
