@@ -258,6 +258,14 @@ function getDpRouteTaskBase(params,callback) {
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and dpr.id = ? ";
     }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart;
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd;
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and dpr.drive_id = ? ";
