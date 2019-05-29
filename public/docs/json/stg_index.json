@@ -7494,49 +7494,6 @@
         }
       }
     },
-    "/user/{userId}/truckDepreciationFile": {
-      "post": {
-        "tags": [
-          "truck"
-        ],
-        "summary": "user upload truckDepreciationFile ",
-        "description": "user upload truckDepreciationFile",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "file",
-            "in": "formData",
-            "description": "file to upload",
-            "required": true,
-            "type": "file"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid truckDepreciation id"
-          }
-        }
-      }
-    },
     "/user/{userId}/truckDepreciation/{truckDepreciationId}": {
       "put": {
         "tags": [
@@ -12583,6 +12540,125 @@
           },
           "400": {
             "description": "Invalid token value or invalid driveWork id"
+          }
+        }
+      }
+    },
+    "/driveTruckMonthValue": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveTruckMonthValue list",
+        "description": "query driveTruckMonthValue",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "valueId",
+            "in": "query",
+            "description": "value id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveTruckMonthValue"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveTruckMonthValue id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/depreciationFeeFile": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user upload depreciationFeeFile ",
+        "description": "user upload depreciationFeeFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveTruckMonthValue id"
           }
         }
       }

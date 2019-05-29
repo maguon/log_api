@@ -41,6 +41,7 @@ var driveExceedOilDate = require('./bl/DriveExceedOilDate.js');
 var driveExceedOilRel = require('./bl/DriveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
 var driveWork = require('./bl/DriveWork.js');
+var driveTruckMonthValue = require('./bl/DriveTruckMonthValue.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
 var cityRoute = require('./bl/CityRoute.js');
@@ -359,7 +360,6 @@ function createServer() {
      */
     server.get('/api/truckDepreciation' ,truckDepreciation.queryTruckDepreciation);
     server.post({path:'/api/user/:userId/truckDepreciation',contentType: 'application/json'},truckDepreciation.createTruckDepreciation);
-    server.post({path:'/api/user/:userId/truckDepreciationFile',contentType: 'multipart/form-data'},truckDepreciation.uploadTruckDepreciationFile);
     server.put({path:'/api/user/:userId/truckDepreciation/:truckDepreciationId',contentType: 'application/json'} ,truckDepreciation.updateTruckDepreciation);
 
     /**
@@ -501,6 +501,12 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveWork',contentType: 'application/json'},driveWork.createDriveWork);
     server.put({path:'/api/user/:userId/driveWork/:driveWorkId',contentType: 'application/json'} ,driveWork.updateDriveWork);
     server.post({path:'/api/user/:userId/driveWorkFile',contentType: 'multipart/form-data'},driveWork.uploadDriveWorkFile);
+
+    /**
+     * DriveTruckMonthValue Module
+     */
+    server.get('/api/driveTruckMonthValue' , driveTruckMonthValue.queryDriveTruckMonthValue);
+    server.post({path:'/api/user/:userId/depreciationFeeFile',contentType: 'multipart/form-data'},driveTruckMonthValue.uploadDepreciationFeeFile);
 
     /**
      * Company Module
