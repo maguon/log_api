@@ -31387,6 +31387,12 @@
       "type": "object",
       "properties": {
 
+        "driveId": {
+          "type": "integer"
+        },
+        "driveName": {
+          "type": "string"
+        },
         "repairType": {
           "type": "integer"
         },
