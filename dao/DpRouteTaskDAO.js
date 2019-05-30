@@ -737,7 +737,7 @@ function getDriveCost(params,callback) {
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
-        " where dpr.date_id>="+params.dateIdStart+" and dpr.date_id<="+params.dateIdEnd+" and dpr.task_status>=9 " +
+        " where dpr.task_plan_date>="+params.dateIdStart+" and dpr.task_plan_date<="+params.dateIdEnd+" and dpr.task_status>=9 " +
         " group by dpr.drive_id ,dpr.truck_id) dprm " +
         " left join (select drcr.drive_id,drcr.truck_id,sum(drcr.total_price) total_clean_fee, " +
         " sum(drcr.total_trailer_fee) total_trailer_fee,sum(drcr.car_parking_fee) car_parking_fee, " +
