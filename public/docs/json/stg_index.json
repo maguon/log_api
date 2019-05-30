@@ -12567,6 +12567,66 @@
         }
       }
     },
+    "/driveTruckMonthValue.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveTruckMonthValue csv",
+        "description": "query driveTruckMonthValueCSV",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveTruckMonthValueId",
+            "in": "query",
+            "description": "driveTruckMonthValue id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveTruckMonthValue"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveTruckMonthValue id"
+          }
+        }
+      }
+    },
     "/user/{userId}/depreciationFeeFile": {
       "post": {
         "tags": [

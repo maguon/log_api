@@ -505,6 +505,7 @@ function createServer() {
      * DriveTruckMonthValue Module
      */
     server.get('/api/driveTruckMonthValue' , driveTruckMonthValue.queryDriveTruckMonthValue);
+    server.get('/api/driveTruckMonthValue.csv',driveTruckMonthValue.getDriveTruckMonthValueCsv);
     server.post({path:'/api/user/:userId/depreciationFeeFile',contentType: 'multipart/form-data'},driveTruckMonthValue.uploadDepreciationFeeFile);
     server.put({path:'/api/user/:userId/truck/:truckId/yMonth/:yMonth',contentType: 'application/json'} ,driveTruckMonthValue.updateTruckDepreciationFee);
     server.put({path:'/api/user/:userId/driveTruckMonthValue/:driveTruckMonthValueId',contentType: 'application/json'} ,driveTruckMonthValue.updateDepreciationFee);

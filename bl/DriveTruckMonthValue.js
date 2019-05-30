@@ -150,8 +150,12 @@ function updateDepreciationFee(req,res,next){
 
 function getDriveTruckMonthValueCsv(req,res,next){
     var csvString = "";
-    var header = "月份" + ',' +"货车牌号" + ',' + "所属公司" + ',' + "货车类型" + ','+ "维修类型" + ','+ "起始时间"+ ','+ "结束时间" + ','+
-        "维修原因" + ','+ "维修状态" + ','+"维修站" + ','+ "维修金额"+ ','+ "配件金额"+ ','+ "保养金额"+ ','+ "维修描述";
+    var header = "月份" + ',' +"司机" + ',' + "货车牌号" + ',' + "货车品牌" + ','+ "板位数" + ','+ "所属类型"+ ','+ "所属公司" + ','+ "产值公司" + ','+
+        "倒板数" + ','+"重载里程" + ','+ "空载里程"+ ','+ "总里程"+ ','+ "重载率"+ ','+ "重载油耗里程"+ ','+ "空载油耗里程" + ','+
+        "运送经销商台数" + ','+ "运送到库台数" + ','+"产值" + ','+ "货车保险"+ ','+ "折旧费"+ ','+ "应发里程工资"+ ','+
+        "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"住宿费" + ','+ "交车打车进门费"+ ','+
+        "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" + ','+ "油费" + ','+"尿素费" + ','+
+        "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "维修费"+ ','+ "配件费"+ ','+ "保养费"+ ','+ "商品车加油费" + ','+ "货车停车费";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -161,73 +165,200 @@ function getDriveTruckMonthValueCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
-                parkObj.id = rows[i].id;
+                parkObj.yMonth = rows[i].y_month;
+                parkObj.driveName = rows[i].drive_name;
                 parkObj.truckNum = rows[i].truck_num;
+                parkObj.brandName = rows[i].brand_name;
+                parkObj.truckNumber = rows[i].truck_number;
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else{
+                    parkObj.operateType = "外协";
+                }
                 if(rows[i].company_name == null){
                     parkObj.companyName = "";
                 }else{
                     parkObj.companyName = rows[i].company_name;
                 }
-                if(rows[i].truck_type == 1){
-                    parkObj.truckType = "头车";
+                if(rows[i].output_company_name == null){
+                    parkObj.outputCompanyName = "";
                 }else{
-                    parkObj.truckType = "挂车";
+                    parkObj.outputCompanyName = rows[i].output_company_name;
                 }
-                if(rows[i].repair_type == 1){
-                    parkObj.repairType = "事故维修";
-                }else if(rows[i].repair_type == 2){
-                    parkObj.repairType = "公司维修";
+                if(rows[i].reverse_count == null){
+                    parkObj.reverseCount = "";
                 }else{
-                    parkObj.repairType = "在外临时维修";
+                    parkObj.reverseCount = rows[i].reverse_count;
                 }
-                if(rows[i].repair_date == null){
-                    parkObj.repairDate = "";
+                if(rows[i].load_distance == null){
+                    parkObj.loadDistance = "";
                 }else{
-                    parkObj.repairDate = new Date(rows[i].repair_date).toLocaleDateString();
+                    parkObj.loadDistance = rows[i].load_distance;
                 }
-                if(rows[i].end_date == null){
-                    parkObj.endDate = "";
+                if(rows[i].no_load_distance == null){
+                    parkObj.noLoadDistance = "";
                 }else{
-                    parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
+                    parkObj.noLoadDistance = rows[i].no_load_distance;
                 }
-                if(rows[i].repair_reason == null){
-                    parkObj.repairReason = "";
+                if(rows[i].distance == null){
+                    parkObj.distance = "";
                 }else{
-                    parkObj.repairReason = rows[i].repair_reason;
+                    parkObj.distance = rows[i].distance;
                 }
-                if(rows[i].repair_status == 0){
-                    parkObj.repairStatus = "正在维修";
+                if(rows[i].load_ratio == null){
+                    parkObj.loadRatio = "";
                 }else{
-                    parkObj.repairStatus = "维修完成";
+                    parkObj.loadRatio = rows[i].load_ratio;
                 }
-                if(rows[i].repair_station_name == null){
-                    parkObj.repairStationName = "";
+                if(rows[i].load_distance_oil == null){
+                    parkObj.loadDistanceOil = "";
                 }else{
-                    parkObj.repairStationName = rows[i].repair_station_name;
+                    parkObj.loadDistanceOil = rows[i].load_distance_oil;
                 }
-                if(rows[i].repair_money == null){
-                    parkObj.repairMoney = "";
+                if(rows[i].no_load_distance_oil == null){
+                    parkObj.noLoadDistanceOil = "";
                 }else{
-                    parkObj.repairMoney = rows[i].repair_money;
+                    parkObj.noLoadDistanceOil = rows[i].no_load_distance_oil;
                 }
-                if(rows[i].parts_money == null){
-                    parkObj.partsMoney = "";
+                if(rows[i].receive_car_count == null){
+                    parkObj.receiveCarCount = "";
                 }else{
-                    parkObj.partsMoney = rows[i].parts_money;
+                    parkObj.receiveCarCount = rows[i].receive_car_count;
                 }
-                if(rows[i].maintain_money == null){
-                    parkObj.maintainMoney = "";
+                if(rows[i].storage_car_count == null){
+                    parkObj.storageCarCount = "";
                 }else{
-                    parkObj.maintainMoney = rows[i].maintain_money;
+                    parkObj.storageCarCount = rows[i].storage_car_count;
                 }
-                if(rows[i].remark == null){
-                    parkObj.remark = "";
+                if(rows[i].output == null){
+                    parkObj.output = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.output = rows[i].output;
                 }
-                csvString = csvString+parkObj.id+","+parkObj.truckNum+","+parkObj.companyName+","+parkObj.truckType+","+parkObj.repairType+","+
-                    parkObj.repairDate+","+parkObj.endDate+","+parkObj.repairReason+","+parkObj.repairStatus+","+
-                    parkObj.repairStationName+","+parkObj.repairMoney+","+parkObj.partsMoney+","+parkObj.maintainMoney+","+parkObj.remark+ '\r\n';
+                if(rows[i].insure_fee == null){
+                    parkObj.insureFee = "";
+                }else{
+                    parkObj.insureFee = rows[i].insure_fee;
+                }
+                if(rows[i].depreciation_fee == null){
+                    parkObj.depreciationFee = "";
+                }else{
+                    parkObj.depreciationFee = rows[i].depreciation_fee;
+                }
+                if(rows[i].distance_salary == null){
+                    parkObj.distanceSalary = "";
+                }else{
+                    parkObj.distanceSalary = rows[i].distance_salary;
+                }
+                if(rows[i].damage_under_fee == null){
+                    parkObj.damageUnderFee = "";
+                }else{
+                    parkObj.damageUnderFee = rows[i].damage_under_fee;
+                }
+                if(rows[i].damage_company_fee == null){
+                    parkObj.damageCompanyFee = "";
+                }else{
+                    parkObj.damageCompanyFee = rows[i].damage_company_fee;
+                }
+                if(rows[i].clean_fee == null){
+                    parkObj.cleanFee = "";
+                }else{
+                    parkObj.cleanFee = rows[i].clean_fee;
+                }
+                if(rows[i].work_count == null){
+                    parkObj.workCount = "";
+                }else{
+                    parkObj.workCount = rows[i].work_count;
+                }
+                if(rows[i].hotel_fee == null){
+                    parkObj.hotelFee = "";
+                }else{
+                    parkObj.hotelFee = rows[i].hotel_fee;
+                }
+                if(rows[i].enter_fee == null){
+                    parkObj.enterFee = "";
+                }else{
+                    parkObj.enterFee = rows[i].enter_fee;
+                }
+                if(rows[i].trailer_fee == null){
+                    parkObj.trailerFee = "";
+                }else{
+                    parkObj.trailerFee = rows[i].trailer_fee;
+                }
+                if(rows[i].car_parking_fee == null){
+                    parkObj.carParkingFee = "";
+                }else{
+                    parkObj.carParkingFee = rows[i].car_parking_fee;
+                }
+                if(rows[i].run_fee == null){
+                    parkObj.runFee = "";
+                }else{
+                    parkObj.runFee = rows[i].run_fee;
+                }
+                if(rows[i].lead_fee == null){
+                    parkObj.leadFee = "";
+                }else{
+                    parkObj.leadFee = rows[i].lead_fee;
+                }
+                if(rows[i].etc_fee == null){
+                    parkObj.etcFee = "";
+                }else{
+                    parkObj.etcFee = rows[i].etc_fee;
+                }
+                if(rows[i].oil_fee == null){
+                    parkObj.oilFee = "";
+                }else{
+                    parkObj.oilFee = rows[i].oil_fee;
+                }
+                if(rows[i].urea_fee == null){
+                    parkObj.ureaFee = "";
+                }else{
+                    parkObj.ureaFee = rows[i].urea_fee;
+                }
+                if(rows[i].peccancy_under_fee == null){
+                    parkObj.peccancyUnderFee = "";
+                }else{
+                    parkObj.peccancyUnderFee = rows[i].peccancy_under_fee;
+                }
+                if(rows[i].peccancy_company_fee == null){
+                    parkObj.peccancyCompanyFee = "";
+                }else{
+                    parkObj.peccancyCompanyFee = rows[i].peccancy_company_fee;
+                }
+                if(rows[i].repair_fee == null){
+                    parkObj.repairFee = "";
+                }else{
+                    parkObj.repairFee = rows[i].repair_fee;
+                }
+                if(rows[i].parts_fee == null){
+                    parkObj.partsFee = "";
+                }else{
+                    parkObj.partsFee = rows[i].parts_fee;
+                }
+                if(rows[i].maintain_fee == null){
+                    parkObj.maintainFee = "";
+                }else{
+                    parkObj.maintainFee = rows[i].maintain_fee;
+                }
+                if(rows[i].car_oil_fee == null){
+                    parkObj.carOilFee = "";
+                }else{
+                    parkObj.carOilFee = rows[i].car_oil_fee;
+                }
+                if(rows[i].truck_parking_fee == null){
+                    parkObj.truckParkingFee = "";
+                }else{
+                    parkObj.truckParkingFee = rows[i].truck_parking_fee;
+                }
+                csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.brandName+","+parkObj.truckNumber+","+
+                    parkObj.operateType+","+parkObj.companyName+","+parkObj.outputCompanyName+","+parkObj.reverseCount+","+parkObj.loadDistance+","+
+                    parkObj.noLoadDistance+","+parkObj.distance+","+parkObj.loadRatio+","+parkObj.loadDistanceOil+","+parkObj.noLoadDistanceOil+","+
+                    parkObj.receiveCarCount+","+parkObj.storageCarCount+","+parkObj.output+","+parkObj.insureFee+","+parkObj.depreciationFee+","+
+                    parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
+                    parkObj.hotelFee+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
+                    parkObj.leadFee+","+parkObj.etcFee+","+parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
+                    parkObj.peccancyCompanyFee+","+parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+parkObj.carOilFee+","+
+                    parkObj.truckParkingFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
