@@ -148,11 +148,105 @@ function updateDepreciationFee(req,res,next){
     })
 }
 
+function getDriveTruckMonthValueCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' +"货车牌号" + ',' + "所属公司" + ',' + "货车类型" + ','+ "维修类型" + ','+ "起始时间"+ ','+ "结束时间" + ','+
+        "维修原因" + ','+ "维修状态" + ','+"维修站" + ','+ "维修金额"+ ','+ "配件金额"+ ','+ "保养金额"+ ','+ "维修描述";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveTruckMonthValueDAO.getDriveTruckMonthValue(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveTruckMonthValue ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
+                if(rows[i].truck_type == 1){
+                    parkObj.truckType = "头车";
+                }else{
+                    parkObj.truckType = "挂车";
+                }
+                if(rows[i].repair_type == 1){
+                    parkObj.repairType = "事故维修";
+                }else if(rows[i].repair_type == 2){
+                    parkObj.repairType = "公司维修";
+                }else{
+                    parkObj.repairType = "在外临时维修";
+                }
+                if(rows[i].repair_date == null){
+                    parkObj.repairDate = "";
+                }else{
+                    parkObj.repairDate = new Date(rows[i].repair_date).toLocaleDateString();
+                }
+                if(rows[i].end_date == null){
+                    parkObj.endDate = "";
+                }else{
+                    parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
+                }
+                if(rows[i].repair_reason == null){
+                    parkObj.repairReason = "";
+                }else{
+                    parkObj.repairReason = rows[i].repair_reason;
+                }
+                if(rows[i].repair_status == 0){
+                    parkObj.repairStatus = "正在维修";
+                }else{
+                    parkObj.repairStatus = "维修完成";
+                }
+                if(rows[i].repair_station_name == null){
+                    parkObj.repairStationName = "";
+                }else{
+                    parkObj.repairStationName = rows[i].repair_station_name;
+                }
+                if(rows[i].repair_money == null){
+                    parkObj.repairMoney = "";
+                }else{
+                    parkObj.repairMoney = rows[i].repair_money;
+                }
+                if(rows[i].parts_money == null){
+                    parkObj.partsMoney = "";
+                }else{
+                    parkObj.partsMoney = rows[i].parts_money;
+                }
+                if(rows[i].maintain_money == null){
+                    parkObj.maintainMoney = "";
+                }else{
+                    parkObj.maintainMoney = rows[i].maintain_money;
+                }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
+                csvString = csvString+parkObj.id+","+parkObj.truckNum+","+parkObj.companyName+","+parkObj.truckType+","+parkObj.repairType+","+
+                    parkObj.repairDate+","+parkObj.endDate+","+parkObj.repairReason+","+parkObj.repairStatus+","+
+                    parkObj.repairStationName+","+parkObj.repairMoney+","+parkObj.partsMoney+","+parkObj.maintainMoney+","+parkObj.remark+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 
 module.exports = {
     queryDriveTruckMonthValue : queryDriveTruckMonthValue,
     uploadDepreciationFeeFile : uploadDepreciationFeeFile,
     updateTruckDepreciationFee : updateTruckDepreciationFee,
-    updateDepreciationFee : updateDepreciationFee
+    updateDepreciationFee : updateDepreciationFee,
+    getDriveTruckMonthValueCsv : getDriveTruckMonthValueCsv
 }

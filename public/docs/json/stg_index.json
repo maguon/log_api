@@ -12610,7 +12610,7 @@
         }
       }
     },
-    "/user/{userId}/truck/{truckId}/drive/{driveId}/yMonth/{yMonth}": {
+    "/user/{userId}/truck/{truckId}/yMonth/{yMonth}": {
       "put": {
         "tags": [
           "drive"
