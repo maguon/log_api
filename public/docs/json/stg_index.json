@@ -12610,6 +12610,75 @@
         }
       }
     },
+    "/user/{userId}/truck/{truckId}/drive/{driveId}/yMonth/{yMonth}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update truckDepreciation",
+        "description": "update truckDepreciation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "path",
+            "description": "truck id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "path",
+            "description": "yMonth",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckDepreciation",
+            "in": "body",
+            "description": "truckDepreciation info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckDepreciation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveTruckMonthValue id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveTruckMonthValue/{driveTruckMonthValueId}": {
       "put": {
         "tags": [

@@ -39,11 +39,21 @@ function getDriveTruckMonthValue(params,callback) {
 }
 
 function updateTruckDepreciationFee(params,callback){
-    var query = " update drive_truck_month_value set depreciation_fee = ? where truck_id = ? and y_month = ? " ;
+    var query = " update drive_truck_month_value set depreciation_fee = ? where id is not null" ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.depreciationFee;
-    paramsArray[i++]=params.truckId;
-    paramsArray[i++]=params.yMonth;
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and truck_id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drive_id = ? ";
+    }
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and y_month = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckDepreciationFee ');
         return callback(error,rows);

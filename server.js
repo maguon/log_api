@@ -506,6 +506,7 @@ function createServer() {
      */
     server.get('/api/driveTruckMonthValue' , driveTruckMonthValue.queryDriveTruckMonthValue);
     server.post({path:'/api/user/:userId/depreciationFeeFile',contentType: 'multipart/form-data'},driveTruckMonthValue.uploadDepreciationFeeFile);
+    server.put({path:'/api/user/:userId/truck/:truckId/drive/:driveId/yMonth/:yMonth',contentType: 'application/json'} ,driveTruckMonthValue.updateTruckDepreciationFee);
     server.put({path:'/api/user/:userId/driveTruckMonthValue/:driveTruckMonthValueId',contentType: 'application/json'} ,driveTruckMonthValue.updateDepreciationFee);
 
     /**
