@@ -81,6 +81,14 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and dpcr.truck_id = ? ";
     }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and t.company_id = ? ";
+    }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
         query = query + " and dprl.route_end_id = ? ";
