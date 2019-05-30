@@ -353,8 +353,8 @@ function getDriveDistanceLoadStat(params,callback) {
         " sum(dpr.reverse_flag) as reverse_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
-        " sum(case when dpr.oil_load_flag = 1 then dpr.distance end) as load_oil_distance, " +
-        " sum(case when dpr.oil_load_flag = 0 then dpr.distance end) as no_oil_distance " +
+        " sum(case when dpr.oil_load_flag = 1 then dpr.oil_distance end) as load_oil_distance, " +
+        " sum(case when dpr.oil_load_flag = 0 then dpr.oil_distance end) as no_oil_distance " +
         " from dp_route_task dpr " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
