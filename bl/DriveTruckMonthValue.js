@@ -205,11 +205,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }else{
                     parkObj.distance = rows[i].distance;
                 }
-                if(rows[i].load_ratio == null){
-                    parkObj.loadRatio = "";
-                }else{
-                    parkObj.loadRatio = rows[i].load_ratio;
-                }
+                parkObj.loadRatio =rows[i].load_distance/(rows[i].load_distance+rows[i].no_load_distance);
                 if(rows[i].load_distance_oil == null){
                     parkObj.loadDistanceOil = "";
                 }else{
