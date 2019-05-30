@@ -46,10 +46,6 @@ function updateTruckDepreciationFee(params,callback){
         paramsArray[i++] = params.truckId;
         query = query + " and truck_id = ? ";
     }
-    if(params.driveId){
-        paramsArray[i++] = params.driveId;
-        query = query + " and drive_id = ? ";
-    }
     if(params.yMonth){
         paramsArray[i++] = params.yMonth;
         query = query + " and y_month = ? ";

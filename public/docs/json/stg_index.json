@@ -12638,14 +12638,6 @@
 
           },
           {
-            "name": "driveId",
-            "in": "path",
-            "description": "drive id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
             "name": "yMonth",
             "in": "path",
             "description": "yMonth",
