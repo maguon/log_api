@@ -206,15 +206,15 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.distance = rows[i].distance;
                 }
                 parkObj.loadRatio =rows[i].load_distance/(rows[i].load_distance+rows[i].no_load_distance);
-                if(rows[i].load_distance_oil == null){
-                    parkObj.loadDistanceOil = "";
+                if(rows[i].load_oil_distance == null){
+                    parkObj.loadOilDistance = "";
                 }else{
-                    parkObj.loadDistanceOil = rows[i].load_distance_oil;
+                    parkObj.loadOilDistance = rows[i].load_oil_distance;
                 }
-                if(rows[i].no_load_distance_oil == null){
-                    parkObj.noLoadDistanceOil = "";
+                if(rows[i].no_oil_distance == null){
+                    parkObj.noOilDistance = "";
                 }else{
-                    parkObj.noLoadDistanceOil = rows[i].no_load_distance_oil;
+                    parkObj.noOilDistance = rows[i].no_oil_distance;
                 }
                 if(rows[i].receive_car_count == null){
                     parkObj.receiveCarCount = "";
@@ -348,7 +348,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.brandName+","+parkObj.truckNumber+","+
                     parkObj.operateType+","+parkObj.companyName+","+parkObj.outputCompanyName+","+parkObj.reverseCount+","+parkObj.loadDistance+","+
-                    parkObj.noLoadDistance+","+parkObj.distance+","+parkObj.loadRatio+","+parkObj.loadDistanceOil+","+parkObj.noLoadDistanceOil+","+
+                    parkObj.noLoadDistance+","+parkObj.distance+","+parkObj.loadRatio+","+parkObj.loadOilDistance+","+parkObj.noOilDistance+","+
                     parkObj.receiveCarCount+","+parkObj.storageCarCount+","+parkObj.output+","+parkObj.insureFee+","+parkObj.depreciationFee+","+
                     parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
                     parkObj.hotelFee+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
