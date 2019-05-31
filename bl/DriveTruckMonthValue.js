@@ -212,7 +212,38 @@ function createDriveTruckMonthValue(req,res,next){
                 logger.error(' updateCarOilFee ' + err.message);
                 throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateCarOilFee ' + 'success');
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCarOilFee ' + 'success');
+                }else{
+                    logger.warn(' updateCarOilFee ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.yMonth = yMonth;
+        driveTruckMonthValueDAO.updateTruckNum(params,function(err,result){
+            if (err) {
+                logger.error(' updateTruckNum ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateCarOilFee ' + 'success');
+                }else{
+                    logger.warn(' updateCarOilFee ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        params.yMonth = yMonth;
+        driveTruckMonthValueDAO.updateDrive(params,function(err,result){
+            if (err) {
+                logger.error(' updateDrive ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDrive ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }

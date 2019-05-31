@@ -228,14 +228,49 @@ function updateCarOilFee (params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select dprtf.drive_id,dprtf.truck_id,sum(dprtf.car_oil_fee) car_oil_fee ,sum(dprtf.total_price) truck_parking_fee " +
         " from dp_route_task_fee dprtf " +
-        " where dprtf.date_id>=20190501 and dprtf.date_id<=20190531 and dprtf.status=2 " +
+        " where dprtf.date_id>="+params.yMonth+"01 and dprtf.date_id<="+params.yMonth+"31 and dprtf.status=2 " +
         " group by dprtf.drive_id,dprtf.truck_id) dprtfm " +
-        " on dtmv.drive_id = dprtfm.drive_id and dtmv.truck_id = dprtfm.truck_id and dtmv.y_month = 201905 " +
-        " set dtmv.car_oil_fee = dprtfm.car_oil_fee , dtmv.truck_parking_fee = dprtfm.truck_parking_fee";
+        " on dtmv.drive_id = dprtfm.drive_id and dtmv.truck_id = dprtfm.truck_id and dtmv.y_month = " +params.yMonth+
+        " set dtmv.car_oil_fee = dprtfm.car_oil_fee , dtmv.truck_parking_fee = dprtfm.truck_parking_fee ";
     var paramsArray=[],i=0;
 
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCarOilFee ');
+        return callback(error,rows);
+    });
+}
+
+function updateTruckNum (params,callback){
+    var query = " update drive_truck_month_value dtmv inner join( " +
+        " select t.id,t.truck_num,tr.number,t.brand_id,tb.brand_name," +
+        " t.operate_type,t.company_id,c.company_name,t.output_company_id,t.output_company_name " +
+        " from truck_info t " +
+        " left join truck_info tr on t.rel_id = tr.id " +
+        " left join truck_brand tb on t.brand_id = tb.id " +
+        " left join company_info c on t.company_id = c.id " +
+        " where t.truck_type = 1)tm " +
+        " on dtmv.truck_id = tm.id and dtmv.y_month = " +params.yMonth+
+        " set dtmv.truck_num = tm.truck_num , dtmv.truck_number = tm.number, " +
+        " dtmv.brand_id = tm.brand_id , dtmv.brand_name = tm.brand_name , dtmv.operate_type = tm.operate_type , " +
+        " dtmv.company_id = tm.company_id , dtmv.company_name = tm.company_name , " +
+        " dtmv.output_company_id = tm.output_company_id , dtmv.output_company_name = tm.output_company_name ";
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateTruckNum ');
+        return callback(error,rows);
+    });
+}
+
+function updateDrive (params,callback){
+    var query = " update drive_truck_month_value dtmv inner join( " +
+        " select id,drive_name from drive_info) d " +
+        " on dtmv.drive_id = d.id and dtmv.y_month = " +params.yMonth+
+        " set dtmv.drive_name = d.drive_name ";
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDrive ');
         return callback(error,rows);
     });
 }
@@ -316,6 +351,8 @@ module.exports ={
     updatePeccancy : updatePeccancy,
     updateRepair : updateRepair,
     updateCarOilFee : updateCarOilFee,
+    updateTruckNum : updateTruckNum,
+    updateDrive : updateDrive,
     getDriveTruckMonthValue : getDriveTruckMonthValue,
     updateTruckDepreciationFee : updateTruckDepreciationFee,
     updateDepreciationFee : updateDepreciationFee
