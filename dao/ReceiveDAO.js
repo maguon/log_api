@@ -56,6 +56,10 @@ function getReceive(params,callback) {
         paramsArray[i++] = params.makeId;
         query = query + " and re.make_id = ? ";
     }
+    if(params.receiveFlag){
+        paramsArray[i++] = params.receiveFlag;
+        query = query + " and re.receive_flag = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);

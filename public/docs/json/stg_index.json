@@ -13798,6 +13798,14 @@
 
           },
           {
+            "name": "receiveFlag",
+            "in": "query",
+            "description": "receive flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
