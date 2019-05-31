@@ -187,6 +187,55 @@ function updateOilFee (params,callback){
     });
 }
 
+function updatePeccancy (params,callback){
+    var query = " update drive_truck_month_value dtmv inner join( " +
+        " select dp.drive_id,dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
+        " from drive_peccancy dp " +
+        " where dp.date_id>="+params.yMonth+"01 and dp.date_id<= "+params.yMonth+"31 " +
+        " group by dp.drive_id,dp.truck_id) dpm " +
+        " on dtmv.drive_id = dpm.drive_id and dtmv.truck_id = dpm.truck_id and dtmv.y_month = 201905  "+
+        " set dtmv.peccancy_under_fee = dpm.peccancy_under_fee , dtmv.peccancy_company_fee = dpm.peccancy_company_fee ";
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updatePeccancy ');
+        return callback(error,rows);
+    });
+}
+
+function updateRepair (params,callback){
+    var query = " update drive_truck_month_value dtmv inner join( " +
+        " select trr.drive_id,trr.truck_id,sum(trr.repair_money) repair_fee, " +
+        " sum(trr.parts_money) parts_fee,sum(trr.maintain_money) maintain_fee " +
+        " from truck_repair_rel trr " +
+        " where trr.date_id>="+params.yMonth+"01 and trr.date_id<="+params.yMonth+"31 and trr.repair_status =1 " +
+        " group by trr.drive_id,trr.truck_id) trrm " +
+        " on dtmv.drive_id = trrm.drive_id and dtmv.truck_id = trrm.truck_id and dtmv.y_month = " +params.yMonth+
+        " set dtmv.repair_fee = trrm.repair_fee , dtmv.parts_fee = trrm.parts_fee , dtmv.maintain_fee = trrm.maintain_fee ";
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateRepair ');
+        return callback(error,rows);
+    });
+}
+
+function updateCarOilFee (params,callback){
+    var query = " update drive_truck_month_value dtmv inner join( " +
+        " select dprtf.drive_id,dprtf.truck_id,sum(dprtf.car_oil_fee) car_oil_fee ,sum(dprtf.total_price) truck_parking_fee " +
+        " from dp_route_task_fee dprtf " +
+        " where dprtf.date_id>=20190501 and dprtf.date_id<=20190531 and dprtf.status=2 " +
+        " group by dprtf.drive_id,dprtf.truck_id) dprtfm " +
+        " on dtmv.drive_id = dprtfm.drive_id and dtmv.truck_id = dprtfm.truck_id and dtmv.y_month = 201905 " +
+        " set dtmv.car_oil_fee = dprtfm.car_oil_fee , dtmv.truck_parking_fee = dprtfm.truck_parking_fee";
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarOilFee ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveTruckMonthValue(params,callback) {
     var query = " select dtmv.* from drive_truck_month_value dtmv " +
         " where dtmv.id is not null ";
@@ -260,6 +309,9 @@ module.exports ={
     updateHotelFee : updateHotelFee,
     updateEtcFee : updateEtcFee,
     updateOilFee : updateOilFee,
+    updatePeccancy : updatePeccancy,
+    updateRepair : updateRepair,
+    updateCarOilFee : updateCarOilFee,
     getDriveTruckMonthValue : getDriveTruckMonthValue,
     updateTruckDepreciationFee : updateTruckDepreciationFee,
     updateDepreciationFee : updateDepreciationFee

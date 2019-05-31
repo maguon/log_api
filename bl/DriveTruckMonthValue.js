@@ -164,7 +164,55 @@ function createDriveTruckMonthValue(req,res,next){
                 logger.error(' updateOilFee ' + err.message);
                 throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateOilFee ' + 'success');
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateOilFee ' + 'success');
+                }else{
+                    logger.warn(' updateOilFee ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.yMonth = yMonth;
+        driveTruckMonthValueDAO.updatePeccancy(params,function(err,result){
+            if (err) {
+                logger.error(' updatePeccancy ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updatePeccancy ' + 'success');
+                }else{
+                    logger.warn(' updatePeccancy ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.yMonth = yMonth;
+        driveTruckMonthValueDAO.updateRepair(params,function(err,result){
+            if (err) {
+                logger.error(' updateRepair ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updatePeccancy ' + 'success');
+                }else{
+                    logger.warn(' updatePeccancy ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.yMonth = yMonth;
+        driveTruckMonthValueDAO.updateCarOilFee(params,function(err,result){
+            if (err) {
+                logger.error(' updateCarOilFee ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCarOilFee ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
