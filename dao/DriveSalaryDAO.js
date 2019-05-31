@@ -23,29 +23,42 @@ function addDriveSalary(params,callback){
 }
 
 function getDriveSalary(params,callback) {
-    if(params.monthDateId){
-        var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
-            " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
-            " from drive_info d left join " +
-            " (select * from drive_salary where month_date_id ="+params.monthDateId+") as ds on d.id = ds.drive_id " +
-            " left join company_info c on d.company_id = c.id " +
-            " left join truck_info t on d.id = t.drive_id " +
-            " left join truck_brand tb on t.brand_id = tb.id " +
-            " left join truck_info h on t.rel_id = h.id " +
-            " left join user_info u on d.user_id = u.uid " +
-            " where d.id is not null ";
-    }else{
-        var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
-            " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number " +
-            " from drive_info d left join " +
-            " (select * from drive_salary) as ds on d.id = ds.drive_id " +
-            " left join company_info c on d.company_id = c.id " +
-            " left join truck_info t on d.id = t.drive_id " +
-            " left join truck_brand tb on t.brand_id = tb.id " +
-            " left join truck_info h on t.rel_id = h.id " +
-            " left join user_info u on d.user_id = u.uid " +
-            " where d.id is not null ";
-    }
+    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
+        " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number," +
+        " drtm.distance_salary,drtm.reverse_salary,dprm.enter_fee " +
+        " from drive_info d left join " +
+        " (select * from drive_salary where month_date_id ="+params.monthDateId+") as ds on d.id = ds.drive_id " +
+        " left join company_info c on d.company_id = c.id " +
+        " left join truck_info t on d.id = t.drive_id " +
+        " left join truck_brand tb on t.brand_id = tb.id " +
+        " left join truck_info h on t.rel_id = h.id " +
+        " left join user_info u on d.user_id = u.uid " +
+        " left join (select drt.drive_id, " +
+        " sum( case " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count<3 then drt.distance*0.6 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=4 then drt.distance*0.7 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=5 then drt.distance*0.8 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=6 then drt.distance*0.9 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count>7 then drt.distance " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count<5 then drt.distance*0.6 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=5 then drt.distance*0.7 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=6 then drt.distance*0.8 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=7 then drt.distance*0.9 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=8 then drt.distance " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=9 then drt.distance*1.1 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>10 then drt.distance*1.2 " +
+        " end) distance_salary, " +
+        " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary" +
+        " from dp_route_task drt " +
+        " where drt.task_plan_date>="+params.monthDateId+"01 and drt.task_plan_date<="+params.monthDateId+"31 and drt.task_status>=9 " +
+        " group by drt.drive_id) drtm on d.id = drtm.drive_id " +
+        " left join (select dpr.drive_id, " +
+        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end)*4 as enter_fee " +
+        " from dp_route_task dpr " +
+        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " where dpr.task_plan_date>="+params.monthDateId+"01 and dpr.task_plan_date<="+params.monthDateId+"31 and dpr.task_status>=9" +
+        " group by dpr.drive_id) dprm on d.id = dprm.drive_id " +
+        " where d.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;
