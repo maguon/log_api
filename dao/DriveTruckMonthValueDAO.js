@@ -9,7 +9,7 @@ var logger = serverLogger.createLogger('DriveTruckMonthValueDAO.js');
 function addDistance(params,callback){
     var query = " insert into drive_truck_month_value" +
         " (y_month,drive_id,truck_id,reverse_count,load_distance,no_load_distance,distance," +
-        " load_oil_distance,no_oil_distance,receive_car_count,storage_car_count) " +
+        " load_oil_distance,no_oil_distance,receive_car_count,storage_car_count,enter_fee) " +
         " select "+params.yMonth+",dpr.drive_id,dpr.truck_id, " +
         " count(case when dpr.reverse_flag = 1 then dpr.id end) as reverse_count, " +
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
@@ -18,7 +18,8 @@ function addDistance(params,callback){
         " sum(case when dpr.oil_load_flag = 1 then dpr.oil_distance end) as load_oil_distance, " +
         " sum(case when dpr.oil_load_flag = 0 then dpr.oil_distance end) as no_oil_distance, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end) not_storage_car_count, " +
-        " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dpr.car_count end) storage_car_count " +
+        " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dpr.car_count end) storage_car_count, " +
+        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end)*4 as enter_fee " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_status >=9 and dpr.task_plan_date>="+params.yMonth+"01 and dpr.task_plan_date<=" +params.yMonth+"31"+
@@ -55,12 +56,15 @@ function updateOutput(params,callback){
 
 function updateInsureFee(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
-        " select tir.truck_id,sum(tir.total_money) as insure_fee " +
-        " from truck_insure_rel tir " +
-        " where tir.date_id >="+params.yMonth+"01 and tir.date_id<= "+params.yMonth+"31 and tir.insure_status = 1"+
-        " group by tir.truck_id) tirm " +
-        " on dtmv.truck_id = tirm.truck_id " +
-        " and dtmv.y_month = "+params.yMonth+" set dtmv.insure_fee = tirm.insure_fee ";
+        " select truck_id, sum(case when start_date<="+params.yMonth+"01 and end_date>="+params.yMonth+"31 then 30/DateDiff(end_date,start_date)*insure_money " +
+        " when (start_date<="+params.yMonth+"01 and end_date<="+params.yMonth+"31 and end_date>="+params.yMonth+"01) then DateDiff(end_date,"+params.yMonth+"01)/DateDiff(end_date,start_date)*insure_money " +
+        " when (start_date>="+params.yMonth+"01 and start_date<="+params.yMonth+"31 and end_date>="+params.yMonth+"31) then DateDiff("+params.yMonth+"31,start_date)/DateDiff(end_date,start_date)*insure_money end) month_insure" +
+        " from truck_insure_rel " +
+        " where (start_date<="+params.yMonth+"01 and end_date>="+params.yMonth+"31) or (start_date<="+params.yMonth+"01 and end_date<="+params.yMonth+"31 and end_date>="+params.yMonth+"01) " +
+        " or (start_date>="+params.yMonth+"01 and start_date<="+params.yMonth+"31 and end_date>="+params.yMonth+"31) " +
+        " group by truck_id) tir " +
+        " on dtmv.truck_id = tir.truck_id " +
+        " and dtmv.y_month = "+params.yMonth+" set dtmv.insure_fee = tir.month_insure ";
     var paramsArray=[],i=0;
 
     db.dbQuery(query,paramsArray,function(error,rows){
