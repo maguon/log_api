@@ -143,7 +143,7 @@ function updateCleanFee(params,callback){
     });
 }
 
-function updateHotelFee (params,callback){
+function updateHotelFee(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select drive_id,truck_id,sum(work_count) work_count,sum(hotel_fee) hotel_fee " +
         " from drive_work " +
@@ -159,7 +159,7 @@ function updateHotelFee (params,callback){
     });
 }
 
-function updateEtcFee (params,callback){
+function updateEtcFee(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select te.drive_id,te.truck_id,sum(te.etc_fee) etc_fee " +
         " from truck_etc te " +
@@ -175,7 +175,7 @@ function updateEtcFee (params,callback){
     });
 }
 
-function updateOilFee (params,callback){
+function updateOilFee(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select deor.drive_id,deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
         " from drive_exceed_oil_rel deor " +
@@ -191,7 +191,7 @@ function updateOilFee (params,callback){
     });
 }
 
-function updatePeccancy (params,callback){
+function updatePeccancy(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select dp.drive_id,dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
         " from drive_peccancy dp " +
@@ -207,7 +207,7 @@ function updatePeccancy (params,callback){
     });
 }
 
-function updateRepair (params,callback){
+function updateRepair(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select trr.drive_id,trr.truck_id,sum(trr.repair_money) repair_fee, " +
         " sum(trr.parts_money) parts_fee,sum(trr.maintain_money) maintain_fee " +
@@ -224,7 +224,7 @@ function updateRepair (params,callback){
     });
 }
 
-function updateCarOilFee (params,callback){
+function updateCarOilFee(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select dprtf.drive_id,dprtf.truck_id,sum(dprtf.car_oil_fee) car_oil_fee ,sum(dprtf.total_price) truck_parking_fee " +
         " from dp_route_task_fee dprtf " +
@@ -240,7 +240,7 @@ function updateCarOilFee (params,callback){
     });
 }
 
-function updateTruckNum (params,callback){
+function updateTruckNum(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select t.id,t.truck_num,tr.number,t.brand_id,tb.brand_name," +
         " t.operate_type,t.company_id,c.company_name,t.output_company_id,t.output_company_name " +
@@ -262,7 +262,7 @@ function updateTruckNum (params,callback){
     });
 }
 
-function updateDrive (params,callback){
+function updateDrive(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select id,drive_name from drive_info) d " +
         " on dtmv.drive_id = d.id and dtmv.y_month = " +params.yMonth+
