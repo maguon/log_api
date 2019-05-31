@@ -291,6 +291,14 @@ function getDriveTruckMonthValue(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and dtmv.truck_id = ? ";
     }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and dtmv.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and dtmv.company_id = ? ";
+    }
     if(params.yMonth){
         paramsArray[i++] = params.yMonth;
         query = query + " and dtmv.y_month = ? ";
