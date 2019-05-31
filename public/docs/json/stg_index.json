@@ -12820,43 +12820,6 @@
         }
       }
     },
-    "/user/{userId}/yMonth/{yMonth}/driveTruckMonthValue": {
-      "delete": {
-        "tags": [
-          "drive"
-        ],
-        "summary": "Deletes a driveTruckMonthValue",
-        "description": "",
-        "operationId": "driveTruckMonthValue",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "yMonth",
-            "in": "path",
-            "description": "yMonth to delete",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "contacts not found"
-          }
-        }
-      }
-    },
     "/company": {
       "get": {
         "tags": [
