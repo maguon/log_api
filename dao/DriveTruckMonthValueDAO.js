@@ -95,7 +95,7 @@ function updateDistanceSalary(params,callback){
         " where dpr.task_plan_date>="+params.yMonth+"01 and dpr.task_plan_date<="+params.yMonth+"31 and dpr.task_status>=9 " +
         " group by dpr.drive_id,dpr.truck_id) dprm " +
         " on dtmv.drive_id = dprm.drive_id and dtmv.truck_id = dprm.truck_id " +
-        " and dtmv.y_month = "+params.yMonth+" set dtmv.distance_salary = dprm.distance_salary ";
+        " and dtmv.y_month = "+params.yMonth+" set dtmv.distance_salary = dprm.distance_salary , dtmv.reverse_salary = dprm.reverse_salary ";
     var paramsArray=[],i=0;
 
     db.dbQuery(query,paramsArray,function(error,rows){
