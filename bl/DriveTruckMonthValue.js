@@ -581,7 +581,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.brandName+","+parkObj.truckNumber+","+
                     parkObj.operateType+","+parkObj.companyName+","+parkObj.outputCompanyName+","+parkObj.reverseCount+","+parkObj.loadDistance+","+
-                    parkObj.noLoadDistance+","+parkObj.distance+","+parkObj.loadRatio+","+parkObj.loadOilDistance+","+parkObj.noOilDistance+","+
+                    parkObj.noLoadDistance+","+parkObj.distance+","+parkObj.loadRatio.toFixed(2)+","+parkObj.loadOilDistance+","+parkObj.noOilDistance+","+
                     parkObj.receiveCarCount+","+parkObj.storageCarCount+","+parkObj.output+","+parkObj.insureFee+","+parkObj.depreciationFee+","+
                     parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
                     parkObj.hotelFee+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
