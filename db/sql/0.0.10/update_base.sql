@@ -324,3 +324,62 @@ ADD COLUMN `subsidy_urea`  decimal(10,2) NULL DEFAULT 0 COMMENT '本次尿素补
 ALTER TABLE `drive_exceed_oil_date`
 ADD COLUMN `exceed_oil`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '超油' AFTER `subsidy_urea`,
 ADD COLUMN `exceed_urea`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '超尿素' AFTER `exceed_oil`;
+-- ----------------------------
+-- 2019-05-31 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for drive_truck_month_value
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_truck_month_value`;
+CREATE TABLE `drive_truck_month_value` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `y_month` int(4) DEFAULT NULL COMMENT '月份',
+  `drive_id` int(10) DEFAULT '0' COMMENT '司机ID',
+  `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
+  `truck_id` int(10) DEFAULT '0' COMMENT '货车ID',
+  `truck_num` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '货车牌号',
+  `brand_id` int(10) DEFAULT NULL COMMENT '品牌ID',
+  `brand_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '货车品牌',
+  `truck_number` tinyint(2) DEFAULT '0' COMMENT '板车位数',
+  `operate_type` tinyint(1) DEFAULT NULL COMMENT '所属类型(1-自营,2-外协)',
+  `company_id` int(10) DEFAULT '0' COMMENT '所属公司ID',
+  `company_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所属公司名称',
+  `output_company_id` int(10) DEFAULT '0' COMMENT '产值公司',
+  `output_company_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产值公司名称',
+  `reverse_count` int(10) DEFAULT '0' COMMENT '倒板数',
+  `load_distance` decimal(10,2) DEFAULT '0.00' COMMENT '重载里程',
+  `no_load_distance` decimal(10,2) DEFAULT '0.00' COMMENT '空载里程',
+  `distance` decimal(10,2) DEFAULT '0.00' COMMENT '总里程',
+  `load_oil_distance` decimal(10,2) DEFAULT '0.00' COMMENT '重载里程油耗',
+  `no_oil_distance` decimal(10,2) DEFAULT '0.00' COMMENT '空载里程油耗',
+  `receive_car_count` int(10) DEFAULT '0' COMMENT '运送经销商台数',
+  `storage_car_count` int(10) DEFAULT '0' COMMENT '运送到库台数',
+  `output` decimal(10,2) DEFAULT '0.00' COMMENT '产值收入',
+  `insure_fee` decimal(10,2) DEFAULT '0.00' COMMENT '货车保险费',
+  `depreciation_fee` decimal(10,2) DEFAULT '0.00' COMMENT '折旧费',
+  `distance_salary` decimal(10,2) DEFAULT '0.00' COMMENT '应发里程工资',
+  `damage_under_fee` decimal(10,2) DEFAULT '0.00' COMMENT '质损个人承担',
+  `damage_company_fee` decimal(10,2) DEFAULT '0.00' COMMENT '质损公司承担',
+  `clean_fee` decimal(10,2) DEFAULT '0.00' COMMENT '洗车费',
+  `work_count` int(10) DEFAULT '0' COMMENT '出勤天数',
+  `hotel_fee` decimal(10,2) DEFAULT '0.00' COMMENT '住宿费',
+  `enter_fee` decimal(10,2) DEFAULT '0.00' COMMENT '交车打车进门费',
+  `trailer_fee` decimal(10,2) DEFAULT '0.00' COMMENT '拖车费',
+  `car_parking_fee` decimal(10,2) DEFAULT '0.00' COMMENT '提车费',
+  `run_fee` decimal(10,2) DEFAULT '0.00' COMMENT '地跑费',
+  `lead_fee` decimal(10,2) DEFAULT '0.00' COMMENT '带路费',
+  `etc_fee` decimal(10,2) DEFAULT '0.00' COMMENT '过路费',
+  `oil_fee` decimal(10,2) DEFAULT '0.00' COMMENT '油费',
+  `urea_fee` decimal(10,2) DEFAULT '0.00' COMMENT '尿素费',
+  `peccancy_under_fee` decimal(10,2) DEFAULT '0.00' COMMENT '违章罚款个人',
+  `peccancy_company_fee` decimal(10,2) DEFAULT '0.00' COMMENT '违章罚款公司',
+  `repair_fee` decimal(10,2) DEFAULT '0.00' COMMENT '维修',
+  `parts_fee` decimal(10,2) DEFAULT '0.00' COMMENT '配件',
+  `maintain_fee` decimal(10,2) DEFAULT '0.00' COMMENT '保养',
+  `car_oil_fee` decimal(10,2) DEFAULT '0.00' COMMENT '商品车加油',
+  `truck_parking_fee` decimal(10,2) DEFAULT '0.00' COMMENT '货车停车费',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `drive_id` (`y_month`,`drive_id`,`truck_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
