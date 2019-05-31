@@ -992,7 +992,8 @@ function getDriveDistanceLoadStatCsv(req,res,next){
 function getDriveDistanceLoadCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' +"货车牌号" + ',' + "联系电话" + ',' + "调度编号"+ ',' + "计划执行时间" + ','+ "起始城市" + ','+ "目的城市"+ ','+
-        "起始装车地" + ','+ "经销商" + ','+ "装载车辆" + ','+ "公里数";
+        "起始装车地" + ','+ "经销商" + ','+ "装载车辆" + ','+ "公里数"+ ','+
+        "小车洗车费" + ','+ "大车洗车费" + ','+ "拖车费" + ','+ "地跑费" + ','+ "带路费";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -1029,11 +1030,35 @@ function getDriveDistanceLoadCsv(req,res,next){
                 }else{
                     parkObj.realCount = rows[i].real_count;
                 }
-
                 parkObj.distance = rows[i].distance;
-
+                if(rows[i].clean_fee == null){
+                    parkObj.cleanFee = "";
+                }else{
+                    parkObj.cleanFee = rows[i].clean_fee;
+                }
+                if(rows[i].big_clean_fee == null){
+                    parkObj.bigCleanFee = "";
+                }else{
+                    parkObj.bigCleanFee = rows[i].big_clean_fee;
+                }
+                if(rows[i].trailer_fee == null){
+                    parkObj.trailerFee = "";
+                }else{
+                    parkObj.trailerFee = rows[i].trailer_fee;
+                }
+                if(rows[i].run_fee == null){
+                    parkObj.runFee = "";
+                }else{
+                    parkObj.runFee = rows[i].run_fee;
+                }
+                if(rows[i].lead_fee == null){
+                    parkObj.leadFee = "";
+                }else{
+                    parkObj.leadFee = rows[i].lead_fee;
+                }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.id+"," +parkObj.taskPlanDate+","+
-                    parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.addrName+","+parkObj.shortName+","+parkObj.realCount+","+parkObj.distance+ '\r\n';
+                    parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.addrName+","+parkObj.shortName+","+parkObj.realCount+","+parkObj.distance+","+
+                    parkObj.cleanFee+","+parkObj.bigCleanFee+","+parkObj.trailerFee+","+parkObj.runFee+"," +parkObj.leadFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

@@ -410,9 +410,11 @@ function getDriveDistanceLoadStat(params,callback) {
 //调度司机里程详情list，可查询重复调度编号
 function getDriveDistanceLoad(params,callback) {
     var query = " select dpr.*,dprl.addr_name,dprl.short_name,dprl.plan_count,real_count," +
-        " t.truck_num,d.drive_name,u1.mobile " +
+        " t.truck_num,d.drive_name,u1.mobile," +
+        " r.clean_fee,r.big_clean_fee,r.trailer_fee,r.run_fee,r.lead_fee " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " left join receive_info r on dprl.receive_id = r.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join user_info u1 on d.user_id = u1.uid " +
