@@ -303,7 +303,7 @@ function getDriveTruckMonthValue(params,callback) {
         paramsArray[i++] = params.yMonth;
         query = query + " and dtmv.y_month = ? ";
     }
-    query = query + ' order by dtmv.id desc ';
+    query = query + ' order by dtmv.drive_id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
