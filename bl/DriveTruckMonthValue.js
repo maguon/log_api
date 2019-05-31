@@ -398,7 +398,7 @@ function removeDriveTruckMonthValue(req,res,next){
 function getDriveTruckMonthValueCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' +"司机" + ',' + "货车牌号" + ',' + "货车品牌" + ','+ "板位数" + ','+ "所属类型"+ ','+ "所属公司" + ','+ "产值公司" + ','+
-        "倒板数" + ','+"重载里程" + ','+ "空载里程"+ ','+ "总里程"+ ','+ "重载率"+ ','+ "重载油耗里程"+ ','+ "空载油耗里程" + ','+
+        "倒板数" + ','+"倒板工资" + ','+"重载里程" + ','+ "空载里程"+ ','+ "总里程"+ ','+ "重载率"+ ','+ "重载油耗里程"+ ','+ "空载油耗里程" + ','+
         "运送经销商台数" + ','+ "运送到库台数" + ','+"产值" + ','+ "货车保险"+ ','+ "折旧费"+ ','+ "应发里程工资"+ ','+
         "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"住宿费" + ','+ "交车打车进门费"+ ','+
         "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" + ','+ "油费" + ','+"尿素费" + ','+
@@ -436,6 +436,11 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.reverseCount = "";
                 }else{
                     parkObj.reverseCount = rows[i].reverse_count;
+                }
+                if(rows[i].reverse_salary == null){
+                    parkObj.reverseSalary = "";
+                }else{
+                    parkObj.reverseSalary = rows[i].reverse_salary;
                 }
                 if(rows[i].load_distance == null){
                     parkObj.loadDistance = "";
@@ -594,9 +599,9 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.truckParkingFee = rows[i].truck_parking_fee;
                 }
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.brandName+","+parkObj.truckNumber+","+
-                    parkObj.operateType+","+parkObj.companyName+","+parkObj.outputCompanyName+","+parkObj.reverseCount+","+parkObj.loadDistance+","+
+                    parkObj.operateType+","+parkObj.companyName+","+parkObj.outputCompanyName+","+parkObj.reverseCount+","+parkObj.reverseSalary+","+
                     parkObj.noLoadDistance+","+parkObj.distance+","+parkObj.loadRatio.toFixed(2)+","+parkObj.loadOilDistance+","+parkObj.noOilDistance+","+
-                    parkObj.receiveCarCount+","+parkObj.storageCarCount+","+parkObj.output+","+parkObj.insureFee+","+parkObj.depreciationFee+","+
+                    parkObj.loadDistance+","+parkObj.receiveCarCount+","+parkObj.storageCarCount+","+parkObj.output+","+parkObj.insureFee+","+parkObj.depreciationFee+","+
                     parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
                     parkObj.hotelFee+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
                     parkObj.leadFee+","+parkObj.etcFee+","+parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
