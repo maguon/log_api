@@ -337,6 +337,17 @@ function updateDepreciationFee(params,callback){
     });
 }
 
+function deleteDriveTruckMonthValue(params,callback){
+    var query = " delete from drive_truck_month_value where y_month = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.yMonth;
+    paramsArray[i++] = params.driveTruckMonthValueId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteDriveTruckMonthValue ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDistance : addDistance,
@@ -355,5 +366,6 @@ module.exports ={
     updateDrive : updateDrive,
     getDriveTruckMonthValue : getDriveTruckMonthValue,
     updateTruckDepreciationFee : updateTruckDepreciationFee,
-    updateDepreciationFee : updateDepreciationFee
+    updateDepreciationFee : updateDepreciationFee,
+    deleteDriveTruckMonthValue : deleteDriveTruckMonthValue
 }

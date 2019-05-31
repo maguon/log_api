@@ -381,6 +381,20 @@ function updateDepreciationFee(req,res,next){
     })
 }
 
+function removeDriveTruckMonthValue(req,res,next){
+    var params = req.params ;
+    driveTruckMonthValueDAO.deleteDriveTruckMonthValue(params,function(error,result){
+        if (error) {
+            logger.error(' removeDriveTruckMonthValue ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' removeDriveTruckMonthValue ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDriveTruckMonthValueCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' +"司机" + ',' + "货车牌号" + ',' + "货车品牌" + ','+ "板位数" + ','+ "所属类型"+ ','+ "所属公司" + ','+ "产值公司" + ','+
@@ -602,12 +616,12 @@ function getDriveTruckMonthValueCsv(req,res,next){
 }
 
 
-
 module.exports = {
     createDriveTruckMonthValue : createDriveTruckMonthValue,
     queryDriveTruckMonthValue : queryDriveTruckMonthValue,
     uploadDepreciationFeeFile : uploadDepreciationFeeFile,
     updateTruckDepreciationFee : updateTruckDepreciationFee,
     updateDepreciationFee : updateDepreciationFee,
+    removeDriveTruckMonthValue : removeDriveTruckMonthValue,
     getDriveTruckMonthValueCsv : getDriveTruckMonthValueCsv
 }

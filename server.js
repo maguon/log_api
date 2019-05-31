@@ -510,6 +510,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/depreciationFeeFile',contentType: 'multipart/form-data'},driveTruckMonthValue.uploadDepreciationFeeFile);
     server.put({path:'/api/user/:userId/truck/:truckId/yMonth/:yMonth',contentType: 'application/json'} ,driveTruckMonthValue.updateTruckDepreciationFee);
     server.put({path:'/api/user/:userId/driveTruckMonthValue/:driveTruckMonthValueId',contentType: 'application/json'} ,driveTruckMonthValue.updateDepreciationFee);
+    server.del('/api/user/:userId/yMonth/:yMonth/driveTruckMonthValue' , driveTruckMonthValue.removeDriveTruckMonthValue);
 
     /**
      * Company Module
