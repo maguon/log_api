@@ -347,6 +347,7 @@ CREATE TABLE `drive_truck_month_value` (
   `output_company_id` int(10) DEFAULT '0' COMMENT '产值公司',
   `output_company_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产值公司名称',
   `reverse_count` int(10) DEFAULT '0' COMMENT '倒板数',
+  `reverse_salary` decimal(10,2) DEFAULT '0.00' COMMENT '倒板工资',
   `load_distance` decimal(10,2) DEFAULT '0.00' COMMENT '重载里程',
   `no_load_distance` decimal(10,2) DEFAULT '0.00' COMMENT '空载里程',
   `distance` decimal(10,2) DEFAULT '0.00' COMMENT '总里程',
