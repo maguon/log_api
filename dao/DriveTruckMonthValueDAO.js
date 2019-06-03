@@ -15,12 +15,14 @@ function addDistance(params,callback){
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
         " sum(dpr.distance) as distance, " +
-        " sum(case when dpr.oil_load_flag = 1 then dpr.oil_distance end) as load_oil_distance, " +
-        " sum(case when dpr.oil_load_flag = 0 then dpr.oil_distance end) as no_oil_distance, " +
+        " sum(tb.load_distance_oil) as load_oil_distance, " +
+        " sum(tb.no_load_distance_oil) as no_oil_distance, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end) not_storage_car_count, " +
         " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dpr.car_count end) storage_car_count, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end)*4 as enter_fee " +
         " from dp_route_task dpr " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join truck_brand tb on t.brand_id = tb.id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_status >=9 and dpr.task_plan_date>="+params.yMonth+"01 and dpr.task_plan_date<=" +params.yMonth+"31"+
         " group by dpr.drive_id,dpr.truck_id ";
