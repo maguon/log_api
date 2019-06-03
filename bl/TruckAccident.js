@@ -34,11 +34,11 @@ function createTruckAccident(req,res,next){
 
 function queryTruckAccident(req,res,next){
     var params = req.params ;
-    if(params.endDateStart !=null || params.endDateStart !=""){
+    if(params.endDateStart){
         var endDateStart = params.endDateStart;
         params.endDateStart = moment(endDateStart).format('YYYY-MM-DD');
     }
-    if(params.endDateEnd !=null || params.endDateEnd !=""){
+    if(params.endDateEnd){
         var endDateEnd = params.endDateEnd;
         params.endDateEnd = moment(endDateEnd).format('YYYY-MM-DD');
     }
