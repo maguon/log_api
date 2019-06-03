@@ -88,6 +88,14 @@ function getTruckAccident(params,callback) {
         paramsArray[i++] = params.accidentDateEnd +" 23:59:59";
         query = query + " and ta.accident_date <= ? ";
     }
+    if(params.endDateStart){
+        paramsArray[i++] = params.endDateStart +" 00:00:00";
+        query = query + " and tac.end_date >= ? ";
+    }
+    if(params.endDateEnd){
+        paramsArray[i++] = params.endDateEnd +" 23:59:59";
+        query = query + " and tac.end_date <= ? ";
+    }
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
         query = query + " and ta.dp_route_task_id = ? ";

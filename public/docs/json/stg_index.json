@@ -5039,6 +5039,22 @@
 
           },
           {
+            "name": "endDateStart",
+            "in": "query",
+            "description": "endDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "dpRouteTaskId",
             "in": "query",
             "description": "dpRouteTask id ",
@@ -10309,6 +10325,22 @@
             "description": "createdOn end",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "dateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "dateId end",
+            "required": false,
+            "type": "integer"
 
           },
           {
