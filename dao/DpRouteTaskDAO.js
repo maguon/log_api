@@ -295,7 +295,23 @@ function getDpRouteTaskBase(params,callback) {
 }
 
 function getDriveDistanceMoney(params,callback) {
-    var query = " select dpr.* from dp_route_task dpr " +
+    var query = " select " +
+        " sum( case " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=6 and dpr.car_count<3 then dpr.distance*0.6 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=6 and dpr.car_count=4 then dpr.distance*0.7 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=6 and dpr.car_count=5 then dpr.distance*0.8 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=6 and dpr.car_count=6 then dpr.distance*0.9 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=6 and dpr.car_count>7 then dpr.distance " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=8 and dpr.car_count<5 then dpr.distance*0.6 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=8 and dpr.car_count=5 then dpr.distance*0.7 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=8 and dpr.car_count=6 then dpr.distance*0.8 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=8 and dpr.car_count=7 then dpr.distance*0.9 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=8 and dpr.car_count=8 then dpr.distance " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=8 and dpr.car_count=9 then dpr.distance*1.1 " +
+        " when dpr.reverse_flag=0 and dpr.truck_number=8 and dpr.car_count>10 then dpr.distance*1.2 " +
+        " end) distance_salary, " +
+        " sum(case when dpr.reverse_flag=1 then dpr.reverse_money end) reverse_salary" +
+        " from dp_route_task dpr " +
         " where dpr.id is not null ";
     var paramsArray=[],i=0;
     if(params.taskStatus){
@@ -306,13 +322,13 @@ function getDriveDistanceMoney(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and dpr.drive_id = ? ";
     }
-    if(params.dateIdStart){
-        paramsArray[i++] = params.dateIdStart;
-        query = query + " and dpr.date_id >= ? ";
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
     }
-    if(params.dateIdEnd){
-        paramsArray[i++] = params.dateIdEnd;
-        query = query + " and dpr.date_id <= ? ";
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveDistanceMoney ');
