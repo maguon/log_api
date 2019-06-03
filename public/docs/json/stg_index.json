@@ -25328,6 +25328,22 @@
 
           },
           {
+            "name": "endDateStart",
+            "in": "query",
+            "description": "endDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "vin",
             "in": "query",
             "description": "car vin",
@@ -26371,6 +26387,22 @@
             "name": "createdOnEnd",
             "in": "query",
             "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateStart",
+            "in": "query",
+            "description": "endDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "endDateEnd",
+            "in": "query",
+            "description": "endDate end",
             "required": false,
             "type": "string"
 

@@ -67,6 +67,14 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and da.created_on <= ? ";
     }
+    if(params.endDateStart){
+        paramsArray[i++] = params.endDateStart;
+        query = query + " and dc.date_id >= ? ";
+    }
+    if(params.endDateEnd){
+        paramsArray[i++] = params.endDateEnd;
+        query = query + " and dc.date_id <= ? ";
+    }
     if(params.vin){
         paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
