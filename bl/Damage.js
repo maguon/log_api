@@ -436,7 +436,7 @@ function uploadDamageFile(req,res,next){
 function getDamageCsv(req,res,next){
     var csvString = "";
     var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+ "司机"
-        + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "处理状态" ;
+        + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "个人承担" + ','+ "公司承担" + ','+ "处理状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -520,13 +520,20 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.damageLinkType = "运输途中遭人为破坏";
                 }
-
-
-
                 if(rows[i].under_user_name==null){
                     parkObj.underUserName = "";
                 }else{
                     parkObj.underUserName = rows[i].under_user_name;
+                }
+                if(rows[i].under_cost==null){
+                    parkObj.underCost = "";
+                }else{
+                    parkObj.underCost = rows[i].under_cost;
+                }
+                if(rows[i].company_cost==null){
+                    parkObj.companyCost = "";
+                }else{
+                    parkObj.companyCost = rows[i].company_cost;
                 }
                 if(rows[i].damage_status == 1){
                     parkObj.damageStatus = "待处理";
@@ -535,9 +542,10 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.damageStatus = "已处理";
                 }
-                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.damageExplain+","
-                    +parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","
-                    +parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.damageStatus+ '\r\n';
+                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.damageExplain+","+
+                    parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","+
+                    parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.underCost+","+
+                    parkObj.companyCost+","+parkObj.damageStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
