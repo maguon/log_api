@@ -107,6 +107,20 @@ function queryDriveSalary(req,res,next){
     })
 }
 
+function queryDriveSalaryBase(req,res,next){
+    var params = req.params;
+    driveSalaryDAO.getDriveSalaryBase(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveSalaryBase ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveSalaryBase ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDrivePlanSalary(req,res,next){
     var params = req.params;
     driveSalaryDAO.updateDrivePlanSalary(params,function(error,result){
@@ -153,6 +167,7 @@ function updateDriveSalaryStatus(req,res,next){
 module.exports = {
     createDriveSalaryTask : createDriveSalaryTask,
     queryDriveSalary : queryDriveSalary,
+    queryDriveSalaryBase : queryDriveSalaryBase,
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
     updateDriveSalaryStatus : updateDriveSalaryStatus

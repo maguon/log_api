@@ -9197,6 +9197,74 @@
         }
       }
     },
+    "/driveSalaryBase": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveSalary base",
+        "description": "query driveSalaryBase",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSalaryId",
+            "in": "query",
+            "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantStatus",
+            "in": "query",
+            "description": "grant status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSalary"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalary id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSalary": {
       "post": {
         "tags": [

@@ -109,6 +109,37 @@ function getDriveSalary(params,callback) {
     });
 }
 
+function getDriveSalaryBase(params,callback) {
+    var query = " select ds.*,d.drive_name,t.truck_num " +
+        " from drive_salary ds " +
+        " left join drive_info d on ds.drive_id = d.id " +
+        " left join truck_info t on ds.truck_id = t.id " +
+        " where ds.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveSalaryId){
+        paramsArray[i++] = params.driveSalaryId;
+        query = query + " and ds.id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and ds.drive_id = ? ";
+    }
+    if(params.grantStatus){
+        paramsArray[i++] = params.grantStatus;
+        query = query + " and ds.grant_status = ? ";
+    }
+    query = query + ' order by ds.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveSalaryBase ');
+        return callback(error,rows);
+    });
+}
+
 function updateDrivePlanSalary(params,callback){
     var query = " update drive_salary set load_distance = ? , no_load_distance = ? , plan_salary = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -152,6 +183,7 @@ function updateDriveSalaryStatus(params,callback){
 module.exports ={
     addDriveSalary : addDriveSalary,
     getDriveSalary : getDriveSalary,
+    getDriveSalaryBase : getDriveSalaryBase,
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
     updateDriveSalaryStatus : updateDriveSalaryStatus
