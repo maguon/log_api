@@ -73,6 +73,14 @@ function getDrivePeccancy(params,callback) {
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and dp.created_on <= ? ";
     }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dp.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dp.date_id <= ? ";
+    }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and dp.truck_id = ? ";
