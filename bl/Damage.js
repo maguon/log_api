@@ -435,8 +435,9 @@ function uploadDamageFile(req,res,next){
 
 function getDamageCsv(req,res,next){
     var csvString = "";
-    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+ "司机"
-        + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "个人承担" + ','+ "公司承担" + ','+ "处理状态" ;
+    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+
+        "司机" + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "个人承担" + ','+ "公司承担" + ','+
+        "处理结束时间" + ','+"处理状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -535,6 +536,11 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.companyCost = rows[i].company_cost;
                 }
+                if(rows[i].check_end_date==null){
+                    parkObj.checkEndDate = "";
+                }else{
+                    parkObj.checkEndDate = rows[i].check_end_date;
+                }
                 if(rows[i].damage_status == 1){
                     parkObj.damageStatus = "待处理";
                 }else if(rows[i].damage_status == 2){
@@ -545,7 +551,7 @@ function getDamageCsv(req,res,next){
                 csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.damageExplain+","+
                     parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","+
                     parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.underCost+","+
-                    parkObj.companyCost+","+parkObj.damageStatus+ '\r\n';
+                    parkObj.companyCost+","+parkObj.checkEndDate+","+parkObj.damageStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
