@@ -80,11 +80,11 @@ function getEntrustCar(params,callback) {
         query = query + " and c.entrust_id = ? ";
     }
     if(params.orderStart){
-        paramsArray[i++] = params.orderStart;
+        paramsArray[i++] = params.orderStart +" 00:00:00";
         query = query + " and c.order_date >= ? ";
     }
     if(params.orderEnd){
-        paramsArray[i++] = params.orderEnd;
+        paramsArray[i++] = params.orderEnd +" 23:59:59";
         query = query + " and c.order_date <= ? ";
     }
     if(params.makeId){
