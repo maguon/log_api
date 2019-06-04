@@ -391,3 +391,8 @@ ALTER TABLE `drive_salary`
 ADD COLUMN `distance_salary`  decimal(10,2) NULL DEFAULT 0 COMMENT '里程工资' AFTER `no_load_distance`,
 ADD COLUMN `reverse_salary`  decimal(10,2) NULL DEFAULT 0 COMMENT '倒板工资' AFTER `distance_salary`,
 ADD COLUMN `enter_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '交车打车进门费' AFTER `reverse_salary`;
+-- ----------------------------
+-- 2019-06-04 更新
+-- ----------------------------
+ALTER TABLE `car_info`
+MODIFY COLUMN `order_date`  date NULL DEFAULT NULL COMMENT '指令日期' AFTER `entrust_id`;
