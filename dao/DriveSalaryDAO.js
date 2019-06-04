@@ -23,16 +23,21 @@ function addDriveSalary(params,callback){
 }
 
 function getDriveSalary(params,callback) {
-    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
-        " d.id as drive_id,d.drive_name,u.mobile,c.company_name,c.operate_type,t.id as truck_id,t.truck_num,t.truck_type,tb.brand_name,h.number," +
+    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.social_security_fee, " +
+        " ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
+        " dprtm.drive_id,dprtm.drive_name,dprtm.mobile, " +
+        " t.truck_num,t.truck_type,tb.brand_name,h.number,t.operate_type,c.company_name, " +
         " drtm.distance_salary as plan_distance_salary,drtm.reverse_salary as plan_reverse_salary,dprm.enter_fee as plan_enter_fee " +
-        " from drive_info d left join " +
-        " (select * from drive_salary where month_date_id ="+params.monthDateId+") as ds on d.id = ds.drive_id " +
-        " left join company_info c on d.company_id = c.id " +
-        " left join truck_info t on d.id = t.drive_id " +
+        " from(select dprt.drive_id,d.drive_name,d.id,u.mobile from dp_route_task dprt " +
+        " left join drive_info d on dprt.drive_id = d.id " +
+        " left join user_info u on d.user_id = u.uid " +
+        " where dprt.task_plan_date>="+params.monthDateId+"01 and dprt.task_plan_date<="+params.monthDateId+"31 and dprt.task_status>=9 " +
+        " group by dprt.drive_id) dprtm " +
+        " left join(select ds.* from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +
+        " left join truck_info t on dprtm.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join truck_info h on t.rel_id = h.id " +
-        " left join user_info u on d.user_id = u.uid " +
+        " left join company_info c on t.company_id = c.id " +
         " left join (select drt.drive_id, " +
         " sum( case " +
         " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count<3 then drt.distance*0.6 " +
@@ -51,14 +56,14 @@ function getDriveSalary(params,callback) {
         " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary" +
         " from dp_route_task drt " +
         " where drt.task_plan_date>="+params.monthDateId+"01 and drt.task_plan_date<="+params.monthDateId+"31 and drt.task_status>=9 " +
-        " group by drt.drive_id) drtm on d.id = drtm.drive_id " +
+        " group by drt.drive_id) drtm on dprtm.drive_id = drtm.drive_id " +
         " left join (select dpr.drive_id, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end)*4 as enter_fee " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_plan_date>="+params.monthDateId+"01 and dpr.task_plan_date<="+params.monthDateId+"31 and dpr.task_status>=9" +
-        " group by dpr.drive_id) dprm on d.id = dprm.drive_id " +
-        " where d.id is not null ";
+        " group by dpr.drive_id) dprm on dprtm.drive_id = dprm.drive_id " +
+        " where dprtm.drive_id is not null ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){
         paramsArray[i++] = params.driveSalaryId;
@@ -74,19 +79,19 @@ function getDriveSalary(params,callback) {
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and d.id = ? ";
+        query = query + " and dprtm.drive_id = ? ";
     }
     if(params.driveName){
         paramsArray[i++] = params.driveName;
-        query = query + " and d.drive_name = ? ";
+        query = query + " and dprtm.drive_name = ? ";
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and c.operate_type = ? ";
+        query = query + " and t.operate_type = ? ";
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
-        query = query + " and c.id = ? ";
+        query = query + " and t.company_id = ? ";
     }
     if(params.truckNum){
         paramsArray[i++] = params.truckNum;
@@ -97,7 +102,7 @@ function getDriveSalary(params,callback) {
         query = query + " and t.brand_id = ? ";
     }
 
-    query = query + ' order by ds.month_date_id desc ';
+    query = query + ' order by dprtm.drive_id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
