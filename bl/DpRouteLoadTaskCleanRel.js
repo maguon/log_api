@@ -190,7 +190,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     var csvString = "";
     var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ','+ "电话" + ','+ "小车单价" + ','+ "大车单价" + ','+ "小车台数" + ','+
         "大车台数" + ','+ "装车数" + ','+"洗车费" + ','+ "拖车费" + ','+ "提车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
-        "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+ "领取时间" + ','+ "领取状态";
+        "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+ "领取时间" + ','+ "领取状态"+ ','+ "是否补发";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -283,10 +283,16 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.status = "已领取";
                 }
+                if(rows[i].type == 0){
+                    parkObj.type = "否";
+                }else{
+                    parkObj.type = "是";
+                }
                 csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+
                     parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+ parkObj.carCount+","+
                     parkObj.totalPrice+","+parkObj.totalTrailerFee+","+ parkObj.carParkingFee+","+parkObj.runFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","+
-                    parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.loadDate+","+parkObj.cleanDate+","+ parkObj.status+ '\r\n';
+                    parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.loadDate+","+parkObj.cleanDate+","+
+                    parkObj.status+","+parkObj.type+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
