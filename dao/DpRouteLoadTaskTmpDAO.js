@@ -11,7 +11,7 @@ function addDpRouteLoadTaskTmp(params,callback){
         " dp_route_task_id,route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end," +
         " receive_id,short_name,receive_flag,date_id," +
         " plan_date,plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id,transfer_addr_name) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.loadTaskType;
