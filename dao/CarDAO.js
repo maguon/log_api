@@ -164,10 +164,18 @@ function getCarList(params,callback) {
     }
     if(params.currentCityId){
         paramsArray[i++] = params.currentCityId;
-        query = query + " and c.current_city_id = ? ";
+        query = query + " and c.route_start_id = ? ";
     }
     if(params.currentAddrId){
         paramsArray[i++] = params.currentAddrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.newCurrentCityId){
+        paramsArray[i++] = params.newCurrentCityId;
+        query = query + " and c.current_city_id = ? ";
+    }
+    if(params.newCurrentAddrId){
+        paramsArray[i++] = params.newCurrentAddrId;
         query = query + " and c.current_addr_id = ? ";
     }
     query = query + '  order by c.id desc ';
