@@ -18046,6 +18046,60 @@
         }
       }
     },
+    "/user/{userId}/car/{carId}/completedCar": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "update completedCar info",
+        "description": "update completedCar info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "car",
+            "in": "body",
+            "description": "car info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/car"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
     "/user/{userId}/car/{carId}/vin": {
       "put": {
         "tags": [
@@ -33648,6 +33702,9 @@
         },
         "type": {
           "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {
