@@ -33679,6 +33679,9 @@
         "totalPrice": {
           "type": "integer"
         },
+        "smallCarCount": {
+          "type": "integer"
+        },
         "carCount": {
           "type": "integer"
         },
