@@ -25,10 +25,10 @@ function addDriveSalary(params,callback){
 function getDriveSalary(params,callback) {
     var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.social_security_fee, " +
         " ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
-        " dprtm.drive_id,dprtm.drive_name,dprtm.mobile, " +
+        " dprtm.drive_id,dprtm.user_id,dprtm.drive_name,dprtm.mobile, " +
         " t.truck_num,t.truck_type,tb.brand_name,h.number,t.operate_type,c.company_name, " +
         " drtm.distance_salary as plan_distance_salary,drtm.reverse_salary as plan_reverse_salary,dprm.enter_fee as plan_enter_fee " +
-        " from(select dprt.drive_id,d.drive_name,d.id,u.mobile from dp_route_task dprt " +
+        " from(select dprt.drive_id,d.drive_name,d.id,d.user_id,u.mobile from dp_route_task dprt " +
         " left join drive_info d on dprt.drive_id = d.id " +
         " left join user_info u on d.user_id = u.uid " +
         " where dprt.task_plan_date>="+params.monthDateId+"01 and dprt.task_plan_date<="+params.monthDateId+"31 and dprt.task_status>=9 " +
