@@ -345,6 +345,42 @@ function updateCar(req,res,next){
     })
 }
 
+function updateCompletedCar(req,res,next){
+    var params = req.params ;
+    Seq().seq(function(){
+        var that = this;
+        carDAO.getCarList({carId:params.carId},function(error,rows){
+            if (error) {
+                logger.error(' getCarList ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0&&rows[0].car_status==listOfValue.CAR_STATUS_OUT){
+                    that();
+                }else{
+                    logger.warn(' getCarList ' + 'failed');
+                    resUtil.resetFailedRes(res," 商品车任务未完成,不能修改 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var orderDate = params.orderDate;
+        var strDate = moment(orderDate).format('YYYYMMDD');
+        params.orderDateId = parseInt(strDate);
+        carDAO.updateCompletedCar(params,function(error,result){
+            if (error) {
+                logger.error(' updateCompletedCar ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateCompletedCar ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 function updateCarVin(req,res,next){
     var params = req.params ;
     var parkObj = {};
@@ -374,7 +410,7 @@ function updateCarVin(req,res,next){
                     resUtil.resetFailedRes(res, "本条数据已经存在，请核对后重新操作");
                     return next();
                 } else{
-                    logger.error(' createCar ' + error.message);
+                    logger.error(' updateCarVin ' + error.message);
                     throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 }
             } else {
@@ -659,6 +695,7 @@ module.exports = {
     queryCarDayStat : queryCarDayStat,
     queryCarDamageDeclare : queryCarDamageDeclare,
     updateCar : updateCar,
+    updateCompletedCar : updateCompletedCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
     removeUploadCar : removeUploadCar,

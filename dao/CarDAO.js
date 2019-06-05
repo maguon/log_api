@@ -671,6 +671,39 @@ function updateCar(params,callback){
     });
 }
 
+function updateCompletedCar(params,callback){
+    var query = " update car_info set make_id = ? , make_name = ? , entrust_id = ? , order_date = ? , order_date_id = ? , " +
+        " route_id = ? , route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , " +
+        " receive_id = ? , remark = ? where id = ? "  ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.makeId;
+    paramsArray[i++]=params.makeName;
+    paramsArray[i++]=params.entrustId;
+    paramsArray[i++]=params.orderDate;
+    paramsArray[i++]=params.orderDateId;
+    if(params.routeEndId !=null && params.routeEndId != ''){
+        if(params.routeStartId>params.routeEndId){
+            paramsArray[i++] = params.routeEndId+''+params.routeStartId;
+        }else{
+            paramsArray[i++] = params.routeStartId+''+params.routeEndId;
+        }
+    }else{
+        paramsArray[i++] =0;
+    }
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.baseAddrId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.routeEnd;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCompletedCar ');
+        return callback(error,rows);
+    });
+}
+
 function updateCarVin(params,callback){
     var query = " update car_info set vin = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -762,6 +795,7 @@ module.exports ={
     getCarDayStat : getCarDayStat,
     getCarDamageDeclare : getCarDamageDeclare,
     updateCar : updateCar,
+    updateCompletedCar : updateCompletedCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
     updateCarOrderDate : updateCarOrderDate,
