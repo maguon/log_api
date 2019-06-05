@@ -33,7 +33,10 @@ function getDriveSalary(params,callback) {
         " left join user_info u on d.user_id = u.uid " +
         " where dprt.task_plan_date>="+params.monthDateId+"01 and dprt.task_plan_date<="+params.monthDateId+"31 and dprt.task_status>=9 " +
         " group by dprt.drive_id) dprtm " +
-        " left join(select ds.* from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +
+        " left join(select ds.id,ds.month_date_id,ds.drive_id,ds.load_distance,ds.no_load_distance," +
+        " ds.plan_salary,ds.refund_fee,ds.social_security_fee, " +
+        " ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status " +
+        " from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +
         " left join truck_info t on dprtm.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join truck_info h on t.rel_id = h.id " +
@@ -59,8 +62,8 @@ function getDriveSalary(params,callback) {
         " group by drt.drive_id) drtm on dprtm.drive_id = drtm.drive_id " +
         " left join (select dpr.drive_id, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end)*4 as enter_fee " +
-        " from dp_route_task dpr " +
-        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " from dp_route_load_task dprl " +
+        " left join  dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " where dpr.task_plan_date>="+params.monthDateId+"01 and dpr.task_plan_date<="+params.monthDateId+"31 and dpr.task_status>=9" +
         " group by dpr.drive_id) dprm on dprtm.drive_id = dprm.drive_id " +
         " where dprtm.drive_id is not null ";
