@@ -396,3 +396,15 @@ ADD COLUMN `enter_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '交车打车进门
 -- ----------------------------
 ALTER TABLE `car_info`
 MODIFY COLUMN `order_date`  date NULL DEFAULT NULL COMMENT '指令日期' AFTER `entrust_id`;
+-- ----------------------------
+-- 2019-06-06 更新
+-- ----------------------------
+insert into dp_route_task_oil_rel(
+dp_route_task_id,truck_id,drive_id,route_id,route_start_id,route_start,route_end_id,route_end,oil,total_oil,urea,total_urea)
+select drt.id,drt.truck_id,drt.drive_id,drt.route_id,drt.route_start_id,drt.route_start,drt.route_end_id,drt.route_end,
+tb.no_load_distance_oil,(drt.oil_distance*tb.no_load_distance_oil/100) total_oil,tb.urea,(drt.oil_distance*tb.urea/100) total_urea
+from dp_route_task drt
+left join dp_route_task_oil_rel drtor on drt.id = drtor.dp_route_task_id
+left join truck_info ti on drt.truck_id = ti.id
+left join truck_brand tb on ti.brand_id = tb.id
+where drt.task_plan_date>=20190501 and drtor.id is null and drt.task_status=10;
