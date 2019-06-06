@@ -17,6 +17,7 @@ var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
 var dpRouteTaskRelDAO = require('../dao/DpRouteTaskRelDAO.js');
 var cityRouteDAO = require('../dao/CityRouteDAO.js');
+var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -75,6 +76,113 @@ function createDpRouteTask(req,res,next){
         })
     }).seq(function(){
         logger.info(' createDpRouteTask ' + 'success');
+        req.params.routeContent =" 生成路线 ";
+        req.params.routeId = dpRouteTaskId;
+        req.params.routeOp =sysConst.RECORD_OP_TYPE.create;
+        resUtil.resetCreateRes(res,{insertId:dpRouteTaskId},null);
+        return next();
+    })
+}
+
+function createEmptyDpRouteTask(req,res,next){
+    var params = req.params ;
+    var parkObj = {};
+    var dpRouteTaskId = 0;
+    Seq().seq(function(){
+        var that = this;
+        if(params.taskStatus==null||params.taskStatus==""){
+            params.taskStatus = sysConst.TASK_STATUS.ready_accept;
+        }else{
+            var myDate = new Date();
+            var strDate = moment(myDate).format('YYYYMMDD');
+            params.taskStartDate = myDate;
+            params.taskEndDate = myDate;
+            params.dateId = parseInt(strDate);
+        }
+        dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
+            if (error) {
+                logger.error(' createDpRouteTask ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteTask ' + 'success');
+                    dpRouteTaskId = result.insertId;
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"create dpRouteTask failed");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        params.dpRouteTaskId = dpRouteTaskId;
+        dpRouteTaskRelDAO.addDpRouteTaskRel(params,function(error,result){
+            if (error) {
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "调度编号已经被关联，操作失败");
+                    return next();
+                } else{
+                    logger.error(' createDpRouteTaskRel ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
+            } else {
+                if(result&&result.insertId>0){
+                    logger.info(' createDpRouteTaskRel ' + 'success');
+                }else{
+                    logger.warn(' createDpRouteTaskRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        truckDAO.getTruckFirst({truckId:params.truckId}, function (error, rows) {
+            if (error) {
+                logger.error(' getTruckFirst ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows&&rows.length>0) {
+                    parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
+                    parkObj.urea=rows[0].urea;
+                    that();
+                } else {
+
+                }
+            }
+        })
+    }).seq(function() {
+        var that = this;
+        var subParams ={
+            dpRouteTaskId:params.dpRouteTaskId,
+            truckId:params.truckId,
+            driveId:params.driveId,
+            routeId:params.routeId,
+            routeStartId:params.routeStartId,
+            routeStart:params.routeStart,
+            routeEndId:params.routeEndId,
+            routeEnd:params.routeEnd,
+            oil:parkObj.noLoadDistanceOil,
+            totalOil: (params.oilDistance*parkObj.noLoadDistanceOil)/100,
+            urea:parkObj.urea,
+            totalUrea :(params.oilDistance*parkObj.urea)/100
+        }
+        dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
+            if (error) {
+                logger.error(' addDpRouteTaskOilRel ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if (result && result.insertId > 0) {
+                    logger.info(' addDpRouteTaskOilRel ' + 'success');
+                } else {
+                    logger.warn(' addDpRouteTaskOilRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        logger.info(' createEmptyDpRouteTask ' + 'success');
         req.params.routeContent =" 生成路线 ";
         req.params.routeId = dpRouteTaskId;
         req.params.routeOp =sysConst.RECORD_OP_TYPE.create;
@@ -389,6 +497,7 @@ function updateDpRouteTaskStatus(req,res,next){
                         parkObj.routeEndId=rows[0].route_end_id;
                         parkObj.routeEnd=rows[0].route_end;
                         parkObj.distance=rows[0].distance;
+                        parkObj.oilDistance=rows[0].oil_distance;
                         parkObj.loadDistanceOil=rows[0].load_distance_oil;
                         parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
                         parkObj.urea=rows[0].urea;
@@ -473,18 +582,18 @@ function updateDpRouteTaskStatus(req,res,next){
             if(parkObj.loadFlag==sysConst.LOAD_FLAG.loan){
                 parkObj.oil = parkObj.loadDistanceOil;
                 parkObj.reverseOil = parkObj.loadReverseOil;
-                parkObj.totalOil = (parkObj.distance*parkObj.loadDistanceOil)/100;
-                parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
-                parkObj.totalReverseOil = (parkObj.distance*parkObj.loadReverseOil)/100;
+                parkObj.totalOil = (parkObj.oilDistance*parkObj.loadDistanceOil)/100;
+                parkObj.totalUrea = (parkObj.oilDistance*parkObj.urea)/100;
+                parkObj.totalReverseOil = (parkObj.oilDistance*parkObj.loadReverseOil)/100;
                 if(parkObj.reverseFlag==1){
                     parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
                 }
             }else{
                 parkObj.oil = parkObj.noLoadDistanceOil;
                 parkObj.reverseOil = parkObj.noLoadReverseOil;
-                parkObj.totalOil = (parkObj.distance*parkObj.noLoadDistanceOil)/100;
-                parkObj.totalUrea = (parkObj.distance*parkObj.urea)/100;
-                parkObj.totalReverseOil = (parkObj.distance*parkObj.noLoadReverseOil)/100;
+                parkObj.totalOil = (parkObj.oilDistance*parkObj.noLoadDistanceOil)/100;
+                parkObj.totalUrea = (parkObj.oilDistance*parkObj.urea)/100;
+                parkObj.totalReverseOil = (parkObj.oilDistance*parkObj.noLoadReverseOil)/100;
                 if(parkObj.reverseFlag==1){
                     parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
                 }
@@ -1335,6 +1444,7 @@ function getDriveCostCsv(req,res,next){
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
+    createEmptyDpRouteTask : createEmptyDpRouteTask,
     createDpRouteTaskBatch : createDpRouteTaskBatch,
     queryDpRouteTask : queryDpRouteTask,
     queryDpRouteTaskList : queryDpRouteTaskList,

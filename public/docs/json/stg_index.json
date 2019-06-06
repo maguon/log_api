@@ -21471,6 +21471,51 @@
         }
       }
     },
+    "/user/{userId}/emptyDpRouteTask": {
+      "post": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "user create emptyDpRouteTask",
+        "description": "user create emptyDpRouteTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTask",
+            "in": "body",
+            "description": "dpRouteTask info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTask"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTaskBatch": {
       "post": {
         "tags": [
