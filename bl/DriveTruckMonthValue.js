@@ -402,7 +402,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
         "运送经销商台数" + ','+ "运送到库台数" + ','+"产值" + ','+ "货车保险"+ ','+ "折旧费"+ ','+ "应发里程工资"+ ','+
         "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"住宿费" + ','+ "交车打车进门费"+ ','+
         "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" + ','+ "油费" + ','+"尿素费" + ','+
-        "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "维修费"+ ','+ "配件费"+ ','+ "保养费"+ ','+ "商品车加油费" + ','+ "货车停车费";
+        "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "维修费"+ ','+ "配件费"+ ','+ "保养费"+ ','+ "商品车加油费" + ','+ "商品车停车费"+ ','+ "货车停车费";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -593,6 +593,11 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }else{
                     parkObj.carOilFee = rows[i].car_oil_fee;
                 }
+                if(rows[i].car_parking_total_fee == null){
+                    parkObj.carParkingTotalFee = "";
+                }else{
+                    parkObj.carParkingTotalFee = rows[i].car_parking_total_fee;
+                }
                 if(rows[i].truck_parking_fee == null){
                     parkObj.truckParkingFee = "";
                 }else{
@@ -606,7 +611,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.hotelFee+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
                     parkObj.leadFee+","+parkObj.etcFee+","+parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
                     parkObj.peccancyCompanyFee+","+parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+parkObj.carOilFee+","+
-                    parkObj.truckParkingFee+ '\r\n';
+                    parkObj.carParkingTotalFee+","+parkObj.truckParkingFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

@@ -1314,8 +1314,8 @@ function queryDriveCost(req,res,next){
 
 function getDriveCostCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' + "货车" + ',' +"洗车费" + ',' + "拖车费" + ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费" + ','+ "停车费"+ ','+
-        "商品车加油费"+ ','+ "货车油费" + ','+ "货车尿素费"+ ','+ "违章罚款司机" + ','+ "违章罚款公司"+ ','+ "过路费"+ ','+
+    var header = "司机" + ',' + "货车" + ',' +"洗车费" + ',' + "拖车费" + ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费" + ','+ "货车停车费"+ ','+
+        "商品车停车费"+ ','+ "商品车加油费"+ ','+ "货车油费" + ','+ "货车尿素费"+ ','+ "违章罚款司机" + ','+ "违章罚款公司"+ ','+ "过路费"+ ','+
         "质损个人" + ','+ "质损公司"+ ','+ "配件费" + ','+ "维修费"+ ','+ "保养费" + ','+ "货车事故个人"+ ','+ "货车事故公司";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -1357,6 +1357,11 @@ function getDriveCostCsv(req,res,next){
                     parkObj.truckParkingFee = "";
                 }else{
                     parkObj.truckParkingFee = rows[i].truck_parking_fee;
+                }
+                if(rows[i].car_total_fee == null){
+                    parkObj.carTotalFee = "";
+                }else{
+                    parkObj.carTotalFee = rows[i].car_total_fee;
                 }
                 if(rows[i].car_oil_fee == null){
                     parkObj.carOilFee = "";
@@ -1424,9 +1429,9 @@ function getDriveCostCsv(req,res,next){
                     parkObj.accidentCompanyFee = rows[i].accident_company_fee;
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.totalCleanFee+","+parkObj.totalTrailerFee +","+
-                    parkObj.carParkingFee+","+parkObj.totalRunFee+","+parkObj.leadFee +","+parkObj.truckParkingFee +","+parkObj.carOilFee+","+
-                    parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee +","+parkObj.peccancyCompanyFee+","+parkObj.etcFee+","+
-                    parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+
+                    parkObj.carParkingFee+","+parkObj.totalRunFee+","+parkObj.leadFee +","+parkObj.truckParkingFee +","+parkObj.carTotalFee +","+
+                    parkObj.carOilFee+","+parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee +","+parkObj.peccancyCompanyFee+","+
+                    parkObj.etcFee+","+ parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+
                     parkObj.partsFee+","+parkObj.repairFee +","+parkObj.maintainFee+","+parkObj.accidentUnderFee+","+parkObj.accidentCompanyFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');

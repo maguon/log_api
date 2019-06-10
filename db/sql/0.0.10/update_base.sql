@@ -421,3 +421,8 @@ ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `date_id`;
 -- ----------------------------
 ALTER TABLE `dp_route_task_fee`
 ADD COLUMN `dp_route_task_id`  int(10) NULL COMMENT '任务路线ID' AFTER `truck_num`;
+-- ----------------------------
+-- 2019-06-10 更新
+-- ----------------------------
+ALTER TABLE `drive_truck_month_value`
+ADD COLUMN `car_parking_total_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停车费' AFTER `car_oil_fee`;
