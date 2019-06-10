@@ -47,6 +47,22 @@ function createDriveTruckMonthValue(req,res,next){
     }).seq(function () {
         var that = this;
         params.yMonth = yMonth;
+        driveTruckMonthValueDAO.updateStorageCarCount(params,function(err,result){
+            if (err) {
+                logger.error(' updateStorageCarCount ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateStorageCarCount ' + 'success');
+                }else{
+                    logger.warn(' updateStorageCarCount ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.yMonth = yMonth;
         driveTruckMonthValueDAO.updateOutput(params,function(err,result){
             if (err) {
                 logger.error(' updateOutput ' + err.message);
