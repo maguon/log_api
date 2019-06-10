@@ -33919,6 +33919,9 @@
         "truckNum": {
           "type": "string"
         },
+        "dpRouteTaskId": {
+          "type": "integer"
+        },
         "dayCount": {
           "type": "integer"
         },
@@ -33928,8 +33931,20 @@
         "totalPrice": {
           "type": "integer"
         },
+        "carDayCount": {
+          "type": "integer"
+        },
+        "carSinglePrice": {
+          "type": "integer"
+        },
+        "carTotalPrice": {
+          "type": "integer"
+        },
         "carOilFee": {
           "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {

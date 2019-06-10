@@ -408,3 +408,16 @@ left join dp_route_task_oil_rel drtor on drt.id = drtor.dp_route_task_id
 left join truck_info ti on drt.truck_id = ti.id
 left join truck_brand tb on ti.brand_id = tb.id
 where drt.task_plan_date>=20190501 and drtor.id is null and drt.task_status=10;
+-- ----------------------------
+-- 2019-06-10 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_fee`
+ADD COLUMN `car_day_count`  int(4) NULL DEFAULT 0 COMMENT '商品车停车天数' AFTER `total_price`,
+ADD COLUMN `car_single_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停车费单价' AFTER `car_day_count`,
+ADD COLUMN `car_total_price`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停车费总价' AFTER `car_single_price`,
+ADD COLUMN `remark`  varchar(200) NULL COMMENT '备注' AFTER `date_id`;
+-- ----------------------------
+-- 2019-06-10 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_fee`
+ADD COLUMN `dp_route_task_id`  int(10) NULL COMMENT '任务路线ID' AFTER `truck_num`;

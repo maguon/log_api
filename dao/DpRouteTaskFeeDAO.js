@@ -7,17 +7,23 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteTaskFeeDAO.js');
 
 function addDpRouteTaskFee(params,callback){
-    var query = " insert into dp_route_task_fee (drive_id,drive_name,truck_id,truck_num," +
-        " day_count,single_price,total_price,car_oil_fee) values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into dp_route_task_fee (drive_id,drive_name,truck_id,truck_num,dp_route_task_id," +
+        " day_count,single_price,total_price,car_day_count,car_single_price,car_total_price,car_oil_fee,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.truckNum;
+    paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.dayCount;
     paramsArray[i++]=params.singlePrice;
     paramsArray[i++]=params.totalPrice;
+    paramsArray[i++]=params.carDayCount;
+    paramsArray[i++]=params.carSinglePrice;
+    paramsArray[i++]=params.carTotalPrice;
     paramsArray[i++]=params.carOilFee;
+    paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTaskFee ');
         return callback(error,rows);
@@ -93,12 +99,17 @@ function getDpRouteTaskFeeCount(params,callback) {
 }
 
 function updateDpRouteTaskFee(params,callback){
-    var query = " update dp_route_task_fee set day_count = ? , single_price = ? , total_price = ? , car_oil_fee = ? where id = ? ";
+    var query = " update dp_route_task_fee set day_count = ? , single_price = ? , total_price = ? , " +
+        " car_day_count = ? , car_single_price = ? , car_total_price = ? , car_oil_fee = ? , remark = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dayCount;
     paramsArray[i++]=params.singlePrice;
     paramsArray[i++]=params.totalPrice;
+    paramsArray[i++]=params.carDayCount;
+    paramsArray[i++]=params.carSinglePrice;
+    paramsArray[i++]=params.carTotalPrice;
     paramsArray[i++]=params.carOilFee;
+    paramsArray[i++]=params.remark;
     paramsArray[i++] = params.dpRouteTaskFeeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteTaskFee ');
