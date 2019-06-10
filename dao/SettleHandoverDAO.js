@@ -342,10 +342,11 @@ function getDriveSettle(params,callback) {
         " end) distance_salary, " +
         " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary" +
         " from dp_route_task drt " +
+        " left join dp_route_load_task drlt on drt.id = drlt.dp_route_task_id" +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
         " left join company_info c on t.company_id = c.id " +
-        " where drt.task_plan_date>="+params.taskPlanDateStart+" and drt.task_plan_date<="+params.taskPlanDateEnd+" and drt.task_status>=9 " +
+        " where drt.task_plan_date>="+params.taskPlanDateStart+" and drt.task_plan_date<="+params.taskPlanDateEnd+" and drt.task_status>=9 and drlt.load_task_status !=8 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end) not_storage_car_count, " +
@@ -353,7 +354,7 @@ function getDriveSettle(params,callback) {
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_plan_date>="+params.taskPlanDateStart+" and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status>=9 and dprl.load_task_status !=8 " +
-        " group by dpr.drive_id,dpr.truck_id) dprm  on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
+        " group by dpr.drive_id,dpr.truck_id) dprm on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
         " left join (select dprt.drive_id,dprt.truck_id,sum(ecrr.fee*ecrr.distance*drlt.output_ratio) output " +
         " from dp_route_load_task_detail drltd " +
         " left join dp_route_load_task drlt on drlt.id = drltd.dp_route_load_task_id " +
@@ -361,7 +362,7 @@ function getDriveSettle(params,callback) {
         " left join car_info ci on drltd.car_id = ci.id " +
         " left join entrust_city_route_rel ecrr on ci.entrust_id = ecrr.entrust_id and " +
         " ci.make_id = ecrr.make_id and ci.route_id = ecrr.city_route_id and ci.size_type =ecrr.size_type " +
-        " where dprt.task_plan_date>="+params.taskPlanDateStart+" and dprt.task_plan_date<="+params.taskPlanDateEnd+" and dprt.task_status >=9 and drlt.load_task_status !=8 " +
+        " where dprt.task_plan_date>="+params.taskPlanDateStart+" and dprt.task_plan_date<="+params.taskPlanDateEnd+" and dprt.task_status>=9 and drlt.load_task_status !=8 " +
         " group by dprt.drive_id,dprt.truck_id) dprtm on drtm.drive_id = dprtm.drive_id and drtm.truck_id = dprtm.truck_id " +
         " where drtm.drive_id is not null ";
     var paramsArray=[],i=0;
