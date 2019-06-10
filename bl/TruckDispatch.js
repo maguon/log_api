@@ -101,8 +101,7 @@ function initTruckDispatchCity(req,res,next){
     var params = req.params ;
     params.taskStart = 0;
     params.taskEnd = 0;
-    params.carCount = 0;
-    truckDispatchDAO.updateTruckDispatch(params,function(error,result){
+    truckDispatchDAO.updateTruckDispatchCurrent(params,function(error,result){
         if (error) {
             logger.error(' initTruckDispatchCity ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
@@ -113,6 +112,7 @@ function initTruckDispatchCity(req,res,next){
         }
     })
 }
+
 
 module.exports = {
     queryTruckDispatch: queryTruckDispatch ,
