@@ -15,14 +15,14 @@ function addDistance(params,callback){
         " sum(case when dpr.load_flag = 1 then dpr.distance end) as load_distance, " +
         " sum(case when dpr.load_flag = 0 then dpr.distance end) as no_load_distance, " +
         " sum(dpr.distance) as distance, " +
-        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end) not_storage_car_count, " +
-        " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dpr.car_count end) storage_car_count, " +
-        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end)*4 as enter_fee " +
+        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end) not_storage_car_count, " +
+        " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dprl.real_count end) storage_car_count, " +
+        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end)*4 as enter_fee " +
         " from dp_route_task dpr " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
-        " where dpr.task_status >=9 and dprl.load_task_status !=8 " +
+        " where dpr.task_status >=9 " +
         " and dpr.task_plan_date>="+params.yMonth+"01 and dpr.task_plan_date<=" +params.yMonth+"31"+
         " group by dpr.drive_id,dpr.truck_id ";
     var paramsArray=[],i=0;
@@ -44,7 +44,7 @@ function updateOutput(params,callback){
         " and ci.make_id = ecrr.make_id and ci.route_id = ecrr.city_route_id " +
         " and ci.size_type =ecrr.size_type  " +
         " where dprt.task_plan_date>= "+params.yMonth+"01 and dprt.task_plan_date<="+params.yMonth+"31 " +
-        " and dprt.task_status >=9 and drlt.load_task_status !=8 " +
+        " and dprt.task_status >=9 " +
         " group by dprt.drive_id,dprt.truck_id) dprm " +
         " on dtmv.drive_id = dprm.drive_id and dtmv.truck_id = dprm.truck_id " +
         " and dtmv.y_month = "+params.yMonth+" set dtmv.output = dprm.output ";
@@ -94,9 +94,8 @@ function updateDistanceSalary(params,callback){
         " end) distance_salary, " +
         " sum(case when dpr.reverse_flag=1 then dpr.reverse_money end) reverse_salary " +
         " from dp_route_task dpr " +
-        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_plan_date>="+params.yMonth+"01 and dpr.task_plan_date<="+params.yMonth+"31 " +
-        " and dpr.task_status>=9 and dprl.load_task_status !=8" +
+        " and dpr.task_status>=9 " +
         " group by dpr.drive_id,dpr.truck_id) dprm " +
         " on dtmv.drive_id = dprm.drive_id and dtmv.truck_id = dprm.truck_id " +
         " and dtmv.y_month = "+params.yMonth+" set dtmv.distance_salary = dprm.distance_salary , dtmv.reverse_salary = dprm.reverse_salary ";
