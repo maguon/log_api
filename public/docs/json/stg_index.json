@@ -335,6 +335,14 @@
         "parameters": [
 
           {
+            "name": "deviceId",
+            "in": "query",
+            "description": "device id",
+            "required": true,
+            "type": "string"
+
+          },
+          {
             "name": "deviceToken",
             "in": "query",
             "description": "device token",

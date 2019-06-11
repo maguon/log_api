@@ -434,3 +434,8 @@ ADD COLUMN `damage_under_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '质损个�
 ADD COLUMN `accident_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '事故费用' AFTER `damage_under_fee`,
 ADD COLUMN `peccancy_under_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '违章个人承担费用' AFTER `accident_fee`,
 ADD COLUMN `exceed_oil_fee`  varchar(255) NULL DEFAULT 0 COMMENT '超量扣款' AFTER `peccancy_under_fee`;
+-- ----------------------------
+-- 2019-06-11 更新
+-- ----------------------------
+ALTER TABLE `user_device`
+ADD COLUMN `device_id`  varchar(50) NULL AFTER `user_id`;
