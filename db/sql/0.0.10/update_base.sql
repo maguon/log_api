@@ -444,3 +444,8 @@ ADD COLUMN `device_id`  varchar(50) NULL AFTER `user_id`;
 -- ----------------------------
 ALTER TABLE `user_device`
 MODIFY COLUMN `device_token`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '设备标识' AFTER `device_id`;
+-- ----------------------------
+-- 2019-06-11 更新
+-- ----------------------------
+ALTER TABLE `user_device`
+ADD UNIQUE INDEX `user_id` (`user_id`, `device_id`, `app_type`) USING BTREE ;

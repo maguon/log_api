@@ -56,10 +56,13 @@ function updateUserDevice(params,callback){
 }
 
 function updateUserDeviceToken(params,callback){
-    var query = " update user_device set device_token = ? where user_id = ? ";
+    var query = " update user_device set device_token = ? " +
+        " where user_id = ? and device_id = ? and app_type = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.deviceToken;
-    paramsArray[i] = params.userId;
+    paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.deviceId;
+    paramsArray[i++] = params.appType;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateUserDeviceToken ');
         return callback(error,rows);
