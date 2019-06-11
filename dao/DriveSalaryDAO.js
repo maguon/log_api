@@ -7,15 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 
 function addDriveSalary(params,callback){
-    var query = " insert into drive_salary (month_date_id,drive_id,load_distance,no_load_distance," +
+    var query = " insert into drive_salary (month_date_id,drive_id," +
         " distance_salary,reverse_salary,enter_fee,plan_salary,damage_under_fee,accident_fee,peccancy_under_fee," +
         " exceed_oil_fee,refund_fee,social_security_fee,other_fee,actual_salary,remark)  " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.monthDateId;
     paramsArray[i++]=params.driveId;
-    paramsArray[i++]=params.loadDistance;
-    paramsArray[i++]=params.noLoadDistance;
     paramsArray[i++]=params.distanceSalary;
     paramsArray[i++]=params.reverseSalary;
     paramsArray[i++]=params.enterFee;
@@ -36,7 +34,7 @@ function addDriveSalary(params,callback){
 }
 
 function getDriveSalary(params,callback) {
-    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance," +
+    var query = " select ds.id,ds.month_date_id," +
         " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.plan_salary,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee, " +
         " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
         " dprtm.drive_id,dprtm.user_id,dprtm.drive_name,dprtm.mobile, " +
@@ -47,7 +45,7 @@ function getDriveSalary(params,callback) {
         " left join user_info u on d.user_id = u.uid " +
         " where dprt.task_plan_date>="+params.monthDateId+"01 and dprt.task_plan_date<="+params.monthDateId+"31 and dprt.task_status>=9 " +
         " group by dprt.drive_id) dprtm " +
-        " left join(select ds.id,ds.month_date_id,ds.drive_id,ds.load_distance,ds.no_load_distance," +
+        " left join(select ds.id,ds.month_date_id,ds.drive_id," +
         " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.plan_salary,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
         " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status " +
         " from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +

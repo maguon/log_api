@@ -32507,12 +32507,6 @@
         "driveId": {
           "type": "integer"
         },
-        "loadDistance": {
-          "type": "integer"
-        },
-        "noLoadDistance": {
-          "type": "integer"
-        },
         "distanceSalary": {
           "type": "integer"
         },
