@@ -338,7 +338,7 @@
             "name": "deviceId",
             "in": "query",
             "description": "device id",
-            "required": true,
+            "required": false,
             "type": "string"
 
           },
