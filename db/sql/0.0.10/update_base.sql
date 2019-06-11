@@ -426,3 +426,11 @@ ADD COLUMN `dp_route_task_id`  int(10) NULL COMMENT '任务路线ID' AFTER `truc
 -- ----------------------------
 ALTER TABLE `drive_truck_month_value`
 ADD COLUMN `car_parking_total_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '商品车停车费' AFTER `car_oil_fee`;
+-- ----------------------------
+-- 2019-06-11 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+ADD COLUMN `damage_under_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '质损个人承担费用' AFTER `plan_salary`,
+ADD COLUMN `accident_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '事故费用' AFTER `damage_under_fee`,
+ADD COLUMN `peccancy_under_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '违章个人承担费用' AFTER `accident_fee`,
+ADD COLUMN `exceed_oil_fee`  varchar(255) NULL DEFAULT 0 COMMENT '超量扣款' AFTER `peccancy_under_fee`;

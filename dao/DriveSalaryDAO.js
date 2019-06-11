@@ -7,15 +7,29 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 
 function addDriveSalary(params,callback){
-    var query = " insert into drive_salary (month_date_id,drive_id,truck_id,load_distance,no_load_distance,plan_salary)  " +
-        " values ( ? , ? , ? , ? , ? , ? )";
+    var query = " insert into drive_salary (month_date_id,drive_id,truck_id,load_distance,no_load_distance," +
+        " distance_salary,reverse_salary,enter_fee,plan_salary,damage_under_fee,accident_fee,peccancy_under_fee," +
+        " exceed_oil_fee,refund_fee,social_security_fee,other_fee,actual_salary,remark)  " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.monthDateId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.loadDistance;
     paramsArray[i++]=params.noLoadDistance;
+    paramsArray[i++]=params.distanceSalary;
+    paramsArray[i++]=params.reverseSalary;
+    paramsArray[i++]=params.enterFee;
     paramsArray[i++]=params.planSalary;
+    paramsArray[i++]=params.damageUnderFee;
+    paramsArray[i++]=params.accidentFee;
+    paramsArray[i++]=params.peccancyUnderFee;
+    paramsArray[i++]=params.exceedOilFee;
+    paramsArray[i++]=params.refundFee;
+    paramsArray[i++]=params.socialSecurityFee;
+    paramsArray[i++]=params.otherFee;
+    paramsArray[i++]=params.actualSalary;
+    paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveSalary ');
         return callback(error,rows);

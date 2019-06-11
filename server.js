@@ -400,7 +400,7 @@ function createServer() {
      */
     server.get('/api/driveSalary' , driveSalary.queryDriveSalary);
     server.get('/api/driveSalaryBase' , driveSalary.queryDriveSalaryBase);
-    server.post({path:'/api/user/:userId/driveSalary',contentType: 'application/json'},driveSalary.createDriveSalaryTask);
+    server.post({path:'/api/user/:userId/driveSalary',contentType: 'application/json'},driveSalary.createDriveSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId',contentType: 'application/json'} ,driveSalary.updateDrivePlanSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId/driveActualSalary',contentType: 'application/json'} ,driveSalary.updateDriveActualSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId/grantStatus/:grantStatus',contentType: 'application/json'} ,driveSalary.updateDriveSalaryStatus);

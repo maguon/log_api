@@ -32416,11 +32416,44 @@
         "noLoadDistance": {
           "type": "integer"
         },
+        "distanceSalary": {
+          "type": "integer"
+        },
+        "reverseSalary": {
+          "type": "integer"
+        },
+        "enterFee": {
+          "type": "integer"
+        },
         "planSalary": {
           "type": "integer"
         },
-        "dpRouteTaskIds": {
+        "damageUnderFee": {
           "type": "integer"
+        },
+        "accidentFee": {
+          "type": "integer"
+        },
+        "peccancyUnderFee": {
+          "type": "integer"
+        },
+        "exceedOilFee": {
+          "type": "integer"
+        },
+        "refundFee": {
+          "type": "integer"
+        },
+        "socialSecurityFee": {
+          "type": "integer"
+        },
+        "otherFee": {
+          "type": "integer"
+        },
+        "actualSalary": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {
