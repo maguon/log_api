@@ -337,26 +337,15 @@ function getDriveDistanceMoney(params,callback) {
 }
 
 function getDriveDistanceCount(params,callback) {
-    var query = " select sum(dpr.distance) as distance,sum(dpr.car_count) as car_count " +
+    var query = " select sum(dpr.distance) as distance, " +
+        " (select sum(dprl.real_count) from dp_route_load_task dprl " +
+        " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
+        " where dpr.task_plan_date>="+params.dateIdStart+" and dpr.task_plan_date<= " +params.dateIdEnd+
+        " and dpr.task_status>="+params.taskStatus+" and dpr.drive_id = "+params.driveId+") as car_count " +
         " from dp_route_task dpr " +
-        " where dpr.id is not null ";
+        " where dpr.id is not null and dpr.task_plan_date>="+params.dateIdStart+" and dpr.task_plan_date<= " +params.dateIdEnd+
+        " and dpr.task_status>="+params.taskStatus+" and dpr.drive_id = "+params.driveId;
     var paramsArray=[],i=0;
-    if(params.taskStatus){
-        paramsArray[i++] = params.taskStatus;
-        query = query + " and dpr.task_status >= ? ";
-    }
-    if(params.driveId){
-        paramsArray[i++] = params.driveId;
-        query = query + " and dpr.drive_id = ? ";
-    }
-    if(params.dateIdStart){
-        paramsArray[i++] = params.dateIdStart;
-        query = query + " and dpr.date_id >= ? ";
-    }
-    if(params.dateIdEnd){
-        paramsArray[i++] = params.dateIdEnd;
-        query = query + " and dpr.date_id <= ? ";
-    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveDistanceCount ');
         return callback(error,rows);
