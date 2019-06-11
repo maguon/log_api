@@ -9281,6 +9281,106 @@
         }
       }
     },
+    "/driveSalary.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveSalary csv",
+        "description": "query driveSalaryCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSalaryId",
+            "in": "query",
+            "description": "driveSalary id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthDateId",
+            "in": "query",
+            "description": "monthDate id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckBrandId",
+            "in": "query",
+            "description": "truckBrand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantStatus",
+            "in": "query",
+            "description": "grant status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSalary"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalary id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSalary": {
       "post": {
         "tags": [
@@ -32405,9 +32505,6 @@
           "type": "integer"
         },
         "driveId": {
-          "type": "integer"
-        },
-        "truckId": {
           "type": "integer"
         },
         "loadDistance": {

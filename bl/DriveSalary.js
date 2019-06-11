@@ -104,6 +104,137 @@ function updateDriveSalaryStatus(req,res,next){
     })
 }
 
+function getDriveSalaryCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' +"司机姓名" + ',' + "手机号"+ ','+"所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "品牌"+ ','+
+        "里程工资" + ','+ "交车打车进门费" + ','+ "倒板工资" + ','+"任务工资" + ','+ "商品车质损承担"+ ','+ "货车事故承担"+ ','+
+        "违章扣款"+ ','+ "超量扣款" + ','+ "报销扣款" + ','+"社保缴费" + ','+ "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveSalaryDAO.getDriveSalary(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSalary ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.monthDateId = params.monthDateId;
+                parkObj.driveName = rows[i].drive_name;
+                if(rows[i].mobile == null){
+                    parkObj.mobile = "";
+                }else{
+                    parkObj.mobile = rows[i].mobile;
+                }
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else{
+                    parkObj.operateType = "外协";
+                }
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].brand_name == null){
+                    parkObj.brandName = "";
+                }else{
+                    parkObj.brandName = rows[i].brand_name;
+                }
+                if(rows[i].distance_salary == null){
+                    parkObj.distanceSalary = "";
+                }else{
+                    parkObj.distanceSalary = rows[i].distance_salary;
+                }
+                if(rows[i].enter_fee == null){
+                    parkObj.enterFee = "";
+                }else{
+                    parkObj.enterFee = rows[i].enter_fee;
+                }
+                if(rows[i].reverse_salary == null){
+                    parkObj.reverseSalary = "";
+                }else{
+                    parkObj.reverseSalary = rows[i].reverse_salary;
+                }
+                if(rows[i].plan_salary == null){
+                    parkObj.planSalary = "";
+                }else{
+                    parkObj.planSalary = rows[i].plan_salary;
+                }
+                if(rows[i].damage_under_fee == null){
+                    parkObj.damageUnderFee = "";
+                }else{
+                    parkObj.damageUnderFee = rows[i].damage_under_fee;
+                }
+                if(rows[i].accident_fee == null){
+                    parkObj.accidentFee = "";
+                }else{
+                    parkObj.accidentFee = rows[i].accident_fee;
+                }
+                if(rows[i].peccancy_under_fee == null){
+                    parkObj.peccancyUnderFee = "";
+                }else{
+                    parkObj.peccancyUnderFee = rows[i].peccancy_under_fee;
+                }
+                if(rows[i].exceed_oil_fee == null){
+                    parkObj.exceedOilFee = "";
+                }else{
+                    parkObj.exceedOilFee = rows[i].exceed_oil_fee;
+                }
+                if(rows[i].refund_fee == null){
+                    parkObj.refundFee = "";
+                }else{
+                    parkObj.refundFee = rows[i].refund_fee;
+                }
+                if(rows[i].social_security_fee == null){
+                    parkObj.socialSecurityFee = "";
+                }else{
+                    parkObj.socialSecurityFee = rows[i].social_security_fee;
+                }
+                if(rows[i].other_fee == null){
+                    parkObj.otherFee = "";
+                }else{
+                    parkObj.otherFee = rows[i].other_fee;
+                }
+                if(rows[i].actual_salary == null){
+                    parkObj.actualSalary = "";
+                }else{
+                    parkObj.actualSalary = rows[i].actual_salary;
+                }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
+                if(rows[i].grant_status == 2){
+                    parkObj.grantStatus = "未发放";
+                }else if(rows[i].grant_status == 3){
+                    parkObj.grantStatus = "已发放";
+                }else{
+                    parkObj.grantStatus = "未结算";
+                }
+                csvString = csvString+parkObj.monthDateId+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.operateType+","+ parkObj.companyName+","+
+                    parkObj.truckNum+","+parkObj.brandName+","+parkObj.distanceSalary+","+parkObj.enterFee+","+parkObj.reverseSalary+","+
+                    parkObj.planSalary+","+parkObj.damageUnderFee+","+parkObj.accidentFee+","+parkObj.peccancyUnderFee+","+parkObj.exceedOilFee+","+
+                    parkObj.refundFee+","+parkObj.socialSecurityFee+","+parkObj.otherFee+","+parkObj.actualSalary+","+parkObj.remark+","+
+                    parkObj.grantStatus+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDriveSalary : createDriveSalary,
@@ -111,5 +242,6 @@ module.exports = {
     queryDriveSalaryBase : queryDriveSalaryBase,
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
-    updateDriveSalaryStatus : updateDriveSalaryStatus
+    updateDriveSalaryStatus : updateDriveSalaryStatus,
+    getDriveSalaryCsv : getDriveSalaryCsv
 }

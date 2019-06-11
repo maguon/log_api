@@ -7,14 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 
 function addDriveSalary(params,callback){
-    var query = " insert into drive_salary (month_date_id,drive_id,truck_id,load_distance,no_load_distance," +
+    var query = " insert into drive_salary (month_date_id,drive_id,load_distance,no_load_distance," +
         " distance_salary,reverse_salary,enter_fee,plan_salary,damage_under_fee,accident_fee,peccancy_under_fee," +
         " exceed_oil_fee,refund_fee,social_security_fee,other_fee,actual_salary,remark)  " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.monthDateId;
     paramsArray[i++]=params.driveId;
-    paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.loadDistance;
     paramsArray[i++]=params.noLoadDistance;
     paramsArray[i++]=params.distanceSalary;
@@ -37,8 +36,9 @@ function addDriveSalary(params,callback){
 }
 
 function getDriveSalary(params,callback) {
-    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance,ds.plan_salary,ds.refund_fee,ds.social_security_fee, " +
-        " ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
+    var query = " select ds.id,ds.month_date_id,ds.load_distance,ds.no_load_distance," +
+        " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.plan_salary,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee, " +
+        " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
         " dprtm.drive_id,dprtm.user_id,dprtm.drive_name,dprtm.mobile, " +
         " t.truck_num,t.truck_type,tb.brand_name,h.number,t.operate_type,c.company_name, " +
         " drtm.distance_salary as plan_distance_salary,drtm.reverse_salary as plan_reverse_salary,dprm.enter_fee as plan_enter_fee " +
@@ -48,8 +48,8 @@ function getDriveSalary(params,callback) {
         " where dprt.task_plan_date>="+params.monthDateId+"01 and dprt.task_plan_date<="+params.monthDateId+"31 and dprt.task_status>=9 " +
         " group by dprt.drive_id) dprtm " +
         " left join(select ds.id,ds.month_date_id,ds.drive_id,ds.load_distance,ds.no_load_distance," +
-        " ds.plan_salary,ds.refund_fee,ds.social_security_fee, " +
-        " ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status " +
+        " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.plan_salary,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
+        " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status " +
         " from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +
         " left join truck_info t on dprtm.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
@@ -132,10 +132,10 @@ function getDriveSalary(params,callback) {
 }
 
 function getDriveSalaryBase(params,callback) {
-    var query = " select ds.*,d.drive_name,t.truck_num,tb.brand_name,t.operate_type,c.company_name " +
+    var query = " select ds.*,d.drive_name,t.id as truck_id,t.truck_num,tb.brand_name,t.operate_type,c.company_name " +
         " from drive_salary ds " +
         " left join drive_info d on ds.drive_id = d.id " +
-        " left join truck_info t on ds.truck_id = t.id " +
+        " left join truck_info t on d.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join company_info c on t.company_id = c.id " +
         " where ds.id is not null ";
