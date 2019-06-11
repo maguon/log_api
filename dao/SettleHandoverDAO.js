@@ -342,7 +342,6 @@ function getDriveSettle(params,callback) {
         " end) distance_salary, " +
         " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary" +
         " from dp_route_task drt " +
-        " left join dp_route_load_task drlt on drt.id = drlt.dp_route_task_id" +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
         " left join company_info c on t.company_id = c.id " +
