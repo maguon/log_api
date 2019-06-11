@@ -61,7 +61,7 @@ function getDriveSalary(params,callback) {
         " where drt.task_plan_date>="+params.monthDateId+"01 and drt.task_plan_date<="+params.monthDateId+"31 and drt.task_status>=9 " +
         " group by drt.drive_id) drtm on dprtm.drive_id = drtm.drive_id " +
         " left join (select dpr.drive_id, " +
-        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dpr.car_count end)*4 as enter_fee " +
+        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end)*4 as enter_fee " +
         " from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +
         " where dpr.task_plan_date>="+params.monthDateId+"01 and dpr.task_plan_date<="+params.monthDateId+"31 and dpr.task_status>=9" +
