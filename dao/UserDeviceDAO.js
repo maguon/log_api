@@ -7,12 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('UserDeviceDAO.js');
 
 function addUserDevice(params,callback){
-    var query = " insert into user_device (user_id,device_id,device_token,version,app_type,device_type) " +
-        " values ( ? , ? , ? , ? , ? , ? )";
+    var query = " insert into user_device (user_id,device_id,version,app_type,device_type) " +
+        " values ( ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.deviceId;
-    paramsArray[i++]=params.deviceToken;
     paramsArray[i++]=params.version;
     paramsArray[i++]=params.appType;
     paramsArray[i]=params.deviceType;

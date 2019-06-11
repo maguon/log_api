@@ -343,14 +343,6 @@
 
           },
           {
-            "name": "deviceToken",
-            "in": "query",
-            "description": "device token",
-            "required": true,
-            "type": "string"
-
-          },
-          {
             "name": "version",
             "in": "query",
             "description": "device version",
