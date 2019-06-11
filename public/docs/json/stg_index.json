@@ -920,6 +920,52 @@
         }
       }
     },
+    "/user/{userId}/userDeviceToken": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "reset user deviceToken",
+        "description": "reset user deviceToken",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "userDevice",
+            "in": "body",
+            "description": "userDevice info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userDevice"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/newMobile"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/user/{userId}/deviceToken/{deviceToken}": {
       "delete": {
         "tags": [

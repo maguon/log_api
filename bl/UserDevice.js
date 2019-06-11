@@ -41,6 +41,20 @@ function queryUserDevice(req,res,next){
     })
 }
 
+function updateUserDeviceToken (req,res,next){
+    var params = req.params;
+    userDeviceDAO.updateUserDeviceToken(params,function(error,result){
+        if (error) {
+            logger.error(' updateUserDeviceToken ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateUserDeviceToken ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function removeUserDevice (req,res,next){
     var params = req.params;
     userDeviceDAO.deleteUserDevice(params,function(error,result){
@@ -59,5 +73,6 @@ function removeUserDevice (req,res,next){
 module.exports = {
     createUserDevice : createUserDevice,
     queryUserDevice : queryUserDevice,
+    updateUserDeviceToken : updateUserDeviceToken,
     removeUserDevice : removeUserDevice
 }

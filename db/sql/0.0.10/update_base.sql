@@ -439,3 +439,8 @@ ADD COLUMN `exceed_oil_fee`  varchar(255) NULL DEFAULT 0 COMMENT '超量扣款' 
 -- ----------------------------
 ALTER TABLE `user_device`
 ADD COLUMN `device_id`  varchar(50) NULL AFTER `user_id`;
+-- ----------------------------
+-- 2019-06-11 更新
+-- ----------------------------
+ALTER TABLE `user_device`
+MODIFY COLUMN `device_token`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '设备标识' AFTER `device_id`;

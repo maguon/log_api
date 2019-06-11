@@ -213,6 +213,7 @@ function createServer() {
      */
     server.get('/api/userDevice' ,userDevice.queryUserDevice);
     server.post({path:'/api/user/:userId/userDevice',contentType: 'application/json'} , userDevice.createUserDevice);
+    server.put({path:'/api/user/:userId/userDeviceToken',contentType: 'application/json'} ,userDevice.updateUserDeviceToken);
     server.del('/api/user/:userId/deviceToken/:deviceToken' , userDevice.removeUserDevice);
 
 
