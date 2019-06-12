@@ -128,7 +128,7 @@ function uploadDrivePeccancyFile(req,res,next){
             }).seq(function(){
                 var that = this;
                 var subParams ={
-                    truckNum : objArray[i].城市ID,
+                    cityId : objArray[i].城市ID,
                     row : i+1,
                 }
                 cityDAO.getCity(subParams,function(error,rows){
@@ -136,9 +136,11 @@ function uploadDrivePeccancyFile(req,res,next){
                         logger.error(' getCity ' + error.message);
                         throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     } else{
-                        if(rows&&rows.length>0) {
+                        if(rows&&rows.length==1) {
+                            parkObj.cityId = rows[0].id;
                             parkObj.cityName = rows[0].city_name;
                         }else{
+                            parkObj.cityId = 0;
                             parkObj.cityName = "";
                         }
                         that();
@@ -158,7 +160,7 @@ function uploadDrivePeccancyFile(req,res,next){
                         companyMoney : objArray[i].公司承担金额,
                         startDate : objArray[i].违章时间,
                         handleDate : objArray[i].处理时间,
-                        cityId : objArray[i].城市ID,
+                        cityId : parkObj.cityId,
                         cityName : parkObj.cityName,
                         address : objArray[i].违章地点,
                         userId : params.userId,
