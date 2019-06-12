@@ -8,16 +8,20 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var drivePeccancyDAO = require('../dao/DrivePeccancyDAO.js');
+var driveDAO = require('../dao/DriveDAO.js');
+var truckDAO = require('../dao/TruckDAO.js');
+var cityDAO = require('../dao/CityDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DrivePeccancy.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createDrivePeccancy(req,res,next){
     var params = req.params ;
-    var myDate = new Date();
-    var strDate = moment(myDate).format('YYYYMMDD');
+    var strDate = moment(params.startDate).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
     drivePeccancyDAO.addDrivePeccancy(params,function(error,result){
         if (error) {
@@ -73,11 +77,131 @@ function updateDrivePeccancy(req,res,next){
     })
 }
 
+function uploadDrivePeccancyFile(req,res,next){
+    var params = req.params;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    driveName : objArray[i].司机,
+                    row : i+1,
+                }
+                driveDAO.getDrive(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getDrive ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length>0) {
+                            parkObj.driveId = rows[0].id;
+                        }else{
+                            parkObj.driveId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    truckNum : objArray[i].货车牌号,
+                    row : i+1,
+                }
+                truckDAO.getTruckBase(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getTruckBase ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.truckId = rows[0].id;
+                            parkObj.truckType = rows[0].truck_type;
+                        }else{
+                            parkObj.truckId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    truckNum : objArray[i].城市ID,
+                    row : i+1,
+                }
+                cityDAO.getCity(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getCity ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length>0) {
+                            parkObj.cityName = rows[0].city_name;
+                        }else{
+                            parkObj.cityName = "";
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(parkObj.driveId>0&&parkObj.truckId>0){
+                    var subParams ={
+                        driveId : parkObj.driveId,
+                        truckId : parkObj.truckId,
+                        truckType : parkObj.truckType,
+                        fineScore : objArray[i].扣分,
+                        buyScore : objArray[i].买分金额,
+                        trafficFine : objArray[i].交通罚款,
+                        fineMoney : objArray[i].处理金额,
+                        underMoney : objArray[i].个人承担金额,
+                        companyMoney : objArray[i].公司承担金额,
+                        startDate : objArray[i].违章时间,
+                        handleDate : objArray[i].处理时间,
+                        cityId : objArray[i].城市ID,
+                        cityName : parkObj.cityName,
+                        address : objArray[i].违章地点,
+                        userId : params.userId,
+                        dateId : parseInt(moment(objArray[i].违章时间).format('YYYYMMDD')),
+                        remark : objArray[i].备注,
+                        row : i+1
+                    }
+                    drivePeccancyDAO.addDrivePeccancy(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' createUploadDrivePeccancy ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result&&result.insertId>0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' createUploadDrivePeccancy ' + 'success');
+                            }else{
+                                logger.warn(' createUploadDrivePeccancy ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
+                    that(null,i);
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadDrivePeccancyFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 function getDrivePeccancyCsv(req,res,next){
     var csvString = "";
     var header = "违章结算编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "货车类型" + ','+ "扣罚分数" + ','+ "买分金额" + ','+ "交通罚款" + ','+
         "罚款金额" + ','+ "个人承担金额" + ','+ "公司承担金额"+ ','+ "违章时间" + ','+ "处理时间"+ ','+ "违章城市"+ ','+ "违章地点" + ','+
-        "操作人" + ','+ "状态" + ','+ "备注" ;
+        "操作人" + ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -138,11 +262,6 @@ function getDrivePeccancyCsv(req,res,next){
                 }else{
                     parkObj.opUserName = rows[i].op_user_name;
                 }
-                if(rows[i].fine_status == 1){
-                    parkObj.fineStatus = "未扣";
-                }else{
-                    parkObj.fineStatus = "已扣";
-                }
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
@@ -152,7 +271,7 @@ function getDrivePeccancyCsv(req,res,next){
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.truckType+","+parkObj.fineScore+","+
                     parkObj.buyScore+","+parkObj.trafficFine+","+parkObj.fineMoney +","+parkObj.underMoney +","+parkObj.companyMoney+","+
                     parkObj.startDate +","+parkObj.handleDate+","+ parkObj.cityName+","+parkObj.address+","+parkObj.opUserName +","+
-                    parkObj.fineStatus+","+parkObj.remark+ '\r\n';
+                    parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
@@ -172,5 +291,6 @@ module.exports = {
     queryDrivePeccancy : queryDrivePeccancy,
     queryDrivePeccancyCount : queryDrivePeccancyCount,
     updateDrivePeccancy : updateDrivePeccancy,
+    uploadDrivePeccancyFile : uploadDrivePeccancyFile,
     getDrivePeccancyCsv : getDrivePeccancyCsv
 }

@@ -450,6 +450,7 @@ function createServer() {
     server.get('/api/drivePeccancyCount' , drivePeccancy.queryDrivePeccancyCount);
     server.get('/api/drivePeccancy.csv' , drivePeccancy.getDrivePeccancyCsv);
     server.post({path:'/api/user/:userId/drivePeccancy',contentType: 'application/json'},drivePeccancy.createDrivePeccancy);
+    server.post({path:'/api/user/:userId/drivePeccancyFile',contentType: 'multipart/form-data'},drivePeccancy.uploadDrivePeccancyFile);
     server.put({path:'/api/user/:userId/peccancy/:peccancyId',contentType: 'application/json'} ,drivePeccancy.updateDrivePeccancy);
 
     /**
