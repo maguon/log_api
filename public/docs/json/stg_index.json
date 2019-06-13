@@ -11775,8 +11775,8 @@
         "tags": [
           "drive"
         ],
-        "summary": "query  driveExceedOilMonth csv",
-        "description": "query driveExceedOilMonth csv",
+        "summary": "query  driveExceedOilDate csv",
+        "description": "query driveExceedOilDate csv",
         "produces": [
           "application/json"
         ],
@@ -11866,6 +11866,75 @@
           },
           "400": {
             "description": "Invalid token value or invalid driveExceedOilDate id"
+          }
+        }
+      }
+    },
+    "/driveDpRouteTaskOilRel.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveDpRouteTaskOilRel csv",
+        "description": "query driveDpRouteTaskOilRel csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveDpRouteTaskOilRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveDpRouteTaskOilRel id"
           }
         }
       }

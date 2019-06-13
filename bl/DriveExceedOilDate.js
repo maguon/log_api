@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var driveExceedOilDateDAO = require('../dao/DriveExceedOilDateDAO.js');
+var dpRouteTaskOilRelDAO = require('../dao/DpRouteTaskOilRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -240,6 +241,124 @@ function getDriveExceedOilDateCsv(req,res,next){
     })
 }
 
+function getDriveDpRouteTaskOilRelCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属类型" + ','+"所属公司" + ','+
+        "调度编号" + ','+ "起始城市" + ','+"目的城市"+','+ "计划执行时间" + ','+ "里程" + ','+ "油耗里程" + ','+
+        "运载车辆数" + ','+"是否倒板" + ','+ "空(重)" + ','+ "百公里耗油量" + ','+ "百公里尿素" + ','+ "总耗油量"+ ','+ "总尿素";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskOilRelDAO.getDpRouteTaskOilRel(params,function(error,rows){
+        if (error) {
+            logger.error(' getDpRouteTaskOilRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.yMonth = params.yMonth;
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else{
+                    parkObj.operateType = "外协";
+                }
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
+                if(rows[i].dp_route_task_id == null){
+                    parkObj.dpRouteTaskId = "";
+                }else{
+                    parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
+                }
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                if(rows[i].task_plan_date == null){
+                    parkObj.taskPlanDate = "";
+                }else{
+                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                }
+                if(rows[i].distance == null){
+                    parkObj.distance = "";
+                }else{
+                    parkObj.distance = rows[i].distance;
+                }
+                if(rows[i].oil_distance == null){
+                    parkObj.oilDistance = "";
+                }else{
+                    parkObj.oilDistance = rows[i].oil_distance;
+                }
+                if(rows[i].car_count == null){
+                    parkObj.carCount = "";
+                }else{
+                    parkObj.carCount = rows[i].car_count;
+                }
+                if(rows[i].reverse_flag == 0){
+                    parkObj.reverseFlag = "否";
+                }else{
+                    parkObj.reverseFlag = "是";
+                }
+                if(rows[i].load_flag == 0){
+                    parkObj.loadFlag = "空";
+                }else{
+                    parkObj.loadFlag = "重";
+                }
+                if(rows[i].oil == null){
+                    parkObj.oil = "";
+                }else{
+                    parkObj.oil = rows[i].oil;
+                }
+                if(rows[i].urea == null){
+                    parkObj.urea = "";
+                }else{
+                    parkObj.urea = rows[i].urea;
+                }
+                if(rows[i].total_oil == null){
+                    parkObj.totalOil = "";
+                }else{
+                    parkObj.totalOil = rows[i].total_oil;
+                }
+                if(rows[i].total_urea == null){
+                    parkObj.totalUrea = "";
+                }else{
+                    parkObj.totalUrea = rows[i].total_urea;
+                }
+
+                csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
+                    parkObj.dpRouteTaskId+","+parkObj.routeStart +","+parkObj.routeEnd+","+parkObj.taskPlanDate+","+
+                    parkObj.distance+","+parkObj.oilDistance +","+parkObj.carCount+","+parkObj.reverseFlag+","+
+                    parkObj.loadFlag+","+parkObj.oil +","+parkObj.urea+","+parkObj.totalOil+","+parkObj.totalUrea+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDriveExceedOilDate : createDriveExceedOilDate,
@@ -248,5 +367,6 @@ module.exports = {
     updateDriveExceedOilDate : updateDriveExceedOilDate,
     updateDriveExceedOilDateMoney : updateDriveExceedOilDateMoney,
     updateExceedOilDateCheckStatus : updateExceedOilDateCheckStatus,
-    getDriveExceedOilDateCsv : getDriveExceedOilDateCsv
+    getDriveExceedOilDateCsv : getDriveExceedOilDateCsv,
+    getDriveDpRouteTaskOilRelCsv : getDriveDpRouteTaskOilRelCsv
 }
