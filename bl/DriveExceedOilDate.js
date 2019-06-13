@@ -345,7 +345,7 @@ function getDriveDpRouteTaskOilRelCsv(req,res,next){
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
                     parkObj.dpRouteTaskId+","+parkObj.routeStart +","+parkObj.routeEnd+","+parkObj.taskPlanDate+","+
                     parkObj.distance+","+parkObj.oilDistance +","+parkObj.carCount+","+parkObj.reverseFlag+","+
-                    parkObj.loadFlag+","+parkObj.oil +","+parkObj.urea+","+parkObj.totalOil+","+parkObj.totalUrea+ '\r\n';
+                    parkObj.oilLoadFlag+","+parkObj.oil +","+parkObj.urea+","+parkObj.totalOil+","+parkObj.totalUrea+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
