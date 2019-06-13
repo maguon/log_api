@@ -316,10 +316,10 @@ function getDriveDpRouteTaskOilRelCsv(req,res,next){
                 }else{
                     parkObj.reverseFlag = "是";
                 }
-                if(rows[i].load_flag == 0){
-                    parkObj.loadFlag = "空";
+                if(rows[i].oil_load_flag == 0){
+                    parkObj.oilLoadFlag = "空";
                 }else{
-                    parkObj.loadFlag = "重";
+                    parkObj.oilLoadFlag = "重";
                 }
                 if(rows[i].oil == null){
                     parkObj.oil = "";
