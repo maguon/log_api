@@ -449,3 +449,8 @@ MODIFY COLUMN `device_token`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_
 -- ----------------------------
 ALTER TABLE `user_device`
 ADD UNIQUE INDEX `user_id` (`user_id`, `device_id`, `app_type`) USING BTREE ;
+-- ----------------------------
+-- 2019-06-14 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_oil_rel`
+ADD UNIQUE INDEX `dp_route_task_id` (`dp_route_task_id`) USING BTREE ;
