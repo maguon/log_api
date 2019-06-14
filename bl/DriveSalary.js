@@ -108,7 +108,8 @@ function getDriveSalaryCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' +"司机姓名" + ',' + "手机号"+ ','+"所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "品牌"+ ','+
         "里程工资" + ','+ "交车打车进门费" + ','+ "倒板工资" + ','+"任务工资" + ','+ "商品车质损承担"+ ','+ "货车事故承担"+ ','+
-        "违章扣款"+ ','+ "超量扣款" + ','+ "报销扣款" + ','+"社保缴费" + ','+ "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态";
+        "违章扣款"+ ','+ "超量扣款" + ','+ "报销扣款" + ','+"社保缴费" + ','+"伙食费"+ ','+ "个人借款" + ','+ "暂扣款" + ','+"上月欠款" + ','+
+        "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -195,6 +196,26 @@ function getDriveSalaryCsv(req,res,next){
                 }else{
                     parkObj.socialSecurityFee = rows[i].social_security_fee;
                 }
+                if(rows[i].food_fee == null){
+                    parkObj.foodFee = "";
+                }else{
+                    parkObj.foodFee = rows[i].food_fee;
+                }
+                if(rows[i].loan_fee == null){
+                    parkObj.loanFee = "";
+                }else{
+                    parkObj.loanFee = rows[i].loan_fee;
+                }
+                if(rows[i].withhold == null){
+                    parkObj.withhold = "";
+                }else{
+                    parkObj.withhold = rows[i].withhold;
+                }
+                if(rows[i].arrears == null){
+                    parkObj.arrears = "";
+                }else{
+                    parkObj.arrears = rows[i].arrears;
+                }
                 if(rows[i].other_fee == null){
                     parkObj.otherFee = "";
                 }else{
@@ -220,8 +241,8 @@ function getDriveSalaryCsv(req,res,next){
                 csvString = csvString+parkObj.monthDateId+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.operateType+","+ parkObj.companyName+","+
                     parkObj.truckNum+","+parkObj.brandName+","+parkObj.distanceSalary+","+parkObj.enterFee+","+parkObj.reverseSalary+","+
                     parkObj.planSalary+","+parkObj.damageUnderFee+","+parkObj.accidentFee+","+parkObj.peccancyUnderFee+","+parkObj.exceedOilFee+","+
-                    parkObj.refundFee+","+parkObj.socialSecurityFee+","+parkObj.otherFee+","+parkObj.actualSalary+","+parkObj.remark+","+
-                    parkObj.grantStatus+ '\r\n';
+                    parkObj.refundFee+","+parkObj.socialSecurityFee+","+parkObj.foodFee+","+parkObj.loanFee+","+parkObj.withhold+","+parkObj.arrears+","+
+                    parkObj.otherFee+","+parkObj.actualSalary+","+parkObj.remark+","+parkObj.grantStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

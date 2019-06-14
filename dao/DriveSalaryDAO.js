@@ -40,7 +40,7 @@ function addDriveSalary(params,callback){
 function getDriveSalary(params,callback) {
     var query = " select ds.id,ds.month_date_id," +
         " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.plan_salary,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee, " +
-        " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
+        " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.withhold,ds.arrears,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status, " +
         " dprtm.drive_id,dprtm.user_id,dprtm.drive_name,dprtm.mobile, " +
         " t.truck_num,t.truck_type,tb.brand_name,h.number,t.operate_type,c.company_name, " +
         " drtm.distance_salary as plan_distance_salary,drtm.reverse_salary as plan_reverse_salary,dprm.enter_fee as plan_enter_fee " +
@@ -51,7 +51,8 @@ function getDriveSalary(params,callback) {
         " group by dprt.drive_id) dprtm " +
         " left join(select ds.id,ds.month_date_id,ds.drive_id," +
         " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.plan_salary,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
-        " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status " +
+        " ds.exceed_oil_fee,ds.refund_fee,ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.withhold,ds.arrears," +
+        " ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status " +
         " from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +
         " left join truck_info t on dprtm.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
