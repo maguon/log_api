@@ -178,6 +178,123 @@ function getDamageBase(params,callback) {
         return callback(error,rows);
     });
 }
+
+function getDamageInsureRel(params,callback) {
+    var query = " select da.*,u.real_name as declare_user_name,u.type,u.mobile,c.vin,c.make_id,c.make_name,c.ship_name," +
+        " c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name," +
+        " dc.under_user_id,dc.under_user_name,u2.type as under_user_type,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name," +
+        " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id," +
+        " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date, " +
+        " di.id as damage_insure_id,di.created_on as insure_created_on,ti.insure_name,u.real_name as insure_user_name, " +
+        " di.insure_plan,di.damage_money,di.insure_actual " +
+        " from damage_info da " +
+        " left join user_info u on da.declare_user_id = u.uid " +
+        " left join car_info c on da.car_id = c.id " +
+        " left join receive_info r on c.receive_id = r.id " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " left join damage_check dc on da.id = dc.damage_id " +
+        " left join user_info u2 on dc.under_user_id = u2.uid " +
+        " left join user_info u3 on dc.op_user_id = u3.uid " +
+        " left join damage_insure_rel dir on da.id = dir.damage_id " +
+        " left join damage_insure di on dir.damage_insure_id = di.id " +
+        " left join truck_insure ti on di.insure_id = ti.id " +
+        " left join user_info u4 on di.insure_user_id = u4.uid " +
+        " where da.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.damageId){
+        paramsArray[i++] = params.damageId;
+        query = query + " and da.id = ? ";
+    }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and da.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and da.created_on <= ? ";
+    }
+    if(params.endDateStart){
+        paramsArray[i++] = params.endDateStart;
+        query = query + " and dc.date_id >= ? ";
+    }
+    if(params.endDateEnd){
+        paramsArray[i++] = params.endDateEnd;
+        query = query + " and dc.date_id <= ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and c.vin like '%"+params.vinCode+"%'";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.damageType){
+        paramsArray[i++] = params.damageType;
+        query = query + " and dc.damage_type = ? ";
+    }
+    if(params.damageLinkType){
+        paramsArray[i++] = params.damageLinkType;
+        query = query + " and dc.damage_link_type = ? ";
+    }
+    if(params.declareUserId){
+        paramsArray[i++] = params.declareUserId;
+        query = query + " and da.declare_user_id = ? ";
+    }
+    if(params.declareUserName){
+        paramsArray[i++] = params.declareUserName;
+        query = query + " and u.real_name = ? ";
+    }
+    if(params.underUserId){
+        paramsArray[i++] = params.underUserId;
+        query = query + " and dc.under_user_id = ? ";
+    }
+    if(params.underUserName){
+        paramsArray[i++] = params.underUserName;
+        query = query + " and dc.under_user_name = ? ";
+    }
+    if(params.underUserType){
+        paramsArray[i++] = params.underUserType;
+        query = query + " and u2.type = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    if(params.damageStatus){
+        paramsArray[i++] = params.damageStatus;
+        query = query + " and da.damage_status = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and da.drive_id = ? ";
+    }
+    if(params.statStatus){
+        paramsArray[i++] = params.statStatus;
+        query = query + " and da.stat_status = ? ";
+    }
+    if(params.hangStatus){
+        paramsArray[i++] = params.hangStatus;
+        query = query + " and da.hang_status = ? ";
+    }
+    query = query + " order by da.id desc";
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDamageInsureRel ');
+        return callback(error,rows);
+    });
+}
 //web没用
 function getDamageCheckCount(params,callback) {
     var query = " select count(da.id) as damage_count" ;
@@ -606,6 +723,7 @@ module.exports ={
     addUploadDamage : addUploadDamage,
     getDamage : getDamage,
     getDamageBase : getDamageBase,
+    getDamageInsureRel : getDamageInsureRel,
     getDamageCheckCount : getDamageCheckCount,
     getDamageNotCheckCount : getDamageNotCheckCount,
     getDamageTotalCost : getDamageTotalCost,

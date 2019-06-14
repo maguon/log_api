@@ -437,13 +437,14 @@ function getDamageCsv(req,res,next){
     var csvString = "";
     var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+
         "司机" + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "个人承担" + ','+ "公司承担" + ','+
-        "处理结束时间" + ','+"处理状态" ;
+        "处理结束时间" + ','+"处理状态"+ ','+
+    "理赔编号" + ','+ "生成日期" + ','+ "保险公司" + ','+ "经办人"+ ','+ "待赔金额" + ','+ "定损金额" + ','+ "保险赔付";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    damageDAO.getDamage(params,function(error,rows){
+    damageDAO.getDamageInsureRel(params,function(error,rows){
         if (error) {
-            logger.error(' queryDamage ' + error.message);
+            logger.error(' getDamageInsureRel ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
@@ -548,10 +549,48 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.damageStatus = "已处理";
                 }
+
+                if(rows[i].damage_insure_id==null){
+                    parkObj.damageInsureId = "";
+                }else{
+                    parkObj.damageInsureId = rows[i].damage_insure_id;
+                }
+                if(rows[i].insure_created_on==null){
+                    parkObj.insureCreatedOn = "";
+                }else{
+                    parkObj.insureCreatedOn = new Date(rows[i].insure_created_on).toLocaleDateString();
+                }
+                if(rows[i].insure_name==null){
+                    parkObj.insureName = "";
+                }else{
+                    parkObj.insureName = rows[i].insure_name;
+                }
+                if(rows[i].insure_user_name==null || rows[i].damage_insure_id==null){
+                    parkObj.insureUserName = "";
+                }else{
+                    parkObj.insureUserName = rows[i].insure_user_name;
+                }
+                if(rows[i].insure_plan==null){
+                    parkObj.insurePlan = "";
+                }else{
+                    parkObj.insurePlan = rows[i].insure_plan;
+                }
+                if(rows[i].damage_money==null){
+                    parkObj.damageMoney = "";
+                }else{
+                    parkObj.damageMoney = rows[i].damage_money;
+                }
+                if(rows[i].insure_actual==null){
+                    parkObj.insureActual = "";
+                }else{
+                    parkObj.insureActual = rows[i].insure_actual;
+                }
                 csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.damageExplain+","+
                     parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","+
                     parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.underCost+","+
-                    parkObj.companyCost+","+parkObj.checkEndDate+","+parkObj.damageStatus+ '\r\n';
+                    parkObj.companyCost+","+parkObj.checkEndDate+","+parkObj.damageStatus+","+
+                parkObj.damageInsureId+","+parkObj.insureCreatedOn+","+parkObj.insureName+","+
+                parkObj.insureUserName+","+parkObj.insurePlan+","+parkObj.damageMoney+","+parkObj.insureActual+'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
