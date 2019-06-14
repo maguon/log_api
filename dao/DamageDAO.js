@@ -185,7 +185,7 @@ function getDamageInsureRel(params,callback) {
         " dc.under_user_id,dc.under_user_name,u2.type as under_user_type,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name," +
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id," +
         " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date, " +
-        " di.id as damage_insure_id,di.created_on as insure_created_on,ti.insure_name,u.real_name as insure_user_name, " +
+        " di.id as damage_insure_id,di.created_on as insure_created_on,ti.insure_name,u4.real_name as insure_user_name, " +
         " di.insure_plan,di.damage_money,di.insure_actual " +
         " from damage_info da " +
         " left join user_info u on da.declare_user_id = u.uid " +
