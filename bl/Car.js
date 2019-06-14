@@ -556,7 +556,8 @@ function getCarRelCsv(req,res,next){
 
 function getCarListCsv(req,res,next){
     var csvString = "";
-    var header = "VIN" + ',' + "制造商" + ',' +"委托方" + ',' + "发运地城市" + ','+ "发运地地址" + ','+ "目的地城市"+ ','+ "经销商" + ','+ "指令时间" ;
+    var header = "VIN" + ',' + "制造商" + ',' +"委托方" + ',' + "发运地城市" + ','+ "发运地地址" + ','+ "目的地城市"+ ','+
+        "经销商" + ','+ "指令时间" + ','+ "状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -598,8 +599,17 @@ function getCarListCsv(req,res,next){
                 }else{
                     parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
                 }
+                if(rows[i].car_status == 1){
+                    parkObj.carStatus = "待发运";
+                }else if(rows[i].car_status == 2){
+                    parkObj.carStatus = "中转";
+                }else if(rows[i].car_status == 3){
+                    parkObj.carStatus = "已装车";
+                }else{
+                    parkObj.carStatus = "已完成";
+                }
                 csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.enShortName+","+parkObj.routeStart+","+parkObj.addrName+","
-                    +parkObj.routeEnd+","+parkObj.reShortName+","+parkObj.orderDate+ '\r\n';
+                    +parkObj.routeEnd+","+parkObj.reShortName+","+parkObj.orderDate+","+parkObj.carStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
