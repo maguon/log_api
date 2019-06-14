@@ -9,8 +9,8 @@ var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 function addDriveSalary(params,callback){
     var query = " insert into drive_salary (month_date_id,drive_id," +
         " distance_salary,reverse_salary,enter_fee,plan_salary,damage_under_fee,accident_fee,peccancy_under_fee," +
-        " exceed_oil_fee,refund_fee,social_security_fee,other_fee,actual_salary,remark)  " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " exceed_oil_fee,refund_fee,social_security_fee,food_fee,loan_fee,withhold,arrears,other_fee,actual_salary,remark)  " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.monthDateId;
     paramsArray[i++]=params.driveId;
@@ -24,6 +24,10 @@ function addDriveSalary(params,callback){
     paramsArray[i++]=params.exceedOilFee;
     paramsArray[i++]=params.refundFee;
     paramsArray[i++]=params.socialSecurityFee;
+    paramsArray[i++]=params.foodFee;
+    paramsArray[i++]=params.loanFee;
+    paramsArray[i++]=params.withhold;
+    paramsArray[i++]=params.arrears;
     paramsArray[i++]=params.otherFee;
     paramsArray[i++]=params.actualSalary;
     paramsArray[i++]=params.remark;
@@ -176,10 +180,15 @@ function updateDrivePlanSalary(params,callback){
 }
 
 function updateDriveActualSalary(params,callback){
-    var query = " update drive_salary set refund_fee = ? , social_security_fee = ? , other_fee = ? , actual_salary = ? , remark = ? where id = ? ";
+    var query = " update drive_salary set refund_fee = ? , social_security_fee = ? , food_fee = ? , loan_fee = ? , " +
+        " withhold = ? , arrears = ?, other_fee = ? , actual_salary = ? , remark = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.refundFee;
     paramsArray[i++] = params.socialSecurityFee;
+    paramsArray[i++]=params.foodFee;
+    paramsArray[i++]=params.loanFee;
+    paramsArray[i++]=params.withhold;
+    paramsArray[i++]=params.arrears;
     paramsArray[i++] = params.otherFee;
     paramsArray[i++] = params.actualSalary;
     paramsArray[i++] = params.remark;

@@ -454,3 +454,11 @@ ADD UNIQUE INDEX `user_id` (`user_id`, `device_id`, `app_type`) USING BTREE ;
 -- ----------------------------
 ALTER TABLE `dp_route_task_oil_rel`
 ADD UNIQUE INDEX `dp_route_task_id` (`dp_route_task_id`) USING BTREE ;
+-- ----------------------------
+-- 2019-06-14 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+ADD COLUMN `food_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '伙食费' AFTER `social_security_fee`,
+ADD COLUMN `loan_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '个人借款' AFTER `food_fee`,
+ADD COLUMN `withhold`  decimal(10,2) NULL DEFAULT 0 COMMENT '暂扣款' AFTER `loan_fee`,
+ADD COLUMN `arrears`  decimal(10,2) NULL DEFAULT 0 COMMENT '上月欠款' AFTER `withhold`;

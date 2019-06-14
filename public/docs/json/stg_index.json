@@ -32711,6 +32711,18 @@
         "socialSecurityFee": {
           "type": "integer"
         },
+        "foodFee": {
+          "type": "integer"
+        },
+        "loanFee": {
+          "type": "integer"
+        },
+        "withhold": {
+          "type": "integer"
+        },
+        "arrears": {
+          "type": "integer"
+        },
         "otherFee": {
           "type": "integer"
         },
@@ -32733,6 +32745,18 @@
           "type": "integer"
         },
         "socialSecurityFee": {
+          "type": "integer"
+        },
+        "foodFee": {
+          "type": "integer"
+        },
+        "loanFee": {
+          "type": "integer"
+        },
+        "withhold": {
+          "type": "integer"
+        },
+        "arrears": {
           "type": "integer"
         },
         "otherFee": {
