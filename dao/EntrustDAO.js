@@ -302,8 +302,10 @@ function addSettleCarBatch(params,callback) {
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
         " left join city_route_info cr on c.route_id = cr.route_id " +
-        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id" +
-        " where ecrr.entrust_id is not null and c.car_status >=1 ";
+        " left join entrust_city_route_rel ecrr on cr.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " left join settle_car sc on c.vin = sc.vin " +
+        " where sc.vin is null " +
+        " and ecrr.entrust_id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
