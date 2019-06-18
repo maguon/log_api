@@ -34,12 +34,13 @@ function addDriveExceedOilDate(params,callback){
 }
 
 function getDriveExceedOilDate(params,callback) {
-    var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num,dprm.brand_name,dprm.operate_type,dprm.company_name, " +
-        " dprm.plan_oil,dprm.plan_urea,deorm.actual_oil,deorm.actual_urea, " +
-        " deorm.id,deorm.month_date_id,deorm.plan_oil_total,deorm.plan_urea_total, " +
-        " deorm.actual_oil_total,deorm.actual_urea_total,deorm.surplus_oil,deorm.surplus_urea, " +
-        " deorm.subsidy_oil, deorm.subsidy_urea,deorm.exceed_oil,deorm.exceed_urea, " +
-        " deorm.actual_money,deorm.check_status,deorm.settle_status,deorm.remark,deorm.y_month " +
+    var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num," +
+        " dprm.brand_name,dprm.operate_type,dprm.company_id,dprm.company_name,dprm.plan_oil,dprm.plan_urea," +
+        " deorm.actual_oil,deorm.actual_urea, " +
+        " deodm.id,deodm.month_date_id,deodm.plan_oil_total,deodm.plan_urea_total, " +
+        " deodm.actual_oil_total,deodm.actual_urea_total,deodm.surplus_oil,deodm.surplus_urea, " +
+        " deodm.subsidy_oil, deodm.subsidy_urea,deodm.exceed_oil,deodm.exceed_urea, " +
+        " deodm.actual_money,deodm.check_status,deodm.settle_status,deodm.remark " +
         " from(select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,tb.brand_name,t.operate_type,t.company_id,c.company_name, " +
         " sum(drtor.total_oil) plan_oil,sum(drtor.total_urea) plan_urea " +
         " from dp_route_task dpr " +
@@ -50,21 +51,23 @@ function getDriveExceedOilDate(params,callback) {
         " left join company_info c on t.company_id = c.id " +
         " where dpr.task_plan_date>="+params.taskPlanDateStart+" and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status>=9 " +
         " group by dpr.drive_id ,dpr.truck_id) dprm " +
+
         " left join (select sum(deor.oil) actual_oil, sum(deor.urea) actual_urea, " +
-        " deor.drive_id,deor.truck_id,deod.id,deod.month_date_id,deod.plan_oil_total,deod.plan_urea_total, " +
-        " deod.actual_oil_total,deod.actual_urea_total,deod.surplus_oil,deod.surplus_urea,deod.subsidy_oil, " +
-        " deod.subsidy_urea,deod.exceed_oil,deod.exceed_urea,deod.actual_money,deod.check_status,deod.settle_status,deod.remark,db.y_month " +
+        " deor.drive_id,deor.truck_id " +
         " from drive_exceed_oil_rel deor " +
-        " left join date_base db on deor.date_id = db.id " +
-        " left join drive_exceed_oil_date deod on deod.drive_id=deor.drive_id " +
-        " and deod.truck_id = deor.truck_id and deod.month_date_id =db.y_month " +
-        " where db.y_month = " +params.yMonth+
-        " group by deor.drive_id,deor.truck_id) deorm on dprm.drive_id = deorm.drive_id and dprm.truck_id = deorm.truck_id " +
+        " where deor.oil_date>="+params.taskPlanDateStart+" and deor.oil_date<="+params.taskPlanDateStart+
+        " group by deor.drive_id ,deor.truck_id) deorm " +
+        " on dprm.drive_id = deorm.drive_id and dprm.truck_id = deorm.truck_id " +
+        " left join (select deod.id,deod.drive_id,deod.truck_id,deod.month_date_id,deod.plan_oil_total,deod.plan_urea_total," +
+        " deod.actual_oil_total,deod.actual_urea_total,deod.surplus_oil,deod.surplus_urea,deod.subsidy_oil, " +
+        " deod.subsidy_urea,deod.exceed_oil,deod.exceed_urea,deod.actual_money,deod.check_status,deod.settle_status,deod.remark " +
+        " from drive_exceed_oil_date deod where deod.month_date_id = "+params.yMonth+
+        " group by deod.drive_id ,deod.truck_id) deodm on dprm.drive_id = deodm.drive_id and dprm.truck_id = deodm.truck_id "+
         " where dprm.drive_id is not null ";
     var paramsArray=[],i=0;
     if(params.exceedOilDateId){
         paramsArray[i++] = params.exceedOilDateId;
-        query = query + " and deorm.id = ? ";
+        query = query + " and deodm.id = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
@@ -80,15 +83,15 @@ function getDriveExceedOilDate(params,callback) {
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
-        query = query + " and dprm.id = ? ";
+        query = query + " and dprm.company_id = ? ";
     }
     if(params.checkStatus){
         if(params.checkStatus==1){
             paramsArray[i++] = params.checkStatus;
-            query = query + " and deorm.check_status is null ";
+            query = query + " and deodm.check_status is null ";
         }else{
             paramsArray[i++] = params.checkStatus;
-            query = query + " and deorm.check_status = ? ";
+            query = query + " and deodm.check_status = ? ";
         }
     }
     if (params.start && params.size) {
