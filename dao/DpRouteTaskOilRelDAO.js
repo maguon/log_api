@@ -32,8 +32,11 @@ function addDpRouteTaskOilRel(params,callback){
 }
 
 function getDpRouteTaskOilRel(params,callback) {
-    var query = " select dpror.*,t.truck_num,t.operate_type,c.company_name,d.drive_name,dpr.task_plan_date,dpr.distance,dpr.load_flag," +
-        " dpr.oil_distance,dpr.oil_load_flag,dpr.car_count,dpr.reverse_flag " +
+    var query = " select dpr.id as dp_route_task_id,dpr.truck_id,dpr.drive_id, " +
+        " dpr.route_start,dpr.route_end,dpr.task_plan_date,dpr.distance,dpr.load_flag, " +
+        " dpr.oil_distance,dpr.oil_load_flag,dpr.car_count,dpr.reverse_flag, " +
+        " t.truck_num,t.operate_type,c.company_name,d.drive_name, " +
+        " dpror.id,dpror.oil,dpror.total_oil,dpror.urea,dpror.total_urea,dpror.reverse_oil,dpror.total_reverse_oil,dpror.settle_status " +
         " from dp_route_task dpr " +
         " left join dp_route_task_oil_rel dpror on dpror.dp_route_task_id = dpr.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
@@ -47,7 +50,7 @@ function getDpRouteTaskOilRel(params,callback) {
     }
     if(params.dpRouteTaskId){
         paramsArray[i++] = params.dpRouteTaskId;
-        query = query + " and dpror.dp_route_task_id = ? ";
+        query = query + " and dpr.id = ? ";
     }
     if(params.taskPlanDateStart){
         paramsArray[i++] = params.taskPlanDateStart;
