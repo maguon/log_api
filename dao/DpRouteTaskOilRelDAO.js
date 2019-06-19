@@ -59,11 +59,11 @@ function getDpRouteTaskOilRel(params,callback) {
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and dpror.truck_id = ? ";
+        query = query + " and dpr.truck_id = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and dpror.drive_id = ? ";
+        query = query + " and dpr.drive_id = ? ";
     }
     if(params.settleStatus){
         paramsArray[i++] = params.settleStatus;
