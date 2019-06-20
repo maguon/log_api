@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var entrustCityRouteRelDAO = require('../dao/EntrustCityRouteRelDAO.js');
+var cityDAO = require('../dao/CityDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -15,8 +16,35 @@ var logger = serverLogger.createLogger('EntrustCityRouteRel.js');
 
 function createEntrustCityRouteRel(req,res,next){
     var params = req.params ;
+    var parkObj = {};
     var cityRouteFlag  = true;
     Seq().seq(function(){
+        var that = this;
+        cityDAO.getCity({cityId:params.routeStartId},function(error,rows){
+            if (error) {
+                logger.error(' getCity ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0){
+                    parkObj.routeStart = rows[0].city_name;
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        cityDAO.getCity({cityId:params.routeEndId},function(error,rows){
+            if (error) {
+                logger.error(' getCity ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0){
+                    parkObj.routeEnd = rows[0].city_name;
+                }
+                that();
+            }
+        })
+    }).seq(function(){
         var that = this;
         entrustCityRouteRelDAO.getEntrustCityRouteRel(params,function(error,rows){
             if (error) {
@@ -42,7 +70,7 @@ function createEntrustCityRouteRel(req,res,next){
                     }
                 } else {
                     logger.info(' createEntrustCityRouteRel ' + 'success');
-                    req.params.entrustContent =" 设置  品牌 "+params.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
+                    req.params.entrustContent =" 设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+params.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
                     req.params.entrustId = params.entrustId;
                     req.params.cityRouteId = params.cityRouteId;
                     resUtil.resetUpdateRes(res,result,null);
@@ -56,7 +84,7 @@ function createEntrustCityRouteRel(req,res,next){
                     throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
                     logger.info(' updateEntrustCityRouteRel ' + 'success');
-                    req.params.entrustContent =" 修改设置  品牌 "+params.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
+                    req.params.entrustContent =" 修改设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+params.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
                     req.params.entrustId = params.entrustId;
                     req.params.cityRouteId = params.cityRouteId;
                     resUtil.resetUpdateRes(res,result,null);
@@ -101,6 +129,9 @@ function updateEntrustCityRouteRel(req,res,next){
                 if(rows && rows.length>0){
                     parkObj.entrustId = rows[0].entrust_id;
                     parkObj.cityRouteId = rows[0].city_route_id;
+                    parkObj.makeName = rows[0].make_name;
+                    parkObj.routeStart = rows[0].route_start;
+                    parkObj.routeEnd = rows[0].route_end;
                     that();
                 }else{
                     logger.warn(' getEntrustCityRouteRel ' + 'failed');
@@ -116,7 +147,7 @@ function updateEntrustCityRouteRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateEntrustCityRouteRel ' + 'success');
-                req.params.entrustContent =" 修改设置 "+params.distance+"公里  "+params.fee+"元/公里 ";
+                req.params.entrustContent =" 修改设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+parkObj.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
                 req.params.entrustId = parkObj.entrustId;
                 req.params.cityRouteId = parkObj.cityRouteId;
                 resUtil.resetUpdateRes(res,result,null);
