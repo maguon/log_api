@@ -15747,7 +15747,7 @@
         }
       }
     },
-    "/user/{userId}/entrust/{entrustId}/cityRoute/{cityRouteId}/make/{makeId}": {
+    "/user/{userId}/entrust/{entrustId}/make/{makeId}/routeStart/{routeStartId}/routeEnd/{routeEndId}": {
       "put": {
         "tags": [
           "entrust"
@@ -15775,17 +15775,25 @@
 
           },
           {
-            "name": "cityRouteId",
+            "name": "makeId",
             "in": "path",
-            "description": "cityRoute id",
+            "description": "make id",
             "required": true,
             "type": "integer"
 
           },
           {
-            "name": "makeId",
+            "name": "routeStartId",
             "in": "path",
-            "description": "make id",
+            "description": "routeStart id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "path",
+            "description": "routeEnd id",
             "required": true,
             "type": "integer"
 
@@ -33364,6 +33372,12 @@
         },
         "makeName": {
           "type": "string"
+        },
+        "routeStartId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
         },
         "sizeType": {
           "type": "integer"

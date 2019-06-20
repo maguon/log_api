@@ -597,7 +597,7 @@ function createServer() {
      */
     server.get('/api/entrustCityRouteRel',entrustCityRouteRel.queryEntrustCityRouteRel);
     server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel,sysRecord.saveEntrustRecord);
-    server.put({path:'/api/user/:userId/entrust/:entrustId/cityRoute/:cityRouteId/make/:makeId',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.saveEntrustRecord);
+    server.put({path:'/api/user/:userId/entrust/:entrustId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.saveEntrustRecord);
 
     /**
     * EntrustMakeRel Module
