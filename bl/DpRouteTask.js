@@ -148,7 +148,9 @@ function createEmptyDpRouteTask(req,res,next){
                     parkObj.urea=rows[0].urea;
                     that();
                 } else {
-
+                    parkObj.noLoadDistanceOil=0;
+                    parkObj.urea=0;
+                    that();
                 }
             }
         })

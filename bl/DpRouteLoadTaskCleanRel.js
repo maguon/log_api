@@ -222,9 +222,21 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.bigSinglePrice = rows[i].big_single_price;
                 }
-                parkObj.smallCarCount = rows[i].small_car_count;
-                parkObj.bigCarCount = rows[i].big_car_count;
-                parkObj.carCount = rows[i].car_count;
+                if(rows[i].small_car_count==null){
+                    parkObj.smallCarCount = "";
+                }else{
+                    parkObj.smallCarCount = rows[i].small_car_count;
+                }
+                if(rows[i].big_car_count==null){
+                    parkObj.bigCarCount = "";
+                }else{
+                    parkObj.bigCarCount = rows[i].big_car_count;
+                }
+                if(rows[i].car_count==null){
+                    parkObj.carCount = "";
+                }else{
+                    parkObj.carCount = rows[i].car_count;
+                }
                 if(rows[i].total_price==null){
                     parkObj.totalPrice = "";
                 }else{
