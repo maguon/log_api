@@ -462,3 +462,31 @@ ADD COLUMN `food_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '伙食费' AFTER `s
 ADD COLUMN `loan_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '个人借款' AFTER `food_fee`,
 ADD COLUMN `withhold`  decimal(10,2) NULL DEFAULT 0 COMMENT '暂扣款' AFTER `loan_fee`,
 ADD COLUMN `arrears`  decimal(10,2) NULL DEFAULT 0 COMMENT '上月欠款' AFTER `withhold`;
+-- ----------------------------
+-- 2019-06-20 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+ADD COLUMN `route_start_id`  int(10) NULL DEFAULT NULL COMMENT '起始地ID' AFTER `make_name`,
+ADD COLUMN `route_end_id`  int(10) NULL DEFAULT NULL COMMENT '目的地ID' AFTER `route_start_id`;
+-- ----------------------------
+-- 2019-06-20 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+DROP PRIMARY KEY;
+-- ----------------------------
+-- 2019-06-20 更新
+-- ----------------------------
+update entrust_city_route_rel set route_start_id = floor(city_route_id/1000) , route_end_id = mod(city_route_id,1000);
+-- ----------------------------
+-- 2019-06-20 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+MODIFY COLUMN `route_start_id`  int(10) NOT NULL COMMENT '起始地ID' AFTER `make_name`,
+MODIFY COLUMN `route_end_id`  int(10) NOT NULL COMMENT '目的地ID' AFTER `route_start_id`,
+ADD PRIMARY KEY (`entrust_id`, `make_id`, `route_start_id`, `route_end_id`);
+-- ----------------------------
+-- 2019-06-20 更新
+-- ----------------------------
+insert into entrust_city_route_rel (entrust_id,city_route_id,make_id,make_name,route_start_id,route_end_id,size_type,distance,fee)
+select entrust_id,city_route_id,make_id,make_name,route_end_id,route_start_id,size_type,distance,fee
+from entrust_city_route_rel where route_start_id !=route_end_id;
