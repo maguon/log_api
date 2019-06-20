@@ -486,8 +486,14 @@ function getDamageCsv(req,res,next){
                     parkObj.damageType = "C级";
                 }else if(rows[i].damage_type == 4){
                     parkObj.damageType = "D级";
-                }else{
+                }else if(rows[i].damage_type == 6){
                     parkObj.damageType = "F级";
+                }else if(rows[i].damage_type == 7){
+                    parkObj.damageType = "买断车";
+                }else if(rows[i].damage_type == 8){
+                    parkObj.damageType = "退库车";
+                }else{
+                    parkObj.damageType = "";
                 }
                 if(rows[i].damage_link_type == 1){
                     parkObj.damageLinkType = "短驳移库";
@@ -519,8 +525,10 @@ function getDamageCsv(req,res,next){
                     parkObj.damageLinkType = "PDI漏检";
                 }else if(rows[i].damage_link_type == 15){
                     parkObj.damageLinkType = "大连现场收发车";
-                }else{
+                }else if(rows[i].damage_link_type == 16){
                     parkObj.damageLinkType = "运输途中遭人为破坏";
+                }else{
+                    parkObj.damageLinkType = "";
                 }
                 if(rows[i].under_user_name==null){
                     parkObj.underUserName = "";
