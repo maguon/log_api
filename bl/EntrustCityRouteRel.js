@@ -86,7 +86,13 @@ function updateEntrustCityRouteRel(req,res,next){
     var parkObj = {};
     Seq().seq(function(){
         var that = this;
-        entrustCityRouteRelDAO.getEntrustCityRouteRel({cityRouteId:params.cityRouteId},function(error,rows){
+        var subParams = {
+            entrustId : params.entrustId,
+            makeId : params.makeId,
+            routeStartId : params.routeStartId,
+            routeEndId : params.routeEndId
+        }
+        entrustCityRouteRelDAO.getEntrustCityRouteRel(subParams,function(error,rows){
             if (error) {
                 logger.error(' getEntrustCityRouteRel ' + error.message);
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);

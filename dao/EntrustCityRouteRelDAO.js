@@ -36,7 +36,7 @@ function getEntrustCityRouteRel(params,callback) {
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
-        query = query + " and e.id = ? ";
+        query = query + " and ecrr.entrust_id = ? ";
     }
     if(params.cityRouteId){
         paramsArray[i++] = params.cityRouteId;
@@ -45,6 +45,14 @@ function getEntrustCityRouteRel(params,callback) {
     if(params.makeId){
         paramsArray[i++] = params.makeId;
         query = query + " and ecrr.make_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and ecrr.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and ecrr.route_end_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
