@@ -49,7 +49,7 @@ function getSettleCar(params,callback) {
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
         " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id and c.make_id = ecrr.make_id " +
-        " and c.route_id = ecrr.city_route_id and c.size_type = ecrr.size_type " +
+        " and c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id and c.size_type = ecrr.size_type " +
         " where sc.id is not null ";
     var paramsArray=[],i=0;
     if(params.settleCarId){

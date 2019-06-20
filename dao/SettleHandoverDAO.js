@@ -360,7 +360,7 @@ function getDriveSettle(params,callback) {
         " left join dp_route_task dprt on drltd.dp_route_task_id = dprt.id " +
         " left join car_info ci on drltd.car_id = ci.id " +
         " left join entrust_city_route_rel ecrr on ci.entrust_id = ecrr.entrust_id and " +
-        " ci.make_id = ecrr.make_id and ci.route_id = ecrr.city_route_id and ci.size_type =ecrr.size_type " +
+        " ci.make_id = ecrr.make_id and ci.route_start_id = ecrr.route_start_id and ci.route_end_id = ecrr.route_end_id and ci.size_type =ecrr.size_type " +
         " where dprt.task_plan_date>="+params.taskPlanDateStart+" and dprt.task_plan_date<="+params.taskPlanDateEnd+" and dprt.task_status>=9 " +
         " group by dprt.drive_id,dprt.truck_id) dprtm on drtm.drive_id = dprtm.drive_id and drtm.truck_id = dprtm.truck_id " +
         " where drtm.drive_id is not null ";
@@ -404,7 +404,7 @@ function getDriveSettleDetail(params,callback) {
         " left join car_info c on drltd.car_id = c.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id " +
-        " and c.make_id = ecrr.make_id and c.route_id = ecrr.city_route_id " +
+        " and c.make_id = ecrr.make_id and c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
         " and c.size_type =ecrr.size_type  where dpr.task_plan_date>="+params.taskPlanDateStart+" " +
         " and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status >=9 ";
     var paramsArray=[],i=0;

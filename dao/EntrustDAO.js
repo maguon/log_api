@@ -71,7 +71,8 @@ function getEntrustCar(params,callback) {
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
-        " left join entrust_city_route_rel ecrr on c.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
         " where ecrr.entrust_id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -124,7 +125,8 @@ function getEntrustNotCar(params,callback) {
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
-        " left join entrust_city_route_rel ecrr on c.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
         " where ecrr.entrust_id is null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -175,7 +177,8 @@ function getEntrustCarCount(params,callback) {
     var query = " select count(c.id)as entrust_car_count,convert(sum(ecrr.distance*ecrr.fee),decimal(10,2)) as entrust_car_price " +
         " from car_info c " +
         " left join entrust_info e on c.entrust_id = e.id " +
-        " left join entrust_city_route_rel ecrr on c.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
         " where ecrr.entrust_id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -220,7 +223,8 @@ function getEntrustCarNotCount(params,callback) {
     var query = " select count(c.id)as entrust_car_not_count " +
         " from car_info c " +
         " left join entrust_info e on c.entrust_id = e.id " +
-        " left join entrust_city_route_rel ecrr on c.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
         " where ecrr.entrust_id is null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -291,7 +295,8 @@ function addSettleCarBatch(params,callback) {
         " select c.vin,c.entrust_id,c.route_start_id,c.route_end_id,ecrr.distance,ecrr.fee,(ecrr.distance*ecrr.fee) as plan_price " +
         " from car_info c " +
         " left join entrust_info e on c.entrust_id = e.id " +
-        " left join entrust_city_route_rel ecrr on c.route_id = ecrr.city_route_id and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
         " left join settle_car sc on c.vin = sc.vin and c.entrust_id= sc.entrust_id and c.route_start_id = sc.route_start_id and c.route_end_id = sc.route_end_id " +
         " where sc.vin is null " +
         " and ecrr.entrust_id is not null and c.car_status >=1 ";
