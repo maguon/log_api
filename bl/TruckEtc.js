@@ -137,10 +137,69 @@ function queryTruckEtcFeeCount(req,res,next){
     })
 }
 
+function getTruckEtcCsv(req,res,next){
+    var csvString = "";
+    var header = "编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "通行费" + ','+ "交易时间"+ ','+ "创建时间"+ ',' + "描述";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    truckEtcDAO.getTruckEtc(params,function(error,rows){
+        if (error) {
+            logger.error(' getTruckEtcCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                if(rows[i].drive_name==null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].truck_num==null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].etc_fee==null){
+                    parkObj.etcFee = "";
+                }else{
+                    parkObj.etcFee = rows[i].etc_fee;
+                }
+                if(rows[i].etc_date==null){
+                    parkObj.etcDate = "";
+                }else{
+                    parkObj.etcDate = new Date(rows[i].etc_date).toLocaleDateString();
+                }
+                if(rows[i].created_on==null){
+                    parkObj.createdOn = "";
+                }else{
+                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                }
+                if(rows[i].remark==null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
+                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.etcFee+","+
+                    parkObj.etcDate+","+parkObj.createdOn+","+parkObj.remark+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createTruckEtc : createTruckEtc,
     uploadTruckEtcFile : uploadTruckEtcFile,
     queryTruckEtc : queryTruckEtc,
-    queryTruckEtcFeeCount : queryTruckEtcFeeCount
+    queryTruckEtcFeeCount : queryTruckEtcFeeCount,
+    getTruckEtcCsv : getTruckEtcCsv
 }

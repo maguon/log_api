@@ -7355,6 +7355,90 @@
         }
       }
     },
+    "/truckEtc.csv": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckEtc csv",
+        "description": "query truckEtc csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckEtcId",
+            "in": "query",
+            "description": "truckEtc id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "etcDateStart",
+            "in": "query",
+            "description": "etcDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "etcDatenEnd",
+            "in": "query",
+            "description": "etcDaten end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckEtc"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckEtc": {
       "post": {
         "tags": [

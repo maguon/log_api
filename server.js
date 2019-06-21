@@ -353,6 +353,7 @@ function createServer() {
      */
     server.get('/api/truckEtc' ,truckEtc.queryTruckEtc);
     server.get('/api/truckEtcFeeCount' ,truckEtc.queryTruckEtcFeeCount);
+    server.get('/api/truckEtc.csv' ,truckEtc.getTruckEtcCsv);
     server.post({path:'/api/user/:userId/truckEtc',contentType: 'application/json'},truckEtc.createTruckEtc);
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
 
