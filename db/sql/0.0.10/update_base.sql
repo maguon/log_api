@@ -490,3 +490,26 @@ ADD PRIMARY KEY (`entrust_id`, `make_id`, `route_start_id`, `route_end_id`);
 insert into entrust_city_route_rel (entrust_id,city_route_id,make_id,make_name,route_start_id,route_end_id,size_type,distance,fee)
 select entrust_id,city_route_id,make_id,make_name,route_end_id,route_start_id,size_type,distance,fee
 from entrust_city_route_rel where route_start_id !=route_end_id;
+-- ----------------------------
+-- 2019-06-24 更新    修改经销商大于1,并且car_count大于0 1oil_distance油补30
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_update_route_task`;
+DELIMITER ;;
+CREATE TRIGGER `trg_update_route_task` BEFORE UPDATE ON `dp_route_task` FOR EACH ROW BEGIN
+IF(new.task_status=4 && old.task_status<>4) THEN
+UPDATE truck_dispatch set current_city= 0 , task_start = old.route_start_id ,task_end=old.route_end_id
+where truck_id=old.truck_id ;
+set new.car_count = (select car_count from truck_dispatch where truck_id = old.truck_id);
+IF((select count(distinct dprl.receive_id) from dp_route_load_task dprl
+left join city_info c on dprl.route_end_id = c.id
+where c.city_oil_flag=1 and dprl.route_end_id=old.route_end_id and dprl.load_task_status=3
+and dprl.dp_route_task_id=old.id)>1 and new.car_count>0) THEN
+set new.oil_distance = old.distance+30;
+END IF;
+IF((select car_count from truck_dispatch where truck_id = old.truck_id)>0) THEN
+set new.oil_load_flag = 1;
+END IF;
+END IF;
+END
+;;
+DELIMITER ;
