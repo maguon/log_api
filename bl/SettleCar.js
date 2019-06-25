@@ -140,7 +140,8 @@ function uploadSettleCarFile(req,res,next){
 
 function getSettleCarCsv(req,res,next){
     var csvString = "";
-    var header = "VIN" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "价格/公里"+ ','+ "实际金额"+ ','+ "指令时间" ;
+    var header = "VIN" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "价格/公里"+ ','+ "实际金额"+ ','+
+        "当前公里数"+ ','+ "当前单价"+ ','+"指令时间" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -181,13 +182,88 @@ function getSettleCarCsv(req,res,next){
                 }else{
                     parkObj.price = rows[i].price;
                 }
+                if(rows[i].current_distance == null){
+                    parkObj.currentDistance = "";
+                }else{
+                    parkObj.currentDistance = rows[i].current_distance;
+                }
+                if(rows[i].current_fee == null){
+                    parkObj.currentFee = "";
+                }else{
+                    parkObj.currentFee = rows[i].current_fee;
+                }
                 if(rows[i].order_date == null){
                     parkObj.orderDate = "";
                 }else{
                     parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
                 }
-                csvString = csvString+parkObj.vin+","+parkObj.eShortName+","+parkObj.routeStart+","+parkObj.routeEnd
-                    +","+parkObj.distance+","+parkObj.fee+","+parkObj.price+","+parkObj.orderDate+ '\r\n';
+                csvString = csvString+parkObj.vin+","+parkObj.eShortName+","+parkObj.routeStart+","+parkObj.routeEnd +","+
+                    parkObj.distance+","+parkObj.fee+","+parkObj.price+","+parkObj.currentDistance+","+parkObj.currentFee+","+
+                    parkObj.orderDate+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
+function getNotSettleCarCsv(req,res,next){
+    var csvString = "";
+    var header = "VIN" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "价格/公里"+ ','+ "实际金额"+ ','+
+        "预计金额"+ ','+"指令时间" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    settleCarDAO.getSettleCar(params,function(error,rows){
+        if (error) {
+            logger.error(' getSettleCarCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.vin = rows[i].vin;
+                if(rows[i].e_short_name == null){
+                    parkObj.eShortName = "";
+                }else{
+                    parkObj.eShortName = rows[i].e_short_name;
+                }
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                if(rows[i].distance == null){
+                    parkObj.distance = "";
+                }else{
+                    parkObj.distance = rows[i].distance;
+                }
+                if(rows[i].fee == null){
+                    parkObj.fee = "";
+                }else{
+                    parkObj.fee = rows[i].fee;
+                }
+                if(rows[i].plan_price == null){
+                    parkObj.planPrice = "";
+                }else{
+                    parkObj.planPrice = rows[i].plan_price;
+                }
+                if(rows[i].order_date == null){
+                    parkObj.orderDate = "";
+                }else{
+                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                }
+                csvString = csvString+parkObj.vin+","+parkObj.eShortName+","+parkObj.routeStart+","+parkObj.routeEnd +","+
+                    parkObj.distance+","+parkObj.fee+","+parkObj.planPrice+","+parkObj.orderDate+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
@@ -209,5 +285,6 @@ module.exports = {
     queryNotSettleCarCount : queryNotSettleCarCount,
     updateSettleCar : updateSettleCar,
     uploadSettleCarFile : uploadSettleCarFile,
-    getSettleCarCsv : getSettleCarCsv
+    getSettleCarCsv : getSettleCarCsv,
+    getNotSettleCarCsv : getNotSettleCarCsv
 }
