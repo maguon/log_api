@@ -215,7 +215,7 @@ function getSettleCarCsv(req,res,next){
 
 function getNotSettleCarCsv(req,res,next){
     var csvString = "";
-    var header = "VIN" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "价格/公里"+ ','+ "实际金额"+ ','+
+    var header = "VIN" + ',' + "委托方" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "价格/公里"+ ','+
         "预计金额"+ ','+"指令时间" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
