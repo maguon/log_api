@@ -177,11 +177,7 @@ function getSettleCarCsv(req,res,next){
                 }else{
                     parkObj.fee = rows[i].fee;
                 }
-                if(rows[i].price == null){
-                    parkObj.price = "";
-                }else{
-                    parkObj.price = rows[i].price;
-                }
+                parkObj.price = rows[i].price+rows[i].price_2+rows[i].price_3+rows[i].price_4+rows[i].price_5;
                 if(rows[i].current_distance == null){
                     parkObj.currentDistance = "";
                 }else{
