@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var dpRouteTaskTmpDAO = require('../dao/DpRouteTaskTmpDAO.js');
 var dpRouteLoadTaskTmpDAO = require('../dao/DpRouteLoadTaskTmpDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var dpTransferDemandDAO = require('../dao/DpTransferDemandDAO.js');
@@ -17,8 +18,27 @@ var logger = serverLogger.createLogger('DpRouteLoadTaskTmp.js');
 
 function createDpRouteLoadTaskTmp(req,res,next){
     var params = req.params ;
+    var parkObj = {};
     var planCount = 0;
     Seq().seq(function(){
+        var that = this;
+        dpRouteTaskTmpDAO.getDpRouteTaskTmp(params,function(error,rows){
+            if (error) {
+                logger.error(' getDpRouteTaskTmp ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length >0){
+                    parkObj.truckId = rows[0].truck_id;
+                    parkObj.driveId = rows[0].drive_id;
+                    that();
+                }else{
+                    logger.warn(' getDpRouteTaskTmp ' + 'failed');
+                    resUtil.resetFailedRes(res," 临时路线不存在。 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
         var that = this;
         if(params.loadTaskType==1){
             dpDemandDAO.getDpDemandBase({dpDemandId:params.dpDemandId},function(error,rows){
@@ -67,6 +87,8 @@ function createDpRouteLoadTaskTmp(req,res,next){
         }
 
     }).seq(function () {
+        params.truckId=parkObj.truckId;
+        params.driveId=parkObj.driveId;
         dpRouteLoadTaskTmpDAO.addDpRouteLoadTaskTmp(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteLoadTaskTmp ' + error.message);

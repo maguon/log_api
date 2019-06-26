@@ -7,13 +7,15 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DpRouteLoadTaskDAO.js');
 
 function addDpRouteLoadTask(params,callback){
-    var query = " insert into dp_route_load_task (user_id,load_task_type,demand_id,transfer_demand_id, " +
+    var query = " insert into dp_route_load_task (user_id,truck_id,drive_id,load_task_type,demand_id,transfer_demand_id, " +
         " dp_route_task_id,route_start_id,route_start,base_addr_id,addr_name,route_end_id,route_end," +
         " receive_id,short_name,receive_flag,date_id," +
         " plan_date,plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id,transfer_addr_name) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.loadTaskType;
     paramsArray[i++]=params.dpDemandId;
     paramsArray[i++]=params.transferDemandId;
@@ -42,11 +44,11 @@ function addDpRouteLoadTask(params,callback){
 }
 
 function addDpRouteLoadTaskBatch(params,callback){
-    var query = " insert into dp_route_load_task (user_id,load_task_type,demand_id,transfer_demand_id,dp_route_task_id, " +
+    var query = " insert into dp_route_load_task (user_id,truck_id,drive_id,load_task_type,demand_id,transfer_demand_id,dp_route_task_id, " +
         " route_start_id,route_start,base_addr_id,addr_name,route_end_id, " +
         " route_end,receive_id,short_name,receive_flag,date_id,plan_date, " +
         " plan_count,transfer_flag,transfer_city_id,transfer_city,transfer_addr_id,transfer_addr_name) " +
-        " select dprltmp.user_id,dprltmp.load_task_type,dprltmp.demand_id,dprltmp.transfer_demand_id,"+ params.dpRouteTaskId +", " +
+        " select dprltmp.user_id,dprltmp.truck_id,dprltmp.drive_id,dprltmp.load_task_type,dprltmp.demand_id,dprltmp.transfer_demand_id,"+ params.dpRouteTaskId +", " +
         " dprltmp.route_start_id,dprltmp.route_start,dprltmp.base_addr_id,dprltmp.addr_name,dprltmp.route_end_id, " +
         " dprltmp.route_end,dprltmp.receive_id,dprltmp.short_name,dprltmp.receive_flag,dprltmp.date_id,dprltmp.plan_date, " +
         " dprltmp.plan_count,dprltmp.transfer_flag,dprltmp.transfer_city_id,dprltmp.transfer_city,dprltmp.transfer_addr_id," +
@@ -187,7 +189,7 @@ function getDpRouteLoadTask(params,callback) {
 }
 
 function getDpRouteLoadTaskBase(params,callback) {
-    var query = " select dprl.*,dpr.task_status, " +
+    var query = " select dprl.*,dpr.truck_id,dpr.drive_id,dpr.task_status, " +
         " dpd.route_start_id as demand_route_start_id,dpd.route_end_id as demand_route_end_id " +
         " from dp_route_load_task dprl " +
         " left join dp_route_task dpr on dprl.dp_route_task_id = dpr.id " +

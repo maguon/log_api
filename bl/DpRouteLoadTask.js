@@ -23,6 +23,7 @@ var logger = serverLogger.createLogger('DpRouteLoadTask.js');
 
 function createDpRouteLoadTask(req,res,next){
     var params = req.params ;
+    var parkObj = {};
     var planCount = 0;
     Seq().seq(function(){
         var that = this;
@@ -36,6 +37,8 @@ function createDpRouteLoadTask(req,res,next){
                     resUtil.resetFailedRes(res," 指令状态为在途，不能新增任务。 ");
                     return next();
                 }else{
+                    parkObj.truckId = rows[0].truck_id;
+                    parkObj.driveId = rows[0].drive_id;
                     that();
                 }
             }
@@ -89,6 +92,8 @@ function createDpRouteLoadTask(req,res,next){
         }
 
     }).seq(function () {
+        params.truckId=parkObj.truckId;
+        params.driveId=parkObj.driveId;
         dpRouteLoadTaskDAO.addDpRouteLoadTask(params,function(error,result){
             if (error) {
                 logger.error(' createDpRouteLoadTask ' + error.message);
