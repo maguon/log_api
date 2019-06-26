@@ -8,6 +8,7 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var userDeviceDAO = require('../dao/UserDeviceDAO.js');
+var userDAO = require('../dao/UserDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -55,6 +56,74 @@ function updateUserDeviceToken (req,res,next){
     })
 }
 
+function updateDeviceUpdatedOn(req,res,next){
+    var params = req.params;
+    //var tokenObj = oAuthUtil.parseAccessToken(params.token);
+    var tokenObj = {};
+    tokenObj.userId = 79;
+    if(tokenObj){
+        if(params.userId==tokenObj.userId){
+            userDAO.getUser({userId:params.userId},function (error,rows) {
+                if (error) {
+                    logger.error(' changeUserToken ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(rows && rows.length<1){
+                        logger.warn(' changeUserToken ' + params.userId+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                        resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_USER_UNREGISTERED) ;
+                        return next();
+                    }else{
+                        var user = {
+                            userId : rows[0].uid,
+                            userStatus : rows[0].status,
+                            type : rows[0].type,
+                            name : rows[0].real_name,
+                            phone: rows[0].mobile
+                        }
+                        user.accessToken = oAuthUtil.createAccessToken(oAuthUtil.clientType.user,user.userId,user.userStatus);
+                        oAuthUtil.removeToken({accessToken:params.token},function(error,result){
+                            if(error) {
+                                logger.error(' changeUserToken ' + error.stack);
+                            }
+                        })
+                        oAuthUtil.saveToken(user,function(error,result){
+                            if(error){
+                                logger.error(' changeUserToken ' + error.stack);
+                                //return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
+                            }
+/*                            else{
+                                logger.info(' changeUserToken' +params.userId+ " success");
+                                resUtil.resetQueryRes(res,user,null);
+                                return next();
+                            }*/
+                        })
+                        var myDate = new Date();
+                        params.updatedOn = myDate;
+                        userDeviceDAO.updateDeviceUpdatedOn(params,function(error,result){
+                            if(error){
+                                logger.error(' changeUserToken ' + error.stack);
+                                return next(sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG))
+                            }else{
+                                logger.info(' changeUserToken' +params.userId+ " success");
+                                resUtil.resetQueryRes(res,user,null);
+                                return next();
+                            }
+                        })
+                    }
+                }
+            })
+        }else{
+            logger.warn(' changeUserToken' +params.userId+ " failed");
+            resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR) ;
+            return next();
+        }
+    }else{
+        logger.warn(' changeUserToken' +params.userId+ " failed");
+        resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR) ;
+        return next();
+    }
+}
+
 function removeUserDevice (req,res,next){
     var params = req.params;
     userDeviceDAO.deleteUserDevice(params,function(error,result){
@@ -74,5 +143,6 @@ module.exports = {
     createUserDevice : createUserDevice,
     queryUserDevice : queryUserDevice,
     updateUserDeviceToken : updateUserDeviceToken,
+    updateDeviceUpdatedOn : updateDeviceUpdatedOn,
     removeUserDevice : removeUserDevice
 }

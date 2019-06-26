@@ -212,6 +212,7 @@ function createServer() {
      * UserDevice Module
      */
     server.get('/api/userDevice' ,userDevice.queryUserDevice);
+    server.post({path:'/api/user/:userId/token/:token/mobile' ,contentType: 'application/json'}, userDevice.updateDeviceUpdatedOn);
     server.post({path:'/api/user/:userId/userDevice',contentType: 'application/json'} , userDevice.createUserDevice);
     server.put({path:'/api/user/:userId/device/:deviceId/appType/:appType/userDeviceToken',contentType: 'application/json'} ,userDevice.updateUserDeviceToken);
     server.del('/api/user/:userId/deviceToken/:deviceToken' , userDevice.removeUserDevice);

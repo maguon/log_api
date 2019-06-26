@@ -875,6 +875,59 @@
         }
       }
     },
+    "/user/{userId}/token/{token}/mobile": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "create token",
+        "description": "create token",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "description": "token ",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "device",
+            "in": "body",
+            "description": "device info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/user/{userId}/userDevice": {
       "post": {
         "tags": [
@@ -32182,6 +32235,24 @@
       },
       "xml": {
         "name": "userDevice"
+      }
+    },
+    "device": {
+      "type": "object",
+      "properties": {
+
+        "deviceId": {
+          "type": "string"
+        },
+        "appType": {
+          "type": "integer"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "device"
       }
     },
     "password": {

@@ -80,6 +80,22 @@ function updateUserDeviceToken(params,callback){
     });
 }
 
+function updateDeviceUpdatedOn(params,callback){
+    var query = " update user_device set version = ? , updated_on = ? " +
+        " where user_id = ? and device_id = ? and app_type = ? and device_token = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.version;
+    paramsArray[i++] = params.updatedOn;
+    paramsArray[i++] = params.userId;
+    paramsArray[i++] = params.deviceId;
+    paramsArray[i++] = params.appType;
+    paramsArray[i++] = params.token;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDeviceUpdatedOn ');
+        return callback(error,rows);
+    });
+}
+
 function deleteUserDevice(params,callback){
     var query = " delete from user_device where id is not null ";
     var paramsArray=[],i=0;
@@ -103,5 +119,6 @@ module.exports ={
     getUserDevice : getUserDevice,
     updateUserDevice : updateUserDevice,
     updateUserDeviceToken : updateUserDeviceToken,
+    updateDeviceUpdatedOn : updateDeviceUpdatedOn,
     deleteUserDevice : deleteUserDevice
 }

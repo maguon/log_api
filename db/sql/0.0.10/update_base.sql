@@ -554,3 +554,13 @@ END IF;
 END
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2019-06-26 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task`
+ADD COLUMN `outer_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否外协(0-否,1-是)' AFTER `reverse_money`;
+-- ----------------------------
+-- 2019-06-26 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否月结(0-否,1-是)' AFTER `receive_flag`;
