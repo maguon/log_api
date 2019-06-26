@@ -9,8 +9,8 @@ var logger = serverLogger.createLogger('DpRouteTaskDAO.js');
 
 function addDpRouteTask(params,callback){
     var query = " insert into dp_route_task (user_id,truck_id,drive_id,route_id,route_start_id,route_start,route_end_id,route_end, " +
-        " distance,oil_distance,task_plan_date,task_start_date,task_end_date,date_id,truck_number,task_status) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " distance,oil_distance,task_plan_date,task_start_date,task_end_date,date_id,truck_number,outer_flag,task_status) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.truckId;
@@ -31,6 +31,7 @@ function addDpRouteTask(params,callback){
     paramsArray[i++]=params.taskEndDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.truckNumber;
+    paramsArray[i++]=params.outerFlag;
     paramsArray[i]=params.taskStatus;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTask ');

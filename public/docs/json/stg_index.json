@@ -34122,6 +34122,9 @@
         "taskPlanDate": {
           "type": "string"
         },
+        "outerFlag": {
+          "type": "integer"
+        },
         "taskStatus": {
           "type": "integer"
         },
@@ -34220,6 +34223,9 @@
         },
         "taskPlanDate": {
           "type": "string"
+        },
+        "outerFlag": {
+          "type": "integer"
         },
         "currentCity": {
           "type": "integer"

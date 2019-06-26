@@ -564,3 +564,8 @@ ADD COLUMN `outer_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否外协(0-否,1
 -- ----------------------------
 ALTER TABLE `receive_info`
 ADD COLUMN `month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否月结(0-否,1-是)' AFTER `receive_flag`;
+-- ----------------------------
+-- 2019-06-26 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_tmp`
+ADD COLUMN `outer_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否外协(0-否,1-是)' AFTER `load_flag`;
