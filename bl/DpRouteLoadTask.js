@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
+var dpRouteTaskDAO = require('../dao/DpRouteTaskDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
 var dpDemandDAO = require('../dao/DpDemandDAO.js');
 var dpTaskStatDAO = require('../dao/DpTaskStatDAO.js');
@@ -27,13 +28,13 @@ function createDpRouteLoadTask(req,res,next){
     var planCount = 0;
     Seq().seq(function(){
         var that = this;
-        dpRouteLoadTaskDAO.getDpRouteLoadTaskBase(params,function(error,rows){
+        dpRouteTaskDAO.getDpRouteTaskBase({dpRouteTaskId:params.dpRouteTaskId,function(error,rows){
             if (error) {
                 logger.error(' getDpRouteLoadTaskBase ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else{
                 if(rows&&rows.length >0&&rows[0].task_status ==sysConst.TASK_STATUS.on_road){
-                    logger.warn(' getDpRouteLoadTaskBase ' + 'failed');
+                    logger.warn(' getDpRouteTaskBase ' + 'failed');
                     resUtil.resetFailedRes(res," 指令状态为在途，不能新增任务。 ");
                     return next();
                 }else{
