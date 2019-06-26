@@ -422,13 +422,16 @@ function getTruckOperate(params,callback) {
 
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , hp= ? , truck_tel = ? ,the_code = ? , " +
-        " truck_type = ? , number = ? , driving_date = ? , license_date = ? , two_date = ? , remark = ?  where id = ? " ;
+        " operate_type = ? , company_id = ? , truck_type = ? , number = ? , driving_date = ? , license_date = ? , " +
+        " two_date = ? , remark = ?  where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
     paramsArray[i++]=params.hp;
     paramsArray[i++]=params.truckTel;
     paramsArray[i++]=params.theCode;
+    paramsArray[i++]=params.operateType;
+    paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.truckType;
     paramsArray[i++]=params.number;
     paramsArray[i++]=params.drivingDate;

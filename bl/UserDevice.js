@@ -58,9 +58,7 @@ function updateUserDeviceToken (req,res,next){
 
 function updateDeviceUpdatedOn(req,res,next){
     var params = req.params;
-    //var tokenObj = oAuthUtil.parseAccessToken(params.token);
-    var tokenObj = {};
-    tokenObj.userId = 79;
+    var tokenObj = oAuthUtil.parseAccessToken(params.token);
     if(tokenObj){
         if(params.userId==tokenObj.userId){
             userDAO.getUser({userId:params.userId},function (error,rows) {
