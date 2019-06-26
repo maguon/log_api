@@ -28,7 +28,7 @@ function createDpRouteLoadTask(req,res,next){
     var planCount = 0;
     Seq().seq(function(){
         var that = this;
-        dpRouteTaskDAO.getDpRouteTaskBase({dpRouteTaskId:params.dpRouteTaskId,function(error,rows){
+        dpRouteTaskDAO.getDpRouteTaskBase({dpRouteTaskId:params.dpRouteTaskId},function(error,rows){
             if (error) {
                 logger.error(' getDpRouteLoadTaskBase ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
