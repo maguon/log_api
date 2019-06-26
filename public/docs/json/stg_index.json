@@ -33585,6 +33585,9 @@
         "receiveFlag": {
           "type": "integer"
         },
+        "monthFlag": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }
