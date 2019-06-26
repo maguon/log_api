@@ -156,33 +156,37 @@ function createEmptyDpRouteTask(req,res,next){
         })
     }).seq(function() {
         var that = this;
-        var subParams ={
-            dpRouteTaskId:params.dpRouteTaskId,
-            truckId:params.truckId,
-            driveId:params.driveId,
-            routeId:params.routeId,
-            routeStartId:params.routeStartId,
-            routeStart:params.routeStart,
-            routeEndId:params.routeEndId,
-            routeEnd:params.routeEnd,
-            oil:parkObj.noLoadDistanceOil,
-            totalOil: (params.oilDistance*parkObj.noLoadDistanceOil)/100,
-            urea:parkObj.urea,
-            totalUrea :(params.oilDistance*parkObj.urea)/100
-        }
-        dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
-            if (error) {
-                logger.error(' addDpRouteTaskOilRel ' + error.message);
-                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if (result && result.insertId > 0) {
-                    logger.info(' addDpRouteTaskOilRel ' + 'success');
-                } else {
-                    logger.warn(' addDpRouteTaskOilRel ' + 'failed');
-                }
-                that();
+        if(params.outerFlag == sysConst.OUTER_FLAG.no){
+            var subParams ={
+                dpRouteTaskId:params.dpRouteTaskId,
+                truckId:params.truckId,
+                driveId:params.driveId,
+                routeId:params.routeId,
+                routeStartId:params.routeStartId,
+                routeStart:params.routeStart,
+                routeEndId:params.routeEndId,
+                routeEnd:params.routeEnd,
+                oil:parkObj.noLoadDistanceOil,
+                totalOil: (params.oilDistance*parkObj.noLoadDistanceOil)/100,
+                urea:parkObj.urea,
+                totalUrea :(params.oilDistance*parkObj.urea)/100
             }
-        })
+            dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
+                if (error) {
+                    logger.error(' addDpRouteTaskOilRel ' + error.message);
+                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if (result && result.insertId > 0) {
+                        logger.info(' addDpRouteTaskOilRel ' + 'success');
+                    } else {
+                        logger.warn(' addDpRouteTaskOilRel ' + 'failed');
+                    }
+                    that();
+                }
+            })
+        }else{
+            that();
+        }
     }).seq(function(){
         logger.info(' createEmptyDpRouteTask ' + 'success');
         req.params.routeContent =" 生成路线 ";
@@ -506,6 +510,7 @@ function updateDpRouteTaskStatus(req,res,next){
                         parkObj.loadReverseOil=rows[0].load_reverse_oil;
                         parkObj.noLoadReverseOil=rows[0].no_load_reverse_oil;
                         parkObj.reverseFlag=rows[0].reverse_flag;
+                        parkObj.outerFlag=rows[0].outer_flag;
                         that();
                     } else {
                         logger.warn(' getDpRouteTask ' + 'failed');
@@ -575,7 +580,7 @@ function updateDpRouteTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        if (params.taskStatus == sysConst.TASK_STATUS.completed) {
+        if (params.taskStatus == sysConst.TASK_STATUS.completed&&parkObj.outerFlag == sysConst.OUTER_FLAG.no) {
             if(parkObj.carCount>=4){
                 parkObj.loadFlag = sysConst.LOAD_FLAG.loan;
             }else{

@@ -237,6 +237,11 @@ var TASK_FEE_STATUS  ={ //调度费用申请
     grant : 2   //已发放
 };
 
+var OUTER_FLAG = {  //是否外协车
+    no : 0 ,  //否
+    yes : 1 //是
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -273,7 +278,8 @@ module.exports = {
     RECEIVE_FLAG : RECEIVE_FLAG,
     SETTLE_STATUS : SETTLE_STATUS,
     REPAIR_TYPE : REPAIR_TYPE,
-    TASK_FEE_STATUS : TASK_FEE_STATUS
+    TASK_FEE_STATUS : TASK_FEE_STATUS,
+    OUTER_FLAG : OUTER_FLAG
 }
 
 
