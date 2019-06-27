@@ -186,6 +186,8 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     parkObj.driveId = rows[0].drive_id;
                     parkObj.dpRouteTaskId = rows[0].dp_route_task_id;
                     parkObj.dateId = rows[0].date_id;
+                    parkObj.outerFlag = rows[0].outer_flag;
+                    parkObj.monthFlag = rows[0].month_flag;
                     that();
                 } else {
                     logger.warn(' getDpRouteLoadTask ' + 'failed');
@@ -315,7 +317,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
     }).seq(function() { //生成洗车费
         var that = this;
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&parkObj.loadTaskStatus==1&&
-            parkObj.transferFlag==0&&parkObj.cleanFee>0&&cleanStatusFlag) {
+            parkObj.transferFlag==0&&parkObj.cleanFee>0&&cleanStatusFlag&&parkObj.outerFlag==sysConst.OUTER_FLAG.no) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
@@ -334,7 +336,13 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             }else{
                 params.leadFee = parkObj.leadFee;
             }
+            params.monthFlag=parkObj.monthFlag;
             params.totalPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
+            if(parkObj.monthFlag==1){
+                params.actualPrice = 0;
+            }else{
+                params.actualPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
+            }
             params.carCount = parkObj.carCount;
             params.type = 0;
             dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params, function (error, result) {
