@@ -161,7 +161,7 @@ function getSettleHandoverBase(params,callback) {
 
 function getNotSettleHandover(params,callback) {
     var query = " select dpdtl.*,c.make_name,e.short_name as e_short_name, " +
-        " dpd.route_start,dpd.route_end,r.short_name as r_short_name, " +
+        " dpd.route_start,dpd.route_end,r.short_name as r_short_name,dprl.addr_name, " +
         " d.drive_name,t.truck_num,dpr.task_plan_date " +
         " from dp_route_load_task_detail dpdtl " +
         " left join settle_handover_car_rel shcr on dpdtl.car_id = shcr.car_id " +
