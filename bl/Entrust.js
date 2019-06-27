@@ -256,7 +256,7 @@ function createSettleCarBatch(req,res,next){
     entrustDAO.addSettleCarBatch(params,function(error,result){
         if (error) {
             if(error.message.indexOf("Duplicate") > 0) {
-                resUtil.resetFailedRes(res, "数据已经存在，请重新筛选");
+                resUtil.resetFailedRes(res, "数据已存在，请重新筛选");
                 return next();
             } else{
                 logger.error(' createSettleCarBatch ' + error.message);
@@ -268,7 +268,7 @@ function createSettleCarBatch(req,res,next){
                 resUtil.resetCreateRes(res,result,null);
                 return next();
             }else{
-                resUtil.resetFailedRes(res," 暂无数据 ");
+                resUtil.resetFailedRes(res," 数据已存在，请重新筛选 ");
                 return next();
             }
 
