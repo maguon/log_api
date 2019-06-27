@@ -14948,6 +14948,14 @@
 
           },
           {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -15421,6 +15429,14 @@
             "description": "receive id",
             "required": false,
             "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
 
           }
         ],

@@ -107,6 +107,10 @@ function getEntrustCar(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and c.receive_id = ? ";
     }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -332,6 +336,10 @@ function addSettleCarBatch(params,callback) {
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
         query = query + " and c.receive_id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
     }
     query = query + '  order by c.id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
