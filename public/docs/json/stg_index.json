@@ -30626,19 +30626,19 @@
 
           },
           {
-            "name": "entrustId",
-            "in": "query",
-            "description": "entrust id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "makeId",
             "in": "query",
             "description": "car makeId",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
 
           },
           {
