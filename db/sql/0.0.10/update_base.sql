@@ -574,3 +574,7 @@ ADD COLUMN `outer_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否外协(0-否,1
 -- ----------------------------
 ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否月结(0-否,1-是)' AFTER `lead_fee`;
+-- ----------------------------
+-- 2019-06-27 更新
+-- ----------------------------
+update dp_route_task dpr left join truck_info t on dpr.truck_id = t.id set dpr.outer_flag = 1 where t.operate_type = 2;
