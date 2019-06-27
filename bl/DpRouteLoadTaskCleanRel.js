@@ -189,8 +189,9 @@ function updateCleanRelStatus(req,res,next){
 function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     var csvString = "";
     var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ','+ "电话" + ','+ "小车单价" + ','+ "大车单价" + ','+ "小车台数" + ','+
-        "大车台数" + ','+ "装车数" + ','+"洗车费" + ','+ "拖车费" + ','+ "提车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
-        "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+ "领取时间" + ','+ "领取状态"+ ','+ "是否补发"+ ','+ "备注";
+        "大车台数" + ','+ "装车数" + ','+"洗车费" + ','+"实际洗车费" + ','+ "拖车费" + ','+ "提车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
+        "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+"银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+
+        "领取时间" + ','+ "领取状态"+ ','+ "是否补发"+ ','+ "是否月结"+ ','+ "备注";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -242,6 +243,11 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.totalPrice = rows[i].total_price;
                 }
+                if(rows[i].actual_price==null){
+                    parkObj.actualPrice = "";
+                }else{
+                    parkObj.actualPrice = rows[i].actual_price;
+                }
                 if(rows[i].total_trailer_fee==null){
                     parkObj.totalTrailerFee = "";
                 }else{
@@ -283,6 +289,21 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.loadDate = new Date(rows[i].load_date).toLocaleDateString();
                 }
+                if(rows[i].bank_number==null){
+                    parkObj.bankNumber = "";
+                }else{
+                    parkObj.bankNumber = rows[i].bank_number;
+                }
+                if(rows[i].bank_name==null){
+                    parkObj.bankName = "";
+                }else{
+                    parkObj.bankName = rows[i].bank_name;
+                }
+                if(rows[i].bank_user_name==null){
+                    parkObj.bankUserName = "";
+                }else{
+                    parkObj.bankUserName = rows[i].bank_user_name;
+                }
                 if(rows[i].clean_date==null){
                     parkObj.cleanDate = "";
                 }else{
@@ -300,16 +321,22 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.type = "是";
                 }
+                if(rows[i].month_flag == 0){
+                    parkObj.monthFlag = "否";
+                }else{
+                    parkObj.monthFlag = "是";
+                }
                 if(rows[i].remark==null){
                     parkObj.remark = "";
                 }else{
                     parkObj.remark = rows[i].remark;
                 }
                 csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+
-                    parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+ parkObj.carCount+","+
-                    parkObj.totalPrice+","+parkObj.totalTrailerFee+","+ parkObj.carParkingFee+","+parkObj.runFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","+
-                    parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.loadDate+","+parkObj.cleanDate+","+
-                    parkObj.status+","+parkObj.type+","+parkObj.remark+ '\r\n';
+                    parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+parkObj.carCount+","+
+                    parkObj.totalPrice+","+parkObj.actualPrice+","+parkObj.totalTrailerFee+","+ parkObj.carParkingFee+","+parkObj.runFee+","+
+                    parkObj.totalRunFee+","+parkObj.leadFee+","+ parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+
+                    parkObj.loadDate+","+parkObj.bankNumber+","+parkObj.bankName+","+parkObj.bankUserName+","+
+                    parkObj.cleanDate+","+parkObj.status+","+parkObj.type+","+parkObj.monthFlag+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
