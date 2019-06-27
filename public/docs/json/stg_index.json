@@ -30163,6 +30163,14 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "car makeId",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "entrustId",
             "in": "query",
             "description": "entrust id",
@@ -30174,6 +30182,14 @@
             "name": "routeStartId",
             "in": "query",
             "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "baseAddrId",
+            "in": "query",
+            "description": "baseAddr id",
             "required": false,
             "type": "integer"
 

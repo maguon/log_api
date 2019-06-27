@@ -186,6 +186,10 @@ function getNotSettleHandover(params,callback) {
     if(params.vinCode){
         query = query + " and c.vin like '%"+params.vinCode+"%'";
     }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
         query = query + " and c.entrust_id = ? ";
@@ -193,6 +197,10 @@ function getNotSettleHandover(params,callback) {
     if(params.routeStartId){
         paramsArray[i++] = params.routeStartId;
         query = query + " and dpr.route_start_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dprl.base_addr_id = ? ";
     }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
