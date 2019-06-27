@@ -17,12 +17,6 @@ var logger = serverLogger.createLogger('DpRouteLoadTaskCleanRel.js');
 
 function createDpRouteLoadTaskCleanRel(req,res,next){
     var params = req.params ;
-    if(params.monthFlag ==null || params.monthFlag ==""){
-        params.monthFlag = 0;
-    }
-    if(params.actualPrice ==null || params.actualPrice ==""){
-        params.actualPrice = 0;
-    }
     dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params,function(error,result){
         if (error) {
             logger.error(' createDpRouteLoadTaskCleanRel ' + error.message);

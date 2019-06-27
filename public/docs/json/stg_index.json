@@ -34353,7 +34353,13 @@
         "smallSinglePrice": {
           "type": "integer"
         },
+        "monthFlag": {
+          "type": "integer"
+        },
         "totalPrice": {
+          "type": "integer"
+        },
+        "actualPrice": {
           "type": "integer"
         },
         "smallCarCount": {
