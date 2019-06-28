@@ -110,7 +110,27 @@ function createEmptyDpRouteTask(req,res,next){
     var params = req.params ;
     var parkObj = {};
     var dpRouteTaskId = 0;
-    Seq().seq(function(){
+    Seq().seq(function() {
+        var that = this;
+        truckDAO.getTruckFirst({truckId:params.truckId}, function (error, rows) {
+            if (error) {
+                logger.error(' getTruckFirst ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows&&rows.length>0) {
+                    parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
+                    parkObj.urea=rows[0].urea;
+                    parkObj.operateType=rows[0].operate_type;
+                    that();
+                } else {
+                    parkObj.noLoadDistanceOil=0;
+                    parkObj.urea=0;
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
         var that = this;
         if(params.taskStatus==null||params.taskStatus==""){
             params.taskStatus = sysConst.TASK_STATUS.ready_accept;
@@ -120,6 +140,11 @@ function createEmptyDpRouteTask(req,res,next){
             params.taskStartDate = myDate;
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
+        }
+        if(parkObj.operateType==1){
+            params.outerFlag = 0;
+        }else{
+            params.outerFlag = 1;
         }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
@@ -159,26 +184,7 @@ function createEmptyDpRouteTask(req,res,next){
         })
     }).seq(function() {
         var that = this;
-        truckDAO.getTruckFirst({truckId:params.truckId}, function (error, rows) {
-            if (error) {
-                logger.error(' getTruckFirst ' + error.message);
-                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                if (rows&&rows.length>0) {
-                    parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
-                    parkObj.urea=rows[0].urea;
-                    that();
-                } else {
-                    parkObj.noLoadDistanceOil=0;
-                    parkObj.urea=0;
-                    that();
-                }
-            }
-        })
-    }).seq(function() {
-        var that = this;
-        if(params.outerFlag == sysConst.OUTER_FLAG.no){
+        if(parkObj.operateType==1){
             var subParams ={
                 dpRouteTaskId:params.dpRouteTaskId,
                 truckId:params.truckId,

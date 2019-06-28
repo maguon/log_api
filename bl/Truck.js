@@ -11,6 +11,7 @@ var sysConst = require('../util/SysConst.js');
 var truckDAO = require('../dao/TruckDAO.js');
 var driveDAO = require('../dao/DriveDAO.js');
 var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
+var companyDAO = require('../dao/CompanyDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -267,18 +268,39 @@ function updateTruck(req,res,next){
 
 function updateTruckCompany(req,res,next){
     var params = req.params ;
-    truckDAO.updateTruckCompany(params,function(error,result){
-        if (error) {
-            logger.error(' updateTruckCompany ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateTruckCompany ' + 'success');
-            req.params.truckContent =" 修改所属公司为 "+params.companyName;
-            req.params.vhe = params.truckNum;
-            req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
-        }
+    var parkObj = {};
+    Seq().seq(function(){
+        var that = this;
+        companyDAO.getCompany({companyId:params.companyId},function(error,rows){
+            if (error) {
+                logger.error(' getCompany ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    parkObj.companyName = rows[0].company_name;
+                    that();
+                }else{
+                    logger.warn(' getCompany ' + 'failed');
+                    resUtil.resetFailedRes(res, " 所属公司不存在，操作失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        truckDAO.updateTruckCompany(params,function(error,result){
+            if (error) {
+                logger.error(' updateTruckCompany ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateTruckCompany ' + 'success');
+                req.params.truckContent =" 修改所属公司为 "+parkObj.companyName;
+                req.params.vhe = params.truckNum;
+                req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

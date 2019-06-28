@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var dpRouteTaskTmpDAO = require('../dao/DpRouteTaskTmpDAO.js');
 var dpRouteLoadTaskTmpDAO = require('../dao/DpRouteLoadTaskTmpDAO.js');
+var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -14,15 +15,39 @@ var logger = serverLogger.createLogger('DpRouteTaskTmp.js');
 
 function createDpRouteTaskTmp(req,res,next){
     var params = req.params ;
-    dpRouteTaskTmpDAO.addDpRouteTaskTmp(params,function(error,result){
-        if (error) {
-            logger.error(' createDpRouteTaskTmp ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createDpRouteTaskTmp ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
+    var parkObj = {};
+    Seq().seq(function() {
+        var that = this;
+        truckDAO.getTruckBase({truckId:params.truckId}, function (error, rows) {
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows&&rows.length>0) {
+                    parkObj.operateType=rows[0].operate_type;
+                    that();
+                } else {
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
+        if(parkObj.operateType==1){
+            params.outerFlag = 0;
+        }else{
+            params.outerFlag = 1;
         }
+        dpRouteTaskTmpDAO.addDpRouteTaskTmp(params,function(error,result){
+            if (error) {
+                logger.error(' createDpRouteTaskTmp ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createDpRouteTaskTmp ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
