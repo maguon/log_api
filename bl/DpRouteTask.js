@@ -26,8 +26,25 @@ var logger = serverLogger.createLogger('DpRouteTask.js');
 
 function createDpRouteTask(req,res,next){
     var params = req.params ;
+    var parkObj = {};
     var dpRouteTaskId = 0;
-    Seq().seq(function(){
+    Seq().seq(function() {
+        var that = this;
+        truckDAO.getTruckBase({truckId:params.truckId}, function (error, rows) {
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows&&rows.length>0) {
+                    parkObj.operateType=rows[0].operate_type;
+                    that();
+                } else {
+                    that();
+                }
+            }
+        })
+    }).seq(function(){
         var that = this;
         if(params.taskStatus==null||params.taskStatus==""){
             params.taskStatus = sysConst.TASK_STATUS.ready_accept;
@@ -37,6 +54,11 @@ function createDpRouteTask(req,res,next){
             params.taskStartDate = myDate;
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
+        }
+        if(parkObj.operateType==1){
+            params.outerFlag = 0;
+        }else{
+            params.outerFlag = 1;
         }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
