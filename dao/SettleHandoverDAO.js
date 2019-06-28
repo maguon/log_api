@@ -23,6 +23,28 @@ function addSettleHandover(params,callback){
     });
 }
 
+function addSettleHandoverAll(params,callback){
+    var query = " insert into settle_handover_info (number,serial_number,entrust_id,op_user_id,received_date," +
+        "route_start_id,route_end_id,receive_id,car_count,remark,date_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.number;
+    paramsArray[i++]=params.serialNumber;
+    paramsArray[i++]=params.entrustId;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.receivedDate;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.carCount;
+    paramsArray[i++]=params.remark;
+    paramsArray[i++]=params.dateId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addSettleHandoverAll ');
+        return callback(error,rows);
+    });
+}
+
 function getSettleHandover(params,callback) {
     var query = " select sh.*,e.short_name,u.real_name as op_user_name," +
         " c1.city_name as city_route_start,c2.city_name as city_route_end,r.short_name as r_short_name " +
@@ -567,6 +589,7 @@ function updateHandoveImage(params,callback){
 
 module.exports ={
     addSettleHandover : addSettleHandover,
+    addSettleHandoverAll : addSettleHandoverAll,
     getSettleHandover : getSettleHandover,
     getSettleHandoverBase : getSettleHandoverBase,
     getNotSettleHandover : getNotSettleHandover,

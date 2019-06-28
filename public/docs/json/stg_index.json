@@ -31027,6 +31027,51 @@
         }
       }
     },
+    "/user/{userId}/settleHandoverAll": {
+      "post": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "user create settleHandoverAll",
+        "description": "user create settleHandoverAll",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleHandoverAll",
+            "in": "body",
+            "description": "settleHandoverAll info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleHandoverAll"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleHandover id"
+          }
+        }
+      }
+    },
     "/user/{userId}/settleHandover/{settleHandoverId}": {
       "put": {
         "tags": [
@@ -35044,6 +35089,42 @@
       },
       "xml": {
         "name": "settleHandover"
+      }
+    },
+    "settleHandoverAll": {
+      "type": "object",
+      "properties": {
+
+        "serialNumber": {
+          "type": "integer"
+        },
+        "entrustId": {
+          "type": "integer"
+        },
+        "receivedDate": {
+          "type": "string"
+        },
+        "routeStartId": {
+          "type": "integer"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "receiveId": {
+          "type": "integer"
+        },
+        "carCount": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "carIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "settleHandoverAll"
       }
     },
     "settleHandoverImage": {
