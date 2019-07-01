@@ -166,6 +166,48 @@ function updateDpRouteLoadTaskCleanRelStatus(req,res,next){
     })
 }
 
+function updateCleanRelStatusAll(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    Seq().seq(function(){
+        var that = this;
+        var cleanRelIds = params.cleanRelIds;
+        var rowArray = [] ;
+        rowArray.length= cleanRelIds.length;
+        Seq(rowArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                userId : params.userId,
+                dateId : parseInt(strDate),
+                cleanDate : myDate,
+                status : params.status,
+                loadTaskCleanRelId : cleanRelIds[i],
+                row : i+1,
+            }
+            dpRouteLoadTaskCleanRelDAO.updateDpRouteLoadTaskCleanRelStatus(subParams,function(err,result){
+                if (err) {
+                    logger.error(' updateCleanRelStatusAll ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' updateCleanRelStatusAll  ' + 'success');
+                    }else{
+                        logger.warn(' updateCleanRelStatusAll  ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+        }).seq(function(){
+            that();
+        })
+    }).seq(function(){
+        logger.info(' updateCleanRelStatusAll ' + 'success');
+        resUtil.resetQueryRes(res,null);
+        return next();
+    })
+}
+
 function updateCleanRelStatus(req,res,next){
     var params = req.params;
     if(params.status==sysConst.CLEAN_STATUS.completed){
@@ -457,6 +499,7 @@ module.exports = {
     queryDpRouteLoadTaskCleanRelReceiveWeekStat : queryDpRouteLoadTaskCleanRelReceiveWeekStat,
     updateDpRouteLoadTaskCleanRel : updateDpRouteLoadTaskCleanRel,
     updateDpRouteLoadTaskCleanRelStatus : updateDpRouteLoadTaskCleanRelStatus,
+    updateCleanRelStatusAll : updateCleanRelStatusAll,
     updateCleanRelStatus : updateCleanRelStatus,
     getDpRouteLoadTaskCleanRelCsv : getDpRouteLoadTaskCleanRelCsv,
     getDpRouteLoadTaskProtectCsv : getDpRouteLoadTaskProtectCsv

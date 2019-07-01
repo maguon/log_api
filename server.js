@@ -800,6 +800,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/dpRouteLoadTaskCleanRel',contentType: 'application/json'},dpRouteLoadTaskCleanRel.createDpRouteLoadTaskCleanRel);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRel);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId/status/:status',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRelStatus);
+    server.put({path:'/api/user/:userId/status/:status/cleanRelAll',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateCleanRelStatusAll);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/status/:status',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateCleanRelStatus);
 
     /**
