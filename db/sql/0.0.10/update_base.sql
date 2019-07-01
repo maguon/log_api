@@ -578,3 +578,8 @@ ADD COLUMN `month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否月结(0-否,1
 -- 2019-06-27 更新
 -- ----------------------------
 update dp_route_task dpr left join truck_info t on dpr.truck_id = t.id set dpr.outer_flag = 1 where t.operate_type = 2;
+-- ----------------------------
+-- 2019-07-01 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+MODIFY COLUMN `actual_price`  decimal(10,2) NULL DEFAULT NULL COMMENT '实际费用' AFTER `actual_guard_fee`;
