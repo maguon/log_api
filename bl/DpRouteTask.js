@@ -57,6 +57,8 @@ function createDpRouteTask(req,res,next){
         }
         if(params.reverseFlag == null || params.reverseFlag == ""){
             params.reverseFlag = 0;
+            params.reverseMoney = 0;
+
         }
         if(parkObj.operateType==1){
             params.outerFlag = 0;
@@ -146,6 +148,7 @@ function createEmptyDpRouteTask(req,res,next){
         }
         if(params.reverseFlag == null || params.reverseFlag == ""){
             params.reverseFlag = 0;
+            params.reverseMoney = 0;
         }
         if(parkObj.operateType==1){
             params.outerFlag = 0;
@@ -264,6 +267,7 @@ function createDpRouteTaskBatch(req,res,next){
         }
         if(params.reverseFlag == null || params.reverseFlag == ""){
             params.reverseFlag = 0;
+            params.reverseMoney = 0;
         }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {
