@@ -55,6 +55,9 @@ function createDpRouteTask(req,res,next){
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
         }
+        if(params.reverseFlag == null || params.reverseFlag == ""){
+            params.reverseFlag = 0;
+        }
         if(parkObj.operateType==1){
             params.outerFlag = 0;
         }else{
@@ -140,6 +143,9 @@ function createEmptyDpRouteTask(req,res,next){
             params.taskStartDate = myDate;
             params.taskEndDate = myDate;
             params.dateId = parseInt(strDate);
+        }
+        if(params.reverseFlag == null || params.reverseFlag == ""){
+            params.reverseFlag = 0;
         }
         if(parkObj.operateType==1){
             params.outerFlag = 0;
@@ -255,6 +261,9 @@ function createDpRouteTaskBatch(req,res,next){
         var that = this;
         if(params.taskStatus==null||params.taskStatus==""){
             params.taskStatus = sysConst.TASK_STATUS.ready_accept;
+        }
+        if(params.reverseFlag == null || params.reverseFlag == ""){
+            params.reverseFlag = 0;
         }
         dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
             if (error) {

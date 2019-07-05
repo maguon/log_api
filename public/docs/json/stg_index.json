@@ -34276,6 +34276,12 @@
         "taskPlanDate": {
           "type": "string"
         },
+        "reverseFlag": {
+          "type": "integer"
+        },
+        "reverseMoney": {
+          "type": "integer"
+        },
         "outerFlag": {
           "type": "integer"
         },
@@ -34377,6 +34383,12 @@
         },
         "taskPlanDate": {
           "type": "string"
+        },
+        "reverseFlag": {
+          "type": "integer"
+        },
+        "reverseMoney": {
+          "type": "integer"
         },
         "outerFlag": {
           "type": "integer"

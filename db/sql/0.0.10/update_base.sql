@@ -583,3 +583,9 @@ update dp_route_task dpr left join truck_info t on dpr.truck_id = t.id set dpr.o
 -- ----------------------------
 ALTER TABLE `dp_route_load_task_clean_rel`
 MODIFY COLUMN `actual_price`  decimal(10,2) NULL DEFAULT NULL COMMENT '实际费用' AFTER `actual_guard_fee`;
+-- ----------------------------
+-- 2019-07-05 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_tmp`
+ADD COLUMN `reverse_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否倒板(0-否,1-是)' AFTER `load_flag`,
+ADD COLUMN `reverse_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '倒板金额' AFTER `reverse_flag`;

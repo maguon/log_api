@@ -33,6 +33,9 @@ function createDpRouteTaskTmp(req,res,next){
             }
         })
     }).seq(function(){
+        if(params.reverseFlag == null || params.reverseFlag == ""){
+            params.reverseFlag = 0;
+        }
         if(parkObj.operateType==1){
             params.outerFlag = 0;
         }else{
