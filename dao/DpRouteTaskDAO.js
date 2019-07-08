@@ -767,7 +767,7 @@ function getDriveCost(params,callback) {
         " group by deor.drive_id,deor.truck_id) deorm on dprm.drive_id = deorm.drive_id and dprm.truck_id = deorm.truck_id " +
         " left join (select dp.drive_id,dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
         " from drive_peccancy dp " +
-        " where dp.date_id>="+params.dateIdStart+" and dp.date_id<= " +params.dateIdEnd+
+        " where dp.handle_date>="+params.dateIdStart+" and dp.handle_date<= " +params.dateIdEnd+
         " group by dp.drive_id,dp.truck_id) dpm on dprm.drive_id = dpm.drive_id and dprm.truck_id = dpm.truck_id " +
         " left join(select te.drive_id,te.truck_id,sum(te.etc_fee) etc_fee " +
         " from truck_etc te " +
