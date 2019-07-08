@@ -46,9 +46,24 @@ function querySettleOuterTruck(req,res,next){
     })
 }
 
+function updateSettleOuterTruck(req,res,next){
+    var params = req.params ;
+    settleOuterTruckDAO.updateSettleOuterTruck(params,function(error,result){
+        if (error) {
+            logger.error(' updateSettleOuterTruck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateSettleOuterTruck ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 
 module.exports = {
     createSettleOuterTruck : createSettleOuterTruck,
-    querySettleOuterTruck : querySettleOuterTruck
+    querySettleOuterTruck : querySettleOuterTruck,
+    updateSettleOuterTruck : updateSettleOuterTruck
 }

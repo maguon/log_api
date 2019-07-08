@@ -52,8 +52,24 @@ function getSettleOuterTruck(params,callback) {
     });
 }
 
+function updateSettleOuterTruck(params,callback){
+    var query = " update settle_outer_truck set distance = ? , fee = ? " +
+        " where make_id = ? and route_start_id = ? and route_end_id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.distance;
+    paramsArray[i++]=params.fee;
+    paramsArray[i++]=params.makeId;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeEndId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateSettleOuterTruck ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addSettleOuterTruck : addSettleOuterTruck,
-    getSettleOuterTruck : getSettleOuterTruck
+    getSettleOuterTruck : getSettleOuterTruck,
+    updateSettleOuterTruck : updateSettleOuterTruck
 }

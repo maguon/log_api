@@ -32181,6 +32181,76 @@
         }
       }
     },
+    "/user/{userId}/make/{makeId}/routeStart/{routeStartId}/routeEnd/{routeEndId}": {
+      "put": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "update settleOuterTruck info",
+        "description": "update settleOuterTruck info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "path",
+            "description": "make id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "path",
+            "description": "routeStart id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "path",
+            "description": "routeEnd id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleOuterTruck",
+            "in": "body",
+            "description": "settleOuterTruck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleOuterTruck"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterTruck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
