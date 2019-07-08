@@ -589,3 +589,25 @@ MODIFY COLUMN `actual_price`  decimal(10,2) NULL DEFAULT NULL COMMENT '实际费
 ALTER TABLE `dp_route_task_tmp`
 ADD COLUMN `reverse_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '是否倒板(0-否,1-是)' AFTER `load_flag`,
 ADD COLUMN `reverse_money`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '倒板金额' AFTER `reverse_flag`;
+-- ----------------------------
+-- 2019-07-08 更新 去除truck_dispatch car_count>0 oil_load_flag = 1
+-- ----------------------------
+DROP TRIGGER IF EXISTS `trg_update_route_task`;
+DELIMITER ;;
+CREATE TRIGGER `trg_update_route_task` BEFORE UPDATE ON `dp_route_task` FOR EACH ROW BEGIN
+IF(new.task_status=4 && old.task_status<>4) THEN
+UPDATE truck_dispatch set current_city= 0 , task_start = old.route_start_id ,task_end=old.route_end_id
+where truck_id=old.truck_id ;
+set new.car_count = (select car_count from truck_dispatch where truck_id = old.truck_id);
+IF((select count(distinct dprl.receive_id) from dp_route_load_task dprl
+left join city_info c on dprl.route_end_id = c.id
+left join dp_route_task dpr on dprl.drive_id = dpr.drive_id and dprl.truck_id = dpr.truck_id
+where c.city_oil_flag=1 and dprl.route_end_id=old.route_end_id and dprl.load_task_status=3
+and dprl.drive_id = old.drive_id and dprl.truck_id = old.truck_id)>1 and new.car_count>0) THEN
+set new.oil_distance = old.distance+30;
+END IF;
+
+END IF;
+END
+;;
+DELIMITER ;
