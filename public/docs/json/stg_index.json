@@ -32068,6 +32068,119 @@
         }
       }
     },
+    "/settleOuterTruck": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleOuterTruck list",
+        "description": "query settleOuterTruck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleOuterTruck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterTruck id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/settleOuterTruck": {
+      "post": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "user create settleOuterTruck",
+        "description": "user create settleOuterTruck",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleOuterTruck",
+            "in": "body",
+            "description": "settleOuterTruck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleOuterTruck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterTruck id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
@@ -35253,6 +35366,39 @@
       },
       "xml": {
         "name": "settleCar"
+      }
+    },
+    "settleOuterTruck": {
+      "type": "object",
+      "properties": {
+
+        "makeId": {
+          "type": "integer"
+        },
+        "makeName": {
+          "type": "string"
+        },
+        "routeStartId": {
+          "type": "integer"
+        },
+        "routeStart": {
+          "type": "string"
+        },
+        "routeEndId": {
+          "type": "integer"
+        },
+        "routeEnd": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "integer"
+        },
+        "fee": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "settleOuterTruck"
       }
     }
   },

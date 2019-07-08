@@ -84,6 +84,7 @@ var repairStation = require('./bl/RepairStation.js');
 var settleHandover = require('./bl/SettleHandover.js');
 var settleHandoverCarRel = require('./bl/SettleHandoverCarRel.js');
 var settleCar = require('./bl/SettleCar.js');
+var settleOuterTruck = require('./bl/SettleOuterTruck.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -965,6 +966,12 @@ function createServer() {
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);
     server.post({path:'/api/user/:userId/settleCarFile',contentType: 'multipart/form-data'},settleCar.uploadSettleCarFile);
     server.put({path:'/api/user/:userId/settleCar/:settleCarId',contentType: 'application/json'} ,settleCar.updateSettleCar);
+
+    /**
+     * SettleOuterTruck Module
+     */
+    server.get('/api/settleOuterTruck', settleOuterTruck.querySettleOuterTruck);
+    server.post({path:'/api/user/:userId/settleOuterTruck',contentType: 'application/json'},settleOuterTruck.createSettleOuterTruck);
 
     /**
      * MsgPush Module
