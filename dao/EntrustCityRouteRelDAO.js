@@ -8,8 +8,8 @@ var logger = serverLogger.createLogger('EntrustCityRouteRelDAO.js');
 
 function addEntrustCityRouteRel(params,callback){
     var query = " insert into entrust_city_route_rel (entrust_id,city_route_id,make_id,make_name," +
-        " route_start_id,route_end_id,size_type,distance,fee) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " route_start_id,route_end_id,size_type,distance,fee,two_distance,two_fee) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.cityRouteId;
@@ -19,7 +19,9 @@ function addEntrustCityRouteRel(params,callback){
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.sizeType;
     paramsArray[i++]=params.distance;
-    paramsArray[i]=params.fee;
+    paramsArray[i++]=params.fee;
+    paramsArray[i++]=params.twoDistance;
+    paramsArray[i++]=params.twoFee;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addEntrustCityRouteRel ');
         return callback(error,rows);
@@ -66,11 +68,13 @@ function getEntrustCityRouteRel(params,callback) {
 }
 
 function updateEntrustCityRouteRel(params,callback){
-    var query = " update entrust_city_route_rel set distance = ? , fee = ? " +
+    var query = " update entrust_city_route_rel set distance = ? , fee = ? , two_distance = ? , two_fee = ? " +
         " where entrust_id = ? and make_id = ? and route_start_id = ? and route_end_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.fee;
+    paramsArray[i++]=params.twoDistance;
+    paramsArray[i++]=params.twoFee;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.routeStartId;

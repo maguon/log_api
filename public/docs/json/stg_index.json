@@ -34014,6 +34014,12 @@
         },
         "fee": {
           "type": "integer"
+        },
+        "twoDistance": {
+          "type": "integer"
+        },
+        "twoFee": {
+          "type": "integer"
         }
       },
       "xml": {

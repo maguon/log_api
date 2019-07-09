@@ -611,3 +611,9 @@ END IF;
 END
 ;;
 DELIMITER ;
+-- ----------------------------
+-- 2019-07-09 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+ADD COLUMN `two_distance`  decimal(10,2) NULL DEFAULT 0 COMMENT '二级公里数' AFTER `fee`,
+ADD COLUMN `two_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '二级价格' AFTER `two_distance`;
