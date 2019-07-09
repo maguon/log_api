@@ -133,11 +133,13 @@ function updateEntrustCarParkingFee(req,res,next){
 
 function getEntrustCarCsv(req,res,next){
     var csvString = "";
-    var header = "VIN" + ',' + "品牌" + ',' + "委托方"+ ',' + "始发城市" + ','+ "装车地点" + ','+ "目的城市"+ ','+ "经销商" + ','+ "指令时间" + ','+ "公里数(公里)" + ','+ "价格(元)/公里" + ','+ "金额(元)" ;
+    var header = "VIN"+ ',' +"品牌"+ ',' +"委托方"+ ',' +"始发城市"+ ','+"装车地点"+ ','+"目的城市"+ ','+"经销商"+ ','+"指令时间"+ ','+
+        "公里数(公里)"+ ','+"价格(元)/公里"+ ','+"金额(元)"+ ','+"二级公里数(公里)"+ ','+"二级价格(元)/公里"+ ','+"二级金额(元)";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
     var fees = 0;
+    var twoFees = 0;
     entrustDAO.getEntrustCar(params,function(error,rows){
         if (error) {
             logger.error(' getEntrustCar ' + error.message);
@@ -176,8 +178,26 @@ function getEntrustCarCsv(req,res,next){
                 }else{
                     parkObj.fees = fees;
                 }
-                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.eShortName+","+parkObj.routeStart+","+parkObj.addrName+","+parkObj.routeEnd
-                    +","+parkObj.rShortName+","+parkObj.orderDate+","+parkObj.distance+","+parkObj.fee+","+parkObj.fees+ '\r\n';
+                if(rows[i].two_distance == null){
+                    parkObj.twoDistance = "";
+                }else{
+                    parkObj.twoDistance = rows[i].two_distance;
+                }
+                if(rows[i].two_fee == null){
+                    parkObj.twoFee = "";
+                }else{
+                    parkObj.twoFee = rows[i].two_fee;
+                }
+                twoFees = rows[i].two_distance*rows[i].two_fee;
+                if(twoFees == 0){
+                    parkObj.twoFees = "";
+                }else{
+                    parkObj.twoFees = twoFees;
+                }
+                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.eShortName+","+parkObj.routeStart+","+parkObj.addrName+","+
+                    parkObj.routeEnd+","+parkObj.rShortName+","+parkObj.orderDate+","+
+                    parkObj.distance+","+parkObj.fee+","+parkObj.fees+","+
+                    parkObj.twoDistance+","+parkObj.twoFee+","+parkObj.twoFees+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
