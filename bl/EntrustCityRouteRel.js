@@ -46,6 +46,9 @@ function createEntrustCityRouteRel(req,res,next){
         })
     }).seq(function(){
         var that = this;
+        if(params.sizeType==0){
+            params.sizeType = "0";
+        }
         entrustCityRouteRelDAO.getEntrustCityRouteRel(params,function(error,rows){
             if (error) {
                 logger.error(' getEntrustCityRouteRel ' + error.message);
@@ -87,7 +90,7 @@ function createEntrustCityRouteRel(req,res,next){
                     req.params.entrustContent =" 修改设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+params.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
                     req.params.entrustId = params.entrustId;
                     req.params.cityRouteId = params.cityRouteId;
-                    resUtil.resetUpdateRes(res,result,null);
+                    resUtil.resetQueryRes(res,null);
                     return next();
                 }
             })
