@@ -60,6 +60,20 @@ function querySettleOuterTruckList(req,res,next){
     })
 }
 
+function querySettleOuterTruckCarCount(req,res,next){
+    var params = req.params ;
+    settleOuterTruckDAO.getSettleOuterTruckCarCount(params,function(error,result){
+        if (error) {
+            logger.error(' querySettleOuterTruckCarCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' querySettleOuterTruckCarCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateSettleOuterTruck(req,res,next){
     var params = req.params ;
     settleOuterTruckDAO.updateSettleOuterTruck(params,function(error,result){
@@ -80,5 +94,6 @@ module.exports = {
     createSettleOuterTruck : createSettleOuterTruck,
     querySettleOuterTruck : querySettleOuterTruck,
     querySettleOuterTruckList : querySettleOuterTruckList,
+    querySettleOuterTruckCarCount : querySettleOuterTruckCarCount,
     updateSettleOuterTruck : updateSettleOuterTruck
 }
