@@ -103,6 +103,18 @@ function getSettleOuterTruckList(params,callback) {
         paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
     }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and t.company_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpr.truck_id = ? ";
+    }
     query = query + '  order by dpr.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
