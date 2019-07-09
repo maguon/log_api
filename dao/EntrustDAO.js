@@ -66,7 +66,8 @@ function getEntrustRoute(params,callback) {
 }
 
 function getEntrustCar(params,callback) {
-    var query = " select c.*,e.short_name as e_short_name,ba.addr_name,r.short_name as r_short_name,ecrr.distance,ecrr.fee " +
+    var query = " select c.*,e.short_name as e_short_name,ba.addr_name,r.short_name as r_short_name, " +
+        " ecrr.distance,ecrr.fee,ecrr.two_distance,ecrr.two_fee " +
         " from car_info c " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +

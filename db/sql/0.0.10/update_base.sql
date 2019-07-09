@@ -624,3 +624,8 @@ ALTER TABLE `entrust_city_route_rel`
 MODIFY COLUMN `size_type`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '大小车类型(0-小车,1-大车)' AFTER `route_end_id`,
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (`entrust_id`, `make_id`, `route_start_id`, `route_end_id`, `size_type`);
+-- ----------------------------
+-- 2019-07-09 更新
+-- ----------------------------
+ALTER TABLE `drive_truck_month_value`
+ADD COLUMN `two_output`  decimal(10,2) NULL DEFAULT 0 COMMENT '二级产值收入' AFTER `output`;

@@ -355,7 +355,7 @@ function getSettleHandoverMonthCount(params,callback) {
 
 function getDriveSettle(params,callback) {
     var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name, " +
-        " drtm.distance_salary,drtm.reverse_salary,dprm.storage_car_count,dprm.not_storage_car_count,dprtm.output " +
+        " drtm.distance_salary,drtm.reverse_salary,dprm.storage_car_count,dprm.not_storage_car_count,dprtm.output,dprtm.two_output " +
         " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name, " +
         " sum( case " +
         " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count<=3 then drt.distance*0.6 " +
@@ -385,7 +385,8 @@ function getDriveSettle(params,callback) {
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_plan_date>="+params.taskPlanDateStart+" and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status>=9 " +
         " group by dpr.drive_id,dpr.truck_id) dprm on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
-        " left join (select dprt.drive_id,dprt.truck_id,sum(ecrr.fee*ecrr.distance*drlt.output_ratio) output " +
+        " left join (select dprt.drive_id,dprt.truck_id,sum(ecrr.fee*ecrr.distance*drlt.output_ratio) output," +
+        " sum(ecrr.two_fee*ecrr.two_distance*drlt.output_ratio) two_output " +
         " from dp_route_load_task_detail drltd " +
         " left join dp_route_load_task drlt on drlt.id = drltd.dp_route_load_task_id " +
         " left join dp_route_task dprt on drltd.dp_route_task_id = dprt.id " +
