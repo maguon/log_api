@@ -15924,7 +15924,7 @@
         }
       }
     },
-    "/user/{userId}/entrust/{entrustId}/make/{makeId}/routeStart/{routeStartId}/routeEnd/{routeEndId}": {
+    "/user/{userId}/entrust/{entrustId}/make/{makeId}/routeStart/{routeStartId}/routeEnd/{routeEndId}/size/{sizeType}": {
       "put": {
         "tags": [
           "entrust"
@@ -15971,6 +15971,14 @@
             "name": "routeEndId",
             "in": "path",
             "description": "routeEnd id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "sizeType",
+            "in": "path",
+            "description": "size type",
             "required": true,
             "type": "integer"
 

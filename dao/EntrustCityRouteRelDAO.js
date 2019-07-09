@@ -56,6 +56,10 @@ function getEntrustCityRouteRel(params,callback) {
         paramsArray[i++] = params.routeEndId;
         query = query + " and ecrr.route_end_id = ? ";
     }
+    if(params.sizeType){
+        paramsArray[i++] = params.sizeType;
+        query = query + " and ecrr.size_type = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -69,7 +73,7 @@ function getEntrustCityRouteRel(params,callback) {
 
 function updateEntrustCityRouteRel(params,callback){
     var query = " update entrust_city_route_rel set distance = ? , fee = ? , two_distance = ? , two_fee = ? " +
-        " where entrust_id = ? and make_id = ? and route_start_id = ? and route_end_id = ? " ;
+        " where entrust_id = ? and make_id = ? and route_start_id = ? and route_end_id = ? and size_type = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.fee;
@@ -79,6 +83,7 @@ function updateEntrustCityRouteRel(params,callback){
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.sizeType;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateEntrustCityRouteRel ');
         return callback(error,rows);

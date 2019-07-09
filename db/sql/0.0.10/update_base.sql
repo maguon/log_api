@@ -617,3 +617,10 @@ DELIMITER ;
 ALTER TABLE `entrust_city_route_rel`
 ADD COLUMN `two_distance`  decimal(10,2) NULL DEFAULT 0 COMMENT '二级公里数' AFTER `fee`,
 ADD COLUMN `two_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '二级价格' AFTER `two_distance`;
+-- ----------------------------
+-- 2019-07-09 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+MODIFY COLUMN `size_type`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '大小车类型(0-小车,1-大车)' AFTER `route_end_id`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`entrust_id`, `make_id`, `route_start_id`, `route_end_id`, `size_type`);
