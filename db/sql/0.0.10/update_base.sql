@@ -629,3 +629,22 @@ ADD PRIMARY KEY (`entrust_id`, `make_id`, `route_start_id`, `route_end_id`, `siz
 -- ----------------------------
 ALTER TABLE `drive_truck_month_value`
 ADD COLUMN `two_output`  decimal(10,2) NULL DEFAULT 0 COMMENT '二级产值收入' AFTER `output`;
+-- ----------------------------
+-- 2019-07-09 更新
+-- ----------------------------
+DROP TABLE IF EXISTS `settle_outer_truck`;
+CREATE TABLE `settle_outer_truck` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `make_id` int(10) DEFAULT '0' COMMENT '品牌ID',
+  `make_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '品牌',
+  `route_start_id` int(10) DEFAULT '0' COMMENT '起始地ID',
+  `route_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '起始城市',
+  `route_end_id` int(10) DEFAULT '0' COMMENT '目的地ID',
+  `route_end` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '目的城市',
+  `distance` decimal(10,2) DEFAULT '0.00' COMMENT '公里数',
+  `fee` decimal(10,2) DEFAULT '0.00' COMMENT '单价',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `make_id` (`make_id`,`route_start_id`,`route_end_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
