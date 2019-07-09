@@ -477,7 +477,7 @@ function getNotSettleHandoverCsv(req,res,next){
 function getDriveSettleCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' + "货车牌号" + ',' + "所属类型" + ','+ "所属公司" + ','+ "商品车到库数"+ ','+ "商品车非到库数" + ','+
-        "里程工资"+ ','+ "倒板工资"+ ','+ "产值" ;
+        "里程工资"+ ','+ "倒板工资"+ ','+ "产值"+ ','+ "二级产值" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -528,9 +528,14 @@ function getDriveSettleCsv(req,res,next){
                 }else{
                     parkObj.output = rows[i].output;
                 }
+                if(rows[i].two_output == null){
+                    parkObj.twoOutput = "";
+                }else{
+                    parkObj.twoOutput = rows[i].two_output;
+                }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
                     parkObj.storageCarCount+","+parkObj.notStorageCarCount +","+parkObj.distanceSalary+","+parkObj.reverseSalary+","+
-                    parkObj.output+ '\r\n';
+                    parkObj.output+","+parkObj.twoOutput+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
@@ -547,7 +552,7 @@ function getDriveSettleCsv(req,res,next){
 function getDriveSettleDetailCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' + "货车牌号" + ',' + "VIN" + ','+ "委托方" + ','+ "品牌"+ ','+ "起始城市" + ','+
-        "目的城市"+ ','+ "车型"+ ','+ "产值率"+ ','+ "预估公里数"+ ','+ "预估单价"+ ','+ "产值" ;
+        "目的城市"+ ','+ "车型"+ ','+ "产值率"+ ','+ "预估公里数"+ ','+ "预估单价"+ ','+ "产值"+ ','+ "二级产值" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -605,9 +610,14 @@ function getDriveSettleDetailCsv(req,res,next){
                 }else{
                     parkObj.output = rows[i].output;
                 }
+                if(rows[i].two_output == null){
+                    parkObj.twoOutput = "";
+                }else{
+                    parkObj.twoOutput = rows[i].two_output;
+                }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.vin+","+parkObj.shortName+","+
                     parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+parkObj.sizeType+","+
-                    parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+ '\r\n';
+                    parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+","+ parkObj.twoOutput+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
