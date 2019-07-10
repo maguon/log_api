@@ -73,7 +73,7 @@ function getEntrustCar(params,callback) {
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
         " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
-        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id and c.size_type = ecrr.size_type " +
         " where ecrr.entrust_id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -132,7 +132,7 @@ function getEntrustNotCar(params,callback) {
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
         " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
-        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id and c.size_type = ecrr.size_type " +
         " where ecrr.entrust_id is null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -184,7 +184,7 @@ function getEntrustCarCount(params,callback) {
         " from car_info c " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
-        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id and c.size_type = ecrr.size_type " +
         " where ecrr.entrust_id is not null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -230,7 +230,7 @@ function getEntrustCarNotCount(params,callback) {
         " from car_info c " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
-        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id " +
+        " and c.make_id = ecrr.make_id and c.entrust_id = ecrr.entrust_id and c.size_type = ecrr.size_type " +
         " where ecrr.entrust_id is null and c.car_status >=1 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
