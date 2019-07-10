@@ -90,8 +90,8 @@ function updateSettleOuterTruck(req,res,next){
 
 function getSettleOuterTruckCsv(req,res,next){
     var csvString = "";
-    var header = "VIN"+ ',' +"品牌"+ ',' +"外协公司"+ ',' +"司机"+ ',' +"货车牌号"+ ',' +"始发城市"+ ','+"装车地点"+ ','+"目的城市"+ ','+"经销商"+ ','+"指令时间"+ ','+
-        "公里数(公里)"+ ','+"价格/公里"+ ','+"金额";
+    var header = "VIN"+ ',' +"品牌"+ ',' +"外协公司"+ ',' +"司机"+ ',' +"货车牌号"+ ',' +"委托方"+ ','+"始发城市"+ ','+"装车地点"+ ','+"目的城市"+ ','+
+        "经销商"+ ','+"指令时间"+ ','+"公里数(公里)"+ ','+"价格/公里"+ ','+"金额";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -107,6 +107,11 @@ function getSettleOuterTruckCsv(req,res,next){
                 parkObj.companyName = rows[i].company_name;
                 parkObj.driveName = rows[i].drive_name;
                 parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].e_short_name == null){
+                    parkObj.eShortName = "";
+                }else{
+                    parkObj.eShortName = rows[i].e_short_name;
+                }
                 parkObj.routeStart = rows[i].route_start;
                 parkObj.addrName = rows[i].addr_name;
                 parkObj.routeEnd = rows[i].route_end;
@@ -137,7 +142,7 @@ function getSettleOuterTruckCsv(req,res,next){
                     parkObj.fees = fees;
                 }
                 csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.companyName+","+parkObj.driveName+","+parkObj.truckNum+","+
-                    parkObj.routeStart+","+parkObj.addrName+","+parkObj.routeEnd+","+parkObj.rShortName+","+parkObj.orderDate+","+
+                    parkObj.eShortName+","+parkObj.routeStart+","+parkObj.addrName+","+parkObj.routeEnd+","+parkObj.rShortName+","+parkObj.orderDate+","+
                     parkObj.distance+","+parkObj.fee+","+parkObj.fees+","+'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
