@@ -151,7 +151,11 @@ function getEntrustCarCsv(req,res,next){
                 parkObj.eShortName = rows[i].e_short_name;
                 parkObj.routeStart = rows[i].route_start;
                 parkObj.addrName = rows[i].addr_name;
-                parkObj.routeEnd = rows[i].route_end;
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
                 if(rows[i].r_short_name == null){
                     parkObj.rShortName = "";
                 }else{
@@ -229,7 +233,11 @@ function getEntrustNotCarCsv(req,res,next){
                 parkObj.eShortName = rows[i].e_short_name;
                 parkObj.routeStart = rows[i].route_start;
                 parkObj.addrName = rows[i].addr_name;
-                parkObj.routeEnd = rows[i].route_end;
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
                 if(rows[i].r_short_name == null){
                     parkObj.rShortName = "";
                 }else{
