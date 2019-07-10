@@ -188,6 +188,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     parkObj.dateId = rows[0].date_id;
                     parkObj.outerFlag = rows[0].outer_flag;
                     parkObj.monthFlag = rows[0].month_flag;
+                    parkObj.totalCleanFee = rows[0].clean_fee+rows[0].big_clean_fee+rows[0].trailer_fee+rows[0].run_fee+rows[0].lead_fee;
                     that();
                 } else {
                     logger.warn(' getDpRouteLoadTask ' + 'failed');
@@ -317,7 +318,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
     }).seq(function() { //生成洗车费
         var that = this;
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&parkObj.loadTaskStatus==1&&
-            parkObj.transferFlag==0&&parkObj.cleanFee>0&&cleanStatusFlag&&parkObj.outerFlag==sysConst.OUTER_FLAG.no) {
+            parkObj.transferFlag==0&&parkObj.totalCleanFee>0&&cleanStatusFlag&&parkObj.outerFlag==sysConst.OUTER_FLAG.no) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
             params.driveId = parkObj.driveId;
             params.truckId = parkObj.truckId;
