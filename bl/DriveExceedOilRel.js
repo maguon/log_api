@@ -262,6 +262,91 @@ function uploadDriveExceedOilRelFile(req,res,next){
     })
 }
 
+function getDriveExceedOilRelCsv(req,res,next){
+    var csvString = "";
+    var header = "编号" + ',' +"司机" + ',' + "货车牌号" + ',' + "加油量" + ','+ "加尿素量" + ','+ "加油单价"+ ','+ "加尿素单价" + ','+
+        "加油总价" + ','+ "加尿素总价" + ','+"加油时间" + ','+ "创建时间"+ ','+ "地点";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveExceedOilRelDAO.getDriveExceedOilRel(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveExceedOilRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                if(rows[i].drive_name == null){
+                    parkObj.driveName = "";
+                }else{
+                    parkObj.driveName = rows[i].drive_name;
+                }
+                if(rows[i].truck_num == null){
+                    parkObj.truckNum = "";
+                }else{
+                    parkObj.truckNum = rows[i].truck_num;
+                }
+                if(rows[i].oil == null){
+                    parkObj.oil = "";
+                }else{
+                    parkObj.oil = rows[i].oil;
+                }
+                if(rows[i].urea == null){
+                    parkObj.urea = "";
+                }else{
+                    parkObj.urea = rows[i].urea;
+                }
+                if(rows[i].oil_single_price == null){
+                    parkObj.oilSinglePrice = "";
+                }else{
+                    parkObj.oilSinglePrice = rows[i].oil_single_price;
+                }
+                if(rows[i].urea_single_price == null){
+                    parkObj.ureaSinglePrice = "";
+                }else{
+                    parkObj.ureaSinglePrice = rows[i].urea_single_price;
+                }
+                if(rows[i].oil_money == null){
+                    parkObj.oilMoney = "";
+                }else{
+                    parkObj.oilMoney = rows[i].oil_money;
+                }
+                if(rows[i].urea_money == null){
+                    parkObj.ureaMoney = "";
+                }else{
+                    parkObj.ureaMoney = rows[i].urea_money;
+                }
+                if(rows[i].oil_date == null){
+                    parkObj.oilDate = "";
+                }else{
+                    parkObj.oilDate = new Date(rows[i].oil_date).toLocaleDateString();
+                }
+                if(rows[i].created_on == null){
+                    parkObj.createdOn = "";
+                }else{
+                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                }
+                if(rows[i].oil_address == null){
+                    parkObj.oilAddress = "";
+                }else{
+                    parkObj.oilAddress = rows[i].oil_address;
+                }
+                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.oil+","+parkObj.urea+","+
+                    parkObj.oilSinglePrice+","+parkObj.ureaSinglePrice+","+parkObj.oilMoney+","+parkObj.ureaMoney+","+
+                    parkObj.oilDate+","+parkObj.createdOn+","+parkObj.oilAddress+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDriveExceedOilRel : createDriveExceedOilRel,
@@ -269,5 +354,6 @@ module.exports = {
     queryDriveExceedOilRelCount : queryDriveExceedOilRelCount,
     updateDriveExceedOilRel : updateDriveExceedOilRel,
     removeDriveExceedOilRel : removeDriveExceedOilRel,
-    uploadDriveExceedOilRelFile : uploadDriveExceedOilRelFile
+    uploadDriveExceedOilRelFile : uploadDriveExceedOilRelFile,
+    getDriveExceedOilRelCsv : getDriveExceedOilRelCsv
 }
