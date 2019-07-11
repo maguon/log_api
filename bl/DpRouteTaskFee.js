@@ -112,7 +112,9 @@ function updateDpRouteTaskFeeStatus (req,res,next){
 
 function getDpRouteTaskFeeCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车" + ',' + "申请时间" + ',' + "天数" + ','+ "单价" + ','+ "总价"+ ','+ "状态";
+    var header = "司机" + ',' +"货车牌号" + ',' + "商品车加油费" + ',' + "货车停留天数" + ','+ "货车停车单价" + ','+"货车停车费" + ','+
+        "商品车停留天数"+ ','+ "商品车停车单价" + ','+ "商品车停车费"+ ','+ "申请时间" + ','+
+        "银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+"状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -132,10 +134,10 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }else{
                     parkObj.truckNum = rows[i].truck_num;
                 }
-                if(rows[i].created_on == null){
-                    parkObj.createdOn = "";
+                if(rows[i].car_oil_fee == null){
+                    parkObj.carOilFee = "";
                 }else{
-                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                    parkObj.carOilFee = rows[i].car_oil_fee;
                 }
                 if(rows[i].day_count == null){
                     parkObj.dayCount = "";
@@ -152,6 +154,41 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }else{
                     parkObj.totalPrice = rows[i].total_price;
                 }
+                if(rows[i].car_day_count == null){
+                    parkObj.carDayCount = "";
+                }else{
+                    parkObj.carDayCount = rows[i].car_day_count;
+                }
+                if(rows[i].car_single_price == null){
+                    parkObj.carSinglePrice = "";
+                }else{
+                    parkObj.carSinglePrice = rows[i].car_single_price;
+                }
+                if(rows[i].car_total_price == null){
+                    parkObj.carTotalPrice = "";
+                }else{
+                    parkObj.carTotalPrice = rows[i].car_total_price;
+                }
+                if(rows[i].created_on == null){
+                    parkObj.createdOn = "";
+                }else{
+                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                }
+                if(rows[i].bank_number==null){
+                    parkObj.bankNumber = "";
+                }else{
+                    parkObj.bankNumber = rows[i].bank_number;
+                }
+                if(rows[i].bank_name==null){
+                    parkObj.bankName = "";
+                }else{
+                    parkObj.bankName = rows[i].bank_name;
+                }
+                if(rows[i].bank_user_name==null){
+                    parkObj.bankUserName = "";
+                }else{
+                    parkObj.bankUserName = rows[i].bank_user_name;
+                }
                 if(rows[i].status == 1){
                     parkObj.status = "未发放";
                 }else if(rows[i].status == 2){
@@ -159,8 +196,10 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }else{
                     parkObj.status = "驳回";
                 }
-                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.createdOn+","+parkObj.dayCount+","+
-                    parkObj.singlePrice+","+ parkObj.totalPrice+","+parkObj.status+ '\r\n';
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.carOilFee+","+parkObj.dayCount+","+
+                    parkObj.singlePrice+","+parkObj.totalPrice+","+parkObj.carDayCount+","+parkObj.carSinglePrice+","+
+                    parkObj.carTotalPrice+","+parkObj.createdOn+","+parkObj.bankNumber+","+parkObj.bankName+","+
+                    parkObj.bankUserName+","+parkObj.status+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

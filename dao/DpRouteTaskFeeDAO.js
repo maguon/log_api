@@ -31,31 +31,34 @@ function addDpRouteTaskFee(params,callback){
 }
 
 function getDpRouteTaskFee(params,callback) {
-    var query = " select * from dp_route_task_fee where id is not null ";
+    var query = " select dprtf.*,d.bank_number,d.bank_name,d.bank_user_name " +
+        " from dp_route_task_fee dprtf " +
+        " left join drive_info d on dprtf.drive_id = d.id " +
+        " where dprtf.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskFeeId){
         paramsArray[i++] = params.dpRouteTaskFeeId;
-        query = query + " and id = ? ";
+        query = query + " and dprtf.id = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
-        query = query + " and drive_id = ? ";
+        query = query + " and dprtf.drive_id = ? ";
     }
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and truck_id = ? ";
+        query = query + " and dprtf.truck_id = ? ";
     }
     if(params.createdOnStart){
         paramsArray[i++] = params.createdOnStart +" 00:00:00";
-        query = query + " and created_on >= ? ";
+        query = query + " and dprtf.created_on >= ? ";
     }
     if(params.createdOnEnd){
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
-        query = query + " and created_on <= ? ";
+        query = query + " and dprtf.created_on <= ? ";
     }
     if(params.status){
         paramsArray[i++] = params.status;
-        query = query + " and status = ? ";
+        query = query + " and dprtf.status = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
