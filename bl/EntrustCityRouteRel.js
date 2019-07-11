@@ -73,7 +73,8 @@ function createEntrustCityRouteRel(req,res,next){
                     }
                 } else {
                     logger.info(' createEntrustCityRouteRel ' + 'success');
-                    req.params.entrustContent =" 设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+params.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
+                    req.params.entrustContent =" 设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+params.makeName+"  "+
+                        params.distance+"公里  "+params.fee+"元/公里 "+" "+params.twoDistance+"公里  "+params.twoFee+"元/公里 ";
                     req.params.entrustId = params.entrustId;
                     req.params.cityRouteId = params.cityRouteId;
                     resUtil.resetUpdateRes(res,result,null);
@@ -87,7 +88,8 @@ function createEntrustCityRouteRel(req,res,next){
                     throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 } else {
                     logger.info(' updateEntrustCityRouteRel ' + 'success');
-                    req.params.entrustContent =" 修改设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+params.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
+                    req.params.entrustContent =" 修改设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+params.makeName+"  "+
+                        params.distance+"公里  "+params.fee+"元/公里 "+" "+params.twoDistance+"公里  "+params.twoFee+"元/公里 ";
                     req.params.entrustId = params.entrustId;
                     req.params.cityRouteId = params.cityRouteId;
                     resUtil.resetQueryRes(res,null);
@@ -150,7 +152,8 @@ function updateEntrustCityRouteRel(req,res,next){
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateEntrustCityRouteRel ' + 'success');
-                req.params.entrustContent =" 修改设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+parkObj.makeName+"  "+params.distance+"公里  "+params.fee+"元/公里 ";
+                req.params.entrustContent =" 修改设置  "+parkObj.routeStart+" - "+parkObj.routeEnd+" 品牌 "+parkObj.makeName+"  "+
+                    params.distance+"公里  "+params.fee+"元/公里 "+" "+params.twoDistance+"公里  "+params.twoFee+"元/公里 ";
                 req.params.entrustId = parkObj.entrustId;
                 req.params.cityRouteId = parkObj.cityRouteId;
                 resUtil.resetUpdateRes(res,result,null);
