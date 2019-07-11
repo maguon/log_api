@@ -72,7 +72,8 @@ function getDpRouteTaskFee(params,callback) {
 }
 
 function getDpRouteTaskFeeCount(params,callback) {
-    var query = " select sum(total_price) as truck_parking_fee,sum(car_oil_fee) as car_oil_fee " +
+    var query = " select sum(total_price) as truck_parking_fee,sum(car_oil_fee) as car_oil_fee, " +
+        " sum(car_total_price) as car_total_price " +
         " from dp_route_task_fee where id is not null ";
     var paramsArray=[],i=0;
     if(params.driveId){
