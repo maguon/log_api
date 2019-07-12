@@ -71,7 +71,8 @@ function getSettleOuterTruckList(params,callback) {
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
-        " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id and c.route_end_id = sot.route_end_id " +
+        " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
+        " and c.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
         " where dpr.id is not null and c.car_status=9 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -140,7 +141,8 @@ function getSettleOuterTruckCarCount(params,callback) {
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join dp_route_load_task_detail drltd on dpr.id = drltd.dp_route_task_id " +
         " left join car_info c on drltd.car_id = c.id " +
-        " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id and c.route_end_id = sot.route_end_id " +
+        " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
+        " and c.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
         " where dpr.id is not null and c.car_status=9 ";
     var paramsArray=[],i=0;
     if(params.entrustId){

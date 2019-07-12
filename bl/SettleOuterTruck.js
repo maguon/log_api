@@ -143,7 +143,7 @@ function getSettleOuterTruckCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.companyName+","+parkObj.driveName+","+parkObj.truckNum+","+
                     parkObj.eShortName+","+parkObj.routeStart+","+parkObj.addrName+","+parkObj.routeEnd+","+parkObj.rShortName+","+parkObj.orderDate+","+
-                    parkObj.distance+","+parkObj.fee+","+parkObj.fees+","+'\r\n';
+                    parkObj.distance+","+parkObj.fee+","+parkObj.fees+'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
