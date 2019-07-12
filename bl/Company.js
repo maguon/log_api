@@ -70,6 +70,20 @@ function queryCompanyTruckCountTotal(req,res,next){
     })
 }
 
+function queryCompanyRoute(req,res,next){
+    var params = req.params ;
+    companyDAO.getCompanyRoute(params,function(error,result){
+        if (error) {
+            logger.error(' queryCompanyRoute ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryCompanyRoute ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateCompany(req,res,next){
     var params = req.params ;
     companyDAO.updateCompany(params,function(error,result){
@@ -90,5 +104,6 @@ module.exports = {
     queryCompany : queryCompany,
     queryCompanyOperateTypeTotal : queryCompanyOperateTypeTotal,
     queryCompanyTruckCountTotal : queryCompanyTruckCountTotal,
+    queryCompanyRoute : queryCompanyRoute,
     updateCompany : updateCompany
 }

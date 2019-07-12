@@ -86,6 +86,31 @@ function getCompanyTruckCountTotal(params,callback) {
     });
 }
 
+function getCompanyRoute(params,callback) {
+    var query = " select c.*,count(sot.company_id) as company_count  from company_info c " +
+        " left join settle_outer_truck sot on c.id = sot.company_id " +
+        " where c.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and c.id = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and c.operate_type = ? ";
+    }
+    query = query + ' group by c.id ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getCompanyRoute ');
+        return callback(error,rows);
+    });
+}
+
 function updateCompany(params,callback){
     var query = " update company_info set company_name = ?,operate_type = ?," +
         " cooperation_time = ?,contacts = ?,tel = ?,remark = ?  where id = ? " ;
@@ -107,6 +132,7 @@ function updateCompany(params,callback){
 module.exports ={
     addCompany : addCompany,
     getCompany : getCompany,
+    getCompanyRoute : getCompanyRoute,
     getCompanyOperateTypeTotal : getCompanyOperateTypeTotal,
     getCompanyTruckCountTotal : getCompanyTruckCountTotal,
     updateCompany : updateCompany

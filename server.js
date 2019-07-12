@@ -527,6 +527,7 @@ function createServer() {
     server.get('/api/company',company.queryCompany);
     server.get('/api/companyOperateTypeTotal',company.queryCompanyOperateTypeTotal);
     server.get('/api/companyTruckCountTotal',company.queryCompanyTruckCountTotal);
+    server.get('/api/companyRoute',company.queryCompanyRoute);
     server.post({path:'/api/user/:userId/company',contentType: 'application/json'},company.createCompany);
     server.put({path:'/api/user/:userId/company/:companyId',contentType: 'application/json'} ,company.updateCompany);
 
