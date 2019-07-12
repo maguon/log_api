@@ -31,6 +31,10 @@ function getSettleOuterTruck(params,callback) {
         " left join company_info c on sot.company_id = c.id " +
         " where sot.id is not null ";
     var paramsArray=[],i=0;
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and sot.company_id = ? ";
+    }
     if(params.makeId){
         paramsArray[i++] = params.makeId;
         query = query + " and sot.make_id = ? ";
