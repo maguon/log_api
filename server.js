@@ -976,7 +976,7 @@ function createServer() {
     server.get('/api/settleOuterTruckCarCount', settleOuterTruck.querySettleOuterTruckCarCount);
     server.get('/api/settleOuterTruck.csv', settleOuterTruck.getSettleOuterTruckCsv);
     server.post({path:'/api/user/:userId/settleOuterTruck',contentType: 'application/json'},settleOuterTruck.createSettleOuterTruck);
-    server.put({path:'/api/user/:userId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId',contentType: 'application/json'} ,settleOuterTruck.updateSettleOuterTruck);
+    server.put({path:'/api/user/:userId/company/:companyId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId',contentType: 'application/json'} ,settleOuterTruck.updateSettleOuterTruck);
 
     /**
      * MsgPush Module

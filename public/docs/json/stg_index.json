@@ -32669,7 +32669,7 @@
         }
       }
     },
-    "/user/{userId}/make/{makeId}/routeStart/{routeStartId}/routeEnd/{routeEndId}": {
+    "/user/{userId}/company/{companyId}/make/{makeId}/routeStart/{routeStartId}/routeEnd/{routeEndId}": {
       "put": {
         "tags": [
           "settle"
@@ -32684,6 +32684,14 @@
             "name": "userId",
             "in": "path",
             "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "company id",
             "required": true,
             "type": "integer"
 
@@ -35936,6 +35944,9 @@
       "type": "object",
       "properties": {
 
+        "companyId": {
+          "type": "integer"
+        },
         "makeId": {
           "type": "integer"
         },

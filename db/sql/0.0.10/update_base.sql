@@ -648,3 +648,14 @@ CREATE TABLE `settle_outer_truck` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `make_id` (`make_id`,`route_start_id`,`route_end_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-07-12 更新
+-- ----------------------------
+ALTER TABLE `settle_outer_truck`
+ADD COLUMN `company_id`  int(10) NULL DEFAULT 0 COMMENT '外协公司ID' AFTER `id`;
+-- ----------------------------
+-- 2019-07-12 更新
+-- ----------------------------
+ALTER TABLE `settle_outer_truck`
+DROP INDEX `make_id` ,
+ADD UNIQUE INDEX `company_id` (`company_id`, `make_id`, `route_start_id`, `route_end_id`) USING BTREE ;

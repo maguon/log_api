@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SettleOuterTruckDAO.js');
 
 function addSettleOuterTruck(params,callback){
-    var query = " insert into settle_outer_truck (make_id,make_name," +
+    var query = " insert into settle_outer_truck (company_id,make_id,make_name," +
         " route_start_id,route_start,route_end_id,route_end,distance,fee) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? )";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.routeStartId;
@@ -26,7 +27,8 @@ function addSettleOuterTruck(params,callback){
 }
 
 function getSettleOuterTruck(params,callback) {
-    var query = " select sot.* from settle_outer_truck sot " +
+    var query = " select sot.*,c.company_name from settle_outer_truck sot " +
+        " left join company_info c on sot.company_id = c.id " +
         " where sot.id is not null ";
     var paramsArray=[],i=0;
     if(params.makeId){
@@ -199,10 +201,11 @@ function getSettleOuterTruckCarCount(params,callback) {
 
 function updateSettleOuterTruck(params,callback){
     var query = " update settle_outer_truck set distance = ? , fee = ? " +
-        " where make_id = ? and route_start_id = ? and route_end_id = ? " ;
+        " where company_id = ? and make_id = ? and route_start_id = ? and route_end_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.fee;
+    paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
