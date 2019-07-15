@@ -1077,10 +1077,10 @@ function getTruckCostCsv(req,res,next){
                 }else{
                     parkObj.ureaFee = rows[i].urea_fee;
                 }
-                if(rows[i].insure_fee == null){
+                if(rows[i].insure_total_money == null){
                     parkObj.insureFee = "";
                 }else{
-                    parkObj.insureFee = rows[i].insure_fee;
+                    parkObj.insureFee = rows[i].insure_total_money;
                 }
                 csvString = csvString+parkObj.truckNum+"," +parkObj.yMonth+","+parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+
                     parkObj.etcFee+","+parkObj.peccancyUnderFee+","+parkObj.peccancyCompanyFee+","+
