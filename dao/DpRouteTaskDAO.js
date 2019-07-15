@@ -688,11 +688,12 @@ function getRouteTaskDayStat(params,callback){
 }
 
 function updateDpRouteLoadFlag(params,callback){
-    var query = " update dp_route_task set distance = ? , car_count = ? , load_flag = ? where id = ? " ;
+    var query = " update dp_route_task set distance = ? , car_count = ? , load_flag = ? , reverse_money = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.carCount;
     paramsArray[i++]=params.loadFlag;
+    paramsArray[i++]=params.reverseMoney;
     paramsArray[i]=params.dpRouteTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDpRouteLoadFlag ');

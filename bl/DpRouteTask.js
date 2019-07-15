@@ -1238,7 +1238,7 @@ function updateDpRouteLoadFlag (req,res,next){
                 throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateDistanceRecordCount ' + 'success');
-                req.params.routeContent =" 修改结算里程："+params.distance+"公里  "+params.carCount+"辆  "+loadFlag+" 第"+parkObj.upDistanceCount+"次修改";
+                req.params.routeContent =" 修改结算里程："+params.distance+"公里  "+params.carCount+"辆  "+loadFlag+" 倒板金额 "+params.reverseMoney+" 第"+parkObj.upDistanceCount+"次修改";
                 req.params.routeId = params.dpRouteTaskId;
                 req.params.routeOp =sysConst.RECORD_OP_TYPE.distance;
                 resUtil.resetUpdateRes(res,result,null);
