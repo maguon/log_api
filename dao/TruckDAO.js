@@ -432,34 +432,29 @@ function getTruckCost(params,callback) {
         " left join(select trr.truck_id,sum(trr.repair_money) repair_money, " +
         " sum(trr.parts_money) parts_money,sum(trr.maintain_money) maintain_money " +
         " from truck_repair_rel trr " +
-        " left join date_base db on trr.date_id = db.id " +
-        " where db.y_month = " +params.yMonth+
+        " where trr.date_id>= "+params.yMonth+"01 and trr.date_id<="+params.lastDay+
         " group by trr.truck_id) trrm on tm.id = trrm.truck_id " +
         " left join(select te.truck_id,sum(te.etc_fee) etc_fee " +
         " from truck_etc te " +
-        " left join date_base db on te.date_id = db.id " +
-        " where db.y_month = " +params.yMonth+
+        " where te.date_id>= "+params.yMonth+"01 and te.date_id<="+params.lastDay+
         " group by te.truck_id) tem on tm.id = tem.truck_id " +
         " left join (select dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
         " from drive_peccancy dp " +
-        " left join date_base db on dp.date_id = db.id " +
-        " where db.y_month = " +params.yMonth+
+        " where dp.handle_date>= "+params.yMonth+"01 and dp.handle_date<="+params.lastDay+
         " group by dp.truck_id) dpm on tm.id = dpm.truck_id " +
         " left join (select deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
         " from drive_exceed_oil_rel deor " +
-        " left join date_base db on deor.date_id = db.id " +
-        " where db.y_month = " +params.yMonth+
+        " where deor.date_id>= "+params.yMonth+"01 and deor.date_id<="+params.lastDay+
         " group by deor.truck_id) deorm on tm.id = deorm.truck_id " +
         " left join(select tir.truck_id,sum(tir.total_money) insure_total_money " +
         " from truck_insure_rel tir " +
-        " left join date_base db on tir.date_id = db.id " +
-        " where db.y_month = " +params.yMonth+
+        " where tir.date_id>= "+params.yMonth+"01 and tir.date_id<="+params.lastDay+
         " group by tir.truck_id) tirm on tm.id = tirm.truck_id " +
         " where tm.id is not null ";
     var paramsArray=[],i=0;
     if(params.truckId){
         paramsArray[i++] = params.truckId;
-        query = query + " and tm.truck_id = ? ";
+        query = query + " and tm.id = ? ";
     }
     if(params.truckType){
         paramsArray[i++] = params.truckType;
