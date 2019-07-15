@@ -446,11 +446,11 @@ function getTruckCost(params,callback) {
         " from drive_exceed_oil_rel deor " +
         " where deor.date_id>= "+params.yMonth+"01 and deor.date_id<="+params.lastDay+
         " group by deor.truck_id) deorm on tm.id = deorm.truck_id " +
-        " left join(select truck_id, sum(case when start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+" then 30/DateDiff(end_date,start_date)*insure_money " +
-        " when (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) then DateDiff(end_date,"+params.yMonth+"01)/DateDiff(end_date,start_date)*insure_money " +
-        " when (start_date>="+params.yMonth+"01 and start_date<="+params.lastDay+" and end_date>="+params.lastDay+") then DateDiff("+params.lastDay+",start_date)/DateDiff(end_date,start_date)*insure_money end) insure_total_money" +
+        " left join(select truck_id, sum(case when insure_status = 1 and start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+" then 30/DateDiff(end_date,start_date)*insure_money " +
+        " when insure_status = 1 and (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) then DateDiff(end_date,"+params.yMonth+"01)/DateDiff(end_date,start_date)*insure_money " +
+        " when insure_status = 1 and (start_date>="+params.yMonth+"01 and start_date<="+params.lastDay+" and end_date>="+params.lastDay+") then DateDiff("+params.lastDay+",start_date)/DateDiff(end_date,start_date)*insure_money end) insure_total_money" +
         " from truck_insure_rel " +
-        " where (start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+") or (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) " +
+        " where insure_status = 1 and (start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+") or (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) " +
         " or (start_date>="+params.yMonth+"01 and start_date<="+params.lastDay+" and end_date>="+params.lastDay+") " +
         " group by truck_id) tirm on tm.id = tirm.truck_id " +
         " where tm.id is not null ";
