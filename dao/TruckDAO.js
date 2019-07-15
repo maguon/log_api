@@ -426,7 +426,7 @@ function getTruckCost(params,callback) {
         " tem.etc_fee, " +
         " dpm.peccancy_under_fee,dpm.peccancy_company_fee, " +
         " deorm.oil_fee,deorm.urea_fee, " +
-        " tirm.insure_total_money " +
+        " TRUNCATE(tirm.insure_total_money,0) as insure_total_money " +
         " from(select t.id,t.truck_num,t.truck_type,t.operate_type,t.company_id " +
         " from truck_info t group by t.id) tm " +
         " left join(select trr.truck_id,sum(trr.repair_money) repair_fee, " +
@@ -446,10 +446,14 @@ function getTruckCost(params,callback) {
         " from drive_exceed_oil_rel deor " +
         " where deor.date_id>= "+params.yMonth+"01 and deor.date_id<="+params.lastDay+
         " group by deor.truck_id) deorm on tm.id = deorm.truck_id " +
-        " left join(select tir.truck_id,sum(tir.total_money) insure_total_money " +
-        " from truck_insure_rel tir " +
-        " where tir.date_id>= "+params.yMonth+"01 and tir.date_id<="+params.lastDay+
-        " group by tir.truck_id) tirm on tm.id = tirm.truck_id " +
+        " left join(select truck_id, sum(case when start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+" then 30/DateDiff(end_date,start_date)*insure_money " +
+        " when (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) then DateDiff(end_date,"+params.yMonth+"01)/DateDiff(end_date,start_date)*insure_money " +
+        " when (start_date>="+params.yMonth+"01 and start_date<="+params.lastDay+" and end_date>="+params.lastDay+") then DateDiff("+params.lastDay+",start_date)/DateDiff(end_date,start_date)*insure_money end) insure_total_money" +
+        " from truck_insure_rel " +
+        " where (start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+") or (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) " +
+        " or (start_date>="+params.yMonth+"01 and start_date<="+params.lastDay+" and end_date>="+params.lastDay+") " +
+        " and insure_status >=1 and active = 1" +
+        " group by truck_id) tirm on tm.id = tirm.truck_id " +
         " where tm.id is not null ";
     var paramsArray=[],i=0;
     if(params.truckId){
