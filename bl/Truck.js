@@ -243,6 +243,20 @@ function queryTruckOperate(req,res,next){
     })
 }
 
+function queryTruckCost(req,res,next){
+    var params = req.params ;
+    truckDAO.getTruckCost(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckCost ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckCost ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateTruck(req,res,next){
     var params = req.params ;
     if(params.number == null || params.number == ""){
@@ -1018,6 +1032,7 @@ module.exports = {
     queryTruckTypeCountTotal : queryTruckTypeCountTotal,
     queryTruckOperateTypeCountTotal : queryTruckOperateTypeCountTotal,
     queryTruckOperate : queryTruckOperate,
+    queryTruckCost : queryTruckCost,
     updateTruck : updateTruck,
     updateTruckCompany : updateTruckCompany,
     updateTruckImage : updateTruckImage,

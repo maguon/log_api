@@ -420,6 +420,70 @@ function getTruckOperate(params,callback) {
     });
 }
 
+function getTruckCost(params,callback) {
+    var query = " select tm.id,tm.truck_num, " +
+        " trrm.repair_money,trrm.parts_money,trrm.maintain_money, " +
+        " tem.etc_fee, " +
+        " dpm.peccancy_under_fee,dpm.peccancy_company_fee, " +
+        " deorm.oil_fee,deorm.urea_fee, " +
+        " tirm.insure_total_money " +
+        " from(select t.id,t.truck_num,t.truck_type,t.operate_type,t.company_id " +
+        " from truck_info t group by t.id) tm " +
+        " left join(select trr.truck_id,sum(trr.repair_money) repair_money, " +
+        " sum(trr.parts_money) parts_money,sum(trr.maintain_money) maintain_money " +
+        " from truck_repair_rel trr " +
+        " left join date_base db on trr.date_id = db.id " +
+        " where db.y_month = " +params.yMonth+
+        " group by trr.truck_id) trrm on tm.id = trrm.truck_id " +
+        " left join(select te.truck_id,sum(te.etc_fee) etc_fee " +
+        " from truck_etc te " +
+        " left join date_base db on te.date_id = db.id " +
+        " where db.y_month = " +params.yMonth+
+        " group by te.truck_id) tem on tm.id = tem.truck_id " +
+        " left join (select dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
+        " from drive_peccancy dp " +
+        " left join date_base db on dp.date_id = db.id " +
+        " where db.y_month = " +params.yMonth+
+        " group by dp.truck_id) dpm on tm.id = dpm.truck_id " +
+        " left join (select deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
+        " from drive_exceed_oil_rel deor " +
+        " left join date_base db on deor.date_id = db.id " +
+        " where db.y_month = " +params.yMonth+
+        " group by deor.truck_id) deorm on tm.id = deorm.truck_id " +
+        " left join(select tir.truck_id,sum(tir.total_money) insure_total_money " +
+        " from truck_insure_rel tir " +
+        " left join date_base db on tir.date_id = db.id " +
+        " where db.y_month = " +params.yMonth+
+        " group by tir.truck_id) tirm on tm.id = tirm.truck_id " +
+        " where tm.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and tm.truck_id = ? ";
+    }
+    if(params.truckType){
+        paramsArray[i++] = params.truckType;
+        query = query + " and tm.truck_type = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and tm.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and tm.company_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckCost ');
+        return callback(error,rows);
+    });
+}
+
 function updateTruck(params,callback){
     var query = " update truck_info set truck_num = ? , brand_id = ? , hp= ? , truck_tel = ? ,the_code = ? , " +
         " operate_type = ? , company_id = ? , truck_type = ? , number = ? , driving_date = ? , license_date = ? , " +
@@ -562,6 +626,7 @@ module.exports ={
     getTruckTypeCountTotal : getTruckTypeCountTotal,
     getTruckOperateTypeCountTotal : getTruckOperateTypeCountTotal,
     getTruckOperate : getTruckOperate,
+    getTruckCost : getTruckCost,
     updateTruck : updateTruck,
     updateTruckCompany : updateTruckCompany,
     updateTruckDrivingImage :updateTruckDrivingImage,
