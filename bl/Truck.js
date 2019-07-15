@@ -1037,20 +1037,20 @@ function getTruckCostCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.truckNum = rows[i].truck_num;
                 parkObj.yMonth = params.yMonth;
-                if(rows[i].repair_fee == null){
-                    parkObj.repairFee = "";
+                if(rows[i].repair_money == null){
+                    parkObj.repairMoney = "";
                 }else{
-                    parkObj.repairFee = rows[i].repair_fee;
+                    parkObj.repairMoney = rows[i].repair_money;
                 }
-                if(rows[i].parts_fee == null){
-                    parkObj.partsFee = "";
+                if(rows[i].parts_money == null){
+                    parkObj.partsMoney = "";
                 }else{
-                    parkObj.partsFee = rows[i].parts_fee;
+                    parkObj.partsMoney = rows[i].parts_money;
                 }
-                if(rows[i].maintain_fee == null){
-                    parkObj.maintainFee = "";
+                if(rows[i].maintain_money == null){
+                    parkObj.maintainMoney = "";
                 }else{
-                    parkObj.maintainFee = rows[i].maintain_fee;
+                    parkObj.maintainMoney = rows[i].maintain_money;
                 }
                 if(rows[i].etc_fee == null){
                     parkObj.etcFee = "";
@@ -1082,7 +1082,7 @@ function getTruckCostCsv(req,res,next){
                 }else{
                     parkObj.insureFee = rows[i].insure_fee;
                 }
-                csvString = csvString+parkObj.truckNum+"," +parkObj.yMonth+","+parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+
+                csvString = csvString+parkObj.truckNum+"," +parkObj.yMonth+","+parkObj.repairMoney+","+parkObj.partsMoney+","+parkObj.maintainMoney+","+
                     parkObj.etcFee+","+parkObj.peccancyUnderFee+","+parkObj.peccancyCompanyFee+","+
                     parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.insureFee+ '\r\n';
             }
