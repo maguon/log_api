@@ -452,7 +452,6 @@ function getTruckCost(params,callback) {
         " from truck_insure_rel " +
         " where (start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+") or (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) " +
         " or (start_date>="+params.yMonth+"01 and start_date<="+params.lastDay+" and end_date>="+params.lastDay+") " +
-        " and insure_status >=1 and active = 1" +
         " group by truck_id) tirm on tm.id = tirm.truck_id " +
         " where tm.id is not null ";
     var paramsArray=[],i=0;
