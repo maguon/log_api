@@ -421,14 +421,16 @@ function getTruckOperate(params,callback) {
 }
 
 function getTruckCost(params,callback) {
-    var query = " select tm.id,tm.truck_num, " +
+    var query = " select tm.id,tm.truck_num,tm.truck_type,tm.operate_type,tm.company_name, " +
         " trrm.repair_fee,trrm.parts_fee,trrm.maintain_fee, " +
         " tem.etc_fee, " +
         " dpm.peccancy_under_fee,dpm.peccancy_company_fee, " +
         " deorm.oil_fee,deorm.urea_fee, " +
         " TRUNCATE(tirm.insure_total_money,0) as insure_total_money " +
-        " from(select t.id,t.truck_num,t.truck_type,t.operate_type,t.company_id " +
-        " from truck_info t group by t.id) tm " +
+        " from(select t.id,t.truck_num,t.truck_type,t.operate_type,t.company_id,c.company_name " +
+        " from truck_info t " +
+        " left join company_info c on t.company_id = c.id " +
+        " group by t.id) tm " +
         " left join(select trr.truck_id,sum(trr.repair_money) repair_fee, " +
         " sum(trr.parts_money) parts_fee,sum(trr.maintain_money) maintain_fee " +
         " from truck_repair_rel trr " +
