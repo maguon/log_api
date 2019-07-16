@@ -551,8 +551,8 @@ function getDriveSettleCsv(req,res,next){
 
 function getDriveSettleDetailCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' + "货车牌号" + ',' + "VIN" + ','+ "委托方" + ','+ "品牌"+ ','+ "起始城市" + ','+
-        "目的城市"+ ','+ "车型"+ ','+ "产值率"+ ','+ "预估公里数"+ ','+ "预估单价"+ ','+ "产值"+ ','+ "二级产值" ;
+    var header = "调度编号"+ ','+"司机"+ ',' +"货车牌号"+ ',' +"计划执行时间"+ ',' +"VIN"+ ','+"委托方"+ ','+"品牌"+ ','+"起始城市"+ ','+
+        "目的城市"+ ','+"车型"+ ','+"产值率"+ ','+"预估公里数"+ ','+"预估单价"+ ','+"产值"+ ','+"二级产值";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -562,8 +562,14 @@ function getDriveSettleDetailCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
                 parkObj.driveName = rows[i].drive_name;
                 parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].task_plan_date == null){
+                    parkObj.taskPlanDate = "";
+                }else{
+                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                }
                 parkObj.vin = rows[i].vin;
                 if(rows[i].short_name == null){
                     parkObj.shortName = "";
@@ -615,9 +621,10 @@ function getDriveSettleDetailCsv(req,res,next){
                 }else{
                     parkObj.twoOutput = rows[i].two_output;
                 }
-                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.vin+","+parkObj.shortName+","+
-                    parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+parkObj.sizeType+","+
-                    parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+","+ parkObj.twoOutput+ '\r\n';
+                csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.taskPlanDate+","+
+                    parkObj.vin+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+
+                    parkObj.sizeType+","+parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+","+
+                    parkObj.twoOutput+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
