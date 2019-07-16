@@ -162,7 +162,8 @@ var DAMAGE_STEP_TYPE = {
     TIANJIN : 13,//天津办收发车
     PDI : 14,//PDI漏检
     DALIAN : 15,//大连现场收发车
-    HUMAN : 16//运输途中遭人为破坏
+    HUMAN : 16,//运输途中遭人为破坏
+    OTHER : 17  //其他
 
 };
 

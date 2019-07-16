@@ -527,6 +527,8 @@ function getDamageCsv(req,res,next){
                     parkObj.damageLinkType = "大连现场收发车";
                 }else if(rows[i].damage_link_type == 16){
                     parkObj.damageLinkType = "运输途中遭人为破坏";
+                }else if(rows[i].damage_link_type == 17){
+                    parkObj.damageLinkType = "其他";
                 }else{
                     parkObj.damageLinkType = "";
                 }
