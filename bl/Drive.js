@@ -378,7 +378,7 @@ function getDriveCsv(req,res,next){
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.operateFlag+","+parkObj.gender+","+parkObj.operateType+","+
                     parkObj.companyName +","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.idNumber+","+parkObj.licenseType +","+
