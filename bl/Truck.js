@@ -295,7 +295,7 @@ function updateTruckCompany(req,res,next){
                 return next();
             } else {
                 if(rows && rows.length>0){
-                    parkObj.companyName = rows[0].company_name;
+                    parkObj.newCompanyName = rows[0].company_name;
                     that();
                 }else{
                     logger.warn(' getCompany ' + 'failed');
@@ -305,13 +305,43 @@ function updateTruckCompany(req,res,next){
             }
         })
     }).seq(function(){
+        var that = this;
+        truckDAO.getTruckBase({truckId:params.truckId},function(error,rows){
+            if (error) {
+                logger.error(' getTruckBase ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    parkObj.companyName = rows[0].company_name;
+                    parkObj.operateType = rows[0].operate_type;
+                    that();
+                }else{
+                    logger.warn(' getTruckBase ' + 'failed');
+                    resUtil.resetFailedRes(res, " 货车不存在，操作失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        if(parkObj.operateType==1){
+            parkObj.operateType ="自营";
+        }else{
+            parkObj.operateType ="外协";
+        }
+        if(params.operateType==1){
+            parkObj.newOperateType ="自营";
+        }else{
+            parkObj.newOperateType ="外协";
+        }
         truckDAO.updateTruckCompany(params,function(error,result){
             if (error) {
                 logger.error(' updateTruckCompany ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateTruckCompany ' + 'success');
-                req.params.truckContent =" 修改所属公司为 "+parkObj.companyName;
+                req.params.truckContent ="原所属类型 " +parkObj.operateType+" 修改为 "+parkObj.newOperateType+
+                    " 原所属公司 "+parkObj.companyName+" 修改为 "+parkObj.newCompanyName;
                 req.params.vhe = params.truckNum;
                 req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
                 resUtil.resetUpdateRes(res,result,null);

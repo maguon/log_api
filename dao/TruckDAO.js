@@ -214,7 +214,10 @@ function getTruckTrailer(params,callback) {
 }
 
 function getTruckBase(params,callback) {
-    var query = " select t.* from truck_info t where t.id is not null ";
+    var query = " select t.*,c.company_name " +
+        " from truck_info t " +
+        " left join company_info c on t.company_id = c.id " +
+        " where t.id is not null ";
     var paramsArray=[],i=0;
     if(params.truckId){
         paramsArray[i++] = params.truckId;

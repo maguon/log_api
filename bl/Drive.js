@@ -168,18 +168,51 @@ function updateDrive(req,res,next){
 
 function updateDriveCompany(req,res,next){
     var params = req.params ;
-    driveDAO.updateDriveCompany(params,function(error,result){
-        if (error) {
-            logger.error(' updateDriveCompany ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' updateDriveCompany ' + 'success');
-            req.params.driverContent =" 修改所属公司为 "+params.companyName;
-            req.params.tid = params.driveId;
-            req.params.driverOp =30;
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
+    var parkObj = {};
+    Seq().seq(function(){
+        var that = this;
+        driveDAO.getDrive({driveId:params.driveId},function(error,rows){
+            if (error) {
+                logger.error(' getDrive ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    parkObj.initCompanyName = rows[0].company_name;
+                    parkObj.operateType = rows[0].operate_type;
+                    that();
+                }else{
+                    logger.warn(' getDrive ' + 'failed');
+                    resUtil.resetFailedRes(res, " 司机不存在，操作失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        if(parkObj.operateType==1){
+            parkObj.operateType ="自营";
+        }else{
+            parkObj.operateType ="外协";
         }
+        if(params.operateType==1){
+            parkObj.newOperateType ="自营";
+        }else{
+            parkObj.newOperateType ="外协";
+        }
+        driveDAO.updateDriveCompany(params,function(error,result){
+            if (error) {
+                logger.error(' updateDriveCompany ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDriveCompany ' + 'success');
+                req.params.driverContent ="原所属类型 " +parkObj.operateType+" 修改为 "+parkObj.newOperateType+
+                    " 原所属公司 "+parkObj.initCompanyName+" 修改为 "+params.companyName;
+                req.params.tid = params.driveId;
+                req.params.driverOp =30;
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 
