@@ -345,7 +345,7 @@ function getTruckRepairCsv(req,res,next){
                 if(rows[i].repair_reason == null){
                     parkObj.repairReason = "";
                 }else{
-                    parkObj.repairReason = rows[i].repair_reason;
+                    parkObj.repairReason = rows[i].repair_reason.replace(/[\r\n]/g, '');
                 }
                 if(rows[i].repair_status == 0){
                     parkObj.repairStatus = "正在维修";
@@ -375,7 +375,7 @@ function getTruckRepairCsv(req,res,next){
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.id+","+parkObj.truckNum+","+parkObj.companyName+","+parkObj.truckType+","+parkObj.repairType+","+
                     parkObj.repairDate+","+parkObj.endDate+","+parkObj.repairReason+","+parkObj.repairStatus+","+

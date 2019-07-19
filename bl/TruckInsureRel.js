@@ -188,7 +188,7 @@ function getTruckInsureRelCsv(req,res,next){
                 if(rows[i].insure_explain==null){
                     parkObj.insureExplain = "";
                 }else{
-                    parkObj.insureExplain = rows[i].insure_explain;
+                    parkObj.insureExplain = rows[i].insure_explain.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.insureNum+","+parkObj.insureName+","+parkObj.insureType+","+parkObj.insureMoney+","+
                     parkObj.truckNum+","+parkObj.truckType+","+parkObj.companyName+","+
