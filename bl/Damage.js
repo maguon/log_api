@@ -455,7 +455,7 @@ function getDamageCsv(req,res,next){
                 if(rows[i].damage_explain==null){
                     parkObj.damageExplain = "";
                 }else{
-                    parkObj.damageExplain = rows[i].damage_explain;
+                    parkObj.damageExplain = rows[i].damage_explain.replace(/[\r\n]/g, '');
                 }
                 parkObj.declareUserName = rows[i].declare_user_name;
                 if(rows[i].truck_num==null){
@@ -659,7 +659,7 @@ function getDamageBaseCsv(req,res,next){
                 if(rows[i].damage_explain==null){
                     parkObj.damageExplain = "";
                 }else{
-                    parkObj.damageExplain = rows[i].damage_explain;
+                    parkObj.damageExplain = rows[i].damage_explain.replace(/[\r\n]/g, '');;
                 }
                 if(rows[i].damage_status == 1){
                     parkObj.damageStatus = "待处理";
