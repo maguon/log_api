@@ -214,7 +214,7 @@ function getDamageCheckIndemnityCsv(req,res,next){
                 if(rows[i].apply_explain == null){
                     parkObj.applyExplain = "";
                 }else{
-                    parkObj.applyExplain = rows[i].apply_explain;
+                    parkObj.applyExplain = rows[i].apply_explain.replace(/[\r\n]/g, '');
                 }
                 parkObj.applyUserName = rows[i].apply_user_name;
                 if(rows[i].actual_money == null){
@@ -225,7 +225,7 @@ function getDamageCheckIndemnityCsv(req,res,next){
                 if(rows[i].indemnity_explain == null){
                     parkObj.indemnityExplain = "";
                 }else{
-                    parkObj.indemnityExplain = rows[i].indemnity_explain;
+                    parkObj.indemnityExplain = rows[i].indemnity_explain.replace(/[\r\n]/g, '');
                 }
                 if(rows[i].indemnity_date == null){
                     parkObj.indemnityDate = "";

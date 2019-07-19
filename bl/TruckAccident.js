@@ -221,7 +221,7 @@ function getTruckAccidentCsv(req,res,next){
                 if(rows[i].accident_explain == null){
                     parkObj.accidentExplain = "";
                 }else{
-                    parkObj.accidentExplain = rows[i].accident_explain;
+                    parkObj.accidentExplain = rows[i].accident_explain.replace(/[\r\n]/g, '');
                 }
                 if(rows[i].under_user_name == null){
                     parkObj.underUserName = "";
@@ -246,7 +246,7 @@ function getTruckAccidentCsv(req,res,next){
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 if(rows[i].op_user_name == null){
                     parkObj.opUserName = "";

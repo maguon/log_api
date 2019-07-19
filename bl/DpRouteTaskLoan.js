@@ -221,7 +221,7 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 if(rows[i].grant_explain == null){
                     parkObj.grantExplain = "";
                 }else{
-                    parkObj.grantExplain = rows[i].grant_explain;
+                    parkObj.grantExplain = rows[i].grant_explain.replace(/[\r\n]/g, '');
                 }
                 parkObj.refundActualMoney = rows[i].refund_actual_money;
                 if(rows[i].refund_date == null){
@@ -237,7 +237,7 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 if(rows[i].refund_explain == null){
                     parkObj.refundExplain = "";
                 }else{
-                    parkObj.refundExplain = rows[i].refund_explain;
+                    parkObj.refundExplain = rows[i].refund_explain.replace(/[\r\n]/g, '');
                 }
                 parkObj.repaymentMoney = rows[i].repayment_money;
                 parkObj.profit = rows[i].profit;

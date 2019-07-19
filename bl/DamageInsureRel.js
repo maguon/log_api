@@ -148,7 +148,7 @@ function getDamageInsureRelCsv(req,res,next){
                 if(rows[i].damage_explain==null){
                     parkObj.damageExplain = "";
                 }else{
-                    parkObj.damageExplain = rows[i].damage_explain;
+                    parkObj.damageExplain = rows[i].damage_explain.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.damageInsureId+","+parkObj.createdOn+","+parkObj.insureName+","
                     +parkObj.damageMoney+"," +parkObj.insurePlan+","+parkObj.insureActual+"," +parkObj.insureUserName+","

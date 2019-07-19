@@ -373,7 +373,7 @@ function getSettleHandoverCsv(req,res,next){
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.number+","+parkObj.shortName+","+parkObj.cityRouteStart+","+parkObj.cityRouteEnd
                     +","+parkObj.rShortName+","+parkObj.vin+","+parkObj.serialNumber+","+parkObj.receivedDate+","+parkObj.opUserName+","+parkObj.remark+ '\r\n';

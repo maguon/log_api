@@ -94,7 +94,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].turn_remark == null){
                     parkObj.turnRemark = "";
                 }else{
-                    parkObj.turnRemark = rows[i].turn_remark;
+                    parkObj.turnRemark = rows[i].turn_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].braking == 0){
@@ -111,7 +111,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].braking_remark == null){
                     parkObj.brakingRemark = "";
                 }else{
-                    parkObj.brakingRemark = rows[i].braking_remark;
+                    parkObj.brakingRemark = rows[i].braking_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].liquid == 0){
@@ -128,7 +128,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].liquid_remark == null){
                     parkObj.liquidRemark = "";
                 }else{
-                    parkObj.liquidRemark = rows[i].liquid_remark;
+                    parkObj.liquidRemark = rows[i].liquid_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].lighting == 0){
@@ -145,7 +145,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].lighting_remark == null){
                     parkObj.lightingRemark = "";
                 }else{
-                    parkObj.lightingRemark = rows[i].lighting_remark;
+                    parkObj.lightingRemark = rows[i].lighting_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].transmission == 0){
@@ -162,7 +162,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].transmission_remark == null){
                     parkObj.transmissionRemark = "";
                 }else{
-                    parkObj.transmissionRemark = rows[i].transmission_remark;
+                    parkObj.transmissionRemark = rows[i].transmission_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].tyre == 0){
@@ -179,7 +179,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].tyre_remark == null){
                     parkObj.tyreRemark = "";
                 }else{
-                    parkObj.tyreRemark = rows[i].tyre_remark;
+                    parkObj.tyreRemark = rows[i].tyre_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].suspension == 0){
@@ -196,7 +196,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].suspension_remark == null){
                     parkObj.suspensionRemark = "";
                 }else{
-                    parkObj.suspensionRemark = rows[i].suspension_remark;
+                    parkObj.suspensionRemark = rows[i].suspension_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].structure == 0){
@@ -213,7 +213,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].structure_remark == null){
                     parkObj.structureRemark = "";
                 }else{
-                    parkObj.structureRemark = rows[i].structure_remark;
+                    parkObj.structureRemark = rows[i].structure_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].facilities == 0){
@@ -230,7 +230,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].facilities_remark == null){
                     parkObj.facilitiesRemark = "";
                 }else{
-                    parkObj.facilitiesRemark = rows[i].facilities_remark;
+                    parkObj.facilitiesRemark = rows[i].facilities_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].link_device == 0){
@@ -247,7 +247,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].link_device_remark == null){
                     parkObj.linkDeviceRemark = "";
                 }else{
-                    parkObj.linkDeviceRemark = rows[i].link_device_remark;
+                    parkObj.linkDeviceRemark = rows[i].link_device_remark.replace(/[\r\n]/g, '');
                 }
 
                 if(rows[i].check_date == null){
@@ -258,7 +258,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 if(rows[i].check_user_name == null){
                     parkObj.checkUserName = "";

@@ -229,7 +229,7 @@ function getDriveSalaryCsv(req,res,next){
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 if(rows[i].grant_status == 2){
                     parkObj.grantStatus = "未发放";

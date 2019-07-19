@@ -178,7 +178,7 @@ function getTruckEtcCsv(req,res,next){
                 if(rows[i].remark==null){
                     parkObj.remark = "";
                 }else{
-                    parkObj.remark = rows[i].remark;
+                    parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.etcFee+","+
                     parkObj.etcDate+","+parkObj.createdOn+","+parkObj.remark+ '\r\n';
