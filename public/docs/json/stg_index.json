@@ -16199,6 +16199,74 @@
         }
       }
     },
+    "/entrustCityRouteRel.csv": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query entrustCityRouteRel csv",
+        "description": "query entrustCityRouteRelCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityRouteId",
+            "in": "query",
+            "description": "cityRoute id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrustCityRouteRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustCityRouteRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/entrustCityRouteRel": {
       "post": {
         "tags": [

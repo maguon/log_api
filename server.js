@@ -603,6 +603,7 @@ function createServer() {
      * EntrustCityRouteRel Module
      */
     server.get('/api/entrustCityRouteRel',entrustCityRouteRel.queryEntrustCityRouteRel);
+    server.get('/api/entrustCityRouteRel.csv',entrustCityRouteRel.getEntrustCityRouteRelCsv);
     server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel,sysRecord.saveEntrustRecord);
     server.put({path:'/api/user/:userId/entrust/:entrustId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId/size/:sizeType',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.saveEntrustRecord);
 

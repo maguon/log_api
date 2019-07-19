@@ -163,9 +163,79 @@ function updateEntrustCityRouteRel(req,res,next){
     })
 }
 
+function getEntrustCityRouteRelCsv(req,res,next){
+    var csvString = "";
+    var header = "委托方" + ',' +"品牌" + ',' + "车型" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "单价" + ','+"总价" + ','+
+        "二级公里数" + ','+ "二级单价" + ','+"二级总价";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    entrustCityRouteRelDAO.getEntrustCityRouteRel(params,function(error,rows){
+        if (error) {
+            logger.error(' getEntrustCityRouteRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.shortName = rows[i].short_name;
+                parkObj.makeName = rows[i].make_name;
+                if(rows[i].size_type == 1){
+                    parkObj.sizeType = "小";
+                }else{
+                    parkObj.sizeType = "大";
+                }
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                if(rows[i].distance == null){
+                    parkObj.distance = "";
+                }else{
+                    parkObj.distance = rows[i].distance;
+                }
+                if(rows[i].fee == null){
+                    parkObj.fee = "";
+                }else{
+                    parkObj.fee = rows[i].fee;
+                }
+                parkObj.totalFee =rows[i].distance*rows[i].fee;
+                if(rows[i].two_distance == null){
+                    parkObj.twoDistance = "";
+                }else{
+                    parkObj.twoDistance = rows[i].two_distance;
+                }
+                if(rows[i].two_fee == null){
+                    parkObj.twoFee = "";
+                }else{
+                    parkObj.twoFee = rows[i].two_fee;
+                }
+                parkObj.twoTotalFee =rows[i].two_distance*rows[i].two_fee;
+
+                csvString = csvString+parkObj.shortName+","+parkObj.makeName+","+parkObj.sizeType+","+parkObj.routeStart+","+parkObj.routeEnd+","+
+                    parkObj.distance+","+parkObj.fee+","+parkObj.totalFee+","+parkObj.twoDistance+","+
+                    parkObj.twoFee+","+parkObj.twoTotalFee+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createEntrustCityRouteRel : createEntrustCityRouteRel,
     queryEntrustCityRouteRel : queryEntrustCityRouteRel,
-    updateEntrustCityRouteRel : updateEntrustCityRouteRel
+    updateEntrustCityRouteRel : updateEntrustCityRouteRel,
+    getEntrustCityRouteRelCsv : getEntrustCityRouteRelCsv
 }
