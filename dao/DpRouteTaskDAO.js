@@ -411,6 +411,7 @@ function getDriveDistanceLoadStat(params,callback) {
         query = query + " and dpr.load_flag = ? ";
     }
     query = query + ' group by d.id,t.id';
+    query = query + ' order by d.id';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveDistanceLoadStat ');
         return callback(error,rows);

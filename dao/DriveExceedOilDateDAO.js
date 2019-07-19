@@ -94,6 +94,7 @@ function getDriveExceedOilDate(params,callback) {
             query = query + " and deodm.check_status = ? ";
         }
     }
+    query = query + ' order by dprm.drive_id ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
