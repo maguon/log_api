@@ -477,9 +477,16 @@ function getDriveDistanceLoad(params,callback) {
         paramsArray[i++] = params.loadTaskStatus;
         query = query + " and dprl.load_task_status = ? ";
     }
+    if(params.loadTaskStatusArr){
+        query = query + " and dprl.load_task_status in ("+params.loadTaskStatusArr + ") "
+    }
     if(params.loadFlag){
         paramsArray[i++] = params.loadFlag;
         query = query + " and dpr.load_flag = ? ";
+    }
+    if(params.reverseFlag){
+        paramsArray[i++] = params.reverseFlag;
+        query = query + " and dpr.reverse_flag = ? ";
     }
     query = query + " order by dpr.id desc";
     if (params.start && params.size) {

@@ -21875,7 +21875,14 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
 
+          },
           {
             "name": "driveId",
             "in": "query",
@@ -21888,6 +21895,30 @@
             "name": "truckId",
             "in": "query",
             "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "reverseFlag",
+            "in": "query",
+            "description": "reverse flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
             "required": false,
             "type": "integer"
 
@@ -21909,9 +21940,25 @@
 
           },
           {
+            "name": "taskStatus",
+            "in": "query",
+            "description": "task status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "taskStatusArr",
             "in": "query",
             "description": "task statusArr",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "loadTaskStatusArr",
+            "in": "query",
+            "description": "loadTask statusArr",
             "required": false,
             "type": "string"
 
