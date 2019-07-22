@@ -1850,6 +1850,14 @@
 
           },
           {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "companyId",
             "in": "query",
             "description": "company id",
@@ -2039,6 +2047,14 @@
             "description": "drive name",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
+            "required": false,
+            "type": "integer"
 
           },
           {

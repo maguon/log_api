@@ -404,6 +404,10 @@ function getTruckOperate(params,callback) {
         paramsArray[i++] = params.driveName;
         query = query + " and d.drive_name = ? ";
     }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
+    }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
         query = query + " and t.company_id = ? ";
@@ -488,24 +492,64 @@ function getTruckCost(params,callback) {
 }
 
 function updateTruck(params,callback){
-    var query = " update truck_info set truck_num = ? , brand_id = ? , hp= ? , truck_tel = ? ,the_code = ? , " +
-        " operate_type = ? , company_id = ? , truck_type = ? , number = ? , driving_date = ? , license_date = ? , " +
-        " two_date = ? , remark = ?  where id = ? " ;
+    var query = " update truck_info set " ;
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.truckNum;
-    paramsArray[i++]=params.brandId;
-    paramsArray[i++]=params.hp;
-    paramsArray[i++]=params.truckTel;
-    paramsArray[i++]=params.theCode;
-    paramsArray[i++]=params.operateType;
-    paramsArray[i++]=params.companyId;
-    paramsArray[i++]=params.truckType;
-    paramsArray[i++]=params.number;
-    paramsArray[i++]=params.drivingDate;
-    paramsArray[i++]=params.licenseDate;
-    paramsArray[i++]=params.twoDate;
-    paramsArray[i++]=params.remark;
-    paramsArray[i]=params.truckId;
+    if(params.truckNum){
+        paramsArray[i++]=params.truckNum;
+        query = query + " truck_num = ? ";
+    }
+    if(params.brandId){
+        paramsArray[i++]=params.brandId;
+        query = query + " , brand_id = ? ";
+    }
+    if(params.hp){
+        paramsArray[i++]=params.hp;
+        query = query + " , hp = ? ";
+    }
+    if(params.truckTel){
+        paramsArray[i++]=params.truckTel;
+        query = query + " , truck_tel = ? ";
+    }
+    if(params.theCode){
+        paramsArray[i++]=params.theCode;
+        query = query + " , the_code = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++]=params.operateType;
+        query = query + " , operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++]=params.companyId;
+        query = query + " , company_id = ? ";
+    }
+    if(params.truckType){
+        paramsArray[i++]=params.truckType;
+        query = query + " , truck_type = ? ";
+    }
+    if(params.number){
+        paramsArray[i++]=params.number;
+        query = query + " , number = ? ";
+    }
+    if(params.drivingDate){
+        paramsArray[i++]=params.drivingDate;
+        query = query + " , driving_date = ? ";
+    }
+    if(params.licenseDate){
+        paramsArray[i++]=params.licenseDate;
+        query = query + " , license_date = ? ";
+    }
+    if(params.twoDate){
+        paramsArray[i++]=params.twoDate;
+        query = query + " , two_date = ? ";
+    }
+    if(params.remark){
+        paramsArray[i++]=params.remark;
+        query = query + " , remark = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++]=params.truckId;
+        query = query + " where id = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruck ');
         return callback(error,rows);
