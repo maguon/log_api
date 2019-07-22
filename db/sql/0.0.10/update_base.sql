@@ -659,3 +659,11 @@ ADD COLUMN `company_id`  int(10) NULL DEFAULT 0 COMMENT '外协公司ID' AFTER `
 ALTER TABLE `settle_outer_truck`
 DROP INDEX `make_id` ,
 ADD UNIQUE INDEX `company_id` (`company_id`, `make_id`, `route_start_id`, `route_end_id`) USING BTREE ;
+-- ----------------------------
+-- 2019-07-22 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_fee`
+ADD COLUMN `cash_etc`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金ETC' AFTER `car_oil_fee`,
+ADD COLUMN `cash_repair`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金维修' AFTER `cash_etc`,
+ADD COLUMN `cash_peccancy`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金违章' AFTER `cash_repair`,
+ADD COLUMN `cash_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金加油' AFTER `cash_peccancy`;

@@ -35901,6 +35901,18 @@
         "carOilFee": {
           "type": "integer"
         },
+        "cashEtc": {
+          "type": "integer"
+        },
+        "cashRepair": {
+          "type": "integer"
+        },
+        "cashPeccancy": {
+          "type": "integer"
+        },
+        "cashOil": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }
