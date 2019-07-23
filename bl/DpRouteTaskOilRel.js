@@ -27,7 +27,22 @@ function queryDpRouteTaskOilRel(req,res,next){
     })
 }
 
+function queryDpRouteTaskOilRelList(req,res,next){
+    var params = req.params ;
+    dpRouteTaskOilRelDAO.getDpRouteTaskOilRelList(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskOilRelList ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskOilRelList ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    queryDpRouteTaskOilRel : queryDpRouteTaskOilRel
+    queryDpRouteTaskOilRel : queryDpRouteTaskOilRel,
+    queryDpRouteTaskOilRelList: queryDpRouteTaskOilRelList
 }

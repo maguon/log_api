@@ -836,6 +836,7 @@ function createServer() {
      * DpRouteTaskOilRel Module
      */
     server.get('/api/dpRouteTaskOilRel',dpRouteTaskOilRel.queryDpRouteTaskOilRel);
+    server.get('/api/dpRouteTaskOilRelList',dpRouteTaskOilRel.queryDpRouteTaskOilRelList);
 
     /**
      * DpRouteTaskFee Module

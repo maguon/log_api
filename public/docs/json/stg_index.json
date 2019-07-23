@@ -26115,6 +26115,82 @@
         }
       }
     },
+    "/dpRouteTaskOilRelList": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskOilRel list",
+        "description": "query dpRouteTaskOilRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dpRouteTaskOilRelId",
+            "in": "query",
+            "description": "dpRouteTaskOilRel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskOilRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskOilRel id"
+          }
+        }
+      }
+    },
     "/dpRouteTaskFee": {
       "get": {
         "tags": [

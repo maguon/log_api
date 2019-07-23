@@ -83,6 +83,52 @@ function getDpRouteTaskOilRel(params,callback) {
     });
 }
 
+function getDpRouteTaskOilRelList(params,callback) {
+    var query = " select dpror.*,dpr.task_plan_date,dpr.distance,dpr.load_flag, " +
+        " dpr.oil_distance,dpr.oil_load_flag,dpr.car_count,dpr.reverse_flag, " +
+        " t.truck_num,t.operate_type,c.company_name,d.drive_name " +
+        " from dp_route_task_oil_rel dpror " +
+        " left join dp_route_task dpr on dpr.id = dpror.dp_route_task_id " +
+        " left join truck_info t on dpror.truck_id = t.id " +
+        " left join company_info c on t.company_id = c.id " +
+        " left join drive_info d on dpror.drive_id = d.id " +
+        " where dpror.id is not null and dpr.task_status >=9 ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskOilRelId){
+        paramsArray[i++] = params.dpRouteTaskOilRelId;
+        query = query + " and dpror.id = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dpror.dp_route_task_id = ? ";
+    }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart;
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd;
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpror.truck_id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpror.drive_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskOilRelList ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpRouteTaskOilReltotalOil(params,callback){
     var query = " update dp_route_task_oil_rel set oil = ? , total_oil = ? " +
         " where dp_route_task_id = ? ";
@@ -111,6 +157,7 @@ function updateDpRouteTaskOilRelStatus(params,callback){
 module.exports ={
     addDpRouteTaskOilRel : addDpRouteTaskOilRel,
     getDpRouteTaskOilRel : getDpRouteTaskOilRel,
+    getDpRouteTaskOilRelList : getDpRouteTaskOilRelList,
     updateDpRouteTaskOilReltotalOil : updateDpRouteTaskOilReltotalOil,
     updateDpRouteTaskOilRelStatus : updateDpRouteTaskOilRelStatus
 }
