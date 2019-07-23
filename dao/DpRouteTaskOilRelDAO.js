@@ -118,6 +118,7 @@ function getDpRouteTaskOilRelList(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and dpror.drive_id = ? ";
     }
+    query = query + " order by dpror.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
