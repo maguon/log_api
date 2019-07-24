@@ -962,8 +962,8 @@ function queryRouteTaskDayStat(req,res,next){
 
 function getDpRouteTaskCsv(req,res,next){
     var csvString = "";
-    var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "司机" + ','+ "电话" + ','+"身份证号" + ','+
-        "货车牌号" + ','+ "计划装车数"+ ','+ "实际装车数" + ','+ "计划执行时间" + ','+ "完成时间"
+    var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "司机" + ','+ "身份证号" + ','+
+        "货车牌号" + ','+ "货车电话" + ','+ "计划装车数"+ ','+ "实际装车数" + ','+ "计划执行时间" + ','+ "完成时间"
         + ','+ "调度人" + ','+ "状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -978,17 +978,17 @@ function getDpRouteTaskCsv(req,res,next){
                 parkObj.route = rows[i].route_start+'-'+rows[i].route_end;
                 parkObj.distance = rows[i].distance;
                 parkObj.driveName = rows[i].drive_name;
-                if(rows[i].mobile == null){
-                    parkObj.mobile = "";
-                }else{
-                    parkObj.mobile = rows[i].mobile;
-                }
                 if(rows[i].id_number == null){
                     parkObj.idNumber = "";
                 }else{
                     parkObj.idNumber = rows[i].id_number;
                 }
                 parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].truck_tel == null){
+                    parkObj.truckTel = "";
+                }else{
+                    parkObj.truckTel = rows[i].truck_tel;
+                }
                 if(rows[i].plan_count == null){
                     parkObj.planCount = "";
                 }else{
@@ -1022,8 +1022,8 @@ function getDpRouteTaskCsv(req,res,next){
                     parkObj.taskStatus = "全部完成";
                 }
                 csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.driveName+","+
-                    parkObj.mobile+","+parkObj.idNumber+","+parkObj.truckNum+","
-                    +parkObj.planCount+"," +parkObj.realCount+"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+"," +parkObj.taskStatus+ '\r\n';
+                    parkObj.idNumber+","+parkObj.truckNum+","+parkObj.truckTel+","+
+                    parkObj.planCount+"," +parkObj.realCount+"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+"," +parkObj.taskStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
