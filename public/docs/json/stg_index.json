@@ -26259,6 +26259,22 @@
 
           },
           {
+            "name": "grantDateStart",
+            "in": "query",
+            "description": "grantDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "grantDateEnd",
+            "in": "query",
+            "description": "grantDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "status",
             "in": "query",
             "description": "status",
@@ -26420,6 +26436,22 @@
 
           },
           {
+            "name": "grantDateStart",
+            "in": "query",
+            "description": "grantDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "grantDateEnd",
+            "in": "query",
+            "description": "grantDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "status",
             "in": "query",
             "description": "status",
@@ -26576,6 +26608,59 @@
             "required": true,
             "type": "integer"
 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/status/{status}/dpRouteTaskFeeStatusAll": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteTaskFee statusAll",
+        "description": "update dpRouteTaskFee statusAll",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskFeeStatusAll",
+            "in": "body",
+            "description": "dpRouteTaskFeeStatusAll info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteTaskFeeStatusAll"
+            }
           }
         ],
         "responses": {
@@ -35825,6 +35910,18 @@
       },
       "xml": {
         "name": "cleanRelAll"
+      }
+    },
+    "dpRouteTaskFeeStatusAll": {
+      "type": "object",
+      "properties": {
+
+        "dpRouteTaskFeeIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "dpRouteTaskFeeStatusAll"
       }
     },
     "dpRouteTaskLoanGrant": {

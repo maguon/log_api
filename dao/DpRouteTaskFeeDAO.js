@@ -61,6 +61,14 @@ function getDpRouteTaskFee(params,callback) {
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and dprtf.created_on <= ? ";
     }
+    if(params.grantDateStart){
+        paramsArray[i++] = params.grantDateStart +" 00:00:00";
+        query = query + " and dprtf.grant_date >= ? ";
+    }
+    if(params.grantDateEnd){
+        paramsArray[i++] = params.grantDateEnd +" 23:59:59";
+        query = query + " and dprtf.grant_date <= ? ";
+    }
     if(params.status){
         paramsArray[i++] = params.status;
         query = query + " and dprtf.status = ? ";

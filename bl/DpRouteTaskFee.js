@@ -110,6 +110,47 @@ function updateDpRouteTaskFeeStatus (req,res,next){
     })
 }
 
+function updateDpRouteTaskFeeStatusAll(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    Seq().seq(function(){
+        var that = this;
+        var dpRouteTaskFeeIds = params.dpRouteTaskFeeIds;
+        var rowArray = [] ;
+        rowArray.length= dpRouteTaskFeeIds.length;
+        Seq(rowArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                status : params.status,
+                grantDate : myDate,
+                dateId : parseInt(strDate),
+                dpRouteTaskFeeId : dpRouteTaskFeeIds[i],
+                row : i+1,
+            }
+            dpRouteTaskFeeDAO.updateDpRouteTaskFeeStatus(subParams,function(err,result){
+                if (err) {
+                    logger.error(' updateDpRouteTaskFeeStatusAll ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' updateDpRouteTaskFeeStatusAll  ' + 'success');
+                    }else{
+                        logger.warn(' updateDpRouteTaskFeeStatusAll  ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+        }).seq(function(){
+            that();
+        })
+    }).seq(function(){
+        logger.info(' updateDpRouteTaskFeeStatusAll ' + 'success');
+        resUtil.resetQueryRes(res,null);
+        return next();
+    })
+}
+
 function getDpRouteTaskFeeCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' +"货车牌号" + ',' + "商品车加油费" + ',' + "货车停留天数" + ','+ "货车停车单价" + ','+"货车停车费" + ','+
@@ -220,5 +261,6 @@ module.exports = {
     queryDpRouteTaskFeeCount : queryDpRouteTaskFeeCount,
     updateDpRouteTaskFee : updateDpRouteTaskFee,
     updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus,
+    updateDpRouteTaskFeeStatusAll : updateDpRouteTaskFeeStatusAll,
     getDpRouteTaskFeeCsv : getDpRouteTaskFeeCsv
 }
