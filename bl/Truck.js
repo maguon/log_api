@@ -262,21 +262,15 @@ function queryTruckCost(req,res,next){
 
 function updateTruck(req,res,next){
     var params = req.params ;
-    if(params.number == null || params.number == ""){
-        params.number = 0;
-    }
-    if(params.operateType == null || params.operateType == ""){
-        params.operateType = 0;
-    }
-    if(params.companyId == null || params.companyId == ""){
-        params.companyId = 0;
-    }
     truckDAO.updateTruck(params,function(error,result){
         if (error) {
             logger.error(' updateTruck ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' updateTruck ' + 'success');
+            req.params.truckContent =" 修改过车辆信息 ";
+            req.params.vhe = params.truckNum;
+            req.params.truckOp =sysConst.RECORD_OP_TYPE.truckOp;
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }

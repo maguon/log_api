@@ -514,10 +514,6 @@ function updateTruck(params,callback){
         paramsArray[i++]=params.theCode;
         query = query + " , the_code = ? ";
     }
-    if(params.operateType){
-        paramsArray[i++]=params.operateType;
-        query = query + " , operate_type = ? ";
-    }
     if(params.companyId){
         paramsArray[i++]=params.companyId;
         query = query + " , company_id = ? ";
