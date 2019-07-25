@@ -40,6 +40,7 @@ var driveExceedOil = require('./bl/DriveExceedOil.js');
 var driveExceedOilDate = require('./bl/DriveExceedOilDate.js');
 var driveExceedOilRel = require('./bl/DriveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
+var driveExceedOilPrice = require('./bl/DriveExceedOilPrice.js');
 var driveWork = require('./bl/DriveWork.js');
 var driveTruckMonthValue = require('./bl/DriveTruckMonthValue.js');
 var company = require('./bl/Company.js');
@@ -475,7 +476,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId/oilStatus/:oilStatus',contentType: 'application/json'} ,driveExceedOil.updateDriveOilStatus);
 
     /**
-     * driveExceedOilDate Module
+     * DriveExceedOilDate Module
      */
     server.get('/api/driveExceedOilDate' , driveExceedOilDate.queryDriveExceedOilDate);
     server.get('/api/driveExceedOilMonth' , driveExceedOilDate.queryDriveExceedOilMonth);
@@ -485,6 +486,12 @@ function createServer() {
     server.put({path:'/api/user/:userId/exceedOilDateId/:exceedOilDateId',contentType: 'application/json'} ,driveExceedOilDate.updateDriveExceedOilDate);
     server.put({path:'/api/user/:userId/exceedOilDateId/:exceedOilDateId/actualMoney',contentType: 'application/json'} ,driveExceedOilDate.updateDriveExceedOilDateMoney);
     server.put({path:'/api/user/:userId/exceedOilDate/:exceedOilDateId/checkStatus/:checkStatus',contentType: 'application/json'} ,driveExceedOilDate.updateExceedOilDateCheckStatus);
+
+    /**
+     * DriveExceedOilPrice Module
+     */
+    server.get('/api/driveExceedOilPrice' , driveExceedOilPrice.queryDriveExceedOilPrice);
+    server.put({path:'/api/user/:userId/driveExceedOilPrice/:oilPriceId',contentType: 'application/json'} ,driveExceedOilPrice.updateDriveExceedOilPrice);
 
     /**
      * DriveExceedOilRel Module

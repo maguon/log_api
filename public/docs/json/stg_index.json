@@ -13044,12 +13044,102 @@
         }
       }
     },
+    "/driveExceedOilPrice": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOilPrice list",
+        "description": "query driveExceedOilPrice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "oilPriceId",
+            "in": "query",
+            "description": "oilPrice id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOilPrice"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilPrice id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveExceedOilPrice/{oilPriceId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveExceedOilPrice info",
+        "description": "update driveExceedOilPrice info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "oilPriceId",
+            "in": "path",
+            "description": "oilPrice id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveExceedOilPrice",
+            "in": "body",
+            "description": "driveExceedOilPrice info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveExceedOilPrice"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilPrice id"
+          }
+        }
+      }
+    },
     "/driveWork": {
       "get": {
         "tags": [
           "drive"
         ],
-        "summary": "query  driveWork list",
+        "summary": "query driveWork list",
         "description": "query driveWork",
         "produces": [
           "application/json"
@@ -34860,6 +34950,21 @@
       },
       "xml": {
         "name": "driveDpRouteTaskOilRel"
+      }
+    },
+    "driveExceedOilPrice": {
+      "type": "object",
+      "properties": {
+
+        "oilSinglePrice": {
+          "type": "integer"
+        },
+        "ureaSinglePrice": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveExceedOilPrice"
       }
     },
     "checkReason": {

@@ -667,3 +667,16 @@ ADD COLUMN `cash_etc`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金ETC' AFTER `c
 ADD COLUMN `cash_repair`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金维修' AFTER `cash_etc`,
 ADD COLUMN `cash_peccancy`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金违章' AFTER `cash_repair`,
 ADD COLUMN `cash_oil`  decimal(10,2) NULL DEFAULT 0 COMMENT '现金加油' AFTER `cash_peccancy`;
+-- ----------------------------
+-- 2019-07-25 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for drive_exceed_oil_price
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_exceed_oil_price`;
+CREATE TABLE `drive_exceed_oil_price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `oil_single_price` decimal(10,2) DEFAULT '0.00' COMMENT '油的每升扣款单价',
+  `urea_single_price` decimal(10,2) DEFAULT '0.00' COMMENT '尿素每升扣款单价',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
