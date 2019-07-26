@@ -31,6 +31,11 @@ function getEntrustInvoice(params,callback) {
         paramsArray[i++] = params.entrustId;
         query = query + " and ei.entrust_id = ? ";
     }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getEntrustInvoice ');
         return callback(error,rows);
