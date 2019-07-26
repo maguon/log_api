@@ -54,83 +54,96 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
                 })
             }).seq(function(){
                 var that = this;
-                var subParams ={
-                    vin : objArray[i].vin,
-                    entrustId : objArray[i].entrustId,
-                    routeStartId : objArray[i].routeStartId,
-                    routeEndId : objArray[i].routeEndId,
-                    price : objArray[i].price,
-                    seq : objArray[i].seq,
-                    settleStatus : sysConst.SETTLE_STATUS.settle,
-                    userId : params.userId,
-                    uploadId : params.uploadId,
-                    row : i+1,
-                }
-                settleCarDAO.updateUploadSettleCar(subParams,function(err,result){
-                    if (err) {
-                        if(err.message.indexOf("Duplicate") > 0) {
-                            failedCase=objArray.length-successedInsert;
-                            resUtil.resetFailedRes(res, "数据已存在，上传失败 本次成功上传"+successedInsert+"条 失败"+failedCase+"条");
-                            return next();
-                        } else{
-                            logger.error(' createUploadSettleCar ' + err.message);
-                            throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                        }
-                    } else {
-                        if(result && result.affectedRows > 0){
-                            successedInsert = successedInsert+result.affectedRows;
-                            carCount = carCount +1;
-                            planPrice = planPrice+parseInt(objArray[i].price);
-                            logger.info(' createUploadSettleCar ' + 'success');
-                        }else{
-                            logger.warn(' createUploadSettleCar ' + 'failed');
-                        }
-                        that(null,i);
+                if(params.entrustId==objArray[i].entrustId){
+                    var subParams ={
+                        vin : objArray[i].vin,
+                        entrustId : objArray[i].entrustId,
+                        routeStartId : objArray[i].routeStartId,
+                        routeEndId : objArray[i].routeEndId,
+                        price : objArray[i].price,
+                        seq : objArray[i].seq,
+                        settleStatus : sysConst.SETTLE_STATUS.settle,
+                        userId : params.userId,
+                        uploadId : params.uploadId,
+                        row : i+1,
                     }
-                })
+                    settleCarDAO.updateUploadSettleCar(subParams,function(err,result){
+                        if (err) {
+                            if(err.message.indexOf("Duplicate") > 0) {
+                                failedCase=objArray.length-successedInsert;
+                                resUtil.resetFailedRes(res, "数据已存在，上传失败 本次成功上传"+successedInsert+"条 失败"+failedCase+"条");
+                                return next();
+                            } else{
+                                logger.error(' createUploadSettleCar ' + err.message);
+                                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            }
+                        } else {
+                            if(result && result.affectedRows > 0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                carCount = carCount +1;
+                                planPrice = planPrice+parseInt(objArray[i].price);
+                                logger.info(' createUploadSettleCar ' + 'success');
+                            }else{
+                                logger.warn(' createUploadSettleCar ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
+                    that(null,i);
+                }
+
             }).seq(function(){
-                var subParams ={
-                    carId : parkObj.carId,
-                    entrustId : objArray[i].entrustId,
-                    price : objArray[i].price,
-                    row : i+1,
-                }
-                entrustInvoiceCarRelDAO.addEntrustInvoiceCarRel(subParams,function(err,result){
-                    if (err) {
-                        logger.error(' addEntrustInvoiceCarRel ' + err.message);
-                        //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                        that(null,i);
-                    } else {
-                        if(result&&result.insertId>0){
-                            logger.info(' addEntrustInvoiceCarRel ' + 'success');
-                        }else{
-                            logger.warn(' addEntrustInvoiceCarRel ' + 'failed');
-                        }
-                        that(null,i);
+                if(params.entrustId==objArray[i].entrustId){
+                    var subParams ={
+                        carId : parkObj.carId,
+                        entrustId : objArray[i].entrustId,
+                        price : objArray[i].price,
+                        row : i+1,
                     }
-                })
+                    entrustInvoiceCarRelDAO.addEntrustInvoiceCarRel(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' addEntrustInvoiceCarRel ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result&&result.insertId>0){
+                                logger.info(' addEntrustInvoiceCarRel ' + 'success');
+                            }else{
+                                logger.warn(' addEntrustInvoiceCarRel ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
+                    that(null,i);
+                }
             })
         }).seq(function(){
             var that = this;
-            var subParams ={
-                entrustId : params.entrustId,
-                carCount : carCount,
-                planPrice : planPrice
-            }
-            entrustInvoiceDAO.addEntrustInvoice(subParams,function(err,result){
-                if (err) {
-                    logger.error(' addEntrustInvoice ' + err.message);
-                    //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    that();
-                } else {
-                    if(result&&result.insertId>0){
-                        logger.info(' addEntrustInvoice ' + 'success');
-                    }else{
-                        logger.warn(' addEntrustInvoice ' + 'failed');
-                    }
-                    that();
+            if(successedInsert>0) {
+                var subParams = {
+                    entrustId: params.entrustId,
+                    carCount: carCount,
+                    planPrice: planPrice
                 }
-            })
+                entrustInvoiceDAO.addEntrustInvoice(subParams, function (err, result) {
+                    if (err) {
+                        logger.error(' addEntrustInvoice ' + err.message);
+                        //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                        that();
+                    } else {
+                        if (result && result.insertId > 0) {
+                            logger.info(' addEntrustInvoice ' + 'success');
+                        } else {
+                            logger.warn(' addEntrustInvoice ' + 'failed');
+                        }
+                        that();
+                    }
+                })
+            }else{
+                that();
+            }
         }).seq(function(){
             fs.unlink(file.path, function() {});
             failedCase=objArray.length-successedInsert;
