@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var entrustInvoiceCarRelDAO = require('../dao/EntrustInvoiceCarRelDAO.js');
+var entrustInvoiceDAO = require('../dao/EntrustInvoiceDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var settleCarDAO = require('../dao/SettleCarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -21,6 +22,8 @@ var fs = require('fs');
 function uploadEntrustInvoiceCarRelFile(req,res,next){
     var params = req.params;
     var parkObj = {};
+    var carCount = 0;
+    var planPrice = 0;
     var successedInsert = 0;
     var failedCase = 0;
     var file = req.files.file;
@@ -76,6 +79,8 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
                     } else {
                         if(result && result.affectedRows > 0){
                             successedInsert = successedInsert+result.affectedRows;
+                            carCount = carCount +1;
+                            planPrice = planPrice+parseInt(objArray[i].price);
                             logger.info(' createUploadSettleCar ' + 'success');
                         }else{
                             logger.warn(' createUploadSettleCar ' + 'failed');
@@ -104,6 +109,27 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
                         that(null,i);
                     }
                 })
+            })
+        }).seq(function(){
+            var that = this;
+            var subParams ={
+                entrustId : params.entrustId,
+                carCount : carCount,
+                planPrice : planPrice
+            }
+            entrustInvoiceDAO.addEntrustInvoice(subParams,function(err,result){
+                if (err) {
+                    logger.error(' addEntrustInvoice ' + err.message);
+                    //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    that();
+                } else {
+                    if(result&&result.insertId>0){
+                        logger.info(' addEntrustInvoice ' + 'success');
+                    }else{
+                        logger.warn(' addEntrustInvoice ' + 'failed');
+                    }
+                    that();
+                }
             })
         }).seq(function(){
             fs.unlink(file.path, function() {});

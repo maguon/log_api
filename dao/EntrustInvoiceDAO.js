@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('EntrustInvoiceDAO.js');
 
 function addEntrustInvoice(params,callback){
-    var query = " insert into entrust_invoice (entrust_id,car_count,plan_price) " +
-        " select entrust_id,count(car_id) car_count,sum(price)price from entrust_invoice_car_rel where entrust_id = ? ";
+    var query = " insert into entrust_invoice (entrust_id,car_count,plan_price) values ( ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.entrustId;
+    paramsArray[i++]=params.carCount;
+    paramsArray[i++]=params.planPrice;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addEntrustInvoice ');
         return callback(error,rows);
