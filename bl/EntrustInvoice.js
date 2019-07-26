@@ -76,30 +76,28 @@ function removeEntrustInvoice(req,res,next){
                 }
             }
         })
-    }).seq(function(){
+    }).seq(function (){
         var that = this;
-        entrustInvoiceDAO.deleteEntrustInvoice(params,function(error,result){
-            if (error) {
-                logger.error(' removeEntrustInvoice ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' removeEntrustInvoice ' + 'success');
-                    that();
-                }else{
-                    logger.warn(' removeEntrustInvoice ' + 'failed');
-                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
         entrustInvoiceCarRelDAO.deleteEntrustInvoiceCarRel(params,function(error,result){
             if (error) {
                 logger.error(' deleteEntrustInvoiceCarRel ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' deleteEntrustInvoiceCarRel ' + 'success');
+                if(result&&result.affectedRows>0){
+                    logger.info(' deleteEntrustInvoiceCarRel ' + 'success');
+                }else{
+                    logger.warn(' deleteEntrustInvoiceCarRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        entrustInvoiceDAO.deleteEntrustInvoice(params,function(error,result){
+            if (error) {
+                logger.error(' removeEntrustInvoice ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' removeEntrustInvoice ' + 'success');
                 resUtil.resetUpdateRes(res,result,null);
                 return next();
             }
