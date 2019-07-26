@@ -709,6 +709,8 @@ CREATE TABLE `entrust_invoice_car_rel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entrust_invoice_id` int(10) DEFAULT '0' COMMENT '委托方ID',
   `car_id` int(10) DEFAULT '0' COMMENT '商品车ID',
+  `route_start_id` int(10) DEFAULT '0' COMMENT '起始地ID',
+  `route_end_id` int(10) DEFAULT '0' COMMENT '目的地ID',
   `price` decimal(10,2) DEFAULT '0.00' COMMENT '金额',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

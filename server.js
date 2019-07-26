@@ -634,6 +634,7 @@ function createServer() {
     /**
      * EntrustInvoiceCarRel Module
      */
+    server.get('/api/entrustInvoiceCarRel',entrustInvoiceCarRel.queryEntrustInvoiceCarRel);
     server.post({path:'/api/user/:userId/entrustInvoiceCarRelFile',contentType: 'multipart/form-data'},entrustInvoiceCarRel.uploadEntrustInvoiceCarRelFile);
 
     /**

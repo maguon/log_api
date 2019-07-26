@@ -110,8 +110,10 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
                 }).seq(function(){
                     if(params.entrustId==objArray[i].entrustId){
                         var subParams ={
-                            carId : parkObj.carId,
                             entrustInvoiceId : entrustInvoiceId,
+                            carId : parkObj.carId,
+                            routeStartId : objArray[i].routeStartId,
+                            routeEndId : objArray[i].routeEndId,
                             price : objArray[i].price,
                             row : i+1,
                         }
@@ -164,7 +166,22 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
     })
 }
 
+function queryEntrustInvoiceCarRel(req,res,next){
+    var params = req.params ;
+    entrustInvoiceCarRelDAO.getEntrustInvoiceCarRel(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustInvoiceCarRel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustInvoiceCarRel ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
-    uploadEntrustInvoiceCarRelFile : uploadEntrustInvoiceCarRelFile
+    uploadEntrustInvoiceCarRelFile : uploadEntrustInvoiceCarRelFile,
+    queryEntrustInvoiceCarRel : queryEntrustInvoiceCarRel
 }

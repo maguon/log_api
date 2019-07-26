@@ -16666,6 +16666,14 @@
 
           },
           {
+            "name": "invoiceStatus",
+            "in": "query",
+            "description": "invoice status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -16835,6 +16843,67 @@
           },
           "400": {
             "description": "Invalid token value or invalid entrustInvoice id"
+          }
+        }
+      }
+    },
+    "/entrustInvoiceCarRel": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query entrustInvoiceCarRel list",
+        "description": "query entrustInvoiceCarRel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustInvoiceId",
+            "in": "query",
+            "description": "entrustInvoice id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrustInvoice"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustInvoiceCarRel id"
           }
         }
       }
