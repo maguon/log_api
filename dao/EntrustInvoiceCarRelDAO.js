@@ -18,7 +18,18 @@ function addEntrustInvoiceCarRel(params,callback){
     });
 }
 
+function deleteEntrustInvoiceCarRel(params,callback){
+    var query = " delete from entrust_invoice_car_rel where entrust_invoice_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.entrustInvoiceId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteEntrustInvoiceCarRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addEntrustInvoiceCarRel : addEntrustInvoiceCarRel
+    addEntrustInvoiceCarRel : addEntrustInvoiceCarRel,
+    deleteEntrustInvoiceCarRel : deleteEntrustInvoiceCarRel
 }

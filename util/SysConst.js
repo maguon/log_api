@@ -243,6 +243,11 @@ var OUTER_FLAG = {  //是否外协车
     yes : 1 //是
 };
 
+var INVOICE_STATUS  ={
+    not_completed : 1,  //未处理
+    completed : 2   //已处理
+};
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -280,7 +285,8 @@ module.exports = {
     SETTLE_STATUS : SETTLE_STATUS,
     REPAIR_TYPE : REPAIR_TYPE,
     TASK_FEE_STATUS : TASK_FEE_STATUS,
-    OUTER_FLAG : OUTER_FLAG
+    OUTER_FLAG : OUTER_FLAG,
+    INVOICE_STATUS : INVOICE_STATUS
 }
 
 

@@ -29,6 +29,10 @@ function getEntrustInvoice(params,callback) {
         paramsArray[i++] = params.entrustId;
         query = query + " and ei.entrust_id = ? ";
     }
+    if(params.invoiceStatus){
+        paramsArray[i++] = params.invoiceStatus;
+        query = query + " and ei.invoice_status = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -75,11 +79,22 @@ function updateEntrustInvoiceStatus(params,callback){
     });
 }
 
+function deleteEntrustInvoice(params,callback){
+    var query = " delete from entrust_invoice where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.entrustInvoiceId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteEntrustInvoice ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addEntrustInvoice : addEntrustInvoice,
     getEntrustInvoice : getEntrustInvoice,
     updateEntrustInvoiceCarCount : updateEntrustInvoiceCarCount,
     updateEntrustInvoice : updateEntrustInvoice,
-    updateEntrustInvoiceStatus : updateEntrustInvoiceStatus
+    updateEntrustInvoiceStatus : updateEntrustInvoiceStatus,
+    deleteEntrustInvoice : deleteEntrustInvoice
 }

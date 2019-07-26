@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var entrustInvoiceDAO = require('../dao/EntrustInvoiceDAO.js');
+var entrustInvoiceCarRelDAO = require('../dao/EntrustInvoiceCarRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -56,9 +57,60 @@ function updateEntrustInvoiceStatus(req,res,next){
     })
 }
 
+function removeEntrustInvoice(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        params.invoiceStatus = sysConst.INVOICE_STATUS.not_completed;
+        entrustInvoiceDAO.getEntrustInvoice(params,function(error,rows){
+            if (error) {
+                logger.error(' getEntrustInvoice ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0) {
+                    that();
+                }else{
+                    logger.warn(' getEntrustInvoice ' + 'failed');
+                    resUtil.resetFailedRes(res,"开票信息已处理，不能删除");
+                    return next();
+                }
+            }
+        })
+    }).seq(function(){
+        var that = this;
+        entrustInvoiceDAO.deleteEntrustInvoice(params,function(error,result){
+            if (error) {
+                logger.error(' removeEntrustInvoice ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' removeEntrustInvoice ' + 'success');
+                    that();
+                }else{
+                    logger.warn(' removeEntrustInvoice ' + 'failed');
+                    resUtil.resetFailedRes(res," 删除失败，请核对相关ID ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        entrustInvoiceCarRelDAO.deleteEntrustInvoiceCarRel(params,function(error,result){
+            if (error) {
+                logger.error(' deleteEntrustInvoiceCarRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' deleteEntrustInvoiceCarRel ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     queryEntrustInvoice : queryEntrustInvoice,
     updateEntrustInvoice : updateEntrustInvoice,
-    updateEntrustInvoiceStatus : updateEntrustInvoiceStatus
+    updateEntrustInvoiceStatus : updateEntrustInvoiceStatus,
+    removeEntrustInvoice : removeEntrustInvoice
 }

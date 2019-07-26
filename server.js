@@ -629,6 +629,7 @@ function createServer() {
     server.get('/api/entrustInvoice',entrustInvoice.queryEntrustInvoice);
     server.put({path:'/api/user/:userId/entrustInvoice/:entrustInvoiceId',contentType: 'application/json'} ,entrustInvoice.updateEntrustInvoice);
     server.put({path:'/api/user/:userId/entrustInvoice/:entrustInvoiceId/invoiceStatus/:invoiceStatus',contentType: 'application/json'} ,entrustInvoice.updateEntrustInvoiceStatus);
+    server.del('/api/user/:userId/entrustInvoice/:entrustInvoiceId' , entrustInvoice.removeEntrustInvoice);
 
     /**
      * EntrustInvoiceCarRel Module
