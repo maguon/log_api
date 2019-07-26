@@ -158,7 +158,7 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
                 fs.unlink(file.path, function() {});
                 failedCase=objArray.length-successedInsert;
                 logger.info(' uploadEntrustInvoiceCarRelFile ' + 'success');
-                resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+                resUtil.resetQueryRes(res, {entrustInvoiceId:entrustInvoiceId},null);
                 return next();
             })
         })
