@@ -53,6 +53,8 @@ var entrust = require('./bl/Entrust.js');
 var entrustContacts = require('./bl/EntrustContacts.js');
 var entrustCityRouteRel = require('./bl/EntrustCityRouteRel.js');
 var entrustMakeRel = require('./bl/EntrustMakeRel.js');
+var entrustInvoice = require('./bl/EntrustInvoice.js');
+var entrustInvoiceCarRel = require('./bl/EntrustInvoiceCarRel.js');
 var storage = require('./bl/Storage.js');
 var storageArea = require('./bl/StorageArea.js');
 var storageParking = require('./bl/StorageParking.js');
@@ -620,6 +622,18 @@ function createServer() {
     server.get('/api/entrustMakeRel',entrustMakeRel.queryEntrustMakeRel);
     server.post({path:'/api/user/:userId/entrustMakeRel',contentType: 'application/json'},entrustMakeRel.createEntrustMakeRel);
     server.del('/api/user/:userId/entrust/:entrustId/make/:makeId' , entrustMakeRel.removeEntrustMakeRel);
+
+    /**
+     * EntrustInvoice Module
+     */
+    server.get('/api/entrustInvoice',entrustInvoice.queryEntrustInvoice);
+    server.put({path:'/api/user/:userId/entrustInvoice/:entrustInvoiceId',contentType: 'application/json'} ,entrustInvoice.updateEntrustInvoice);
+    server.put({path:'/api/user/:userId/entrustInvoice/:entrustInvoiceId/invoiceStatus/:invoiceStatus',contentType: 'application/json'} ,entrustInvoice.updateEntrustInvoiceStatus);
+
+    /**
+     * EntrustInvoiceCarRel Module
+     */
+    server.post({path:'/api/user/:userId/entrustInvoiceCarRelFile',contentType: 'multipart/form-data'},entrustInvoiceCarRel.uploadEntrustInvoiceCarRelFile);
 
     /**
      * Storage Module

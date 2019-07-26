@@ -16637,6 +16637,208 @@
         }
       }
     },
+    "/entrustInvoice": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query entrustInvoice list",
+        "description": "query entrustInvoice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "entrustInvoiceId",
+            "in": "query",
+            "description": "entrustInvoice id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrustInvoice"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustInvoice id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrustInvoice/{entrustInvoiceId}": {
+      "put": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "update entrustInvoice",
+        "description": "update entrustInvoice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustInvoiceId",
+            "in": "path",
+            "description": "entrustInvoice id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustInvoice",
+            "in": "body",
+            "description": "entrustInvoice info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entrustInvoice"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustInvoice id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrustInvoice/{entrustInvoiceId}/invoiceStatus/{invoiceStatus}": {
+      "put": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "update entrustInvoice status",
+        "description": "update entrustInvoice status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "entrustInvoiceId",
+            "in": "path",
+            "description": "entrustInvoice id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "invoiceStatus",
+            "in": "path",
+            "description": "invoice status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustInvoice id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/entrustInvoiceCarRelFile": {
+      "post": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "user upload entrustInvoiceCarRelFile ",
+        "description": "user upload entrustInvoiceCarRelFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid entrustInvoiceCarRel id"
+          }
+        }
+      }
+    },
     "/storage": {
       "get": {
         "tags": [
@@ -35271,6 +35473,24 @@
       },
       "xml": {
         "name": "entrustMakeRel"
+      }
+    },
+    "entrustInvoice": {
+      "type": "object",
+      "properties": {
+
+        "updatePrice": {
+          "type": "integer"
+        },
+        "actualPrice": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "entrustInvoice"
       }
     },
     "storage": {
