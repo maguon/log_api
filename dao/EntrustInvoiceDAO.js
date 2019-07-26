@@ -7,11 +7,9 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('EntrustInvoiceDAO.js');
 
 function addEntrustInvoice(params,callback){
-    var query = " insert into entrust_invoice (entrust_id,car_count,plan_price) values ( ? , ? , ? ) ";
+    var query = " insert into entrust_invoice (entrust_id) values ( ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.entrustId;
-    paramsArray[i++]=params.carCount;
-    paramsArray[i++]=params.planPrice;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addEntrustInvoice ');
         return callback(error,rows);
@@ -38,6 +36,17 @@ function getEntrustInvoice(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getEntrustInvoice ');
+        return callback(error,rows);
+    });
+}
+
+function updateEntrustInvoiceCarCount(params,callback){
+    var query = " update entrust_invoice ei inner join (select entrust_invoice_id,count(car_id) car_count,sum(price) price " +
+        " from entrust_invoice_car_rel where entrust_invoice_id = "+params.entrustInvoiceId+") eicr on ei.id = eicr.entrust_invoice_id " +
+        " set ei.car_count = eicr.car_count , ei.plan_price = eicr.price where eicr.entrust_invoice_id = "+params.entrustInvoiceId;
+    var paramsArray=[],i=0;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateEntrustInvoiceCarCount ');
         return callback(error,rows);
     });
 }
@@ -70,6 +79,7 @@ function updateEntrustInvoiceStatus(params,callback){
 module.exports ={
     addEntrustInvoice : addEntrustInvoice,
     getEntrustInvoice : getEntrustInvoice,
+    updateEntrustInvoiceCarCount : updateEntrustInvoiceCarCount,
     updateEntrustInvoice : updateEntrustInvoice,
     updateEntrustInvoiceStatus : updateEntrustInvoiceStatus
 }
