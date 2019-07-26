@@ -680,3 +680,37 @@ CREATE TABLE `drive_exceed_oil_price` (
   `urea_single_price` decimal(10,2) DEFAULT '0.00' COMMENT '尿素每升扣款单价',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-07-26 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for entrust_invoice
+-- ----------------------------
+DROP TABLE IF EXISTS `entrust_invoice`;
+CREATE TABLE `entrust_invoice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entrust_id` int(10) DEFAULT '0' COMMENT '委托方ID',
+  `car_count` int(10) DEFAULT '0' COMMENT '商品车数量',
+  `plan_price` decimal(10,2) DEFAULT '0.00' COMMENT '预计金额',
+  `update_price` decimal(10,2) DEFAULT '0.00' COMMENT '调整金额',
+  `actual_price` decimal(10,2) DEFAULT '0.00' COMMENT '实际金额',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `invoice_status` tinyint(1) DEFAULT '1' COMMENT '处理状态(1-未处理,2-已处理)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for entrust_invoice_car_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `entrust_invoice_car_rel`;
+CREATE TABLE `entrust_invoice_car_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entrust_invoice_id` int(10) DEFAULT '0' COMMENT '委托方ID',
+  `car_id` int(10) DEFAULT '0' COMMENT '商品车ID',
+  `price` decimal(10,2) DEFAULT '0.00' COMMENT '金额',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
