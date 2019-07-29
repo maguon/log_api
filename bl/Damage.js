@@ -435,7 +435,7 @@ function uploadDamageFile(req,res,next){
 
 function getDamageCsv(req,res,next){
     var csvString = "";
-    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+
+    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+"指令时间" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+
         "司机" + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "个人承担" + ','+ "公司承担" + ','+
         "处理结束时间" + ','+"处理状态"+ ','+
     "理赔编号" + ','+ "生成日期" + ','+ "保险公司" + ','+ "经办人"+ ','+ "待赔金额" + ','+ "定损金额" + ','+ "保险赔付";
@@ -452,6 +452,11 @@ function getDamageCsv(req,res,next){
                 parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
                 parkObj.vin = rows[i].vin;
                 parkObj.makeName = rows[i].make_name;
+                if(rows[i].order_date==null){
+                    parkObj.orderDate = "";
+                }else{
+                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                }
                 if(rows[i].damage_explain==null){
                     parkObj.damageExplain = "";
                 }else{
@@ -595,8 +600,8 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.insureActual = rows[i].insure_actual;
                 }
-                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.damageExplain+","+
-                    parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","+
+                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+parkObj.orderDate+","+
+                    parkObj.damageExplain+","+parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","+
                     parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.underCost+","+
                     parkObj.companyCost+","+parkObj.checkEndDate+","+parkObj.damageStatus+","+
                 parkObj.damageInsureId+","+parkObj.insureCreatedOn+","+parkObj.insureName+","+

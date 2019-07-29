@@ -41,7 +41,7 @@ function addUploadDamage(params,callback){
 
 function getDamage(params,callback) {
     var query = " select da.*,u.real_name as declare_user_name,u.type,u.mobile,c.vin,c.make_id,c.make_name,c.ship_name," +
-        " c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name," +
+        " c.order_date,c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name," +
         " dc.under_user_id,dc.under_user_name,u2.type as under_user_type,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name," +
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id," +
         " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date " +
@@ -181,7 +181,7 @@ function getDamageBase(params,callback) {
 
 function getDamageInsureRel(params,callback) {
     var query = " select da.*,u.real_name as declare_user_name,u.type,u.mobile,c.vin,c.make_id,c.make_name,c.ship_name," +
-        " c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name," +
+        " c.order_date,c.receive_id,r.short_name as re_short_name,c.entrust_id,e.short_name as en_short_name," +
         " dc.under_user_id,dc.under_user_name,u2.type as under_user_type,dc.damage_type,dc.damage_link_type,dc.refund_user_id,dc.refund_user_name," +
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id," +
         " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date, " +
