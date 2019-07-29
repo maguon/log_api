@@ -9,8 +9,7 @@ var logger = serverLogger.createLogger('DpRouteTaskFeeDAO.js');
 function addDpRouteTaskFee(params,callback){
     var query = " insert into dp_route_task_fee (drive_id,drive_name,truck_id,truck_num,dp_route_task_id," +
         " day_count,single_price,total_price,car_day_count,car_single_price,car_total_price,car_oil_fee," +
-        " cash_etc,cash_repair,cash_peccancy,cash_oil,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " other_fee,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
@@ -24,10 +23,7 @@ function addDpRouteTaskFee(params,callback){
     paramsArray[i++]=params.carSinglePrice;
     paramsArray[i++]=params.carTotalPrice;
     paramsArray[i++]=params.carOilFee;
-    paramsArray[i++]=params.cashEtc;
-    paramsArray[i++]=params.cashRepair;
-    paramsArray[i++]=params.cashPeccancy;
-    paramsArray[i++]=params.cashOil;
+    paramsArray[i++]=params.otherFee;
     paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTaskFee ');
@@ -123,7 +119,7 @@ function getDpRouteTaskFeeCount(params,callback) {
 function updateDpRouteTaskFee(params,callback){
     var query = " update dp_route_task_fee set day_count = ? , single_price = ? , total_price = ? , " +
         " car_day_count = ? , car_single_price = ? , car_total_price = ? , car_oil_fee = ? , " +
-        " cash_etc = ? , cash_repair = ? , cash_peccancy = ? , cash_oil = ? , remark = ? where id = ? ";
+        " other_fee = ? , remark = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dayCount;
     paramsArray[i++]=params.singlePrice;
@@ -132,10 +128,7 @@ function updateDpRouteTaskFee(params,callback){
     paramsArray[i++]=params.carSinglePrice;
     paramsArray[i++]=params.carTotalPrice;
     paramsArray[i++]=params.carOilFee;
-    paramsArray[i++]=params.cashEtc;
-    paramsArray[i++]=params.cashRepair;
-    paramsArray[i++]=params.cashPeccancy;
-    paramsArray[i++]=params.cashOil;
+    paramsArray[i++]=params.otherFee;
     paramsArray[i++]=params.remark;
     paramsArray[i++] = params.dpRouteTaskFeeId;
     db.dbQuery(query,paramsArray,function(error,rows){

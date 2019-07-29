@@ -36634,16 +36634,7 @@
         "carOilFee": {
           "type": "integer"
         },
-        "cashEtc": {
-          "type": "integer"
-        },
-        "cashRepair": {
-          "type": "integer"
-        },
-        "cashPeccancy": {
-          "type": "integer"
-        },
-        "cashOil": {
+        "otherFee": {
           "type": "integer"
         },
         "remark": {

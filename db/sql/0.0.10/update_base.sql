@@ -735,3 +735,8 @@ ADD COLUMN `urea_single_price`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '尿素�
 -- ----------------------------
 ALTER TABLE `dp_route_task`
 ADD COLUMN `remark`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注' AFTER `up_distance_count`;
+-- ----------------------------
+-- 2019-07-29 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_fee`
+ADD COLUMN `other_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '其他费用' AFTER `cash_oil`;
