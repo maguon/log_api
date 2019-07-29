@@ -740,3 +740,10 @@ ADD COLUMN `remark`  varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_
 -- ----------------------------
 ALTER TABLE `dp_route_task_fee`
 ADD COLUMN `other_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '其他费用' AFTER `cash_oil`;
+-- ----------------------------
+-- 2019-07-29 更新
+-- ----------------------------
+ALTER TABLE `truck_etc`
+ADD COLUMN `number`  varchar(50) NULL COMMENT '编号' AFTER `id`,
+ADD COLUMN `payment_type`  tinyint(1) NULL DEFAULT 1 COMMENT '是否打款(1-否 ,2-是)' AFTER `upload_id`,
+ADD COLUMN `payment_status`  tinyint(1) NULL DEFAULT 0 COMMENT '打款状态(-1-驳回 ,0-未打款,1-已打款)' AFTER `payment_type`;

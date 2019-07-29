@@ -7468,6 +7468,22 @@
 
           },
           {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -34726,6 +34742,9 @@
       "type": "object",
       "properties": {
 
+        "number": {
+          "type": "string"
+        },
         "driveId": {
           "type": "integer"
         },
@@ -34746,6 +34765,9 @@
         },
         "remark": {
           "type": "string"
+        },
+        "paymentType": {
+          "type": "integer"
         }
       },
       "xml": {
