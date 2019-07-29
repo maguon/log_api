@@ -155,7 +155,7 @@ function getDpRouteTaskFeeCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' +"货车牌号" + ',' + "商品车加油费" + ',' + "货车停留天数" + ','+ "货车停车单价" + ','+"货车停车费" + ','+
         "商品车停留天数"+ ','+ "商品车停车单价" + ','+ "商品车停车费"+ ','+ "申请时间" + ','+
-        "银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+"状态";
+        "银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+"状态"+ ','+"备注";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -237,10 +237,15 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }else{
                     parkObj.status = "驳回";
                 }
+                if(rows[i].remark==null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.carOilFee+","+parkObj.dayCount+","+
                     parkObj.singlePrice+","+parkObj.totalPrice+","+parkObj.carDayCount+","+parkObj.carSinglePrice+","+
                     parkObj.carTotalPrice+","+parkObj.createdOn+","+parkObj.bankNumber+","+parkObj.bankName+","+
-                    parkObj.bankUserName+","+parkObj.status+ '\r\n';
+                    parkObj.bankUserName+","+parkObj.status+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
