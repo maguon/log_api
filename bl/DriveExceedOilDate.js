@@ -107,7 +107,8 @@ function getDriveExceedOilDateCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属类型" + ','+"所属公司" + ','+ "计划用油量" + ','+
         "实际用油量" + ','+"计划尿素量"+','+ "实际尿素量" + ','+ "结余油量" + ','+ "结余尿素量" + ','+
-        "本月油补" + ','+"本月尿素补" + ','+ "超油量" + ','+ "超尿素量" + ','+ "超量金额" + ','+ "处理状态";
+        "本月油补" + ','+"本月尿素补" + ','+ "超油量" + ','+ "超尿素量" + ','+"重载油耗里程" + ','+ "空载油耗里程" + ','+
+        "超量金额" + ','+ "处理状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -212,6 +213,16 @@ function getDriveExceedOilDateCsv(req,res,next){
                 }else{
                     parkObj.exceedUrea = rows[i].exceed_urea;
                 }
+                if(rows[i].load_oil_distance == null){
+                    parkObj.loadOilDistance = "";
+                }else{
+                    parkObj.loadOilDistance = rows[i].load_oil_distance;
+                }
+                if(rows[i].no_load_oil_distance == null){
+                    parkObj.noLoadOilDistance = "";
+                }else{
+                    parkObj.noLoadOilDistance = rows[i].no_load_oil_distance;
+                }
                 if(rows[i].actual_money == null){
                     parkObj.actualMoney = "";
                 }else{
@@ -225,9 +236,10 @@ function getDriveExceedOilDateCsv(req,res,next){
                     parkObj.settleStatus = "未处理";
                 }
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+
-                    parkObj.companyName+","+ parkObj.planOilTotal+","+parkObj.actualOilTotal +","+parkObj.planUreaTotal+","+parkObj.actualUreaTotal+","+
-                    parkObj.surplusOil+","+parkObj.surplusUrea +","+parkObj.subsidyOil+","+parkObj.subsidyUrea+","+
-                    parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.actualMoney+","+parkObj.settleStatus+ '\r\n';
+                    parkObj.companyName+","+ parkObj.planOilTotal+","+parkObj.actualOilTotal +","+parkObj.planUreaTotal+","+
+                    parkObj.actualUreaTotal+","+parkObj.surplusOil+","+parkObj.surplusUrea +","+parkObj.subsidyOil+","+
+                    parkObj.subsidyUrea+","+parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.loadOilDistance+","+
+                    parkObj.noLoadOilDistance +","+parkObj.actualMoney+","+parkObj.settleStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
