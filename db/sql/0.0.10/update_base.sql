@@ -716,3 +716,9 @@ CREATE TABLE `entrust_invoice_car_rel` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-07-29 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_price`
+ADD COLUMN `surplus_oil_single_price`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '结油每升扣款单价' AFTER `urea_single_price`,
+ADD COLUMN `surplus_urea_single_price`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '结尿素每升扣款单价' AFTER `surplus_oil_single_price`;

@@ -35291,6 +35291,12 @@
         },
         "ureaSinglePrice": {
           "type": "integer"
+        },
+        "surplusOilSinglePrice": {
+          "type": "integer"
+        },
+        "surplusUreaSinglePrice": {
+          "type": "integer"
         }
       },
       "xml": {
