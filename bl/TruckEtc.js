@@ -66,6 +66,7 @@ function uploadTruckEtcFile(req,res,next){
             }).seq(function(){
                 if(parkObj.truckId>0){
                     var subParams ={
+                        number : objArray[i].编号,
                         truckId : parkObj.truckId,
                         truckNum : objArray[i].车牌号,
                         driveId : parkObj.driveId,
