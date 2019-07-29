@@ -70,7 +70,7 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
                     })
                 }).seq(function(){
                     var that = this;
-                    if(params.entrustId==objArray[i].entrustId){
+                    if(params.entrustId==objArray[i].entrustId&&parkObj.carId>0){
                         var subParams ={
                             vin : objArray[i].vin,
                             entrustId : objArray[i].entrustId,
@@ -108,7 +108,7 @@ function uploadEntrustInvoiceCarRelFile(req,res,next){
                     }
 
                 }).seq(function(){
-                    if(params.entrustId==objArray[i].entrustId){
+                    if(params.entrustId==objArray[i].entrustId&&parkObj.carId>0){
                         var subParams ={
                             entrustInvoiceId : entrustInvoiceId,
                             carId : parkObj.carId,
