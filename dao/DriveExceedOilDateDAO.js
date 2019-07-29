@@ -9,8 +9,8 @@ var logger = serverLogger.createLogger('DriveExceedOilDateDAO.js');
 function addDriveExceedOilDate(params,callback){
     var query = " insert into drive_exceed_oil_date (month_date_id,drive_id,truck_id,plan_oil_total,plan_urea_total, " +
         " actual_oil_total,actual_urea_total,surplus_oil,surplus_urea,subsidy_oil,subsidy_urea,exceed_oil,exceed_urea," +
-        " actual_money,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " load_oil_distance,no_load_oil_distance,oil_single_price,urea_single_price,actual_money,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.monthDateId;
     paramsArray[i++]=params.driveId;
@@ -25,6 +25,10 @@ function addDriveExceedOilDate(params,callback){
     paramsArray[i++]=params.subsidyUrea;
     paramsArray[i++]=params.exceedOil;
     paramsArray[i++]=params.exceedUrea;
+    paramsArray[i++]=params.loadOilDistance;
+    paramsArray[i++]=params.noLoadOilDistance;
+    paramsArray[i++]=params.oilSinglePrice;
+    paramsArray[i++]=params.ureaSinglePrice;
     paramsArray[i++]=params.actualMoney;
     paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -154,6 +158,7 @@ function getDriveExceedOilMonth(params,callback) {
 function updateDriveExceedOilDate(params,callback){
     var query = " update drive_exceed_oil_date set plan_oil_total = ? , plan_urea_total = ? , actual_oil_total = ? , actual_urea_total = ? , " +
         " surplus_oil = ? , surplus_urea = ? , subsidy_oil = ? , subsidy_urea = ? , exceed_oil = ? , exceed_urea = ? , " +
+        " load_oil_distance = ? , no_load_oil_distance = ? , oil_single_price = ? , urea_single_price = ? , " +
         " actual_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.planOilTotal;
@@ -166,6 +171,10 @@ function updateDriveExceedOilDate(params,callback){
     paramsArray[i++]=params.subsidyUrea;
     paramsArray[i++]=params.exceedOil;
     paramsArray[i++]=params.exceedUrea;
+    paramsArray[i++]=params.loadOilDistance;
+    paramsArray[i++]=params.noLoadOilDistance;
+    paramsArray[i++]=params.oilSinglePrice;
+    paramsArray[i++]=params.ureaSinglePrice;
     paramsArray[i++]=params.actualMoney;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.exceedOilDateId;

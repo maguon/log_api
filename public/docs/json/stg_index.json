@@ -35166,6 +35166,18 @@
         "exceedUrea": {
           "type": "integer"
         },
+        "loadOilDistance": {
+          "type": "integer"
+        },
+        "noLoadOilDistance": {
+          "type": "integer"
+        },
+        "oilSinglePrice": {
+          "type": "integer"
+        },
+        "ureaSinglePrice": {
+          "type": "integer"
+        },
         "actualMoney": {
           "type": "integer"
         },

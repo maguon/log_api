@@ -722,3 +722,11 @@ CREATE TABLE `entrust_invoice_car_rel` (
 ALTER TABLE `drive_exceed_oil_price`
 ADD COLUMN `surplus_oil_single_price`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '结油每升扣款单价' AFTER `urea_single_price`,
 ADD COLUMN `surplus_urea_single_price`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '结尿素每升扣款单价' AFTER `surplus_oil_single_price`;
+-- ----------------------------
+-- 2019-07-29 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_date`
+ADD COLUMN `load_oil_distance`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '重载油耗公里' AFTER `exceed_urea`,
+ADD COLUMN `no_load_oil_distance`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '空载油耗公里' AFTER `load_oil_distance`,
+ADD COLUMN `oil_single_price`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '油每升扣款单价' AFTER `no_load_oil_distance`,
+ADD COLUMN `urea_single_price`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '尿素每升扣款单价' AFTER `oil_single_price`;
