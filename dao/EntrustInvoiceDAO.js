@@ -33,6 +33,7 @@ function getEntrustInvoice(params,callback) {
         paramsArray[i++] = params.invoiceStatus;
         query = query + " and ei.invoice_status = ? ";
     }
+    query = query + '  order by ei.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
