@@ -7772,6 +7772,58 @@
         }
       }
     },
+    "/user/{userId}/truckEtc/{truckEtcId}/paymentStatus/{paymentStatus}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update payment status",
+        "description": "update payment status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckEtcId",
+            "in": "path",
+            "description": "truckEtc id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "path",
+            "description": "payment status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
     "/truckDepreciation": {
       "get": {
         "tags": [

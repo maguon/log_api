@@ -363,6 +363,7 @@ function createServer() {
     server.get('/api/truckEtc.csv' ,truckEtc.getTruckEtcCsv);
     server.post({path:'/api/user/:userId/truckEtc',contentType: 'application/json'},truckEtc.createTruckEtc);
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
+    server.put({path:'/api/user/:userId/truckEtc/:truckEtcId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,truckEtc.updatePaymentStatus);
 
     /**
      * TruckDepreciation Module

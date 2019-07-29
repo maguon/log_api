@@ -115,9 +115,21 @@ function getTruckEtcFeeCount(params,callback) {
     });
 }
 
+function updatePaymentStatus(params,callback){
+    var query = " update truck_etc set payment_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.paymentStatus;
+    paramsArray[i]=params.truckEtcId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updatePaymentStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addUploadTruckEtc : addUploadTruckEtc,
     getTruckEtc : getTruckEtc,
-    getTruckEtcFeeCount : getTruckEtcFeeCount
+    getTruckEtcFeeCount : getTruckEtcFeeCount,
+    updatePaymentStatus : updatePaymentStatus
 }

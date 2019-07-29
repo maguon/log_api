@@ -137,6 +137,20 @@ function queryTruckEtcFeeCount(req,res,next){
     })
 }
 
+function updatePaymentStatus(req,res,next){
+    var params = req.params ;
+    truckEtcDAO.updatePaymentStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updatePaymentStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updatePaymentStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getTruckEtcCsv(req,res,next){
     var csvString = "";
     var header = "编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "通行费" + ','+ "交易时间"+ ','+ "创建时间"+ ',' + "描述";
@@ -201,5 +215,6 @@ module.exports = {
     uploadTruckEtcFile : uploadTruckEtcFile,
     queryTruckEtc : queryTruckEtc,
     queryTruckEtcFeeCount : queryTruckEtcFeeCount,
+    updatePaymentStatus : updatePaymentStatus,
     getTruckEtcCsv : getTruckEtcCsv
 }
