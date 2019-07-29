@@ -44,6 +44,7 @@ function getDriveExceedOilDate(params,callback) {
         " deodm.id,deodm.month_date_id,deodm.plan_oil_total,deodm.plan_urea_total, " +
         " deodm.actual_oil_total,deodm.actual_urea_total,deodm.surplus_oil,deodm.surplus_urea, " +
         " deodm.subsidy_oil, deodm.subsidy_urea,deodm.exceed_oil,deodm.exceed_urea, " +
+        " deodm.load_oil_distance,deodm.no_load_oil_distance,deodm.oil_single_price,deodm.urea_single_price, " +
         " deodm.actual_money,deodm.check_status,deodm.settle_status,deodm.remark " +
         " from(select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,tb.brand_name,t.operate_type,t.company_id,c.company_name, " +
         " sum(drtor.total_oil) plan_oil,sum(drtor.total_urea) plan_urea " +
@@ -64,7 +65,9 @@ function getDriveExceedOilDate(params,callback) {
         " on dprm.drive_id = deorm.drive_id and dprm.truck_id = deorm.truck_id " +
         " left join (select deod.id,deod.drive_id,deod.truck_id,deod.month_date_id,deod.plan_oil_total,deod.plan_urea_total," +
         " deod.actual_oil_total,deod.actual_urea_total,deod.surplus_oil,deod.surplus_urea,deod.subsidy_oil, " +
-        " deod.subsidy_urea,deod.exceed_oil,deod.exceed_urea,deod.actual_money,deod.check_status,deod.settle_status,deod.remark " +
+        " deod.subsidy_urea,deod.exceed_oil,deod.exceed_urea,deod.load_oil_distance,deod.no_load_oil_distance," +
+        " deod.oil_single_price,deod.urea_single_price," +
+        " deod.actual_money,deod.check_status,deod.settle_status,deod.remark " +
         " from drive_exceed_oil_date deod where deod.month_date_id = "+params.yMonth+
         " group by deod.drive_id ,deod.truck_id) deodm on dprm.drive_id = deodm.drive_id and dprm.truck_id = deodm.truck_id "+
         " where dprm.drive_id is not null ";
