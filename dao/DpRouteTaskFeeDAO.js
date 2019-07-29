@@ -36,9 +36,10 @@ function addDpRouteTaskFee(params,callback){
 }
 
 function getDpRouteTaskFee(params,callback) {
-    var query = " select dprtf.*,d.bank_number,d.bank_name,d.bank_user_name " +
+    var query = " select dprtf.*,d.bank_number,d.bank_name,d.bank_user_name,dpr.route_start,dpr.route_end  " +
         " from dp_route_task_fee dprtf " +
         " left join drive_info d on dprtf.drive_id = d.id " +
+        " left join dp_route_task dpr on dprtf.dp_route_task_id = dpr.id " +
         " where dprtf.id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskFeeId){
