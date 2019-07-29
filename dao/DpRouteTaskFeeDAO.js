@@ -45,6 +45,10 @@ function getDpRouteTaskFee(params,callback) {
         paramsArray[i++] = params.dpRouteTaskFeeId;
         query = query + " and dprtf.id = ? ";
     }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dprtf.dp_route_task_id = ? ";
+    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and dprtf.drive_id = ? ";

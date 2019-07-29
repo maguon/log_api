@@ -23170,6 +23170,59 @@
         }
       }
     },
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteReverseRemark": {
+      "put": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "update dpRouteReverseRemark",
+        "description": "update dpRouteReverseRemark",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "path",
+            "description": "dpRouteTask id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteReverseRemark",
+            "in": "body",
+            "description": "dpRouteReverseRemark info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dpRouteReverseRemark"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask/{dpRouteTaskId}": {
       "delete": {
         "tags": [
@@ -26642,6 +26695,14 @@
             "name": "dpRouteTaskFeeId",
             "in": "query",
             "description": "dpRouteTaskFee id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "dpRouteTaskId",
+            "in": "query",
+            "description": "dpRouteTask id",
             "required": false,
             "type": "integer"
 
@@ -36132,6 +36193,18 @@
       },
       "xml": {
         "name": "dpRouteReverseFlag"
+      }
+    },
+    "dpRouteReverseRemark": {
+      "type": "object",
+      "properties": {
+
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "dpRouteReverseRemark"
       }
     },
     "dpRouteTaskBatch": {

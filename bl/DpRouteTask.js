@@ -964,7 +964,7 @@ function getDpRouteTaskCsv(req,res,next){
     var csvString = "";
     var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "司机" + ','+ "身份证号" + ','+
         "货车牌号" + ','+ "货车电话" + ','+ "计划装车数"+ ','+ "实际装车数" + ','+ "计划执行时间" + ','+ "完成时间"
-        + ','+ "调度人" + ','+ "状态" ;
+        + ','+ "调度人" + ','+ "状态"+ ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -1021,9 +1021,15 @@ function getDpRouteTaskCsv(req,res,next){
                 }else{
                     parkObj.taskStatus = "全部完成";
                 }
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
                 csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.driveName+","+
                     parkObj.idNumber+","+parkObj.truckNum+","+parkObj.truckTel+","+
-                    parkObj.planCount+"," +parkObj.realCount+"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+"," +parkObj.taskStatus+ '\r\n';
+                    parkObj.planCount+"," +parkObj.realCount+"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+","+
+                    parkObj.taskStatus+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
@@ -1363,6 +1369,20 @@ function updateDpRouteReverseFlag (req,res,next){
     })
 }
 
+function updateDpRouteTaskRemark (req,res,next){
+    var params = req.params;
+    dpRouteTaskDAO.updateDpRouteTaskRemark(params,function(error,result){
+        if (error) {
+            logger.error(' updateDpRouteTaskRemark ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDpRouteTaskRemark ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDriveCost(req,res,next){
     var params = req.params ;
     dpRouteTaskDAO.getDriveCost(params,function(error,result){
@@ -1537,6 +1557,7 @@ module.exports = {
     updateDpRouteLoadFlag : updateDpRouteLoadFlag,
     updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
     updateDpRouteReverseFlag : updateDpRouteReverseFlag,
+    updateDpRouteTaskRemark : updateDpRouteTaskRemark,
     queryDriveCost : queryDriveCost,
     getDriveCostCsv : getDriveCostCsv
 }

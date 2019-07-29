@@ -742,6 +742,18 @@ function updateDistanceRecordCount(params,callback){
         return callback(error,rows);
     });
 }
+
+function updateDpRouteTaskRemark(params,callback){
+    var query = " update dp_route_task set remark = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDpRouteTaskRemark ');
+        return callback(error,rows);
+    });
+}
+
 //最新司机成本
 function getDriveCost(params,callback) {
     var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num, " +
@@ -845,5 +857,6 @@ module.exports ={
     updateDpRouteOilLoadFlag : updateDpRouteOilLoadFlag,
     updateDpRouteReverseFlag : updateDpRouteReverseFlag,
     updateDistanceRecordCount : updateDistanceRecordCount,
+    updateDpRouteTaskRemark : updateDpRouteTaskRemark,
     getDriveCost : getDriveCost
 }
