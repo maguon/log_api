@@ -54,7 +54,8 @@ function addTruckTrailer(params,callback){
 }
 
 function getTruckFirst(params,callback) {
-    var query = " select h.*,t.id as trail_id,t.truck_num as trail_num,t.number as trail_number," +
+    var query = " select h.*,t.id as trail_id,t.truck_num as trail_num,t.number as trail_number, " +
+        " t.driving_date as trail_driving_date,t.license_date as trail_license_date, " +
         " b.brand_name,b.load_distance_oil,b.no_load_distance_oil,b.urea,b.load_reverse_oil,b.no_load_reverse_oil," +
         " d.drive_name,u.mobile,d1.drive_name as vice_drive_name,c.company_name " +
         " from truck_info h left join truck_info t on h.rel_id = t.id " +
@@ -134,6 +135,7 @@ function getTruckFirst(params,callback) {
 
 function getTruckTrailer(params,callback) {
     var query = " select h.*,t.id as first_id,t.truck_num as first_num, " +
+        " t.driving_date as first_driving_date,t.license_date as first_license_date, " +
         " d.id as driveId,d.drive_name,u.mobile,c.company_name,b.brand_name " +
         " from truck_info h left join truck_info t on h.id = t.rel_id " +
         " left join truck_brand b on h.brand_id = b.id  " +

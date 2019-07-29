@@ -929,7 +929,9 @@ function getTruckOperateCsv(req,res,next){
 
 function getTruckFirstCsv(req,res,next){
     var csvString = "";
-    var header = "货车牌号" + ',' + "品牌" + ',' + "关联挂车号" + ',' + "挂车货位" + ','+ "联系电话" + ','+ "主驾司机"+ ','+ "副驾司机" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态";
+    var header = "货车牌号" + ',' + "品牌" + ',' + "关联挂车号" + ',' + "挂车货位" + ','+ "联系电话" + ','+ "主驾司机"+ ','+ "副驾司机" + ','+
+        "所属类型" + ','+ "所属公司" + ','+ "货车状态"+ ',' +
+        "头车行驶证检验日期" + ','+ "头车营运证检验日期" + ','+ "挂车行驶证检验日期"+ ','+ "挂车营运证检验日期";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -981,8 +983,29 @@ function getTruckFirstCsv(req,res,next){
                 }else{
                     parkObj.truckStatus = "停用";
                 }
-                csvString = csvString+parkObj.truckNum+","+parkObj.brandName+","+parkObj.trailNum+"," +parkObj.trailNumber+"," +parkObj.truckTel+","
-                    +parkObj.driveName+"," +parkObj.viceDriveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckStatus+ '\r\n';
+                if(rows[i].driving_date == null){
+                    parkObj.drivingDate = "";
+                }else{
+                    parkObj.drivingDate = new Date(rows[i].driving_date).toLocaleDateString();
+                }
+                if(rows[i].license_date == null){
+                    parkObj.licenseDate = "";
+                }else{
+                    parkObj.licenseDate = new Date(rows[i].license_date).toLocaleDateString();
+                }
+                if(rows[i].trail_driving_date == null){
+                    parkObj.trailDrivingDate = "";
+                }else{
+                    parkObj.trailDrivingDate = new Date(rows[i].trail_driving_date).toLocaleDateString();
+                }
+                if(rows[i].trail_license_date == null){
+                    parkObj.trailLicenseDate = "";
+                }else{
+                    parkObj.trailLicenseDate = new Date(rows[i].trail_license_date).toLocaleDateString();
+                }
+                csvString = csvString+parkObj.truckNum+","+parkObj.brandName+","+parkObj.trailNum+"," +parkObj.trailNumber+"," +parkObj.truckTel+","+
+                    parkObj.driveName+"," +parkObj.viceDriveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckStatus+","+
+                parkObj.drivingDate+","+parkObj.licenseDate+","+parkObj.trailDrivingDate+","+parkObj.trailLicenseDate+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
@@ -998,7 +1021,8 @@ function getTruckFirstCsv(req,res,next){
 
 function getTruckTrailerCsv(req,res,next){
     var csvString = "";
-    var header = "挂车牌号" + ',' + "挂车货位" + ',' + "关联头车号" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态";
+    var header = "挂车牌号" + ',' + "挂车货位" + ',' + "关联头车号" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态"+ ','+
+    "挂车行驶证检验日期" + ','+ "挂车营运证检验日期" + ','+ "头车行驶证检验日期"+ ','+ "头车营运证检验日期";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -1030,7 +1054,29 @@ function getTruckTrailerCsv(req,res,next){
                 }else{
                     parkObj.truckStatus = "停用";
                 }
-                csvString = csvString+parkObj.truckNum+"," +parkObj.number+"," +parkObj.firstNum+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckStatus+ '\r\n';
+                if(rows[i].driving_date == null){
+                    parkObj.drivingDate = "";
+                }else{
+                    parkObj.drivingDate = new Date(rows[i].driving_date).toLocaleDateString();
+                }
+                if(rows[i].license_date == null){
+                    parkObj.licenseDate = "";
+                }else{
+                    parkObj.licenseDate = new Date(rows[i].license_date).toLocaleDateString();
+                }
+                if(rows[i].first_driving_date == null){
+                    parkObj.firstDrivingDate = "";
+                }else{
+                    parkObj.firstDrivingDate = new Date(rows[i].first_driving_date).toLocaleDateString();
+                }
+                if(rows[i].first_license_date == null){
+                    parkObj.firstLicenseDate = "";
+                }else{
+                    parkObj.firstLicenseDate = new Date(rows[i].first_license_date).toLocaleDateString();
+                }
+                csvString = csvString+parkObj.truckNum+"," +parkObj.number+"," +parkObj.firstNum+","+parkObj.operateType+","+
+                    parkObj.companyName+","+parkObj.truckStatus+","+
+                parkObj.drivingDate+","+parkObj.licenseDate+","+parkObj.firstDrivingDate+","+parkObj.firstLicenseDate+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
