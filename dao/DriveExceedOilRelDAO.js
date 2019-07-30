@@ -72,6 +72,14 @@ function getDriveExceedOilRel(params,callback) {
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and deor.created_on <= ? ";
     }
+    if(params.paymentType){
+        paramsArray[i++] = params.paymentType;
+        query = query + " and deor.payment_type = ? ";
+    }
+    if(params.paymentStatus){
+        paramsArray[i++] = params.paymentStatus;
+        query = query + " and deor.payment_status = ? ";
+    }
     query = query + '  order by deor.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -113,6 +121,14 @@ function getDriveExceedOilRelCount(params,callback) {
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and deor.created_on <= ? ";
     }
+    if(params.paymentType){
+        paramsArray[i++] = params.paymentType;
+        query = query + " and deor.payment_type = ? ";
+    }
+    if(params.paymentStatus){
+        paramsArray[i++] = params.paymentStatus;
+        query = query + " and deor.payment_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveExceedOilRelCount ');
         return callback(error,rows);
@@ -141,6 +157,17 @@ function updateDriveExceedOilRel(params,callback){
     });
 }
 
+function updatePaymentStatus(params,callback){
+    var query = " update drive_exceed_oil_rel set payment_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.paymentStatus;
+    paramsArray[i]=params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updatePaymentStatus ');
+        return callback(error,rows);
+    });
+}
+
 function deleteDriveExceedOilRel(params,callback){
     var query = " delete from drive_exceed_oil_rel where id = ? ";
     var paramsArray=[],i=0;
@@ -157,5 +184,6 @@ module.exports ={
     getDriveExceedOilRel : getDriveExceedOilRel,
     getDriveExceedOilRelCount : getDriveExceedOilRelCount,
     updateDriveExceedOilRel : updateDriveExceedOilRel,
+    updatePaymentStatus : updatePaymentStatus,
     deleteDriveExceedOilRel : deleteDriveExceedOilRel
 }

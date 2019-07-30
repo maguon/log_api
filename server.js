@@ -506,6 +506,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveExceedOilRel',contentType: 'application/json'},driveExceedOilRel.createDriveExceedOilRel);
     server.post({path:'/api/user/:userId/driveExceedOilRelFile',contentType: 'multipart/form-data'},driveExceedOilRel.uploadDriveExceedOilRelFile);
     server.put({path:'/api/user/:userId/driveExceedOilRel/:relId',contentType: 'application/json'} ,driveExceedOilRel.updateDriveExceedOilRel);
+    server.put({path:'/api/user/:userId/driveExceedOilRel/:relId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,driveExceedOilRel.updatePaymentStatus);
     server.del('/api/user/:userId/driveExceedOilRel/:relId' , driveExceedOilRel.removeDriveExceedOilRel);
 
     /**

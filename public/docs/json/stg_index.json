@@ -12725,6 +12725,22 @@
 
           },
           {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -12815,6 +12831,22 @@
             "description": "createdOn end",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": false,
+            "type": "integer"
 
           }
         ],
@@ -12907,6 +12939,22 @@
             "description": "createdOn end",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": false,
+            "type": "integer"
 
           }
         ],
@@ -13099,6 +13147,58 @@
           },
           "404": {
             "description": "contacts not found"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveExceedOilRel/{relId}/paymentStatus/{paymentStatus}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update payment status",
+        "description": "update payment status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "path",
+            "description": "payment status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilRel id"
           }
         }
       }

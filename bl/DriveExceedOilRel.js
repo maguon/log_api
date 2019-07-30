@@ -112,6 +112,20 @@ function updateDriveExceedOilRel(req,res,next){
     })
 }
 
+function updatePaymentStatus(req,res,next){
+    var params = req.params ;
+    driveExceedOilRelDAO.updatePaymentStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updatePaymentStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updatePaymentStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function removeDriveExceedOilRel(req,res,next){
     var params = req.params;
     var parkObj = {};
@@ -361,6 +375,7 @@ module.exports = {
     queryDriveExceedOilRel : queryDriveExceedOilRel,
     queryDriveExceedOilRelCount : queryDriveExceedOilRelCount,
     updateDriveExceedOilRel : updateDriveExceedOilRel,
+    updatePaymentStatus : updatePaymentStatus,
     removeDriveExceedOilRel : removeDriveExceedOilRel,
     uploadDriveExceedOilRelFile : uploadDriveExceedOilRelFile,
     getDriveExceedOilRelCsv : getDriveExceedOilRelCsv
