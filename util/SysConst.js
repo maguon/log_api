@@ -253,6 +253,12 @@ var PAYMENT_TYPE ={
     yes : 2 //是
 }
 
+var PAYMENT_STATUS ={
+    cancel : -1, //驳回
+    not_payment : 0,  //未打款
+    payment : 1   //已付款
+}
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -292,7 +298,8 @@ module.exports = {
     TASK_FEE_STATUS : TASK_FEE_STATUS,
     OUTER_FLAG : OUTER_FLAG,
     INVOICE_STATUS : INVOICE_STATUS,
-    PAYMENT_TYPE : PAYMENT_TYPE
+    PAYMENT_TYPE : PAYMENT_TYPE,
+    PAYMENT_STATUS : PAYMENT_STATUS
 }
 
 

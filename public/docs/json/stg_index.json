@@ -7574,6 +7574,22 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

@@ -8,7 +8,8 @@ var logger = serverLogger.createLogger('TruckEtcDAO.js');
 
 function addUploadTruckEtc(params,callback){
     var query = "insert into truck_etc (number,truck_id,truck_num,drive_id,drive_name,etc_fee,etc_date, " +
-        " date_id,remark,op_user_id,upload_id,payment_type) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " date_id,remark,op_user_id,upload_id,payment_type,payment_status) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.number;
     paramsArray[i++]=params.truckId;
@@ -22,6 +23,7 @@ function addUploadTruckEtc(params,callback){
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.uploadId;
     paramsArray[i++]=params.paymentType;
+    paramsArray[i++]=params.paymentStatus;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug( ' addUploadTruckEtc ');
         return callback(error,rows);
@@ -108,6 +110,14 @@ function getTruckEtcFeeCount(params,callback) {
     if(params.createdOnEnd){
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and te.created_on <= ? ";
+    }
+    if(params.paymentType){
+        paramsArray[i++] = params.paymentType;
+        query = query + " and te.payment_type = ? ";
+    }
+    if(params.paymentStatus){
+        paramsArray[i++] = params.paymentStatus;
+        query = query + " and te.payment_status = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckEtcFeeCount ');

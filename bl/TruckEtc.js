@@ -22,6 +22,11 @@ function createTruckEtc(req,res,next){
     var params = req.params ;
     var strDate = moment(params.etcDate).format('YYYYMMDD');
     params.dateId = parseInt(strDate);
+    if(params.paymentType==sysConst.PAYMENT_TYPE.no){
+        params.paymentStatus = sysConst.PAYMENT_STATUS.payment;
+    }else{
+        params.paymentStatus = sysConst.PAYMENT_STATUS.not_payment;
+    }
     truckEtcDAO.addUploadTruckEtc(params,function(error,result){
         if (error) {
             logger.error(' createTruckEtc ' + error.message);
@@ -79,6 +84,7 @@ function uploadTruckEtcFile(req,res,next){
                         userId : params.userId,
                         uploadId : params.uploadId,
                         paymentType : sysConst.PAYMENT_TYPE.no,
+                        paymentStatus : sysConst.PAYMENT_STATUS.payment,
                         row : i+1
                     }
                     truckEtcDAO.addUploadTruckEtc(subParams,function(err,result){
