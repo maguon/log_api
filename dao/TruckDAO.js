@@ -443,11 +443,11 @@ function getTruckCost(params,callback) {
         " left join(select trr.truck_id,sum(trr.repair_money) repair_fee, " +
         " sum(trr.parts_money) parts_fee,sum(trr.maintain_money) maintain_fee " +
         " from truck_repair_rel trr " +
-        " where trr.date_id>= "+params.yMonth+"01 and trr.date_id<="+params.lastDay+
+        " where trr.payment_status = 1 and trr.date_id>= "+params.yMonth+"01 and trr.date_id<="+params.lastDay+
         " group by trr.truck_id) trrm on tm.id = trrm.truck_id " +
         " left join(select te.truck_id,sum(te.etc_fee) etc_fee " +
         " from truck_etc te " +
-        " where te.date_id>= "+params.yMonth+"01 and te.date_id<="+params.lastDay+
+        " where te.payment_status = 1 and te.date_id>= "+params.yMonth+"01 and te.date_id<="+params.lastDay+
         " group by te.truck_id) tem on tm.id = tem.truck_id " +
         " left join (select dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
         " from drive_peccancy dp " +
@@ -455,7 +455,7 @@ function getTruckCost(params,callback) {
         " group by dp.truck_id) dpm on tm.id = dpm.truck_id " +
         " left join (select deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
         " from drive_exceed_oil_rel deor " +
-        " where deor.date_id>= "+params.yMonth+"01 and deor.date_id<="+params.lastDay+
+        " where deor.payment_status = 1 and deor.date_id>= "+params.yMonth+"01 and deor.date_id<="+params.lastDay+
         " group by deor.truck_id) deorm on tm.id = deorm.truck_id " +
         " left join(select truck_id, sum(case when insure_status = 1 and start_date<="+params.yMonth+"01 and end_date>="+params.lastDay+" then 30/DateDiff(end_date,start_date)*insure_money " +
         " when insure_status = 1 and (start_date<="+params.yMonth+"01 and end_date<="+params.lastDay+" and end_date>="+params.yMonth+"01) then DateDiff(end_date,"+params.yMonth+"01)/DateDiff(end_date,start_date)*insure_money " +

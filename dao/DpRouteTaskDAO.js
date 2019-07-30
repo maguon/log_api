@@ -785,7 +785,7 @@ function getDriveCost(params,callback) {
         " group by dprtf.drive_id,dprtf.truck_id) dprtfm on dprm.drive_id = dprtfm.drive_id and dprm.truck_id = dprtfm.truck_id " +
         " left join (select deor.drive_id,deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
         " from drive_exceed_oil_rel deor " +
-        " where deor.date_id>="+params.dateIdStart+" and deor.date_id<=" +params.dateIdEnd+
+        " where deor.payment_status = 1 and deor.date_id>="+params.dateIdStart+" and deor.date_id<=" +params.dateIdEnd+
         " group by deor.drive_id,deor.truck_id) deorm on dprm.drive_id = deorm.drive_id and dprm.truck_id = deorm.truck_id " +
         " left join (select dp.drive_id,dp.truck_id,sum(dp.under_money) peccancy_under_fee,sum(dp.company_money) peccancy_company_fee " +
         " from drive_peccancy dp " +
@@ -793,12 +793,12 @@ function getDriveCost(params,callback) {
         " group by dp.drive_id,dp.truck_id) dpm on dprm.drive_id = dpm.drive_id and dprm.truck_id = dpm.truck_id " +
         " left join(select te.drive_id,te.truck_id,sum(te.etc_fee) etc_fee " +
         " from truck_etc te " +
-        " where te.date_id>="+params.dateIdStart+" and te.date_id<= " +params.dateIdEnd+
+        " where te.payment_status = 1 and te.date_id>="+params.dateIdStart+" and te.date_id<= " +params.dateIdEnd+
         " group by te.drive_id,te.truck_id) tem on dprm.drive_id = tem.drive_id and dprm.truck_id = tem.truck_id " +
         " left join(select trr.drive_id,trr.truck_id,sum(trr.parts_money) parts_fee, " +
         " sum(trr.repair_money) repair_fee,sum(trr.maintain_money) maintain_fee " +
         " from truck_repair_rel trr " +
-        " where trr.date_id>="+params.dateIdStart+" and trr.date_id<="+params.dateIdEnd+"  and trr.repair_status =1 " +
+        " where trr.payment_status = 1 and trr.date_id>="+params.dateIdStart+" and trr.date_id<="+params.dateIdEnd+"  and trr.repair_status =1 " +
         " group by trr.drive_id,trr.truck_id) trrm on dprm.drive_id = trrm.drive_id and dprm.truck_id = trrm.truck_id " +
         " left join (select tai.drive_id,tai.truck_id,sum(tac.under_cost) accident_under_fee,sum(tac.company_cost) accident_company_fee " +
         " from truck_accident_check tac " +
