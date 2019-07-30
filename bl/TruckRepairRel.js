@@ -210,6 +210,9 @@ function updateTruckRepairRelBase(req,res,next){
 
 function updatePaymentStatus(req,res,next){
     var params = req.params ;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.grantDateId = parseInt(strDate);
     truckRepairRelDAO.updatePaymentStatus(params,function(error,result){
         if (error) {
             logger.error(' updatePaymentStatus ' + error.message);

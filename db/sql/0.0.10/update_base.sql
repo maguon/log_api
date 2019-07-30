@@ -761,3 +761,18 @@ ALTER TABLE `drive_exceed_oil_rel`
 ADD COLUMN `number`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编号' AFTER `id`,
 ADD COLUMN `payment_type`  tinyint(1) NULL DEFAULT 1 COMMENT '是否打款(1-否 ,2-是)' AFTER `urea_money`,
 ADD COLUMN `payment_status`  tinyint(1) NULL DEFAULT 0 COMMENT '打款状态(-1-驳回 ,0-未打款,1-已打款)' AFTER `payment_type`;
+-- ----------------------------
+-- 2019-07-30 更新
+-- ----------------------------
+ALTER TABLE `truck_etc`
+ADD COLUMN `grant_date_id`  int(4) NULL COMMENT '发放时间' AFTER `payment_status`;
+-- ----------------------------
+-- 2019-07-30 更新
+-- ----------------------------
+ALTER TABLE `truck_repair_rel`
+ADD COLUMN `grant_date_id`  int(4) NULL DEFAULT NULL COMMENT '发放时间' AFTER `payment_status`;
+-- ----------------------------
+-- 2019-07-30 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_rel`
+ADD COLUMN `grant_date_id`  int(4) NULL DEFAULT NULL COMMENT '发放时间' AFTER `payment_status`;
