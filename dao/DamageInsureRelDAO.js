@@ -94,6 +94,14 @@ function getDamageInsureRel(params,callback) {
         paramsArray[i++] = params.declareDateEnd;
         query = query + " and di.declare_date <= ? ";
     }
+    if(params.completedDateStart){
+        paramsArray[i++] = params.completedDateStart +" 00:00:00";
+        query = query + " and di.completed_date >= ? ";
+    }
+    if(params.completedDateEnd){
+        paramsArray[i++] = params.completedDateEnd +" 23:59:59";
+        query = query + " and di.completed_date <= ? ";
+    }
     query = query + " group by dir.id ";
     query = query + " order by dir.id desc ";
     db.dbQuery(query,paramsArray,function(error,rows){

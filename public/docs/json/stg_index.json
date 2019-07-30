@@ -30871,6 +30871,22 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "completedDateStart",
+            "in": "query",
+            "description": "completedDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "completedDateEnd",
+            "in": "query",
+            "description": "completedDate end",
+            "required": false,
+            "type": "string"
+
           }
         ],
         "responses": {
