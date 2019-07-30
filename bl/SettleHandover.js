@@ -552,7 +552,7 @@ function getDriveSettleCsv(req,res,next){
 function getDriveSettleDetailCsv(req,res,next){
     var csvString = "";
     var header = "调度编号"+ ','+"司机"+ ',' +"货车牌号"+ ',' +"计划执行时间"+ ',' +"VIN"+ ','+"委托方"+ ','+"品牌"+ ','+"起始城市"+ ','+
-        "目的城市"+ ','+"车型"+ ','+"产值率"+ ','+"预估公里数"+ ','+"预估单价"+ ','+"产值"+ ','+"二级产值";
+        "目的城市"+ ','+"经销商"+ ','+"车型"+ ','+"产值率"+ ','+"预估公里数"+ ','+"预估单价"+ ','+"产值"+ ','+"二级产值";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -591,6 +591,11 @@ function getDriveSettleDetailCsv(req,res,next){
                 }else{
                     parkObj.routeEnd = rows[i].route_end;
                 }
+                if(rows[i].short_name == null){
+                    parkObj.shortName = "";
+                }else{
+                    parkObj.shortName = rows[i].short_name;
+                }
                 if(rows[i].size_type == 0){
                     parkObj.sizeType = "小车";
                 }else{
@@ -623,7 +628,7 @@ function getDriveSettleDetailCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.taskPlanDate+","+
                     parkObj.vin+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+
-                    parkObj.sizeType+","+parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+","+
+                    parkObj.shortName+","+parkObj.sizeType+","+parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+","+
                     parkObj.twoOutput+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
