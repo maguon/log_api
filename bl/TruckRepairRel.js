@@ -325,7 +325,8 @@ function uploadTruckRepairRelFile(req,res,next){
 function getTruckRepairCsv(req,res,next){
     var csvString = "";
     var header = "维修编号" + ',' +"货车牌号" + ',' + "所属公司" + ',' + "货车类型" + ','+ "维修类型" + ','+ "起始时间"+ ','+ "结束时间" + ','+
-        "维修原因" + ','+ "维修状态" + ','+"维修站" + ','+ "维修金额"+ ','+ "配件金额"+ ','+ "保养金额"+ ','+ "维修描述";
+        "维修原因" + ','+ "维修状态" + ','+"维修站" + ','+ "维修金额"+ ','+ "配件金额"+ ','+ "保养金额"+ ','+ "维修描述"+ ','+
+    "序号"+ ',' +"财务打款"+ ',' + "状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -399,9 +400,28 @@ function getTruckRepairCsv(req,res,next){
                 }else{
                     parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
+                if(rows[i].number == null){
+                    parkObj.number = "";
+                }else{
+                    parkObj.number = rows[i].number;
+                }
+                if(rows[i].payment_type == 1){
+                    parkObj.paymentType = "否";
+                }else{
+                    parkObj.paymentType = "是";
+                }
+                if(rows[i].payment_status == 0){
+                    parkObj.paymentStatus = "未处理";
+                }else if(rows[i].payment_status == 1){
+                    parkObj.paymentStatus = "已付款";
+                }else{
+                    parkObj.paymentStatus = "驳回";
+                }
                 csvString = csvString+parkObj.id+","+parkObj.truckNum+","+parkObj.companyName+","+parkObj.truckType+","+parkObj.repairType+","+
                     parkObj.repairDate+","+parkObj.endDate+","+parkObj.repairReason+","+parkObj.repairStatus+","+
-                    parkObj.repairStationName+","+parkObj.repairMoney+","+parkObj.partsMoney+","+parkObj.maintainMoney+","+parkObj.remark+ '\r\n';
+                    parkObj.repairStationName+","+parkObj.repairMoney+","+parkObj.partsMoney+","+parkObj.maintainMoney+","+parkObj.remark+","+
+                parkObj.number+","+parkObj.paymentType+","+parkObj.paymentStatus+'\r\n';
+
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

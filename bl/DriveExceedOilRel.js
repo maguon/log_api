@@ -287,7 +287,8 @@ function uploadDriveExceedOilRelFile(req,res,next){
 function getDriveExceedOilRelCsv(req,res,next){
     var csvString = "";
     var header = "编号" + ',' +"司机" + ',' + "货车牌号" + ',' + "加油量" + ','+ "加尿素量" + ','+ "加油单价"+ ','+ "加尿素单价" + ','+
-        "加油总价" + ','+ "加尿素总价" + ','+"加油时间" + ','+ "创建时间"+ ','+ "地点";
+        "加油总价" + ','+ "加尿素总价" + ','+"加油时间" + ','+ "创建时间"+ ','+ "地点"+ ','+
+    "序号"+ ',' +"财务打款"+ ',' + "状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -353,9 +354,27 @@ function getDriveExceedOilRelCsv(req,res,next){
                 }else{
                     parkObj.oilAddress = rows[i].oil_address;
                 }
+                if(rows[i].number == null){
+                    parkObj.number = "";
+                }else{
+                    parkObj.number = rows[i].number;
+                }
+                if(rows[i].payment_type == 1){
+                    parkObj.paymentType = "否";
+                }else{
+                    parkObj.paymentType = "是";
+                }
+                if(rows[i].payment_status == 0){
+                    parkObj.paymentStatus = "未处理";
+                }else if(rows[i].payment_status == 1){
+                    parkObj.paymentStatus = "已付款";
+                }else{
+                    parkObj.paymentStatus = "驳回";
+                }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.oil+","+parkObj.urea+","+
                     parkObj.oilSinglePrice+","+parkObj.ureaSinglePrice+","+parkObj.oilMoney+","+parkObj.ureaMoney+","+
-                    parkObj.oilDate+","+parkObj.createdOn+","+parkObj.oilAddress+ '\r\n';
+                    parkObj.oilDate+","+parkObj.createdOn+","+parkObj.oilAddress+","+
+                parkObj.number+","+parkObj.paymentType+","+parkObj.paymentStatus+'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

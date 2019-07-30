@@ -162,7 +162,8 @@ function updatePaymentStatus(req,res,next){
 
 function getTruckEtcCsv(req,res,next){
     var csvString = "";
-    var header = "编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "通行费" + ','+ "交易时间"+ ','+ "创建时间"+ ',' + "描述";
+    var header = "编号" + ',' + "司机" + ',' + "货车牌号" + ','+ "通行费" + ','+ "交易时间"+ ','+ "创建时间"+ ',' + "描述"+ ',' +
+        "序号"+ ',' +"财务打款"+ ',' + "状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -203,8 +204,27 @@ function getTruckEtcCsv(req,res,next){
                 }else{
                     parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
+                if(rows[i].number == null){
+                    parkObj.number = "";
+                }else{
+                    parkObj.number = rows[i].number;
+                }
+                if(rows[i].payment_type == 1){
+                    parkObj.paymentType = "否";
+                }else{
+                    parkObj.paymentType = "是";
+                }
+                if(rows[i].payment_status == 0){
+                    parkObj.paymentStatus = "未处理";
+                }else if(rows[i].payment_status == 1){
+                    parkObj.paymentStatus = "已付款";
+                }else{
+                    parkObj.paymentStatus = "驳回";
+                }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.etcFee+","+
-                    parkObj.etcDate+","+parkObj.createdOn+","+parkObj.remark+ '\r\n';
+                    parkObj.etcDate+","+parkObj.createdOn+","+parkObj.remark+","+
+                    parkObj.number+","+parkObj.paymentType+","+parkObj.paymentStatus+'\r\n';
+
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
