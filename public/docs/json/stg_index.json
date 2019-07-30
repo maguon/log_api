@@ -4044,6 +4044,22 @@
 
           },
           {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -4195,6 +4211,22 @@
             "name": "accidentId",
             "in": "query",
             "description": "accident id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
             "required": false,
             "type": "integer"
 
@@ -4450,6 +4482,22 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "paymentType",
+            "in": "query",
+            "description": "payment type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -4653,6 +4701,58 @@
             "schema": {
               "$ref": "#/definitions/truckRepairRel"
             }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckRepairRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckRepairRel/{relId}/paymentStatus/{paymentStatus}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update payment status",
+        "description": "update payment status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "relId",
+            "in": "path",
+            "description": "rel id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "path",
+            "description": "payment status",
+            "required": true,
+            "type": "integer"
 
           }
         ],

@@ -120,6 +120,14 @@ function getTruckRepairRel(params,callback) {
         paramsArray[i++] = params.accidentId;
         query = query + " and trr.accident_id = ? ";
     }
+    if(params.paymentType){
+        paramsArray[i++] = params.paymentType;
+        query = query + " and trr.payment_type = ? ";
+    }
+    if(params.paymentStatus){
+        paramsArray[i++] = params.paymentStatus;
+        query = query + " and trr.payment_status = ? ";
+    }
     query = query + ' order by trr.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
@@ -197,6 +205,14 @@ function getTruckRepairRelCount(params,callback) {
     if(params.accidentId){
         paramsArray[i++] = params.accidentId;
         query = query + " and trr.accident_id = ? ";
+    }
+    if(params.paymentType){
+        paramsArray[i++] = params.paymentType;
+        query = query + " and trr.payment_type = ? ";
+    }
+    if(params.paymentStatus){
+        paramsArray[i++] = params.paymentStatus;
+        query = query + " and trr.payment_status = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairRelCount ');
@@ -300,6 +316,17 @@ function updateTruckRepairRelBase(params,callback){
     });
 }
 
+function updatePaymentStatus(params,callback){
+    var query = " update truck_repair_rel set payment_status = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.paymentStatus;
+    paramsArray[i]=params.relId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updatePaymentStatus ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addTruckRepairRel : addTruckRepairRel,
@@ -309,5 +336,6 @@ module.exports ={
     getTruckRepairCountTotal : getTruckRepairCountTotal,
     getTruckRepairMoneyTotal : getTruckRepairMoneyTotal,
     updateTruckRepairRel : updateTruckRepairRel,
-    updateTruckRepairRelBase : updateTruckRepairRelBase
+    updateTruckRepairRelBase : updateTruckRepairRelBase,
+    updatePaymentStatus : updatePaymentStatus
 }

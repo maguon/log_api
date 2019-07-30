@@ -287,6 +287,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckRepairRelFile',contentType: 'multipart/form-data'},truckRepairRel.uploadTruckRepairRelFile);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRelBase/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRelBase);
+    server.put({path:'/api/user/:userId/truckRepairRel/:relId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,truckRepairRel.updatePaymentStatus);
 
     /**
      * TruckDispatch Module
