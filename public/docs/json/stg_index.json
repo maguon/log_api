@@ -34501,6 +34501,9 @@
       "type": "object",
       "properties": {
 
+        "number": {
+          "type": "string"
+        },
         "driveId": {
           "type": "integer"
         },
@@ -34532,6 +34535,9 @@
           "type": "integer"
         },
         "maintainMoney": {
+          "type": "integer"
+        },
+        "paymentType": {
           "type": "integer"
         }
       },

@@ -253,6 +253,7 @@ function uploadTruckRepairRelFile(req,res,next){
             }).seq(function(){
                 if(parkObj.truckId>0&&parkObj.driveId>0){
                     var subParams = {
+                        number : objArray[i].编号,
                         truckId: parkObj.truckId,
                         driveId: parkObj.driveId,
                         driveName: objArray[i].司机,
@@ -266,6 +267,7 @@ function uploadTruckRepairRelFile(req,res,next){
                         repairStatus: listOfValue.REPAIR_STATUS_ACTIVE,
                         repairReason: objArray[i].维修内容,
                         remark: objArray[i].备注,
+                        paymentType : sysConst.PAYMENT_TYPE.no,
                         row: i + 1
                     }
                     truckRepairRelDAO.addUploadTruckRepairRel(subParams, function (err, result) {
