@@ -80,6 +80,14 @@ function getDriveExceedOilRel(params,callback) {
         paramsArray[i++] = params.paymentStatus;
         query = query + " and deor.payment_status = ? ";
     }
+    if(params.grantDateIdStart){
+        paramsArray[i++] = params.grantDateIdStart;
+        query = query + " and deor.grant_date_id >= ? ";
+    }
+    if(params.grantDateIdEnd){
+        paramsArray[i++] = params.grantDateIdEnd;
+        query = query + " and deor.grant_date_id <= ? ";
+    }
     query = query + '  order by deor.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

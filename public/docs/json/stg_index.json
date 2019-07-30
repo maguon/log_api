@@ -4060,6 +4060,22 @@
 
           },
           {
+            "name": "grantDateIdStart",
+            "in": "query",
+            "description": "grantDateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdEnd",
+            "in": "query",
+            "description": "grantDateId end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -4495,6 +4511,22 @@
             "name": "paymentStatus",
             "in": "query",
             "description": "payment status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdStart",
+            "in": "query",
+            "description": "grantDateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdEnd",
+            "in": "query",
+            "description": "grantDateId end",
             "required": false,
             "type": "integer"
 
@@ -7584,6 +7616,22 @@
 
           },
           {
+            "name": "grantDateIdStart",
+            "in": "query",
+            "description": "grantDateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdEnd",
+            "in": "query",
+            "description": "grantDateId end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -7787,6 +7835,22 @@
             "name": "paymentStatus",
             "in": "query",
             "description": "payment status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdStart",
+            "in": "query",
+            "description": "grantDateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdEnd",
+            "in": "query",
+            "description": "grantDateId end",
             "required": false,
             "type": "integer"
 
@@ -12741,6 +12805,22 @@
 
           },
           {
+            "name": "grantDateIdStart",
+            "in": "query",
+            "description": "grantDateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdEnd",
+            "in": "query",
+            "description": "grantDateId end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -12953,6 +13033,22 @@
             "name": "paymentStatus",
             "in": "query",
             "description": "payment status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdStart",
+            "in": "query",
+            "description": "grantDateId start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "grantDateIdEnd",
+            "in": "query",
+            "description": "grantDateId end",
             "required": false,
             "type": "integer"
 
