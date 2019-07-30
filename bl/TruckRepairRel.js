@@ -45,6 +45,11 @@ function createTruckRepairRel(req,res,next){
         var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
         params.repairDate = myDate;
+        if(params.paymentType==sysConst.PAYMENT_TYPE.no){
+            params.paymentStatus = sysConst.PAYMENT_STATUS.payment;
+        }else{
+            params.paymentStatus = sysConst.PAYMENT_STATUS.not_payment;
+        }
         truckRepairRelDAO.addTruckRepairRel(params,function(error,result){
             if (error) {
                 logger.error(' createTruckRepairRel ' + error.message);
@@ -268,6 +273,7 @@ function uploadTruckRepairRelFile(req,res,next){
                         repairReason: objArray[i].维修内容,
                         remark: objArray[i].备注,
                         paymentType : sysConst.PAYMENT_TYPE.no,
+                        paymentStatus : sysConst.PAYMENT_STATUS.payment,
                         row: i + 1
                     }
                     truckRepairRelDAO.addUploadTruckRepairRel(subParams, function (err, result) {
