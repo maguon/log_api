@@ -30369,6 +30369,22 @@
 
           },
           {
+            "name": "completedDateStart",
+            "in": "query",
+            "description": "completedDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "completedDateEnd",
+            "in": "query",
+            "description": "completedDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

@@ -101,6 +101,14 @@ function getDamageInsure(params,callback) {
         paramsArray[i++] = params.declareDateEnd;
         query = query + " and di.declare_date <= ? ";
     }
+    if(params.completedDateStart){
+        paramsArray[i++] = params.completedDateStart +" 00:00:00";
+        query = query + " and di.completed_date >= ? ";
+    }
+    if(params.completedDateEnd){
+        paramsArray[i++] = params.completedDateEnd +" 23:59:59";
+        query = query + " and di.completed_date <= ? ";
+    }
     query = query + " group by di.id ";
     query = query + " order by di.id desc";
     if (params.start && params.size) {
