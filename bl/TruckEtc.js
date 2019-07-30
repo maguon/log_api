@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var truckEtcDAO = require('../dao/TruckEtcDAO.js');
 var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -77,6 +78,7 @@ function uploadTruckEtcFile(req,res,next){
                         remark : objArray[i].描述,
                         userId : params.userId,
                         uploadId : params.uploadId,
+                        paymentType : sysConst.PAYMENT_TYPE.no,
                         row : i+1
                     }
                     truckEtcDAO.addUploadTruckEtc(subParams,function(err,result){

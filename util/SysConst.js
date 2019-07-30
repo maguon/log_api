@@ -248,6 +248,11 @@ var INVOICE_STATUS  ={
     completed : 2   //已处理
 };
 
+var PAYMENT_TYPE ={
+    no : 1 ,  //否
+    yes : 2 //是
+}
+
 
 module.exports = {
     USER_TYPE : USER_TYPE,
@@ -286,7 +291,8 @@ module.exports = {
     REPAIR_TYPE : REPAIR_TYPE,
     TASK_FEE_STATUS : TASK_FEE_STATUS,
     OUTER_FLAG : OUTER_FLAG,
-    INVOICE_STATUS : INVOICE_STATUS
+    INVOICE_STATUS : INVOICE_STATUS,
+    PAYMENT_TYPE : PAYMENT_TYPE
 }
 
 
