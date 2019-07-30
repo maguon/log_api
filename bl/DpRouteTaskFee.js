@@ -154,7 +154,7 @@ function updateDpRouteTaskFeeStatusAll(req,res,next){
 function getDpRouteTaskFeeCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' +"货车牌号" + ',' + "商品车加油费" + ',' + "货车停留天数" + ','+ "货车停车单价" + ','+"货车停车费" + ','+
-        "商品车停留天数"+ ','+ "商品车停车单价" + ','+ "商品车停车费"+ ','+ "申请时间" + ','+
+        "商品车停留天数"+ ','+ "商品车停车单价" + ','+ "商品车停车费"+ ','+ "其他费用" + ','+"申请时间" + ','+
         "银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+"状态"+ ','+"备注"+ ','+ "调度编号"+ ','+"起始城市"+ ','+"目的城市";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -210,6 +210,11 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }else{
                     parkObj.carTotalPrice = rows[i].car_total_price;
                 }
+                if(rows[i].other_fee == null){
+                    parkObj.otherFee = "";
+                }else{
+                    parkObj.otherFee = rows[i].other_fee;
+                }
                 if(rows[i].created_on == null){
                     parkObj.createdOn = "";
                 }else{
@@ -259,7 +264,7 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.carOilFee+","+parkObj.dayCount+","+
                     parkObj.singlePrice+","+parkObj.totalPrice+","+parkObj.carDayCount+","+parkObj.carSinglePrice+","+
-                    parkObj.carTotalPrice+","+parkObj.createdOn+","+parkObj.bankNumber+","+parkObj.bankName+","+
+                    parkObj.carTotalPrice+","+parkObj.otherFee+","+parkObj.createdOn+","+parkObj.bankNumber+","+parkObj.bankName+","+
                     parkObj.bankUserName+","+parkObj.status+","+parkObj.remark+","+
                 parkObj.dpRouteTaskId+","+parkObj.routeStart+","+parkObj.routeEnd+ '\r\n';
             }
