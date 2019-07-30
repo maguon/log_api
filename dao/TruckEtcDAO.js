@@ -31,8 +31,10 @@ function addUploadTruckEtc(params,callback){
 }
 
 function getTruckEtc(params,callback) {
-    var query = " select te.*,u.real_name as op_user_name from truck_etc te " +
+    var query = " select te.*,u.real_name as op_user_name,d.bank_number,d.bank_name,d.bank_user_name " +
+        " from truck_etc te " +
         " left join user_info u on te.op_user_id = u.uid " +
+        " left join drive_info d on te.drive_id = d.id " +
         " where te.id is not null ";
     var paramsArray=[],i=0;
     if(params.truckEtcId){
