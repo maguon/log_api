@@ -28,6 +28,11 @@ function createDriveExceedOilRel(req,res,next){
         var oilDate = params.oilDate;
         var strDate = moment(oilDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
+        if(params.paymentType==sysConst.PAYMENT_TYPE.no){
+            params.paymentStatus = sysConst.PAYMENT_STATUS.payment;
+        }else{
+            params.paymentStatus = sysConst.PAYMENT_STATUS.not_payment;
+        }
         driveExceedOilRelDAO.addDriveExceedOilRel(params,function(error, result) {
             if (error) {
                 logger.error(' createDriveExceedOilRel ' + error.message);
@@ -216,6 +221,7 @@ function uploadDriveExceedOilRelFile(req,res,next){
             }).seq(function(){
                 if(parkObj.truckId>0&&parkObj.driveId>0){
                     var subParams = {
+                        number : objArray[i].编号,
                         exceedOilId : 0,
                         truckId : parkObj.truckId,
                         driveId : parkObj.driveId,
@@ -229,6 +235,8 @@ function uploadDriveExceedOilRelFile(req,res,next){
                         ureaSinglePrice : objArray[i].尿素单价,
                         oilMoney : objArray[i].加油金额,
                         ureaMoney : objArray[i].尿素金额,
+                        paymentType : sysConst.PAYMENT_TYPE.no,
+                        paymentStatus : sysConst.PAYMENT_STATUS.payment,
                         row: i + 1
                     }
                     driveExceedOilRelDAO.addDriveExceedOilRel(subParams, function (err, result) {

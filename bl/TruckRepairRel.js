@@ -45,11 +45,6 @@ function createTruckRepairRel(req,res,next){
         var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
         params.repairDate = myDate;
-        if(params.paymentType==sysConst.PAYMENT_TYPE.no){
-            params.paymentStatus = sysConst.PAYMENT_STATUS.payment;
-        }else{
-            params.paymentStatus = sysConst.PAYMENT_STATUS.not_payment;
-        }
         truckRepairRelDAO.addTruckRepairRel(params,function(error,result){
             if (error) {
                 logger.error(' createTruckRepairRel ' + error.message);
@@ -162,6 +157,11 @@ function updateTruckRepairRel(req,res,next){
         var myDate = new Date();
             params.endDate = myDate;
             params.repairStatus = listOfValue.REPAIR_STATUS_ACTIVE;
+        if(params.paymentType==sysConst.PAYMENT_TYPE.no){
+            params.paymentStatus = sysConst.PAYMENT_STATUS.payment;
+        }else{
+            params.paymentStatus = sysConst.PAYMENT_STATUS.not_payment;
+        }
         truckRepairRelDAO.updateTruckRepairRel(params,function(error,result){
             if (error) {
                 logger.error(' updateTruckRepairRel ' + error.message);

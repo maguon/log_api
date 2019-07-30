@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilRelDAO.js');
 
 function addDriveExceedOilRel(params,callback){
-    var query = " insert into drive_exceed_oil_rel (exceed_oil_id,drive_id,truck_id,oil_date,date_id," +
-        " oil_address_type,oil_address,oil,urea,oil_single_price,urea_single_price,oil_money,urea_money) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into drive_exceed_oil_rel (number,exceed_oil_id,drive_id,truck_id,oil_date,date_id," +
+        " oil_address_type,oil_address,oil,urea,oil_single_price,urea_single_price,oil_money,urea_money,payment_type,payment_status) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.number;
     paramsArray[i++]=params.exceedOilId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.truckId;
@@ -24,6 +25,8 @@ function addDriveExceedOilRel(params,callback){
     paramsArray[i++]=params.ureaSinglePrice;
     paramsArray[i++]=params.oilMoney;
     paramsArray[i++]=params.ureaMoney;
+    paramsArray[i++]=params.paymentType;
+    paramsArray[i++]=params.paymentStatus;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveExceedOilRel ');
         return callback(error,rows);

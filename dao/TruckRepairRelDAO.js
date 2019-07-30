@@ -7,11 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckRepairRelDAO.js');
 
 function addTruckRepairRel(params,callback){
-    var query = " insert into truck_repair_rel (number,truck_id,drive_id,drive_name,repair_type," +
-        " accident_id,repair_date,date_id,repair_reason,payment_type,payment_status) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = " insert into truck_repair_rel (truck_id,drive_id,drive_name,repair_type," +
+        " accident_id,repair_date,date_id,repair_reason) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
-    paramsArray[i++]=params.number;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
@@ -20,8 +19,6 @@ function addTruckRepairRel(params,callback){
     paramsArray[i++]=params.repairDate;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.repairReason;
-    paramsArray[i++]=params.paymentType;
-    paramsArray[i++]=params.paymentStatus;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addTruckRepairRel ');
         return callback(error,rows);
@@ -285,9 +282,11 @@ function getTruckRepairMoneyTotal(params,callback) {
 }
 
 function updateTruckRepairRel(params,callback){
-    var query = " update truck_repair_rel set repair_station_id = ? , repair_user = ? , repair_money = ? , " +
-        " parts_money = ? , maintain_money = ? , end_date = ? , repair_status = ? , remark = ? where id = ? " ;
+    var query = " update truck_repair_rel set number = ? , repair_station_id = ? , repair_user = ? , repair_money = ? , " +
+        " parts_money = ? , maintain_money = ? , end_date = ? , repair_status = ? , remark = ? , " +
+        " payment_type = ? , payment_status = ? where id = ? " ;
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.number;
     paramsArray[i++]=params.repairStationId;
     paramsArray[i++]=params.repairUser;
     paramsArray[i++]=params.repairMoney;
@@ -296,6 +295,8 @@ function updateTruckRepairRel(params,callback){
     paramsArray[i++]=params.endDate;
     paramsArray[i++]=params.repairStatus;
     paramsArray[i++]=params.remark;
+    paramsArray[i++]=params.paymentType;
+    paramsArray[i++]=params.paymentStatus;
     paramsArray[i]=params.relId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckRepairRel ');

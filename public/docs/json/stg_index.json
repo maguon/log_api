@@ -35478,6 +35478,9 @@
       "type": "object",
       "properties": {
 
+        "number": {
+          "type": "string"
+        },
         "exceedOilId": {
           "type": "integer"
         },
@@ -35512,6 +35515,9 @@
           "type": "integer"
         },
         "ureaMoney": {
+          "type": "integer"
+        },
+        "paymentType": {
           "type": "integer"
         }
       },
