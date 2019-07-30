@@ -34,7 +34,7 @@ function addDriveExceedOilRel(params,callback){
 }
 
 function getDriveExceedOilRel(params,callback) {
-    var query = " select deor.*,d.drive_name,t.truck_num " +
+    var query = " select deor.*,d.drive_name,t.truck_num,d.bank_number,d.bank_name,d.bank_user_name " +
         " from drive_exceed_oil_rel deor " +
         " left join drive_info d on deor.drive_id = d.id " +
         " left join truck_info t on deor.truck_id = t.id " +
