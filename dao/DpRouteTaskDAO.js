@@ -49,6 +49,7 @@ function getDpRouteTask(params,callback) {
         " (select sum(real_count) from dp_route_load_task where dp_route_task_id=dpr.id and load_task_status!=8 )real_count, " +
         " tb.load_distance_oil,tb.no_load_distance_oil,tb.urea,tb.load_reverse_oil,tb.no_load_reverse_oil " +
         " from dp_route_task dpr " +
+        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " left join user_info u on dpr.user_id = u.uid " +
         " left join truck_info t on dpr.truck_id = t.id " +
         " left join truck_info tl on t.rel_id = tl.id " +
