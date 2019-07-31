@@ -365,6 +365,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckEtc',contentType: 'application/json'},truckEtc.createTruckEtc);
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
     server.put({path:'/api/user/:userId/truckEtc/:truckEtcId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,truckEtc.updatePaymentStatus);
+    server.put({path:'/api/user/:userId/paymentStatus/:paymentStatus/paymentStatusAll',contentType: 'application/json'} ,truckEtc.updatePaymentStatusAll);
 
     /**
      * TruckDepreciation Module

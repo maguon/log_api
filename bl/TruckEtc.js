@@ -241,6 +241,46 @@ function getTruckEtcCsv(req,res,next){
     })
 }
 
+function updatePaymentStatusAll(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    Seq().seq(function(){
+        var that = this;
+        var truckEtcIds = params.truckEtcIds;
+        var rowArray = [] ;
+        rowArray.length= truckEtcIds.length;
+        Seq(rowArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                paymentStatus : params.paymentStatus,
+                grantDateId : parseInt(strDate),
+                truckEtcId : truckEtcIds[i],
+                row : i+1,
+            }
+            truckEtcDAO.updatePaymentStatus(subParams,function(err,result){
+                if (err) {
+                    logger.error(' updatePaymentStatusAll ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' updatePaymentStatusAll  ' + 'success');
+                    }else{
+                        logger.warn(' updatePaymentStatusAll  ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+        }).seq(function(){
+            that();
+        })
+    }).seq(function(){
+        logger.info(' updatePaymentStatusAll ' + 'success');
+        resUtil.resetQueryRes(res,null);
+        return next();
+    })
+}
+
 
 module.exports = {
     createTruckEtc : createTruckEtc,
@@ -248,5 +288,6 @@ module.exports = {
     queryTruckEtc : queryTruckEtc,
     queryTruckEtcFeeCount : queryTruckEtcFeeCount,
     updatePaymentStatus : updatePaymentStatus,
-    getTruckEtcCsv : getTruckEtcCsv
+    getTruckEtcCsv : getTruckEtcCsv,
+    updatePaymentStatusAll : updatePaymentStatusAll
 }

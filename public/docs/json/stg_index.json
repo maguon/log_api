@@ -8020,6 +8020,59 @@
         }
       }
     },
+    "/user/{userId}/paymentStatus/{paymentStatus}/paymentStatusAll": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update paymentStatus all",
+        "description": "update paymentStatus all",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "path",
+            "description": "paymentStatus",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatusAll",
+            "in": "body",
+            "description": "paymentStatusAll info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/paymentStatusAll"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
     "/truckDepreciation": {
       "get": {
         "tags": [
@@ -35190,6 +35243,18 @@
       },
       "xml": {
         "name": "truckEtc"
+      }
+    },
+    "paymentStatusAll": {
+      "type": "object",
+      "properties": {
+
+        "truckEtcIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "paymentStatusAll"
       }
     },
     "truckDepreciation": {
