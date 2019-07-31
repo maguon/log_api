@@ -391,6 +391,46 @@ function getDriveExceedOilRelCsv(req,res,next){
     })
 }
 
+function updatePaymentStatusAll(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    Seq().seq(function(){
+        var that = this;
+        var relIds = params.relIds;
+        var rowArray = [] ;
+        rowArray.length= relIds.length;
+        Seq(rowArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                paymentStatus : params.paymentStatus,
+                grantDateId : parseInt(strDate),
+                relId : relIds[i],
+                row : i+1,
+            }
+            driveExceedOilRelDAO.updatePaymentStatus(subParams,function(err,result){
+                if (err) {
+                    logger.error(' updatePaymentStatusAll ' + err.message);
+                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    if(result&&result.affectedRows>0){
+                        logger.info(' updatePaymentStatusAll  ' + 'success');
+                    }else{
+                        logger.warn(' updatePaymentStatusAll  ' + 'failed');
+                    }
+                    that(null,i);
+                }
+            })
+        }).seq(function(){
+            that();
+        })
+    }).seq(function(){
+        logger.info(' updatePaymentStatusAll ' + 'success');
+        resUtil.resetQueryRes(res,null);
+        return next();
+    })
+}
+
 
 module.exports = {
     createDriveExceedOilRel : createDriveExceedOilRel,
@@ -400,5 +440,6 @@ module.exports = {
     updatePaymentStatus : updatePaymentStatus,
     removeDriveExceedOilRel : removeDriveExceedOilRel,
     uploadDriveExceedOilRelFile : uploadDriveExceedOilRelFile,
-    getDriveExceedOilRelCsv : getDriveExceedOilRelCsv
+    getDriveExceedOilRelCsv : getDriveExceedOilRelCsv,
+    updatePaymentStatusAll : updatePaymentStatusAll
 }

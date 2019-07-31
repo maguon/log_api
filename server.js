@@ -288,6 +288,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
     server.put({path:'/api/user/:userId/truckRepairRelBase/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRelBase);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,truckRepairRel.updatePaymentStatus);
+    server.put({path:'/api/user/:userId/paymentStatus/:paymentStatus/repairPaymentStatusAll',contentType: 'application/json'} ,truckRepairRel.updatePaymentStatusAll);
 
     /**
      * TruckDispatch Module
@@ -508,6 +509,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveExceedOilRelFile',contentType: 'multipart/form-data'},driveExceedOilRel.uploadDriveExceedOilRelFile);
     server.put({path:'/api/user/:userId/driveExceedOilRel/:relId',contentType: 'application/json'} ,driveExceedOilRel.updateDriveExceedOilRel);
     server.put({path:'/api/user/:userId/driveExceedOilRel/:relId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,driveExceedOilRel.updatePaymentStatus);
+    server.put({path:'/api/user/:userId/paymentStatus/:paymentStatus/oilPaymentStatusAll',contentType: 'application/json'} ,driveExceedOilRel.updatePaymentStatusAll);
     server.del('/api/user/:userId/driveExceedOilRel/:relId' , driveExceedOilRel.removeDriveExceedOilRel);
 
     /**

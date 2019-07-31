@@ -4804,6 +4804,59 @@
         }
       }
     },
+    "/user/{userId}/paymentStatus/{paymentStatus}/repairPaymentStatusAll": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update paymentStatus all",
+        "description": "update paymentStatus all",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "path",
+            "description": "paymentStatus",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "repairPaymentStatusAll",
+            "in": "body",
+            "description": "repairPaymentStatusAll info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/repairPaymentStatusAll"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
     "/truckDispatch": {
       "get": {
         "tags": [
@@ -13348,6 +13401,59 @@
           },
           "400": {
             "description": "Invalid token value or invalid driveExceedOilRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/paymentStatus/{paymentStatus}/oilPaymentStatusAll": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update oilPaymentStatus all",
+        "description": "update oilPaymentStatus all",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "paymentStatus",
+            "in": "path",
+            "description": "paymentStatus",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "oilPaymentStatusAll",
+            "in": "body",
+            "description": "oilPaymentStatusAll info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/oilPaymentStatusAll"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveDpRouteTaskOilRel id"
           }
         }
       }
@@ -34942,6 +35048,18 @@
         "name": "truckRepairRel"
       }
     },
+    "repairPaymentStatusAll": {
+      "type": "object",
+      "properties": {
+
+        "relIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "repairPaymentStatusAll"
+      }
+    },
     "truckAccident": {
       "type": "object",
       "properties": {
@@ -35885,6 +36003,18 @@
       },
       "xml": {
         "name": "driveExceedOilPrice"
+      }
+    },
+    "oilPaymentStatusAll": {
+      "type": "object",
+      "properties": {
+
+        "relIds": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "oilPaymentStatusAll"
       }
     },
     "checkReason": {
