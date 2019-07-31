@@ -137,6 +137,14 @@ function getDriveExceedOilRelCount(params,callback) {
         paramsArray[i++] = params.paymentStatus;
         query = query + " and deor.payment_status = ? ";
     }
+    if(params.grantDateIdStart){
+        paramsArray[i++] = params.grantDateIdStart;
+        query = query + " and deor.grant_date_id >= ? ";
+    }
+    if(params.grantDateIdEnd){
+        paramsArray[i++] = params.grantDateIdEnd;
+        query = query + " and deor.grant_date_id <= ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveExceedOilRelCount ');
         return callback(error,rows);

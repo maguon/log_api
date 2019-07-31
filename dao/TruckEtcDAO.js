@@ -129,6 +129,14 @@ function getTruckEtcFeeCount(params,callback) {
         paramsArray[i++] = params.paymentStatus;
         query = query + " and te.payment_status = ? ";
     }
+    if(params.grantDateIdStart){
+        paramsArray[i++] = params.grantDateIdStart;
+        query = query + " and te.grant_date_id >= ? ";
+    }
+    if(params.grantDateIdEnd){
+        paramsArray[i++] = params.grantDateIdEnd;
+        query = query + " and te.grant_date_id <= ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckEtcFeeCount ');
         return callback(error,rows);

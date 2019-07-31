@@ -329,7 +329,7 @@ function getTruckRepairCsv(req,res,next){
     var csvString = "";
     var header = "维修编号" + ',' +"货车牌号" + ',' + "所属公司" + ',' + "货车类型" + ','+ "维修类型" + ','+ "起始时间"+ ','+ "结束时间" + ','+
         "维修原因" + ','+ "维修状态" + ','+"维修站" + ','+ "维修金额"+ ','+ "配件金额"+ ','+ "保养金额"+ ','+ "维修描述"+ ','+
-    "序号"+ ',' +"财务打款"+ ',' + "状态";
+    "序号"+ ',' +"财务打款"+ ',' + "状态"+ ',' +"银行账号" + ','+ "户名"+ ','+ "开户行";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -420,10 +420,26 @@ function getTruckRepairCsv(req,res,next){
                 }else{
                     parkObj.paymentStatus = "驳回";
                 }
+                if(rows[i].bank_number==null){
+                    parkObj.bankNumber = "";
+                }else{
+                    parkObj.bankNumber = rows[i].bank_number;
+                }
+                if(rows[i].bank_name==null){
+                    parkObj.bankName = "";
+                }else{
+                    parkObj.bankName = rows[i].bank_name;
+                }
+                if(rows[i].bank_user_name==null){
+                    parkObj.bankUserName = "";
+                }else{
+                    parkObj.bankUserName = rows[i].bank_user_name;
+                }
                 csvString = csvString+parkObj.id+","+parkObj.truckNum+","+parkObj.companyName+","+parkObj.truckType+","+parkObj.repairType+","+
                     parkObj.repairDate+","+parkObj.endDate+","+parkObj.repairReason+","+parkObj.repairStatus+","+
                     parkObj.repairStationName+","+parkObj.repairMoney+","+parkObj.partsMoney+","+parkObj.maintainMoney+","+parkObj.remark+","+
-                parkObj.number+","+parkObj.paymentType+","+parkObj.paymentStatus+'\r\n';
+                parkObj.number+","+parkObj.paymentType+","+parkObj.paymentStatus+","+
+                parkObj.bankNumber+","+parkObj.bankName+","+parkObj.bankUserName+'\r\n';
 
             }
             var csvBuffer = new Buffer(csvString,'utf8');

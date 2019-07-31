@@ -221,6 +221,14 @@ function getTruckRepairRelCount(params,callback) {
         paramsArray[i++] = params.paymentStatus;
         query = query + " and trr.payment_status = ? ";
     }
+    if(params.grantDateIdStart){
+        paramsArray[i++] = params.grantDateIdStart;
+        query = query + " and trr.grant_date_id >= ? ";
+    }
+    if(params.grantDateIdEnd){
+        paramsArray[i++] = params.grantDateIdEnd;
+        query = query + " and trr.grant_date_id <= ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckRepairRelCount ');
         return callback(error,rows);
