@@ -174,7 +174,7 @@ function updateDriveExceedOilRel(params,callback){
 }
 
 function updatePaymentStatus(params,callback){
-    var query = " update drive_exceed_oil_rel set payment_status = ? , grant_date_id = ? where id = ? " ;
+    var query = " update drive_exceed_oil_rel set payment_status = ? , grant_date_id = ? where id = ? and payment_status = 0 " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.paymentStatus;
     paramsArray[i++]=params.grantDateId;
