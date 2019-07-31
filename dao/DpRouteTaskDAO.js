@@ -501,6 +501,62 @@ function getDriveDistanceLoad(params,callback) {
     });
 }
 
+function getDpRouteTaskDetail(params,callback) {
+    var query = " select dpr.id,dpr.route_start as dp_route_start,dpr.route_end as dp_route_end, " +
+        " dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,dpr.task_plan_date, " +
+        " drltd.car_id,drltd.vin,e.short_name,c.make_name,c.route_start,c.route_end,r.short_name,c.size_type " +
+        " from dp_route_load_task_detail drltd " +
+        " left join dp_route_load_task dprl on drltd.dp_route_load_task_id = dprl.id " +
+        " left join dp_route_task dpr on drltd.dp_route_task_id = dpr.id " +
+        " left join drive_info d on dpr.drive_id = d.id " +
+        " left join truck_info t on dpr.truck_id = t.id " +
+        " left join car_info c on drltd.car_id = c.id " +
+        " left join receive_info r on c.receive_id = r.id " +
+        " left join entrust_info e on c.entrust_id = e.id " +
+        " where dpr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dpr.id = ? ";
+    }
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status = ? ";
+    }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and dpr.truck_id = ? ";
+    }
+    if(params.reverseFlag){
+        paramsArray[i++] = params.reverseFlag;
+        query = query + " and dpr.reverse_flag = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dpr.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dpr.route_end_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskDetail ');
+        return callback(error,rows);
+    });
+}
+
 function getNotCompletedTaskStatusCount(params,callback) {
     var query = " select count(id) as task_status_count from dp_route_task where id is not null ";
     var paramsArray=[],i=0;
@@ -846,6 +902,7 @@ module.exports ={
     getDriveDistanceCount : getDriveDistanceCount,
     getDriveDistanceLoadStat : getDriveDistanceLoadStat,
     getDriveDistanceLoad : getDriveDistanceLoad,
+    getDpRouteTaskDetail : getDpRouteTaskDetail,
     getTaskStatusCount : getTaskStatusCount,
     updateDpRouteTaskStatus : updateDpRouteTaskStatus,
     updateDpRouteStatStatus : updateDpRouteStatStatus,

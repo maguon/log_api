@@ -1531,6 +1531,76 @@ function getDriveCostCsv(req,res,next){
     })
 }
 
+function getDpRouteTaskDetailCsv(req,res,next){
+    var csvString = "";
+    var header = "调度编号"+ ','+"路线起始地"+ ','+"路线目的地"+ ','+"司机"+ ',' +"货车牌号"+ ',' +"计划执行时间"+ ',' +"VIN"+ ','+"委托方"+ ','+"品牌"+ ','+"起始城市"+ ','+
+        "目的城市"+ ','+"经销商"+ ','+"车型";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskDAO.getDpRouteTaskDetail(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSettle ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;
+                parkObj.dpRouteStart = rows[i].dp_route_start;
+                parkObj.dpRouteEnd = rows[i].dp_route_end;
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].task_plan_date == null){
+                    parkObj.taskPlanDate = "";
+                }else{
+                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                }
+                parkObj.vin = rows[i].vin;
+                if(rows[i].short_name == null){
+                    parkObj.shortName = "";
+                }else{
+                    parkObj.shortName = rows[i].short_name;
+                }
+                if(rows[i].make_name == null){
+                    parkObj.makeName = "";
+                }else{
+                    parkObj.makeName = rows[i].make_name;
+                }
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                if(rows[i].short_name == null){
+                    parkObj.shortName = "";
+                }else{
+                    parkObj.shortName = rows[i].short_name;
+                }
+                if(rows[i].size_type == 0){
+                    parkObj.sizeType = "小车";
+                }else{
+                    parkObj.sizeType = "大车";
+                }
+                csvString = csvString+parkObj.id+","+parkObj.dpRouteStart+","+parkObj.dpRouteEnd+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.taskPlanDate+","+
+                    parkObj.vin+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+
+                    parkObj.shortName+","+parkObj.sizeType+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -1559,5 +1629,6 @@ module.exports = {
     updateDpRouteReverseFlag : updateDpRouteReverseFlag,
     updateDpRouteTaskRemark : updateDpRouteTaskRemark,
     queryDriveCost : queryDriveCost,
-    getDriveCostCsv : getDriveCostCsv
+    getDriveCostCsv : getDriveCostCsv,
+    getDpRouteTaskDetailCsv : getDpRouteTaskDetailCsv
 }

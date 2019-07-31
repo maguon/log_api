@@ -777,6 +777,7 @@ function createServer() {
     server.get('/api/dpRouteTask.csv', dpRouteTask.getDpRouteTaskCsv);
     server.get('/api/driveCost', dpRouteTask.queryDriveCost);
     server.get('/api/driveCost.csv' , dpRouteTask.getDriveCostCsv);
+    server.get('/api/dpRouteTaskDetail.csv' , dpRouteTask.getDpRouteTaskDetailCsv);
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
     server.post({path:'/api/user/:userId/emptyDpRouteTask',contentType: 'application/json'},dpRouteTask.createEmptyDpRouteTask,sysRecord.saveRouteRecord);
     server.post({path:'/api/user/:userId/dpRouteTaskBatch',contentType: 'application/json'},dpRouteTask.createDpRouteTaskBatch,sysRecord.saveRouteRecord);
