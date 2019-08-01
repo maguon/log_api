@@ -992,6 +992,7 @@ function createServer() {
      */
     server.get('/api/settleHandoverCarRel', settleHandoverCarRel.querySettleHandoverCarRel);
     server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},settleHandoverCarRel.createSettleHandoverCarRel,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/settleHandoverCarRelFile',contentType: 'multipart/form-data'},settleHandoverCarRel.uploadSettleHandoverCarRelFile);
     server.del('/api/user/:userId/settleHandover/:settleHandoverId/car/:carId' , settleHandoverCarRel.removeSettleHandoverCarRel);
 
     /**

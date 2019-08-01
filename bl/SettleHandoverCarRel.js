@@ -11,10 +11,13 @@ var sysConst = require('../util/SysConst.js');
 var settleHandoverCarRelDAO = require('../dao/SettleHandoverCarRelDAO.js');
 var settleHandoverDAO = require('../dao/SettleHandoverDAO.js');
 var dpRouteLoadTaskDetailDAO = require('../dao/DpRouteLoadTaskDetailDAO.js');
+var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SettleHandoverCarRel.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createSettleHandoverCarRel(req,res,next){
     var params = req.params ;
@@ -201,10 +204,82 @@ function removeSettleHandoverCarRel(req,res,next){
     })
 }
 
+function uploadSettleHandoverCarRelFile(req,res,next){
+    var params = req.params;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    vin : objArray[i].VIN,
+                    entrustId : objArray[i].委托方ID,
+                    routeStartId : objArray[i].起始城市ID,
+                    addrId : objArray[i].发运地址ID,
+                    routeEndId : objArray[i].目的地ID,
+                    receiveId : objArray[i].经销商ID,
+                    row : i+1,
+                }
+                carDAO.getCarList(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getCarList ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.carId = rows[0].id;
+                        }else{
+                            parkObj.carId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(parkObj.carId>0){
+                    var subParams = {
+                        settleHandoverId : 0,
+                        carId: parkObj.carId,
+                        row: i + 1
+                    }
+                    settleHandoverCarRelDAO.addSettleHandoverCarRel(subParams, function (err, result) {
+                        if (err) {
+                            logger.error(' uploadSettleHandoverCarRelFile ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null, i);
+                        } else {
+                            if (result && result.insertId > 0) {
+                                successedInsert = successedInsert + result.affectedRows;
+                                logger.info(' uploadSettleHandoverCarRelFile ' + 'success');
+                            } else {
+                                logger.warn(' uploadSettleHandoverCarRelFile ' + 'failed');
+                            }
+                            that(null, i);
+                        }
+                    })
+                }else{
+                    that(null,i);
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadSettleHandoverCarRelFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 
 module.exports = {
     createSettleHandoverCarRel : createSettleHandoverCarRel,
     querySettleHandoverCarRel : querySettleHandoverCarRel,
-    removeSettleHandoverCarRel : removeSettleHandoverCarRel
+    removeSettleHandoverCarRel : removeSettleHandoverCarRel,
+    uploadSettleHandoverCarRelFile : uploadSettleHandoverCarRelFile
 }
 
