@@ -165,6 +165,7 @@ function getNotCompletedDpDemand(params,callback) {
         paramsArray[i++] = params.routeEndId;
         query = query + " and dpd.route_end_id = ? ";
     }
+    query = query + ' order by dpd.id desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getNotCompletedDpDemand ');
         return callback(error,rows);
