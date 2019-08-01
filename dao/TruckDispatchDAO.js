@@ -242,6 +242,14 @@ function getCityTruckDispatchCount(params,callback) {
         paramsArray[i++] = params.currentCity;
         query = query + " and td.current_city = ? ";
     }
+    if(params.taskStart){
+        paramsArray[i++] = params.taskStart;
+        query = query + " and td.task_start = ? ";
+    }
+    if(params.taskEnd){
+        paramsArray[i++] = params.taskEnd;
+        query = query + " and td.task_end = ? ";
+    }
     if(params.cityTaskStart){
         query = query + " and concat(td.current_city,td.task_start) like '%"+params.cityTaskStart+"%'";
 
