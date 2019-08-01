@@ -77,6 +77,20 @@ function queryDpDemandBase(req,res,next){
     })
 }
 
+function queryNotCompletedDpDemand(req,res,next){
+    var params = req.params ;
+    dpDemandDAO.getNotCompletedDpDemand(params,function(error,result){
+        if (error) {
+            logger.error(' queryNotCompletedDpDemand ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryNotCompletedDpDemand ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDpDemandStatus(req,res,next){
     var params = req.params;
     Seq().seq(function(){
@@ -262,6 +276,7 @@ module.exports = {
     createDpDemand : createDpDemand,
     queryDpDemand : queryDpDemand,
     queryDpDemandBase : queryDpDemandBase,
+    queryNotCompletedDpDemand : queryNotCompletedDpDemand,
     updateDpDemandStatus : updateDpDemandStatus,
     createEntrustDpDemand : createEntrustDpDemand,
     queryEntrustDpDemand : queryEntrustDpDemand,

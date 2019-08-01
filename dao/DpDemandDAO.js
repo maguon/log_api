@@ -146,6 +146,31 @@ function getDpDemandBase(params,callback) {
     });
 }
 
+function getNotCompletedDpDemand(params,callback) {
+    var query = " select dpd.*,ba.addr_name,r.short_name " +
+        " from dp_demand_info dpd " +
+        " left join base_addr ba on dpd.base_addr_id = ba.id " +
+        " left join receive_info r on dpd.receive_id = r.id" +
+        " where dpd.id is not null and dpd.plan_count<dpd.pre_count and dpd.demand_status = 1 ";
+    var paramsArray=[],i=0;
+    if(params.dpDemandId){
+        paramsArray[i++] = params.dpDemandId;
+        query = query + " and dpd.id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dpd.route_start_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dpd.route_end_id = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getNotCompletedDpDemand ');
+        return callback(error,rows);
+    });
+}
+
 function updateDpDemandPreCountMinus(params,callback){
     var query = " update dp_demand_info set pre_count = pre_count - 1 " +
         " where route_start_id = ? and base_addr_id = ? and route_end_id = ? and receive_id = ? and date_id = ? ";
@@ -288,6 +313,7 @@ module.exports ={
     addDpDemand : addDpDemand,
     getDpDemand : getDpDemand,
     getDpDemandBase : getDpDemandBase,
+    getNotCompletedDpDemand : getNotCompletedDpDemand,
     updateDpDemandPreCountMinus : updateDpDemandPreCountMinus,
     updateDpDemandPreCountPlus : updateDpDemandPreCountPlus,
     updateDpDemandPlanCount : updateDpDemandPlanCount,
