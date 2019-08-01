@@ -85,68 +85,107 @@ function createSettleHandover(req,res,next){
     })
 }
 
+// function createSettleHandoverAll(req,res,next){
+//     var params = req.params ;
+//     var settleHandoverId = 0;
+//     var myDate = new Date();
+//     var strDate = moment(myDate).format('YYYYMM');
+//     var yMonth = 0;
+//     var seqId = 0;
+//     Seq().seq(function(){
+//         var that = this;
+//         settleSeqDAO.getSettleSeq(params,function(error,rows){
+//             if (error) {
+//                 logger.error(' getSettleSeq ' + error.message);
+//                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+//             } else{
+//                 if(rows&&rows.length>0&&rows[0].y_month == strDate){
+//                     yMonth = rows[0].y_month;
+//                     seqId = rows[0].seq_id +1;
+//                 }else{
+//                     yMonth = parseInt(strDate);
+//                     seqId =parseInt(strDate +"00001");
+//                 }
+//                 that();
+//             }
+//         })
+//     }).seq(function(){
+//         var that = this;
+//         params.yMonth =yMonth;
+//         params.seqId =seqId;
+//         settleSeqDAO.addSettleSeq(params,function(error,result){
+//             if (error) {
+//                 logger.error(' createSettleSeq ' + error.message);
+//                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+//             } else {
+//                 if(result&&result.insertId>0){
+//                     logger.info(' createSettleSeq ' + 'success');
+//                     that();
+//                 }else{
+//                     resUtil.resetFailedRes(res," 序列生成失败 ");
+//                     return next();
+//                 }
+//             }
+//         })
+//     }).seq(function(){
+//         var that = this;
+//         params.number = seqId;
+//         var receivedDate = moment(params.receivedDate).format('YYYYMMDD');
+//         params.dateId = parseInt(receivedDate);
+//         settleHandoverDAO.addSettleHandoverAll(params,function(error,result){
+//             if (error) {
+//                 logger.error(' createSettleHandoverAll ' + error.message);
+//                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+//             } else {
+//                 if(result&&result.insertId>0){
+//                     settleHandoverId = result.insertId;
+//                     that();
+//                 }else{
+//                     resUtil.resetFailedRes(res," 交接单生成失败 ");
+//                     return next();
+//                 }
+//             }
+//         })
+//     }).seq(function(){
+//         var that = this;
+//         var carIds = params.carIds;
+//         var rowArray = [] ;
+//         rowArray.length= carIds.length;
+//         Seq(rowArray).seqEach(function(rowObj,i){
+//             var that = this;
+//             var subParams ={
+//                 settleHandoverId : settleHandoverId,
+//                 carId : carIds[i],
+//                 row : i+1,
+//             }
+//             settleHandoverCarRelDAO.addSettleHandoverCarRel(subParams,function(err,result){
+//                 if (err) {
+//                     logger.error(' createSettleHandoverCarRel ' + err.message);
+//                     throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+//                 } else {
+//                     if(result&&result.insertId>0){
+//                         logger.info(' createSettleHandoverCarRel ' + 'success');
+//                     }else{
+//                         logger.warn(' createSettleHandoverCarRel ' + 'failed');
+//                     }
+//                     that(null,i);
+//                 }
+//             })
+//         }).seq(function(){
+//             that();
+//         })
+//     }).seq(function(){
+//         logger.info(' createSettleHandoverAll ' + 'success');
+//         resUtil.resetQueryRes(res,{settleHandoverId:settleHandoverId},null);
+//         return next();
+//     })
+// }
+
 function createSettleHandoverAll(req,res,next){
     var params = req.params ;
-    var settleHandoverId = 0;
-    var myDate = new Date();
-    var strDate = moment(myDate).format('YYYYMM');
-    var yMonth = 0;
-    var seqId = 0;
+    var successedInsert = 0;
+    var failedCase = 0;
     Seq().seq(function(){
-        var that = this;
-        settleSeqDAO.getSettleSeq(params,function(error,rows){
-            if (error) {
-                logger.error(' getSettleSeq ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else{
-                if(rows&&rows.length>0&&rows[0].y_month == strDate){
-                    yMonth = rows[0].y_month;
-                    seqId = rows[0].seq_id +1;
-                }else{
-                    yMonth = parseInt(strDate);
-                    seqId =parseInt(strDate +"00001");
-                }
-                that();
-            }
-        })
-    }).seq(function(){
-        var that = this;
-        params.yMonth =yMonth;
-        params.seqId =seqId;
-        settleSeqDAO.addSettleSeq(params,function(error,result){
-            if (error) {
-                logger.error(' createSettleSeq ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    logger.info(' createSettleSeq ' + 'success');
-                    that();
-                }else{
-                    resUtil.resetFailedRes(res," 序列生成失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function(){
-        var that = this;
-        params.number = seqId;
-        var receivedDate = moment(params.receivedDate).format('YYYYMMDD');
-        params.dateId = parseInt(receivedDate);
-        settleHandoverDAO.addSettleHandoverAll(params,function(error,result){
-            if (error) {
-                logger.error(' createSettleHandoverAll ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.insertId>0){
-                    settleHandoverId = result.insertId;
-                    that();
-                }else{
-                    resUtil.resetFailedRes(res," 交接单生成失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function(){
         var that = this;
         var carIds = params.carIds;
         var rowArray = [] ;
@@ -154,16 +193,19 @@ function createSettleHandoverAll(req,res,next){
         Seq(rowArray).seqEach(function(rowObj,i){
             var that = this;
             var subParams ={
-                settleHandoverId : settleHandoverId,
+                settleHandoverId : 0,
                 carId : carIds[i],
                 row : i+1,
             }
             settleHandoverCarRelDAO.addSettleHandoverCarRel(subParams,function(err,result){
                 if (err) {
                     logger.error(' createSettleHandoverCarRel ' + err.message);
-                    throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    failedCase = failedCase+1;
+                    that(null, i);
                 } else {
                     if(result&&result.insertId>0){
+                        successedInsert = successedInsert + result.affectedRows;
                         logger.info(' createSettleHandoverCarRel ' + 'success');
                     }else{
                         logger.warn(' createSettleHandoverCarRel ' + 'failed');
@@ -176,7 +218,7 @@ function createSettleHandoverAll(req,res,next){
         })
     }).seq(function(){
         logger.info(' createSettleHandoverAll ' + 'success');
-        resUtil.resetQueryRes(res,{settleHandoverId:settleHandoverId},null);
+        resUtil.resetQueryRes(res,{successedInsert:successedInsert,failedCase:failedCase},null);
         return next();
     })
 }
