@@ -222,6 +222,7 @@ function uploadSettleHandoverCarRelFile(req,res,next){
                     addrId : objArray[i].发运地址ID,
                     routeEndId : objArray[i].目的地ID,
                     receiveId : objArray[i].经销商ID,
+                    carStatus : sysConst.CAR_STATUS.completed,
                     row : i+1,
                 }
                 carDAO.getCarList(subParams,function(error,rows){
