@@ -73,7 +73,7 @@ function updateDeviceUpdatedOn(req,res,next){
                 } else {
                     if(rows && rows.length<1){
                         logger.warn(' changeUserToken ' + params.userId+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
-                        resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_USER_UNREGISTERED) ;
+                        resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR) ;
                         return next();
                     }else{
                         var user = {
