@@ -58,9 +58,9 @@ function updateUserDeviceToken (req,res,next){
 
 function updateDeviceUpdatedOn(req,res,next){
     var params = req.params;
-    var tokenObj = 81;
+    var tokenObj = oAuthUtil.parseAccessToken(params.token);
     if(tokenObj){
-        if(params.userId==81){
+        if(params.userId==tokenObj.userId){
             var subParams ={
                 userId : params.userId,
                 sa : 0,
@@ -73,7 +73,7 @@ function updateDeviceUpdatedOn(req,res,next){
                 } else {
                     if(rows && rows.length<1){
                         logger.warn(' changeUserToken ' + params.userId+ sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
-                        resUtil.resetFailedRes(res,sysMsg.SYS_AUTH_TOKEN_ERROR) ;
+                        resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_USER_UNREGISTERED) ;
                         return next();
                     }else{
                         var user = {
