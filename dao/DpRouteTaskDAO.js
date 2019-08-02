@@ -815,7 +815,7 @@ function updateDpRouteTaskRemark(params,callback){
 function getDriveCost(params,callback) {
     var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num, " +
         " drcrm.total_clean_fee,drcrm.total_trailer_fee,drcrm.car_parking_fee,drcrm.total_run_fee,drcrm.lead_fee, " +
-        " dprtfm.truck_parking_fee,dprtfm.car_oil_fee,dprtfm.car_total_fee, " +
+        " dprtfm.truck_parking_fee,dprtfm.car_oil_fee,dprtfm.car_total_fee,dprtfm.other_fee, " +
         " deorm.oil_fee,deorm.urea_fee, " +
         " dpm.peccancy_under_fee,dpm.peccancy_company_fee, " +
         " tem.etc_fee, " +
@@ -835,7 +835,7 @@ function getDriveCost(params,callback) {
         " where drcr.date_id>="+params.dateIdStart+" and drcr.date_id<="+params.dateIdEnd+" and drcr.status=2 " +
         " group by drcr.drive_id,drcr.truck_id) drcrm  on dprm.drive_id = drcrm.drive_id and dprm.truck_id = drcrm.truck_id " +
         " left join(select dprtf.drive_id,dprtf.truck_id,sum(dprtf.total_price) truck_parking_fee," +
-        " sum(dprtf.car_oil_fee) car_oil_fee,sum(dprtf.car_total_price) car_total_fee " +
+        " sum(dprtf.car_oil_fee) car_oil_fee,sum(dprtf.car_total_price) car_total_fee,sum(dprtf.other_fee) other_fee " +
         " from dp_route_task_fee dprtf " +
         " where dprtf.date_id>="+params.dateIdStart+" and dprtf.date_id<="+params.dateIdEnd+" and dprtf.status=2 " +
         " group by dprtf.drive_id,dprtf.truck_id) dprtfm on dprm.drive_id = dprtfm.drive_id and dprm.truck_id = dprtfm.truck_id " +
