@@ -776,3 +776,8 @@ ADD COLUMN `grant_date_id`  int(4) NULL DEFAULT NULL COMMENT '发放时间' AFTE
 -- ----------------------------
 ALTER TABLE `drive_exceed_oil_rel`
 ADD COLUMN `grant_date_id`  int(4) NULL DEFAULT NULL COMMENT '发放时间' AFTER `payment_status`;
+-- ----------------------------
+-- 2019-08-02 更新
+-- ----------------------------
+ALTER TABLE `drive_truck_month_value`
+ADD COLUMN `other_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '其他费用' AFTER `truck_parking_fee`;
