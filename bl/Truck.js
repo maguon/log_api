@@ -1092,8 +1092,12 @@ function getTruckTrailerCsv(req,res,next){
 
 function getTruckCostCsv(req,res,next){
     var csvString = "";
-    var header = "月份" + ',' +"货车牌号" + ',' +"货车类型" + ',' +"所属公司" + ',' + "维修费" + ','+ "配件费" + ','+ "保养费" + ','+
-        "过路费"+ ',' +"违章个人" + ','+ "违章公司" + ','+ "油费" + ','+ "尿素费"+ ',' + "货车保险";
+    var header = "月份" + ',' +"货车牌号" + ',' +"货车类型" + ',' +"所属公司" + ',' +
+        "洗车费" + ',' + "拖车费" + ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ',' +
+        "货车停车费"+ ','+"商品车停车费"+ ','+ "商品车加油费"+ ','+"其他费用"+ ','+
+        "维修费" + ','+ "配件费" + ','+ "保养费" + ','+"过路费"+ ',' +
+        "违章个人" + ','+ "违章公司" + ','+"货车事故个人"+ ','+ "货车事故公司"+ ',' +
+        "油费" + ','+ "尿素费"+ ',' + "货车保险";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -1113,6 +1117,51 @@ function getTruckCostCsv(req,res,next){
                     parkObj.truckType = "挂车";
                 }
                 parkObj.companyName = rows[i].company_name;
+                if(rows[i].total_clean_fee == null){
+                    parkObj.totalCleanFee = "";
+                }else{
+                    parkObj.totalCleanFee = rows[i].total_clean_fee;
+                }
+                if(rows[i].total_trailer_fee == null){
+                    parkObj.totalTrailerFee = "";
+                }else{
+                    parkObj.totalTrailerFee = rows[i].total_trailer_fee;
+                }
+                if(rows[i].car_parking_fee == null){
+                    parkObj.carParkingFee = "";
+                }else{
+                    parkObj.carParkingFee = rows[i].car_parking_fee;
+                }
+                if(rows[i].total_run_fee == null){
+                    parkObj.totalRunFee = "";
+                }else{
+                    parkObj.totalRunFee = rows[i].total_run_fee;
+                }
+                if(rows[i].lead_fee == null){
+                    parkObj.leadFee = "";
+                }else{
+                    parkObj.leadFee = rows[i].lead_fee;
+                }
+                if(rows[i].truck_parking_fee == null){
+                    parkObj.truckParkingFee = "";
+                }else{
+                    parkObj.truckParkingFee = rows[i].truck_parking_fee;
+                }
+                if(rows[i].car_total_fee == null){
+                    parkObj.carTotalFee = "";
+                }else{
+                    parkObj.carTotalFee = rows[i].car_total_fee;
+                }
+                if(rows[i].car_oil_fee == null){
+                    parkObj.carOilFee = "";
+                }else{
+                    parkObj.carOilFee = rows[i].car_oil_fee;
+                }
+                if(rows[i].other_fee == null){
+                    parkObj.otherFee = "";
+                }else{
+                    parkObj.otherFee = rows[i].other_fee;
+                }
                 if(rows[i].repair_fee == null){
                     parkObj.repairFee = "";
                 }else{
@@ -1143,6 +1192,16 @@ function getTruckCostCsv(req,res,next){
                 }else{
                     parkObj.peccancyCompanyFee = rows[i].peccancy_company_fee;
                 }
+                if(rows[i].accident_under_fee == null){
+                    parkObj.accidentUnderFee = "";
+                }else{
+                    parkObj.accidentUnderFee = rows[i].accident_under_fee;
+                }
+                if(rows[i].accident_company_fee == null){
+                    parkObj.accidentCompanyFee = "";
+                }else{
+                    parkObj.accidentCompanyFee = rows[i].accident_company_fee;
+                }
                 if(rows[i].oil_fee == null){
                     parkObj.oilFee = "";
                 }else{
@@ -1159,8 +1218,11 @@ function getTruckCostCsv(req,res,next){
                     parkObj.insureFee = rows[i].insure_total_money;
                 }
                 csvString = csvString+parkObj.yMonth+","+parkObj.truckNum+","+parkObj.truckType+","+parkObj.companyName+","+
-                    parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+parkObj.etcFee+","+parkObj.peccancyUnderFee+","+
-                    parkObj.peccancyCompanyFee+","+parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.insureFee+ '\r\n';
+                    parkObj.totalCleanFee+","+parkObj.totalTrailerFee +","+parkObj.carParkingFee+","+parkObj.totalRunFee+","+parkObj.leadFee +","+
+                    parkObj.truckParkingFee +","+parkObj.carTotalFee +","+parkObj.carOilFee+","+parkObj.otherFee+","+
+                    parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+parkObj.etcFee+","+
+                    parkObj.peccancyUnderFee+","+parkObj.peccancyCompanyFee+","+parkObj.accidentUnderFee+","+parkObj.accidentCompanyFee+","+
+                    parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.insureFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

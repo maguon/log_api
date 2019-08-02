@@ -431,15 +431,29 @@ function getTruckOperate(params,callback) {
 
 function getTruckCost(params,callback) {
     var query = " select tm.id,tm.truck_num,tm.truck_type,tm.operate_type,tm.company_name, " +
+        " drcrm.total_clean_fee,drcrm.total_trailer_fee,drcrm.car_parking_fee,drcrm.total_run_fee,drcrm.lead_fee, " +
+        " dprtfm.truck_parking_fee,dprtfm.car_oil_fee,dprtfm.car_total_fee,dprtfm.other_fee, " +
         " trrm.repair_fee,trrm.parts_fee,trrm.maintain_fee, " +
         " tem.etc_fee, " +
         " dpm.peccancy_under_fee,dpm.peccancy_company_fee, " +
+        " taim.accident_under_fee,taim.accident_company_fee, " +
         " deorm.oil_fee,deorm.urea_fee, " +
         " TRUNCATE(tirm.insure_total_money,0) as insure_total_money " +
         " from(select t.id,t.truck_num,t.truck_type,t.operate_type,t.company_id,c.company_name " +
         " from truck_info t " +
         " left join company_info c on t.company_id = c.id " +
         " group by t.id) tm " +
+        " left join (select drcr.truck_id,sum(drcr.total_price) total_clean_fee, " +
+        " sum(drcr.total_trailer_fee) total_trailer_fee,sum(drcr.car_parking_fee) car_parking_fee, " +
+        " sum(drcr.total_run_fee) total_run_fee,sum(drcr.lead_fee) lead_fee " +
+        " from dp_route_load_task_clean_rel drcr " +
+        " where drcr.date_id>="+params.yMonth+"01 and drcr.date_id<="+params.lastDay+" and drcr.status=2 " +
+        " group by drcr.truck_id) drcrm  on tm.id = drcrm.truck_id " +
+        " left join(select dprtf.truck_id,sum(dprtf.total_price) truck_parking_fee," +
+        " sum(dprtf.car_oil_fee) car_oil_fee,sum(dprtf.car_total_price) car_total_fee,sum(dprtf.other_fee) other_fee " +
+        " from dp_route_task_fee dprtf " +
+        " where dprtf.date_id>="+params.yMonth+"01 and dprtf.date_id<="+params.lastDay+" and dprtf.status=2 " +
+        " group by dprtf.truck_id) dprtfm on tm.id = dprtfm.truck_id " +
         " left join(select trr.truck_id,sum(trr.repair_money) repair_fee, " +
         " sum(trr.parts_money) parts_fee,sum(trr.maintain_money) maintain_fee " +
         " from truck_repair_rel trr " +
@@ -453,6 +467,11 @@ function getTruckCost(params,callback) {
         " from drive_peccancy dp " +
         " where dp.handle_date>= "+params.yMonth+"01 and dp.handle_date<="+params.lastDay+
         " group by dp.truck_id) dpm on tm.id = dpm.truck_id " +
+        " left join (select tai.truck_id,sum(tac.under_cost) accident_under_fee,sum(tac.company_cost) accident_company_fee " +
+        " from truck_accident_check tac " +
+        " left join truck_accident_info tai on tac.truck_accident_id = tai.id " +
+        " where tac.date_id>="+params.yMonth+"01 and tac.date_id<="+params.lastDay+"  and tai.accident_status =3 " +
+        " group by tai.truck_id) taim on tm.id = taim.truck_id " +
         " left join (select deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
         " from drive_exceed_oil_rel deor " +
         " where deor.payment_status = 1 and deor.date_id>= "+params.yMonth+"01 and deor.date_id<="+params.lastDay+
