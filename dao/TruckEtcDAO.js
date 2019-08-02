@@ -144,10 +144,11 @@ function getTruckEtcFeeCount(params,callback) {
 }
 
 function updatePaymentStatus(params,callback){
-    var query = " update truck_etc set payment_status = ? , grant_date_id = ? where id = ? and payment_status = 0 " ;
+    var query = " update truck_etc set payment_status = ? , etc_date = ? , date_id = ? where id = ? and payment_status = 0 " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.paymentStatus;
-    paramsArray[i++]=params.grantDateId;
+    paramsArray[i++]=params.etcDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.truckEtcId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updatePaymentStatus ');

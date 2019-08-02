@@ -150,7 +150,8 @@ function updatePaymentStatus(req,res,next){
     var params = req.params ;
     var myDate = new Date();
     var strDate = moment(myDate).format('YYYYMMDD');
-    params.grantDateId = parseInt(strDate);
+    params.etcDate = myDate;
+    params.dateId = parseInt(strDate);
     truckEtcDAO.updatePaymentStatus(params,function(error,result){
         if (error) {
             logger.error(' updatePaymentStatus ' + error.message);
@@ -270,7 +271,8 @@ function updatePaymentStatusAll(req,res,next){
             var that = this;
             var subParams ={
                 paymentStatus : params.paymentStatus,
-                grantDateId : parseInt(strDate),
+                etcDate : myDate,
+                dateId : parseInt(strDate),
                 truckEtcId : truckEtcIds[i],
                 row : i+1,
             }
