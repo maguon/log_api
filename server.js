@@ -42,6 +42,7 @@ var driveExceedOilRel = require('./bl/DriveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
 var driveExceedOilPrice = require('./bl/DriveExceedOilPrice.js');
 var driveWork = require('./bl/DriveWork.js');
+var driveSocialSecurity = require('./bl/DriveSocialSecurity.js');
 var driveTruckMonthValue = require('./bl/DriveTruckMonthValue.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
@@ -526,6 +527,13 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveWork',contentType: 'application/json'},driveWork.createDriveWork);
     server.put({path:'/api/user/:userId/driveWork/:driveWorkId',contentType: 'application/json'} ,driveWork.updateDriveWork);
     server.post({path:'/api/user/:userId/driveWorkFile',contentType: 'multipart/form-data'},driveWork.uploadDriveWorkFile);
+
+    /**
+     * DriveSocialSecurity Module
+     */
+    server.get('/api/driveSocialSecurity' , driveSocialSecurity.queryDriveSocialSecurity);
+    server.post({path:'/api/user/:userId/driveSocialSecurity',contentType: 'application/json'},driveSocialSecurity.createDriveSocialSecurity);
+    server.put({path:'/api/user/:userId/socialSecurity/:socialSecurityId',contentType: 'application/json'} ,driveSocialSecurity.updateDriveSocialSecurity);
 
     /**
      * DriveTruckMonthValue Module
