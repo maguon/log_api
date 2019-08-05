@@ -63,9 +63,80 @@ function updateDriveSocialSecurity(req,res,next){
     })
 }
 
+function uploadDriveSocialSecurityFile(req,res,next){
+    var params = req.params;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    driveName : objArray[i].司机姓名,
+                    mobile : objArray[i].电话,
+                    row : i+1,
+                }
+                driveDAO.getDrive(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getDrive ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.driveId = rows[0].id;
+                        }else{
+                            parkObj.driveId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(parkObj.driveId>0){
+                    var subParams ={
+                        driveId : parkObj.driveId,
+                        driveName : objArray[i].司机姓名,
+                        mobile : objArray[i].电话,
+                        yMonth : objArray[i].月份,
+                        socialSecurityFee : objArray[i].社保缴费,
+                        row : i+1
+                    }
+                    driveSocialSecurityDAO.addDriveSocialSecurity(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' addDriveSocialSecurity ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result&&result.insertId>0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' addDriveSocialSecurity ' + 'success');
+                            }else{
+                                logger.warn(' addDriveSocialSecurity ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
+                    that(null,i);
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadDriveSocialSecurityFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 
 module.exports = {
     createDriveSocialSecurity : createDriveSocialSecurity,
     queryDriveSocialSecurity : queryDriveSocialSecurity,
-    updateDriveSocialSecurity : updateDriveSocialSecurity
+    updateDriveSocialSecurity : updateDriveSocialSecurity,
+    uploadDriveSocialSecurityFile : uploadDriveSocialSecurityFile
 }
