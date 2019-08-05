@@ -13983,9 +13983,9 @@
         ],
         "parameters": [
           {
-            "name": "driveSocialSecurityId",
+            "name": "socialSecurityId",
             "in": "query",
-            "description": "driveSocialSecurity id",
+            "description": "socialSecurity id",
             "required": false,
             "type": "integer"
 
@@ -14051,9 +14051,9 @@
         ],
         "parameters": [
           {
-            "name": "driveSocialSecurityId",
+            "name": "socialSecurityId",
             "in": "query",
-            "description": "driveSocialSecurity id",
+            "description": "socialSecurity id",
             "required": false,
             "type": "integer"
 
