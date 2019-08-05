@@ -781,3 +781,22 @@ ADD COLUMN `grant_date_id`  int(4) NULL DEFAULT NULL COMMENT '发放时间' AFTE
 -- ----------------------------
 ALTER TABLE `drive_truck_month_value`
 ADD COLUMN `other_fee`  decimal(10,2) NULL DEFAULT 0.00 COMMENT '其他费用' AFTER `truck_parking_fee`;
+-- ----------------------------
+-- 2019-08-05 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for drive_social_security
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_social_security`;
+CREATE TABLE `drive_social_security` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drive_id` int(10) DEFAULT '0' COMMENT '司机ID',
+  `drive_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '司机姓名',
+  `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户名(手机号)',
+  `y_month` int(4) DEFAULT '0' COMMENT '月份',
+  `social_security_fee` decimal(10,2) DEFAULT '0.00' COMMENT '社保费',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `drive_id` (`drive_id`,`y_month`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
