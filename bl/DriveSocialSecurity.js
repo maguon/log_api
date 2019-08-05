@@ -99,7 +99,7 @@ function uploadDriveSocialSecurityFile(req,res,next){
                         driveName : objArray[i].司机姓名,
                         mobile : objArray[i].电话,
                         yMonth : objArray[i].月份,
-                        socialSecurityFee : objArray[i].社保缴费,
+                        socialSecurityFee : objArray[i].社保费,
                         row : i+1
                     }
                     driveSocialSecurityDAO.addDriveSocialSecurity(subParams,function(err,result){
@@ -133,10 +133,49 @@ function uploadDriveSocialSecurityFile(req,res,next){
     })
 }
 
+function getDriveSocialSecurityCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' +"司机姓名" + ',' + "手机号"+ ','+"社保费";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveSocialSecurityDAO.getDriveSocialSecurity(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSocialSecurity ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.yMonth = rows[i].y_month;
+                parkObj.driveName = rows[i].drive_name;
+                if(rows[i].mobile == null){
+                    parkObj.mobile = "";
+                }else{
+                    parkObj.mobile = rows[i].mobile;
+                }
+                if(rows[i].social_security_fee == null){
+                    parkObj.socialSecurityFee = "";
+                }else{
+                    parkObj.socialSecurityFee = rows[i].social_security_fee;
+                }
+                csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.socialSecurityFee+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDriveSocialSecurity : createDriveSocialSecurity,
     queryDriveSocialSecurity : queryDriveSocialSecurity,
     updateDriveSocialSecurity : updateDriveSocialSecurity,
-    uploadDriveSocialSecurityFile : uploadDriveSocialSecurityFile
+    uploadDriveSocialSecurityFile : uploadDriveSocialSecurityFile,
+    getDriveSocialSecurityCsv : getDriveSocialSecurityCsv
 }

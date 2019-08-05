@@ -14039,6 +14039,58 @@
         }
       }
     },
+    "/driveSocialSecurity.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveSocialSecurity csv",
+        "description": "query driveSocialSecurityCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSocialSecurityId",
+            "in": "query",
+            "description": "driveSocialSecurity id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSocialSecurity"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSocialSecurity id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSocialSecurity": {
       "post": {
         "tags": [

@@ -532,6 +532,7 @@ function createServer() {
      * DriveSocialSecurity Module
      */
     server.get('/api/driveSocialSecurity' , driveSocialSecurity.queryDriveSocialSecurity);
+    server.get('/api/driveSocialSecurity.csv' , driveSocialSecurity.getDriveSocialSecurityCsv);
     server.post({path:'/api/user/:userId/driveSocialSecurity',contentType: 'application/json'},driveSocialSecurity.createDriveSocialSecurity);
     server.post({path:'/api/user/:userId/driveSocialSecurityFile',contentType: 'multipart/form-data'},driveSocialSecurity.uploadDriveSocialSecurityFile);
     server.put({path:'/api/user/:userId/socialSecurity/:socialSecurityId',contentType: 'application/json'} ,driveSocialSecurity.updateDriveSocialSecurity);
