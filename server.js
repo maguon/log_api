@@ -90,6 +90,7 @@ var settleHandoverCarRel = require('./bl/SettleHandoverCarRel.js');
 var settleCar = require('./bl/SettleCar.js');
 var settleOuterTruck = require('./bl/SettleOuterTruck.js');
 var settleOuterInvoice = require('./bl/SettleOuterInvoice.js');
+var settleOuterInvoiceCarRel = require('./bl/SettleOuterInvoiceCarRel.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -1034,6 +1035,11 @@ function createServer() {
     server.get('/api/settleOuterInvoiceBatch', settleOuterInvoice.createSettleOuterInvoiceBatch);
     server.get('/api/settleOuterInvoice', settleOuterInvoice.querySettleOuterInvoice);
     server.put({path:'/api/user/:userId/settleOuterInvoice/:outerInvoiceId',contentType: 'application/json'} ,settleOuterInvoice.updateSettleOuterInvoice);
+
+    /**
+     * SettleOuterInvoiceCarRel Module
+     */
+    server.get('/api/settleOuterInvoiceCarRel', settleOuterInvoiceCarRel.querySettleOuterInvoiceCarRel);
 
     /**
      * MsgPush Module

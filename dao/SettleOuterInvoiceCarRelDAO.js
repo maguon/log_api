@@ -73,7 +73,33 @@ function addSettleOuterInvoiceCarRelBatch(params,callback) {
     });
 }
 
+function getSettleOuterInvoiceCarRel(params,callback) {
+    var query = " select soicr.*,c.vin " +
+        " from settle_outer_invoice_car_rel soicr " +
+        " left join car_info c on soicr.car_id = c.id " +
+        " where soicr.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.relId){
+        paramsArray[i++] = params.relId;
+        query = query + " and soicr.id = ? ";
+    }
+    if(params.outerInvoiceId){
+        paramsArray[i++] = params.outerInvoiceId;
+        query = query + " and soicr.outer_invoice_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getSettleOuterInvoiceCarRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addSettleOuterInvoiceCarRelBatch : addSettleOuterInvoiceCarRelBatch
+    addSettleOuterInvoiceCarRelBatch : addSettleOuterInvoiceCarRelBatch,
+    getSettleOuterInvoiceCarRel : getSettleOuterInvoiceCarRel
 }
