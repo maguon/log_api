@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
+var sysConst = require('../util/SysConst.js');
 var settleOuterInvoiceDAO = require('../dao/SettleOuterInvoiceDAO.js');
 var settleOuterInvoiceCarRelDAO = require('../dao/SettleOuterInvoiceCarRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
@@ -83,9 +84,58 @@ function updateSettleOuterInvoice(req,res,next){
     })
 }
 
+function removeSettleOuterInvoice(req,res,next){
+    var params = req.params;
+    Seq().seq(function(){
+        var that = this;
+        params.invoiceStatus = sysConst.INVOICE_STATUS.not_completed;
+        settleOuterInvoiceDAO.getSettleOuterInvoice(params,function(error,rows){
+            if (error) {
+                logger.error(' getSettleOuterInvoice ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else{
+                if(rows&&rows.length>0) {
+                    that();
+                }else{
+                    logger.warn(' getSettleOuterInvoice ' + 'failed');
+                    resUtil.resetFailedRes(res,"开票信息已处理，不能删除");
+                    return next();
+                }
+            }
+        })
+    }).seq(function (){
+        var that = this;
+        settleOuterInvoiceCarRelDAO.deleteSettleOuterInvoiceCarRel(params,function(error,result){
+            if (error) {
+                logger.error(' deleteSettleOuterInvoiceCarRel ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' deleteSettleOuterInvoiceCarRel ' + 'success');
+                }else{
+                    logger.warn(' deleteSettleOuterInvoiceCarRel ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function(){
+        settleOuterInvoiceDAO.deleteSettleOuterInvoice(params,function(error,result){
+            if (error) {
+                logger.error(' removeSettleOuterInvoice ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' removeSettleOuterInvoice ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 
 module.exports = {
     createSettleOuterInvoiceBatch : createSettleOuterInvoiceBatch,
     querySettleOuterInvoice : querySettleOuterInvoice,
-    updateSettleOuterInvoice : updateSettleOuterInvoice
+    updateSettleOuterInvoice : updateSettleOuterInvoice,
+    removeSettleOuterInvoice : removeSettleOuterInvoice
 }

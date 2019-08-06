@@ -123,9 +123,20 @@ function updateSettleOuterInvoice(params,callback){
     });
 }
 
+function deleteSettleOuterInvoice(params,callback){
+    var query = " delete from settle_outer_invoice where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.outerInvoiceId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteSettleOuterInvoice ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addSettleOuterInvoiceBatch : addSettleOuterInvoiceBatch,
     getSettleOuterInvoice : getSettleOuterInvoice,
-    updateSettleOuterInvoice : updateSettleOuterInvoice
+    updateSettleOuterInvoice : updateSettleOuterInvoice,
+    deleteSettleOuterInvoice : deleteSettleOuterInvoice
 }

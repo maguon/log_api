@@ -35228,6 +35228,41 @@
             "description": "Invalid token value or invalid settleOuterInvoice id"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "Deletes a settleOuterInvoice",
+        "description": "",
+        "operationId": "deleteSettleOuterInvoice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "outerInvoiceId",
+            "in": "path",
+            "description": "outerInvoice id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "contacts not found"
+          }
+        }
       }
     },
     "/settleOuterInvoiceCarRel": {

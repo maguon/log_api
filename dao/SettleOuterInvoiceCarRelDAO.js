@@ -105,8 +105,19 @@ function getSettleOuterInvoiceCarRel(params,callback) {
     });
 }
 
+function deleteSettleOuterInvoiceCarRel(params,callback){
+    var query = " delete from settle_outer_invoice_car_rel where outer_invoice_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.outerInvoiceId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' deleteSettleOuterInvoiceCarRel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addSettleOuterInvoiceCarRelBatch : addSettleOuterInvoiceCarRelBatch,
-    getSettleOuterInvoiceCarRel : getSettleOuterInvoiceCarRel
+    getSettleOuterInvoiceCarRel : getSettleOuterInvoiceCarRel,
+    deleteSettleOuterInvoiceCarRel : deleteSettleOuterInvoiceCarRel
 }
