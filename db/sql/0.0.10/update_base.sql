@@ -800,3 +800,40 @@ CREATE TABLE `drive_social_security` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `drive_id` (`drive_id`,`y_month`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-08-06 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for settle_outer_invoice
+-- ----------------------------
+DROP TABLE IF EXISTS `settle_outer_invoice`;
+CREATE TABLE `settle_outer_invoice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(10) DEFAULT '0' COMMENT '外协公司ID',
+  `car_count` int(10) DEFAULT '0' COMMENT '商品车数量',
+  `plan_price` decimal(10,2) DEFAULT '0.00' COMMENT '预计金额',
+  `update_price` decimal(10,2) DEFAULT '0.00' COMMENT '调整金额',
+  `actual_price` decimal(10,2) DEFAULT '0.00' COMMENT '实际金额',
+  `remark` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `invoice_status` tinyint(1) DEFAULT '1' COMMENT '处理状态(1-未处理,2-已处理)',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for settle_outer_invoice_car_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `settle_outer_invoice_car_rel`;
+CREATE TABLE `settle_outer_invoice_car_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `outer_invoice_id` int(10) DEFAULT '0',
+  `car_id` int(10) DEFAULT '0',
+  `distance` decimal(10,2) DEFAULT '0.00' COMMENT '公里数',
+  `fee` decimal(10,2) DEFAULT '0.00' COMMENT '单价',
+  `total_fee` decimal(10,2) DEFAULT '0.00' COMMENT '总价',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `car_id` (`car_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
