@@ -1033,6 +1033,7 @@ function createServer() {
      */
     server.get('/api/settleOuterInvoiceBatch', settleOuterInvoice.createSettleOuterInvoiceBatch);
     server.get('/api/settleOuterInvoice', settleOuterInvoice.querySettleOuterInvoice);
+    server.put({path:'/api/user/:userId/settleOuterInvoice/:outerInvoiceId',contentType: 'application/json'} ,settleOuterInvoice.updateSettleOuterInvoice);
 
     /**
      * MsgPush Module

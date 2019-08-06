@@ -69,8 +69,23 @@ function querySettleOuterInvoice(req,res,next){
     })
 }
 
+function updateSettleOuterInvoice(req,res,next){
+    var params = req.params ;
+    settleOuterInvoiceDAO.updateSettleOuterInvoice(params,function(error,result){
+        if (error) {
+            logger.error(' updateSettleOuterInvoice ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateSettleOuterInvoice ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 
 module.exports = {
     createSettleOuterInvoiceBatch : createSettleOuterInvoiceBatch,
-    querySettleOuterInvoice : querySettleOuterInvoice
+    querySettleOuterInvoice : querySettleOuterInvoice,
+    updateSettleOuterInvoice : updateSettleOuterInvoice
 }

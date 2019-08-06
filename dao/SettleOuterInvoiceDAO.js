@@ -103,8 +103,22 @@ function getSettleOuterInvoice(params,callback) {
     });
 }
 
+function updateSettleOuterInvoice(params,callback){
+    var query = " update settle_outer_invoice set update_price = ? , actual_price = ? , remark = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.updatePrice;
+    paramsArray[i++]=params.actualPrice;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.outerInvoiceId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateSettleOuterInvoice ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addSettleOuterInvoiceBatch : addSettleOuterInvoiceBatch,
-    getSettleOuterInvoice : getSettleOuterInvoice
+    getSettleOuterInvoice : getSettleOuterInvoice,
+    updateSettleOuterInvoice : updateSettleOuterInvoice
 }

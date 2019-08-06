@@ -35160,6 +35160,60 @@
         }
       }
     },
+    "/user/{userId}/settleOuterInvoice/{outerInvoiceId}": {
+      "put": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "update settleOuterInvoice info",
+        "description": "update settleOuterInvoice info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "outerInvoiceId",
+            "in": "path",
+            "description": "outerInvoice id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleOuterInvoice",
+            "in": "body",
+            "description": "settleOuterInvoice info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/settleOuterInvoice"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterInvoice id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
@@ -38546,6 +38600,24 @@
       },
       "xml": {
         "name": "settleOuterTruck"
+      }
+    },
+    "settleOuterInvoice": {
+      "type": "object",
+      "properties": {
+
+        "updatePrice": {
+          "type": "integer"
+        },
+        "actualPrice": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "settleOuterInvoice"
       }
     }
   },
