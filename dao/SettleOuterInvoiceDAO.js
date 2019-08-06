@@ -17,7 +17,7 @@ function addSettleOuterInvoiceBatch(params,callback) {
         " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
         " and c.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
         " left join settle_outer_invoice_car_rel soicr on c.id = soicr.car_id " +
-        " where dpr.id is not null and c.car_status=9 and soicr.car_id is null ";
+        " where dpr.id is not null and c.car_status=9 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
@@ -66,6 +66,13 @@ function addSettleOuterInvoiceBatch(params,callback) {
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and dpr.truck_id = ? ";
+    }
+    if(params.settleStatus){
+        if(params.settleStatus==1){
+            query = query + " and soicr.car_id is null ";
+        }else{
+            query = query + " and soicr.car_id is not null ";
+        }
     }
     query = query + '  group by t.company_id ';
     db.dbQuery(query,paramsArray,function(error,rows){
