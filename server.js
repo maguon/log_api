@@ -1032,6 +1032,7 @@ function createServer() {
      * SettleOuterInvoice Module
      */
     server.get('/api/settleOuterInvoiceBatch', settleOuterInvoice.createSettleOuterInvoiceBatch);
+    server.get('/api/settleOuterInvoice', settleOuterInvoice.querySettleOuterInvoice);
 
     /**
      * MsgPush Module

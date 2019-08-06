@@ -74,7 +74,37 @@ function addSettleOuterInvoiceBatch(params,callback) {
     });
 }
 
+function getSettleOuterInvoice(params,callback) {
+    var query = " select soi.*,c.company_name from settle_outer_invoice soi " +
+        " left join company_info c on soi.company_id = c.id " +
+        " where soi.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.outerInvoiceId){
+        paramsArray[i++] = params.outerInvoiceId;
+        query = query + " and soi.id = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and soi.company_id = ? ";
+    }
+    if(params.invoiceStatus){
+        paramsArray[i++] = params.invoiceStatus;
+        query = query + " and soi.invoice_status = ? ";
+    }
+    query = query + '  order by soi.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getSettleOuterInvoice ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
-    addSettleOuterInvoiceBatch : addSettleOuterInvoiceBatch
+    addSettleOuterInvoiceBatch : addSettleOuterInvoiceBatch,
+    getSettleOuterInvoice : getSettleOuterInvoice
 }

@@ -53,10 +53,24 @@ function createSettleOuterInvoiceBatch(req,res,next){
             }
         })
     })
+}
 
+function querySettleOuterInvoice(req,res,next){
+    var params = req.params ;
+    settleOuterInvoiceDAO.getSettleOuterInvoice(params,function(error,result){
+        if (error) {
+            logger.error(' querySettleOuterInvoice ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' querySettleOuterInvoice ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
 }
 
 
 module.exports = {
-    createSettleOuterInvoiceBatch : createSettleOuterInvoiceBatch
+    createSettleOuterInvoiceBatch : createSettleOuterInvoiceBatch,
+    querySettleOuterInvoice : querySettleOuterInvoice
 }
