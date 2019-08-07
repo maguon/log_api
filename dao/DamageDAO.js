@@ -86,6 +86,14 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.makeId;
         query = query + " and c.make_id = ? ";
     }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
     if(params.damageType){
         paramsArray[i++] = params.damageType;
         query = query + " and dc.damage_type = ? ";
