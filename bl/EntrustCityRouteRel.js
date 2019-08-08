@@ -288,69 +288,73 @@ function uploadEntrustCityRouteRelFile(req,res,next){
                     }
                 })
             }).seq(function(){
-                if(relFlag){
-                    if(objArray[i].起始城市ID>objArray[i].目的地ID){
-                        parkObj.cityRouteId = objArray[i].目的地ID+''+objArray[i].起始城市ID;
+                if(objArray[i].车型=='1'||objArray[i].车型=='0'){
+                    if(relFlag){
+                        if(objArray[i].起始城市ID>objArray[i].目的地ID){
+                            parkObj.cityRouteId = objArray[i].目的地ID+''+objArray[i].起始城市ID;
+                        }else{
+                            parkObj.cityRouteId = objArray[i].起始城市ID+''+objArray[i].目的地ID;
+                        }
+                        var subParams ={
+                            entrustId : objArray[i].委托方ID,
+                            cityRouteId : parkObj.cityRouteId,
+                            makeId : objArray[i].制造商ID,
+                            makeName : parkObj.makeName,
+                            routeStartId : objArray[i].起始城市ID,
+                            routeEndId : objArray[i].目的地ID,
+                            sizeType : objArray[i].车型,
+                            distance : objArray[i].公里数,
+                            fee : objArray[i].单价,
+                            twoDistance : objArray[i].二级公里数,
+                            twoFee : objArray[i].二级单价,
+                            row : i+1
+                        }
+                        entrustCityRouteRelDAO.addEntrustCityRouteRel(subParams,function(err,result){
+                            if (err) {
+                                logger.error(' addEntrustCityRouteRel ' + err.message);
+                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                                that(null,i);
+                            } else {
+                                if(result&&result.affectedRows>0){
+                                    successedInsert = successedInsert+result.affectedRows;
+                                    logger.info(' addEntrustCityRouteRel ' + 'success');
+                                }else{
+                                    logger.warn(' addEntrustCityRouteRel ' + 'failed');
+                                }
+                                that(null,i);
+                            }
+                        })
                     }else{
-                        parkObj.cityRouteId = objArray[i].起始城市ID+''+objArray[i].目的地ID;
-                    }
-                    var subParams ={
-                        entrustId : objArray[i].委托方ID,
-                        cityRouteId : parkObj.cityRouteId,
-                        makeId : objArray[i].制造商ID,
-                        makeName : parkObj.makeName,
-                        routeStartId : objArray[i].起始城市ID,
-                        routeEndId : objArray[i].目的地ID,
-                        sizeType : objArray[i].车型,
-                        distance : objArray[i].公里数,
-                        fee : objArray[i].单价,
-                        twoDistance : objArray[i].二级公里数,
-                        twoFee : objArray[i].二级单价,
-                        row : i+1
-                    }
-                    entrustCityRouteRelDAO.addEntrustCityRouteRel(subParams,function(err,result){
-                        if (err) {
-                            logger.error(' addEntrustCityRouteRel ' + err.message);
-                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                            that(null,i);
-                        } else {
-                            if(result&&result.affectedRows>0){
-                                successedInsert = successedInsert+result.affectedRows;
-                                logger.info(' addEntrustCityRouteRel ' + 'success');
-                            }else{
-                                logger.warn(' addEntrustCityRouteRel ' + 'failed');
-                            }
-                            that(null,i);
+                        var subParams ={
+                            entrustId : objArray[i].委托方ID,
+                            makeId : objArray[i].制造商ID,
+                            routeStartId : objArray[i].起始城市ID,
+                            routeEndId : objArray[i].目的地ID,
+                            sizeType : objArray[i].车型,
+                            distance : objArray[i].公里数,
+                            fee : objArray[i].单价,
+                            twoDistance : objArray[i].二级公里数,
+                            twoFee : objArray[i].二级单价,
+                            row : i+1
                         }
-                    })
+                        entrustCityRouteRelDAO.updateEntrustCityRouteRel(subParams,function(err,result){
+                            if (err) {
+                                logger.error(' updateEntrustCityRouteRel ' + err.message);
+                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                                that(null,i);
+                            } else {
+                                if(result && result.affectedRows > 0){
+                                    successedInsert = successedInsert+result.affectedRows;
+                                    logger.info(' updateEntrustCityRouteRel ' + 'success');
+                                }else{
+                                    logger.warn(' updateEntrustCityRouteRel ' + 'failed');
+                                }
+                                that(null,i);
+                            }
+                        })
+                    }
                 }else{
-                    var subParams ={
-                        entrustId : objArray[i].委托方ID,
-                        makeId : objArray[i].制造商ID,
-                        routeStartId : objArray[i].起始城市ID,
-                        routeEndId : objArray[i].目的地ID,
-                        sizeType : objArray[i].车型,
-                        distance : objArray[i].公里数,
-                        fee : objArray[i].单价,
-                        twoDistance : objArray[i].二级公里数,
-                        twoFee : objArray[i].二级单价,
-                        row : i+1
-                    }
-                    entrustCityRouteRelDAO.updateEntrustCityRouteRel(subParams,function(err,result){
-                        if (err) {
-                            logger.error(' updateEntrustCityRouteRel ' + err.message);
-                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                            that(null,i);
-                        } else {
-                            if(result && result.affectedRows > 0){
-                                successedInsert = successedInsert+result.affectedRows;
-                                logger.info(' updateEntrustCityRouteRel ' + 'success');
-                            }else{
-                                logger.warn(' updateEntrustCityRouteRel ' + 'failed');
-                            }
-                            that(null,i);
-                        }
-                    })
+                    that(null,i);
                 }
 
             })
