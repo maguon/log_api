@@ -314,7 +314,7 @@ function uploadEntrustCityRouteRelFile(req,res,next){
                             //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                             that(null,i);
                         } else {
-                            if(result&&result.insertId>0){
+                            if(result&&result.affectedRows>0){
                                 successedInsert = successedInsert+result.affectedRows;
                                 logger.info(' addEntrustCityRouteRel ' + 'success');
                             }else{
