@@ -9,10 +9,13 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var entrustCityRouteRelDAO = require('../dao/EntrustCityRouteRelDAO.js');
 var cityDAO = require('../dao/CityDAO.js');
+var carMakeDAO = require('../dao/CarMakeDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('EntrustCityRouteRel.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createEntrustCityRouteRel(req,res,next){
     var params = req.params ;
@@ -232,10 +235,141 @@ function getEntrustCityRouteRelCsv(req,res,next){
     })
 }
 
+function uploadEntrustCityRouteRelFile(req,res,next){
+    var params = req.params;
+    var relFlag  = true;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    makeId : objArray[i].制造商ID,
+                    row : i+1,
+                }
+                carMakeDAO.getCarMake(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getCarMake ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.makeName = rows[0].make_name;
+                        }else{
+                            parkObj.makeName = "";
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    entrustId : objArray[i].委托方ID,
+                    makeId : objArray[i].制造商ID,
+                    routeStartId : objArray[i].起始城市ID,
+                    routeEndId : objArray[i].目的地ID,
+                    sizeType : objArray[i].车型,
+                    row : i+1,
+                }
+                entrustCityRouteRelDAO.getEntrustCityRouteRel(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getEntrustCityRouteRel ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length>0){
+                            relFlag = false;
+                        }else{
+                            relFlag = true;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(relFlag){
+                    if(objArray[i].起始城市ID>objArray[i].目的地ID){
+                        parkObj.cityRouteId = objArray[i].目的地ID+''+objArray[i].起始城市ID;
+                    }else{
+                        parkObj.cityRouteId = objArray[i].起始城市ID+''+objArray[i].目的地ID;
+                    }
+                    var subParams ={
+                        entrustId : objArray[i].委托方ID,
+                        cityRouteId : parkObj.cityRouteId,
+                        makeId : objArray[i].制造商ID,
+                        makeName : parkObj.makeName,
+                        routeStartId : objArray[i].起始城市ID,
+                        routeEndId : objArray[i].目的地ID,
+                        sizeType : objArray[i].车型,
+                        distance : objArray[i].公里数,
+                        fee : objArray[i].单价,
+                        twoDistance : objArray[i].二级公里数,
+                        twoFee : objArray[i].二级单价,
+                        row : i+1
+                    }
+                    entrustCityRouteRelDAO.addEntrustCityRouteRel(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' addEntrustCityRouteRel ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result&&result.insertId>0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' addEntrustCityRouteRel ' + 'success');
+                            }else{
+                                logger.warn(' addEntrustCityRouteRel ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
+                    var subParams ={
+                        entrustId : objArray[i].委托方ID,
+                        makeId : objArray[i].制造商ID,
+                        routeStartId : objArray[i].起始城市ID,
+                        routeEndId : objArray[i].目的地ID,
+                        sizeType : objArray[i].车型,
+                        distance : objArray[i].公里数,
+                        fee : objArray[i].单价,
+                        twoDistance : objArray[i].二级公里数,
+                        twoFee : objArray[i].二级单价,
+                        row : i+1
+                    }
+                    entrustCityRouteRelDAO.updateEntrustCityRouteRel(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' updateEntrustCityRouteRel ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result && result.affectedRows > 0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' updateEntrustCityRouteRel ' + 'success');
+                            }else{
+                                logger.warn(' updateEntrustCityRouteRel ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadEntrustCityRouteRelFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 
 module.exports = {
     createEntrustCityRouteRel : createEntrustCityRouteRel,
     queryEntrustCityRouteRel : queryEntrustCityRouteRel,
     updateEntrustCityRouteRel : updateEntrustCityRouteRel,
-    getEntrustCityRouteRelCsv : getEntrustCityRouteRelCsv
+    getEntrustCityRouteRelCsv : getEntrustCityRouteRelCsv,
+    uploadEntrustCityRouteRelFile : uploadEntrustCityRouteRelFile
 }
