@@ -155,8 +155,10 @@ function updateTruckRepairRel(req,res,next){
     }).seq(function(){
         var that = this;
         var myDate = new Date();
-            params.endDate = myDate;
-            params.repairStatus = listOfValue.REPAIR_STATUS_ACTIVE;
+        var strDate = moment(myDate).format('YYYYMMDD');
+        params.endDate = myDate;
+        params.dateId = parseInt(strDate);
+        params.repairStatus = listOfValue.REPAIR_STATUS_ACTIVE;
         if(params.paymentType==sysConst.PAYMENT_TYPE.no){
             params.paymentStatus = sysConst.PAYMENT_STATUS.payment;
         }else{
@@ -211,9 +213,7 @@ function updateTruckRepairRelBase(req,res,next){
 function updatePaymentStatus(req,res,next){
     var params = req.params ;
     var myDate = new Date();
-    var strDate = moment(myDate).format('YYYYMMDD');
     params.repairDate = myDate;
-    params.dateId = parseInt(strDate);
     truckRepairRelDAO.updatePaymentStatus(params,function(error,result){
         if (error) {
             logger.error(' updatePaymentStatus ' + error.message);

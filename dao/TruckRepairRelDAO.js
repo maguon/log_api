@@ -301,7 +301,7 @@ function getTruckRepairMoneyTotal(params,callback) {
 
 function updateTruckRepairRel(params,callback){
     var query = " update truck_repair_rel set number = ? , repair_station_id = ? , repair_user = ? , repair_money = ? , " +
-        " parts_money = ? , maintain_money = ? , end_date = ? , repair_status = ? , remark = ? , " +
+        " parts_money = ? , maintain_money = ? , end_date = ? , date_id = ? , repair_status = ? , remark = ? , " +
         " payment_type = ? , payment_status = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.number;
@@ -311,6 +311,7 @@ function updateTruckRepairRel(params,callback){
     paramsArray[i++]=params.partsMoney;
     paramsArray[i++]=params.maintainMoney;
     paramsArray[i++]=params.endDate;
+    paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.repairStatus;
     paramsArray[i++]=params.remark;
     paramsArray[i++]=params.paymentType;
@@ -336,11 +337,10 @@ function updateTruckRepairRelBase(params,callback){
 }
 
 function updatePaymentStatus(params,callback){
-    var query = " update truck_repair_rel set payment_status = ? , repair_date = ? , date_id = ? where id = ? and payment_status = 0 " ;
+    var query = " update truck_repair_rel set payment_status = ? , repair_date = ? where id = ? and payment_status = 0 " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.paymentStatus;
     paramsArray[i++]=params.repairDate;
-    paramsArray[i++]=params.dateId;
     paramsArray[i]=params.relId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updatePaymentStatus ');
