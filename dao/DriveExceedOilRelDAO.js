@@ -101,7 +101,8 @@ function getDriveExceedOilRel(params,callback) {
 }
 
 function getDriveExceedOilRelCount(params,callback) {
-    var query = " select sum(deor.oil_money) as oil_money,sum(deor.urea_money) as urea_money " +
+    var query = " select sum(deor.oil_money) as oil_money,sum(deor.urea_money) as urea_money," +
+        " sum(deor.oil) as oil,sum(deor.urea) as urea " +
         " from drive_exceed_oil_rel deor " +
         " where deor.id is not null ";
     var paramsArray=[],i=0;
