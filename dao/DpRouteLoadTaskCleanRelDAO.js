@@ -180,6 +180,7 @@ function getDpRouteLoadTaskCleanRelCount(params,callback) {
         " sum(dpcr.car_parking_fee) as car_parking_fee,sum(dpcr.total_run_fee) as total_run_fee,sum(dpcr.lead_fee) as lead_fee " +
         " from dp_route_load_task_clean_rel dpcr " +
         " left join dp_route_load_task dprl on dpcr.dp_route_load_task_id = dprl.id " +
+        " left join truck_info t on dpcr.truck_id = t.id " +
         " where dpcr.id is not null ";
     var paramsArray=[],i=0;
     if(params.loadTaskCleanRelId){
@@ -197,6 +198,14 @@ function getDpRouteLoadTaskCleanRelCount(params,callback) {
     if(params.truckId){
         paramsArray[i++] = params.truckId;
         query = query + " and dpcr.truck_id = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and t.company_id = ? ";
     }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
