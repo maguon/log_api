@@ -9,11 +9,14 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var truckInsureRelDAO = require('../dao/TruckInsureRelDAO.js');
+var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('TruckInsureRel.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createTruckInsureRel(req,res,next){
     var params = req.params ;
@@ -206,6 +209,87 @@ function getTruckInsureRelCsv(req,res,next){
     })
 }
 
+function uploadTruckInsureRelFile(req,res,next){
+    var params = req.params;
+    var parkObj = {};
+    var myDate = new Date();
+    var strDate = moment(myDate).format('YYYYMMDD');
+    params.dateId = parseInt(strDate);
+    params.insureDate = myDate;
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            var subParams ={
+                truckNum : objArray[i].车牌号,
+                row : i+1,
+            }
+            Seq().seq(function(){
+                var that = this;
+                truckDAO.getTruckBase(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getTruckBase ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.truckId = rows[0].id;
+                        }else{
+                            parkObj.truckId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(parkObj.truckId>0){
+                    var subParams ={
+                        truckId : parkObj.truckId,
+                        insureId : objArray[i].保险公司ID,
+                        insureType : objArray[i].保险种类ID,
+                        insureNum : objArray[i].保单编号,
+                        insureMoney : objArray[i].保险金额,
+                        taxMoney : objArray[i].税金额,
+                        totalMoney : parseInt(objArray[i].保险金额)+parseInt(objArray[i].税金额),
+                        insureDate : myDate,
+                        startDate : objArray[i].生效日期起始,
+                        endDate : objArray[i].生效日期终止,
+                        dateId : parseInt(moment(myDate).format('YYYYMMDD')),
+                        insureExplain : objArray[i].保险备注,
+                        userId : params.userId,
+                        row : i+1
+                    }
+                    truckInsureRelDAO.addTruckInsureRel(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' addTruckInsureRel ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result&&result.insertId>0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' addTruckInsureRel ' + 'success');
+                            }else{
+                                logger.warn(' addTruckInsureRel ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
+                    that(null,i);
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadTruckInsureRelFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
+    })
+}
+
 
 module.exports = {
     createTruckInsureRel : createTruckInsureRel,
@@ -215,5 +299,6 @@ module.exports = {
     queryTruckInsureCountTotal : queryTruckInsureCountTotal,
     updateTruckInsureRel : updateTruckInsureRel,
     removeTruckInsureRel : removeTruckInsureRel,
-    getTruckInsureRelCsv : getTruckInsureRelCsv
+    getTruckInsureRelCsv : getTruckInsureRelCsv,
+    uploadTruckInsureRelFile : uploadTruckInsureRelFile
 }

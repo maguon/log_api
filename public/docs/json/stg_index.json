@@ -3687,6 +3687,49 @@
         }
       }
     },
+    "/user/{userId}/truckInsureRelFile": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user upload truckInsureRelFile ",
+        "description": "user upload truckInsureRelFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckInsureRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/truckInsureRel/{relId}": {
       "put": {
         "tags": [

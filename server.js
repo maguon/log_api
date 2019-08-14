@@ -268,6 +268,7 @@ function createServer() {
     server.get('/api/truckInsureCountTotal',truckInsureRel.queryTruckInsureCountTotal);
     server.get('/api/truckInsureRel.csv', truckInsureRel.getTruckInsureRelCsv);
     server.post({path:'/api/user/:userId/truckInsureRel',contentType: 'application/json'},truckInsureRel.createTruckInsureRel);
+    server.post({path:'/api/user/:userId/truckInsureRelFile',contentType: 'multipart/form-data'},truckInsureRel.uploadTruckInsureRelFile);
     server.put({path:'/api/user/:userId/truckInsureRel/:relId',contentType: 'application/json'} ,truckInsureRel.updateTruckInsureRel);
     server.del('/api/user/:userId/truckInsureRel/:relId' , truckInsureRel.removeTruckInsureRel);
 
