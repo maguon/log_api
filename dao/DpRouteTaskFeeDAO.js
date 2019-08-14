@@ -108,11 +108,11 @@ function getDpRouteTaskFeeCount(params,callback) {
     }
     if(params.grantDateStart){
         paramsArray[i++] = params.grantDateStart +" 00:00:00";
-        query = query + " and dprtf.grant_date >= ? ";
+        query = query + " and grant_date >= ? ";
     }
     if(params.grantDateEnd){
         paramsArray[i++] = params.grantDateEnd +" 23:59:59";
-        query = query + " and dprtf.grant_date <= ? ";
+        query = query + " and grant_date <= ? ";
     }
     if(params.status){
         paramsArray[i++] = params.status;
