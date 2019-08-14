@@ -32815,6 +32815,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "handoverFlag",
+            "in": "query",
+            "description": "handover flag",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

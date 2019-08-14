@@ -278,12 +278,53 @@ function getNotSettleHandover(params,callback) {
 }
 
 function getNotSettleHandoverCarCount(params,callback) {
-    var query = " select count(dpdtl.id) as car_count from dp_route_load_task_detail dpdtl " +
+    var query = " select count(dpdtl.id) as car_count " +
+        " from dp_route_load_task_detail dpdtl " +
         " left join settle_handover_car_rel shcr on dpdtl.car_id = shcr.car_id " +
         " left join dp_route_task dpr on dpdtl.dp_route_task_id = dpr.id " +
         " left join dp_route_load_task dprl on dpdtl.dp_route_load_task_id = dprl.id " +
+        " left join car_info c on dpdtl.car_id = c.id " +
         " where shcr.car_id is null ";
     var paramsArray=[],i=0;
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and c.vin like '%"+params.vinCode+"%'";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and dpr.route_start_id = ? ";
+    }
+    if(params.baseAddrId){
+        paramsArray[i++] = params.baseAddrId;
+        query = query + " and dprl.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and dpr.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    if(params.dpRouteTaskId){
+        paramsArray[i++] = params.dpRouteTaskId;
+        query = query + " and dpdtl.dp_route_task_id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
     if(params.taskPlanDateStart){
         paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
         query = query + " and dpr.task_plan_date >= ? ";
@@ -299,6 +340,13 @@ function getNotSettleHandoverCarCount(params,callback) {
     if(params.transferFlag){
         paramsArray[i++] = params.transferFlag;
         query = query + " and dprl.transfer_flag = ? ";
+    }
+    if(params.handoverFlag) {
+        if (params.handoverFlag == 1) {
+            query = query + " and shcr.car_id is null ";
+        } else {
+            query = query + " and shcr.car_id is not null ";
+        }
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getNotSettleHandoverCarCount ');
