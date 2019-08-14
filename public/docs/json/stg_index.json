@@ -32621,6 +32621,14 @@
 
           },
           {
+            "name": "handoverFlag",
+            "in": "query",
+            "description": "handover flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

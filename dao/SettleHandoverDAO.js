@@ -196,7 +196,7 @@ function getNotSettleHandover(params,callback) {
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +
         " left join drive_info d on dpr.drive_id = d.id " +
         " left join truck_info t on dpr.truck_id = t.id " +
-        " where shcr.car_id is null ";
+        " where dpdtl.car_id is not null ";
     var paramsArray=[],i=0;
     if(params.dpRouteTaskDetailId){
         paramsArray[i++] = params.dpRouteTaskDetailId;
@@ -256,6 +256,13 @@ function getNotSettleHandover(params,callback) {
     if(params.transferFlag){
         paramsArray[i++] = params.transferFlag;
         query = query + " and dprl.transfer_flag = ? ";
+    }
+    if(params.handoverFlag) {
+        if (params.handoverFlag == 1) {
+            query = query + " and shcr.car_id is null ";
+        } else {
+            query = query + " and shcr.car_id is not null ";
+        }
     }
     query = query + ' group by dpdtl.id ';
     query = query + ' order by dpdtl.id desc ';
