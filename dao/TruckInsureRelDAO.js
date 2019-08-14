@@ -94,6 +94,7 @@ function getTruckInsureRel(params,callback) {
         query = query + " and r.active = ? ";
     }
     query = query + " group by r.id ";
+    query = query + " order by r.id desc ";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
