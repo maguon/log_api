@@ -219,6 +219,10 @@ function getEntrustCarCount(params,callback) {
         paramsArray[i++] = params.receiveId;
         query = query + " and c.receive_id = ? ";
     }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getEntrustCarCount ');
         return callback(error,rows);
@@ -264,6 +268,10 @@ function getEntrustCarNotCount(params,callback) {
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
         query = query + " and c.receive_id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getEntrustCarNotCount ');

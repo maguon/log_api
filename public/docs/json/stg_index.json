@@ -16412,6 +16412,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
           }
         ],
         "responses": {
@@ -16503,6 +16511,14 @@
             "description": "receive id",
             "required": false,
             "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
 
           }
         ],
