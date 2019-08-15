@@ -34885,6 +34885,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "settleStatus",
+            "in": "query",
+            "description": "settle status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -35006,6 +35014,14 @@
             "name": "truckId",
             "in": "query",
             "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleStatus",
+            "in": "query",
+            "description": "settle status",
             "required": false,
             "type": "integer"
 

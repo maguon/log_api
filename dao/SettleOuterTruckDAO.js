@@ -151,6 +151,7 @@ function getSettleOuterTruckCarCount(params,callback) {
         " left join car_info c on drltd.car_id = c.id " +
         " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
         " and c.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
+        " left join settle_outer_invoice_car_rel soicr on c.id = soicr.car_id " +
         " where dpr.id is not null and c.car_status=9 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
@@ -201,7 +202,13 @@ function getSettleOuterTruckCarCount(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and dpr.truck_id = ? ";
     }
-    query = query + '  order by dpr.id desc ';
+    if(params.settleStatus){
+        if(params.settleStatus==1){
+            query = query + " and soicr.car_id is null ";
+        }else{
+            query = query + " and soicr.car_id is not null ";
+        }
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
