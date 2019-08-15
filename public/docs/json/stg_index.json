@@ -32656,7 +32656,7 @@
             "name": "handoverFlag",
             "in": "query",
             "description": "handover flag",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
@@ -32820,7 +32820,7 @@
             "name": "handoverFlag",
             "in": "query",
             "description": "handover flag",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           }
@@ -33207,6 +33207,14 @@
             "in": "query",
             "description": "transfer flag",
             "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "handoverFlag",
+            "in": "query",
+            "description": "handover flag",
+            "required": true,
             "type": "integer"
 
           }

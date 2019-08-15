@@ -435,7 +435,7 @@ function getSettleHandoverCsv(req,res,next){
 function getNotSettleHandoverCsv(req,res,next){
     var csvString = "";
     var header = "VIN" + ',' + "品牌" + ',' + "委托方" + ','+ "调度编号" + ','+ "起始城市"+ ','+ "起始装车地"+ ','+ "目的城市" + ','+ "经销商"
-        + ',' +"司机" + ','+ "货车车牌"+','+ "计划执行时间" + ',' +"送达时间";
+        + ',' +"司机" + ','+ "货车车牌"+','+ "计划执行时间" + ',' +"送达时间" + ',' +"交接单状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -501,8 +501,14 @@ function getNotSettleHandoverCsv(req,res,next){
                 }else{
                     parkObj.arriveDate = new Date(rows[i].arrive_date).toLocaleDateString();
                 }
-                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.eShortName+","+parkObj.dpRouteTaskId +","+parkObj.routeStart
-                    +","+parkObj.addrName+","+parkObj.routeEnd+","+parkObj.rShortName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.taskPlanDate+","+parkObj.arriveDate+ '\r\n';
+                if(rows[i].handover_flag ==1){
+                    parkObj.handoverFlag = "未返还";
+                }else{
+                    parkObj.handoverFlag = "已返还";
+                }
+                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.eShortName+","+parkObj.dpRouteTaskId +","+
+                    parkObj.routeStart+","+parkObj.addrName+","+parkObj.routeEnd+","+parkObj.rShortName+","+parkObj.driveName+","+
+                    parkObj.truckNum+","+parkObj.taskPlanDate+","+parkObj.arriveDate+","+parkObj.handoverFlag+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

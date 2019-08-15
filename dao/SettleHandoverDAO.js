@@ -185,7 +185,7 @@ function getNotSettleHandover(params,callback) {
     var query = " select dpdtl.*,c.make_name,e.id as entrust_id,e.short_name as e_short_name, " +
         " dpd.route_start_id,dpd.route_start,dpd.route_end_id,dpd.route_end," +
         " r.id as receive_id,r.short_name as r_short_name,dprl.addr_name, " +
-        " d.drive_name,t.truck_num,dpr.task_plan_date " +
+        " d.drive_name,t.truck_num,dpr.task_plan_date, " +params.handoverFlag+" as handover_flag "+
         " from dp_route_load_task_detail dpdtl " +
         " left join settle_handover_car_rel shcr on dpdtl.car_id = shcr.car_id " +
         " left join car_info c on dpdtl.car_id = c.id " +
