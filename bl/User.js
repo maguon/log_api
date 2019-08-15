@@ -435,14 +435,14 @@ function updateUserMobile(req,res,next){
     var params = req.params;
     Seq().seq(function(){
         var that = this;
-        userDAO.getUser(params,function(error,rows){
+        userDAO.getUser({mobile:params.newMobile},function(error,rows){
             if (error) {
                 logger.error(' updateUserMobile ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                if(rows && rows.length<1){
-                    logger.warn(' updateUserMobile ' + sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
-                    resUtil.resetFailedRes(res,sysMsg.ADMIN_LOGIN_USER_UNREGISTERED);
+                if(rows && rows.length>0){
+                    logger.warn(' updateUserMobile ' + sysMsg.CUST_SIGNUP_REGISTERED);
+                    resUtil.resetFailedRes(res,sysMsg.CUST_SIGNUP_REGISTERED);
                     return next();
                 }else{
                     that();
