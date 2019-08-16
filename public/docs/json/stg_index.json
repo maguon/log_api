@@ -13872,6 +13872,58 @@
         }
       }
     },
+    "/driveWork.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveWork csv",
+        "description": "query driveWorkCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveWork"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveWork id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveWork": {
       "post": {
         "tags": [

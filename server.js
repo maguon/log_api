@@ -527,6 +527,7 @@ function createServer() {
      * DriveWork Module
      */
     server.get('/api/driveWork' , driveWork.queryDriveWork);
+    server.get('/api/driveWork.csv' , driveWork.getDriveWorkCsv);
     server.post({path:'/api/user/:userId/driveWork',contentType: 'application/json'},driveWork.createDriveWork);
     server.put({path:'/api/user/:userId/driveWork/:driveWorkId',contentType: 'application/json'} ,driveWork.updateDriveWork);
     server.post({path:'/api/user/:userId/driveWorkFile',contentType: 'multipart/form-data'},driveWork.uploadDriveWorkFile);

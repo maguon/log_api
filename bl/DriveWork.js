@@ -234,10 +234,54 @@ function updateDriveWork(req,res,next){
     })
 }
 
+function getDriveWorkCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "住宿费";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveWorkDAO.getDriveWork(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveWork ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                parkObj.mobile = rows[i].mobile;
+                parkObj.yMonth = rows[i].y_month;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].work_count == null){
+                    parkObj.workCount = "";
+                }else{
+                    parkObj.workCount = rows[i].work_count;
+                }
+                if(rows[i].hotel_fee == null){
+                    parkObj.hotelFee = "";
+                }else{
+                    parkObj.hotelFee = rows[i].hotel_fee;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.yMonth+","+parkObj.workCount+","+
+                    parkObj.hotelFee+'\r\n';
+
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 
 module.exports = {
     createDriveWork : createDriveWork,
     uploadDriveWorkFile : uploadDriveWorkFile,
     queryDriveWork : queryDriveWork,
-    updateDriveWork : updateDriveWork
+    updateDriveWork : updateDriveWork,
+    getDriveWorkCsv : getDriveWorkCsv
 }
