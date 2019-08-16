@@ -373,7 +373,6 @@ function deleteDriveTruckMonthValue(params,callback){
     var query = " delete from drive_truck_month_value where y_month = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.yMonth;
-    paramsArray[i++] = params.driveTruckMonthValueId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' deleteDriveTruckMonthValue ');
         return callback(error,rows);
