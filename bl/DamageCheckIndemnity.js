@@ -194,9 +194,9 @@ function getDamageCheckIndemnityCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.damageId = rows[i].damage_id;
-                parkObj.bankNumber = rows[i].bank_number;
-                parkObj.bankUserName = rows[i].bank_user_name;
-                parkObj.bankName = rows[i].bank_name;
+                parkObj.bankNumber = rows[i].bank_number.replace(/["]/g, '');
+                parkObj.bankUserName = rows[i].bank_user_name.replace(/["]/g, '');
+                parkObj.bankName = rows[i].bank_name.replace(/["]/g, '');
                 parkObj.cityName = rows[i].city_name;
                 parkObj.receiveName = rows[i].receive_name;
                 parkObj.planMoney = rows[i].plan_money;
