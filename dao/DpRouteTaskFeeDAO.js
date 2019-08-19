@@ -164,11 +164,44 @@ function updateDpRouteTaskFeeStatus(params,callback){
     });
 }
 
+function getDpRouteTaskFeeMonthStat(params,callback){
+    var query = " select db.y_month, " +
+        " count(case when dprtf.status = "+params.status+" then dprtf.id end) refund_count, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.total_price end)total_price, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.car_total_price end)car_total_price, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.car_oil_fee end)car_oil_fee, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.other_fee end)other_fee " +
+        " from date_base db " +
+        " left join dp_route_task_fee dprtf on db.id = dprtf.date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and db.y_month >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and db.y_month <= ? ";
+    }
+    query = query + ' group by db.y_month ';
+    query = query + ' order by db.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskFeeMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTaskFee : addDpRouteTaskFee,
     getDpRouteTaskFee : getDpRouteTaskFee,
     getDpRouteTaskFeeCount : getDpRouteTaskFeeCount,
     updateDpRouteTaskFee : updateDpRouteTaskFee,
-    updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus
+    updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus,
+    getDpRouteTaskFeeMonthStat : getDpRouteTaskFeeMonthStat
 }

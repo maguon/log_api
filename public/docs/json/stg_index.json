@@ -28289,6 +28289,74 @@
         }
       }
     },
+    "/dpRouteTaskFeeMonthStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskFeeMonth stat",
+        "description": "query dpRouteTaskFeeMonth stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskFee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskFee id"
+          }
+        }
+      }
+    },
     "/dpRouteTaskFee.csv": {
       "get": {
         "tags": [

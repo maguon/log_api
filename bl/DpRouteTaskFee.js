@@ -151,6 +151,20 @@ function updateDpRouteTaskFeeStatusAll(req,res,next){
     })
 }
 
+function queryDpRouteTaskFeeMonthStat(req,res,next){
+    var params = req.params ;
+    dpRouteTaskFeeDAO.getDpRouteTaskFeeMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDpRouteTaskFeeMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDpRouteTaskFeeMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDpRouteTaskFeeCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' +"货车牌号" + ',' + "商品车加油费" + ',' + "货车停留天数" + ','+ "货车停车单价" + ','+"货车停车费" + ','+
@@ -288,5 +302,6 @@ module.exports = {
     updateDpRouteTaskFee : updateDpRouteTaskFee,
     updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus,
     updateDpRouteTaskFeeStatusAll : updateDpRouteTaskFeeStatusAll,
+    queryDpRouteTaskFeeMonthStat : queryDpRouteTaskFeeMonthStat,
     getDpRouteTaskFeeCsv : getDpRouteTaskFeeCsv
 }
