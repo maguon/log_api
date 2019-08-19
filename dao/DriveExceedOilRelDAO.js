@@ -197,6 +197,64 @@ function deleteDriveExceedOilRel(params,callback){
     });
 }
 
+function getDriveExceedOilRelMonthStat(params,callback) {
+    var query = " select db.y_month," +
+        " sum(case when deor.payment_status = "+params.paymentStatus+" then deor.oil end) as oil, " +
+        " sum(case when deor.payment_status = "+params.paymentStatus+" then deor.urea end) as urea " +
+        " from date_base db " +
+        " left join drive_exceed_oil_rel deor on db.id = deor.date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + ' and db.y_month >= ? '
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + ' and db.y_month <= ? '
+    }
+    query = query + " group by db.y_month " ;
+    query = query + " order by db.y_month desc " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilRelMonthStat ');
+        return callback(error,rows);
+    });
+}
+
+function getDriveExceedOilRelWeekStat(params,callback) {
+    var query = " select db.y_week," +
+        " sum(case when deor.payment_status = "+params.paymentStatus+" then deor.oil end) as oil, " +
+        " sum(case when deor.payment_status = "+params.paymentStatus+" then deor.urea end) as urea " +
+        " from date_base db " +
+        " left join drive_exceed_oil_rel deor on db.id = deor.date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.weekStart){
+        paramsArray[i++] = params.weekStart;
+        query = query + ' and db.y_week >= ? '
+    }
+    if(params.weekEnd){
+        paramsArray[i++] = params.weekEnd;
+        query = query + ' and db.y_week <= ? '
+    }
+    query = query + " group by db.y_week " ;
+    query = query + " order by db.y_week desc " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilRelWeekStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDriveExceedOilRel : addDriveExceedOilRel,
@@ -204,5 +262,7 @@ module.exports ={
     getDriveExceedOilRelCount : getDriveExceedOilRelCount,
     updateDriveExceedOilRel : updateDriveExceedOilRel,
     updatePaymentStatus : updatePaymentStatus,
-    deleteDriveExceedOilRel : deleteDriveExceedOilRel
+    deleteDriveExceedOilRel : deleteDriveExceedOilRel,
+    getDriveExceedOilRelMonthStat : getDriveExceedOilRelMonthStat,
+    getDriveExceedOilRelWeekStat : getDriveExceedOilRelWeekStat
 }

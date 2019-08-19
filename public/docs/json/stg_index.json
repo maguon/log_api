@@ -13159,6 +13159,142 @@
         }
       }
     },
+    "/driveExceedOilRelMonthStat": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query  driveExceedOilRelMonth stat",
+        "description": "query driveExceedOilRelMonthStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOilRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilRel id"
+          }
+        }
+      }
+    },
+    "/driveExceedOilRelWeekStat": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveExceedOilRelWeek stat",
+        "description": "query driveExceedOilRelWeekStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "description": "payment status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "weekStart",
+            "in": "query",
+            "description": "week start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "weekEnd",
+            "in": "query",
+            "description": "week end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveExceedOilRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveExceedOilRel id"
+          }
+        }
+      }
+    },
     "/driveExceedOilRel.csv": {
       "get": {
         "tags": [
