@@ -237,11 +237,15 @@ function getTruckRepairRelCount(params,callback) {
 
 function getTruckRepairCountTotal(params,callback) {
     if(params.truckType==null || params.truckType==""){
-        var query = " select db.y_month,count( trr.id) as repair_count from date_base db " +
+        var query = " select db.y_month, " +
+            " count(case when trr.payment_status = 1 then trr.id end) as repair_count " +
+            " from date_base db " +
             " left join truck_repair_rel trr on db.id = trr.date_id " +
             " left join truck_info ti on trr.truck_id = ti.id where db.id is not null ";
     }else{
-        var query = " select db.y_month,count(case when ti.truck_type = "+params.truckType+" then trr.id end) as repair_count from date_base db " +
+        var query = " select db.y_month, " +
+            " count(case when ti.truck_type = "+params.truckType+" and trr.payment_status = 1 then trr.id end) as repair_count " +
+            " from date_base db " +
             " left join truck_repair_rel trr on db.id = trr.date_id " +
             " left join truck_info ti on trr.truck_id = ti.id where db.id is not null ";
     }
@@ -269,11 +273,15 @@ function getTruckRepairCountTotal(params,callback) {
 
 function getTruckRepairMoneyTotal(params,callback) {
     if(params.truckType==null || params.truckType==""){
-        var query = " select db.y_month,sum(trr.repair_money) as repair_money from date_base db " +
+        var query = " select db.y_month, " +
+            " sum(case when trr.payment_status = 1 then trr.repair_money end) as repair_money " +
+            " from date_base db " +
             " left join truck_repair_rel trr on db.id = trr.date_id " +
             " left join truck_info ti on trr.truck_id = ti.id where db.id is not null ";
     }else{
-        var query = " select db.y_month,sum(case when ti.truck_type = "+params.truckType+" then trr.repair_money end) as repair_money from date_base db " +
+        var query = " select db.y_month," +
+            " sum(case when ti.truck_type = "+params.truckType+" and trr.payment_status = 1 then trr.repair_money end) as repair_money " +
+            " from date_base db " +
             " left join truck_repair_rel trr on db.id = trr.date_id " +
             " left join truck_info ti on trr.truck_id = ti.id where db.id is not null ";
     }
