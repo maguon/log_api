@@ -203,6 +203,20 @@ function queryDriveExceedOilRelMonthStat(req,res,next){
     })
 }
 
+function queryDriveExceedOilMoneyMonthStat(req,res,next){
+    var params = req.params ;
+    driveExceedOilRelDAO.getDriveExceedOilMoneyMonthStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveExceedOilMoneyMonthStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveExceedOilMoneyMonthStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDriveExceedOilRelWeekStat(req,res,next){
     var params = req.params ;
     driveExceedOilRelDAO.getDriveExceedOilRelWeekStat(params,function(error,result){
@@ -486,6 +500,7 @@ module.exports = {
     updatePaymentStatus : updatePaymentStatus,
     removeDriveExceedOilRel : removeDriveExceedOilRel,
     queryDriveExceedOilRelMonthStat : queryDriveExceedOilRelMonthStat,
+    queryDriveExceedOilMoneyMonthStat : queryDriveExceedOilMoneyMonthStat,
     queryDriveExceedOilRelWeekStat : queryDriveExceedOilRelWeekStat,
     uploadDriveExceedOilRelFile : uploadDriveExceedOilRelFile,
     getDriveExceedOilRelCsv : getDriveExceedOilRelCsv,

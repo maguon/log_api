@@ -226,10 +226,39 @@ function getDriveExceedOilRelMonthStat(params,callback) {
     });
 }
 
+function getDriveExceedOilMoneyMonthStat(params,callback) {
+    var query = " select db.y_month, " +
+        " sum(distinct case when deod.check_status = "+params.checkStatus+" then deod.actual_money end) as actual_money " +
+        " from date_base db " +
+        " left join drive_exceed_oil_date deod on db.y_month = deod.month_date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + ' and db.y_month >= ? '
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + ' and db.y_month <= ? '
+    }
+    query = query + " group by db.y_month " ;
+    query = query + " order by db.y_month desc " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilMoneyMonthStat ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveExceedOilRelWeekStat(params,callback) {
     var query = " select db.y_week," +
         " sum(case when deor.payment_status = "+params.paymentStatus+" then deor.oil end) as oil, " +
-        " sum(case when deor.payment_status = "+params.paymentStatus+" then deor.urea end) as urea " +
+        " sum(case when deor.payment_status = "+params.paymentStatus+" then deor.urea end) as urea," +
+        " sum(case when deor.payment_status = 1 then deor.oil_money end) as oil_money " +
         " from date_base db " +
         " left join drive_exceed_oil_rel deor on db.id = deor.date_id " +
         " where db.id is not null " ;
@@ -264,5 +293,6 @@ module.exports ={
     updatePaymentStatus : updatePaymentStatus,
     deleteDriveExceedOilRel : deleteDriveExceedOilRel,
     getDriveExceedOilRelMonthStat : getDriveExceedOilRelMonthStat,
+    getDriveExceedOilMoneyMonthStat : getDriveExceedOilMoneyMonthStat,
     getDriveExceedOilRelWeekStat : getDriveExceedOilRelWeekStat
 }
