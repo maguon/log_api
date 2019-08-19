@@ -196,6 +196,30 @@ function getDpRouteTaskFeeMonthStat(params,callback){
     });
 }
 
+function getDpRouteTaskFeeDayStat(params,callback){
+    var query = " select db.id, " +
+        " count(case when dprtf.status = "+params.status+" then dprtf.id end) refund_count, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.total_price end)total_price, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.car_total_price end)car_total_price, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.car_oil_fee end)car_oil_fee, " +
+        " sum(case when dprtf.status = "+params.status+" then dprtf.other_fee end)other_fee " +
+        " from date_base db " +
+        " left join dp_route_task_fee dprtf on db.id = dprtf.date_id " +
+        " where db.id is not null " ;
+    var paramsArray=[],i=0;
+    query = query + ' group by db.id ';
+    query = query + ' order by db.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskFeeDayStat ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDpRouteTaskFee : addDpRouteTaskFee,
@@ -203,5 +227,6 @@ module.exports ={
     getDpRouteTaskFeeCount : getDpRouteTaskFeeCount,
     updateDpRouteTaskFee : updateDpRouteTaskFee,
     updateDpRouteTaskFeeStatus : updateDpRouteTaskFeeStatus,
-    getDpRouteTaskFeeMonthStat : getDpRouteTaskFeeMonthStat
+    getDpRouteTaskFeeMonthStat : getDpRouteTaskFeeMonthStat,
+    getDpRouteTaskFeeDayStat : getDpRouteTaskFeeDayStat
 }

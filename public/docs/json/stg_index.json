@@ -28357,6 +28357,59 @@
         }
       }
     },
+    "/dpRouteTaskFeeDayStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskFeeDay stat",
+        "description": "query dpRouteTaskFeeDay stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "record start position for paging",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "record size  for paging",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskFee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid dpRouteTaskFee id"
+          }
+        }
+      }
+    },
     "/dpRouteTaskFee.csv": {
       "get": {
         "tags": [

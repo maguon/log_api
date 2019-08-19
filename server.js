@@ -894,6 +894,7 @@ function createServer() {
     server.get('/api/dpRouteTaskFee',dpRouteTaskFee.queryDpRouteTaskFee);
     server.get('/api/dpRouteTaskFeeCount',dpRouteTaskFee.queryDpRouteTaskFeeCount);
     server.get('/api/dpRouteTaskFeeMonthStat',dpRouteTaskFee.queryDpRouteTaskFeeMonthStat);
+    server.get('/api/dpRouteTaskFeeDayStat',dpRouteTaskFee.queryDpRouteTaskFeeDayStat);
     server.post({path:'/api/user/:userId/dpRouteTaskFee',contentType: 'application/json'},dpRouteTaskFee.createDpRouteTaskFee);
     server.put({path:'/api/user/:userId/dpRouteTaskFee/:dpRouteTaskFeeId',contentType: 'application/json'} ,dpRouteTaskFee.updateDpRouteTaskFee);
     server.put({path:'/api/user/:userId/dpRouteTaskFee/:dpRouteTaskFeeId/status/:status',contentType: 'application/json'} ,dpRouteTaskFee.updateDpRouteTaskFeeStatus);
