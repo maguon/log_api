@@ -149,6 +149,14 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.reverseFlag;
         query = query + " and dpr.reverse_flag = ? ";
     }
+    if(params.createdOnStart){
+        paramsArray[i++] = params.createdOnStart +" 00:00:00";
+        query = query + " and dpr.created_on >= ? ";
+    }
+    if(params.createdOnEnd){
+        paramsArray[i++] = params.createdOnEnd +" 23:59:59";
+        query = query + " and dpr.created_on <= ? ";
+    }
     query = query + ' group by dpr.id ';
     query = query + " order by dpr.id desc";
     if (params.start && params.size) {
