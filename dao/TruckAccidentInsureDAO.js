@@ -8,7 +8,8 @@ var logger = serverLogger.createLogger('TruckAccidentInsureDAO.js');
 
 function addTruckAccidentInsure(params,callback){
     var query = " insert into truck_accident_insure ( insure_id , insure_type , insure_plan , insure_user_id , " +
-        " financial_loan_status , financial_loan , payment_explain ) values ( ? , ? , ? , ? , ? , ? , ? ) ";
+        " financial_loan_status , financial_loan , payment_explain , ref_remark ) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
@@ -16,7 +17,8 @@ function addTruckAccidentInsure(params,callback){
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.financialLoanStatus;
     paramsArray[i++]=params.financialLoan;
-    paramsArray[i]=params.paymentExplain;
+    paramsArray[i++]=params.paymentExplain;
+    paramsArray[i++]=params.refRemark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addTruckAccidentInsure ');
         return callback(error,rows);
@@ -91,17 +93,19 @@ function getTruckAccidentInsure(params,callback) {
 }
 
 function updateTruckAccidentInsure(params,callback){
-    var query = " update truck_accident_insure set insure_id = ? , insure_type = ? , insure_plan = ? , payment_explain = ? , " +
-        " financial_loan = ? , insure_actual = ? , check_explain = ? where id = ? " ;
+    var query = " update truck_accident_insure set insure_id = ? , insure_type = ? , insure_plan = ? , ref_remark = ? , " +
+        " payment_explain = ? , financial_loan = ? , insure_actual = ? , check_explain = ? , detail_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.insureType;
     paramsArray[i++]=params.insurePlan;
+    paramsArray[i++]=params.refRemark;
     paramsArray[i++]=params.paymentExplain;
     paramsArray[i++]=params.financialLoan;
     paramsArray[i++]=params.insureActual;
     paramsArray[i++]=params.checkExplain;
-    paramsArray[i]=params.accidentInsureId;
+    paramsArray[i++]=params.detailExplain;
+    paramsArray[i++]=params.accidentInsureId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateTruckAccidentInsure ');
         return callback(error,rows);

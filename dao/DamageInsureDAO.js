@@ -125,7 +125,8 @@ function getDamageInsure(params,callback) {
 function updateDamageInsure(params,callback){
     var query = " update damage_insure set insure_id = ? , city_id = ? , city_name = ? , " +
         " declare_date = ? , liability_type = ? , ref_remark = ? , derate_money = ? , car_valuation = ? , invoice_money = ? ," +
-        " damage_money = ? , insure_plan = ? , financial_loan = ? , payment_explain = ? , insure_actual = ? , check_explain = ? where id = ? " ;
+        " damage_money = ? , insure_plan = ? , financial_loan = ? , payment_explain = ? , insure_actual = ? , check_explain = ? , " +
+        " detail_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.cityId;
@@ -142,6 +143,7 @@ function updateDamageInsure(params,callback){
     paramsArray[i++]=params.paymentExplain;
     paramsArray[i++]=params.insureActual;
     paramsArray[i++]=params.checkExplain;
+    paramsArray[i++]=params.detailExplain;
     paramsArray[i]=params.damageInsureId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageInsure ');

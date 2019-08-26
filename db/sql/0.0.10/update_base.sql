@@ -837,3 +837,18 @@ CREATE TABLE `settle_outer_invoice_car_rel` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `car_id` (`car_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2019-08-26 更新
+-- ----------------------------
+ALTER TABLE `truck_accident_insure`
+ADD COLUMN `detail_explain`  varchar(200) NULL COMMENT '详细说明' AFTER `check_explain`;
+-- ----------------------------
+-- 2019-08-26 更新
+-- ----------------------------
+ALTER TABLE `truck_accident_insure`
+ADD COLUMN `ref_remark`  varchar(200) NULL COMMENT '定损员信息' AFTER `insure_actual`;
+-- ----------------------------
+-- 2019-08-26 更新
+-- ----------------------------
+ALTER TABLE `damage_insure`
+ADD COLUMN `detail_explain`  varchar(200) NULL COMMENT '详细说明' AFTER `check_explain`;

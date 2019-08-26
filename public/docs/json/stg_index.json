@@ -36631,10 +36631,16 @@
         "insureActual": {
           "type": "integer"
         },
+        "refRemark": {
+          "type": "string"
+        },
         "paymentExplain": {
           "type": "string"
         },
         "checkExplain": {
+          "type": "string"
+        },
+        "detailExplain": {
           "type": "string"
         },
         "accidentIds": {
@@ -39019,6 +39025,9 @@
           "type": "string"
         },
         "checkExplain": {
+          "type": "string"
+        },
+        "detailExplain": {
           "type": "string"
         },
         "damageIds": {
