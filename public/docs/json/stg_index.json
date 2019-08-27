@@ -12572,6 +12572,22 @@
 
           },
           {
+            "name": "yMonthStart",
+            "in": "query",
+            "description": "yMonth start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonthEnd",
+            "in": "query",
+            "description": "yMonth end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

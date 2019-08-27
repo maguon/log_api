@@ -132,6 +132,14 @@ function getDriveExceedOilDateList(params,callback) {
         paramsArray[i++] = params.checkStatus;
         query = query + " and deod.check_status = ? ";
     }
+    if(params.yMonthStart){
+        paramsArray[i++] = params.yMonthStart;
+        query = query + " and deod.month_date_id >= ? ";
+    }
+    if(params.yMonthEnd){
+        paramsArray[i++] = params.yMonthEnd;
+        query = query + " and deod.month_date_id <= ? ";
+    }
     query = query + ' order by deod.month_date_id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
