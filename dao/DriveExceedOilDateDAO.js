@@ -113,6 +113,37 @@ function getDriveExceedOilDate(params,callback) {
     });
 }
 
+function getDriveExceedOilDateList(params,callback) {
+    var query = " select deod.*,d.drive_name,t.truck_num " +
+        " from drive_exceed_oil_date deod " +
+        " left join drive_info d on deod.drive_id = d.id " +
+        " left join truck_info t on deod.truck_id = t.id " +
+        " where deod.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.exceedOilDateId){
+        paramsArray[i++] = params.exceedOilDateId;
+        query = query + " and deod.id = ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and deod.drive_id = ? ";
+    }
+    if(params.checkStatus){
+        paramsArray[i++] = params.checkStatus;
+        query = query + " and deod.check_status = ? ";
+    }
+    query = query + ' order by deod.month_date_id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveExceedOilDateList ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveExceedOilMonth(params,callback) {
     var query = " select deod.id,deo.drive_id,d.drive_name,deo.truck_id,t.truck_num,c.company_name,db.y_month, " +
         " sum(deo.plan_oil) as plan_oil,sum(deo.plan_urea) as plan_urea, " +
@@ -227,6 +258,7 @@ module.exports ={
     getDriveExceedOilDate : getDriveExceedOilDate,
     getDriveExceedOilMonth : getDriveExceedOilMonth,
     updateDriveExceedOilDate : updateDriveExceedOilDate,
+    getDriveExceedOilDateList : getDriveExceedOilDateList,
     updateDriveExceedOilDateMoney : updateDriveExceedOilDateMoney,
     updateExceedOilDateCheckStatus : updateExceedOilDateCheckStatus,
     updateExceedOilDateStatus : updateExceedOilDateStatus

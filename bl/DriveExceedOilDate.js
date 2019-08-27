@@ -47,6 +47,20 @@ function queryDriveExceedOilDate(req,res,next){
     })
 }
 
+function queryDriveExceedOilDateList(req,res,next){
+    var params = req.params ;
+    driveExceedOilDateDAO.getDriveExceedOilDateList(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveExceedOilDateList ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveExceedOilDateList ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDriveExceedOilMonth(req,res,next){
     var params = req.params ;
     driveExceedOilDateDAO.getDriveExceedOilMonth(params,function(error,result){
@@ -375,6 +389,7 @@ function getDriveDpRouteTaskOilRelCsv(req,res,next){
 module.exports = {
     createDriveExceedOilDate : createDriveExceedOilDate,
     queryDriveExceedOilDate : queryDriveExceedOilDate,
+    queryDriveExceedOilDateList : queryDriveExceedOilDateList,
     queryDriveExceedOilMonth : queryDriveExceedOilMonth,
     updateDriveExceedOilDate : updateDriveExceedOilDate,
     updateDriveExceedOilDateMoney : updateDriveExceedOilDateMoney,

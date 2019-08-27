@@ -489,6 +489,7 @@ function createServer() {
      * DriveExceedOilDate Module
      */
     server.get('/api/driveExceedOilDate' , driveExceedOilDate.queryDriveExceedOilDate);
+    server.get('/api/driveExceedOilDateList' , driveExceedOilDate.queryDriveExceedOilDateList);
     server.get('/api/driveExceedOilMonth' , driveExceedOilDate.queryDriveExceedOilMonth);
     server.get('/api/driveExceedOilDate.csv' , driveExceedOilDate.getDriveExceedOilDateCsv);
     server.get('/api/driveDpRouteTaskOilRel.csv' , driveExceedOilDate.getDriveDpRouteTaskOilRelCsv);
