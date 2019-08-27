@@ -619,10 +619,10 @@ function getDriveSettleDetailCsv(req,res,next){
                     parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
                 }
                 parkObj.vin = rows[i].vin;
-                if(rows[i].short_name == null){
-                    parkObj.shortName = "";
+                if(rows[i].e_short_name == null){
+                    parkObj.eShortName = "";
                 }else{
-                    parkObj.shortName = rows[i].short_name;
+                    parkObj.eShortName = rows[i].e_short_name;
                 }
                 if(rows[i].make_name == null){
                     parkObj.makeName = "";
@@ -675,7 +675,7 @@ function getDriveSettleDetailCsv(req,res,next){
                     parkObj.twoOutput = rows[i].two_output;
                 }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.taskPlanDate+","+
-                    parkObj.vin+","+parkObj.shortName+","+parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+
+                    parkObj.vin+","+parkObj.eShortName+","+parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+
                     parkObj.shortName+","+parkObj.sizeType+","+parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+","+
                     parkObj.twoOutput+ '\r\n';
             }
