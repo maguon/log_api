@@ -35144,6 +35144,22 @@
 
           },
           {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "makeId",
             "in": "query",
             "description": "make id",
@@ -35292,6 +35308,22 @@
 
           },
           {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "makeId",
             "in": "query",
             "description": "make id",
@@ -35420,6 +35452,22 @@
             "in": "query",
             "description": "order end",
             "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateStart",
+            "in": "query",
+            "description": "taskPlanDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "taskPlanDateEnd",
+            "in": "query",
+            "description": "taskPlanDate end",
+            "required": false,
             "type": "string"
 
           },
