@@ -181,9 +181,9 @@ function queryDpRouteTaskFeeDayStat(req,res,next){
 
 function getDpRouteTaskFeeCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "商品车加油费" + ',' + "货车停留天数" + ','+ "货车停车单价" + ','+"货车停车费" + ','+
+    var header = "调度编号"+ ','+"起始城市"+ ','+"目的城市"+ ','+"司机" + ',' +"货车牌号" + ',' + "商品车加油费" + ',' + "货车停留天数" + ','+ "货车停车单价" + ','+"货车停车费" + ','+
         "商品车停留天数"+ ','+ "商品车停车单价" + ','+ "商品车停车费"+ ','+ "其他费用" + ','+"申请时间" + ','+
-        "银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+"状态"+ ','+"备注"+ ','+ "调度编号"+ ','+"起始城市"+ ','+"目的城市";
+        "银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+"状态"+ ','+"备注";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -193,6 +193,21 @@ function getDpRouteTaskFeeCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                if(rows[i].dp_route_task_id==null){
+                    parkObj.dpRouteTaskId = "";
+                }else{
+                    parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
+                }
+                if(rows[i].route_start==null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                if(rows[i].route_end==null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
                 if(rows[i].drive_name == null){
                     parkObj.driveName = "";
                 }else{
@@ -275,26 +290,11 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }else{
                     parkObj.remark = rows[i].remark;
                 }
-                if(rows[i].dp_route_task_id==null){
-                    parkObj.dpRouteTaskId = "";
-                }else{
-                    parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
-                }
-                if(rows[i].route_start==null){
-                    parkObj.routeStart = "";
-                }else{
-                    parkObj.routeStart = rows[i].route_start;
-                }
-                if(rows[i].route_end==null){
-                    parkObj.routeEnd = "";
-                }else{
-                    parkObj.routeEnd = rows[i].route_end;
-                }
-                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.carOilFee+","+parkObj.dayCount+","+
+                csvString = csvString+parkObj.dpRouteTaskId+","+parkObj.routeStart+","+parkObj.routeEnd+
+                    parkObj.driveName+","+parkObj.truckNum+","+parkObj.carOilFee+","+parkObj.dayCount+","+
                     parkObj.singlePrice+","+parkObj.totalPrice+","+parkObj.carDayCount+","+parkObj.carSinglePrice+","+
                     parkObj.carTotalPrice+","+parkObj.otherFee+","+parkObj.createdOn+","+parkObj.bankNumber+","+parkObj.bankName+","+
-                    parkObj.bankUserName+","+parkObj.status+","+parkObj.remark+","+
-                parkObj.dpRouteTaskId+","+parkObj.routeStart+","+parkObj.routeEnd+ '\r\n';
+                    parkObj.bankUserName+","+parkObj.status+","+parkObj.remark+'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
