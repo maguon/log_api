@@ -290,7 +290,7 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 }else{
                     parkObj.remark = rows[i].remark;
                 }
-                csvString = csvString+parkObj.dpRouteTaskId+","+parkObj.routeStart+","+parkObj.routeEnd+
+                csvString = csvString+parkObj.dpRouteTaskId+","+parkObj.routeStart+","+parkObj.routeEnd+","+
                     parkObj.driveName+","+parkObj.truckNum+","+parkObj.carOilFee+","+parkObj.dayCount+","+
                     parkObj.singlePrice+","+parkObj.totalPrice+","+parkObj.carDayCount+","+parkObj.carSinglePrice+","+
                     parkObj.carTotalPrice+","+parkObj.otherFee+","+parkObj.createdOn+","+parkObj.bankNumber+","+parkObj.bankName+","+
