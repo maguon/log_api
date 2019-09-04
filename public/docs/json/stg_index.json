@@ -26027,6 +26027,14 @@
 
           },
           {
+            "name": "monthFlag",
+            "in": "query",
+            "description": "month flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -26179,6 +26187,14 @@
             "description": "loadDate end",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "monthFlag",
+            "in": "query",
+            "description": "month flag",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {
@@ -26594,6 +26610,14 @@
             "name": "type",
             "in": "query",
             "description": "type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "monthFlag",
+            "in": "query",
+            "description": "month flag",
             "required": false,
             "type": "integer"
 

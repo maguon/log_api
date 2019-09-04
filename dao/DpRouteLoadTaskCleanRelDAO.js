@@ -128,6 +128,10 @@ function getDpRouteLoadTaskCleanRel(params,callback) {
         paramsArray[i++] = params.type;
         query = query + " and dpcr.type = ? ";
     }
+    if(params.monthFlag){
+        paramsArray[i++] = params.monthFlag;
+        query = query + " and dpcr.month_flag = ? ";
+    }
     query = query + ' group by dpcr.id ';
     query = query + ' order by dpcr.id desc ';
     if (params.start && params.size) {
@@ -237,6 +241,10 @@ function getDpRouteLoadTaskCleanRelCount(params,callback) {
     if(params.loadDateEnd){
         paramsArray[i++] = params.loadDateEnd +" 23:59:59";
         query = query + " and dprl.load_date <= ? ";
+    }
+    if(params.monthFlag){
+        paramsArray[i++] = params.monthFlag;
+        query = query + " and dpcr.month_flag = ? ";
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTaskCleanRelCount ');
