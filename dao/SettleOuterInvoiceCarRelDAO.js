@@ -89,8 +89,10 @@ function addSettleOuterInvoiceCarRelBatch(params,callback) {
 }
 
 function getSettleOuterInvoiceCarRel(params,callback) {
-    var query = " select soicr.*,c.vin " +
+    var query = " select soicr.*,c.vin,ci.company_name " +
         " from settle_outer_invoice_car_rel soicr " +
+        " left join settle_outer_invoice soi on soicr.outer_invoice_id = soi.id " +
+        " left join company_info ci on soi.company_id = ci.id " +
         " left join car_info c on soicr.car_id = c.id " +
         " where soicr.id is not null ";
     var paramsArray=[],i=0;

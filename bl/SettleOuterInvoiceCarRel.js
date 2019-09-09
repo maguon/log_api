@@ -30,7 +30,7 @@ function querySettleOuterInvoiceCarRel(req,res,next){
 
 function getSettleOuterInvoiceCarRelCsv(req,res,next){
     var csvString = "";
-    var header = "VIN" + ',' + "公里数" + ',' + "单价" + ','+ "总价";
+    var header = "编号" + ',' +"外协公司" + ',' +"VIN" + ',' + "公里数" + ',' + "单价" + ','+ "总价";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -40,6 +40,9 @@ function getSettleOuterInvoiceCarRelCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                parkObj.outerInvoiceId = rows[i].outer_invoice_id;
+                parkObj.companyName = rows[i].company_name;
+                parkObj.vin = rows[i].vin;
                 parkObj.vin = rows[i].vin;
                 if(rows[i].distance==null){
                     parkObj.distance = "";
@@ -56,7 +59,7 @@ function getSettleOuterInvoiceCarRelCsv(req,res,next){
                 }else{
                     parkObj.totalFee = rows[i].total_fee;
                 }
-                csvString = csvString+parkObj.vin+","+parkObj.distance+","+parkObj.fee+","+parkObj.totalFee+'\r\n';
+                csvString = csvString+parkObj.outerInvoiceId+","+parkObj.companyName+","+parkObj.vin+","+parkObj.distance+","+parkObj.fee+","+parkObj.totalFee+'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
