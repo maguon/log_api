@@ -31,6 +31,14 @@ function addSettleOuterInvoiceCarRelBatch(params,callback) {
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
     }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
     if(params.makeId){
         paramsArray[i++] = params.makeId;
         query = query + " and c.make_id = ? ";

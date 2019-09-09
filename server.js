@@ -1050,6 +1050,7 @@ function createServer() {
      * SettleOuterInvoiceCarRel Module
      */
     server.get('/api/settleOuterInvoiceCarRel', settleOuterInvoiceCarRel.querySettleOuterInvoiceCarRel);
+    server.get('/api/settleOuterInvoiceCarRel.csv', settleOuterInvoiceCarRel.getSettleOuterInvoiceCarRelCsv);
 
     /**
      * MsgPush Module

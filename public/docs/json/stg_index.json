@@ -36065,6 +36065,51 @@
         }
       }
     },
+    "/settleOuterInvoiceCarRel.csv": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleOuterInvoiceCarRel csv",
+        "description": "query settleOuterInvoiceCarRelCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "relId",
+            "in": "query",
+            "description": "rel id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "outerInvoiceId",
+            "in": "query",
+            "description": "outerInvoice id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleOuterInvoiceCarRel"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterInvoiceCarRel id"
+          }
+        }
+      }
+    },
     "/user/{userId}/pushMsg": {
       "get": {
         "tags": [
