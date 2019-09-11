@@ -692,6 +692,15 @@ function createEntrustCar(req,res,next){
     })
 }
 
+function createCarSort(req,res,next){
+    var params = req.params;
+    req.params.carContent =" 分拣 ";
+    req.params.op =sysConst.CAR_OP_TYPE.SORT;
+    logger.info(' createCarSort ' + params.vin);
+    resUtil.resetCreateRes(res,{insertId:1},null);
+    return next();
+}
+
 
 module.exports = {
     createUploadCar : createUploadCar,
@@ -712,5 +721,6 @@ module.exports = {
     removeCar : removeCar,
     getCarRelCsv : getCarRelCsv,
     getCarListCsv : getCarListCsv,
-    createEntrustCar : createEntrustCar
+    createEntrustCar : createEntrustCar,
+    createCarSort : createCarSort
 }

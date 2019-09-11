@@ -20606,6 +20606,51 @@
         }
       }
     },
+    "/user/{userId}/carSort": {
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "user add carSort record",
+        "description": "user add a carSort assurance",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "carSort",
+            "in": "body",
+            "description": "carSort info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/carSort"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid parameter id"
+          }
+        }
+      }
+    },
     "/user/{userId}/car/{carId}": {
       "put": {
         "tags": [
@@ -38168,6 +38213,21 @@
       },
       "xml": {
         "name": "entrustCar"
+      }
+    },
+    "carSort": {
+      "type": "object",
+      "properties": {
+
+        "carId": {
+          "type": "integer"
+        },
+        "vin": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "carSort"
       }
     },
     "carStorageRel": {

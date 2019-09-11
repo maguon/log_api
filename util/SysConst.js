@@ -27,6 +27,7 @@ var CAR_OP_TYPE = {
     LOAD :14 , //装车
     ARRIVED : 15, //到达
     SETTLE_HANDOVER : 16, //交接单
+    SORT : 17,  //分拣
     DIRECT_ARRIVED : 19 //直发送达
 };
 var RECORD_OP_TYPE  ={
