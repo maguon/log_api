@@ -244,17 +244,17 @@ function createServer() {
     server.get('/api/truckFirstCsv.csv', truck.getTruckFirstCsv);
     server.get('/api/truckTrailerCsv.csv', truck.getTruckTrailerCsv);
     server.get('/api/truckCost.csv', truck.getTruckCostCsv);
-    server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.saveTruckRecord);
-    server.post({path:'/api/user/:userId/truckTrailer',contentType: 'application/json'},truck.createTruckTrailer,sysRecord.saveTruckRecord);
-    server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck,sysRecord.saveTruckRecord);
-    server.put({path:'/api/user/:userId/truck/:truckId/truckCompany',contentType: 'application/json'} ,truck.updateTruckCompany,sysRecord.saveTruckRecord);
+    server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.checkUserStatus,sysRecord.saveTruckRecord);
+    server.post({path:'/api/user/:userId/truckTrailer',contentType: 'application/json'},truck.createTruckTrailer,sysRecord.checkUserStatus,sysRecord.saveTruckRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck,sysRecord.checkUserStatus,sysRecord.saveTruckRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId/truckCompany',contentType: 'application/json'} ,truck.updateTruckCompany,sysRecord.checkUserStatus,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId/image',contentType: 'application/json'} ,truck.updateTruckImage);
-    server.put({path:'/api/user/:userId/truck/:truckId/trail/:trailId/bind',contentType: 'application/json'} ,truck.updateTruckRelBind,sysRecord.saveTruckRecord);
-    server.put({path:'/api/user/:userId/truck/:truckId/trail/:trailId/unbind',contentType: 'application/json'} ,truck.updateTruckRelUnBind,sysRecord.saveTruckRecord);
-    server.put({path:'/api/user/:userId/truck/:truckId/drive/:driveId/bind',contentType: 'application/json'} ,truck.updateTruckDriveRelBind,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
-    server.put({path:'/api/user/:userId/truck/:truckId/drive/:driveId/unbind',contentType: 'application/json'} ,truck.updateTruckDriveRelUnBind,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
-    server.put({path:'/api/user/:userId/truck/:truckId/viceDrive/:viceDriveId/bind',contentType: 'application/json'} ,truck.updateTruckViceDriveRelBind,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
-    server.put({path:'/api/user/:userId/truck/:truckId/viceDrive/:viceDriveId/unbind',contentType: 'application/json'} ,truck.updateTruckViceDriveRelUnBind,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId/trail/:trailId/bind',contentType: 'application/json'} ,truck.updateTruckRelBind,sysRecord.checkUserStatus,sysRecord.saveTruckRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId/trail/:trailId/unbind',contentType: 'application/json'} ,truck.updateTruckRelUnBind,sysRecord.checkUserStatus,sysRecord.saveTruckRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId/drive/:driveId/bind',contentType: 'application/json'} ,truck.updateTruckDriveRelBind,sysRecord.checkUserStatus,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId/drive/:driveId/unbind',contentType: 'application/json'} ,truck.updateTruckDriveRelUnBind,sysRecord.checkUserStatus,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId/viceDrive/:viceDriveId/bind',contentType: 'application/json'} ,truck.updateTruckViceDriveRelBind,sysRecord.checkUserStatus,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
+    server.put({path:'/api/user/:userId/truck/:truckId/viceDrive/:viceDriveId/unbind',contentType: 'application/json'} ,truck.updateTruckViceDriveRelUnBind,sysRecord.checkUserStatus,sysRecord.saveTruckRecord,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus/first',contentType: 'application/json'} ,truck.updateTruckStatusFirst);
     server.put({path:'/api/user/:userId/truck/:truckId/truckStatus/:truckStatus/trailer',contentType: 'application/json'} ,truck.updateTruckStatusTrailer);
     server.put({path:'/api/user/:userId/truck/:truckId/repairStatus/:repairStatus',contentType: 'application/json'} ,truck.updateRepairStatus);
@@ -395,9 +395,9 @@ function createServer() {
     server.get('/api/driveOperateTypeCount' , drive.queryDriveOperateTypeCount);
     server.get('/api/driveTruckCount' , drive.queryDriveTruckCount);
     server.get('/api/drive.csv' , drive.getDriveCsv);
-    server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.saveDriverRecord);
+    server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.checkUserStatus,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
-    server.put({path:'/api/user/:userId/drive/:driveId/driveCompany',contentType: 'application/json'} ,drive.updateDriveCompany,sysRecord.saveDriverRecord);
+    server.put({path:'/api/user/:userId/drive/:driveId/driveCompany',contentType: 'application/json'} ,drive.updateDriveCompany,sysRecord.checkUserStatus,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId/driveBankNumber',contentType: 'application/json'} ,drive.updateDriveBankNumber);
     server.put({path:'/api/user/:userId/drive/:driveId/image',contentType: 'application/json'} ,drive.updateDriveImage);
     server.put({path:'/api/user/:userId/drive/:driveId/driveStatus/:driveStatus',contentType: 'application/json'} ,drive.updateDriveStatus);
@@ -596,9 +596,9 @@ function createServer() {
      */
     server.get('/api/receive',receive.queryReceive);
     server.get('/api/receiveCount',receive.queryReceiveCount);
-    server.post({path:'/api/user/:userId/receive',contentType: 'application/json'},receive.createReceive,sysRecord.saveReceiverRecord);
+    server.post({path:'/api/user/:userId/receive',contentType: 'application/json'},receive.createReceive,sysRecord.checkUserStatus,sysRecord.saveReceiverRecord);
     server.put({path:'/api/user/:userId/receive/:receiveId',contentType: 'application/json'} ,receive.updateReceive);
-    server.put({path:'/api/user/:userId/receive/:receiveId/cleanFee',contentType: 'application/json'} ,receive.updateReceiveCleanFee,sysRecord.saveReceiverRecord);
+    server.put({path:'/api/user/:userId/receive/:receiveId/cleanFee',contentType: 'application/json'} ,receive.updateReceiveCleanFee,sysRecord.checkUserStatus,sysRecord.saveReceiverRecord);
 
     /**
      * ReceiveContacts Module
@@ -637,9 +637,9 @@ function createServer() {
      */
     server.get('/api/entrustCityRouteRel',entrustCityRouteRel.queryEntrustCityRouteRel);
     server.get('/api/entrustCityRouteRel.csv',entrustCityRouteRel.getEntrustCityRouteRelCsv);
-    server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel,sysRecord.saveEntrustRecord);
+    server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel,sysRecord.checkUserStatus,sysRecord.saveEntrustRecord);
     server.post({path:'/api/user/:userId/entrustCityRouteRelFile',contentType: 'multipart/form-data'},entrustCityRouteRel.uploadEntrustCityRouteRelFile);
-    server.put({path:'/api/user/:userId/entrust/:entrustId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId/size/:sizeType',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.saveEntrustRecord);
+    server.put({path:'/api/user/:userId/entrust/:entrustId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId/size/:sizeType',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.checkUserStatus,sysRecord.saveEntrustRecord);
 
     /**
     * EntrustMakeRel Module
@@ -688,7 +688,7 @@ function createServer() {
      */
     server.get('/api/storageParking',storageParking.queryStorageParking);
     server.get('/api/storage/:storageId/makeStat',storageParking.queryStorageParkingMakeStat);
-    server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
 
     /**
      * Car Module
@@ -704,22 +704,22 @@ function createServer() {
     server.get('/api/carRel.csv',car.getCarRelCsv);
     server.get('/api/carList.csv',car.getCarListCsv);
     server.post({path:'/api/user/:userId/uploadCar',contentType: 'application/json'},car.createUploadCar);
-    server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
-    server.post({path:'/api/user/:userId/entrustCar',contentType: 'application/json'},car.createEntrustCar,sysRecord.saveCarRecord);
-    server.post({path:'/api/user/:userId/carSort',contentType: 'application/json'},car.createCarSort,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.checkUserStatus,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/entrustCar',contentType: 'application/json'},car.createEntrustCar,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/carSort',contentType: 'application/json'},car.createCarSort,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
     server.put({path:'/api/user/:userId/car/:carId/completedCar',contentType: 'application/json'} ,car.updateCompletedCar);
-    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin,sysRecord.saveCarRecord);
-    server.put({path:'/api/user/:userId/car/:carId/carStatus/:carStatus',contentType: 'application/json'} ,car.updateCarStatus,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/car/:carId/carStatus/:carStatus',contentType: 'application/json'} ,car.updateCarStatus,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
     server.del('/api/user/:userId/upload/:uploadId' , car.removeUploadCar);
     server.del('/api/user/:userId/car/:carId/car' , car.removeCar);
 
     /**
      * CarStorageRel Module
      */
-    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel,sysRecord.saveCarRecord);
-    server.put({path:'/api/user/:userId/car/:carId/carStorageRel',contentType: 'application/json'},carStorageRel.createAgainCarStorageRel,sysRecord.saveCarRecord);
-    server.put({path:'/api/user/:userId/carStorageRel/:relId/relStatus/:relStatus',contentType: 'application/json'} ,carStorageRel.updateRelStatus,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/car/:carId/carStorageRel',contentType: 'application/json'},carStorageRel.createAgainCarStorageRel,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/carStorageRel/:relId/relStatus/:relStatus',contentType: 'application/json'} ,carStorageRel.updateRelStatus,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/carStorageRel/:relId/planOutTime',contentType: 'application/json'} ,carStorageRel.updateRelPlanOutTime);
     server.post({path:'/api/user/:userId/carExportsFile',contentType: 'multipart/form-data'},carStorageRel.uploadCarExportsFile);
 
@@ -799,16 +799,16 @@ function createServer() {
     server.get('/api/driveCost', dpRouteTask.queryDriveCost);
     server.get('/api/driveCost.csv' , dpRouteTask.getDriveCostCsv);
     server.get('/api/dpRouteTaskDetail.csv' , dpRouteTask.getDpRouteTaskDetailCsv);
-    server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
-    server.post({path:'/api/user/:userId/emptyDpRouteTask',contentType: 'application/json'},dpRouteTask.createEmptyDpRouteTask,sysRecord.saveRouteRecord);
-    server.post({path:'/api/user/:userId/dpRouteTaskBatch',contentType: 'application/json'},dpRouteTask.createDpRouteTaskBatch,sysRecord.saveRouteRecord);
-    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus,sysRecord.saveRouteRecord);
-    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatusBack/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatusBack,sysRecord.saveRouteRecord);
-    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteLoadFlag,sysRecord.saveRouteRecord);
-    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteOilLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteOilLoadFlag,sysRecord.saveRouteRecord);
+    server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
+    server.post({path:'/api/user/:userId/emptyDpRouteTask',contentType: 'application/json'},dpRouteTask.createEmptyDpRouteTask,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
+    server.post({path:'/api/user/:userId/dpRouteTaskBatch',contentType: 'application/json'},dpRouteTask.createDpRouteTaskBatch,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatus/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatus,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatusBack/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatusBack,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteLoadFlag,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteOilLoadFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteOilLoadFlag,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteReverseFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteReverseFlag);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteReverseRemark',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskRemark);
-    server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId' , dpRouteTask.removeDpRouteTask,sysRecord.saveRouteRecord);
+    server.del('/api/user/:userId/dpRouteTask/:dpRouteTaskId' , dpRouteTask.removeDpRouteTask,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
 
     /**
      * dpRouteTaskTmp Module
@@ -823,8 +823,8 @@ function createServer() {
     server.get('/api/dpRouteLoadTask',dpRouteLoadTask.queryDpRouteLoadTask);
     server.get('/api/dpRouteLoadTaskCount',dpRouteLoadTask.queryDpRouteLoadTaskCount);
     server.post({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadTask',contentType: 'application/json'},dpRouteLoadTask.createDpRouteLoadTask);
-    server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatus/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatus,sysRecord.saveRouteRecord);
-    server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatusBack/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatusBack,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatus/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatus,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatusBack/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatusBack,sysRecord.checkUserStatus,sysRecord.saveRouteRecord);
     server.del('/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId' , dpRouteLoadTask.removeDpRouteLoadTask);
 
     /**
@@ -840,9 +840,9 @@ function createServer() {
     server.get('/api/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',dpRouteLoadTaskDetail.queryDpRouteLoadTaskDetail);
     server.get('/api/dpRouteLoadTaskDetailBase',dpRouteLoadTaskDetail.queryDpRouteLoadTaskDetailBase);
     server.get('/api/carLoadStatusCount',dpRouteLoadTaskDetail.queryCarLoadStatusCount);
-    server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
-    server.put({path:'/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId/carLoadStatus/:carLoadStatus',contentType: 'application/json'} ,dpRouteLoadTaskDetail.updateDpRouteLoadTaskDetailStatus,sysRecord.saveCarRecord);
-    server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId/carLoadStatus/:carLoadStatus',contentType: 'application/json'} ,dpRouteLoadTaskDetail.updateDpRouteLoadTaskDetailStatus,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
 
     /**
      * DpRouteLoadTaskCleanRel Module
@@ -922,8 +922,8 @@ function createServer() {
     server.get('/api/damageDaseAddrTopMonthStat',damage.queryDamageDaseAddrTopMonthStat);
     server.get('/api/damage.csv', damage.getDamageCsv);
     server.get('/api/damageBase.csv', damage.getDamageBaseCsv);
-    server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage,sysRecord.saveCarRecord);
-    server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},damage.createQualityAssurance,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},damage.createDamage,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},damage.createQualityAssurance,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/damageFile',contentType: 'multipart/form-data'},damage.uploadDamageFile);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
     server.put({path:'/api/user/:userId/damage/:damageId/damageStatus/:damageStatus',contentType: 'application/json'} ,damage.updateDamageStatus);
@@ -1013,7 +1013,7 @@ function createServer() {
      * SettleHandoverCarRel Module
      */
     server.get('/api/settleHandoverCarRel', settleHandoverCarRel.querySettleHandoverCarRel);
-    server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},settleHandoverCarRel.createSettleHandoverCarRel,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},settleHandoverCarRel.createSettleHandoverCarRel,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/settleHandoverCarRelFile',contentType: 'multipart/form-data'},settleHandoverCarRel.uploadSettleHandoverCarRelFile);
     server.del('/api/user/:userId/settleHandover/:settleHandoverId/car/:carId' , settleHandoverCarRel.removeSettleHandoverCarRel);
 
