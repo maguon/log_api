@@ -704,7 +704,7 @@ function createServer() {
     server.get('/api/carRel.csv',car.getCarRelCsv);
     server.get('/api/carList.csv',car.getCarListCsv);
     server.post({path:'/api/user/:userId/uploadCar',contentType: 'application/json'},car.createUploadCar);
-    server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/entrustCar',contentType: 'application/json'},car.createEntrustCar,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/carSort',contentType: 'application/json'},car.createCarSort,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);

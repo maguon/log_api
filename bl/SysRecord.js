@@ -6,6 +6,16 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SysRecord.js');
 
+var sysError = require('../util/SystemError.js');
+function checkUserStatus (req,res,next){
+    var params = req.params;
+    if(params.params._uid && params._utype && params._uname){
+        return next();
+    }else{
+        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+    }
+}
+
 function saveCarRecord (req,res,next){
     if(res._body.success){
         var params = req.params;
@@ -155,6 +165,7 @@ function saveEntrustRecord (req,res,next){
 
 
 module.exports ={
+    checkUserStatus : checkUserStatus ,
     saveCarRecord : saveCarRecord ,
     saveTruckRecord : saveTruckRecord ,
     saveDriverRecord : saveDriverRecord ,
