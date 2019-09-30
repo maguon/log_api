@@ -223,6 +223,7 @@ function updateDamageHangStatus(req,res,next){
 function createQualityAssurance(req,res,next){
     var params = req.params;
     req.params.carContent =" 质检 ";
+    req.params.unique =1;
     req.params.op =sysConst.CAR_OP_TYPE.QUALITY;
     logger.info(' createQualityAssurance ' + params.vin)
     resUtil.resetCreateRes(res,{insertId:1},null);

@@ -695,6 +695,7 @@ function createEntrustCar(req,res,next){
 function createCarSort(req,res,next){
     var params = req.params;
     req.params.carContent =" 分拣 ";
+    req.params.unique =1;
     req.params.op =sysConst.CAR_OP_TYPE.SORT;
     logger.info(' createCarSort ' + params.vin);
     resUtil.resetCreateRes(res,{insertId:1},null);
