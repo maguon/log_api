@@ -26,6 +26,9 @@ function saveCarRecord (req,res,next){
         recordParams.username = params._uname || 'admin';
         recordParams.content = params.carContent;
         recordParams.carId = params.carId;
+        if(params.unique ==1){
+            recordParams.unique = params.unique;
+        }
         recordParams.makeId = params.makeId;
         recordParams.makeName = params.makeName;
         recordParams.vin = params.vin;
