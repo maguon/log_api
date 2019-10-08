@@ -174,10 +174,13 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     parkObj.cleanFee = rows[0].clean_fee;
                     parkObj.bigCleanFee = rows[0].big_clean_fee;
                     parkObj.trailerFee = rows[0].trailer_fee;
+                    parkObj.trailerMonthFlag = rows[0].trailer_month_flag;
                     parkObj.receiveFlag = rows[0].receive_flag;
                     parkObj.carParkingFee = rows[0].car_parking_fee;
                     parkObj.runFee = rows[0].run_fee;
+                    parkObj.runMonthFlag = rows[0].run_month_flag;
                     parkObj.leadFee = rows[0].lead_fee;
+                    parkObj.leadMonthFlag = rows[0].lead_month_flag;
                     parkObj.carCount = rows[0].car_count;
                     parkObj.smallCarCount = rows[0].small_car_count;
                     parkObj.bigCarCount = rows[0].big_car_count;
@@ -328,16 +331,39 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             params.smallCarCount = parkObj.smallCarCount;
             params.bigCarCount = parkObj.bigCarCount;
             params.trailerFee = parkObj.trailerFee;
-            params.totalTrailerFee = parkObj.trailerFee*parkObj.carCount;
+            params.actualTrailerFee = parkObj.trailerFee*parkObj.carCount;
+            if(parkObj.trailerMonthFlag==1){
+                params.totalTrailerFee = 0;
+            }else{
+                params.totalTrailerFee = parkObj.trailerFee*parkObj.carCount;
+            }
             params.carParkingFee = parkObj.carParkingFee;
             params.runFee = parkObj.runFee;
-            params.totalRunFee = parkObj.runFee*parkObj.carCount;
+            params.actualRunFee = parkObj.runFee*parkObj.carCount;
+            if(parkObj.runMonthFlag==1){
+                params.totalRunFee = 0;
+            }else{
+                params.totalRunFee = parkObj.runFee*parkObj.carCount;
+            }
             if(leadFee>0){
+                params.actualLeadFee = 0;
+            }else{
+                params.actualLeadFee = parkObj.leadFee;
+            }
+            if(parkObj.leadMonthFlag==1){
                 params.leadFee = 0;
             }else{
-                params.leadFee = parkObj.leadFee;
+                if(leadFee>0){
+                    params.leadFee = 0;
+                }else{
+                    params.leadFee = parkObj.leadFee;
+                }
             }
-            params.monthFlag=parkObj.monthFlag;
+            if(parkObj.trailerMonthFlag==1||parkObj.runMonthFlag==1||parkObj.leadMonthFlag==1||parkObj.monthFlag==1){
+                params.monthFlag=1;
+            }else{
+                params.monthFlag=0;
+            }
             params.totalPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
             if(parkObj.monthFlag==1){
                 params.actualPrice = 0;

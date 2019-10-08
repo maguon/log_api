@@ -73,7 +73,7 @@ function getDpRouteLoadTask(params,callback) {
         " count(case when c.size_type = 0 then dpdtl.id end) as small_car_count, " +
         " count(case when c.size_type = 1 then dpdtl.id end) as big_car_count, " +
         " sum(e.car_parking_fee) as car_parking_fee, " +
-        " r.make_name,r.clean_fee,r.big_clean_fee,r.trailer_fee,r.run_fee,r.lead_fee,r.receive_flag,r.month_flag, " +
+        " r.make_name,r.clean_fee,r.big_clean_fee,r.trailer_fee,r.trailer_month_flag,r.run_fee,r.run_month_flag,r.lead_fee,r.lead_month_flag,r.receive_flag,r.month_flag, " +
         " dpd.pre_count,dpd.route_start as demand_route_start,ba2.addr_name as demand_addr_name,dpd.route_end as demand_route_end,dpd.remark as demand_remark " +
         " from dp_route_load_task dprl " +
         " left join dp_demand_info dpd on dprl.demand_id = dpd.id " +

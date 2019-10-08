@@ -859,3 +859,10 @@ ALTER TABLE `receive_info`
 ADD COLUMN `trailer_month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '拖车费是否月结(0-否,1-是)' AFTER `trailer_fee`,
 ADD COLUMN `run_month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '地跑费是否月结(0-否,1-是)' AFTER `run_fee`,
 ADD COLUMN `lead_month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '带路费是否月结(0-否,1-是)' AFTER `lead_fee`;
+-- ----------------------------
+-- 2019-10-08 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `actual_trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总拖车费' AFTER `total_trailer_fee`,
+ADD COLUMN `actual_run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总地跑费' AFTER `total_run_fee`,
+ADD COLUMN `actual_lead_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总带路费' AFTER `lead_fee`;
