@@ -16202,12 +16202,12 @@
 
           },
           {
-            "name": "receive",
+            "name": "receiveCleanFee",
             "in": "body",
             "description": "receive clean fee property",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/receive"
+              "$ref": "#/definitions/receiveCleanFee"
             }
 
           }
@@ -37928,6 +37928,21 @@
         "makeName": {
           "type": "string"
         },
+        "receiveFlag": {
+          "type": "integer"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "receive"
+      }
+    },
+    "receiveCleanFee": {
+      "type": "object",
+      "properties": {
+
         "cleanFee": {
           "type": "integer"
         },
@@ -37937,24 +37952,27 @@
         "trailerFee": {
           "type": "integer"
         },
+        "trailerMonthFlag": {
+          "type": "integer"
+        },
         "runFee": {
+          "type": "integer"
+        },
+        "runMonthFlag": {
           "type": "integer"
         },
         "leadFee": {
           "type": "integer"
         },
-        "receiveFlag": {
+        "leadMonthFlag": {
           "type": "integer"
         },
         "monthFlag": {
           "type": "integer"
-        },
-        "remark": {
-          "type": "string"
         }
       },
       "xml": {
-        "name": "receive"
+        "name": "receiveCleanFee"
       }
     },
     "entrust": {

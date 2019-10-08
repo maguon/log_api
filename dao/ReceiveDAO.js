@@ -111,14 +111,17 @@ function updateReceive(params,callback){
 }
 
 function updateReceiveCleanFee(params,callback){
-    var query = " update receive_info set clean_fee = ? , big_clean_fee = ? , trailer_fee = ? , " +
-        " run_fee = ? , lead_fee = ? , month_flag = ? where id = ? ";
+    var query = " update receive_info set clean_fee = ? , big_clean_fee = ? , trailer_fee = ? , trailer_month_flag = ? , " +
+        " run_fee = ? , run_month_flag = ? , lead_fee = ? , lead_month_flag = ? , month_flag = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.cleanFee;
     paramsArray[i++]=params.bigCleanFee;
     paramsArray[i++]=params.trailerFee;
+    paramsArray[i++]=params.trailerMonthFlag;
     paramsArray[i++]=params.runFee;
+    paramsArray[i++]=params.runMonthFlag;
     paramsArray[i++]=params.leadFee;
+    paramsArray[i++]=params.leadMonthFlag;
     paramsArray[i++]=params.monthFlag;
     paramsArray[i]=params.receiveId;
     db.dbQuery(query,paramsArray,function(error,rows){

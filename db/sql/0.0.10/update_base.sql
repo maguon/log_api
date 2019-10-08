@@ -852,3 +852,10 @@ ADD COLUMN `ref_remark`  varchar(200) NULL COMMENT '定损员信息' AFTER `insu
 -- ----------------------------
 ALTER TABLE `damage_insure`
 ADD COLUMN `detail_explain`  varchar(200) NULL COMMENT '详细说明' AFTER `check_explain`;
+-- ----------------------------
+-- 2019-10-08 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `trailer_month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '拖车费是否月结(0-否,1-是)' AFTER `trailer_fee`,
+ADD COLUMN `run_month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '地跑费是否月结(0-否,1-是)' AFTER `run_fee`,
+ADD COLUMN `lead_month_flag`  tinyint(1) NULL DEFAULT 0 COMMENT '带路费是否月结(0-否,1-是)' AFTER `lead_fee`;
