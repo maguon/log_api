@@ -38827,6 +38827,9 @@
         "totalTrailerFee": {
           "type": "integer"
         },
+        "actualTrailerFee": {
+          "type": "integer"
+        },
         "carParkingFee": {
           "type": "integer"
         },
@@ -38836,7 +38839,13 @@
         "totalRunFee": {
           "type": "integer"
         },
+        "actualRunFee": {
+          "type": "integer"
+        },
         "leadFee": {
+          "type": "integer"
+        },
+        "actualLeadFee": {
           "type": "integer"
         },
         "type": {
