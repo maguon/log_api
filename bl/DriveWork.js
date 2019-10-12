@@ -146,7 +146,7 @@ function uploadDriveWorkFile(req,res,next){
                             mobile : objArray[i].电话,
                             yMonth : objArray[i].月份,
                             workCount : objArray[i].出勤天数,
-                            hotelFee : objArray[i].住宿费,
+                            hotelFee : objArray[i].补助,
                             row : i+1
                         }
                         driveWorkDAO.addDriveWork(subParams,function(err,result){
@@ -171,7 +171,7 @@ function uploadDriveWorkFile(req,res,next){
                             mobile : objArray[i].电话,
                             yMonth : objArray[i].月份,
                             workCount : objArray[i].出勤天数,
-                            hotelFee : objArray[i].住宿费,
+                            hotelFee : objArray[i].补助,
                             row : i+1
                         }
                         driveWorkDAO.updateDriveWork(subParams,function(err,result){
@@ -236,7 +236,7 @@ function updateDriveWork(req,res,next){
 
 function getDriveWorkCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "住宿费";
+    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "补助";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
