@@ -866,3 +866,8 @@ ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `actual_trailer_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总拖车费' AFTER `total_trailer_fee`,
 ADD COLUMN `actual_run_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总地跑费' AFTER `total_run_fee`,
 ADD COLUMN `actual_lead_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总带路费' AFTER `lead_fee`;
+-- ----------------------------
+-- 2019-11-05 更新
+-- ----------------------------
+ALTER TABLE `drive_work`
+ADD COLUMN `remark`  varchar(200) NULL COMMENT '描述（司机出勤备注）';
