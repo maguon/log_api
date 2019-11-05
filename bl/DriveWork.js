@@ -236,7 +236,7 @@ function updateDriveWork(req,res,next){
 
 function getDriveWorkCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "补助";
+    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "补助" + ','+ "描述";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -261,8 +261,9 @@ function getDriveWorkCsv(req,res,next){
                 }else{
                     parkObj.hotelFee = rows[i].hotel_fee;
                 }
+                parkObj.remark = rows[i].remark;
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.yMonth+","+parkObj.workCount+","+
-                    parkObj.hotelFee+'\r\n';
+                    parkObj.hotelFee+ "," + parkObj.remark+'\r\n';
 
             }
             var csvBuffer = new Buffer(csvString,'utf8');
