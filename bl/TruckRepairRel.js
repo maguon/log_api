@@ -282,7 +282,7 @@ function uploadTruckRepairRelFile(req,res,next){
                         driveName: objArray[i].司机,
                         repairType: objArray[i].维修类型,
                         repairDate: objArray[i].维修开始时间,
-                        dateId: parseInt(moment(objArray[i].维修开始时间).format('YYYYMMDD')),
+                        dateId: parseInt(moment(objArray[i].维修结束时间).format('YYYYMMDD')),
                         endDate: objArray[i].维修结束时间,
                         partsMoney: objArray[i].配件费,
                         repairMoney: objArray[i].维修费,
