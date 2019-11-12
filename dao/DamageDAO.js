@@ -7,11 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageDAO.js');
 
 function addDamage(params,callback){
-    var query = " insert into damage_info (declare_user_id,car_id,truck_id,truck_num,drive_id,drive_name,date_id,damage_explain) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into damage_info (declare_user_id,car_id,car_model_name,truck_id,truck_num,drive_id,drive_name,date_id,damage_explain) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.carId;
+    paramsArray[i++]=params.carModelName;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.driveId;
@@ -410,12 +411,13 @@ function getDamageTotalCost(params,callback) {
 }
 
 function updateDamage(params,callback){
-    var query = " update damage_info set truck_id = ? , truck_num = ? , drive_id = ? , drive_name = ? , damage_explain = ? where id = ? " ;
+    var query = " update damage_info set truck_id = ? , truck_num = ? , drive_id = ? , drive_name = ? , car_model_name = ? ,damage_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
+    paramsArray[i++]=params.carModelName;
     paramsArray[i++]=params.damageExplain;
     paramsArray[i]=params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){

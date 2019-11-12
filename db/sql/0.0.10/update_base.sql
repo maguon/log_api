@@ -871,3 +871,8 @@ ADD COLUMN `actual_lead_fee`  decimal(10,2) NULL DEFAULT 0 COMMENT '总带路费
 -- ----------------------------
 ALTER TABLE `drive_work`
 ADD COLUMN `remark` varchar(200) NULL COMMENT '描述（司机出勤备注）' AFTER `updated_on`;
+-- ----------------------------
+-- 2019-11-12 更新
+-- ----------------------------
+ALTER TABLE `damage_info`
+ADD COLUMN `car_model_name` varchar(50) NULL COMMENT '车型号名称' AFTER `car_id`;
