@@ -440,7 +440,7 @@ function getDamageCsv(req,res,next){
         "指令时间" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+
         "司机" + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "个人承担" + ','+ "公司承担" + ','+
         "处理结束时间" + ','+"处理状态"+ ','+
-    "理赔编号" + ','+ "生成日期" + ','+ "保险公司" + ','+ "经办人"+ ','+ "待赔金额" + ','+ "定损金额" + ','+ "保险赔付";
+    "理赔编号" + ','+ "生成日期" + ','+ "保险公司" + ','+ "经办人"+ ','+ "待赔金额" + ','+ "定损金额" + ','+ "保险赔付" + ','+ "挂起状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -622,13 +622,18 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.insureActual = rows[i].insure_actual;
                 }
+                if(rows[i].hang_status==null){
+                    parkObj.hangStatus = "";
+                }else{
+                    parkObj.hangStatus = rows[i].hang_status;
+                }
                 csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+
                     parkObj.routeStart+","+parkObj.addrName+","+parkObj.routeEnd+","+parkObj.shipName+","+parkObj.orderDate+","+
                     parkObj.damageExplain+","+parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","+
                     parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.underCost+","+
                     parkObj.companyCost+","+parkObj.checkEndDate+","+parkObj.damageStatus+","+
                 parkObj.damageInsureId+","+parkObj.insureCreatedOn+","+parkObj.insureName+","+
-                parkObj.insureUserName+","+parkObj.insurePlan+","+parkObj.damageMoney+","+parkObj.insureActual+'\r\n';
+                parkObj.insureUserName+","+parkObj.insurePlan+","+parkObj.damageMoney+","+parkObj.insureActual+ parkObj.hangStatus + "," +'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
