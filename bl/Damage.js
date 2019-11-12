@@ -698,8 +698,10 @@ function getDamageBaseCsv(req,res,next){
                 }
                 if(rows[i].hang_status==null){
                     parkObj.hangStatus = "";
-                }else{
-                    parkObj.hangStatus = rows[i].hang_status;
+                }else if(rows[i].hang_status == 0){
+                    parkObj.hangStatus = "非挂起";
+                }else if(rows[i].hang_status ==1){
+                    parkObj.hangStatus = "挂起";
                 }
                 csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+","+parkObj.makeName+","+parkObj.enShortName+","+
                     parkObj.reShortName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.declareUserName+","+parkObj.damageExplain+","+
