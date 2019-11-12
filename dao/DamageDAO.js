@@ -222,7 +222,6 @@ function getDamageInsureRel(params,callback) {
         // 联系人
         " ,dci.contacts_name " +
 
-
         " from damage_info da " +
         // 2019-11-12 外连接 商品车赔偿打款
         " left join damage_check_indemnity dci on da.id = dci.damage_id " +

@@ -458,7 +458,12 @@ function getDamageCsv(req,res,next){
                 parkObj.vin = rows[i].vin;
                 parkObj.makeName = rows[i].make_name;
                 // 车型
-                parkObj.carModelName = rows[i].car_model_name;
+                if(rows[i].car_model_name==null){
+                    parkObj.carModelName = "";
+                }else{
+                    parkObj.carModelName = rows[i].car_model_name;
+                }
+
                 if(rows[i].route_start==null){
                     parkObj.routeStart = "";
                 }else{
