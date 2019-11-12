@@ -436,7 +436,7 @@ function uploadDamageFile(req,res,next){
 
 function getDamageCsv(req,res,next){
     var csvString = "";
-    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ',' + "品牌" + ',' + "起始城市" + ',' + "起始装车地" + ',' + "目的城市" + ',' + "船名" + ',' +
+    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ',' + "品牌" + ',' + "车型" + ',' + "起始城市" + ',' + "起始装车地" + ',' + "目的城市" + ',' + "船名" + ',' +
         "指令时间" + ',' + "质损说明" + ',' + "申报人" + ',' + "货车牌号" + ',' +
         "司机" + ',' + "经销商" + ',' + "委托方" + ',' + "质损类型" + ',' + "质损环节" + ',' + "责任人" + ',' + "个人承担" + ',' + "公司承担" + ',' +
         "处理结束时间" + ',' + "处理状态" + ',' +
@@ -457,6 +457,8 @@ function getDamageCsv(req,res,next){
                 parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
                 parkObj.vin = rows[i].vin;
                 parkObj.makeName = rows[i].make_name;
+                // 车型
+                parkObj.carModelName = rows[i].car_model_name;
                 if(rows[i].route_start==null){
                     parkObj.routeStart = "";
                 }else{
@@ -639,7 +641,7 @@ function getDamageCsv(req,res,next){
                 if(rows[i].indemnity_explain==null){
                     parkObj.indemnityExplain = "";
                 }else{
-                    parkObj.indemnityExplain = rows[i].indemnity_explain;
+                    parkObj.indemnityExplain = rows[i].indemnity_explain.replace(',','');
                 }
 
                 // 打款时间
@@ -662,34 +664,34 @@ function getDamageCsv(req,res,next){
                 if(rows[i].bank_number==null){
                     parkObj.bankNumber = "";
                 }else{
-                    parkObj.bankNumber = rows[i].bank_number;
+                    parkObj.bankNumber = rows[i].bank_number.replace(/[\r\n]/g, '');
                 }
                 // 户名
                 if(rows[i].bank_user_name==null){
                     parkObj.bankUserName = "";
                 }else{
-                    parkObj.bankUserName = rows[i].bank_user_name;
+                    parkObj.bankUserName = rows[i].bank_user_name.replace(/[\r\n]/g, '');
                 }
                 // 开户行
                 if(rows[i].bank_name==null){
                     parkObj.bankName = "";
                 }else{
-                    parkObj.bankName = rows[i].bank_name;
+                    parkObj.bankName = rows[i].bank_name.replace(/[\r\n]/g, '');
                 }
                 // 申请打款备注
                 if(rows[i].apply_explain==null){
                     parkObj.applyExplain = "";
                 }else{
-                    parkObj.applyExplain = rows[i].apply_explain;
+                    parkObj.applyExplain = rows[i].apply_explain.replace(/[\r\n]/g, '').replace(',','');
                 }
                 // 联系人
                 if(rows[i].contacts_name==null){
                     parkObj.contactsName = "";
                 }else{
-                    parkObj.contactsName = rows[i].contacts_name;
+                    parkObj.contactsName = rows[i].contacts_name.replace(/[\r\n]/g, '');
                 }
 
-                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+
+                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+"," + parkObj.carModelName +","+
                     parkObj.routeStart + "," + parkObj.addrName + "," + parkObj.routeEnd + "," + parkObj.shipName + "," + parkObj.orderDate + "," +
                     parkObj.damageExplain + "," + parkObj.declareUserName + "," + parkObj.truckNum + "," + parkObj.driveName + "," + parkObj.reShortName + "," + parkObj.enShortName + "," +
                     parkObj.damageType + "," + parkObj.damageLinkType + "," + parkObj.underUserName + "," + parkObj.underCost + "," +
