@@ -39094,6 +39094,9 @@
         "carId": {
           "type": "integer"
         },
+        "carModelName": {
+          "type": "string"
+        },
         "vin": {
           "type": "string"
         },

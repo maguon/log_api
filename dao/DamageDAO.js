@@ -7,11 +7,12 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageDAO.js');
 
 function addDamage(params,callback){
-    var query = " insert into damage_info (declare_user_id,car_id,truck_id,truck_num,drive_id,drive_name,date_id,damage_explain) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into damage_info (declare_user_id,car_id,car_model_name,truck_id,truck_num,drive_id,drive_name,date_id,damage_explain) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.carId;
+    paramsArray[i++]=params.carModelName;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.driveId;
