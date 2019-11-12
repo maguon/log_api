@@ -201,7 +201,30 @@ function getDamageInsureRel(params,callback) {
         " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date, " +
         " di.id as damage_insure_id,di.created_on as insure_created_on,ti.insure_name,u4.real_name as insure_user_name, " +
         " di.insure_plan,di.damage_money,di.insure_actual " +
+        // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
+        // 实际打款金额
+        " ,dci.actual_money " +
+        // 打款说明
+        " ,dci.indemnity_explain " +
+        // 打款时间
+        " ,dci.indemnity_date " +
+        // 状态 赔款状态(1-未打款,2-已打款)
+        " ,dci.indemnity_status " +
+        // 打款账户
+        " ,dci.bank_number " +
+        // 户名
+        " ,dci.bank_user_name " +
+        // 开户行
+        " ,dci.bank_name " +
+        // 申请打款备注
+        " ,dci.apply_explain " +
+        // 联系人
+        " ,dci.contacts_name " +
+
+
         " from damage_info da " +
+        // 2019-11-12 外连接 商品车赔偿打款
+        " left join damage_check_indemnity dci on da.id = dci.damage_id " +
         " left join user_info u on da.declare_user_id = u.uid " +
         " left join car_info c on da.car_id = c.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
