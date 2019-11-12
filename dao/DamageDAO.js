@@ -140,6 +140,10 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and da.drive_id = ? ";
     }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and da.truck_id = ? ";
+    }
     if(params.statStatus){
         paramsArray[i++] = params.statStatus;
         query = query + " and da.stat_status = ? ";

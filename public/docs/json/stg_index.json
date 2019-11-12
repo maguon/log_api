@@ -29059,7 +29059,13 @@
             "description": "drive id",
             "required": false,
             "type": "integer"
-
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "statStatus",
