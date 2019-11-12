@@ -388,12 +388,13 @@ function getDamageTotalCost(params,callback) {
 }
 
 function updateDamage(params,callback){
-    var query = " update damage_info set truck_id = ? , truck_num = ? , drive_id = ? , drive_name = ? , damage_explain = ? where id = ? " ;
+    var query = " update damage_info set truck_id = ? , truck_num = ? , drive_id = ? , drive_name = ? , car_model_name = ? ,damage_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckId;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
+    paramsArray[i++]=params.carModelName;
     paramsArray[i++]=params.damageExplain;
     paramsArray[i]=params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){
