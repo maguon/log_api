@@ -10,8 +10,8 @@ function addDpRouteLoadTaskCleanRel(params,callback){
     var query = " insert into dp_route_load_task_clean_rel (dp_route_task_id,dp_route_load_task_id," +
         " drive_id,truck_id,receive_id,small_single_price,big_single_price,small_car_count,big_car_count," +
         " trailer_fee,total_trailer_fee,actual_trailer_fee,car_parking_fee,run_fee,total_run_fee,actual_run_fee," +
-        " lead_fee,actual_lead_fee,month_flag,total_price,actual_price,car_count,type,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " lead_fee,actual_lead_fee,month_flag,total_price,actual_price,car_count,type,create_user_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.dpRouteLoadTaskId;
@@ -36,6 +36,8 @@ function addDpRouteLoadTaskCleanRel(params,callback){
     paramsArray[i++]=params.actualPrice;
     paramsArray[i++]=params.carCount;
     paramsArray[i++]=params.type;
+    // 2019-11-14 表结构新加字段【create_user_id】对应
+    paramsArray[i++] = params.type == 0 ? 0 : params.userId;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteLoadTaskCleanRel ');
