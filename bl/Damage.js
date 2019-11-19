@@ -436,11 +436,14 @@ function uploadDamageFile(req,res,next){
 
 function getDamageCsv(req,res,next){
     var csvString = "";
-    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ','+ "品牌" + ','+"起始城市" + ','+ "起始装车地"+ ','+ "目的城市" + ','+ "船名" + ','+
-        "指令时间" + ','+ "质损说明"+ ','+ "申报人" + ','+ "货车牌号" + ','+
-        "司机" + ','+ "经销商" + ','+ "委托方" + ','+ "质损类型"+ ','+ "质损环节" + ','+ "责任人" + ','+ "个人承担" + ','+ "公司承担" + ','+
-        "处理结束时间" + ','+"处理状态"+ ','+
-    "理赔编号" + ','+ "生成日期" + ','+ "保险公司" + ','+ "经办人"+ ','+ "待赔金额" + ','+ "定损金额" + ','+ "保险赔付";
+    var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ',' + "品牌" + ',' + "车型" + ',' + "起始城市" + ',' + "起始装车地" + ',' + "目的城市" + ',' + "船名" + ',' +
+        "指令时间" + ',' + "质损说明" + ',' + "申报人" + ',' + "货车牌号" + ',' +
+        "司机" + ',' + "经销商" + ',' + "委托方" + ',' + "质损类型" + ',' + "质损环节" + ',' + "责任人" + ',' + "个人承担" + ',' + "公司承担" + ',' +
+        "处理结束时间" + ',' + "处理状态" + ',' +
+        "理赔编号" + ',' + "生成日期" + ',' + "保险公司" + ',' + "经办人" + ',' + "待赔金额" + ',' + "定损金额" + ',' + "保险赔付"
+        // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
+        + ',' + "实际打款金额" + ',' + "打款说明" + ',' + "打款时间" + ',' + "状态" + ',' + "打款账户" + ',' + "户名" + ',' + "开户行" + ',' + "申请打款备注" + ',' + "联系人"
+    ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -454,6 +457,13 @@ function getDamageCsv(req,res,next){
                 parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
                 parkObj.vin = rows[i].vin;
                 parkObj.makeName = rows[i].make_name;
+                // 车型
+                if(rows[i].car_model_name==null){
+                    parkObj.carModelName = "";
+                }else{
+                    parkObj.carModelName = rows[i].car_model_name;
+                }
+
                 if(rows[i].route_start==null){
                     parkObj.routeStart = "";
                 }else{
@@ -622,13 +632,81 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.insureActual = rows[i].insure_actual;
                 }
-                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+","+
-                    parkObj.routeStart+","+parkObj.addrName+","+parkObj.routeEnd+","+parkObj.shipName+","+parkObj.orderDate+","+
-                    parkObj.damageExplain+","+parkObj.declareUserName+"," +parkObj.truckNum+"," +parkObj.driveName+","+parkObj.reShortName+","+parkObj.enShortName+","+
-                    parkObj.damageType+","+parkObj.damageLinkType+","+parkObj.underUserName+","+parkObj.underCost+","+
-                    parkObj.companyCost+","+parkObj.checkEndDate+","+parkObj.damageStatus+","+
-                parkObj.damageInsureId+","+parkObj.insureCreatedOn+","+parkObj.insureName+","+
-                parkObj.insureUserName+","+parkObj.insurePlan+","+parkObj.damageMoney+","+parkObj.insureActual+'\r\n';
+
+                // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
+
+                // 实际打款金额
+                if(rows[i].actual_money==null){
+                    parkObj.actualMoney = "";
+                }else{
+                    parkObj.actualMoney = rows[i].actual_money;
+                }
+
+                // 打款说明
+                if(rows[i].indemnity_explain==null){
+                    parkObj.indemnityExplain = "";
+                }else{
+                    parkObj.indemnityExplain = rows[i].indemnity_explain.replace(',','');
+                }
+
+                // 打款时间
+                if(rows[i].indemnity_date==null){
+                    parkObj.indemnityDate = "";
+                }else{
+                    parkObj.indemnityDate = new Date(rows[i].indemnity_date).toLocaleDateString();
+                }
+
+                // 状态 赔款状态(1-未打款,2-已打款)
+                if(rows[i].indemnity_status == 1){
+                    parkObj.indemnityStatus = "未打款";
+                }else if(rows[i].indemnity_status == 2){
+                    parkObj.indemnityStatus = "已打款";
+                }else{
+                    parkObj.indemnityStatus = "";
+                }
+
+                // 打款账户
+                if(rows[i].bank_number==null){
+                    parkObj.bankNumber = "";
+                }else{
+                    parkObj.bankNumber = rows[i].bank_number.replace(/[\r\n]/g, '');
+                }
+                // 户名
+                if(rows[i].bank_user_name==null){
+                    parkObj.bankUserName = "";
+                }else{
+                    parkObj.bankUserName = rows[i].bank_user_name.replace(/[\r\n]/g, '');
+                }
+                // 开户行
+                if(rows[i].bank_name==null){
+                    parkObj.bankName = "";
+                }else{
+                    parkObj.bankName = rows[i].bank_name.replace(/[\r\n]/g, '');
+                }
+                // 申请打款备注
+                if(rows[i].apply_explain==null){
+                    parkObj.applyExplain = "";
+                }else{
+                    parkObj.applyExplain = rows[i].apply_explain.replace(/[\r\n]/g, '').replace(',','');
+                }
+                // 联系人
+                if(rows[i].contacts_name==null){
+                    parkObj.contactsName = "";
+                }else{
+                    parkObj.contactsName = rows[i].contacts_name.replace(/[\r\n]/g, '');
+                }
+
+                csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+"," + parkObj.carModelName +","+
+                    parkObj.routeStart + "," + parkObj.addrName + "," + parkObj.routeEnd + "," + parkObj.shipName + "," + parkObj.orderDate + "," +
+                    parkObj.damageExplain + "," + parkObj.declareUserName + "," + parkObj.truckNum + "," + parkObj.driveName + "," + parkObj.reShortName + "," + parkObj.enShortName + "," +
+                    parkObj.damageType + "," + parkObj.damageLinkType + "," + parkObj.underUserName + "," + parkObj.underCost + "," +
+                    parkObj.companyCost + "," + parkObj.checkEndDate + "," + parkObj.damageStatus + "," +
+                    parkObj.damageInsureId + "," + parkObj.insureCreatedOn + "," + parkObj.insureName + "," +
+                    parkObj.insureUserName + "," + parkObj.insurePlan + "," + parkObj.damageMoney + "," + parkObj.insureActual
+                    // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
+                    + "," + parkObj.actualMoney + "," + parkObj.indemnityExplain + "," + parkObj.indemnityDate + "," + parkObj.indemnityStatus
+                    + "," + parkObj.bankNumber + "," + parkObj.bankUserName + "," + parkObj.bankName + "," + parkObj.applyExplain + "," + parkObj.contactsName
+                    +'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

@@ -876,3 +876,9 @@ ADD COLUMN `remark` varchar(200) NULL COMMENT '描述（司机出勤备注）' A
 -- ----------------------------
 ALTER TABLE `damage_info`
 ADD COLUMN `car_model_name` varchar(50) NULL COMMENT '车型号名称' AFTER `car_id`;
+
+-- ----------------------------
+-- 2019-11-14 更新
+-- ----------------------------
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `create_user_id` int(10) NOT NULL DEFAULT 0 COMMENT '创建人ID' AFTER `grant_user_id`;

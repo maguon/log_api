@@ -175,13 +175,29 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     parkObj.bigCleanFee = rows[0].big_clean_fee;
                     parkObj.trailerFee = rows[0].trailer_fee;
                     parkObj.trailerMonthFlag = rows[0].trailer_month_flag;
-                    parkObj.receiveFlag = rows[0].receive_flag;
                     parkObj.carParkingFee = rows[0].car_parking_fee;
                     parkObj.runFee = rows[0].run_fee;
                     parkObj.runMonthFlag = rows[0].run_month_flag;
-                    parkObj.leadFee = rows[0].lead_fee;
-                    parkObj.leadMonthFlag = rows[0].lead_month_flag;
+
+                    // dp_route_load_task 表： 计划派发商品车数量
+                    parkObj.planCount = rows[0].plan_count;
+
+                    // dp_route_load_task_detail 表中，统计实际装车数量
                     parkObj.carCount = rows[0].car_count;
+
+                    // receive_info 表中取得字段
+                    // lead_fee 带路费
+                    parkObj.leadFee = rows[0].lead_fee;
+
+                    // lead_month_flag 带路费是否月结(0-否,1-是)，
+                    parkObj.leadMonthFlag = rows[0].lead_month_flag;
+
+                    // receive_flag 是否为库(0-非库,1-是库)
+                    parkObj.receiveFlag = rows[0].receive_flag;
+
+                    // month_flag 是否月结(0-否,1-是)
+                    parkObj.monthFlag = rows[0].month_flag;
+
                     parkObj.smallCarCount = rows[0].small_car_count;
                     parkObj.bigCarCount = rows[0].big_car_count;
                     parkObj.truckNum = rows[0].truck_num;
@@ -190,7 +206,6 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     parkObj.dpRouteTaskId = rows[0].dp_route_task_id;
                     parkObj.dateId = rows[0].date_id;
                     parkObj.outerFlag = rows[0].outer_flag;
-                    parkObj.monthFlag = rows[0].month_flag;
                     parkObj.totalCleanFee = rows[0].clean_fee+rows[0].big_clean_fee+rows[0].trailer_fee+rows[0].run_fee+rows[0].lead_fee;
                     that();
                 } else {
@@ -320,6 +335,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         }
     }).seq(function() { //生成洗车费
         var that = this;
+        // 判断：
         if(params.loadTaskStatus == sysConst.LOAD_TASK_STATUS.load&&parkObj.loadTaskStatus==1&&
             parkObj.transferFlag==0&&parkObj.totalCleanFee>0&&cleanStatusFlag&&parkObj.outerFlag==sysConst.OUTER_FLAG.no) {
             params.dpRouteTaskId = parkObj.dpRouteTaskId;
@@ -345,20 +361,25 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             }else{
                 params.totalRunFee = parkObj.runFee*parkObj.carCount;
             }
-            if(leadFee>0){
-                params.actualLeadFee = 0;
-            }else{
-                params.actualLeadFee = parkObj.leadFee;
-            }
-            if(parkObj.leadMonthFlag==1){
-                params.leadFee = 0;
-            }else{
-                if(leadFee>0){
-                    params.leadFee = 0;
-                }else{
+
+            // 带路费(非月结)
+            params.leadFee = 0;
+            // 带路费(月结)
+            params.actualLeadFee = 0;
+
+            // 当 实际装车数 等于 计划派发商品车数量 时，才有带路费
+            if (parkObj.carCount == parkObj.planCount) {
+                // 月结 且 没有另外一个路线费用 (0-否,1-是)，
+                if (parkObj.leadMonthFlag == 1 && leadFee == 0) {
+                    params.actualLeadFee = parkObj.leadFee;
+                }
+
+                // 非月结 且 没有另外一个路线费用 (0-否,1-是)，
+                if (parkObj.leadMonthFlag == 0 && leadFee == 0) {
                     params.leadFee = parkObj.leadFee;
                 }
             }
+
             if(parkObj.trailerMonthFlag==1||parkObj.runMonthFlag==1||parkObj.leadMonthFlag==1||parkObj.monthFlag==1){
                 params.monthFlag=1;
             }else{
