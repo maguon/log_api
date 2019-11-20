@@ -492,8 +492,12 @@ function  queryDpRouteTaskBaseCsv(req,res,next) {
                     parkObj.reverseFlag = "是";
                 }
                 parkObj.reverseMoney = rows[i].reverse_money;//倒板工资
-                parkObj.taskEndDate = rows[i].task_end_date;//完成时间
-
+                //完成时间
+                if(rows[i].task_end_date == null){
+                    parkObj.taskEndDate = "";
+                }else{
+                    parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
+                }
                 csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.truckNum+","+
                     parkObj.truckNumber+","+parkObj.mileageSalary +","+parkObj.loadFlag+","+
                     parkObj.reverseFlag+"," +parkObj.reverseMoney+"," +parkObj.taskEndDate+'\r\n';
