@@ -418,7 +418,7 @@ function queryDpRouteTaskBase(req,res,next){
 
 function  queryDpRouteTaskBaseCsv(req,res,next) {
     var csvString = "";
-    var header = "调度编号" + ',' + "线路" + ',' + "公里数"+ ',' + "货车" + ','+ "运输车辆" + ','+
+    var header = "调度编号" + ',' + "线路" + ',' + "公里数"+ ',' + "货车" + ','+ "实际装车商品车数量" + ','+ "板车位数" +','+
         "单价" + ','+ "重载/空载" + ','+ "倒板"+ ','+ "倒板工资" + ','+ "完成时间" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -433,7 +433,9 @@ function  queryDpRouteTaskBaseCsv(req,res,next) {
                 parkObj.route = rows[i].route_start+'-'+rows[i].route_end;//线路
                 parkObj.distance = rows[i].distance;//公里数
                 parkObj.truckNum = rows[i].truck_num + '('+ rows[i].brand_name + ')';//货车
-                parkObj.truckNumber = rows[i].car_count + '/'+ rows[i].truck_number;//运输车辆
+                //运输车辆
+                parkObj.carCount = rows[i].car_count;//实际装车商品车数量
+                parkObj.truckNumber = rows[i].truck_number;//板车位数
                 //单价
                 if(rows[i].truck_number == 6){
 
@@ -498,7 +500,7 @@ function  queryDpRouteTaskBaseCsv(req,res,next) {
                 }else{
                     parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
                 }
-                csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.truckNum+","+
+                csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.truckNum+","+ parkObj.carCount+","+
                     parkObj.truckNumber+","+parkObj.mileageSalary +","+parkObj.loadFlag+","+
                     parkObj.reverseFlag+"," +parkObj.reverseMoney+"," +parkObj.taskEndDate+'\r\n';
             }
