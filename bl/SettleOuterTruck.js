@@ -240,17 +240,17 @@ function uploadSettleOuterTruckFile(req,res,next){
                         fee : objArray[i].单价,
                         row : i+1
                     }
-                    settleOuterTruckDAO.addSettleOuterTruck(subParams,function(err,result){
+                    settleOuterTruckDAO.addSettleOuterTruckData(subParams,function(err,result){
                         if (err) {
-                            logger.error(' addSettleOuterTruck ' + err.message);
+                            logger.error(' addSettleOuterTruckData ' + err.message);
                             //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                             that(null,i);
                         } else {
                             if(result&&result.affectedRows>0){
                                 successedInsert = successedInsert+result.affectedRows;
-                                logger.info(' addSettleOuterTruck ' + 'success');
+                                logger.info(' addSettleOuterTruckData ' + 'success');
                             }else{
-                                logger.warn(' addSettleOuterTruck ' + 'failed');
+                                logger.warn(' addSettleOuterTruckData ' + 'failed');
                             }
                             that(null,i);
                         }

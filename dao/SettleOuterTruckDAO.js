@@ -26,6 +26,28 @@ function addSettleOuterTruck(params,callback){
     });
 }
 
+function addSettleOuterTruckData(params,callback){
+    var query = " INSERT INTO settle_outer_truck (company_id,make_id,make_name," +
+        " route_start_id,route_start,route_end_id,route_end,distance,fee) " +
+        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , ? FROM DUAL " +
+        " WHERE EXISTS(SELECT id FROM company_info WHERE id=? AND operate_type=2)";
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.companyId;
+    paramsArray[i++]=params.makeId;
+    paramsArray[i++]=params.makeName;
+    paramsArray[i++]=params.routeStartId;
+    paramsArray[i++]=params.routeStart;
+    paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.routeEnd;
+    paramsArray[i++]=params.distance;
+    paramsArray[i++]=params.fee;
+    paramsArray[i++]=params.companyId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addSettleOuterTruckData ');
+        return callback(error,rows);
+    });
+}
+
 function getSettleOuterTruck(params,callback) {
     var query = " select sot.*,c.company_name from settle_outer_truck sot " +
         " left join company_info c on sot.company_id = c.id " +
@@ -255,6 +277,7 @@ function updateSettleOuterTruck(params,callback){
 
 module.exports ={
     addSettleOuterTruck : addSettleOuterTruck,
+    addSettleOuterTruckData : addSettleOuterTruckData,
     getSettleOuterTruck : getSettleOuterTruck,
     getSettleOuterTruckList : getSettleOuterTruckList,
     getSettleOuterTruckCarCount : getSettleOuterTruckCarCount,
