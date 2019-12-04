@@ -416,6 +416,106 @@ function queryDpRouteTaskBase(req,res,next){
     })
 }
 
+function  queryDpRouteTaskBaseCsv(req,res,next) {
+    var csvString = "";
+    var header = "调度编号" + ',' + "线路" + ',' + "公里数"+ ',' + "货车" + ','+ "实际装车商品车数量" + ','+ "板车位数" +','+
+        "单价" + ','+ "重载/空载" + ','+ "倒板"+ ','+ "倒板工资" + ','+ "完成时间" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    dpRouteTaskDAO.getDpRouteTaskBase(params,function(error,rows){
+        if (error) {
+            logger.error(' queryDpRouteTaskBaseCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.id = rows[i].id;//调度编号
+                parkObj.route = rows[i].route_start+'-'+rows[i].route_end;//线路
+                parkObj.distance = rows[i].distance;//公里数
+                parkObj.truckNum = rows[i].truck_num + '('+ rows[i].brand_name + ')';//货车
+                //运输车辆
+                parkObj.carCount = rows[i].car_count;//实际装车商品车数量
+                parkObj.truckNumber = rows[i].truck_number;//板车位数
+                //单价
+                if(rows[i].truck_number == 6){
+
+                    if(rows[i].car_count<=3){
+                        parkObj.mileageSalary=0.6;
+                    }
+                    else if(rows[i].car_count==4){
+                        parkObj.mileageSalary =0.7;
+                    }
+                    else if(rows[i].car_count==5){
+                        parkObj.mileageSalary =0.8;
+                    }
+                    else if(rows[i].car_count==6){
+                        parkObj.mileageSalary =0.9;
+                    }
+                    else if(rows[i].car_count>=7){
+                        parkObj.mileageSalary =1;
+                    }
+                }
+                else if(rows[i].truck_number == 8){
+                    if(rows[i].car_count<=4){
+                        parkObj.mileageSalary=0.6;
+                    }
+                    else if(rows[i].car_count==5){
+                        parkObj.mileageSalary =0.7;
+                    }
+                    else if(rows[i].car_count==6){
+                        parkObj.mileageSalary =0.8;
+                    }
+                    else if(rows[i].car_count==7){
+                        parkObj.mileageSalary =0.9;
+                    }
+                    else if(rows[i].car_count==8){
+                        parkObj.mileageSalary =1.0;
+                    }
+                    else if(rows[i].car_count==9){
+                        parkObj.mileageSalary =1.1;
+                    }
+                    else if(rows[i].car_count>=10){
+                        parkObj.mileageSalary =1.2;
+                    }
+                }
+                else {
+                    parkObj.mileageSalary =0
+                }
+                //重载/空载
+                if(rows[i].load_flag == 0){
+                    parkObj.loadFlag = "空载";
+                }else if(rows[i].load_flag == 1) {
+                    parkObj.loadFlag = "重载";
+                }
+                //倒板
+                if(rows[i].reverse_flag == 0){
+                    parkObj.reverseFlag = "否";
+                }else if(rows[i].reverse_flag == 1) {
+                    parkObj.reverseFlag = "是";
+                }
+                parkObj.reverseMoney = rows[i].reverse_money;//倒板工资
+                //完成时间
+                if(rows[i].task_end_date == null){
+                    parkObj.taskEndDate = "";
+                }else{
+                    parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
+                }
+                csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.truckNum+","+ parkObj.carCount+","+
+                    parkObj.truckNumber+","+parkObj.mileageSalary +","+parkObj.loadFlag+","+
+                    parkObj.reverseFlag+"," +parkObj.reverseMoney+"," +parkObj.taskEndDate+'\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 function queryDriveDistanceMoney(req,res,next){
     var params = req.params ;
     dpRouteTaskDAO.getDriveDistanceMoney(params,function(error,result){
@@ -1614,6 +1714,7 @@ module.exports = {
     queryDpRouteTask : queryDpRouteTask,
     queryDpRouteTaskList : queryDpRouteTaskList,
     queryDpRouteTaskBase : queryDpRouteTaskBase,
+    queryDpRouteTaskBaseCsv : queryDpRouteTaskBaseCsv,
     queryDriveDistanceMoney : queryDriveDistanceMoney,
     queryDriveDistanceCount : queryDriveDistanceCount,
     queryDriveDistanceLoadStat : queryDriveDistanceLoadStat,

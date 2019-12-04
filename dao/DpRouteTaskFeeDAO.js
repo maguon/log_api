@@ -74,6 +74,7 @@ function getDpRouteTaskFee(params,callback) {
         paramsArray[i++] = params.status;
         query = query + " and dprtf.status = ? ";
     }
+    query = query + ' order by dprtf.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
