@@ -8,6 +8,8 @@ var resUtil = require('../util/ResponseUtil.js');
 var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var settleOuterTruckDAO = require('../dao/SettleOuterTruckDAO.js');
+var carMakeDAO = require('../dao/CarMakeDAO.js');
+var cityDAO = require('../dao/CityDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -46,6 +48,7 @@ function querySettleOuterTruck(req,res,next){
     })
 }
 
+// 查询结果下载
 function getSettleOuterTruckBaseCsv(req, res, next) {
     var csvString = "";
     var header = "外协公司" + ',' +"品牌" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "单价" + ','+"总价";
@@ -103,6 +106,162 @@ function getSettleOuterTruckBaseCsv(req, res, next) {
             res.end();
             return next(false);
         }
+    })
+}
+
+// 批量数据导入
+function uploadSettleOuterTruckFile(req,res,next){
+    var params = req.params;
+    var hasData  = false;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    makeId : objArray[i].制造商ID,
+                    row : i+1,
+                }
+                carMakeDAO.getCarMake(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getCarMake ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.makeName = rows[0].make_name;
+                        }else{
+                            parkObj.makeName = "";
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    cityId : objArray[i].起始城市ID,
+                    row : i+1,
+                }
+                cityDAO.getCity(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getCity ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.startCityName = rows[0].city_name;
+                        }else{
+                            parkObj.startCityName = "";
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    cityId : objArray[i].目的地ID,
+                    row : i+1,
+                }
+                cityDAO.getCity(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getCity ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.endCityName = rows[0].city_name;
+                        }else{
+                            parkObj.endCityName = "";
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    companyId : objArray[i].外协公司ID,
+                    makeId : objArray[i].制造商ID,
+                    routeStartId : objArray[i].起始城市ID,
+                    routeEndId : objArray[i].目的地ID,
+                    row : i+1,
+                }
+                settleOuterTruckDAO.getSettleOuterTruck(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' getSettleOuterTruck ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length>0){
+                            hasData = true;
+                        }else{
+                            hasData = false;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(hasData){
+                    var subParams ={
+                        companyId : objArray[i].外协公司ID,
+                        makeId : objArray[i].制造商ID,
+                        routeStartId : objArray[i].起始城市ID,
+                        routeEndId : objArray[i].目的地ID,
+                        distance : objArray[i].公里数,
+                        fee : objArray[i].单价,
+                        row : i+1
+                    }
+                    settleOuterTruckDAO.updateSettleOuterTruck(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' updateSettleOuterTruck ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result && result.affectedRows > 0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' updateSettleOuterTruck ' + 'success');
+                            }else{
+                                logger.warn(' updateSettleOuterTruck ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }else{
+                    var subParams ={
+                        companyId : objArray[i].外协公司ID,
+                        makeId : objArray[i].制造商ID,
+                        makeName : parkObj.makeName,
+                        routeStartId : objArray[i].起始城市ID,
+                        routeStart : parkObj.startCityName,
+                        routeEndId : objArray[i].目的地ID,
+                        routeEnd : parkObj.endCityName,
+                        distance : objArray[i].公里数,
+                        fee : objArray[i].单价,
+                        row : i+1
+                    }
+                    settleOuterTruckDAO.addSettleOuterTruck(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' addSettleOuterTruck ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result&&result.affectedRows>0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' addSettleOuterTruck ' + 'success');
+                            }else{
+                                logger.warn(' addSettleOuterTruck ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
+                }
+            })
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' uploadSettleOuterTruckFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
     })
 }
 
@@ -222,11 +381,11 @@ function getSettleOuterTruckCsv(req,res,next){
     })
 }
 
-
 module.exports = {
     createSettleOuterTruck : createSettleOuterTruck,
     querySettleOuterTruck : querySettleOuterTruck,
     getSettleOuterTruckBaseCsv : getSettleOuterTruckBaseCsv,
+    uploadSettleOuterTruckFile : uploadSettleOuterTruckFile,
     querySettleOuterTruckList : querySettleOuterTruckList,
     querySettleOuterTruckCarCount : querySettleOuterTruckCarCount,
     updateSettleOuterTruck : updateSettleOuterTruck,
