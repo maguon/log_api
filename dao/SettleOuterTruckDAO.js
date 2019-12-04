@@ -27,10 +27,10 @@ function addSettleOuterTruck(params,callback){
 }
 
 function addSettleOuterTruckData(params,callback){
-    var query = " INSERT INTO settle_outer_truck (company_id,make_id,make_name," +
+    var query = " insert into settle_outer_truck (company_id,make_id,make_name," +
         " route_start_id,route_start,route_end_id,route_end,distance,fee) " +
-        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , ? FROM DUAL " +
-        " WHERE EXISTS(SELECT id FROM company_info WHERE id=? AND operate_type=2)";
+        " select ? , ? , ? , ? , ? , ? , ? , ? , ? from dual " +
+        " where exists(select id from company_info where id=? and operate_type=2)";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.companyId;
     paramsArray[i++]=params.makeId;
@@ -41,7 +41,7 @@ function addSettleOuterTruckData(params,callback){
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.fee;
-    paramsArray[i++]=params.companyId;
+    paramsArray[i]=params.companyId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addSettleOuterTruckData ');
         return callback(error,rows);
