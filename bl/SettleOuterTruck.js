@@ -46,6 +46,66 @@ function querySettleOuterTruck(req,res,next){
     })
 }
 
+function getSettleOuterTruckBaseCsv(req, res, next) {
+    var csvString = "";
+    var header = "外协公司" + ',' +"品牌" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "单价" + ','+"总价";
+
+    csvString = header + '\r\n' + csvString;
+    var params = req.params;
+    var parkObj = {};
+    settleOuterTruckDAO.getSettleOuterTruck(params,function(error,rows){
+        if (error) {
+            logger.error(' getSettleOuterTruck ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                // 外协公司
+                parkObj.companyName = rows[i].company_name;
+                // 品牌
+                parkObj.makeName = rows[i].make_name;
+                // 起始城市
+                if(rows[i].route_start == null){
+                    parkObj.routeStart = "";
+                }else{
+                    parkObj.routeStart = rows[i].route_start;
+                }
+                // 目的城市
+                if(rows[i].route_end == null){
+                    parkObj.routeEnd = "";
+                }else{
+                    parkObj.routeEnd = rows[i].route_end;
+                }
+                // 公里数
+                if(rows[i].distance == null){
+                    parkObj.distance = "";
+                }else{
+                    parkObj.distance = rows[i].distance;
+                }
+                // 单价
+                if(rows[i].fee == null){
+                    parkObj.fee = "";
+                }else{
+                    parkObj.fee = rows[i].fee;
+                }
+                // 总价
+                parkObj.totalFee =rows[i].distance*rows[i].fee;
+
+                // 一行数据
+                csvString = csvString+parkObj.companyName+","+parkObj.makeName+","+parkObj.routeStart+","+parkObj.routeEnd+","+
+                    parkObj.distance+","+parkObj.fee+","+parkObj.totalFee+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 function querySettleOuterTruckList(req,res,next){
     var params = req.params ;
     settleOuterTruckDAO.getSettleOuterTruckList(params,function(error,result){
@@ -166,6 +226,7 @@ function getSettleOuterTruckCsv(req,res,next){
 module.exports = {
     createSettleOuterTruck : createSettleOuterTruck,
     querySettleOuterTruck : querySettleOuterTruck,
+    getSettleOuterTruckBaseCsv : getSettleOuterTruckBaseCsv,
     querySettleOuterTruckList : querySettleOuterTruckList,
     querySettleOuterTruckCarCount : querySettleOuterTruckCarCount,
     updateSettleOuterTruck : updateSettleOuterTruck,

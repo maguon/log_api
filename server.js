@@ -1033,6 +1033,7 @@ function createServer() {
      * SettleOuterTruck Module
      */
     server.get('/api/settleOuterTruck', settleOuterTruck.querySettleOuterTruck);
+    server.get('/api/settleOuterTruckBase.csv', settleOuterTruck.getSettleOuterTruckBaseCsv);
     server.get('/api/settleOuterTruckList', settleOuterTruck.querySettleOuterTruckList);
     server.get('/api/settleOuterTruckCarCount', settleOuterTruck.querySettleOuterTruckCarCount);
     server.get('/api/settleOuterTruck.csv', settleOuterTruck.getSettleOuterTruckCsv);

@@ -35191,6 +35191,66 @@
         }
       }
     },
+    "/settleOuterTruckBase.csv": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleOuterTruck csv",
+        "description": "query settleOuterTruckBaseCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleOuterTruck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterTruck id"
+          }
+        }
+      }
+    },
     "/settleOuterTruckList": {
       "get": {
         "tags": [
