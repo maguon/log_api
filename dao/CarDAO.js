@@ -637,11 +637,16 @@ function getCarDamageDeclare(params,callback) {
 }
 
 function updateCar(params,callback){
-    var query = " update car_info set vin = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
+    var query = " update car_info set vin = ? , company_id = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
         " route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , route_id = ? , receive_id = ? , " +
         " entrust_id = ? , order_date = ? , order_date_id = ? , ship_name = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
+    if(params.companyId){
+        paramsArray[i++]=params.companyId;
+    }else{
+        paramsArray[i++]= 0 ;
+    }
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.modelId;

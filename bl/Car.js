@@ -179,6 +179,7 @@ function updateCar(req,res,next){
     var carObj = {};
     var dateId = 0;
     var updateDemandFlag;
+
     Seq().seq(function () {
         var that = this;
         var orderDate = params.orderDate;
@@ -198,9 +199,10 @@ function updateCar(req,res,next){
                         carObj.routeEndId = rows[0].route_end_id;
                         carObj.receiveId = rows[0].receive_id;
                         carObj.dateId = rows[0].order_date_id;
+                        carObj.companyId = rows[0].company_id;
                         that();
                     }else if(rows[0].car_status>listOfValue.CAR_STATUS_MOVE&&rows[0].route_start_id==params.routeStartId
-                    &&rows[0].base_addr_id==params.baseAddrId&&rows[0].route_end_id==params.routeEndId
+                        &&rows[0].base_addr_id==params.baseAddrId&&rows[0].route_end_id==params.routeEndId
                         &&rows[0].receive_id==params.receiveId&&rows[0].order_date_id==dateId){
                         that();
                     }else{
@@ -218,7 +220,15 @@ function updateCar(req,res,next){
         })
     }).seq(function () {
         var that = this;
-        if(carObj.carStatus==listOfValue.CAR_STATUS_MOVE&&carObj.routeStartId>0&&carObj.baseAddrId>0&&carObj.routeEndId>0&&carObj.receiveId>0&&carObj.dateId>0){
+        //车辆状态 默认1
+        //起始地ID >0
+        //起始地发货地址ID > 0
+        //目的地ID > 0
+        //经销商ID > 0
+        //经销商ID > 0
+        //指令统计时间 > 0
+        //原信息不是外协车辆
+        if(carObj.carStatus==listOfValue.CAR_STATUS_MOVE&&carObj.routeStartId>0&&carObj.baseAddrId>0&&carObj.routeEndId>0&&carObj.receiveId>0&&carObj.dateId>0&&carObj.companyId==0){
             var subParams ={
                 routeStartId : carObj.routeStartId,
                 baseAddrId : carObj.baseAddrId,
@@ -226,6 +236,7 @@ function updateCar(req,res,next){
                 receiveId : carObj.receiveId,
                 dateId : carObj.dateId
             }
+            //pre_count = pre_count - 1
             dpDemandDAO.updateDpDemandPreCountMinus(subParams,function(error,result){
                 if (error) {
                     logger.error(' updateDpDemandPreCountMinus ' + error.message);
@@ -244,7 +255,15 @@ function updateCar(req,res,next){
         }
     }).seq(function () {
         var that = this;
-        if(carObj.carStatus==listOfValue.CAR_STATUS_MOVE&&params.routeStartId>0&&params.baseAddrId>0&&params.routeEndId>0&&params.receiveId>0&&params.orderDate!=null){
+        //车辆状态 默认1
+        //起始地ID >0
+        //起始地发货地址ID > 0
+        //目的地ID > 0
+        //经销商ID > 0
+        //经销商ID > 0
+        //指令统计时间 非空
+        //原信息不是外协车辆
+        if(carObj.carStatus==listOfValue.CAR_STATUS_MOVE&&params.routeStartId>0&&params.baseAddrId>0&&params.routeEndId>0&&params.receiveId>0&&params.orderDate!=null&&params.companyId==0){
             var orderDate = params.orderDate;
             var strDate = moment(orderDate).format('YYYYMMDD');
             dateId = parseInt(strDate);
@@ -261,6 +280,7 @@ function updateCar(req,res,next){
                     resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     return next();
                 } else {
+                    //查询是否存在调度需求
                     if(rows && rows.length>0){
                         updateDemandFlag = true;
                         that();
@@ -283,6 +303,7 @@ function updateCar(req,res,next){
                 receiveId : params.receiveId,
                 dateId : dateId
             }
+            //pre_count = pre_count + 1
             dpDemandDAO.updateDpDemandPreCountPlus(subParams,function(error,result){
                 if (error) {
                     logger.error(' updateDpDemandPreCountPlus ' + error.message);
