@@ -179,7 +179,9 @@ function updateCar(req,res,next){
     var carObj = {};
     var dateId = 0;
     var updateDemandFlag;
-
+    if(params.companyId == null || params.companyId==""){
+        params.companyId = 0;
+    }
     Seq().seq(function () {
         var that = this;
         var orderDate = params.orderDate;
