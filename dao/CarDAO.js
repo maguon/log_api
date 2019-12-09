@@ -687,10 +687,15 @@ function updateCar(params,callback){
 }
 
 function updateCompletedCar(params,callback){
-    var query = " update car_info set make_id = ? , make_name = ? , entrust_id = ? , order_date = ? , order_date_id = ? , " +
+    var query = " update car_info set company_id = ?, make_id = ? , make_name = ? , entrust_id = ? , order_date = ? , order_date_id = ? , " +
         " route_id = ? , route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , " +
         " receive_id = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
+    if(params.companyId){
+        paramsArray[i++]=params.companyId;
+    }else{
+        paramsArray[i++]= 0 ;
+    }
     paramsArray[i++]=params.makeId;
     paramsArray[i++]=params.makeName;
     paramsArray[i++]=params.entrustId;
