@@ -888,7 +888,7 @@ ALTER TABLE `car_info`
 ADD COLUMN `company_id` int(11) NULL DEFAULT NULL COMMENT '外协公司ID（不是外协时为0）' AFTER `vin`;
 DROP TRIGGER `trg_new_car`;
 DELIMITER ;;
-CREATE DEFINER = `root`@`localhost` TRIGGER `trg_new_car` AFTER INSERT ON `car_info` FOR EACH ROW BEGIN
+CREATE TRIGGER `trg_new_car` AFTER INSERT ON `car_info` FOR EACH ROW BEGIN
 set @count = (select count(*) from dp_demand_info
 where demand_status=1 and user_id=0 and route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
  and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = DATE_FORMAT(new.order_date,'%Y%m%d'));
@@ -905,7 +905,7 @@ DELIMITER ;
 
 DROP TRIGGER `trg_delete_car`;
 DELIMITER ;;
-CREATE DEFINER = `root`@`localhost` TRIGGER `trg_delete_car` BEFORE DELETE ON `car_info` FOR EACH ROW BEGIN
+CREATE TRIGGER `trg_delete_car` BEFORE DELETE ON `car_info` FOR EACH ROW BEGIN
 IF(old.route_end_id>0 && old.car_status=1&&old.receive_id>0&&old.order_date is not null && old.company_id =0) THEN
 UPDATE dp_demand_info set pre_count=pre_count-1 where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
 and route_end_id = old.route_end_id and receive_id=old.receive_id and date_id = DATE_FORMAT(old.order_date,'%Y%m%d');
