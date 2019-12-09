@@ -38348,6 +38348,9 @@
         "vin": {
           "type": "string"
         },
+        "companyId": {
+          "type": "integer"
+        },
         "makeId": {
           "type": "integer"
         },

@@ -876,9 +876,42 @@ ADD COLUMN `remark` varchar(200) NULL COMMENT '描述（司机出勤备注）' A
 -- ----------------------------
 ALTER TABLE `damage_info`
 ADD COLUMN `car_model_name` varchar(50) NULL COMMENT '车型号名称' AFTER `car_id`;
-
 -- ----------------------------
 -- 2019-11-14 更新
 -- ----------------------------
 ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `create_user_id` int(10) NOT NULL DEFAULT 0 COMMENT '创建人ID' AFTER `grant_user_id`;
+-- ----------------------------
+-- 2019-12-9 更新
+-- ----------------------------
+ALTER TABLE `car_info`
+ADD COLUMN `company_id` int(11) NULL DEFAULT NULL COMMENT '外协公司ID（不是外协时为0）' AFTER `vin`;
+DROP TRIGGER `trg_new_car`;
+DELIMITER ;;
+CREATE DEFINER = `root`@`localhost` TRIGGER `trg_new_car` AFTER INSERT ON `car_info` FOR EACH ROW BEGIN
+set @count = (select count(*) from dp_demand_info
+where demand_status=1 and user_id=0 and route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+ and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = DATE_FORMAT(new.order_date,'%Y%m%d'));
+IF(new.route_end_id>0 && new.car_status=1&&new.receive_id>0&&new.order_date is not null && @count=0 && new.company_id=0) THEN
+INSERT INTO dp_demand_info(user_id,route_id,route_start_id,route_start,base_addr_id,route_end_id,route_end,receive_id,date_id,pre_count)
+VALUES (0,new.route_id,new.route_start_id,new.route_start,new.base_addr_id,new.route_end_id,new.route_end,new.receive_id,DATE_FORMAT(new.order_date,'%Y%m%d'),1);
+ELSEIF (new.route_end_id>0 && new.car_status=1&&new.receive_id>0&&new.order_date is not null&&@count>0 && new.company_id=0) THEN
+UPDATE dp_demand_info set pre_count=pre_count+1 where user_id=0 and route_start_id=new.route_start_id and base_addr_id=new.base_addr_id
+ and route_end_id = new.route_end_id and receive_id=new.receive_id and date_id = DATE_FORMAT(new.order_date,'%Y%m%d');
+END IF ;
+END
+;;
+DELIMITER ;
+
+DROP TRIGGER `trg_delete_car`;
+DELIMITER ;;
+CREATE DEFINER = `root`@`localhost` TRIGGER `trg_delete_car` BEFORE DELETE ON `car_info` FOR EACH ROW BEGIN
+IF(old.route_end_id>0 && old.car_status=1&&old.receive_id>0&&old.order_date is not null && old.company_id =0) THEN
+UPDATE dp_demand_info set pre_count=pre_count-1 where route_start_id=old.route_start_id and base_addr_id=old.base_addr_id
+and route_end_id = old.route_end_id and receive_id=old.receive_id and date_id = DATE_FORMAT(old.order_date,'%Y%m%d');
+
+END IF ;
+END
+;;
+DELIMITER ;
+
