@@ -785,7 +785,7 @@ function updateDpRouteTaskStatus(req,res,next){
                 }
                 carDAO.updateCarCompanyId(subParams,function(error,result){
                     if (error) {
-                        logger.error(' updateCompletedCar ' + error.message);
+                        logger.error(' updateCarCompanyId ' + error.message);
                         throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
                     } else {
                         if (result && result.affectedRows > 0) {
