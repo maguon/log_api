@@ -746,6 +746,20 @@ function updateCarStatus(params,callback){
     });
 }
 
+function updateCarCompanyId(params,callback){
+    var query = " UPDATE car_info SET company_id =( " +
+        "SELECT ti.company_id FROM truck_info ti WHERE id = ? )" +
+        "WHERE id IN ( " +
+        "SELECT drltd.car_id FROM dp_route_load_task_detail drltd WHERE dp_route_task_id = ? )";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.truckId;
+    paramsArray[i] = params.dpRouteTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCarCompanyId ');
+        return callback(error,rows);
+    });
+}
+
 function updateCarOrderDate(params,callback){
     var query = " update car_info left join dp_route_load_task_detail on car_info.id = dp_route_load_task_detail.car_id " +
         " left join dp_route_load_task on dp_route_load_task.id = dp_route_load_task_detail.dp_route_load_task_id " +
@@ -818,6 +832,7 @@ module.exports ={
     updateCompletedCar : updateCompletedCar,
     updateCarVin : updateCarVin,
     updateCarStatus : updateCarStatus,
+    updateCarCompanyId : updateCarCompanyId,
     updateCarOrderDate : updateCarOrderDate,
     updateCaCurrentCity : updateCaCurrentCity,
     deleteUploadCar : deleteUploadCar,

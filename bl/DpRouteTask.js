@@ -17,6 +17,7 @@ var truckDispatchDAO = require('../dao/TruckDispatchDAO.js');
 var dpRouteTaskLoanRelDAO = require('../dao/DpRouteTaskLoanRelDAO.js');
 var dpRouteTaskRelDAO = require('../dao/DpRouteTaskRelDAO.js');
 var cityRouteDAO = require('../dao/CityRouteDAO.js');
+var carDAO = require('../dao/CarDAO.js');
 var truckDAO = require('../dao/TruckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -721,60 +722,82 @@ function updateDpRouteTaskStatus(req,res,next){
         }
     }).seq(function() {
         var that = this;
-        if (params.taskStatus == sysConst.TASK_STATUS.completed&&parkObj.outerFlag == sysConst.OUTER_FLAG.no) {
-            if(parkObj.carCount>=4){
-                parkObj.loadFlag = sysConst.LOAD_FLAG.loan;
-            }else{
-                parkObj.loadFlag = sysConst.LOAD_FLAG.not_loan;
-            }
-            if(parkObj.loadFlag==sysConst.LOAD_FLAG.loan){
-                parkObj.oil = parkObj.loadDistanceOil;
-                parkObj.reverseOil = parkObj.loadReverseOil;
-                parkObj.totalOil = (parkObj.oilDistance*parkObj.loadDistanceOil)/100;
-                parkObj.totalUrea = (parkObj.oilDistance*parkObj.urea)/100;
-                parkObj.totalReverseOil = (parkObj.oilDistance*parkObj.loadReverseOil)/100;
-                if(parkObj.reverseFlag==1){
-                    parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
+        if (params.taskStatus == sysConst.TASK_STATUS.completed) {
+            if(parkObj.outerFlag == sysConst.OUTER_FLAG.no){
+                if(parkObj.carCount>=4){
+                    parkObj.loadFlag = sysConst.LOAD_FLAG.loan;
+                }else{
+                    parkObj.loadFlag = sysConst.LOAD_FLAG.not_loan;
                 }
-            }else{
-                parkObj.oil = parkObj.noLoadDistanceOil;
-                parkObj.reverseOil = parkObj.noLoadReverseOil;
-                parkObj.totalOil = (parkObj.oilDistance*parkObj.noLoadDistanceOil)/100;
-                parkObj.totalUrea = (parkObj.oilDistance*parkObj.urea)/100;
-                parkObj.totalReverseOil = (parkObj.oilDistance*parkObj.noLoadReverseOil)/100;
-                if(parkObj.reverseFlag==1){
-                    parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
-                }
-            }
-            var subParams ={
-                dpRouteTaskId:params.dpRouteTaskId,
-                truckId:parkObj.truckId,
-                driveId:parkObj.driveId,
-                routeId:parkObj.routeId,
-                routeStartId:parkObj.routeStartId,
-                routeStart:parkObj.routeStart,
-                routeEndId:parkObj.routeEndId,
-                routeEnd:parkObj.routeEnd,
-                oil:parkObj.oil,
-                totalOil:parkObj.totalOil,
-                urea:parkObj.urea,
-                totalUrea:parkObj.totalUrea,
-                reverseOil:parkObj.reverseOil,
-                totalReverseOil:parkObj.totalReverseOil
-            }
-            dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
-                if (error) {
-                    logger.error(' addDpRouteTaskOilRel ' + error.message);
-                    throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if (result && result.insertId > 0) {
-                        logger.info(' addDpRouteTaskOilRel ' + 'success');
-                    } else {
-                        logger.warn(' addDpRouteTaskOilRel ' + 'failed');
+                if(parkObj.loadFlag==sysConst.LOAD_FLAG.loan){
+                    parkObj.oil = parkObj.loadDistanceOil;
+                    parkObj.reverseOil = parkObj.loadReverseOil;
+                    parkObj.totalOil = (parkObj.oilDistance*parkObj.loadDistanceOil)/100;
+                    parkObj.totalUrea = (parkObj.oilDistance*parkObj.urea)/100;
+                    parkObj.totalReverseOil = (parkObj.oilDistance*parkObj.loadReverseOil)/100;
+                    if(parkObj.reverseFlag==1){
+                        parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
                     }
-                    that();
+                }else{
+                    parkObj.oil = parkObj.noLoadDistanceOil;
+                    parkObj.reverseOil = parkObj.noLoadReverseOil;
+                    parkObj.totalOil = (parkObj.oilDistance*parkObj.noLoadDistanceOil)/100;
+                    parkObj.totalUrea = (parkObj.oilDistance*parkObj.urea)/100;
+                    parkObj.totalReverseOil = (parkObj.oilDistance*parkObj.noLoadReverseOil)/100;
+                    if(parkObj.reverseFlag==1){
+                        parkObj.totalOil = parkObj.totalOil+parkObj.totalReverseOil;
+                    }
                 }
-            })
+                var subParams ={
+                    dpRouteTaskId:params.dpRouteTaskId,
+                    truckId:parkObj.truckId,
+                    driveId:parkObj.driveId,
+                    routeId:parkObj.routeId,
+                    routeStartId:parkObj.routeStartId,
+                    routeStart:parkObj.routeStart,
+                    routeEndId:parkObj.routeEndId,
+                    routeEnd:parkObj.routeEnd,
+                    oil:parkObj.oil,
+                    totalOil:parkObj.totalOil,
+                    urea:parkObj.urea,
+                    totalUrea:parkObj.totalUrea,
+                    reverseOil:parkObj.reverseOil,
+                    totalReverseOil:parkObj.totalReverseOil
+                }
+                dpRouteTaskOilRelDAO.addDpRouteTaskOilRel(subParams, function (error, result) {
+                    if (error) {
+                        logger.error(' addDpRouteTaskOilRel ' + error.message);
+                        throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else {
+                        if (result && result.insertId > 0) {
+                            logger.info(' addDpRouteTaskOilRel ' + 'success');
+                        } else {
+                            logger.warn(' addDpRouteTaskOilRel ' + 'failed');
+                        }
+                        that();
+                    }
+                })
+            }else{
+                //根据dp_route_task 查出外协名称，同时更新车辆外协公司ID
+                var subParams ={
+                    dpRouteTaskId:params.dpRouteTaskId,
+                    truckId:parkObj.truckId,
+                }
+                carDAO.updateCarCompanyId(subParams,function(error,result){
+                    if (error) {
+                        logger.error(' updateCompletedCar ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else {
+                        if (result && result.affectedRows > 0) {
+                            logger.info(' updateCarCompanyId ' + 'success');
+                        } else {
+                            logger.warn(' updateCarCompanyId ' + 'failed');
+                        }
+                        that();
+                    }
+                })
+            }
+
         }else{
             that();
         }
