@@ -109,6 +109,10 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.vin;
         query = query + " and c.vin = ? ";
     }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and c.company_id = ? ";
+    }
     if(params.vinCode){
         query = query + " and c.vin like '%"+params.vinCode+"%'";
     }

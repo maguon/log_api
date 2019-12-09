@@ -19169,7 +19169,6 @@
             "description": "car vin",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "vinCode",
@@ -19177,7 +19176,13 @@
             "description": "vin code",
             "required": false,
             "type": "string"
-
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "makeId",
@@ -19185,7 +19190,6 @@
             "description": "make id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "routeStartId",
@@ -19193,7 +19197,6 @@
             "description": "routeStart id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "addrId",
@@ -19201,7 +19204,6 @@
             "description": "addr id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "routeEndId",
@@ -19209,7 +19211,6 @@
             "description": "routeEnd id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "entrustId",
@@ -19217,7 +19218,6 @@
             "description": "entrust id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "receiveId",
@@ -19225,7 +19225,6 @@
             "description": "receive id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "orderStart",
@@ -19233,7 +19232,6 @@
             "description": "order start",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "orderEnd",
@@ -19241,7 +19239,6 @@
             "description": "order end",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "createdStart",
@@ -19249,7 +19246,6 @@
             "description": "created start",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "createdEnd",
@@ -19257,7 +19253,6 @@
             "description": "created end",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "carStatus",
@@ -19265,7 +19260,6 @@
             "description": "car status",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "carStatusArr",
@@ -19273,7 +19267,6 @@
             "description": "car statusArr",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "currentCityId",
@@ -19281,7 +19274,6 @@
             "description": "currentCity id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "currentAddrId",
@@ -19289,7 +19281,6 @@
             "description": "currentAddr id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "newCurrentCityId",
@@ -19297,7 +19288,6 @@
             "description": "newCurrentCity id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "newCurrentAddrId",
@@ -19305,7 +19295,6 @@
             "description": "newCurrentAddr id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "userId",
@@ -19313,7 +19302,6 @@
             "description": "user id",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "uploadId",
@@ -19321,7 +19309,6 @@
             "description": "upload id",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "start",
@@ -19329,7 +19316,6 @@
             "description": " list start pos",
             "required": false,
             "type": "integer"
-
           },
           {
             "name": "size",
@@ -19337,7 +19323,6 @@
             "description": "list size for pagination",
             "required": false,
             "type": "integer"
-
           }
         ],
         "responses": {
@@ -35271,109 +35256,6 @@
           },
           "400": {
             "description": "Invalid token value or invalid settleOuterTruck id"
-          }
-        }
-      }
-    },
-    "/settleOuterTruckBase.csv": {
-      "get": {
-        "tags": [
-          "settle"
-        ],
-        "summary": "query settleOuterTruck csv",
-        "description": "query settleOuterTruckBaseCsv",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "query",
-            "description": "company id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "makeId",
-            "in": "query",
-            "description": "make id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "routeStartId",
-            "in": "query",
-            "description": "routeStart id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
-            "name": "routeEndId",
-            "in": "query",
-            "description": "routeEnd id",
-            "required": false,
-            "type": "integer"
-
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/settleOuterTruck"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid settleOuterTruck id"
-          }
-        }
-      }
-    },
-    "/user/{userId}/settleOuterTruckFile": {
-      "post": {
-        "tags": [
-          "settle"
-        ],
-        "summary": "user upload settleOuterTruckFile ",
-        "description": "user upload settleOuterTruckFile",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "type": "integer"
-
-          },
-          {
-            "name": "file",
-            "in": "formData",
-            "description": "file to upload",
-            "required": true,
-            "type": "file"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ApiResponse"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid token value or invalid settleOuterTruckFile id"
           }
         }
       }
