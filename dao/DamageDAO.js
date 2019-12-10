@@ -322,6 +322,14 @@ function getDamageInsureRel(params,callback) {
         paramsArray[i++] = params.hangStatus;
         query = query + " and da.hang_status = ? ";
     }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart +" 00:00:00";
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd +" 23:59:59";
+        query = query + " and c.order_date <= ? ";
+    }
     query = query + " order by da.id desc";
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);

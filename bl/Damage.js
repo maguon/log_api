@@ -442,7 +442,7 @@ function getDamageCsv(req,res,next){
         "处理结束时间" + ',' + "处理状态" + ',' +
         "理赔编号" + ',' + "生成日期" + ',' + "保险公司" + ',' + "经办人" + ',' + "待赔金额" + ',' + "定损金额" + ',' + "保险赔付"
         // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
-        + ',' + "实际打款金额" + ',' + "打款说明" + ',' + "打款时间" + ',' + "状态" + ',' + "打款账户" + ',' + "户名" + ',' + "开户行" + ',' + "申请打款备注" + ',' + "联系人"
+        + ',' + "实际打款金额" + ',' + "打款说明" + ',' + "打款时间" + ',' + "状态" + ',' + "打款账户" + ',' + "户名" + ',' + "开户行" + ',' + "申请打款备注" + ',' + "联系人"+ ',' + "挂起状态"
     ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -695,7 +695,12 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.contactsName = rows[i].contacts_name.replace(/[\r\n]/g, '');
                 }
-
+                // 挂起状态
+                if(rows[i].hang_status == 0){
+                    parkObj.hangStatus = "非挂起";
+                }else{
+                    parkObj.hangStatus = "挂起";
+                }
                 csvString = csvString+parkObj.id+","+parkObj.createdOn+","+parkObj.vin+"," +parkObj.makeName+"," + parkObj.carModelName +","+
                     parkObj.routeStart + "," + parkObj.addrName + "," + parkObj.routeEnd + "," + parkObj.shipName + "," + parkObj.orderDate + "," +
                     parkObj.damageExplain + "," + parkObj.declareUserName + "," + parkObj.truckNum + "," + parkObj.driveName + "," + parkObj.reShortName + "," + parkObj.enShortName + "," +
@@ -705,7 +710,7 @@ function getDamageCsv(req,res,next){
                     parkObj.insureUserName + "," + parkObj.insurePlan + "," + parkObj.damageMoney + "," + parkObj.insureActual
                     // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
                     + "," + parkObj.actualMoney + "," + parkObj.indemnityExplain + "," + parkObj.indemnityDate + "," + parkObj.indemnityStatus
-                    + "," + parkObj.bankNumber + "," + parkObj.bankUserName + "," + parkObj.bankName + "," + parkObj.applyExplain + "," + parkObj.contactsName
+                    + "," + parkObj.bankNumber + "," + parkObj.bankUserName + "," + parkObj.bankName + "," + parkObj.applyExplain + "," + parkObj.contactsName+ "," + parkObj.hangStatus
                     +'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');

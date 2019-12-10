@@ -30062,7 +30062,6 @@
             "description": "createdOn start",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "createdOnEnd",
@@ -30070,7 +30069,6 @@
             "description": "createdOn end",
             "required": false,
             "type": "string"
-
           },
           {
             "name": "endDateStart",
@@ -30182,7 +30180,34 @@
             "description": "damage status",
             "required": false,
             "type": "integer"
-
+          },
+          {
+            "name": "damageStatus",
+            "in": "query",
+            "description": "damage status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "hangStatus",
+            "in": "query",
+            "description": "hang status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "orderDate start",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "orderDate end",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
