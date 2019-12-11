@@ -653,6 +653,7 @@ function updateDpRouteTaskStatus(req,res,next){
                         parkObj.noLoadReverseOil=rows[0].no_load_reverse_oil;
                         parkObj.reverseFlag=rows[0].reverse_flag;
                         parkObj.outerFlag=rows[0].outer_flag;
+                        parkObj.companyId=rows[0].company_id;
                         that();
                     } else {
                         logger.warn(' getDpRouteTask ' + 'failed');
@@ -781,7 +782,7 @@ function updateDpRouteTaskStatus(req,res,next){
                 //根据dp_route_task 查出外协名称，同时更新车辆外协公司ID
                 var subParams ={
                     dpRouteTaskId:params.dpRouteTaskId,
-                    truckId:parkObj.truckId,
+                    companyId:parkObj.companyId
                 }
                 carDAO.updateCarCompanyId(subParams,function(error,result){
                     if (error) {

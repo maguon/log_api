@@ -747,12 +747,12 @@ function updateCarStatus(params,callback){
 }
 
 function updateCarCompanyId(params,callback){
-    var query = " UPDATE car_info SET company_id =( " +
-        "SELECT ti.company_id FROM truck_info ti WHERE id = ? )" +
-        "WHERE id IN ( " +
-        "SELECT drltd.car_id FROM dp_route_load_task_detail drltd WHERE dp_route_task_id = ? )";
+    var query = " UPDATE car_info ci " +
+        "LEFT JOIN dp_route_load_task_detail drltd ON ci.id = drltd.car_id " +
+        "SET ci.company_id = ? " +
+        "WHERE  drltd.dp_route_task_id = ?"
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.truckId;
+    paramsArray[i++] = params.companyId;
     paramsArray[i] = params.dpRouteTaskId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCarCompanyId ');
