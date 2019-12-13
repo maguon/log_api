@@ -559,6 +559,15 @@ function getDpRouteTaskDetail(params,callback) {
         paramsArray[i++] = params.routeEndId;
         query = query + " and dpr.route_end_id = ? ";
     }
+    // 2019-12-13 添加2个条件
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and t.company_id = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteTaskDetail ');
         return callback(error,rows);
