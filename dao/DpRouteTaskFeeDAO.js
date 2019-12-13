@@ -9,7 +9,7 @@ var logger = serverLogger.createLogger('DpRouteTaskFeeDAO.js');
 function addDpRouteTaskFee(params,callback){
     var query = " insert into dp_route_task_fee (drive_id,drive_name,truck_id,truck_num,dp_route_task_id," +
         " day_count,single_price,total_price,car_day_count,car_single_price,car_total_price,car_oil_fee," +
-        " other_fee,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " other_fee,remark, create_user_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
@@ -25,6 +25,7 @@ function addDpRouteTaskFee(params,callback){
     paramsArray[i++]=params.carOilFee;
     paramsArray[i++]=params.otherFee;
     paramsArray[i++]=params.remark;
+    paramsArray[i++]=params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDpRouteTaskFee ');
         return callback(error,rows);
@@ -148,12 +149,13 @@ function updateDpRouteTaskFee(params,callback){
 
 function updateDpRouteTaskFeeStatus(params,callback){
     if(params.status==2){
-        var query = " update dp_route_task_fee set status = ? , grant_date = ? , date_id = ? where id = ? ";
+        var query = " update dp_route_task_fee set status = ? , grant_user_id = ? , grant_date = ? , date_id = ? where id = ? ";
     }else{
-        var query = " update dp_route_task_fee set status = ? where id = ? ";
+        var query = " update dp_route_task_fee set status = ? , grant_user_id = ? where id = ? ";
     }
     var paramsArray=[],i=0;
     paramsArray[i++] = params.status;
+    paramsArray[i++] = params.userId;
     if(params.grantDate){
         paramsArray[i++] = params.grantDate;
         paramsArray[i++] = params.dateId;

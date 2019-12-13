@@ -915,3 +915,9 @@ END
 ;;
 DELIMITER ;
 
+-- ----------------------------
+-- 2019-12-13 更新
+-- ----------------------------
+ALTER TABLE `dp_route_task_fee`
+ADD COLUMN `grant_user_id` int(10) NOT NULL DEFAULT 0 COMMENT '发放人ID' AFTER `remark`,
+ADD COLUMN `create_user_id` int(10) NOT NULL DEFAULT 0 COMMENT '创建人ID' AFTER `grant_user_id`;
