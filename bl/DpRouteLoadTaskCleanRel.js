@@ -431,7 +431,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+
                     parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+parkObj.carCount+","+
-                    parkObj.totalPrice+","+parkObj.actualTrailerFee+","+","+parkObj.actualRunFee+","+","+parkObj.actualLeadFee+","
+                    parkObj.totalPrice+","+parkObj.actualTrailerFee+","+parkObj.actualRunFee+","+parkObj.actualLeadFee+","
                     +parkObj.actualPrice+","+parkObj.totalTrailerFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","
                     +parkObj.carParkingFee+","+ parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+
                     parkObj.loadDate+","+parkObj.bankNumber+","+parkObj.bankName+","+parkObj.bankUserName+","+
