@@ -230,10 +230,11 @@ function updateCleanRelStatus(req,res,next){
 
 function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     var csvString = "";
-    var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ','+ "电话" + ','+ "小车单价" + ','+ "大车单价" + ','+ "小车台数" + ','+
-        "大车台数" + ','+ "装车数" + ','+"洗车费" + ','+"应发洗车费" + ','+ "拖车费" + ','+ "提车费"+ ','+ "地跑费单价" + ','+ "地跑费总价"+ ','+"带路费"+ ','+
-        "货车牌号" + ','+ "送达经销商"+ ','+ "品牌"+ ','+ "装车日期" + ','+"银行账号" + ','+ "户名"+ ','+ "开户行"+ ','+
-        "领取时间" + ','+ "领取状态"+ ','+ "是否补发"+ ','+ "是否月结"+ ','+ "备注";
+    var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ',' + "电话" + ',' + "小车单价" + ',' + "大车单价" + ',' + "小车台数" + ',' +
+        "大车台数" + ',' + "装车数" + ',' + "洗车费" + ',' + "拖车费" + ',' + "地跑费" + ',' + "带路费" + ','
+        + "应发洗车费" + ',' + "应发拖车费" + ',' + "应发地跑费" + ',' + "应发带路费" + ',' + "提车费" + ','
+        + "货车牌号" + ',' + "送达经销商" + ',' + "品牌" + ',' + "装车日期" + ',' + "银行账号" + ',' + "户名" + ',' + "开户行" + ',' +
+        "领取时间" + ',' + "领取状态" + ',' + "是否补发" + ',' + "是否月结" + ',' + "备注";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -243,114 +244,166 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                // 洗车编号
                 parkObj.id = rows[i].id;
+                // 调度编号
                 parkObj.dpRouteTaskId = rows[i].dp_route_task_id;
+                // 司机
                 if(rows[i].drive_name==null){
                     parkObj.driveName = "";
                 }else{
                     parkObj.driveName = rows[i].drive_name;
                 }
+                // 电话
                 if(rows[i].mobile==null){
                     parkObj.mobile = "";
                 }else{
                     parkObj.mobile = rows[i].mobile;
                 }
+                // 小车单价
                 if(rows[i].small_single_price==null){
                     parkObj.smallSinglePrice = "";
                 }else{
                     parkObj.smallSinglePrice = rows[i].small_single_price;
                 }
+                // 大车单价
                 if(rows[i].big_single_price==null){
                     parkObj.bigSinglePrice = "";
                 }else{
                     parkObj.bigSinglePrice = rows[i].big_single_price;
                 }
+                // 小车台数
                 if(rows[i].small_car_count==null){
                     parkObj.smallCarCount = "";
                 }else{
                     parkObj.smallCarCount = rows[i].small_car_count;
                 }
+                // 大车台数
                 if(rows[i].big_car_count==null){
                     parkObj.bigCarCount = "";
                 }else{
                     parkObj.bigCarCount = rows[i].big_car_count;
                 }
+                // 装车数
                 if(rows[i].car_count==null){
                     parkObj.carCount = "";
                 }else{
                     parkObj.carCount = rows[i].car_count;
                 }
+                // 洗车费
                 if(rows[i].total_price==null){
                     parkObj.totalPrice = "";
                 }else{
                     parkObj.totalPrice = rows[i].total_price;
                 }
+                // 拖车费
+                if(rows[i].actual_trailer_fee==null){
+                    parkObj.actualTrailerFee = "";
+                }else{
+                    parkObj.actualTrailerFee = rows[i].actual_trailer_fee;
+                }
+                // 地跑费
+                if(rows[i].actual_run_fee==null){
+                    parkObj.actualRunFee = "";
+                }else{
+                    parkObj.actualRunFee = rows[i].actual_run_fee;
+                }
+                // 带路费
+                if(rows[i].actual_lead_fee==null){
+                    parkObj.actualLeadFee = "";
+                }else{
+                    parkObj.actualLeadFee = rows[i].actual_lead_fee;
+                }
+
+                // 应发洗车费
                 if(rows[i].actual_price==null){
                     parkObj.actualPrice = "";
                 }else{
                     parkObj.actualPrice = rows[i].actual_price;
                 }
+                // 应发拖车费
                 if(rows[i].total_trailer_fee==null){
                     parkObj.totalTrailerFee = "";
                 }else{
                     parkObj.totalTrailerFee = rows[i].total_trailer_fee;
                 }
-                if(rows[i].car_parking_fee==null){
-                    parkObj.carParkingFee = "";
-                }else{
-                    parkObj.carParkingFee = rows[i].car_parking_fee;
-                }
-                if(rows[i].run_fee==null){
-                    parkObj.runFee = "";
-                }else{
-                    parkObj.runFee = rows[i].run_fee;
-                }
+                // 应发地跑费
                 if(rows[i].total_run_fee==null){
                     parkObj.totalRunFee = "";
                 }else{
                     parkObj.totalRunFee = rows[i].total_run_fee;
                 }
+                // 应发带路费
                 if(rows[i].lead_fee==null){
                     parkObj.leadFee = "";
                 }else{
                     parkObj.leadFee = rows[i].lead_fee;
                 }
+
+                // 提车费
+                if(rows[i].car_parking_fee==null){
+                    parkObj.carParkingFee = "";
+                }else{
+                    parkObj.carParkingFee = rows[i].car_parking_fee;
+                }
+                // // 地跑费单价
+                // if(rows[i].run_fee==null){
+                //     parkObj.runFee = "";
+                // }else{
+                //     parkObj.runFee = rows[i].run_fee;
+                // }
+                // // 地跑费总价
+                // if(rows[i].total_run_fee==null){
+                //     parkObj.totalRunFee = "";
+                // }else{
+                //     parkObj.totalRunFee = rows[i].total_run_fee;
+                // }
+
+                // 货车牌号
                 if(rows[i].truck_num==null){
                     parkObj.truckNum = "";
                 }else{
                     parkObj.truckNum = rows[i].truck_num;
                 }
+                // 送达经销商
                 parkObj.shortName = rows[i].short_name;
+                // 品牌
                 if(rows[i].make_name==null){
                     parkObj.makeName = "";
                 }else{
                     parkObj.makeName = rows[i].make_name;
                 }
+                // 装车日期
                 if(rows[i].load_date==null){
                     parkObj.loadDate = "";
                 }else{
                     parkObj.loadDate = new Date(rows[i].load_date).toLocaleDateString();
                 }
+                // 银行账号
                 if(rows[i].bank_number==null){
                     parkObj.bankNumber = "";
                 }else{
                     parkObj.bankNumber = rows[i].bank_number;
                 }
+                // 户名
                 if(rows[i].bank_name==null){
                     parkObj.bankName = "";
                 }else{
                     parkObj.bankName = rows[i].bank_name;
                 }
+                // 开户行
                 if(rows[i].bank_user_name==null){
                     parkObj.bankUserName = "";
                 }else{
                     parkObj.bankUserName = rows[i].bank_user_name;
                 }
+                // 领取时间
                 if(rows[i].clean_date==null){
                     parkObj.cleanDate = "";
                 }else{
                     parkObj.cleanDate = new Date(rows[i].clean_date).toLocaleDateString();
                 }
+                // 领取状态
                 if(rows[i].status == 0){
                     parkObj.status = "未通过";
                 }else if(rows[i].status == 1){
@@ -358,16 +411,19 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.status = "已领取";
                 }
+                // 是否补发
                 if(rows[i].type == 0){
                     parkObj.type = "否";
                 }else{
                     parkObj.type = "是";
                 }
+                // 是否月结
                 if(rows[i].month_flag == 0){
                     parkObj.monthFlag = "否";
                 }else{
                     parkObj.monthFlag = "是";
                 }
+                // 备注
                 if(rows[i].remark==null){
                     parkObj.remark = "";
                 }else{
@@ -375,8 +431,9 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+
                     parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+parkObj.carCount+","+
-                    parkObj.totalPrice+","+parkObj.actualPrice+","+parkObj.totalTrailerFee+","+ parkObj.carParkingFee+","+parkObj.runFee+","+
-                    parkObj.totalRunFee+","+parkObj.leadFee+","+ parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+
+                    parkObj.totalPrice+","+parkObj.actualTrailerFee+","+","+parkObj.actualRunFee+","+","+parkObj.actualLeadFee+","
+                    +parkObj.actualPrice+","+parkObj.totalTrailerFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","
+                    +parkObj.carParkingFee+","+ parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+
                     parkObj.loadDate+","+parkObj.bankNumber+","+parkObj.bankName+","+parkObj.bankUserName+","+
                     parkObj.cleanDate+","+parkObj.status+","+parkObj.type+","+parkObj.monthFlag+","+parkObj.remark+ '\r\n';
             }
