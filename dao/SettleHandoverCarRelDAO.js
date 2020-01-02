@@ -7,10 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SettleHandoverCarRelDAO.js');
 
 function addSettleHandoverCarRel(params,callback){
-    var query = " insert into settle_handover_car_rel (settle_handover_id,car_id) values ( ? , ? )";
+    var query = " insert into settle_handover_car_rel (settle_handover_id,car_id,sequence_num) values ( ? , ?  , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.settleHandoverId;
     paramsArray[i++]=params.carId;
+    paramsArray[i++]=params.sequenceNum;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addSettleHandoverCarRel ');
         return callback(error,rows);

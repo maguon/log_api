@@ -195,6 +195,7 @@ function createSettleHandoverAll(req,res,next){
             var subParams ={
                 settleHandoverId : 0,
                 carId : carIds[i],
+                sequenceNum : null,
                 row : i+1,
             }
             settleHandoverCarRelDAO.addSettleHandoverCarRel(subParams,function(err,result){
