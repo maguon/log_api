@@ -24102,6 +24102,14 @@
 
           },
           {
+            "name": "upDistanceFlag",
+            "in": "query",
+            "description": "update distance flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "routeStartId",
             "in": "query",
             "description": "routeStart id",

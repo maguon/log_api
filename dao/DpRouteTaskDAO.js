@@ -149,6 +149,13 @@ function getDpRouteTask(params,callback) {
         paramsArray[i++] = params.reverseFlag;
         query = query + " and dpr.reverse_flag = ? ";
     }
+    if(params.upDistanceFlag){
+        if (params.upDistanceFlag == 0) {
+            query = query + " and dpr.up_distance_count = 0 ";
+        } else if (params.upDistanceFlag == 1) {
+            query = query + " and dpr.up_distance_count > 0 ";
+        }
+    }
     if(params.createdOnStart){
         paramsArray[i++] = params.createdOnStart +" 00:00:00";
         query = query + " and dpr.created_on >= ? ";
