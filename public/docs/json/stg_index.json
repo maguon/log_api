@@ -24094,9 +24094,24 @@
 
           },
           {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "truckId",
             "in": "query",
             "description": "truck id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
             "required": false,
             "type": "string"
 
