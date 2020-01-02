@@ -24086,17 +24086,17 @@
 
           },
           {
-            "name": "driveName",
+            "name": "driveId",
             "in": "query",
-            "description": "drive name",
+            "description": "drive id",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "truckNum",
+            "name": "truckId",
             "in": "query",
-            "description": "truck num",
+            "description": "truck id",
             "required": false,
             "type": "string"
 
