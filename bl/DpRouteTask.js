@@ -1086,7 +1086,7 @@ function queryRouteTaskDayStat(req,res,next){
 
 function getDpRouteTaskCsv(req,res,next){
     var csvString = "";
-    var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "修改次数"+ ',' + "司机" + ','+ "身份证号" + ','+
+    var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "修改"+ ',' + "司机" + ','+ "身份证号" + ','+
         "货车牌号" + ','+ "货车电话" + ','+ "计划装车数"+ ','+ "实际装车数" + ','+ "计划执行时间" + ','+ "完成时间"
         + ','+ "调度人" + ','+ "状态"+ ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
