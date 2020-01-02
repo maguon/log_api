@@ -23130,6 +23130,14 @@
 
           },
           {
+            "name": "upDistanceFlag",
+            "in": "query",
+            "description": "update distance flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",

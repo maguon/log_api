@@ -242,6 +242,13 @@ function getDpRouteTaskList(params,callback) {
         paramsArray[i++] = params.reverseFlag;
         query = query + " and dpr.reverse_flag = ? ";
     }
+    if(params.upDistanceFlag){
+        if (params.upDistanceFlag == 0) {
+            query = query + " and dpr.up_distance_count = 0 ";
+        } else if (params.upDistanceFlag == 1) {
+            query = query + " and dpr.up_distance_count > 0 ";
+        }
+    }
     query = query + ' group by dpr.id ';
     query = query + " order by dpr.id desc";
     if (params.start && params.size) {
