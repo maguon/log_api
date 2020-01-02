@@ -1086,7 +1086,7 @@ function queryRouteTaskDayStat(req,res,next){
 
 function getDpRouteTaskCsv(req,res,next){
     var csvString = "";
-    var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "司机" + ','+ "身份证号" + ','+
+    var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "修改"+ ',' + "司机" + ','+ "身份证号" + ','+
         "货车牌号" + ','+ "货车电话" + ','+ "计划装车数"+ ','+ "实际装车数" + ','+ "计划执行时间" + ','+ "完成时间"
         + ','+ "调度人" + ','+ "状态"+ ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
@@ -1101,6 +1101,7 @@ function getDpRouteTaskCsv(req,res,next){
                 parkObj.id = rows[i].id;
                 parkObj.route = rows[i].route_start+'-'+rows[i].route_end;
                 parkObj.distance = rows[i].distance;
+                parkObj.upDistanceCount = rows[i].up_distance_count;
                 parkObj.driveName = rows[i].drive_name;
                 if(rows[i].id_number == null){
                     parkObj.idNumber = "";
@@ -1150,7 +1151,7 @@ function getDpRouteTaskCsv(req,res,next){
                 }else{
                     parkObj.remark = rows[i].remark;
                 }
-                csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.driveName+","+
+                csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.upDistanceCount+"," +parkObj.driveName+","+
                     parkObj.idNumber+","+parkObj.truckNum+","+parkObj.truckTel+","+
                     parkObj.planCount+"," +parkObj.realCount+"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+","+
                     parkObj.taskStatus+","+parkObj.remark+ '\r\n';

@@ -23130,6 +23130,14 @@
 
           },
           {
+            "name": "upDistanceFlag",
+            "in": "query",
+            "description": "update distance flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -24078,6 +24086,14 @@
 
           },
           {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "driveName",
             "in": "query",
             "description": "drive name",
@@ -24086,11 +24102,26 @@
 
           },
           {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "truckNum",
             "in": "query",
             "description": "truck num",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "upDistanceFlag",
+            "in": "query",
+            "description": "update distance flag",
+            "required": false,
+            "type": "integer"
 
           },
           {

@@ -224,7 +224,8 @@ function uploadSettleHandoverCarRelFile(req,res,next){
                     receiveId : objArray[i].经销商ID,
                     carStatus : sysConst.CAR_STATUS.completed,
                     row : i+1,
-                }
+                };
+                parkObj.sequenceNum = objArray[i].序列号;
                 carDAO.getCarList(subParams,function(error,rows){
                     if (error) {
                         logger.error(' getCarList ' + error.message);
@@ -235,6 +236,7 @@ function uploadSettleHandoverCarRelFile(req,res,next){
                         }else{
                             parkObj.carId = 0;
                         }
+
                         that();
                     }
                 })
@@ -243,6 +245,7 @@ function uploadSettleHandoverCarRelFile(req,res,next){
                     var subParams = {
                         settleHandoverId : 0,
                         carId: parkObj.carId,
+                        sequenceNum: parkObj.sequenceNum,
                         row: i + 1
                     }
                     settleHandoverCarRelDAO.addSettleHandoverCarRel(subParams, function (err, result) {
