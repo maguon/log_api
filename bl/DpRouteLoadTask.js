@@ -258,8 +258,9 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         var that = this;
         var subParams = {
             dpRouteTaskId : parkObj.dpRouteTaskId,
-            routeStartId : parkObj.routeStartId,
-            routeEndId : parkObj.routeEndId,
+            // 2020-01-02 修改，同指令下，不关心目的城市了，取得所有的月结带路费合计
+            // routeStartId : parkObj.routeStartId,
+            // routeEndId : parkObj.routeEndId,
         }
         dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel(subParams, function (error, rows) {
             if (error) {
@@ -269,7 +270,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             } else {
                 if (rows && rows.length >0) {
                     for(var i=0;i<rows.length;i++){
-                        leadFee = leadFee + rows[i].lead_fee;
+                        leadFee = leadFee + rows[i].actual_lead_fee;
                     }
                     that();
                 } else {
@@ -362,19 +363,18 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                 params.totalRunFee = parkObj.runFee*parkObj.carCount;
             }
 
-            // 带路费(非月结)
-            params.leadFee = 0;
-            // 带路费(月结)
+            // 带路费(*月结)
             params.actualLeadFee = 0;
+            // 应发带路费(*非月结)
+            params.leadFee = 0;
 
             // 当 实际装车数 等于 计划派发商品车数量 时，才有带路费
             if (parkObj.carCount == parkObj.planCount) {
-                // 月结 且 没有另外一个路线费用 (0-否,1-是)，
-                if (parkObj.leadMonthFlag == 1 && leadFee == 0) {
+                // 只要没有另外一个路线费用，带路费(月结) 有值
+                if (leadFee == 0) {
                     params.actualLeadFee = parkObj.leadFee;
                 }
-
-                // 非月结 且 没有另外一个路线费用 (0-否,1-是)，
+                // 非月结 且 没有另外一个路线费用 (0-否,1-是)
                 if (parkObj.leadMonthFlag == 0 && leadFee == 0) {
                     params.leadFee = parkObj.leadFee;
                 }
