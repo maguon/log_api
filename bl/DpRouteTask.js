@@ -1087,50 +1087,64 @@ function queryRouteTaskDayStat(req,res,next){
 function getDpRouteTaskCsv(req,res,next){
     var csvString = "";
     var header = "调度编号" + ',' + "路线" + ',' + "里程"+ ',' + "修改"+ ',' + "司机" + ','+ "身份证号" + ','+
-        "货车牌号" + ','+ "货车电话" + ','+ "计划装车数"+ ','+ "实际装车数" + ','+ "计划执行时间" + ','+ "完成时间"
+        "货车牌号" + ','+ "货车电话" + ','+ "运送数量"+ ','+ "板位数" + ','+ "计划执行时间" + ','+ "完成时间"
         + ','+ "调度人" + ','+ "状态"+ ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
-    dpRouteTaskDAO.getDpRouteTask(params,function(error,rows){
+    dpRouteTaskDAO.getDpRouteTaskCsv(params,function(error,rows){
         if (error) {
             logger.error(' queryDpRouteTaskCsv ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                // 调度编号
                 parkObj.id = rows[i].id;
+                // 路线
                 parkObj.route = rows[i].route_start+'-'+rows[i].route_end;
+                // 里程
                 parkObj.distance = rows[i].distance;
+                // 修改
                 parkObj.upDistanceCount = rows[i].up_distance_count;
+                // 司机
                 parkObj.driveName = rows[i].drive_name;
+                // 身份证号
                 if(rows[i].id_number == null){
                     parkObj.idNumber = "";
                 }else{
                     parkObj.idNumber = rows[i].id_number;
                 }
+                // 货车牌号
                 parkObj.truckNum = rows[i].truck_num;
+                // 货车电话
                 if(rows[i].truck_tel == null){
                     parkObj.truckTel = "";
                 }else{
                     parkObj.truckTel = rows[i].truck_tel;
                 }
-                if(rows[i].plan_count == null){
-                    parkObj.planCount = "";
+                // 运送数量
+                if(rows[i].car_count == null){
+                    parkObj.carCount = "";
                 }else{
-                    parkObj.planCount = rows[i].plan_count;
+                    parkObj.carCount = rows[i].car_count;
                 }
-                if(rows[i].real_count == null){
-                    parkObj.realCount = "";
+                // 板位数
+                if(rows[i].truck_number == null){
+                    parkObj.truckNumber = "";
                 }else{
-                    parkObj.realCount = rows[i].real_count;
+                    parkObj.truckNumber = rows[i].truck_number;
                 }
+                // 计划执行时间
                 parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                // 完成时间
                 if(rows[i].task_end_date == null){
                     parkObj.taskEndDate = "";
                 }else{
                     parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
                 }
+                // 调度人
                 parkObj.routeOpName = rows[i].route_op_name;
+                // 状态
                 if(rows[i].task_status == 1){
                     parkObj.taskStatus = "待接受";
                 }else if(rows[i].task_status == 2){
@@ -1146,6 +1160,7 @@ function getDpRouteTaskCsv(req,res,next){
                 }else{
                     parkObj.taskStatus = "全部完成";
                 }
+                // 备注
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
@@ -1153,7 +1168,7 @@ function getDpRouteTaskCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.upDistanceCount+"," +parkObj.driveName+","+
                     parkObj.idNumber+","+parkObj.truckNum+","+parkObj.truckTel+","+
-                    parkObj.planCount+"," +parkObj.realCount+"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+","+
+                    parkObj.carCount+"," +parkObj.truckNumber +"," +parkObj.taskPlanDate+","+parkObj.taskEndDate+","+parkObj.routeOpName+","+
                     parkObj.taskStatus+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
