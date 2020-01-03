@@ -12,7 +12,7 @@ function checkUserStatus (req,res,next){
     if(params._uid && params._utype && params._uname){
         return next();
     }else{
-        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        throw sysError.NotAuthorizedError(error.message,sysMsg.SYS_AUTH_TOKEN_ERROR);
     }
 }
 
