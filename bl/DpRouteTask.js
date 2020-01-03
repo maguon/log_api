@@ -1345,151 +1345,159 @@ function getDriveDistanceLoadCsv(req,res,next){
 }
 
 function updateDpRouteLoadFlag (req,res,next){
-    var params = req.params;
-    var parkObj = {};
-    var loadFlag = "";
-    Seq().seq(function() {
-        var that = this;
-        dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
-            if (error) {
-                logger.error(' getDpRouteTask ' + error.message);
-                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                if (rows && rows.length > 0) {
-                    parkObj.upDistanceCount=rows[0].up_distance_count;
-                    that();
-                } else {
-                    logger.warn(' getDpRouteTask ' + 'failed');
-                    resUtil.resetFailedRes(res, " 指令路线不存在 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function() {
-        var that = this;
-        if(params.loadFlag==sysConst.LOAD_FLAG.not_loan){
-            loadFlag = "空载";
-        }else{
-            loadFlag = "重载";
-        }
-        dpRouteTaskDAO.updateDpRouteLoadFlag(params,function(error,result){
-            if (error) {
-                logger.error(' updateDpRouteLoadFlag ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if (result && result.affectedRows > 0) {
-                    logger.info(' updateDpRouteLoadFlag ' + 'success');
-                    that();
-                } else {
-                    logger.warn(' updateDpRouteLoadFlag ' + 'failed');
-                    resUtil.resetFailedRes(res," 修改结算里程失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function() {
-        parkObj.upDistanceCount = parkObj.upDistanceCount + 1;
-        dpRouteTaskDAO.updateDistanceRecordCount(params, function (error, result) {
-            if (error) {
-                logger.error(' updateDistanceRecordCount ' + error.message);
-                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' updateDistanceRecordCount ' + 'success');
-                req.params.routeContent =" 修改结算里程："+params.distance+"公里  "+params.carCount+"辆  "+loadFlag+" 倒板金额 "+params.reverseMoney+" 第"+parkObj.upDistanceCount+"次修改";
-                req.params.routeId = params.dpRouteTaskId;
-                req.params.routeOp =sysConst.RECORD_OP_TYPE.distance;
-                resUtil.resetUpdateRes(res,result,null);
-                return next();
-            }
-        })
-    })
+    // 2020-01-03 此接口暂时不使用，
+    resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+    return next();
+
+    // var params = req.params;
+    // var parkObj = {};
+    // var loadFlag = "";
+    // Seq().seq(function() {
+    //     var that = this;
+    //     dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
+    //         if (error) {
+    //             logger.error(' getDpRouteTask ' + error.message);
+    //             resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //             return next();
+    //         } else {
+    //             if (rows && rows.length > 0) {
+    //                 parkObj.upDistanceCount=rows[0].up_distance_count;
+    //                 that();
+    //             } else {
+    //                 logger.warn(' getDpRouteTask ' + 'failed');
+    //                 resUtil.resetFailedRes(res, " 指令路线不存在 ");
+    //                 return next();
+    //             }
+    //         }
+    //     })
+    // }).seq(function() {
+    //     var that = this;
+    //     if(params.loadFlag==sysConst.LOAD_FLAG.not_loan){
+    //         loadFlag = "空载";
+    //     }else{
+    //         loadFlag = "重载";
+    //     }
+    //     dpRouteTaskDAO.updateDpRouteLoadFlag(params,function(error,result){
+    //         if (error) {
+    //             logger.error(' updateDpRouteLoadFlag ' + error.message);
+    //             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //         } else {
+    //             if (result && result.affectedRows > 0) {
+    //                 logger.info(' updateDpRouteLoadFlag ' + 'success');
+    //                 that();
+    //             } else {
+    //                 logger.warn(' updateDpRouteLoadFlag ' + 'failed');
+    //                 resUtil.resetFailedRes(res," 修改结算里程失败 ");
+    //                 return next();
+    //             }
+    //         }
+    //     })
+    // }).seq(function() {
+    //     parkObj.upDistanceCount = parkObj.upDistanceCount + 1;
+    //     dpRouteTaskDAO.updateDistanceRecordCount(params, function (error, result) {
+    //         if (error) {
+    //             logger.error(' updateDistanceRecordCount ' + error.message);
+    //             throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //         } else {
+    //             logger.info(' updateDistanceRecordCount ' + 'success');
+    //             req.params.routeContent =" 修改结算里程："+params.distance+"公里  "+params.carCount+"辆  "+loadFlag+" 倒板金额 "+params.reverseMoney+" 第"+parkObj.upDistanceCount+"次修改";
+    //             req.params.routeId = params.dpRouteTaskId;
+    //             req.params.routeOp =sysConst.RECORD_OP_TYPE.distance;
+    //             resUtil.resetUpdateRes(res,result,null);
+    //             return next();
+    //         }
+    //     })
+    // })
 }
 
 function updateDpRouteOilLoadFlag (req,res,next){
-    var params = req.params;
-    var parkObj = {};
-    var oilLoadFlag = "";
-    Seq().seq(function () {
-        var that = this;
-        dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
-            if (error) {
-                logger.error(' getDpRouteTask ' + error.message);
-                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
-                return next();
-            } else {
-                if (rows && rows.length > 0) {
-                    parkObj.loadDistanceOil=rows[0].load_distance_oil;
-                    parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
-                    parkObj.upDistanceCount=rows[0].up_distance_count;
-                    that();
-                } else {
-                    logger.warn(' getDpRouteTask ' + 'failed');
-                    resUtil.resetFailedRes(res, " 指令路线不存在 ");
-                    return next();
-                }
-            }
-        })
-        }).seq(function () {
-            var that = this;
-            if(params.oilLoadFlag==sysConst.OIL_LOAD_FLAG.not_loan){
-                oilLoadFlag = "空载";
-            }else{
-                oilLoadFlag = "重载";
-            }
-            dpRouteTaskDAO.updateDpRouteOilLoadFlag(params,function(error,result){
-                if (error) {
-                    logger.error(' updateDpRouteOilLoadFlag ' + error.message);
-                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                } else {
-                    if (result && result.affectedRows > 0) {
-                        logger.info(' updateDpRouteOilLoadFlag ' + 'success');
-                        that();
-                    } else {
-                        logger.warn(' updateDpRouteOilLoadFlag ' + 'failed');
-                        resUtil.resetFailedRes(res," 修改结算里程失败 ");
-                        return next();
-                    }
-                }
-            })
-    }).seq(function(){
-        var that = this;
-        if(params.oilLoadFlag==sysConst.OIL_LOAD_FLAG.loan){
-            params.oil = parkObj.loadDistanceOil;
-            params.totalOil = (params.oilDistance*parkObj.loadDistanceOil)/100;
-        }else{
-            params.oil = parkObj.noLoadDistanceOil;
-            params.totalOil = (params.oilDistance*parkObj.noLoadDistanceOil)/100;
-        }
-        dpRouteTaskOilRelDAO.updateDpRouteTaskOilReltotalOil(params, function (error, result) {
-            if (error) {
-                logger.error(' updateDpRouteTaskOilReltotalOil ' + error.message);
-                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if (result && result.affectedRows > 0) {
-                    logger.info(' updateDpRouteTaskOilReltotalOil ' + 'success');
-                } else {
-                    logger.warn(' updateDpRouteTaskOilReltotalOil ' + 'failed');
-                }
-                that();
-            }
-        })
-    }).seq(function() {
-        parkObj.upDistanceCount = parkObj.upDistanceCount + 1;
-        dpRouteTaskDAO.updateDistanceRecordCount(params, function (error, result) {
-            if (error) {
-                logger.error(' updateDistanceRecordCount ' + error.message);
-                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                logger.info(' updateDistanceRecordCount ' + 'success');
-                req.params.routeContent =" 修改油耗里程："+params.oilDistance+"公里  "+oilLoadFlag+" 第"+parkObj.upDistanceCount+"次修改";
-                req.params.routeId = params.dpRouteTaskId;
-                req.params.routeOp =sysConst.RECORD_OP_TYPE.oil_distance;
-                resUtil.resetUpdateRes(res,result,null);
-                return next();
-            }
-        })
-    })
+    // 2020-01-03 此接口暂时不使用，
+    resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+    return next();
+
+    // var params = req.params;
+    // var parkObj = {};
+    // var oilLoadFlag = "";
+    // Seq().seq(function () {
+    //     var that = this;
+    //     dpRouteTaskDAO.getDpRouteTask({dpRouteTaskId:params.dpRouteTaskId}, function (error, rows) {
+    //         if (error) {
+    //             logger.error(' getDpRouteTask ' + error.message);
+    //             resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //             return next();
+    //         } else {
+    //             if (rows && rows.length > 0) {
+    //                 parkObj.loadDistanceOil=rows[0].load_distance_oil;
+    //                 parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
+    //                 parkObj.upDistanceCount=rows[0].up_distance_count;
+    //                 that();
+    //             } else {
+    //                 logger.warn(' getDpRouteTask ' + 'failed');
+    //                 resUtil.resetFailedRes(res, " 指令路线不存在 ");
+    //                 return next();
+    //             }
+    //         }
+    //     })
+    //     }).seq(function () {
+    //         var that = this;
+    //         if(params.oilLoadFlag==sysConst.OIL_LOAD_FLAG.not_loan){
+    //             oilLoadFlag = "空载";
+    //         }else{
+    //             oilLoadFlag = "重载";
+    //         }
+    //         dpRouteTaskDAO.updateDpRouteOilLoadFlag(params,function(error,result){
+    //             if (error) {
+    //                 logger.error(' updateDpRouteOilLoadFlag ' + error.message);
+    //                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //             } else {
+    //                 if (result && result.affectedRows > 0) {
+    //                     logger.info(' updateDpRouteOilLoadFlag ' + 'success');
+    //                     that();
+    //                 } else {
+    //                     logger.warn(' updateDpRouteOilLoadFlag ' + 'failed');
+    //                     resUtil.resetFailedRes(res," 修改结算里程失败 ");
+    //                     return next();
+    //                 }
+    //             }
+    //         })
+    // }).seq(function(){
+    //     var that = this;
+    //     if(params.oilLoadFlag==sysConst.OIL_LOAD_FLAG.loan){
+    //         params.oil = parkObj.loadDistanceOil;
+    //         params.totalOil = (params.oilDistance*parkObj.loadDistanceOil)/100;
+    //     }else{
+    //         params.oil = parkObj.noLoadDistanceOil;
+    //         params.totalOil = (params.oilDistance*parkObj.noLoadDistanceOil)/100;
+    //     }
+    //     dpRouteTaskOilRelDAO.updateDpRouteTaskOilReltotalOil(params, function (error, result) {
+    //         if (error) {
+    //             logger.error(' updateDpRouteTaskOilReltotalOil ' + error.message);
+    //             throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //         } else {
+    //             if (result && result.affectedRows > 0) {
+    //                 logger.info(' updateDpRouteTaskOilReltotalOil ' + 'success');
+    //             } else {
+    //                 logger.warn(' updateDpRouteTaskOilReltotalOil ' + 'failed');
+    //             }
+    //             that();
+    //         }
+    //     })
+    // }).seq(function() {
+    //     parkObj.upDistanceCount = parkObj.upDistanceCount + 1;
+    //     dpRouteTaskDAO.updateDistanceRecordCount(params, function (error, result) {
+    //         if (error) {
+    //             logger.error(' updateDistanceRecordCount ' + error.message);
+    //             throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //         } else {
+    //             logger.info(' updateDistanceRecordCount ' + 'success');
+    //             req.params.routeContent =" 修改油耗里程："+params.oilDistance+"公里  "+oilLoadFlag+" 第"+parkObj.upDistanceCount+"次修改";
+    //             req.params.routeId = params.dpRouteTaskId;
+    //             req.params.routeOp =sysConst.RECORD_OP_TYPE.oil_distance;
+    //             resUtil.resetUpdateRes(res,result,null);
+    //             return next();
+    //         }
+    //     })
+    // })
 }
 
 function updateDpRouteReverseFlag (req,res,next){
