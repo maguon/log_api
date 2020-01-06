@@ -35774,6 +35774,122 @@
         }
       }
     },
+    "/settleOuterCarCount": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query  settleOuter carCount",
+        "description": "query settleOuterCarCount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleStatus",
+            "in": "query",
+            "description": "settle status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleOuterTruck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterTruck id"
+          }
+        }
+      }
+    },
     "/settleOuterTruck.csv": {
       "get": {
         "tags": [
@@ -35893,6 +36009,122 @@
             "name": "truckId",
             "in": "query",
             "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "settleStatus",
+            "in": "query",
+            "description": "settle status",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/settleOuterTruck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid settleOuterTruck id"
+          }
+        }
+      }
+    },
+    "/settleOuterCar.csv": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query settleOuterCar csv",
+        "description": "query settleOuterCarCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "company id",
             "required": false,
             "type": "integer"
 
