@@ -1039,7 +1039,11 @@ function createServer() {
     // 2020-01-06 新加接口：外协导入车辆查询
     server.get('/api/settleOuterCarList', settleOuterTruck.querySettleOuterCarList);
     server.get('/api/settleOuterTruckCarCount', settleOuterTruck.querySettleOuterTruckCarCount);
+    // 2020-01-06 新加接口：外协导入车辆查询 结算车辆数:0 结算金额:元
+    server.get('/api/settleOuterCarCount', settleOuterTruck.querySettleOuterCarCount);
     server.get('/api/settleOuterTruck.csv', settleOuterTruck.getSettleOuterTruckCsv);
+    // 2020-01-06 新加接口：外协导入车辆下载
+    server.get('/api/settleOuterCar.csv', settleOuterTruck.getSettleOuterCarCsv);
     server.post({path:'/api/user/:userId/settleOuterTruckFile',contentType: 'multipart/form-data'},settleOuterTruck.uploadSettleOuterTruckFile);
     server.post({path:'/api/user/:userId/settleOuterTruck',contentType: 'application/json'},settleOuterTruck.createSettleOuterTruck);
     server.put({path:'/api/user/:userId/company/:companyId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId',contentType: 'application/json'} ,settleOuterTruck.updateSettleOuterTruck);
@@ -1048,6 +1052,8 @@ function createServer() {
      * SettleOuterInvoice Module
      */
     server.get('/api/settleOuterInvoiceBatch', settleOuterInvoice.createSettleOuterInvoiceBatch);
+    // 2020-01-06 新加接口：交接车辆 TODO
+    // server.get('/api/settleOuterInvoiceBatch', settleOuterInvoice.createSettleOuterInvoiceBatch);
     server.get('/api/settleOuterInvoice', settleOuterInvoice.querySettleOuterInvoice);
     server.put({path:'/api/user/:userId/settleOuterInvoice/:outerInvoiceId',contentType: 'application/json'} ,settleOuterInvoice.updateSettleOuterInvoice);
     server.del('/api/user/:userId/settleOuterInvoice/:outerInvoiceId' , settleOuterInvoice.removeSettleOuterInvoice);
