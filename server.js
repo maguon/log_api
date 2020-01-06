@@ -1052,8 +1052,8 @@ function createServer() {
      * SettleOuterInvoice Module
      */
     server.get('/api/settleOuterInvoiceBatch', settleOuterInvoice.createSettleOuterInvoiceBatch);
-    // 2020-01-06 新加接口：交接车辆 TODO
-    // server.get('/api/settleOuterInvoiceBatch', settleOuterInvoice.createSettleOuterInvoiceBatch);
+    // 2020-01-06 新加接口：交接车辆
+    server.get('/api/settleOuterInvoiceBat', settleOuterInvoice.createSettleOuterInvoiceBat);
     server.get('/api/settleOuterInvoice', settleOuterInvoice.querySettleOuterInvoice);
     server.put({path:'/api/user/:userId/settleOuterInvoice/:outerInvoiceId',contentType: 'application/json'} ,settleOuterInvoice.updateSettleOuterInvoice);
     server.del('/api/user/:userId/settleOuterInvoice/:outerInvoiceId' , settleOuterInvoice.removeSettleOuterInvoice);

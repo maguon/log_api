@@ -56,6 +56,47 @@ function createSettleOuterInvoiceBatch(req,res,next){
     })
 }
 
+function createSettleOuterInvoiceBat(req,res,next){
+    var params = req.params ;
+    var outerInvoiceId = 0;
+    Seq().seq(function(){
+        var that = this;
+        settleOuterInvoiceDAO.addSettleOuterInvoiceBat(params,function(error,result){
+            if (error) {
+                logger.error(' addSettleOuterInvoiceBat ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    outerInvoiceId = result.insertId;
+                    logger.info(' addSettleOuterInvoiceBat ' + 'success');
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res," 数据已存在，请重新筛选 ");
+                    return next();
+                }
+
+            }
+        })
+    }).seq(function(){
+        params.outerInvoiceId = outerInvoiceId;
+        settleOuterInvoiceCarRelDAO.addSettleOuterInvoiceCarRelBat(params,function(error,result){
+            if (error) {
+                if(error.message.indexOf("Duplicate") > 0) {
+                    resUtil.resetFailedRes(res, "此数据已存在，操作失败");
+                    return next();
+                } else{
+                    logger.error(' addSettleOuterInvoiceCarRelBat ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                }
+            } else {
+                logger.info(' addSettleOuterInvoiceCarRelBat ' + 'success');
+                resUtil.resetUpdateRes(res,result,null);
+                return next();
+            }
+        })
+    })
+}
+
 function querySettleOuterInvoice(req,res,next){
     var params = req.params ;
     settleOuterInvoiceDAO.getSettleOuterInvoice(params,function(error,result){
@@ -135,6 +176,7 @@ function removeSettleOuterInvoice(req,res,next){
 
 module.exports = {
     createSettleOuterInvoiceBatch : createSettleOuterInvoiceBatch,
+    createSettleOuterInvoiceBat : createSettleOuterInvoiceBat,
     querySettleOuterInvoice : querySettleOuterInvoice,
     updateSettleOuterInvoice : updateSettleOuterInvoice,
     removeSettleOuterInvoice : removeSettleOuterInvoice

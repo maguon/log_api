@@ -88,6 +88,68 @@ function addSettleOuterInvoiceCarRelBatch(params,callback) {
     });
 }
 
+function addSettleOuterInvoiceCarRelBat(params,callback) {
+    var query = " insert into settle_outer_invoice_car_rel (outer_invoice_id,car_id,distance,fee,total_fee) " +
+        " select "+params.outerInvoiceId+",c.id,sot.distance,sot.fee,sot.distance*sot.fee " +
+        " from car_info c " +
+        " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
+        " and c.route_end_id = sot.route_end_id and c.company_id = sot.company_id " +
+        " left join settle_outer_invoice_car_rel soicr on c.id = soicr.car_id " +
+        " where c.id is not null and c.company_id<>0 and c.car_status=9 ";
+    var paramsArray=[],i=0;
+    if(params.entrustId){
+        paramsArray[i++] = params.entrustId;
+        query = query + " and c.entrust_id = ? ";
+    }
+    if(params.orderStart){
+        paramsArray[i++] = params.orderStart;
+        query = query + " and c.order_date >= ? ";
+    }
+    if(params.orderEnd){
+        paramsArray[i++] = params.orderEnd;
+        query = query + " and c.order_date <= ? ";
+    }
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
+    if(params.routeStartId){
+        paramsArray[i++] = params.routeStartId;
+        query = query + " and c.route_start_id = ? ";
+    }
+    if(params.addrId){
+        paramsArray[i++] = params.addrId;
+        query = query + " and c.base_addr_id = ? ";
+    }
+    if(params.routeEndId){
+        paramsArray[i++] = params.routeEndId;
+        query = query + " and c.route_end_id = ? ";
+    }
+    if(params.receiveId){
+        paramsArray[i++] = params.receiveId;
+        query = query + " and c.receive_id = ? ";
+    }
+    if(params.vin){
+        paramsArray[i++] = params.vin;
+        query = query + " and c.vin = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and c.company_id = ? ";
+    }
+    if(params.settleStatus){
+        if(params.settleStatus==1){
+            query = query + " and soicr.car_id is null ";
+        }else{
+            query = query + " and soicr.car_id is not null ";
+        }
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addSettleOuterInvoiceCarRelBat ');
+        return callback(error,rows);
+    });
+}
+
 function getSettleOuterInvoiceCarRel(params,callback) {
     var query = " select soicr.*,c.vin,ci.company_name " +
         " from settle_outer_invoice_car_rel soicr " +
@@ -128,6 +190,7 @@ function deleteSettleOuterInvoiceCarRel(params,callback){
 
 module.exports ={
     addSettleOuterInvoiceCarRelBatch : addSettleOuterInvoiceCarRelBatch,
+    addSettleOuterInvoiceCarRelBat : addSettleOuterInvoiceCarRelBat,
     getSettleOuterInvoiceCarRel : getSettleOuterInvoiceCarRel,
     deleteSettleOuterInvoiceCarRel : deleteSettleOuterInvoiceCarRel
 }
