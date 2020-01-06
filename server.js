@@ -1036,6 +1036,8 @@ function createServer() {
     server.get('/api/settleOuterTruck', settleOuterTruck.querySettleOuterTruck);
     server.get('/api/settleOuterTruckBase.csv', settleOuterTruck.getSettleOuterTruckBaseCsv);
     server.get('/api/settleOuterTruckList', settleOuterTruck.querySettleOuterTruckList);
+    // 2020-01-06 新加接口：外协导入车辆查询
+    server.get('/api/settleOuterCarList', settleOuterTruck.querySettleOuterCarList);
     server.get('/api/settleOuterTruckCarCount', settleOuterTruck.querySettleOuterTruckCarCount);
     server.get('/api/settleOuterTruck.csv', settleOuterTruck.getSettleOuterTruckCsv);
     server.post({path:'/api/user/:userId/settleOuterTruckFile',contentType: 'multipart/form-data'},settleOuterTruck.uploadSettleOuterTruckFile);

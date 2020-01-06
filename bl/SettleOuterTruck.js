@@ -281,6 +281,20 @@ function querySettleOuterTruckList(req,res,next){
     })
 }
 
+function querySettleOuterCarList(req,res,next){
+    var params = req.params ;
+    settleOuterTruckDAO.querySettleOuterCarList(params,function(error,result){
+        if (error) {
+            logger.error(' querySettleOuterCarList ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' querySettleOuterCarList ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function querySettleOuterTruckCarCount(req,res,next){
     var params = req.params ;
     settleOuterTruckDAO.getSettleOuterTruckCarCount(params,function(error,result){
@@ -389,6 +403,7 @@ module.exports = {
     getSettleOuterTruckBaseCsv : getSettleOuterTruckBaseCsv,
     uploadSettleOuterTruckFile : uploadSettleOuterTruckFile,
     querySettleOuterTruckList : querySettleOuterTruckList,
+    querySettleOuterCarList : querySettleOuterCarList,
     querySettleOuterTruckCarCount : querySettleOuterTruckCarCount,
     updateSettleOuterTruck : updateSettleOuterTruck,
     getSettleOuterTruckCsv : getSettleOuterTruckCsv
