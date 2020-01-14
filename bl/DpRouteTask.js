@@ -779,8 +779,9 @@ function updateDpRouteTaskStatus(req,res,next){
                     }
                 })
             }else{
-                //根据dp_route_task 查出外协名称，同时更新车辆外协公司ID
-                var subParams ={
+                that();
+                // 根据 dp_route_task 查出外协名称，同时更新车辆外协公司ID
+                /*var subParams ={
                     dpRouteTaskId:params.dpRouteTaskId,
                     companyId:parkObj.companyId
                 }
@@ -796,7 +797,7 @@ function updateDpRouteTaskStatus(req,res,next){
                         }
                         that();
                     }
-                })
+                })*/
             }
 
         }else{

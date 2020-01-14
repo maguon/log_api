@@ -688,7 +688,7 @@ function createServer() {
      */
     server.get('/api/storageParking',storageParking.queryStorageParking);
     server.get('/api/storage/:storageId/makeStat',storageParking.queryStorageParkingMakeStat);
-    server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,storageParking.updateStorageParking,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/storageParking/:parkingId',contentType: 'application/json'} ,sysRecord.checkUserStatus,storageParking.updateStorageParking,sysRecord.saveCarRecord);
 
     /**
      * Car Module
@@ -704,12 +704,12 @@ function createServer() {
     server.get('/api/carRel.csv',car.getCarRelCsv);
     server.get('/api/carList.csv',car.getCarListCsv);
     server.post({path:'/api/user/:userId/uploadCar',contentType: 'application/json'},car.createUploadCar);
-    server.post({path:'/api/user/:userId/car',contentType: 'application/json'},car.createCar,sysRecord.saveCarRecord);
-    server.post({path:'/api/user/:userId/entrustCar',contentType: 'application/json'},car.createEntrustCar,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/car',contentType: 'application/json'},sysRecord.checkUserStatus,car.createCar,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/entrustCar',contentType: 'application/json'},sysRecord.checkUserStatus,car.createEntrustCar,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/carSort',contentType: 'application/json'},sysRecord.checkUserStatus,car.createCarSort,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId',contentType: 'application/json'} ,car.updateCar);
     server.put({path:'/api/user/:userId/car/:carId/completedCar',contentType: 'application/json'} ,car.updateCompletedCar);
-    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,car.updateCarVin,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,sysRecord.checkUserStatus,car.updateCarVin,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId/carStatus/:carStatus',contentType: 'application/json'} ,sysRecord.checkUserStatus,car.updateCarStatus,sysRecord.saveCarRecord);
     server.del('/api/user/:userId/upload/:uploadId' , car.removeUploadCar);
     server.del('/api/user/:userId/car/:carId/car' , car.removeCar);
@@ -717,9 +717,9 @@ function createServer() {
     /**
      * CarStorageRel Module
      */
-    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},carStorageRel.createCarStorageRel,sysRecord.saveCarRecord);
-    server.put({path:'/api/user/:userId/car/:carId/carStorageRel',contentType: 'application/json'},carStorageRel.createAgainCarStorageRel,sysRecord.saveCarRecord);
-    server.put({path:'/api/user/:userId/carStorageRel/:relId/relStatus/:relStatus',contentType: 'application/json'} ,carStorageRel.updateRelStatus,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/carStorageRel',contentType: 'application/json'},sysRecord.checkUserStatus,carStorageRel.createCarStorageRel,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/car/:carId/carStorageRel',contentType: 'application/json'},sysRecord.checkUserStatus,carStorageRel.createAgainCarStorageRel,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/carStorageRel/:relId/relStatus/:relStatus',contentType: 'application/json'} ,sysRecord.checkUserStatus,carStorageRel.updateRelStatus,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/carStorageRel/:relId/planOutTime',contentType: 'application/json'} ,carStorageRel.updateRelPlanOutTime);
     server.post({path:'/api/user/:userId/carExportsFile',contentType: 'multipart/form-data'},carStorageRel.uploadCarExportsFile);
 
@@ -841,9 +841,9 @@ function createServer() {
     server.get('/api/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',dpRouteLoadTaskDetail.queryDpRouteLoadTaskDetail);
     server.get('/api/dpRouteLoadTaskDetailBase',dpRouteLoadTaskDetail.queryDpRouteLoadTaskDetailBase);
     server.get('/api/carLoadStatusCount',dpRouteLoadTaskDetail.queryCarLoadStatusCount);
-    server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
-    server.put({path:'/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId/carLoadStatus/:carLoadStatus',contentType: 'application/json'} ,dpRouteLoadTaskDetail.updateDpRouteLoadTaskDetailStatus,sysRecord.saveCarRecord);
-    server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},sysRecord.checkUserStatus,dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
+    server.put({path:'/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId/carLoadStatus/:carLoadStatus',contentType: 'application/json'} ,sysRecord.checkUserStatus,dpRouteLoadTaskDetail.updateDpRouteLoadTaskDetailStatus,sysRecord.saveCarRecord);
+    server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , sysRecord.checkUserStatus,dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
 
     /**
      * DpRouteLoadTaskCleanRel Module
@@ -1014,7 +1014,7 @@ function createServer() {
      * SettleHandoverCarRel Module
      */
     server.get('/api/settleHandoverCarRel', settleHandoverCarRel.querySettleHandoverCarRel);
-    server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},settleHandoverCarRel.createSettleHandoverCarRel,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/settleHandoverCarRel',contentType: 'application/json'},sysRecord.checkUserStatus,settleHandoverCarRel.createSettleHandoverCarRel,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/settleHandoverCarRelFile',contentType: 'multipart/form-data'},settleHandoverCarRel.uploadSettleHandoverCarRelFile);
     server.del('/api/user/:userId/settleHandover/:settleHandoverId/car/:carId' , settleHandoverCarRel.removeSettleHandoverCarRel);
 
