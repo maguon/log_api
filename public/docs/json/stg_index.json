@@ -19297,6 +19297,13 @@
             "type": "integer"
           },
           {
+            "name": "outerFlag",
+            "in": "query",
+            "description": "outer flag",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "userId",
             "in": "query",
             "description": "user id",

@@ -188,6 +188,13 @@ function getCarList(params,callback) {
         paramsArray[i++] = params.newCurrentAddrId;
         query = query + " and c.current_addr_id = ? ";
     }
+    if(params.outerFlag){
+        if (params.outerFlag == 0) {
+            query = query + " and c.company_id = 0 ";
+        } else if (params.outerFlag == 1) {
+            query = query + " and c.company_id > 0 ";
+        }
+    }
     query = query + '  order by c.id desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
