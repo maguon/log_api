@@ -55,7 +55,7 @@ function createDpRouteLoadTaskDetail(req,res,next){
                 resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                if(rows && rows.length>0&&rows[0].car_status <listOfValue.CAR_STATUS_LOAD){
+                if(rows && rows.length>0 && rows[0].car_status <listOfValue.CAR_STATUS_LOAD && rows[0].company_id == 0 ){
                     if(rows[0].route_start_id==parkObj.demandRouteStartId&&rows[0].route_end_id==parkObj.demandRouteEndId&&rows[0].receive_id==parkObj.receiveId){
                         that();
                     }else if(rows[0].route_start_id==parkObj.demandRouteStartId&&rows[0].route_end_id==null&&rows[0].receive_id==null){

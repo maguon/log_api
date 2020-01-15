@@ -19297,6 +19297,13 @@
             "type": "integer"
           },
           {
+            "name": "outerFlag",
+            "in": "query",
+            "description": "outer flag",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "userId",
             "in": "query",
             "description": "user id",
@@ -34630,6 +34637,13 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "userId",
             "in": "query",
             "description": "user id",
@@ -34755,6 +34769,13 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "settleStatus",
             "in": "query",
             "description": "settle status",
@@ -34846,6 +34867,13 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "settleStatus",
@@ -34946,6 +34974,13 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "userId",
@@ -35062,6 +35097,13 @@
             "required": false,
             "type": "string"
 
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "userId",

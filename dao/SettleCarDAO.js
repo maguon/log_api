@@ -40,7 +40,7 @@ function addUploadSettleCar(params,callback){
 }
 
 function getSettleCar(params,callback) {
-    var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date," +
+    var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date,c.make_name," +
         " ecrr.distance as current_distance,ecrr.fee as current_fee " +
         " from settle_car sc " +
         " left join entrust_info e on sc.entrust_id = e.id " +
@@ -82,6 +82,11 @@ function getSettleCar(params,callback) {
     if(params.orderEnd){
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
+    }
+    // 2020-01-15 添加检索条件 品牌ID
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
     }
     if(params.userId){
         paramsArray[i++] = params.userId;
@@ -141,6 +146,11 @@ function getSettleCarCount(params,callback) {
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
     }
+    // 2020-01-15 添加检索条件 品牌ID
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
     if(params.settleStatus){
         paramsArray[i++] = params.settleStatus;
         query = query + " and sc.settle_status = ? ";
@@ -184,6 +194,11 @@ function getNotSettleCarCount(params,callback) {
     if(params.orderEnd){
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
+    }
+    // 2020-01-15 添加检索条件 品牌ID
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
     }
     if(params.settleStatus){
         paramsArray[i++] = params.settleStatus;
