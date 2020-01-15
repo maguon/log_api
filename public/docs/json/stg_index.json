@@ -34637,6 +34637,13 @@
 
           },
           {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "userId",
             "in": "query",
             "description": "user id",
