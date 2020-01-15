@@ -83,6 +83,11 @@ function getSettleCar(params,callback) {
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
     }
+    // 2020-01-15 添加检索条件 品牌ID
+    if(params.makeId){
+        paramsArray[i++] = params.makeId;
+        query = query + " and c.make_id = ? ";
+    }
     if(params.userId){
         paramsArray[i++] = params.userId;
         query = query + " and sc.user_id = ? ";
