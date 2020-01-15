@@ -40,7 +40,7 @@ function addUploadSettleCar(params,callback){
 }
 
 function getSettleCar(params,callback) {
-    var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date," +
+    var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date,c.make_name," +
         " ecrr.distance as current_distance,ecrr.fee as current_fee " +
         " from settle_car sc " +
         " left join entrust_info e on sc.entrust_id = e.id " +
