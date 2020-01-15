@@ -173,7 +173,7 @@ function getSettleOuterTruckList(params,callback) {
     });
 }
 
-// 2020-01-06 新建接口：外协导入车辆查询
+// 2020-01-06 新建接口：外协导入车辆查�?
 function getSettleOuterCarList(params,callback) {
     var query = " select c.id,cm.company_name, " +
         " c.vin,c.make_name,e.short_name as e_short_name,c.route_start,ba.addr_name,c.route_end, " +
@@ -186,7 +186,7 @@ function getSettleOuterCarList(params,callback) {
         " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
         " and c.route_end_id = sot.route_end_id and c.company_id = sot.company_id " +
         " left join settle_outer_invoice_car_rel soicr on c.id = soicr.car_id " +
-        " where c.id is not null and c.company_id<>0 and c.car_status=9 ";
+        " where c.id is not null and c.company_id<>0 ";
     var paramsArray=[],i=0;
     if(params.entrustId){
         paramsArray[i++] = params.entrustId;
