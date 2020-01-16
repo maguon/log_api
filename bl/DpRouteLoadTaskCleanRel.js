@@ -233,7 +233,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ',' + "电话" + ',' + "小车单价" + ',' + "大车单价" + ',' + "小车台数" + ',' +
         "大车台数" + ',' + "装车数" + ',' + "洗车费" + ',' + "拖车费" + ',' + "地跑费" + ',' + "带路费" + ','
         + "应发洗车费" + ',' + "应发拖车费" + ',' + "应发地跑费" + ',' + "应发带路费" + ',' + "提车费" + ','
-        + "货车牌号" + ',' + "送达经销商" + ',' + "品牌" + ',' + "装车日期" + ',' + "银行账号" + ',' + "户名" + ',' + "开户行" + ',' +
+        + "货车牌号" + ',' + "所属公司" + ',' + "送达经销商" + ',' + "品牌" + ',' + "装车日期" + ',' + "银行账号" + ',' + "户名" + ',' + "开户行" + ',' +
         "领取时间" + ',' + "领取状态" + ',' + "是否补发" + ',' + "是否月结" + ',' + "备注";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -365,6 +365,12 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.truckNum = rows[i].truck_num;
                 }
+                // 所属公司
+                if(rows[i].company_name==null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
                 // 送达经销商
                 parkObj.shortName = rows[i].short_name;
                 // 品牌
@@ -433,7 +439,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                     parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+parkObj.carCount+","+
                     parkObj.totalPrice+","+parkObj.actualTrailerFee+","+parkObj.actualRunFee+","+parkObj.actualLeadFee+","
                     +parkObj.actualPrice+","+parkObj.totalTrailerFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","
-                    +parkObj.carParkingFee+","+ parkObj.truckNum+","+parkObj.shortName+","+parkObj.makeName+","+
+                    +parkObj.carParkingFee+","+ parkObj.truckNum+","+ parkObj.companyName+","+parkObj.shortName+","+parkObj.makeName+","+
                     parkObj.loadDate+","+parkObj.bankNumber+","+parkObj.bankName+","+parkObj.bankUserName+","+
                     parkObj.cleanDate+","+parkObj.status+","+parkObj.type+","+parkObj.monthFlag+","+parkObj.remark+ '\r\n';
             }

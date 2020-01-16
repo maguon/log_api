@@ -173,7 +173,7 @@ function getSettleOuterTruckList(params,callback) {
     });
 }
 
-// 2020-01-06 新建接口：外协导入车辆查�?
+// 2020-01-06 新建接口：外协导入车辆查询
 function getSettleOuterCarList(params,callback) {
     var query = " select c.id,cm.company_name, " +
         " c.vin,c.make_name,e.short_name as e_short_name,c.route_start,ba.addr_name,c.route_end, " +

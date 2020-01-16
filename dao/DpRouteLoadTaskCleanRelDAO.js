@@ -47,11 +47,12 @@ function addDpRouteLoadTaskCleanRel(params,callback){
 
 function getDpRouteLoadTaskCleanRel(params,callback) {
     var query = " select dpcr.*,d.drive_name,d.bank_number,d.bank_name,d.bank_user_name,u3.mobile,t.truck_num,u.real_name as field_op_name,dprl.load_date, " +
-        " dprl.route_start as route_start_name,ba.addr_name,dprl.route_end as route_end_name, " +
+        " dprl.route_start as route_start_name,ba.addr_name,dprl.route_end as route_end_name,c.company_name, " +
         " r.short_name,r.make_name,u1.real_name as grant_user_name,u2.real_name as drive_user_name " +
         " from dp_route_load_task_clean_rel dpcr " +
         " left join drive_info d on dpcr.drive_id = d.id " +
         " left join truck_info t on dpcr.truck_id = t.id " +
+        " left join company_info c on c.id = t.company_id " +
         " left join receive_info r on dpcr.receive_id = r.id " +
         " left join dp_route_load_task dprl on dpcr.dp_route_load_task_id = dprl.id " +
         " left join user_info u on dprl.field_op_id = u.uid " +
