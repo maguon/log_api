@@ -24677,13 +24677,13 @@
         }
       }
     },
-    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteLoadFlag": {
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteLoadDistance": {
       "put": {
         "tags": [
           "dispatch"
         ],
-        "summary": "update dpRouteLoadFlag",
-        "description": "update dpRouteLoadFlag",
+        "summary": "update dpRouteLoadDistance",
+        "description": "update dpRouteLoadDistance",
         "produces": [
           "application/json"
         ],
@@ -24730,13 +24730,13 @@
         }
       }
     },
-    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteOilLoadFlag": {
+    "/user/{userId}/dpRouteTask/{dpRouteTaskId}/dpRouteOilLoadDistance": {
       "put": {
         "tags": [
           "dispatch"
         ],
-        "summary": "update dpRouteOilLoadFlag",
-        "description": "update dpRouteOilLoadFlag",
+        "summary": "update dpRouteOilLoadDistance",
+        "description": "update dpRouteOilLoadDistance",
         "produces": [
           "application/json"
         ],
