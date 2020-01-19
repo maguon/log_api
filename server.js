@@ -807,9 +807,9 @@ function createServer() {
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/taskStatusBack/:taskStatus',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskStatusBack,sysRecord.saveRouteRecord);
 
     // 接口名称修改 dpRouteLoadFlag --> dpRouteLoadDistance
-    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadDistance',contentType: 'application/json'} ,sysRecord.checkUserStatus,dpRouteTask.updateDpRouteLoadFlag,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadDistance',contentType: 'application/json'} ,dpRouteTask.updateDpRouteLoadFlag,sysRecord.saveRouteRecord);
     // 接口名称修改 dpRouteOilLoadFlag --> dpRouteOilLoadDistance
-    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteOilLoadDistance',contentType: 'application/json'} ,sysRecord.checkUserStatus ,dpRouteTask.updateDpRouteOilLoadFlag,sysRecord.saveRouteRecord);
+    server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteOilLoadDistance',contentType: 'application/json'} ,dpRouteTask.updateDpRouteOilLoadFlag,sysRecord.saveRouteRecord);
 
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteReverseFlag',contentType: 'application/json'} ,dpRouteTask.updateDpRouteReverseFlag);
     server.put({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteReverseRemark',contentType: 'application/json'} ,dpRouteTask.updateDpRouteTaskRemark);

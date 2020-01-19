@@ -1364,7 +1364,17 @@ function updateDpRouteLoadFlag (req,res,next){
                 return next();
             } else {
                 // 8号以后，才可以修改
-                // params.
+
+                // // 任务计划时间
+                // rows[0].task_plan_date;
+                //
+                // // 系统当前日
+                // var todayNum = new Date().getDate();
+                //
+                // var strDate = moment(myDate).format('YYYYMMDD');
+
+
+
                 if (rows && rows.length > 0) {
                     parkObj.upDistanceCount=rows[0].up_distance_count;
                     that();
