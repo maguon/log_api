@@ -39244,7 +39244,6 @@
     "dpRouteLoadFlag": {
       "type": "object",
       "properties": {
-
         "distance": {
           "type": "integer"
         },
@@ -39256,6 +39255,9 @@
         },
         "reverseMoney": {
           "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {
@@ -39271,6 +39273,9 @@
         },
         "oilLoadFlag": {
           "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {
