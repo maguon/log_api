@@ -25,6 +25,25 @@ var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteTask.js');
 
+function checkTaskExpired(taskPlanDate, deadDay) {
+    const now = new Date();
+    // 当前日
+    const nowDay = now.getDate();
+    // 任务计划时间 年月
+    const taskPlanMonth = moment(taskPlanDate).format('YYYYMM');
+    // 可以更新的 年月
+    let taskActiveMonth;
+    if (nowDay > deadDay) {
+        // 8号以后，可以更新 为 当前月
+        taskActiveMonth = moment(now).format('YYYYMM');
+    } else {
+        // 8号之前，可以更新 为 前一月
+        now.setMonth(now.getMonth()-1);
+        taskActiveMonth = moment(now).format('YYYYMM');
+    }
+    return taskPlanMonth >= taskActiveMonth;
+}
+
 function createDpRouteTask(req,res,next){
     var params = req.params ;
     var parkObj = {};
@@ -1363,19 +1382,14 @@ function updateDpRouteLoadFlag (req,res,next){
                 resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
-                // 8号以后，才可以修改
-
-                // // 任务计划时间
-                // rows[0].task_plan_date;
-                //
-                // // 系统当前日
-                // var todayNum = new Date().getDate();
-                //
-                // var strDate = moment(myDate).format('YYYYMMDD');
-
-
-
                 if (rows && rows.length > 0) {
+                    // 校验任务计划时间，是否可以进行修改 默认没有参数：params.expiredFlag，当有这个参数时，则不做下面校验
+                    if (typeof(params.expiredFlag) == "undefined" && !checkTaskExpired(rows[0].task_plan_date, 8)) {
+                        logger.warn(' getDpRouteTask ' + 'failed');
+                        resUtil.resetFailedRes(res, " 任务计划时间为：不能修改的时间！ ");
+                        return next();
+                    }
+
                     parkObj.upDistanceCount=rows[0].up_distance_count;
                     that();
                 } else {
@@ -1444,6 +1458,13 @@ function updateDpRouteOilLoadFlag (req,res,next){
                 return next();
             } else {
                 if (rows && rows.length > 0) {
+                    // 校验任务计划时间，是否可以进行修改 默认没有参数：params.expiredFlag，当有这个参数时，则不做下面校验
+                    if (typeof(params.expiredFlag)=="undefined" && !checkTaskExpired(rows[0].task_plan_date, 8)) {
+                        logger.warn(' getDpRouteTask ' + 'failed');
+                        resUtil.resetFailedRes(res, " 任务计划时间为：不能修改的时间！ ");
+                        return next();
+                    }
+
                     parkObj.loadDistanceOil=rows[0].load_distance_oil;
                     parkObj.noLoadDistanceOil=rows[0].no_load_distance_oil;
                     parkObj.upDistanceCount=rows[0].up_distance_count;
