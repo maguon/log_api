@@ -1386,7 +1386,7 @@ function updateDpRouteLoadFlag (req,res,next){
                     // 校验任务计划时间，是否可以进行修改 默认没有参数：params.expiredFlag，当有这个参数时，则不做下面校验
                     if (typeof(params.expiredFlag) == "undefined" && !checkTaskExpired(rows[0].task_plan_date, 8)) {
                         logger.warn(' getDpRouteTask ' + 'failed');
-                        resUtil.resetFailedRes(res, " 任务计划时间为：不能修改的时间！ ");
+                        resUtil.resetFailedRes(res, " 任务计划时间为：超过任务修改期限！ ");
                         return next();
                     }
 
@@ -1461,7 +1461,7 @@ function updateDpRouteOilLoadFlag (req,res,next){
                     // 校验任务计划时间，是否可以进行修改 默认没有参数：params.expiredFlag，当有这个参数时，则不做下面校验
                     if (typeof(params.expiredFlag)=="undefined" && !checkTaskExpired(rows[0].task_plan_date, 8)) {
                         logger.warn(' getDpRouteTask ' + 'failed');
-                        resUtil.resetFailedRes(res, " 任务计划时间为：不能修改的时间！ ");
+                        resUtil.resetFailedRes(res, " 任务计划时间为：超过任务修改期限！ ");
                         return next();
                     }
 
