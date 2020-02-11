@@ -29041,7 +29041,7 @@
           {
             "name": "indemnityStart",
             "in": "query",
-            "description": "indemnity start",
+            "description": "indemnity start (yyyyMMdd)",
             "required": false,
             "type": "integer"
 
@@ -29049,7 +29049,7 @@
           {
             "name": "indemnityEnd",
             "in": "query",
-            "description": "indemnity end",
+            "description": "indemnity end (yyyyMMdd)",
             "required": false,
             "type": "integer"
 
@@ -30141,14 +30141,14 @@
           {
             "name": "indemnityStart",
             "in": "query",
-            "description": "indemnity start",
+            "description": "indemnity start (yyyyMMdd)",
             "required": false,
             "type": "integer"
           },
           {
             "name": "indemnityEnd",
             "in": "query",
-            "description": "indemnity end",
+            "description": "indemnity end (yyyyMMdd)",
             "required": false,
             "type": "integer"
           },
