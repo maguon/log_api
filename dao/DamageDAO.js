@@ -48,6 +48,8 @@ function getDamage(params,callback) {
         " dc.reduction_cost,dc.penalty_cost,dc.profit,dc.repair_id,dc.repair_cost,dc.transport_cost,dc.under_cost,dc.company_cost,dc.op_user_id," +
         " u3.real_name as op_user_name,dc.date_id as check_end_date,dc.remark,dc.created_on as check_start_date " +
         " from damage_info da " +
+        // 2020-02-11 外连接 商品车赔偿打款
+        " left join damage_check_indemnity dci on da.id = dci.damage_id " +
         " left join user_info u on da.declare_user_id = u.uid " +
         " left join car_info c on da.car_id = c.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
@@ -96,6 +98,15 @@ function getDamage(params,callback) {
     if(params.orderEnd){
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
+    }
+    // 2020-02-11 外连接 商品车赔偿打款
+    if(params.indemnityStart){
+        paramsArray[i++] = params.indemnityStart;
+        query = query + " and dci.date_id >= ? ";
+    }
+    if(params.indemnityEnd){
+        paramsArray[i++] = params.indemnityEnd;
+        query = query + " and dci.date_id <= ? ";
     }
     if(params.damageType){
         paramsArray[i++] = params.damageType;
@@ -250,6 +261,15 @@ function getDamageInsureRel(params,callback) {
     if(params.createdOnEnd){
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and da.created_on <= ? ";
+    }
+    // 2020-02-11 外连接 商品车赔偿打款
+    if(params.indemnityStart){
+        paramsArray[i++] = params.indemnityStart;
+        query = query + " and dci.date_id >= ? ";
+    }
+    if(params.indemnityEnd){
+        paramsArray[i++] = params.indemnityEnd;
+        query = query + " and dci.date_id <= ? ";
     }
     if(params.endDateStart){
         paramsArray[i++] = params.endDateStart;

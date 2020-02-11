@@ -29095,6 +29095,22 @@
 
           },
           {
+            "name": "indemnityStart",
+            "in": "query",
+            "description": "indemnity start",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "indemnityEnd",
+            "in": "query",
+            "description": "indemnity end",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "damageType",
             "in": "query",
             "description": "damage type",
@@ -30121,6 +30137,20 @@
             "description": "createdOn end",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "indemnityStart",
+            "in": "query",
+            "description": "indemnity start",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "indemnityEnd",
+            "in": "query",
+            "description": "indemnity end",
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "endDateStart",
