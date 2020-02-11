@@ -72,6 +72,15 @@ function getDamage(params,callback) {
         paramsArray[i++] = params.createdOnEnd +" 23:59:59";
         query = query + " and da.created_on <= ? ";
     }
+    // 2020-02-11 外连接 商品车赔偿打款
+    if(params.indemnityStart){
+        paramsArray[i++] = params.indemnityStart;
+        query = query + " and dci.date_id >= ? ";
+    }
+    if(params.indemnityEnd){
+        paramsArray[i++] = params.indemnityEnd;
+        query = query + " and dci.date_id <= ? ";
+    }
     if(params.endDateStart){
         paramsArray[i++] = params.endDateStart;
         query = query + " and dc.date_id >= ? ";
@@ -98,15 +107,6 @@ function getDamage(params,callback) {
     if(params.orderEnd){
         paramsArray[i++] = params.orderEnd;
         query = query + " and c.order_date <= ? ";
-    }
-    // 2020-02-11 外连接 商品车赔偿打款
-    if(params.indemnityStart){
-        paramsArray[i++] = params.indemnityStart;
-        query = query + " and dci.date_id >= ? ";
-    }
-    if(params.indemnityEnd){
-        paramsArray[i++] = params.indemnityEnd;
-        query = query + " and dci.date_id <= ? ";
     }
     if(params.damageType){
         paramsArray[i++] = params.damageType;
