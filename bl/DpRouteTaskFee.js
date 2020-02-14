@@ -125,6 +125,7 @@ function updateDpRouteTaskFeeStatusAll(req,res,next){
                 status : params.status,
                 grantDate : myDate,
                 dateId : parseInt(strDate),
+                userId : params.userId,
                 dpRouteTaskFeeId : dpRouteTaskFeeIds[i],
                 row : i+1,
             }
