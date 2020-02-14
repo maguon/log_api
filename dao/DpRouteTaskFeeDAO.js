@@ -156,7 +156,7 @@ function updateDpRouteTaskFeeStatus(params,callback){
     var paramsArray=[],i=0;
     paramsArray[i++] = params.status;
     paramsArray[i++] = params.userId;
-    if(params.grantDate){
+    if(params.status==2){
         paramsArray[i++] = params.grantDate;
         paramsArray[i++] = params.dateId;
     }
