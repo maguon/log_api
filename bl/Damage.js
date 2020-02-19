@@ -533,38 +533,30 @@ function getDamageCsv(req,res,next){
                     parkObj.damageType = "";
                 }
                 if(rows[i].damage_link_type == 1){
-                    parkObj.damageLinkType = "短驳移库";
+                    parkObj.damageLinkType = "不可抗力因素";
                 }else if(rows[i].damage_link_type == 2){
-                    parkObj.damageLinkType = "公路运输";
+                    parkObj.damageLinkType = "基层漏检";
                 }else if(rows[i].damage_link_type == 3){
-                    parkObj.damageLinkType = "公司运输";
+                    parkObj.damageLinkType = "基层违规操作";
                 }else if(rows[i].damage_link_type == 4){
                     parkObj.damageLinkType = "驾驶员漏检";
                 }else if(rows[i].damage_link_type == 5){
-                    parkObj.damageLinkType = "交通事故";
-                }else if(rows[i].damage_link_type == 6){
-                    parkObj.damageLinkType = "前端责任";
-                }else if(rows[i].damage_link_type == 7){
-                    parkObj.damageLinkType = "安盛船务责任";
-                }else if(rows[i].damage_link_type == 8){
-                    parkObj.damageLinkType = "安盛判定";
-                }else if(rows[i].damage_link_type == 9){
-                    parkObj.damageLinkType = "通用判定";
-                }else if(rows[i].damage_link_type == 10){
                     parkObj.damageLinkType = "驾驶员违规操作";
+                }else if(rows[i].damage_link_type == 6){
+                    parkObj.damageLinkType = "交通事故";
+                }else if(rows[i].damage_link_type == 7){
+                    parkObj.damageLinkType = "经销商恶意刁难";
+                }else if(rows[i].damage_link_type == 8){
+                    parkObj.damageLinkType = "前端责任";
+                }else if(rows[i].damage_link_type == 9){
+                    parkObj.damageLinkType = "强判";
+                }else if(rows[i].damage_link_type == 10){
+                    parkObj.damageLinkType = "人为破坏";
                 }else if(rows[i].damage_link_type == 11){
-                    parkObj.damageLinkType = "长春办收发车";
+                    parkObj.damageLinkType = "设备故障";
                 }else if(rows[i].damage_link_type == 12){
-                    parkObj.damageLinkType = "沈阳办收发车";
+                    parkObj.damageLinkType = "索赔";
                 }else if(rows[i].damage_link_type == 13){
-                    parkObj.damageLinkType = "天津办收发车";
-                }else if(rows[i].damage_link_type == 14){
-                    parkObj.damageLinkType = "PDI漏检";
-                }else if(rows[i].damage_link_type == 15){
-                    parkObj.damageLinkType = "大连现场收发车";
-                }else if(rows[i].damage_link_type == 16){
-                    parkObj.damageLinkType = "运输途中遭人为破坏";
-                }else if(rows[i].damage_link_type == 17){
                     parkObj.damageLinkType = "其他";
                 }else{
                     parkObj.damageLinkType = "";
