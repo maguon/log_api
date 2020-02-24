@@ -439,7 +439,7 @@ function getDamageCsv(req,res,next){
     var header = "质损编号" + ',' + "申报时间" + ',' + "VIN码" + ',' + "品牌" + ',' + "车型" + ',' + "起始城市" + ',' + "起始装车地" + ',' + "目的城市" + ',' + "船名" + ',' +
         "指令时间" + ',' + "质损说明" + ',' + "申报人" + ',' + "货车牌号" + ',' +
         "司机" + ',' + "经销商" + ',' + "委托方" + ',' + "质损类型" + ',' + "质损环节" + ',' + "责任人" + ',' + "个人承担" + ',' + "公司承担" + ',' +
-        "处理结束时间" + ',' + "处理状态" + ',' +
+        "处理结束时间" + ',' + "处理状态" + ',' + '备注' +',' +
         "理赔编号" + ',' + "生成日期" + ',' + "保险公司" + ',' + "经办人" + ',' + "待赔金额" + ',' + "定损金额" + ',' + "保险赔付"
         // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
         + ',' + "实际打款金额" + ',' + "打款说明" + ',' + "打款时间" + ',' + "状态" + ',' + "打款账户" + ',' + "户名" + ',' + "开户行" + ',' + "申请打款备注" + ',' + "联系人"+ ',' + "挂起状态"
@@ -457,6 +457,11 @@ function getDamageCsv(req,res,next){
                 parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
                 parkObj.vin = rows[i].vin;
                 parkObj.makeName = rows[i].make_name;
+                if(rows[i].remark==null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
                 // 车型
                 if(rows[i].car_model_name==null){
                     parkObj.carModelName = "";
@@ -699,7 +704,7 @@ function getDamageCsv(req,res,next){
                     parkObj.routeStart + "," + parkObj.addrName + "," + parkObj.routeEnd + "," + parkObj.shipName + "," + parkObj.orderDate + "," +
                     parkObj.damageExplain + "," + parkObj.declareUserName + "," + parkObj.truckNum + "," + parkObj.driveName + "," + parkObj.reShortName + "," + parkObj.enShortName + "," +
                     parkObj.damageType + "," + parkObj.damageLinkType + "," + parkObj.underUserName + "," + parkObj.underCost + "," +
-                    parkObj.companyCost + "," + parkObj.checkEndDate + "," + parkObj.damageStatus + "," +
+                    parkObj.companyCost + "," + parkObj.checkEndDate + "," + parkObj.damageStatus + "," +parkObj.remark+","+
                     parkObj.damageInsureId + "," + parkObj.insureCreatedOn + "," + parkObj.insureName + "," +
                     parkObj.insureUserName + "," + parkObj.insurePlan + "," + parkObj.damageMoney + "," + parkObj.insureActual
                     // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
