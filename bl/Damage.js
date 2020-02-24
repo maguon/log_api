@@ -558,6 +558,8 @@ function getDamageCsv(req,res,next){
                     parkObj.damageLinkType = "索赔";
                 }else if(rows[i].damage_link_type == 13){
                     parkObj.damageLinkType = "其他";
+                }else if(rows[i].damage_link_type == 14){
+                    parkObj.damageLinkType = "仓储责任";
                 }else{
                     parkObj.damageLinkType = "";
                 }
