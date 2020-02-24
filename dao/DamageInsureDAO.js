@@ -9,8 +9,8 @@ var logger = serverLogger.createLogger('DamageInsureDAO.js');
 function addDamageInsure(params,callback){
     var query = " insert into damage_insure (insure_id,insure_user_id," +
         " city_id,city_name,declare_date,liability_type,ref_remark,derate_money,car_valuation,invoice_money, " +
-        " damage_money,insure_plan,financial_loan_status,financial_loan,payment_explain) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " damage_money,insure_plan,financial_loan_status,financial_loan,payment_explain,date_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.insureId;
     paramsArray[i++]=params.userId;
@@ -26,7 +26,8 @@ function addDamageInsure(params,callback){
     paramsArray[i++]=params.insurePlan;
     paramsArray[i++]=params.financialLoanStatus;
     paramsArray[i++]=params.financialLoan;
-    paramsArray[i]=params.paymentExplain;
+    paramsArray[i++]=params.paymentExplain;
+    paramsArray[i]=params.dateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDamageInsure ');
         return callback(error,rows);

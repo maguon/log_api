@@ -20,6 +20,8 @@ var logger = serverLogger.createLogger('DamageInsure.js');
 function createInsure(req,res,next){
     var params = req.params ;
     var damageInsureId = 0;
+
+    params.dateId = moment(myDate).format('YYYYMMDD');
     Seq().seq(function(){
         var that = this;
         damageInsureDAO.addDamageInsure(params,function(error,result){
