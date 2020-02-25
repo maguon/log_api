@@ -186,7 +186,7 @@ function getDpRouteLoadTaskCleanRelBase(params,callback) {
 }
 
 function getDpRouteLoadTaskCleanRelCount(params,callback) {
-    var query = " select sum(dpcr.total_price) as total_clean_fee,sum(dpcr.total_trailer_fee) as total_trailer_fee, " +
+    var query = " select sum(dpcr.car_count) as car_count ,sum(dpcr.total_price) as total_clean_fee,sum(dpcr.total_trailer_fee) as total_trailer_fee, " +
         " sum(dpcr.car_parking_fee) as car_parking_fee,sum(dpcr.total_run_fee) as total_run_fee,sum(dpcr.lead_fee) as lead_fee " +
         " from dp_route_load_task_clean_rel dpcr " +
         " left join dp_route_load_task dprl on dpcr.dp_route_load_task_id = dprl.id " +
