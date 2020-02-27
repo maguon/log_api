@@ -259,8 +259,9 @@ function updateDpRouteLoadTaskStatus(req,res,next){
         var subParams = {
             dpRouteTaskId : parkObj.dpRouteTaskId,
             // 2020-01-02 修改，同指令下，不关心目的城市了，取得所有的月结带路费合计
-            // routeStartId : parkObj.routeStartId,
-            // routeEndId : parkObj.routeEndId,
+            // 2020-02-26 上面的修改作废，重新修改：需要关心目的城市，不同的目的城市分别对待
+            routeStartId : parkObj.routeStartId,
+            routeEndId : parkObj.routeEndId,
         }
         dpRouteLoadTaskCleanRelDAO.getDpRouteLoadTaskCleanRel(subParams, function (error, rows) {
             if (error) {
