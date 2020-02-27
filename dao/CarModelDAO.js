@@ -24,6 +24,10 @@ function getCarModel(params,callback) {
         paramsArray[i++] = params.makeId;
         query = query + " and ma.id = ? ";
     }
+    if(params.modelStatus == 0 || params.modelStatus == 1){
+        paramsArray[i++] = params.modelStatus;
+        query = query + " and mo.model_status = ? ";
+    }
     query = query + '  order by mo.model_status desc ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getCarModel ');

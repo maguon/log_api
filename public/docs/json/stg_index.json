@@ -21397,7 +21397,13 @@
             "description": "make id",
             "required": true,
             "type": "integer"
-
+          },
+          {
+            "name": "modelStatus",
+            "in": "query",
+            "description": "model status",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
