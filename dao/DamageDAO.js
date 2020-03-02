@@ -228,6 +228,8 @@ function getDamageInsureRel(params,callback) {
         " ,dci.bank_user_name " +
         // 开户行
         " ,dci.bank_name " +
+        // 开户行号
+        " ,dci.bank_id " +
         // 申请打款备注
         " ,dci.apply_explain " +
         // 联系人

@@ -39897,6 +39897,9 @@
         "bankName": {
           "type": "string"
         },
+        "bankId": {
+          "type": "string"
+        },
         "cityId": {
           "type": "integer"
         },

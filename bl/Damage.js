@@ -442,7 +442,7 @@ function getDamageCsv(req,res,next){
         "处理结束时间" + ',' + "处理状态" + ',' + '备注' +',' +
         "理赔编号" + ',' + "生成日期" + ',' + "保险公司" + ',' + "经办人" + ',' + "待赔金额" + ',' + "定损金额" + ',' + "保险赔付"
         // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
-        + ',' + "实际打款金额" + ',' + "打款说明" + ',' + "打款时间" + ',' + "状态" + ',' + "打款账户" + ',' + "户名" + ',' + "开户行" + ',' + "申请打款备注" + ',' + "联系人"+ ',' + "挂起状态"
+        + ',' + "实际打款金额" + ',' + "打款说明" + ',' + "打款时间" + ',' + "状态" + ',' + "打款账户" + ',' + "户名" + ',' + "开户行" + ',' + "开户行号" + ',' + "申请打款备注" + ',' + "联系人"+ ',' + "挂起状态"
     ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -682,6 +682,12 @@ function getDamageCsv(req,res,next){
                 }else{
                     parkObj.bankName = rows[i].bank_name.replace(/[\r\n]/g, '');
                 }
+                // 开户行号
+                if(rows[i].bank_id==null){
+                    parkObj.bankId = "";
+                }else{
+                    parkObj.bankId = rows[i].bank_id.replace(/[\r\n]/g, '');
+                }
                 // 申请打款备注
                 if(rows[i].apply_explain==null){
                     parkObj.applyExplain = "";
@@ -709,7 +715,7 @@ function getDamageCsv(req,res,next){
                     parkObj.insureUserName + "," + parkObj.insurePlan + "," + parkObj.damageMoney + "," + parkObj.insureActual
                     // 2019-11-12 外连接 商品车赔偿打款 csv 使用字段
                     + "," + parkObj.actualMoney + "," + parkObj.indemnityExplain + "," + parkObj.indemnityDate + "," + parkObj.indemnityStatus
-                    + "," + parkObj.bankNumber + "," + parkObj.bankUserName + "," + parkObj.bankName + "," + parkObj.applyExplain + "," + parkObj.contactsName+ "," + parkObj.hangStatus
+                    + "," + parkObj.bankNumber + "," + parkObj.bankUserName + "," + parkObj.bankName + "," + parkObj.bankId + "," + parkObj.applyExplain + "," + parkObj.contactsName+ "," + parkObj.hangStatus
                     +'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');

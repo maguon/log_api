@@ -182,7 +182,7 @@ function queryIndemnityMonthStat(req,res,next){
 
 function getDamageCheckIndemnityCsv(req,res,next){
     var csvString = "";
-    var header = "质损编号" + ',' + "打款账号" + ',' + "户名"+ ',' + "开户行" + ','+ "城市" + ','+ "经销商"+ ','+ "计划打款金额" + ','+ "联系人" + ','+ "联系电话"
+    var header = "质损编号" + ',' + "打款账号" + ',' + "户名"+ ',' + "开户行"  + ',' + "开户行号" + ',' + "城市" + ','+ "经销商"+ ','+ "计划打款金额" + ','+ "联系人" + ','+ "联系电话"
         + ','+ "申请时间" + ','+ "申请打款备注" + ','+ "申报人"+ ','+ "实际打款金额" + ','+ "打款说明" + ','+ "打款时间" + ','+ "状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -197,6 +197,7 @@ function getDamageCheckIndemnityCsv(req,res,next){
                 parkObj.bankNumber = rows[i].bank_number.replace(/["]/g, '');
                 parkObj.bankUserName = rows[i].bank_user_name.replace(/["]/g, '');
                 parkObj.bankName = rows[i].bank_name.replace(/["]/g, '');
+                parkObj.bankId = rows[i].bank_id.replace(/[\r\n]/g, '');
                 parkObj.cityName = rows[i].city_name;
                 parkObj.receiveName = rows[i].receive_name;
                 parkObj.planMoney = rows[i].plan_money;
@@ -237,7 +238,7 @@ function getDamageCheckIndemnityCsv(req,res,next){
                 }else{
                     parkObj.indemnityStatus = "已打款";
                 }
-                csvString = csvString+parkObj.damageId+","+parkObj.bankNumber+","+parkObj.bankUserName+"," +parkObj.bankName+","+parkObj.cityName+","
+                csvString = csvString+parkObj.damageId+","+parkObj.bankNumber+","+parkObj.bankUserName+"," +parkObj.bankName+","+parkObj.bankId+","+parkObj.cityName+","
                     +parkObj.receiveName+"," +parkObj.planMoney+"," +parkObj.contactsName+","+parkObj.tel+","+parkObj.createdOn+"," +parkObj.applyExplain+","
                     +parkObj.applyUserName+","+parkObj.actualMoney+","+parkObj.indemnityExplain+","+parkObj.indemnityDate+","+parkObj.indemnityStatus+ '\r\n';
             }

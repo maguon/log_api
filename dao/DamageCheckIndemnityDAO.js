@@ -7,14 +7,15 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageCheckIndemnityDAO.js');
 
 function addDamageCheckIndemnity(params,callback){
-    var query = " insert into damage_check_indemnity (damage_id,damage_check_id,bank_number,bank_user_name,bank_name, " +
-        " city_id,receive_name,plan_money,contacts_name,tel,apply_user_id,apply_explain) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into damage_check_indemnity (damage_id,damage_check_id,bank_number,bank_user_name,bank_name,bank_id, " +
+        " city_id,receive_name,plan_money,contacts_name,tel,apply_user_id,apply_explain) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.damageId;
     paramsArray[i++]=params.damageCheckId;
     paramsArray[i++]=params.bankNumber;
     paramsArray[i++]=params.bankUserName;
     paramsArray[i++]=params.bankName;
+    paramsArray[i++]=params.bankId;
     paramsArray[i++]=params.cityId;
     paramsArray[i++]=params.receiveName;
     paramsArray[i++]=params.planMoney;
@@ -96,12 +97,13 @@ function getDamageCheckIndemnity(params,callback) {
 }
 
 function updateDamageCheckIndemnity(params,callback){
-    var query = " update damage_check_indemnity set bank_number = ? , bank_user_name = ? , bank_name = ? , " +
+    var query = " update damage_check_indemnity set bank_number = ? , bank_user_name = ? , bank_name = ? , bank_id = ? , " +
         " city_id = ? , receive_name = ? , plan_money = ? , contacts_name = ? , tel = ? , apply_explain = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.bankNumber;
     paramsArray[i++]=params.bankUserName;
     paramsArray[i++]=params.bankName;
+    paramsArray[i++]=params.bankId;
     paramsArray[i++]=params.cityId;
     paramsArray[i++]=params.receiveName;
     paramsArray[i++]=params.planMoney;

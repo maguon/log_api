@@ -927,3 +927,9 @@ ADD COLUMN `create_user_id` int(10) NOT NULL DEFAULT 0 COMMENT '创建人ID' AFT
 -- ----------------------------
 ALTER TABLE `settle_handover_car_rel`
 ADD COLUMN `sequence_num` varchar(40) NULL COMMENT '序列号' AFTER `car_id`;
+
+-- ----------------------------
+-- 2020-03-02 更新
+-- ----------------------------
+ALTER TABLE `damage_check_indemnity`
+ADD COLUMN `bank_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '开户行号' AFTER `bank_name`;
