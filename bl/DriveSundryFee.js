@@ -131,6 +131,8 @@ function uploadDriveSundryFee(req, res, next) {
                                 that(null, i);
                             }
                         })
+                    } else {
+                        that(null, i);
                     }
                 } else {
                     that(null, i);
