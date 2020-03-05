@@ -264,10 +264,45 @@ function uploadDriveSundryOtherFee(req, res, next) {
     })
 }
 
+function getDriveSundryFeeCsv(req,res,next){
+    var csvString = "";
+    var header = "司机姓名" + ',' + "电话" + ',' + "月份" + ','+ "个人借款" + ','+ "社保费" + ','+ "伙食费" + ','+ "其他扣款";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    driveSundryFeeDAO.getDriveSundryFee(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSundryFee ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.mobile = rows[i].tel;
+                parkObj.yMonth = rows[i].y_month;
+                parkObj.personalLoan = rows[i].personal_loan;
+                parkObj.socialFee = rows[i].social_fee;
+                parkObj.mealsFee = rows[i].meals_fee;
+                parkObj.otherFee = rows[i].other_fee;
+                csvString = csvString+parkObj.driveName+","+parkObj.mobile+","+parkObj.yMonth+","+parkObj.personalLoan+","+
+                    parkObj.socialFee+ "," + parkObj.mealsFee+ "," + parkObj.otherFee+'\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 module.exports = {
     createDriveSundryFee: createDriveSundryFee,
     updateDriveSundryFee : updateDriveSundryFee,
     queryDriveSundryFee: queryDriveSundryFee,
     uploadDriveSundryFee: uploadDriveSundryFee,
-    uploadDriveSundryOtherFee: uploadDriveSundryOtherFee
+    uploadDriveSundryOtherFee: uploadDriveSundryOtherFee,
+    getDriveSundryFeeCsv: getDriveSundryFeeCsv
 };

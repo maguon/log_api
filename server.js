@@ -541,6 +541,7 @@ function createServer() {
      * DriveSundryFee Module add by yujy at 2020/03/05
      */
     server.get('/api/driveSundryFee' , driveSundryFee.queryDriveSundryFee);
+    server.get('/api/driveSundryFee.csv' , driveWork.getDriveSundryFeeCsv);
     server.post({path:'/api/user/:userId/driveSundryFee',contentType: 'application/json'},driveSundryFee.createDriveSundryFee);
     server.put({path:'/api/user/:userId/driveSundryFee/:driveSundryFeeId',contentType: 'application/json'} ,driveSundryFee.updateDriveSundryFee);
     server.post({path:'/api/user/:userId/driveSundryFeeFile',contentType: 'multipart/form-data'},driveSundryFee.uploadDriveSundryFee);

@@ -14432,6 +14432,55 @@
         }
       }
     },
+    "/driveSundryFee.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveSundryFee csv",
+        "description": "query driveSundryFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSundryFee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSundryFee": {
       "post": {
         "tags": [
