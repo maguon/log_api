@@ -42,6 +42,7 @@ var driveExceedOilRel = require('./bl/DriveExceedOilRel.js');
 var driveDpRouteTaskOilRel = require('./bl/DriveDpRouteTaskOilRel.js');
 var driveExceedOilPrice = require('./bl/DriveExceedOilPrice.js');
 var driveWork = require('./bl/DriveWork.js');
+var driveSundryFee = require('./bl/DriveSundryFee.js');
 var driveSocialSecurity = require('./bl/DriveSocialSecurity.js');
 var driveTruckMonthValue = require('./bl/DriveTruckMonthValue.js');
 var company = require('./bl/Company.js');
@@ -535,6 +536,15 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveWork',contentType: 'application/json'},driveWork.createDriveWork);
     server.put({path:'/api/user/:userId/driveWork/:driveWorkId',contentType: 'application/json'} ,driveWork.updateDriveWork);
     server.post({path:'/api/user/:userId/driveWorkFile',contentType: 'multipart/form-data'},driveWork.uploadDriveWorkFile);
+
+    /**
+     * DriveSundryFee Module add by yujy at 2020/03/05
+     */
+    server.get('/api/driveSundryFee' , driveSundryFee.queryDriveSundryFee);
+    server.post({path:'/api/user/:userId/driveSundryFee',contentType: 'application/json'},driveSundryFee.createDriveSundryFee);
+    server.put({path:'/api/user/:userId/driveSundryFee/:driveSundryFeeId',contentType: 'application/json'} ,driveSundryFee.updateDriveSundryFee);
+    server.post({path:'/api/user/:userId/driveSundryFeeFile',contentType: 'multipart/form-data'},driveSundryFee.uploadDriveSundryFee);
+    server.post({path:'/api/user/:userId/driveSundryOtherFeeFile',contentType: 'multipart/form-data'},driveSundryFee.uploadDriveSundryOtherFee);
 
     /**
      * DriveSocialSecurity Module

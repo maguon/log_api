@@ -14362,6 +14362,215 @@
         }
       }
     },
+    "/driveSundryFee": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveSundryFee list",
+        "description": "query driveSundryFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSundryFeeId",
+            "in": "query",
+            "description": "driveSundryFee id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSundryFee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSundryFee": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSundryFee",
+        "description": "user create driveSundryFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSundryFee",
+            "in": "body",
+            "description": "driveSundryFee info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSundryFee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSundryFee/{driveSundryFeeId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveSundryFee info",
+        "description": "update driveSundryFee info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSundryFeeId",
+            "in": "path",
+            "description": "driveSundryFee id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSundryFee",
+            "in": "body",
+            "description": "driveSundryFee info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSundryFee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSundryFeeFile": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user upload driveSundryFeeFile ",
+        "description": "user upload driveSundryFeeFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveWork id"
+          }
+        }
+      }
+    },
     "/driveSocialSecurity": {
       "get": {
         "tags": [
@@ -38492,6 +38701,35 @@
       },
       "xml": {
         "name": "driveWork"
+      }
+    },
+    "driveSundryFee": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "yMonth": {
+          "type": "integer"
+        },
+        "personalLoan": {
+          "type": "integer"
+        },
+        "socialFee": {
+          "type": "integer"
+        },
+        "mealsFee": {
+          "type": "integer"
+        },
+        "otherFee": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSundryFee"
       }
     },
     "driveSocialSecurity": {

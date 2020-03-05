@@ -933,3 +933,25 @@ ADD COLUMN `sequence_num` varchar(40) NULL COMMENT '序列号' AFTER `car_id`;
 -- ----------------------------
 ALTER TABLE `damage_check_indemnity`
 ADD COLUMN `bank_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '开户行号' AFTER `bank_name`;
+
+-- ----------------------------
+-- 2020-03-05 更新
+-- ----------------------------
+-- ----------------------------
+-- Table structure for drive_sundry_fee
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_sundry_fee`;
+CREATE TABLE `drive_sundry_fee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) DEFAULT '0' COMMENT '用户ID',
+  `drive_id` int(10) DEFAULT '0' COMMENT '司机ID',
+  `y_month` int(4) DEFAULT '0' COMMENT '月份',
+  `personal_loan` decimal(10,2) DEFAULT '0.00' COMMENT '个人借款',
+  `social_fee` decimal(10,2) DEFAULT '0.00' COMMENT '社保费',
+  `meals_fee` decimal(10,2) DEFAULT '0.00' COMMENT '伙食费',
+  `other_fee` decimal(10,2) DEFAULT '0.00' COMMENT '其他扣款',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `drive_id` (`drive_id`,`y_month`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
