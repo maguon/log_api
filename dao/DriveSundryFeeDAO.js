@@ -78,7 +78,7 @@ function updateDriveSundryOtherFee(params, callback) {
 }
 
 function getDriveSundryFee(params, callback) {
-    var query = " select dsf.* from drive_sundry_fee dsf " +
+    var query = " select dsf.*,d.drive_name,d.tel from drive_sundry_fee dsf left join drive_info d on d.id = dsf.drive_id  " +
         " where dsf.id is not null ";
     var paramsArray = [], i = 0;
     if (params.driveSundryFeeId) {
