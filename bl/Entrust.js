@@ -157,17 +157,22 @@ function getEntrustPriceCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                // 委托方ID
                 parkObj.entrustId = rows[i].entrust_id;
-                parkObj.entrustCarCount = rows[i].entrust_car_count;
+                // 委托方简称
                 if(rows[i].short_name == null){
                     parkObj.shortName = "";
                 }else{
                     parkObj.shortName = rows[i].short_name;
                 }
+                // 车辆数
+                parkObj.entrustCarCount = rows[i].entrust_car_count;
+                // 一级估值
                 parkObj.entrustCarPrice = rows[i].entrust_car_price;
+                // 二级估值
                 parkObj.entrustCarTwoPrice = rows[i].entrust_car_two_price;
 
-                csvString = csvString+parkObj.entrustId+","+parkObj.entrustCarCount+","+parkObj.shortName+","+parkObj.entrustCarPrice+","+parkObj.entrustCarTwoPrice+ '\r\n';
+                csvString = csvString+parkObj.entrustId+","+parkObj.shortName+","+parkObj.entrustCarCount+","+parkObj.entrustCarPrice+","+parkObj.entrustCarTwoPrice+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
