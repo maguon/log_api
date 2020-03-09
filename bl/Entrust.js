@@ -75,6 +75,20 @@ function queryEntrustCar(req,res,next){
     })
 }
 
+function queryEntrustPrice(req,res,next){
+    var params = req.params ;
+    entrustDAO.getEntrustPrice(params,function(error,result){
+        if (error) {
+            logger.error(' queryEntrustPrice ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryEntrustPrice ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryEntrustCarCount(req,res,next){
     var params = req.params ;
     entrustDAO.getEntrustCarCount(params,function(error,result){
@@ -127,6 +141,41 @@ function updateEntrustCarParkingFee(req,res,next){
             logger.info(' updateEntrustCarParkingFee ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
+        }
+    })
+}
+
+function getEntrustPriceCsv(req,res,next){
+    var csvString = "";
+    var header = "委托方ID"+ ',' +"委托方简称"+ ',' +"车辆数"+ ',' +"一级估值"+ ','+"二级估值";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    entrustDAO.getEntrustPrice(params,function(error,rows){
+        if (error) {
+            logger.error(' getEntrustPriceCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.entrustId = rows[i].entrust_id;
+                parkObj.entrustCarCount = rows[i].entrust_car_count;
+                parkObj.entrustCarPrice = rows[i].entrust_car_price;
+                parkObj.entrustCarTwoPrice = rows[i].entrust_car_two_price;
+                if(rows[i].short_name == null){
+                    parkObj.shortName = "";
+                }else{
+                    parkObj.shortName = rows[i].short_name;
+                }
+                csvString = csvString+parkObj.entrustId+","+parkObj.entrustCarCount+","+parkObj.entrustCarPrice+","+parkObj.entrustCarTwoPrice+","+parkObj.shortName+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);
+            res.end();
+            return next(false);
         }
     })
 }
@@ -314,6 +363,8 @@ module.exports = {
     queryEntrustCarNotCount : queryEntrustCarNotCount,
     updateEntrust : updateEntrust,
     updateEntrustCarParkingFee : updateEntrustCarParkingFee,
+    queryEntrustPrice : queryEntrustPrice,
+    getEntrustPriceCsv : getEntrustPriceCsv,
     getEntrustCarCsv : getEntrustCarCsv,
     getEntrustNotCarCsv : getEntrustNotCarCsv,
     createSettleCarBatch : createSettleCarBatch

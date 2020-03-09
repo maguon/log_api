@@ -629,6 +629,9 @@ function createServer() {
     server.get('/api/entrustCarCount',entrust.queryEntrustCarCount);
     server.get('/api/entrustCarNotCount',entrust.queryEntrustCarNotCount);
     server.get('/api/entrustCar.csv',entrust.getEntrustCarCsv);
+    // 2020/3/9 新建2个接口，委托方估值
+    server.get('/api/entrustPrice',entrust.queryEntrustPrice);
+    server.get('/api/entrustPrice.csv',entrust.getEntrustPriceCsv);
     server.get('/api/entrustNotCar.csv',entrust.getEntrustNotCarCsv);
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
     server.get('/api/settleCarBatch',entrust.createSettleCarBatch);
