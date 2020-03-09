@@ -159,14 +159,15 @@ function getEntrustPriceCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.entrustId = rows[i].entrust_id;
                 parkObj.entrustCarCount = rows[i].entrust_car_count;
-                parkObj.entrustCarPrice = rows[i].entrust_car_price;
-                parkObj.entrustCarTwoPrice = rows[i].entrust_car_two_price;
                 if(rows[i].short_name == null){
                     parkObj.shortName = "";
                 }else{
                     parkObj.shortName = rows[i].short_name;
                 }
-                csvString = csvString+parkObj.entrustId+","+parkObj.entrustCarCount+","+parkObj.entrustCarPrice+","+parkObj.entrustCarTwoPrice+","+parkObj.shortName+ '\r\n';
+                parkObj.entrustCarPrice = rows[i].entrust_car_price;
+                parkObj.entrustCarTwoPrice = rows[i].entrust_car_two_price;
+
+                csvString = csvString+parkObj.entrustId+","+parkObj.entrustCarCount+","+parkObj.shortName+","+parkObj.entrustCarPrice+","+parkObj.entrustCarTwoPrice+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
