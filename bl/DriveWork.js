@@ -268,7 +268,11 @@ function getDriveWorkCsv(req,res,next){
                 }else{
                     parkObj.fullWorkFee = rows[i].full_work_fee;
                 }
-                parkObj.remark = rows[i].remark;
+                if(rows[i].remark == null){
+                    parkObj.remark = "";
+                }else{
+                    parkObj.remark = rows[i].remark;
+                }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.yMonth+","+parkObj.workCount+","+
                     parkObj.hotelFee+ "," + parkObj.fullWorkFee + "," + parkObj.remark+'\r\n';
 
