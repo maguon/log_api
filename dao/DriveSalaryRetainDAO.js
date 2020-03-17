@@ -63,7 +63,7 @@ function updateDriveSalaryRetain(params,callback){
     paramsArray[i++] = params.remark;
     paramsArray[i] = params.driveSalaryRetainId;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateDrivePlanSalary ');
+        logger.debug(' updateDriveSalaryRetain ');
         return callback(error,rows);
     });
 }
