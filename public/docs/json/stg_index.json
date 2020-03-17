@@ -38668,6 +38668,12 @@
         "hotelFee": {
           "type": "integer"
         },
+        "fullWorkFee": {
+          "type": "integer"
+        },
+        "otherFee": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }

@@ -148,6 +148,7 @@ function uploadDriveWorkFile(req,res,next){
                             workCount : objArray[i].出勤天数,
                             hotelFee : objArray[i].出差补助,
                             fullWorkFee : objArray[i].满勤补助,
+                            otherFee : objArray[i].其他补助,
                             row : i+1
                         }
                         driveWorkDAO.addDriveWork(subParams,function(err,result){
@@ -174,6 +175,7 @@ function uploadDriveWorkFile(req,res,next){
                             workCount : objArray[i].出勤天数,
                             hotelFee : objArray[i].出差补助,
                             fullWorkFee : objArray[i].满勤补助,
+                            otherFee : objArray[i].其他补助,
                             row : i+1
                         }
                         driveWorkDAO.updateDriveWork(subParams,function(err,result){
@@ -238,7 +240,7 @@ function updateDriveWork(req,res,next){
 
 function getDriveWorkCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "备注" ;
+    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "其他补助" + ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -268,13 +270,18 @@ function getDriveWorkCsv(req,res,next){
                 }else{
                     parkObj.fullWorkFee = rows[i].full_work_fee;
                 }
+                if(rows[i].other_fee == null){
+                    parkObj.otherFee = "";
+                }else{
+                    parkObj.otherFee = rows[i].other_fee;
+                }
                 if(rows[i].remark == null){
                     parkObj.remark = "";
                 }else{
                     parkObj.remark = rows[i].remark;
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.yMonth+","+parkObj.workCount+","+
-                    parkObj.hotelFee+ "," + parkObj.fullWorkFee + "," + parkObj.remark+'\r\n';
+                    parkObj.hotelFee+ "," + parkObj.fullWorkFee+ "," + parkObj.otherFee + "," + parkObj.remark+'\r\n';
 
             }
             var csvBuffer = new Buffer(csvString,'utf8');
