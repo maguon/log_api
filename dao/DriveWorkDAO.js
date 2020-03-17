@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DriveWorkDAO.js');
 
 function addDriveWork(params,callback){
     var query = "insert into drive_work (drive_id,drive_name,truck_id,truck_num,mobile,y_month,work_count,hotel_fee,full_work_fee,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.driveName;
