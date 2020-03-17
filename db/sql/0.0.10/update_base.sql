@@ -975,3 +975,11 @@ CREATE TABLE `drive_salary_retain`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
+-- ----------------------------
+-- 2020-03-17 更新
+-- ----------------------------
+ALTER TABLE `drive_work`
+DROP COLUMN `social_security_fee`,
+ADD COLUMN `full_work_fee`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_fee`;

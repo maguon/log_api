@@ -38992,6 +38992,9 @@
         "hotelFee": {
           "type": "integer"
         },
+        "fullWorkFee": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }
