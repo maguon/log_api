@@ -428,8 +428,9 @@ function createServer() {
     /**
      * DriveSalaryRetain Module
      */
-    server.get('/api/driveSalaryRetain' , driveSalaryRetain.queryDriveSalaryTaskRel);
-    server.post({path:'/api/user/:userId/driveSalaryRetain',contentType: 'application/json'},driveSalaryRetain.createDriveSalaryTaskRel);
+    server.get('/api/driveSalaryRetain' , driveSalaryRetain.queryDriveSalaryRetain);
+    server.post({path:'/api/user/:userId/driveSalaryRetain',contentType: 'application/json'},driveSalaryRetain.createDriveSalaryRetain);
+    server.put({path:'/api/user/:userId/driveSalaryRetain/:driveSalaryRetainId',contentType: 'application/json'} ,driveSalaryRetain.updateDriveSalaryRetain);
 
     /**
      * DriveSalaryTaskRel Module

@@ -53,7 +53,23 @@ function getDriveSalaryRetain(params,callback) {
     });
 }
 
+function updateDriveSalaryRetain(params,callback){
+    var query = " update drive_salary_retain set y_month = ? , drive_id = ? , damage_retain_fee = ? , damage_op_fee = ? , remark = ? where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.yearMonth;
+    paramsArray[i++] = params.driveId;
+    paramsArray[i++] = params.damageRetainFee;
+    paramsArray[i++] = params.damageOpFee;
+    paramsArray[i++] = params.remark;
+    paramsArray[i] = params.driveSalaryRetainId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDrivePlanSalary ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addDriveSalaryRetain : addDriveSalaryRetain,
-    getDriveSalaryRetain : getDriveSalaryRetain
+    getDriveSalaryRetain : getDriveSalaryRetain,
+    updateDriveSalaryRetain : updateDriveSalaryRetain
 }

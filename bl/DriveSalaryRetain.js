@@ -11,18 +11,18 @@ var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryTaskRel.js');
 
-function createDriveSalaryTaskRel(req,res,next){
+function createDriveSalaryRetain(req,res,next){
     var params = req.params ;
     //查询user_id
     Seq().seq(function(){
         var that = this;
         driveDAO.getDrive(params,function(error,result){
             if (error) {
-                logger.error(' createDriveSalaryTaskRel getDrive ' + error.message);
+                logger.error(' createDriveSalaryRetain getDrive ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' queryDrive ' + 'success');
-                logger.info(' createDriveSalaryTaskRel getDrive ' + 'success');
+                logger.info(' createDriveSalaryRetain getDrive ' + 'success');
                 userId = result[0].user_id;
                 that();
             }
@@ -33,10 +33,10 @@ function createDriveSalaryTaskRel(req,res,next){
         params.type = 1;
         driveSalaryRetainDAO.addDriveSalaryRetain(params,function(error,result){
             if (error) {
-                logger.error(' createDriveSalaryTaskRel addDriveSalaryRetain ' + error.message);
+                logger.error(' createDriveSalaryRetain addDriveSalaryRetain ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' createDriveSalaryTaskRel addDriveSalaryRetain ' + 'success');
+                logger.info(' createDriveSalaryRetain addDriveSalaryRetain ' + 'success');
                 resUtil.resetCreateRes(res,result,null);
                 return next();
             }
@@ -44,21 +44,35 @@ function createDriveSalaryTaskRel(req,res,next){
     })
 }
 
-function queryDriveSalaryTaskRel(req,res,next){
+function queryDriveSalaryRetain(req,res,next){
     var params = req.params ;
     driveSalaryRetainDAO.getDriveSalaryRetain(params,function(error,result){
         if (error) {
-            logger.error(' queryDriveSalaryTaskRel ' + error.message);
+            logger.error(' queryDriveSalaryRetain ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDriveSalaryTaskRel ' + 'success');
+            logger.info(' queryDriveSalaryRetain ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
     })
 }
 
+function updateDriveSalaryRetain(req,res,next){
+    var params = req.params;
+    driveSalaryRetainDAO.updateDriveSalaryRetain(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveSalaryRetain ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveSalaryRetain ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
 module.exports = {
-    createDriveSalaryTaskRel : createDriveSalaryTaskRel,
-    queryDriveSalaryTaskRel : queryDriveSalaryTaskRel
+    createDriveSalaryRetain : createDriveSalaryRetain,
+    queryDriveSalaryRetain : queryDriveSalaryRetain,
+    updateDriveSalaryRetain : updateDriveSalaryRetain
 }

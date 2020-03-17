@@ -10532,7 +10532,60 @@
         }
       }
     },
+    "/user/{userId}/driveSalaryRetain/{driveSalaryRetainId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveSalaryRetain info",
+        "description": "update driveSalaryRetain info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
 
+          },
+          {
+            "name": "driveSalaryRetainId",
+            "in": "path",
+            "description": "driveSalaryRetain id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSalary",
+            "in": "body",
+            "description": "driveSalary info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSalaryRetain"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalaryRetain id"
+          }
+        }
+      }
+    },
     "/driveSalaryTaskRel": {
       "get": {
         "tags": [
