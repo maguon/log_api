@@ -955,3 +955,23 @@ CREATE TABLE `drive_sundry_fee` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `drive_id` (`drive_id`,`y_month`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- 2020-03-17 更新
+-- ----------------------------
+DROP TABLE IF EXISTS `drive_salary_retain`;
+CREATE TABLE `drive_salary_retain`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `y_month` int(4) NOT NULL COMMENT '月份',
+  `user_id` int(10) NULL DEFAULT NULL COMMENT '用户ID',
+  `drive_id` int(10) NULL DEFAULT NULL COMMENT '司机ID',
+  `damage_retain_fee` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '质损暂扣',
+  `damage_op_fee` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '质损罚款',
+  `truck_retain_fee` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '交车暂扣',
+  `type` tinyint(1) NULL DEFAULT 0 COMMENT '扣款类型（1-质量，2-车管）',
+  `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
