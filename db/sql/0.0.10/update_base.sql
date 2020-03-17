@@ -975,8 +975,6 @@ CREATE TABLE `drive_salary_retain`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-
 -- ----------------------------
 -- 2020-03-17 更新
 -- ----------------------------

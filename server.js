@@ -30,6 +30,7 @@ var brand = require('./bl/Brand.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
 var driveSalary = require('./bl/DriveSalary.js');
+var driveSalaryRetain = require('./bl/DriveSalaryRetain.js');
 var driveSalaryTaskRel = require('./bl/DriveSalaryTaskRel.js');
 var driveSalaryDamageRel = require('./bl/DriveSalaryDamageRel.js');
 var driveSalaryAccidentRel = require('./bl/DriveSalaryAccidentRel.js');
@@ -423,6 +424,13 @@ function createServer() {
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId',contentType: 'application/json'} ,driveSalary.updateDrivePlanSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId/driveActualSalary',contentType: 'application/json'} ,driveSalary.updateDriveActualSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId/grantStatus/:grantStatus',contentType: 'application/json'} ,driveSalary.updateDriveSalaryStatus);
+
+    /**
+     * DriveSalaryRetain Module
+     */
+    server.get('/api/driveSalaryRetain' , driveSalaryRetain.queryDriveSalaryRetain);
+    server.post({path:'/api/user/:userId/driveSalaryRetain',contentType: 'application/json'},driveSalaryRetain.createDriveSalaryRetain);
+    server.put({path:'/api/user/:userId/driveSalaryRetain/:driveSalaryRetainId',contentType: 'application/json'} ,driveSalaryRetain.updateDriveSalaryRetain);
 
     /**
      * DriveSalaryTaskRel Module
