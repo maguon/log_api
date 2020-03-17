@@ -983,3 +983,6 @@ CREATE TABLE `drive_salary_retain`  (
 ALTER TABLE `drive_work`
 DROP COLUMN `social_security_fee`,
 ADD COLUMN `full_work_fee`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_fee`;
+
+ALTER TABLE `drive_work`
+ADD COLUMN `other_fee`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `full_work_fee`;
