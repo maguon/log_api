@@ -38145,6 +38145,21 @@
         "driveId": {
           "type": "integer"
         },
+        "truckId": {
+          "type": "integer"
+        },
+        "companyId": {
+          "type": "integer"
+        },
+        "userId": {
+          "type": "integer"
+        },
+        "loadDistance": {
+          "type": "integer"
+        },
+        "noLoadDistance": {
+          "type": "integer"
+        },
         "distanceSalary": {
           "type": "integer"
         },
@@ -38152,9 +38167,6 @@
           "type": "integer"
         },
         "enterFee": {
-          "type": "integer"
-        },
-        "planSalary": {
           "type": "integer"
         },
         "damageUnderFee": {
@@ -38169,7 +38181,52 @@
         "exceedOilFee": {
           "type": "integer"
         },
-        "refundFee": {
+        "damageWithhold": {
+          "type": "integer"
+        },
+        "safeForfeit": {
+          "type": "integer"
+        },
+        "breakWithhold": {
+          "type": "integer"
+        },
+        "personalTax": {
+          "type": "integer"
+        },
+        "hotelBonus": {
+          "type": "integer"
+        },
+        "fullWorkBonus": {
+          "type": "integer"
+        },
+        "otherBonus": {
+          "type": "integer"
+        },
+        "carOilFee": {
+          "type": "integer"
+        },
+        "truckParkingFee": {
+          "type": "integer"
+        },
+        "carParkingFee": {
+          "type": "integer"
+        },
+        "dpOtherFee": {
+          "type": "integer"
+        },
+        "cleanFee": {
+          "type": "integer"
+        },
+        "trailerFee": {
+          "type": "integer"
+        },
+        "carPickFee": {
+          "type": "integer"
+        },
+        "runFee": {
+          "type": "integer"
+        },
+        "leadFee": {
           "type": "integer"
         },
         "socialSecurityFee": {
@@ -38179,12 +38236,6 @@
           "type": "integer"
         },
         "loanFee": {
-          "type": "integer"
-        },
-        "withhold": {
-          "type": "integer"
-        },
-        "arrears": {
           "type": "integer"
         },
         "otherFee": {
