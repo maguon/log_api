@@ -30,7 +30,6 @@ function createDriveSalaryRetain(req,res,next){
     }).seq(function () {
         var that = this;
         params.userId = userId;
-        params.type = 1;
         driveSalaryRetainDAO.addDriveSalaryRetain(params,function(error,result){
             if (error) {
                 logger.error(' createDriveSalaryRetain addDriveSalaryRetain ' + error.message);
