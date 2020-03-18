@@ -24,14 +24,23 @@ function addDriveSalaryRetain(params,callback){
 }
 
 function getDriveSalaryRetain(params,callback) {
-    var query = " select dsr.*,di.drive_name,di.tel " +
+    var query = " select dsr.*,di.drive_name,di.tel,ci.company_name,di.company_id " +
         " from drive_salary_retain dsr " +
         " left join drive_info di on dsr.drive_id = di.id " +
+        " left join company_info ci on ci.id = di.company_id " +
         " where dsr.id is not null ";
     var paramsArray=[],i=0;
+    if(params.driveSalaryRetainId){
+        paramsArray[i++] = params.driveSalaryRetainId;
+        query = query + " and dsr.id = ? ";
+    }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
         query = query + " and dsr.drive_id = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and ci.company_id = ? ";
     }
     if(params.yearMonth){
         paramsArray[i++] = params.yearMonth;
