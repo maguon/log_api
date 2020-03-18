@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DriveSalaryDAO.js');
 function addDriveSalary(params,callback){
     var query = " insert into drive_salary ( " +
         " month_date_id, drive_id, truck_id，company_id, user_id, load_distance, no_load_distance, distance_salary, reverse_salary, enter_fee, " +
-        " damage_under_fee, accident_fee, peccancy_under_fee, exceed_oil_fee, damage_withhold，safe_forfeit，break_withhold，personal_tax，hotel_bonus，full_work_bonus，other_bonus， " +
+        " damage_under_fee, accident_fee, peccancy_under_fee, exceed_oil_fee, damage_retain_fee，damage_op_fee，truck_retain_fee，personal_tax，hotel_bonus，full_work_bonus，other_bonus， " +
         " car_oil_fee, truck_parking_fee, car_parking_fee, dp_other_fee, clean_fee, trailer_fee, car_pick_fee, run_fee, lead_fee, " +
         " social_security_fee, food_fee, loan_fee, other_fee, actual_salary, remark " +
         " ) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) " ;
@@ -29,9 +29,9 @@ function addDriveSalary(params,callback){
     paramsArray[i++]=params.peccancyUnderFee;
     paramsArray[i++]=params.exceedOilFee;
     // 质损暂扣款
-    paramsArray[i++]=params.damageWithhold;
-    paramsArray[i++]=params.safeForfeit;
-    paramsArray[i++]=params.breakWithhold;
+    paramsArray[i++]=params.damageRetainFee;
+    paramsArray[i++]=params.damageOpFee;
+    paramsArray[i++]=params.truckRetainFee;
     paramsArray[i++]=params.personalTax;
     paramsArray[i++]=params.hotelBonus;
     paramsArray[i++]=params.fullWorkBonus;
@@ -62,7 +62,7 @@ function addDriveSalary(params,callback){
 function getDriveSalary(params,callback) {
     var query = " select ds.id,ds.month_date_id,ds.truck_id,ds.company_id,ds.user_id,ds.load_distance,ds.no_load_distance," +
         " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
-        " ds.exceed_oil_fee,ds.damage_withhold,ds.safe_forfeit,ds.break_withhold,ds.personal_tax,ds.hotel_bonus,ds.full_work_bonus,ds.other_bonus," +
+        " ds.exceed_oil_fee,ds.damage_retain_fee,ds.damage_op_fee,ds.truck_retain_fee,ds.personal_tax,ds.hotel_bonus,ds.full_work_bonus,ds.other_bonus," +
         " ds.car_oil_fee,ds.truck_parking_fee,ds.car_parking_fee,ds.lead_fee,ds.run_fee,ds.car_pick_fee,ds.trailer_fee,ds.clean_fee,ds.dp_other_fee," +
         " ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status," +
         " dprtm.drive_id,dprtm.user_id,dprtm.drive_name,dprtm.mobile, " +
@@ -78,7 +78,7 @@ function getDriveSalary(params,callback) {
         // 外连
         " left join(select ds.id,ds.month_date_id,ds.drive_id,ds.truck_id,ds.company_id,ds.user_id,ds.load_distance,ds.no_load_distance," +
         "           ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
-        "           ds.exceed_oil_fee,ds.damage_withhold,ds.safe_forfeit,ds.break_withhold,ds.personal_tax,ds.hotel_bonus,ds.full_work_bonus,ds.other_bonus," +
+        "           ds.exceed_oil_fee,ds.damage_retain_fee,ds.damage_op_fee,ds.truck_retain_fee,ds.personal_tax,ds.hotel_bonus,ds.full_work_bonus,ds.other_bonus," +
         "           ds.car_oil_fee,ds.truck_parking_fee,ds.car_parking_fee,ds.lead_fee,ds.run_fee,ds.car_pick_fee,ds.trailer_fee,ds.clean_fee,ds.dp_other_fee," +
         "           ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status" +
         "           from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +

@@ -107,7 +107,7 @@ function getDriveSalaryCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' +"司机姓名" + ',' + "手机号"+ ','+"所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "品牌"+ ','+
         "里程工资" + ','+ "交车打车进门费" + ','+ "倒板工资" + ','+ "商品车质损承担"+ ','+ "货车事故承担"+ ','+
-        "违章扣款"+ ','+ "超量扣款" + ','+ "质损暂扣款" + ','+ "安全罚款" + ','+ "违章暂扣款" + ','+ "个税" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "其他补助" + ','+
+        "违章扣款"+ ','+ "超量扣款" + ','+ "质损暂扣款" + ','+ "质安罚款" + ','+ "交车暂扣款" + ','+ "个税" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "其他补助" + ','+
         "商品车加油费" + ','+ "货车停车费" + ','+ "商品车停车费" + ','+ "其它运送费用" + ','+ "洗车费" + ','+ "拖车费" + ','+ "提车费" + ','+ "地跑费" + ','+ "带路费" + ','+
         "社保缴费" + ','+"伙食费"+ ','+ "个人借款" + ','+ "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态";
     csvString = header + '\r\n'+csvString;
@@ -196,22 +196,22 @@ function getDriveSalaryCsv(req,res,next){
                     parkObj.exceedOilFee = rows[i].exceed_oil_fee;
                 }
                 // 质损暂扣款
-                if(rows[i].damage_withhold == null){
-                    parkObj.damageWithhold = "";
+                if(rows[i].damage_retain_fee == null){
+                    parkObj.damageRetainFee = "";
                 }else{
-                    parkObj.damageWithhold = rows[i].damage_withhold;
+                    parkObj.damageRetainFee = rows[i].damage_retain_fee;
                 }
-                // 安全罚款
-                if(rows[i].safe_forfeit == null){
-                    parkObj.safeForfeit = "";
+                // 质安罚款
+                if(rows[i].damage_op_fee == null){
+                    parkObj.damageOpFee = "";
                 }else{
-                    parkObj.safeForfeit = rows[i].safe_forfeit;
+                    parkObj.damageOpFee = rows[i].damage_op_fee;
                 }
-                // 违章暂扣款
-                if(rows[i].break_withhold == null){
-                    parkObj.breakWithhold = "";
+                // 交车暂扣
+                if(rows[i].truck_retain_fee == null){
+                    parkObj.truckRetainFee = "";
                 }else{
-                    parkObj.breakWithhold = rows[i].break_withhold;
+                    parkObj.truckRetainFee = rows[i].truck_retain_fee;
                 }
                 // 个税
                 if(rows[i].personal_tax == null){
@@ -339,7 +339,7 @@ function getDriveSalaryCsv(req,res,next){
                 csvString = csvString+parkObj.monthDateId+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.operateType+","+ parkObj.companyName+","+
                     parkObj.truckNum+","+parkObj.brandName+","+parkObj.distanceSalary+","+parkObj.enterFee+","+parkObj.reverseSalary+","+
                     parkObj.damageUnderFee+","+parkObj.accidentFee+","+parkObj.peccancyUnderFee+","+parkObj.exceedOilFee+","+
-                    parkObj.damageWithhold+","+parkObj.safeForfeit+","+parkObj.breakWithhold+","+parkObj.personalTax+","+
+                    parkObj.damageRetainFee+","+parkObj.damageOpFee+","+parkObj.truckRetainFee+","+parkObj.personalTax+","+
                     parkObj.hotelBonus+","+parkObj.fullWorkBonus+","+parkObj.otherBonus+","+parkObj.carOilFee+","+
                     parkObj.truckParkingFee+","+parkObj.carParkingFee+","+parkObj.dpOtherFee+","+parkObj.cleanFee+","+
                     parkObj.trailerFee+","+parkObj.carPickFee+","+parkObj.runFee+","+parkObj.leadFee+","+
