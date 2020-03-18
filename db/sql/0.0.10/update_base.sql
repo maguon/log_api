@@ -990,6 +990,7 @@ ADD COLUMN `other_bonus`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `
 -- ----------------------------
 ALTER TABLE `drive_salary`
 MODIFY COLUMN `other_fee` decimal(10,2) DEFAULT 0 COMMENT '其他扣款',
+DROP COLUMN `entrust_id`,
 DROP COLUMN `plan_salary`,
 DROP COLUMN `refund_fee`,
 DROP COLUMN `withhold`,
