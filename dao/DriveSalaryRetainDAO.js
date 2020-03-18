@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DriveSalaryRetainDAO.js');
 
 function addDriveSalaryRetain(params,callback){
     var query = " insert into drive_salary_retain (op_user_id,y_month,user_id,drive_id,damage_retain_fee,damage_op_fee,truck_retain_fee,type,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ?) ";
+        " values ( ? , ? , ? , ? , ? , ? , ? , ?, ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.opUserId;
     paramsArray[i++]=params.yearMonth;
