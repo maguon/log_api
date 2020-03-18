@@ -1013,3 +1013,9 @@ ADD COLUMN `trailer_fee` decimal(10,2) DEFAULT 0 COMMENT '拖车费' AFTER `clea
 ADD COLUMN `car_pick_fee` decimal(10,2) DEFAULT 0 COMMENT '提车费' AFTER `trailer_fee`,
 ADD COLUMN `run_fee` decimal(10,2) DEFAULT 0 COMMENT '地跑费' AFTER `car_pick_fee`,
 ADD COLUMN `lead_fee` decimal(10,2) DEFAULT 0 COMMENT '带路费' AFTER `run_fee`;
+
+-- ----------------------------
+-- 2020-03-18 更新
+-- ----------------------------
+ALTER TABLE `drive_salary_retain`
+ADD COLUMN `op_user_id` int(10) NULL DEFAULT NULL COMMENT '处理用户ID' AFTER `user_id`;
