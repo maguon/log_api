@@ -64,7 +64,7 @@ function getDriveSalary(params,callback) {
         " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
         " ds.exceed_oil_fee,ds.damage_withhold,ds.safe_forfeit,ds.break_withhold,ds.personal_tax,ds.hotel_bonus,ds.full_work_bonus,ds.other_bonus," +
         " ds.car_oil_fee,ds.truck_parking_fee,ds.car_parking_fee,ds.lead_fee,ds.run_fee,ds.car_pick_fee,ds.trailer_fee,ds.clean_fee,ds.dp_other_fee," +
-        " ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status" +
+        " ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status," +
         " dprtm.drive_id,dprtm.user_id,dprtm.drive_name,dprtm.mobile, " +
         " t.truck_num,t.truck_type,tb.brand_name,h.number,t.operate_type,c.company_name, " +
         " drtm.distance_salary as plan_distance_salary,drtm.reverse_salary as plan_reverse_salary,dprm.enter_fee as plan_enter_fee " +
