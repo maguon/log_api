@@ -146,9 +146,9 @@ function uploadDriveWorkFile(req,res,next){
                             mobile : objArray[i].电话,
                             yMonth : objArray[i].月份,
                             workCount : objArray[i].出勤天数,
-                            hotelFee : objArray[i].出差补助,
-                            fullWorkFee : objArray[i].满勤补助,
-                            otherFee : objArray[i].其他补助,
+                            hotelBonus : objArray[i].出差补助,
+                            fullWorkBonus : objArray[i].满勤补助,
+                            otherBonus : objArray[i].其他补助,
                             row : i+1
                         }
                         driveWorkDAO.addDriveWork(subParams,function(err,result){
@@ -173,9 +173,9 @@ function uploadDriveWorkFile(req,res,next){
                             mobile : objArray[i].电话,
                             yMonth : objArray[i].月份,
                             workCount : objArray[i].出勤天数,
-                            hotelFee : objArray[i].出差补助,
-                            fullWorkFee : objArray[i].满勤补助,
-                            otherFee : objArray[i].其他补助,
+                            hotelBonus : objArray[i].出差补助,
+                            fullWorkBonus : objArray[i].满勤补助,
+                            otherBonus : objArray[i].其他补助,
                             row : i+1
                         }
                         driveWorkDAO.updateDriveWork(subParams,function(err,result){
@@ -260,20 +260,20 @@ function getDriveWorkCsv(req,res,next){
                 }else{
                     parkObj.workCount = rows[i].work_count;
                 }
-                if(rows[i].hotel_fee == null){
-                    parkObj.hotelFee = "";
+                if(rows[i].hotel_bonus == null){
+                    parkObj.hotelBonus = "";
                 }else{
-                    parkObj.hotelFee = rows[i].hotel_fee;
+                    parkObj.hotelBonus = rows[i].hotel_bonus;
                 }
-                if(rows[i].full_work_fee == null){
-                    parkObj.fullWorkFee = "";
+                if(rows[i].full_work_bonus == null){
+                    parkObj.fullWorkBonus = "";
                 }else{
-                    parkObj.fullWorkFee = rows[i].full_work_fee;
+                    parkObj.fullWorkBonus = rows[i].full_work_bonus;
                 }
-                if(rows[i].other_fee == null){
-                    parkObj.otherFee = "";
+                if(rows[i].other_bonus == null){
+                    parkObj.otherBonus = "";
                 }else{
-                    parkObj.otherFee = rows[i].other_fee;
+                    parkObj.otherBonus = rows[i].other_bonus;
                 }
                 if(rows[i].remark == null){
                     parkObj.remark = "";
@@ -281,7 +281,7 @@ function getDriveWorkCsv(req,res,next){
                     parkObj.remark = rows[i].remark;
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.yMonth+","+parkObj.workCount+","+
-                    parkObj.hotelFee+ "," + parkObj.fullWorkFee+ "," + parkObj.otherFee + "," + parkObj.remark+'\r\n';
+                    parkObj.hotelBonus+ "," + parkObj.fullWorkBonus+ "," + parkObj.otherBonus + "," + parkObj.remark+'\r\n';
 
             }
             var csvBuffer = new Buffer(csvString,'utf8');
@@ -296,11 +296,10 @@ function getDriveWorkCsv(req,res,next){
     })
 }
 
-
 module.exports = {
     createDriveWork : createDriveWork,
     uploadDriveWorkFile : uploadDriveWorkFile,
     queryDriveWork : queryDriveWork,
     updateDriveWork : updateDriveWork,
     getDriveWorkCsv : getDriveWorkCsv
-}
+};

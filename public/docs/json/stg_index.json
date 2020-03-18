@@ -38679,13 +38679,13 @@
         "workCount": {
           "type": "integer"
         },
-        "hotelFee": {
+        "hotelBonus": {
           "type": "integer"
         },
-        "fullWorkFee": {
+        "fullWorkBonus": {
           "type": "integer"
         },
-        "otherFee": {
+        "otherBonus": {
           "type": "integer"
         },
         "remark": {

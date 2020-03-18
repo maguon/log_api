@@ -980,7 +980,30 @@ CREATE TABLE `drive_salary_retain`  (
 -- ----------------------------
 ALTER TABLE `drive_work`
 DROP COLUMN `social_security_fee`,
-ADD COLUMN `full_work_fee`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_fee`;
+DROP COLUMN `hotel_fee`,
+ADD COLUMN `hotel_bonus`  decimal(10,2) DEFAULT 0 COMMENT '出差补助' AFTER `work_count`,
+ADD COLUMN `full_work_bonus`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_bonus`,
+ADD COLUMN `other_bonus`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `full_work_bonus`;
 
-ALTER TABLE `drive_work`
-ADD COLUMN `other_fee`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `full_work_fee`;
+---- ----------------------------
+---- 2020-03-18 更新
+---- ----------------------------
+--ALTER TABLE `drive_salary`
+--MODIFY COLUMN `other_fee` decimal(10,2) DEFAULT 0 COMMENT '其他扣款',
+--
+--DROP COLUMN `plan_salary`,
+--DROP COLUMN `refund_fee`,
+--DROP COLUMN `withhold`,
+--DROP COLUMN `arrears`,
+--
+--ADD COLUMN `company_id` int(10) DEFAULT '0' COMMENT '所属公司ID' AFTER `entrust_id`,
+--ADD COLUMN `user_id` int(10) DEFAULT '0' COMMENT '用户ID' AFTER `company_id`,
+--ADD COLUMN `damage_withhold` decimal(10,2) DEFAULT 0 COMMENT '质损暂扣款' AFTER `exceed_oil_fee`,
+--ADD COLUMN `safe_forfeit` decimal(10,2) DEFAULT 0 COMMENT '安全罚款' AFTER `damage_withhold`,
+--ADD COLUMN `break_withhold` decimal(10,2) DEFAULT 0 COMMENT '违章暂扣款' AFTER `safe_forfeit`,
+--
+--ADD COLUMN `hotel_fee` decimal(10,2) DEFAULT 0 COMMENT '出差补助' AFTER `break_withhold`,
+--ADD COLUMN `personal_tax` decimal(10,2) DEFAULT 0 COMMENT '个税' AFTER `hotel_fee`,
+--
+--
+--ADD COLUMN `full_work_fee`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_fee`;
