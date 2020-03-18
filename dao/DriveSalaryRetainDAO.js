@@ -51,7 +51,7 @@ function getDriveSalaryRetain(params,callback) {
         paramsArray[i++] = params.type;
         query = query + " and dsr.type = ? ";
     }
-    query = query + ' group by dsr.id ';
+    query = query + ' order by dsr.id desc';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
