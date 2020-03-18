@@ -38279,10 +38279,6 @@
     "driveActualSalary": {
       "type": "object",
       "properties": {
-
-        "refundFee": {
-          "type": "integer"
-        },
         "socialSecurityFee": {
           "type": "integer"
         },
@@ -38290,12 +38286,6 @@
           "type": "integer"
         },
         "loanFee": {
-          "type": "integer"
-        },
-        "withhold": {
-          "type": "integer"
-        },
-        "arrears": {
           "type": "integer"
         },
         "otherFee": {
