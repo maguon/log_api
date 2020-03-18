@@ -38275,6 +38275,9 @@
         },
         "type": {
           "type": "integer"
+        },
+        "remark": {
+          "type": "string"
         }
       },
       "xml": {
