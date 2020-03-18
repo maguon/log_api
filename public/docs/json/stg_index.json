@@ -38255,7 +38255,9 @@
     "driveSalaryRetain": {
       "type": "object",
       "properties": {
-
+        "opUserId": {
+          "type": "integer"
+        },
         "yearMonth": {
           "type": "integer"
         },
@@ -38268,8 +38270,11 @@
         "damageOpFee": {
           "type": "integer"
         },
-        "remark": {
-          "type": "string"
+        "truckRetainFee": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "integer"
         }
       },
       "xml": {

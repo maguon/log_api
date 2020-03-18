@@ -7,9 +7,10 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryRetainDAO.js');
 
 function addDriveSalaryRetain(params,callback){
-    var query = " insert into drive_salary_retain (y_month,user_id,drive_id,damage_retain_fee,damage_op_fee,type,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ?) ";
+    var query = " insert into drive_salary_retain (op_user_id,y_month,user_id,drive_id,damage_retain_fee,damage_op_fee,type,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ?) ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.opUserId;
     paramsArray[i++]=params.yearMonth;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.driveId;
@@ -63,12 +64,11 @@ function getDriveSalaryRetain(params,callback) {
 }
 
 function updateDriveSalaryRetain(params,callback){
-    var query = " update drive_salary_retain set y_month = ? , drive_id = ? , damage_retain_fee = ? , damage_op_fee = ? , remark = ? where id = ? ";
+    var query = " update drive_salary_retain set damage_retain_fee = ? , damage_op_fee = ? ,truck_retain_fee = ? , remark = ? where id = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.yearMonth;
-    paramsArray[i++] = params.driveId;
     paramsArray[i++] = params.damageRetainFee;
     paramsArray[i++] = params.damageOpFee;
+    paramsArray[i++] = params.truckRetainFee;
     paramsArray[i++] = params.remark;
     paramsArray[i] = params.driveSalaryRetainId;
     db.dbQuery(query,paramsArray,function(error,rows){
