@@ -29,7 +29,7 @@ function getDriveSalaryRetain(params,callback) {
     var query = " select dsr.*,di.drive_name,ui.mobile,ci.company_name,di.company_id " +
         " from drive_salary_retain dsr " +
         " left join drive_info di on dsr.drive_id = di.id " +
-        " left join user_info ui on ui.id = di.user_id " +
+        " left join user_info ui on ui.uid = di.user_id " +
         " left join company_info ci on ci.id = di.company_id " +
         " where dsr.id is not null ";
     var paramsArray=[],i=0;
