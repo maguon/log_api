@@ -38255,9 +38255,6 @@
     "driveSalaryRetain": {
       "type": "object",
       "properties": {
-        "opUserId": {
-          "type": "integer"
-        },
         "yearMonth": {
           "type": "integer"
         },

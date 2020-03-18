@@ -13,6 +13,7 @@ var logger = serverLogger.createLogger('DriveSalaryTaskRel.js');
 
 function createDriveSalaryRetain(req,res,next){
     var params = req.params ;
+    params.opUserId = params.userId;
     //查询user_id
     Seq().seq(function(){
         var that = this;
