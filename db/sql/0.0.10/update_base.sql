@@ -985,25 +985,30 @@ ADD COLUMN `hotel_bonus`  decimal(10,2) DEFAULT 0 COMMENT '出差补助' AFTER `
 ADD COLUMN `full_work_bonus`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_bonus`,
 ADD COLUMN `other_bonus`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `full_work_bonus`;
 
----- ----------------------------
----- 2020-03-18 更新
----- ----------------------------
---ALTER TABLE `drive_salary`
---MODIFY COLUMN `other_fee` decimal(10,2) DEFAULT 0 COMMENT '其他扣款',
---
---DROP COLUMN `plan_salary`,
---DROP COLUMN `refund_fee`,
---DROP COLUMN `withhold`,
---DROP COLUMN `arrears`,
---
---ADD COLUMN `company_id` int(10) DEFAULT '0' COMMENT '所属公司ID' AFTER `entrust_id`,
---ADD COLUMN `user_id` int(10) DEFAULT '0' COMMENT '用户ID' AFTER `company_id`,
---ADD COLUMN `damage_withhold` decimal(10,2) DEFAULT 0 COMMENT '质损暂扣款' AFTER `exceed_oil_fee`,
---ADD COLUMN `safe_forfeit` decimal(10,2) DEFAULT 0 COMMENT '安全罚款' AFTER `damage_withhold`,
---ADD COLUMN `break_withhold` decimal(10,2) DEFAULT 0 COMMENT '违章暂扣款' AFTER `safe_forfeit`,
---
---ADD COLUMN `hotel_fee` decimal(10,2) DEFAULT 0 COMMENT '出差补助' AFTER `break_withhold`,
---ADD COLUMN `personal_tax` decimal(10,2) DEFAULT 0 COMMENT '个税' AFTER `hotel_fee`,
---
---
---ADD COLUMN `full_work_fee`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_fee`;
+-- ----------------------------
+-- 2020-03-18 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+MODIFY COLUMN `other_fee` decimal(10,2) DEFAULT 0 COMMENT '其他扣款',
+DROP COLUMN `plan_salary`,
+DROP COLUMN `refund_fee`,
+DROP COLUMN `withhold`,
+DROP COLUMN `arrears`,
+ADD COLUMN `company_id` int(10) DEFAULT '0' COMMENT '所属公司ID' AFTER `entrust_id`,
+ADD COLUMN `user_id` int(10) DEFAULT '0' COMMENT '用户ID' AFTER `company_id`,
+ADD COLUMN `damage_withhold` decimal(10,2) DEFAULT 0 COMMENT '质损暂扣款' AFTER `exceed_oil_fee`,
+ADD COLUMN `safe_forfeit` decimal(10,2) DEFAULT 0 COMMENT '安全罚款' AFTER `damage_withhold`,
+ADD COLUMN `break_withhold` decimal(10,2) DEFAULT 0 COMMENT '违章暂扣款' AFTER `safe_forfeit`,
+ADD COLUMN `personal_tax` decimal(10,2) DEFAULT 0 COMMENT '个税' AFTER `break_withhold`,
+ADD COLUMN `hotel_bonus` decimal(10,2) DEFAULT 0 COMMENT '出差补助' AFTER `personal_tax`,
+ADD COLUMN `full_work_bonus`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_bonus`,
+ADD COLUMN `other_bonus` decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `full_work_bonus`,
+ADD COLUMN `car_oil_fee` decimal(10,2) DEFAULT 0 COMMENT '商品车加油费' AFTER `other_bonus`,
+ADD COLUMN `truck_parking_fee` decimal(10,2) DEFAULT 0 COMMENT '货车停车费' AFTER `car_oil_fee`,
+ADD COLUMN `car_parking_fee` decimal(10,2) DEFAULT 0 COMMENT '商品车停车费' AFTER `truck_parking_fee`,
+ADD COLUMN `dp_other_fee` decimal(10,2) DEFAULT 0 COMMENT '其它运送费用' AFTER `car_parking_fee`,
+ADD COLUMN `clean_fee` decimal(10,2) DEFAULT 0 COMMENT '洗车费' AFTER `dp_other_fee`,
+ADD COLUMN `trailer_fee` decimal(10,2) DEFAULT 0 COMMENT '拖车费' AFTER `clean_fee`,
+ADD COLUMN `car_pick_fee` decimal(10,2) DEFAULT 0 COMMENT '提车费' AFTER `trailer_fee`,
+ADD COLUMN `run_fee` decimal(10,2) DEFAULT 0 COMMENT '地跑费' AFTER `car_pick_fee`,
+ADD COLUMN `lead_fee` decimal(10,2) DEFAULT 0 COMMENT '带路费' AFTER `run_fee`;
