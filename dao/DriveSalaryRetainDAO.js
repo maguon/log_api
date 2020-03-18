@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveSalaryRetainDAO.js');
 
 function addDriveSalaryRetain(params,callback){
-    var query = " insert into drive_salary_retain (op_user_id,y_month,user_id,drive_id,damage_retain_fee,damage_op_fee,type,remark) " +
+    var query = " insert into drive_salary_retain (op_user_id,y_month,user_id,drive_id,damage_retain_fee,damage_op_fee,truck_retain_fee,type,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ?) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.opUserId;
@@ -16,6 +16,7 @@ function addDriveSalaryRetain(params,callback){
     paramsArray[i++]=params.driveId;
     paramsArray[i++]=params.damageRetainFee;
     paramsArray[i++]=params.damageOpFee;
+    paramsArray[i++]=params.truckRetainFee;
     paramsArray[i++]=params.type;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
