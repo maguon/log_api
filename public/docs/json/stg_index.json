@@ -38181,13 +38181,13 @@
         "exceedOilFee": {
           "type": "integer"
         },
-        "damageWithhold": {
+        "damageRetainFee": {
           "type": "integer"
         },
-        "safeForfeit": {
+        "damageOpFee": {
           "type": "integer"
         },
-        "breakWithhold": {
+        "truckRetainFee": {
           "type": "integer"
         },
         "personalTax": {
