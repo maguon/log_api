@@ -14540,6 +14540,307 @@
         }
       }
     },
+    "/driveSundryFee": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveSundryFee list",
+        "description": "query driveSundryFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "driveSundryFeeId",
+            "in": "query",
+            "description": "driveSundryFee id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSundryFee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/driveSundryFee.csv": {
+      "get": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "query driveSundryFee csv",
+        "description": "query driveSundryFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "driveId",
+            "in": "query",
+            "description": "drive id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth id",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/driveSundryFee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSundryFee": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user create driveSundryFee",
+        "description": "user create driveSundryFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveSundryFee",
+            "in": "body",
+            "description": "driveSundryFee info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSundryFee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSundryFee/{driveSundryFeeId}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveSundryFee info",
+        "description": "update driveSundryFee info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSundryFeeId",
+            "in": "path",
+            "description": "driveSundryFee id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "driveSundryFee",
+            "in": "body",
+            "description": "driveSundryFee info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveSundryFee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSundryFeeFile": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user upload driveSundryFeeFile ",
+        "description": "user upload driveSundryFeeFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/driveSundryOtherFeeFile": {
+      "post": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user upload driveSundryOtherFeeFile ",
+        "description": "user upload driveSundryOtherFeeFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSundryFee id"
+          }
+        }
+      }
+    },
     "/driveSocialSecurity": {
       "get": {
         "tags": [
@@ -16864,6 +17165,111 @@
         }
       }
     },
+    "/entrustPrice": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query  entrustPrice list",
+        "description": "query entrustPrice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrustPrice"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
     "/entrustCarCount": {
       "get": {
         "tags": [
@@ -17155,6 +17561,106 @@
               "type": "object",
               "items": {
                 "$ref": "#/definitions/entrustCar"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid car id"
+          }
+        }
+      }
+    },
+    "/entrustPrice.csv": {
+      "get": {
+        "tags": [
+          "entrust"
+        ],
+        "summary": "query  entrustPrice csv",
+        "description": "query entrustPriceCsv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entrustId",
+            "in": "query",
+            "description": "entrust id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "orderStart",
+            "in": "query",
+            "description": "order start",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "orderEnd",
+            "in": "query",
+            "description": "order end",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "makeId",
+            "in": "query",
+            "description": "make id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeStartId",
+            "in": "query",
+            "description": "routeStart id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "addrId",
+            "in": "query",
+            "description": "addr id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "routeEndId",
+            "in": "query",
+            "description": "routeEnd id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "receiveId",
+            "in": "query",
+            "description": "receive id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "vin",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/entrustPrice"
               }
             }
           },
@@ -21576,6 +22082,13 @@
             "required": true,
             "type": "integer"
 
+          },
+          {
+            "name": "modelStatus",
+            "in": "query",
+            "description": "model status",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -38742,6 +39255,35 @@
         "name": "driveWork"
       }
     },
+    "driveSundryFee": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer"
+        },
+        "driveId": {
+          "type": "integer"
+        },
+        "yMonth": {
+          "type": "integer"
+        },
+        "personalLoan": {
+          "type": "integer"
+        },
+        "socialFee": {
+          "type": "integer"
+        },
+        "mealsFee": {
+          "type": "integer"
+        },
+        "otherFee": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSundryFee"
+      }
+    },
     "driveSocialSecurity": {
       "type": "object",
       "properties": {
@@ -39196,6 +39738,30 @@
       },
       "xml": {
         "name": "entrustCar"
+      }
+    },
+    "entrustPrice": {
+      "type": "object",
+      "properties": {
+
+        "vin": {
+          "type": "string"
+        },
+        "makeId": {
+          "type": "integer"
+        },
+        "routeStart": {
+          "type": "string"
+        },
+        "baseAddrId": {
+          "type": "integer"
+        },
+        "entrustId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "entrustPrice"
       }
     },
     "carSort": {
@@ -40143,6 +40709,9 @@
           "type": "string"
         },
         "bankName": {
+          "type": "string"
+        },
+        "bankId": {
           "type": "string"
         },
         "cityId": {
