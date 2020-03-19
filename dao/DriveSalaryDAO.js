@@ -197,30 +197,6 @@ function getDriveSalaryBase(params,callback) {
     });
 }
 
-function getDriveSalaryYmonth(params,callback) {
-    var query = " select ds.* from drive_salary ds " +
-        " where ds.id is not null ";
-    var paramsArray=[],i=0;
-    if(params.driveId){
-        paramsArray[i++] = params.driveId;
-        query = query + " and ds.drive_id = ? ";
-    }
-    if(params.yMonth){
-        paramsArray[i++] = params.yMonth;
-        query = query + " and ds.month_date_id = ? ";
-    }
-    query = query + ' order by ds.id desc ';
-    if (params.start && params.size) {
-        paramsArray[i++] = parseInt(params.start);
-        paramsArray[i++] = parseInt(params.size);
-        query += " limit ? , ? "
-    }
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDriveSalaryYmonth ');
-        return callback(error,rows);
-    });
-}
-
 function updateDrivePlanSalary(params,callback){
     var query = " update drive_salary set load_distance = ? , no_load_distance = ?  where id = ? ";
     var paramsArray=[],i=0;
@@ -294,7 +270,6 @@ module.exports ={
     addDriveSalary : addDriveSalary,
     getDriveSalary : getDriveSalary,
     getDriveSalaryBase : getDriveSalaryBase,
-    getDriveSalaryYmonth : getDriveSalaryYmonth,
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
     updateDriveSalaryStatus : updateDriveSalaryStatus,

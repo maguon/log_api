@@ -120,8 +120,7 @@ function updateDriveSalaryPersonalTaxFile(req,res,next){
                 var that = this;
                 var subParams ={
                     driveName : objArray[i].司机姓名,
-                    mobile : objArray[i].电话,
-                    row : i+1,
+                    mobile : objArray[i].电话
                 }
                 driveDAO.getDrive(subParams,function(error,rows){
                     if (error) {
@@ -137,53 +136,28 @@ function updateDriveSalaryPersonalTaxFile(req,res,next){
                     }
                 })
             }).seq(function(){
-                var that = this;
-                var subParams ={
-                    driveId : parkObj.driveId,
-                    yMonth : objArray[i].月份,
-                    row : i+1,
-                }
-                driveSalaryDAO.getDriveSalaryYmonth(subParams,function(error,rows){
-                    if (error) {
-                        logger.error(' updateDriveSalaryPersonalTaxFile getDriveSalary ' + error.message);
-                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                    } else{
-                        if(rows&&rows.length==1){
-                            driveFlag = true;
-                        }else{
-                            driveFlag = false;
-                        }
-                        that();
-                    }
-                })
-            }).seq(function(){
                 if(parkObj.driveId>0){
-                    if(driveFlag){
-                        var subParams ={
-                            driveId : parkObj.driveId,
-                            yMonth : objArray[i].月份,
-                            personalTax : objArray[i].个人所得税,
-                            row : i+1
-                        }
-                        driveSalaryDAO.updateDriveSalaryPersonalTax(subParams,function(err,result){
-                            if (err) {
-                                logger.error(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + err.message);
-                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-                                that(null,i);
-                            } else {
-                                if(result && result.affectedRows > 0){
-                                    successedInsert = successedInsert+result.affectedRows;
-                                    logger.info(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + 'success');
-                                }else{
-                                    logger.warn(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + 'failed');
-                                }
-                                that(null,i);
-                            }
-                        })
-                    }else{
-                        logger.warn(' updateDriveSalaryPersonalTaxFile updateDriveSalaryPersonalTax ' + 'failed');
-                        that(null,i);
+                    var subParams ={
+                        driveId : parkObj.driveId,
+                        yMonth : objArray[i].月份,
+                        personalTax : objArray[i].个人所得税,
+                        row : i+1
                     }
+                    driveSalaryDAO.updateDriveSalaryPersonalTax(subParams,function(err,result){
+                        if (err) {
+                            logger.error(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + err.message);
+                            //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                            that(null,i);
+                        } else {
+                            if(result && result.affectedRows > 0){
+                                successedInsert = successedInsert+result.affectedRows;
+                                logger.info(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + 'success');
+                            }else{
+                                logger.warn(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + 'failed');
+                            }
+                            that(null,i);
+                        }
+                    })
                 }else{
                     that(null,i);
                 }

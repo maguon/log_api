@@ -1107,7 +1107,15 @@ function createServer() {
     server.post({path:'/api/user/:userId/app',contentType: 'application/json'},app.createAppVersion);
     server.put({path:'/api/user/:userId/app/:appId',contentType: 'application/json'} ,app.updateAppVersion);
 
-
+    server.get('/api/appAbout',function(req,res,next){
+        res.send(200,{title:"鸿溧科技（大连）有限公司",content:"公司以数据为核心，以服务为导向，针对目前整车物流的特殊需求，解决整车物流的痛点问题，打造整车物流行业标准.\n" +
+                "\n" +
+                "使整车物流朝着规范化、专业化、协同化、网络化的方向发展，推动整车物流的互联互通和转型升级，成为中国领先的整车物流平台。",
+            contact:"辽宁省大连市开发区凯伦国际B座13楼（开发区快轨站南行200米）\n" +
+                "手机: 18841133050\n" +
+                "Email: info@myxxjs.com"
+        })
+    });
     server.on('NotFound', function (req, res, next) {
         logger.warn(req.url + " not found");
         res.send(404,{success:false,msg:" service not found !"});
