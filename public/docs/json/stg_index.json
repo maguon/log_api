@@ -38926,6 +38926,23 @@
         "name": "driveActualSalary"
       }
     },
+    "drivePersonalTax": {
+      "type": "object",
+      "properties": {
+        "driveId": {
+          "type": "integer"
+        },
+        "yMonth": {
+          "type": "integer"
+        },
+        "personalTax": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "drivePersonalTax"
+      }
+    },
     "driveSalaryTaskRelAll": {
       "type": "object",
       "properties": {
