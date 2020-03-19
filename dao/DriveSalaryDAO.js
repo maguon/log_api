@@ -197,6 +197,30 @@ function getDriveSalaryBase(params,callback) {
     });
 }
 
+function getDriveSalaryYmonth(params,callback) {
+    var query = " select ds.* from drive_salary ds " +
+        " where ds.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and ds.drive_id = ? ";
+    }
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and ds.month_date_id = ? ";
+    }
+    query = query + ' order by ds.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveSalaryYmonth ');
+        return callback(error,rows);
+    });
+}
+
 function updateDrivePlanSalary(params,callback){
     var query = " update drive_salary set load_distance = ? , no_load_distance = ?  where id = ? ";
     var paramsArray=[],i=0;
@@ -237,12 +261,42 @@ function updateDriveSalaryStatus(params,callback){
     });
 }
 
+function updateDriveSalaryPersonalTax(params,callback){
+    var query = " update drive_salary set personal_tax = ? , " +
+        "actual_salary = IFNULL(distance_salary + reverse_salary + enter_fee " +
+        " - damage_under_fee - accident_fee - peccancy_under_fee - exceed_oil_fee " +
+        " + full_work_bonus + other_bonus " +
+        " - hotel_bonus - social_security_fee - food_fee - loan_fee " +
+        " - other_fee - damage_retain_fee - damage_op_fee - truck_retain_fee " +
+        " + car_oil_fee + truck_parking_fee + car_parking_fee + dp_other_fee " +
+        " + clean_fee  + trailer_fee + run_fee + lead_fee + car_pick_fee " +
+        " - personal_tax,0) " +
+        " where id is not null ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.personalTax;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drive_id = ? ";
+    }
+    if(params.yMonth){
+        paramsArray[i] = params.yMonth;
+        query = query + " and month_date_id = ? ";
+    }
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveSalaryPersonalTax ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDriveSalary : addDriveSalary,
     getDriveSalary : getDriveSalary,
     getDriveSalaryBase : getDriveSalaryBase,
+    getDriveSalaryYmonth : getDriveSalaryYmonth,
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
-    updateDriveSalaryStatus : updateDriveSalaryStatus
+    updateDriveSalaryStatus : updateDriveSalaryStatus,
+    updateDriveSalaryPersonalTax : updateDriveSalaryPersonalTax
 };

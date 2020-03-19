@@ -8,11 +8,14 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var driveSalaryDAO = require('../dao/DriveSalaryDAO.js');
+var driveDAO = require('../dao/DriveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
 var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DriveSalary.js');
+var csv=require('csvtojson');
+var fs = require('fs');
 
 function createDriveSalary(req,res,next){
     var params = req.params ;
@@ -100,6 +103,100 @@ function updateDriveSalaryStatus(req,res,next){
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
+    })
+}
+
+function updateDriveSalaryPersonalTaxFile(req,res,next){
+    var params = req.params;
+    var driveFlag  = true;
+    var parkObj = {};
+    var successedInsert = 0;
+    var failedCase = 0;
+    var file = req.files.file;
+    csv().fromFile(file.path).then(function(objArray) {
+        Seq(objArray).seqEach(function(rowObj,i){
+            var that = this;
+            Seq().seq(function(){
+                var that = this;
+                var subParams ={
+                    driveName : objArray[i].司机姓名,
+                    mobile : objArray[i].电话,
+                    row : i+1,
+                }
+                driveDAO.getDrive(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' updateDriveSalaryPersonalTaxFile getDrive ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1) {
+                            parkObj.driveId = rows[0].id;
+                        }else{
+                            parkObj.driveId = 0;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                var that = this;
+                var subParams ={
+                    driveId : parkObj.driveId,
+                    yMonth : objArray[i].月份,
+                    row : i+1,
+                }
+                driveSalaryDAO.getDriveSalaryYmonth(subParams,function(error,rows){
+                    if (error) {
+                        logger.error(' updateDriveSalaryPersonalTaxFile getDriveSalary ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length==1){
+                            driveFlag = true;
+                        }else{
+                            driveFlag = false;
+                        }
+                        that();
+                    }
+                })
+            }).seq(function(){
+                if(parkObj.driveId>0){
+                    if(driveFlag){
+                        var subParams ={
+                            driveId : parkObj.driveId,
+                            yMonth : objArray[i].月份,
+                            personalTax : objArray[i].个人所得税,
+                            row : i+1
+                        }
+                        driveSalaryDAO.updateDriveSalaryPersonalTax(subParams,function(err,result){
+                            if (err) {
+                                logger.error(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + err.message);
+                                //throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                                that(null,i);
+                            } else {
+                                if(result && result.affectedRows > 0){
+                                    successedInsert = successedInsert+result.affectedRows;
+                                    logger.info(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + 'success');
+                                }else{
+                                    logger.warn(' updateDriveSalaryPersonalTaxFile updateDriveWork ' + 'failed');
+                                }
+                                that(null,i);
+                            }
+                        })
+                    }else{
+                        logger.warn(' updateDriveSalaryPersonalTaxFile updateDriveSalaryPersonalTax ' + 'failed');
+                        that(null,i);
+                    }
+                }else{
+                    that(null,i);
+                }
+
+            })
+
+        }).seq(function(){
+            fs.unlink(file.path, function() {});
+            failedCase=objArray.length-successedInsert;
+            logger.info(' updateDriveSalaryPersonalTaxFile uploadDriveWorkFile ' + 'success');
+            resUtil.resetQueryRes(res, {successedInsert:successedInsert,failedCase:failedCase},null);
+            return next();
+        })
     })
 }
 
@@ -365,5 +462,6 @@ module.exports = {
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
     updateDriveSalaryStatus : updateDriveSalaryStatus,
+    updateDriveSalaryPersonalTaxFile : updateDriveSalaryPersonalTaxFile,
     getDriveSalaryCsv : getDriveSalaryCsv
 };
