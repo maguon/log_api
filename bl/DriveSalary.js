@@ -174,6 +174,20 @@ function updateDriveSalaryPersonalTaxFile(req,res,next){
     })
 }
 
+function updateDrivePersonalTax(req,res,next){
+    var params = req.params;
+    driveSalaryDAO.updateDriveSalaryPersonalTax(params,function(error,result){
+        if (error) {
+            logger.error(' updateDrivePersonalTax ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDrivePersonalTax ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function getDriveSalaryCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' +"司机姓名" + ',' + "手机号"+ ','+"所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "品牌"+ ','+
@@ -436,6 +450,7 @@ module.exports = {
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
     updateDriveSalaryStatus : updateDriveSalaryStatus,
+    updateDrivePersonalTax : updateDrivePersonalTax,
     updateDriveSalaryPersonalTaxFile : updateDriveSalaryPersonalTaxFile,
     getDriveSalaryCsv : getDriveSalaryCsv
 };

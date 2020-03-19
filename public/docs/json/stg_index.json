@@ -10422,6 +10422,52 @@
         }
       }
     },
+    "/user/{userId}/drivePersonalTax": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update driveSalary info",
+        "description": "update driveSalary info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "drivePersonalTax",
+            "in": "body",
+            "description": "drivePersonalTax info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/drivePersonalTax"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid driveSalary id"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSalaryPersonalTaxFile": {
       "post": {
         "tags": [
@@ -10709,6 +10755,23 @@
             "description": "Invalid token value or invalid driveSalaryTaskRel id"
           }
         }
+      }
+    },
+    "drivePersonalTax": {
+      "type": "object",
+      "properties": {
+        "driveId": {
+          "type": "integer"
+        },
+        "yMonth": {
+          "type": "integer"
+        },
+        "personalTax": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "drivePersonalTax"
       }
     },
     "/user/{userId}/driveSalaryTaskRelAll": {

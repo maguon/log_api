@@ -424,6 +424,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId',contentType: 'application/json'} ,driveSalary.updateDrivePlanSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId/driveActualSalary',contentType: 'application/json'} ,driveSalary.updateDriveActualSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId/grantStatus/:grantStatus',contentType: 'application/json'} ,driveSalary.updateDriveSalaryStatus);
+    server.put({path:'/api/user/:userId/drivePersonalTax',contentType: 'application/json'} ,driveSalary.updateDrivePersonalTax);
     server.post({path:'/api/user/:userId/driveSalaryPersonalTaxFile',contentType: 'multipart/form-data'},driveSalary.updateDriveSalaryPersonalTaxFile);
 
     /**
