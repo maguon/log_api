@@ -165,12 +165,13 @@ function getDriveSalary(params,callback) {
 }
 
 function getDriveSalaryBase(params,callback) {
-    var query = " select ds.*,d.drive_name,t.id as truck_id,t.truck_num,t.brand_id as truck_brand_id ,tb.brand_name,t.operate_type,c.company_name " +
+    var query = " select ds.*,d.drive_name,t.id as truck_id,t.truck_num,t.brand_id as truck_brand_id ,tb.brand_name,t.operate_type,c.company_name,ui.mobile " +
         " from drive_salary ds " +
         " left join drive_info d on ds.drive_id = d.id " +
         " left join truck_info t on d.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +
         " left join company_info c on t.company_id = c.id " +
+        " left join user_info ui on ui.uid = ds.user_id " +
         " where ds.id is not null ";
     var paramsArray=[],i=0;
     if(params.driveSalaryId){

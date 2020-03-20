@@ -431,8 +431,9 @@ function getDriveSalaryCsv(req,res,next){
         "社保缴费" + ','+"伙食费"+ ','+ "个人借款" + ','+ "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
+    params.yMonth = params.monthDateId;
     var parkObj = {};
-    driveSalaryDAO.getDriveSalary(params,function(error,rows){
+    driveSalaryDAO.getDriveSalaryBase(params,function(error,rows){
         if (error) {
             logger.error(' getDriveSalary ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
