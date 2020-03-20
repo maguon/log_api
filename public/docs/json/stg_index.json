@@ -10192,9 +10192,9 @@
 
           },
           {
-            "name": "monthDateId",
+            "name": "yMonth",
             "in": "query",
-            "description": "monthDate id",
+            "description": "yMonth id",
             "required": true,
             "type": "integer"
 
