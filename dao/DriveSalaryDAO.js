@@ -165,7 +165,7 @@ function getDriveSalary(params,callback) {
 }
 
 function getDriveSalaryBase(params,callback) {
-    var query = " select ds.*,d.drive_name,t.id as truck_id,t.truck_num,tb.brand_name,t.operate_type,c.company_name " +
+    var query = " select ds.*,d.drive_name,t.id as truck_id,t.truck_num,t.brand_id as truck_brand_id ,tb.brand_name,t.operate_type,c.company_name " +
         " from drive_salary ds " +
         " left join drive_info d on ds.drive_id = d.id " +
         " left join truck_info t on d.id = t.drive_id " +
@@ -181,6 +181,10 @@ function getDriveSalaryBase(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and ds.drive_id = ? ";
     }
+    if(params.driveName){
+        paramsArray[i++] = params.driveName;
+        query = query + " and d.drive_name = ? ";
+    }
     if(params.yMonth){
         paramsArray[i++] = params.yMonth;
         query = query + " and ds.month_date_id = ? ";
@@ -189,6 +193,10 @@ function getDriveSalaryBase(params,callback) {
         paramsArray[i++] = params.truckId;
         query = query + " and ds.truck_id = ? ";
     }
+    if(params.truckNum){
+        paramsArray[i++] = params.truckNum;
+        query = query + " and t.truck_num = ? ";
+    }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
         query = query + " and ds.company_id = ? ";
@@ -196,6 +204,14 @@ function getDriveSalaryBase(params,callback) {
     if(params.userId){
         paramsArray[i++] = params.userId;
         query = query + " and ds.user_id = ? ";
+    }
+    if(params.truckBrandId){
+        paramsArray[i++] = params.truckBrandId;
+        query = query + " and t.brand_id = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and t.operate_type = ? ";
     }
     if(params.grantStatus){
         paramsArray[i++] = params.grantStatus;

@@ -10076,6 +10076,13 @@
             "type": "integer"
           },
           {
+            "name": "driveName",
+            "in": "query",
+            "description": "drive name",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "yMonth",
             "in": "query",
             "description": "yMonth",
@@ -10090,6 +10097,20 @@
             "type": "integer"
           },
           {
+            "name": "truckNum",
+            "in": "query",
+            "description": "truck num",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "truckBrandId",
+            "in": "query",
+            "description": "truckBrand id",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "companyId",
             "in": "query",
             "description": "company id",
@@ -10100,6 +10121,13 @@
             "name": "userId",
             "in": "query",
             "description": "user id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operate type",
             "required": false,
             "type": "integer"
           },
