@@ -38926,6 +38926,17 @@
         "name": "driveSalary"
       }
     },
+    "driveSalaryBatch": {
+      "type": "object",
+      "properties": {
+        "yMonth": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveSalaryBatch"
+      }
+    },
     "driveSalaryRetain": {
       "type": "object",
       "properties": {
