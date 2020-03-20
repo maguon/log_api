@@ -181,6 +181,22 @@ function getDriveSalaryBase(params,callback) {
         paramsArray[i++] = params.driveId;
         query = query + " and ds.drive_id = ? ";
     }
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and ds.month_date_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and ds.truck_id = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and ds.company_id = ? ";
+    }
+    if(params.userId){
+        paramsArray[i++] = params.userId;
+        query = query + " and ds.user_id = ? ";
+    }
     if(params.grantStatus){
         paramsArray[i++] = params.grantStatus;
         query = query + " and ds.grant_status = ? ";
