@@ -9,7 +9,7 @@ function addDriveSalaryBatch(params, callback) {
     // 默认插入字段：月份, 司机ID, 公司ID， 用户ID
     var query = "INSERT INTO drive_salary(month_date_id, drive_id, company_id, user_id)" +
         // 费用申请 + 洗车费相关 + 杂费相关 + 暂扣款
-        " SELECT " + params.yMonth + "as month_date_id, dtt.drive_id, di.company_id, di.user_id" +
+        " SELECT " + params.yMonth + " as month_date_id, dtt.drive_id, di.company_id, di.user_id" +
         " FROM ( " +
         "    SELECT DISTINCT drive_id FROM dp_route_task WHERE task_plan_date>=" + params.monthStart + " AND task_plan_date<=" + params.monthEnd + " AND task_status=10" +
         "    UNION SELECT DISTINCT drive_id FROM drive_sundry_fee WHERE y_month=" + params.yMonth +
@@ -19,14 +19,14 @@ function addDriveSalaryBatch(params, callback) {
         " LEFT JOIN drive_info di ON di.id = dtt.drive_id" +
         // 商品车质损相关
         " UNION" +
-        " SELECT" + params.yMonth + "as month_date_id, di.id as drive_id, di.company_id, di.user_id " +
+        " SELECT " + params.yMonth + " as month_date_id, di.id as drive_id, di.company_id, di.user_id " +
         " FROM damage_check dc" +
         " LEFT JOIN drive_info di on dc.under_user_id = di.user_id" +
         " LEFT JOIN damage_info dai on dc.damage_id = dai.id" +
         " WHERE di.id is not null AND dai.date_id>=" + params.yMonth + "01 AND dai.date_id<=" + params.yMonth + "31 AND dai.damage_status =3 " +
         // 货车事故承担相关
         " UNION" +
-        " SELECT" + params.yMonth + "as month_date_id, di.id as drive_id, di.company_id, di.user_id " +
+        " SELECT " + params.yMonth + " as month_date_id, di.id as drive_id, di.company_id, di.user_id " +
         " FROM truck_accident_check tac" +
         " LEFT JOIN drive_info di on tac.under_user_id = di.user_id " +
         " LEFT JOIN truck_accident_info tai on tac.truck_accident_id = tai.id " +
@@ -165,7 +165,7 @@ function updateRetainFfee(params, callback) {
         " INNER JOIN (" +
         "   SELECT drive_id, sum(damage_retain_fee) as damage_retain_fee, sum(damage_op_fee) as damage_op_fee, sum(truck_retain_fee) as truck_retain_fee" +
         "   FROM drive_salary_retain" +
-        "   WHERE y_month=" + params.yMonth +
+        "   WHERE y_month= " + params.yMonth +
         "   GROUP BY drive_id ) as base" +
         " ON ds.drive_id = base.drive_id " +
         " AND ds.month_date_id = " + params.yMonth +
@@ -303,7 +303,7 @@ function updateLoadDistance(params, callback) {
 
 // 删除指定月 所有数据
 function deleteDriveSalary(params,callback){
-    var query = " DELETE FROM drive_salary WHERE month_date_id = ? ";
+    var query = "DELETE FROM drive_salary WHERE month_date_id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.yMonth;
     db.dbQuery(query,paramsArray,function(error,rows){
