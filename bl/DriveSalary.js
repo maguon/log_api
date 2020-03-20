@@ -440,7 +440,7 @@ function getDriveSalaryCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 // 月份
-                parkObj.monthDateId = params.monthDateId;
+                parkObj.monthDateId = rows[i].month_date_id;
                 // 司机姓名
                 parkObj.driveName = rows[i].drive_name;
                 // 手机号
