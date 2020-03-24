@@ -10,9 +10,10 @@ var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 function setOutputPatch(req,res,next){
     var idArray =[];
     var outputObj ={};
+    var params = req.params;
     Seq().seq(function(){
         var that = this;
-        dpRouteLoadTaskDAO.getDpRouteLoadTaskPatch({},function(error,rows){
+        dpRouteLoadTaskDAO.getDpRouteLoadTaskPatch(params,function(error,rows){
             if (error) {
                 logger.error(' getDpRouteLoadTaskPatch ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
