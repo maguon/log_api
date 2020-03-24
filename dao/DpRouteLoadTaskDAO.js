@@ -217,7 +217,8 @@ function getDpRouteLoadTaskBase(params,callback) {
 function getDpRouteLoadTaskList(params,callback) {
     var query = " select c2.distance/c1.distance as output_ratio from city_route_info c1,city_route_info c2, " +
         " (select concat(LEAST(ddi.route_start_id,ddi.route_end_id),GREATEST(ddi.route_start_id,ddi.route_end_id)) as demand_route_id," +
-        " concat(LEAST(drlt.route_start_id,drlt.transfer_city_id),GREATEST(drlt.route_start_id,drlt.transfer_city_id)) as load_route_id" +
+        " case when load_task_type=1 then concat(LEAST(drlt.route_start_id,drlt.transfer_city_id),GREATEST(drlt.route_start_id,drlt.transfer_city_id)) " +
+        " else  concat(LEAST(drlt.route_start_id,drlt.route_end_id),GREATEST(drlt.route_start_id,drlt.route_end_id)) end as load_route_id " +
         " from dp_route_load_task drlt left join dp_demand_info ddi on drlt.demand_id = ddi.id where drlt.id = "+ params.dpRouteLoadTaskId +") drtt " +
         " where c1.route_id= drtt.demand_route_id and c2.route_id = drtt.load_route_id ";
     var paramsArray=[],i=0;
