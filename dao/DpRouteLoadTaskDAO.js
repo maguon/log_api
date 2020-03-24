@@ -280,7 +280,16 @@ function updateDpRouteLoadTaskStatus(params,callback){
 }
 
 function getDpRouteLoadTaskPatch(params,callback) {
-    var query = " select dprl.id from dp_route_load_task dprl where dprl.id is not null and dprl.load_task_status = 7";
+    var query = " select dprl.id from dp_route_load_task dprl where dprl.id is not null and dprl.load_task_status = 7 ";
+    var paramsArray=[],i=0;
+    if(params.start){
+        paramsArray[i++] = params.start;
+        query = query+ 'and dprl.created_on >= ? '
+    }
+    if(params.end){
+        paramsArray[i++] = params.end;
+        query = query+ 'and dprl.created_on <= ? '
+    }
     db.dbQuery(query,[],function(error,rows){
         logger.debug(' getDpRouteLoadTaskPatch ');
         return callback(error,rows);
