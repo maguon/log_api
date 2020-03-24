@@ -281,7 +281,7 @@ function updateDpRouteLoadTaskStatus(params,callback){
 
 function getDpRouteLoadTaskPatch(params,callback) {
     var query = " select dprl.id from dp_route_load_task dprl where dprl.id is not null and dprl.load_task_status = 7";
-    db.dbQuery(query,paramsArray,function(error,rows){
+    db.dbQuery(query,[],function(error,rows){
         logger.debug(' getDpRouteLoadTaskPatch ');
         return callback(error,rows);
     });
