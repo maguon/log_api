@@ -290,7 +290,7 @@ function getDpRouteLoadTaskPatch(params,callback) {
         paramsArray[i++] = params.end;
         query = query+ 'and dprl.created_on <= ? '
     }
-    db.dbQuery(query,[],function(error,rows){
+    db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDpRouteLoadTaskPatch ');
         return callback(error,rows);
     });
