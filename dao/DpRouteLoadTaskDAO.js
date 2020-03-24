@@ -279,6 +279,25 @@ function updateDpRouteLoadTaskStatus(params,callback){
     });
 }
 
+function getDpRouteLoadTaskPatch(params,callback) {
+    var query = " select dprl.id from dp_route_load_task dprl where dprl.id is not null and dprl.load_task_status = 7";
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteLoadTaskPatch ');
+        return callback(error,rows);
+    });
+}
+
+function updateOutputById(params,callback){
+    var query = " update dp_route_load_task set  output_ratio = ? ";
+    query = query + " where id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.outputRatio;
+    paramsArray[i++] = params.id;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateOutputById ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
     addDpRouteLoadTask : addDpRouteLoadTask,
@@ -287,5 +306,7 @@ module.exports ={
     getDpRouteLoadTaskBase : getDpRouteLoadTaskBase,
     getDpRouteLoadTaskList : getDpRouteLoadTaskList,
     getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
-    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus
+    updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus,
+    getDpRouteLoadTaskPatch : getDpRouteLoadTaskPatch ,
+    updateOutputById : updateOutputById
 }

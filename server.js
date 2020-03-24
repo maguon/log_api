@@ -98,6 +98,7 @@ var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
 var msgPush = require('./bl/MsgPush.js');
 var sms = require('./bl/Sms.js');
+var sysPatch = require('./bl/SysPatch.js');
 
 
 ///--- API
@@ -1108,6 +1109,10 @@ function createServer() {
     server.post({path:'/api/user/:userId/app',contentType: 'application/json'},app.createAppVersion);
     server.put({path:'/api/user/:userId/app/:appId',contentType: 'application/json'} ,app.updateAppVersion);
 
+    /**
+     * Patch
+     */
+    server.get('/api/loadOutRation',sysPatch.setOutputPatch);
     server.get('/api/appAbout',function(req,res,next){
         res.send(200,{title:"鸿溧科技（大连）有限公司",content:"公司以数据为核心，以服务为导向，针对目前整车物流的特殊需求，解决整车物流的痛点问题，打造整车物流行业标准.\n" +
                 "\n" +
