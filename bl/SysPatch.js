@@ -12,7 +12,7 @@ function setOutputPatch(req,res,next){
     var outputObj ={};
     Seq().seq(function(){
         var that = this;
-        dpRouteLoadTaskDAO.getDpRouteLoadTaskPatch({},function(rows,error){
+        dpRouteLoadTaskDAO.getDpRouteLoadTaskPatch({},function(error,rows){
             if (error) {
                 logger.error(' getDpRouteLoadTaskPatch ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
@@ -27,7 +27,7 @@ function setOutputPatch(req,res,next){
             outputObj.id=rowObj.id;
             Seq().seq(function(){
                 var that = this;
-                dpRouteLoadTaskDAO.getDpRouteLoadTaskList({dpRouteLoadTaskId:rowObj.id},function(rows,error){
+                dpRouteLoadTaskDAO.getDpRouteLoadTaskList({dpRouteLoadTaskId:rowObj.id},function(error,rows){
                     if (error) {
                         logger.error(' getDpRouteLoadTask ' + error.message);
                         resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
@@ -43,7 +43,7 @@ function setOutputPatch(req,res,next){
                     }
                 })
             }).seq(function(){
-                dpRouteLoadTaskDAO.updateOutputById(outputObj,function(result,error){
+                dpRouteLoadTaskDAO.updateOutputById(outputObj,function(error,result){
                     if (error) {
                         logger.error(' updateOutputById ' + error.message);
                         throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
