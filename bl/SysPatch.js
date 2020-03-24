@@ -2,6 +2,8 @@ var Seq = require('seq');
 var sysMsg = require('../util/SystemMsg.js');
 var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
+var serverLogger = require('../util/ServerLogger.js');
+var logger = serverLogger.createLogger('SysPatch.js');
 
 var dpRouteLoadTaskDAO = require('../dao/DpRouteLoadTaskDAO.js');
 
