@@ -29,18 +29,6 @@ function updateDriveSundryFee(params, callback) {
     paramsArray[i++] = params.socialFee;
     paramsArray[i++] = params.mealsFee;
     paramsArray[i++] = params.otherFee;
-    if (params.userId) {
-        paramsArray[i++] = params.userId;
-        query = query + " and user_id = ? ";
-    }
-    if (params.driveId) {
-        paramsArray[i++] = params.driveId;
-        query = query + " and drive_id = ? ";
-    }
-    if (params.yMonth) {
-        paramsArray[i++] = params.yMonth;
-        query = query + " and y_month = ? ";
-    }
     if (params.driveSundryFeeId) {
         paramsArray[i++] = params.driveSundryFeeId;
         query = query + " and id = ? ";
