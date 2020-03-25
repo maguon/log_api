@@ -556,7 +556,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/driveSundryFee',contentType: 'application/json'},driveSundryFee.createDriveSundryFee);
     server.put({path:'/api/user/:userId/driveSundryFee/:driveSundryFeeId',contentType: 'application/json'} ,driveSundryFee.updateDriveSundryFee);
     server.post({path:'/api/user/:userId/driveSundryFeeFile',contentType: 'multipart/form-data'},driveSundryFee.uploadDriveSundryFee);
-    server.post({path:'/api/user/:userId/driveSundryOtherFeeFile',contentType: 'multipart/form-data'},driveSundryFee.uploadDriveSundryOtherFee);
+    // server.post({path:'/api/user/:userId/driveSundryOtherFeeFile',contentType: 'multipart/form-data'},driveSundryFee.uploadDriveSundryOtherFee);
 
     /**
      * DriveSocialSecurity Module
