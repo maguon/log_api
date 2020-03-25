@@ -452,7 +452,11 @@ function getDriveSalaryCsv(req,res,next){
                 if(rows[i].operate_type == 1){
                     parkObj.operateType = "自营";
                 }else{
-                    parkObj.operateType = "外协";
+                    if(rows[i].operate_type == 2){
+                        parkObj.operateType = "外协";
+                    }else{
+                        parkObj.operateType = "";
+                    }
                 }
                 // 所属公司
                 if(rows[i].company_name == null){
