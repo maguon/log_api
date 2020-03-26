@@ -39,14 +39,22 @@ function addDriveExceedOilDate(params,callback){
 
 function getDriveExceedOilDate(params,callback) {
     var query = " select dprm.drive_id,dprm.drive_name,dprm.truck_id,dprm.truck_num," +
-        " dprm.brand_name,dprm.operate_type,dprm.company_id,dprm.company_name,dprm.plan_oil,dprm.plan_urea," +
+        " dprm.brand_name,dprm.load_distance_oil,dprm.no_load_distance_oil,dprm.urea, " +
+        " dprm.load_reverse_oil,dprm.no_load_reverse_oil, " +
+        " dprm.operate_type,dprm.company_id,dprm.company_name,dprm.plan_oil,dprm.plan_urea," +
         " deorm.actual_oil,deorm.actual_urea, " +
         " deodm.id,deodm.month_date_id,deodm.plan_oil_total,deodm.plan_urea_total, " +
         " deodm.actual_oil_total,deodm.actual_urea_total,deodm.surplus_oil,deodm.surplus_urea, " +
         " deodm.subsidy_oil, deodm.subsidy_urea,deodm.exceed_oil,deodm.exceed_urea, " +
         " deodm.load_oil_distance,deodm.no_load_oil_distance,deodm.oil_single_price,deodm.urea_single_price, " +
-        " deodm.actual_money,deodm.check_status,deodm.settle_status,deodm.remark " +
-        " from(select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,tb.brand_name,t.operate_type,t.company_id,c.company_name, " +
+        " deodm.actual_money, " +
+        " deodm.gps_no_load_oil_distance,deodm.gps_load_oil_distance,deodm.gps_oil_total,deodm.gps_urea_total, " +
+        " deodm.gps_exceed_oil,deodm.gps_exceed_urea,deodm.gps_actual_money," +
+        " deodm.check_status,deodm.settle_status,deodm.remark " +
+        " from(select dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num, " +
+        " tb.brand_name,tb.load_distance_oil,tb.no_load_distance_oil, " +
+        " tb.urea,tb.load_reverse_oil,tb.no_load_reverse_oil, " +
+        " t.operate_type,t.company_id,c.company_name, " +
         " sum(drtor.total_oil) plan_oil,sum(drtor.total_urea) plan_urea " +
         " from dp_route_task dpr " +
         " left join dp_route_task_oil_rel drtor on drtor.dp_route_task_id = dpr.id " +
@@ -67,7 +75,10 @@ function getDriveExceedOilDate(params,callback) {
         " deod.actual_oil_total,deod.actual_urea_total,deod.surplus_oil,deod.surplus_urea,deod.subsidy_oil, " +
         " deod.subsidy_urea,deod.exceed_oil,deod.exceed_urea,deod.load_oil_distance,deod.no_load_oil_distance," +
         " deod.oil_single_price,deod.urea_single_price," +
-        " deod.actual_money,deod.check_status,deod.settle_status,deod.remark " +
+        " deod.actual_money," +
+        " deod.gps_no_load_oil_distance,deod.gps_load_oil_distance,deod.gps_oil_total,deod.gps_urea_total, " +
+        " deod.gps_exceed_oil,deod.gps_exceed_urea,deod.gps_actual_money, " +
+        " deod.check_status,deod.settle_status,deod.remark " +
         " from drive_exceed_oil_date deod where deod.month_date_id = "+params.yMonth+
         " group by deod.drive_id ,deod.truck_id) deodm on dprm.drive_id = deodm.drive_id and dprm.truck_id = deodm.truck_id "+
         " where dprm.drive_id is not null ";
@@ -201,7 +212,8 @@ function updateDriveExceedOilDate(params,callback){
     var query = " update drive_exceed_oil_date set plan_oil_total = ? , plan_urea_total = ? , actual_oil_total = ? , actual_urea_total = ? , " +
         " surplus_oil = ? , surplus_urea = ? , subsidy_oil = ? , subsidy_urea = ? , exceed_oil = ? , exceed_urea = ? , " +
         " load_oil_distance = ? , no_load_oil_distance = ? , oil_single_price = ? , urea_single_price = ? , " +
-        " actual_money = ? , remark = ? where id = ? " ;
+        " actual_money = ? , gps_no_load_oil_distance = ? , gps_load_oil_distance = ? , gps_oil_total = ? , gps_urea_total = ? , " +
+        " gps_exceed_oil = ? , gps_exceed_urea = ? , gps_actual_money = ? , remark = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.planOilTotal;
     paramsArray[i++]=params.planUreaTotal;
@@ -218,6 +230,13 @@ function updateDriveExceedOilDate(params,callback){
     paramsArray[i++]=params.oilSinglePrice;
     paramsArray[i++]=params.ureaSinglePrice;
     paramsArray[i++]=params.actualMoney;
+    paramsArray[i++]=params.gpsNoLoadOilDistance;
+    paramsArray[i++]=params.gpsLoadOilDistance;
+    paramsArray[i++]=params.gpsOilTotal;
+    paramsArray[i++]=params.gpsUreaTotal;
+    paramsArray[i++]=params.gpsExceedOil;
+    paramsArray[i++]=params.gpsExceedUrea;
+    paramsArray[i++]=params.gpsActualMoney;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.exceedOilDateId;
     db.dbQuery(query,paramsArray,function(error,rows){

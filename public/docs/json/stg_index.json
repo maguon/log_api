@@ -39195,6 +39195,27 @@
         "actualMoney": {
           "type": "integer"
         },
+        "gpsNoLoadOilDistance": {
+          "type": "integer"
+        },
+        "gpsLoadOilDistance": {
+          "type": "integer"
+        },
+        "gpsOilTotal": {
+          "type": "integer"
+        },
+        "gpsUreaTotal": {
+          "type": "integer"
+        },
+        "gpsExceedOil": {
+          "type": "integer"
+        },
+        "gpsExceedUrea": {
+          "type": "integer"
+        },
+        "gpsActualMoney": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }

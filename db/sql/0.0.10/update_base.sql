@@ -1019,3 +1019,15 @@ ADD COLUMN `lead_fee` decimal(10,2) DEFAULT 0 COMMENT '带路费' AFTER `run_fee
 -- ----------------------------
 ALTER TABLE `drive_salary_retain`
 ADD COLUMN `op_user_id` int(10) NULL DEFAULT NULL COMMENT '处理用户ID' AFTER `user_id`;
+
+-- ----------------------------
+-- 2020-03-26 更新
+-- ----------------------------
+ALTER TABLE `drive_exceed_oil_date`
+ADD COLUMN `gps_no_load_oil_distance` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS空载油耗公里' AFTER `actual_money`,
+ADD COLUMN `gps_load_oil_distance` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS重载油耗公里' AFTER `gps_no_load_oil_distance`,
+ADD COLUMN `gps_oil_total` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS总用油量' AFTER `gps_load_oil_distance`,
+ADD COLUMN `gps_urea_total` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS计划总尿素量' AFTER `gps_oil_total`,
+ADD COLUMN `gps_exceed_oil` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS超油' AFTER `gps_urea_total`,
+ADD COLUMN `gps_exceed_urea` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS超尿素' AFTER `gps_exceed_oil`,
+ADD COLUMN `gps_actual_money` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS实际超量总金额' AFTER `gps_exceed_urea`;
