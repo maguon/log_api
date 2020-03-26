@@ -28,7 +28,7 @@ function addDpRouteLoadTask(params,callback){
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.receiveId;
     paramsArray[i++]=params.shortName;
-    paramsArray[i++]=params.receiveFlag;
+    paramsArray[i++]=params.receiveFlag==null?1:params.receiveFlag;
     paramsArray[i++]=params.dateId;
     paramsArray[i++]=params.planDate;
     paramsArray[i++]=params.planCount;
