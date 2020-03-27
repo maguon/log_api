@@ -9,8 +9,10 @@ var logger = serverLogger.createLogger('DriveExceedOilDateDAO.js');
 function addDriveExceedOilDate(params,callback){
     var query = " insert into drive_exceed_oil_date (month_date_id,drive_id,truck_id,plan_oil_total,plan_urea_total, " +
         " actual_oil_total,actual_urea_total,surplus_oil,surplus_urea,subsidy_oil,subsidy_urea,exceed_oil,exceed_urea," +
-        " load_oil_distance,no_load_oil_distance,oil_single_price,urea_single_price,actual_money,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+        " load_oil_distance,no_load_oil_distance,oil_single_price,urea_single_price,actual_money," +
+        " gps_no_load_oil_distance,gps_load_oil_distance,gps_oil_total,gps_urea_total, " +
+        " gps_exceed_oil, gps_exceed_urea, gps_actual_money,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.monthDateId;
     paramsArray[i++]=params.driveId;
@@ -30,6 +32,13 @@ function addDriveExceedOilDate(params,callback){
     paramsArray[i++]=params.oilSinglePrice;
     paramsArray[i++]=params.ureaSinglePrice;
     paramsArray[i++]=params.actualMoney;
+    paramsArray[i++]=params.gpsNoLoadOilDistance;
+    paramsArray[i++]=params.gpsLoadOilDistance;
+    paramsArray[i++]=params.gpsOilTotal;
+    paramsArray[i++]=params.gpsUreaTotal;
+    paramsArray[i++]=params.gpsExceedOil;
+    paramsArray[i++]=params.gpsExceedUrea;
+    paramsArray[i++]=params.gpsActualMoney;
     paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDriveExceedOilDate ');
