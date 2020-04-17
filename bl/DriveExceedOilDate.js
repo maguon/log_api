@@ -122,7 +122,8 @@ function getDriveExceedOilDateCsv(req,res,next){
     var header = "月份" + ',' + "司机" + ',' + "货车牌号" + ','+ "所属类型" + ','+"所属公司" + ','+ "计划用油量" + ','+
         "实际用油量" + ','+"计划尿素量"+','+ "实际尿素量" + ','+ "结余油量" + ','+ "结余尿素量" + ','+
         "本月油补" + ','+"本月尿素补" + ','+ "超油量" + ','+ "超尿素量" + ','+"重载油耗里程" + ','+ "空载油耗里程" + ','+
-        "超量金额" + ','+ "处理状态";
+        "超量金额" + ',' + "GPS用油量" + ',' + "GPS尿素量" + ',' + "GPS空载" + ',' + "GPS重载" + ',' +
+        "GPS超量油" + ',' + "GPS超量尿素" + ',' + "GPS超量金额" + ',' + "处理状态";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -242,6 +243,42 @@ function getDriveExceedOilDateCsv(req,res,next){
                 }else{
                     parkObj.actualMoney = rows[i].actual_money;
                 }
+                //GPS
+                if(rows[i].gps_oil_total == null){
+                    parkObj.gpsOilTotal = "";
+                }else{
+                    parkObj.gpsOilTotal = rows[i].gps_oil_total;
+                }
+                if(rows[i].gps_urea_total == null){
+                    parkObj.gpsUreaTotal = "";
+                }else{
+                    parkObj.gpsUreaTotal = rows[i].gps_urea_total;
+                }
+                if(rows[i].gps_no_load_oil_distance == null){
+                    parkObj.gpsNoLoadOilDistance = "";
+                }else{
+                    parkObj.gpsNoLoadOilDistance = rows[i].gps_no_load_oil_distance;
+                }
+                if(rows[i].gps_load_oil_distance == null){
+                    parkObj.gpsLoadOilDistance = "";
+                }else{
+                    parkObj.gpsLoadOilDistance = rows[i].gps_load_oil_distance;
+                }
+                if(rows[i].gps_exceed_oil == null){
+                    parkObj.gpsExceedOil = "";
+                }else{
+                    parkObj.gpsExceedOil = rows[i].gps_exceed_oil;
+                }
+                if(rows[i].gps_exceed_urea == null){
+                    parkObj.gpsExceedUrea = "";
+                }else{
+                    parkObj.gpsExceedUrea = rows[i].gps_exceed_urea;
+                }
+                if(rows[i].gps_actual_money == null){
+                    parkObj.gpsActualMoney = "";
+                }else{
+                    parkObj.gpsActualMoney = rows[i].gps_actual_money;
+                }
                 if(rows[i].check_status == 3){
                     parkObj.settleStatus = "已处理";
                 }else if(rows[i].check_status == 2){
@@ -253,7 +290,9 @@ function getDriveExceedOilDateCsv(req,res,next){
                     parkObj.companyName+","+ parkObj.planOilTotal+","+parkObj.actualOilTotal +","+parkObj.planUreaTotal+","+
                     parkObj.actualUreaTotal+","+parkObj.surplusOil+","+parkObj.surplusUrea +","+parkObj.subsidyOil+","+
                     parkObj.subsidyUrea+","+parkObj.exceedOil+","+parkObj.exceedUrea +","+parkObj.loadOilDistance+","+
-                    parkObj.noLoadOilDistance +","+parkObj.actualMoney+","+parkObj.settleStatus+ '\r\n';
+                    parkObj.noLoadOilDistance +","+parkObj.actualMoney+","+
+                    parkObj.gpsOilTotal+","+parkObj.gpsUreaTotal+","+parkObj.gpsNoLoadOilDistance+","+parkObj.gpsLoadOilDistance+","+
+                    parkObj.gpsExceedOil+","+parkObj.gpsExceedUrea+","+parkObj.gpsActualMoney+","+ parkObj.settleStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
