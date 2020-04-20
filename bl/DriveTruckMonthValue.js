@@ -181,9 +181,9 @@ function createDriveTruckMonthValue(req,res,next){
                 throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.affectedRows>0){
-                    logger.info(' updateHotelFee ' + 'success');
+                    logger.info(' updateEtcFee ' + 'success');
                 }else{
-                    logger.warn(' updateHotelFee ' + 'failed');
+                    logger.warn(' updateEtcFee ' + 'failed');
                 }
                 that();
             }
@@ -432,7 +432,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
     var header = "月份" + ',' +"司机" + ',' + "货车牌号" + ',' + "货车品牌" + ','+ "板位数" + ','+ "所属类型"+ ','+ "所属公司" + ','+ "产值公司" + ','+
         "倒板数" + ','+"倒板工资" + ','+"重载里程" + ','+ "空载里程"+ ','+ "总里程"+ ','+ "重载率"+ ','+ "重载油耗里程"+ ','+ "空载油耗里程" + ','+
         "运送经销商台数" + ','+ "运送到库台数" + ','+"产值" + ','+"二级产值" + ','+"货车保险"+ ','+ "折旧费"+ ','+ "应发里程工资"+ ','+
-        "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"补助" + ','+ "交车打车进门费"+ ','+
+        "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"满勤补助" + ','+ "交车打车进门费"+ ','+
         "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" + ','+ "油费" + ','+"尿素费" + ','+
         "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "维修费"+ ','+ "配件费"+ ','+ "保养费"+ ','+ "商品车加油费" + ','+ "商品车停车费"+ ','+
         "货车停车费"+','+"其他费用";
@@ -445,127 +445,160 @@ function getDriveTruckMonthValueCsv(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             for(var i=0;i<rows.length;i++){
+                // 月份
                 parkObj.yMonth = rows[i].y_month;
+                // 司机
                 parkObj.driveName = rows[i].drive_name;
+                // 货车牌号
                 parkObj.truckNum = rows[i].truck_num;
+                // 货车品牌
                 parkObj.brandName = rows[i].brand_name;
+                // 板位数
                 parkObj.truckNumber = rows[i].truck_number;
+                // 所属类型
                 if(rows[i].operate_type == 1){
                     parkObj.operateType = "自营";
                 }else{
                     parkObj.operateType = "外协";
                 }
+                // 所属公司
                 if(rows[i].company_name == null){
                     parkObj.companyName = "";
                 }else{
                     parkObj.companyName = rows[i].company_name;
                 }
+                // 产值公司
                 if(rows[i].output_company_name == null){
                     parkObj.outputCompanyName = "";
                 }else{
                     parkObj.outputCompanyName = rows[i].output_company_name;
                 }
+
+                // 倒板数
                 if(rows[i].reverse_count == null){
                     parkObj.reverseCount = "";
                 }else{
                     parkObj.reverseCount = rows[i].reverse_count;
                 }
+                // 倒板工资
                 if(rows[i].reverse_salary == null){
                     parkObj.reverseSalary = "";
                 }else{
                     parkObj.reverseSalary = rows[i].reverse_salary;
                 }
+                // 重载里程
                 if(rows[i].load_distance == null){
                     parkObj.loadDistance = "";
                 }else{
                     parkObj.loadDistance = rows[i].load_distance;
                 }
+                // 空载里程
                 if(rows[i].no_load_distance == null){
                     parkObj.noLoadDistance = "";
                 }else{
                     parkObj.noLoadDistance = rows[i].no_load_distance;
                 }
+                // 总里程
                 if(rows[i].distance == null){
                     parkObj.distance = "";
                 }else{
                     parkObj.distance = rows[i].distance;
                 }
+                // 重载率
                 parkObj.loadRatio =rows[i].load_distance/(rows[i].load_distance+rows[i].no_load_distance);
+                // 重载油耗里程
                 if(rows[i].load_oil_distance == null){
                     parkObj.loadOilDistance = "";
                 }else{
                     parkObj.loadOilDistance = rows[i].load_oil_distance;
                 }
+                // 空载油耗里程
                 if(rows[i].no_oil_distance == null){
                     parkObj.noOilDistance = "";
                 }else{
                     parkObj.noOilDistance = rows[i].no_oil_distance;
                 }
+
+                // 运送经销商台数
                 if(rows[i].receive_car_count == null){
                     parkObj.receiveCarCount = "";
                 }else{
                     parkObj.receiveCarCount = rows[i].receive_car_count;
                 }
+                // 运送到库台数
                 if(rows[i].storage_car_count == null){
                     parkObj.storageCarCount = "";
                 }else{
                     parkObj.storageCarCount = rows[i].storage_car_count;
                 }
+                // 产值
                 if(rows[i].output == null){
                     parkObj.output = "";
                 }else{
                     parkObj.output = rows[i].output;
                 }
+                // 二级产值
                 if(rows[i].two_output == null){
                     parkObj.twoOutput = "";
                 }else{
                     parkObj.twoOutput = rows[i].two_output;
                 }
+                // 货车保险
                 if(rows[i].insure_fee == null){
                     parkObj.insureFee = "";
                 }else{
                     parkObj.insureFee = rows[i].insure_fee;
                 }
+                // 折旧费
                 if(rows[i].depreciation_fee == null){
                     parkObj.depreciationFee = "";
                 }else{
                     parkObj.depreciationFee = rows[i].depreciation_fee;
                 }
+                // 应发里程工资
                 if(rows[i].distance_salary == null){
                     parkObj.distanceSalary = "";
                 }else{
                     parkObj.distanceSalary = rows[i].distance_salary;
                 }
+
+                // 质损个人承担
                 if(rows[i].damage_under_fee == null){
                     parkObj.damageUnderFee = "";
                 }else{
                     parkObj.damageUnderFee = rows[i].damage_under_fee;
                 }
+                // 质损公司承担
                 if(rows[i].damage_company_fee == null){
                     parkObj.damageCompanyFee = "";
                 }else{
                     parkObj.damageCompanyFee = rows[i].damage_company_fee;
                 }
+                // 洗车费
                 if(rows[i].clean_fee == null){
                     parkObj.cleanFee = "";
                 }else{
                     parkObj.cleanFee = rows[i].clean_fee;
                 }
+                // 出勤天数
                 if(rows[i].work_count == null){
                     parkObj.workCount = "";
                 }else{
                     parkObj.workCount = rows[i].work_count;
                 }
-                if(rows[i].hotel_fee == null){
-                    parkObj.hotelFee = "";
+                // 满勤补助
+                if(rows[i].full_work_bonus == null){
+                    parkObj.fullWorkBonus = "";
                 }else{
-                    parkObj.hotelFee = rows[i].hotel_fee;
+                    parkObj.fullWorkBonus = rows[i].full_work_bonus;
                 }
+                // 交车打车进门费
                 if(rows[i].enter_fee == null){
                     parkObj.enterFee = "";
                 }else{
                     parkObj.enterFee = rows[i].enter_fee;
                 }
+
                 if(rows[i].trailer_fee == null){
                     parkObj.trailerFee = "";
                 }else{
@@ -652,7 +685,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.noOilDistance+","+ parkObj.receiveCarCount+","+parkObj.storageCarCount+","+parkObj.output+","+parkObj.twoOutput+","+
                     parkObj.insureFee+","+parkObj.depreciationFee+","+
                     parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
-                    parkObj.hotelFee+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
+                    parkObj.fullWorkBonus+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
                     parkObj.leadFee+","+parkObj.etcFee+","+parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
                     parkObj.peccancyCompanyFee+","+parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+parkObj.carOilFee+","+
                     parkObj.carParkingTotalFee+","+parkObj.truckParkingFee+","+parkObj.otherFee+ '\r\n';

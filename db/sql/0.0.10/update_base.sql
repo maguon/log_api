@@ -1031,3 +1031,12 @@ ADD COLUMN `gps_urea_total` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS计划�
 ADD COLUMN `gps_exceed_oil` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS超油' AFTER `gps_urea_total`,
 ADD COLUMN `gps_exceed_urea` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS超尿素' AFTER `gps_exceed_oil`,
 ADD COLUMN `gps_actual_money` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'GPS实际超量总金额' AFTER `gps_exceed_urea`;
+
+-- ----------------------------
+-- 2019-04-20 更新
+-- ----------------------------
+ALTER TABLE `drive_truck_month_value`
+DROP COLUMN `hotel_fee`,
+ADD COLUMN `hotel_bonus`  decimal(10,2) DEFAULT 0 COMMENT '出差补助' AFTER `work_count`,
+ADD COLUMN `full_work_bonus`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_bonus`,
+ADD COLUMN `other_bonus`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `full_work_bonus`;
