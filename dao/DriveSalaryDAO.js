@@ -299,10 +299,11 @@ function updateDriveSalaryPersonalTax(params,callback){
 }
 
 function updateDriveSalaryEnterFee(params,callback){
-    var query = " update drive_salary set enter_fee = 0 where drive_id = ? and month_date_id = ? ";
+    var query = " update drive_salary set enter_fee = 0 where drive_id = ? and month_date_id = ? and grant_status != ?";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.driveId;
-    paramsArray[i] = params.yMonth;
+    paramsArray[i++] = params.yMonth;
+    paramsArray[i] = 3;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDriveSalaryEnterFee ');
         return callback(error,rows);
