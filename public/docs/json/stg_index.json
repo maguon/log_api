@@ -10523,6 +10523,58 @@
         }
       }
     },
+    "/user/{userId}/drive/{driveId}/yMonth/{yMonth}": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "user update driveSalaryEnterFee",
+        "description": "user update driveSalaryEnterFee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "path",
+            "description": "yMonth",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id and yMonth"
+          }
+        }
+      }
+    },
     "/user/{userId}/driveSalaryPersonalTaxFile": {
       "post": {
         "tags": [

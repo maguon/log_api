@@ -298,6 +298,16 @@ function updateDriveSalaryPersonalTax(params,callback){
     });
 }
 
+function updateDriveSalaryEnterFee(params,callback){
+    var query = " update drive_salary set enter_fee = 0 where drive_id = ? and month_date_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.driveId;
+    paramsArray[i] = params.yMonth;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveSalaryEnterFee ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
     addDriveSalary : addDriveSalary,
@@ -306,5 +316,6 @@ module.exports ={
     updateDrivePlanSalary : updateDrivePlanSalary,
     updateDriveActualSalary : updateDriveActualSalary,
     updateDriveSalaryStatus : updateDriveSalaryStatus,
-    updateDriveSalaryPersonalTax : updateDriveSalaryPersonalTax
+    updateDriveSalaryPersonalTax : updateDriveSalaryPersonalTax,
+    updateDriveSalaryEnterFee : updateDriveSalaryEnterFee
 };
