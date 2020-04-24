@@ -340,6 +340,20 @@ function updateDriveSalaryStatus(req,res,next){
     })
 }
 
+function updateDrivePersonalTax(req,res,next){
+    var params = req.params;
+    driveSalaryDAO.updateDriveSalaryPersonalTax(params,function(error,result){
+        if (error) {
+            logger.error(' updateDrivePersonalTax ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDrivePersonalTax ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDriveSalaryPersonalTaxFile(req,res,next){
     var params = req.params;
     var driveFlag  = true;
@@ -408,14 +422,14 @@ function updateDriveSalaryPersonalTaxFile(req,res,next){
     })
 }
 
-function updateDrivePersonalTax(req,res,next){
+function updateDriveSalaryEnterFee(req,res,next){
     var params = req.params;
-    driveSalaryDAO.updateDriveSalaryPersonalTax(params,function(error,result){
+    driveSalaryDAO.updateDriveSalaryEnterFee(params,function(error,result){
         if (error) {
-            logger.error(' updateDrivePersonalTax ' + error.message);
+            logger.error(' updateDriveSalaryEnterFee ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' updateDrivePersonalTax ' + 'success');
+            logger.info(' updateDriveSalaryEnterFee ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }
@@ -691,5 +705,6 @@ module.exports = {
     updateDriveSalaryStatus : updateDriveSalaryStatus,
     updateDrivePersonalTax : updateDrivePersonalTax,
     updateDriveSalaryPersonalTaxFile : updateDriveSalaryPersonalTaxFile,
+    updateDriveSalaryEnterFee : updateDriveSalaryEnterFee,
     getDriveSalaryCsv : getDriveSalaryCsv
 };
