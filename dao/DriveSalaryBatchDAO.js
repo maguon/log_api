@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DriveSalaryBatchDAO.js');
 function addDriveSalaryBatch(params, callback) {
     // 默认插入字段：月份, 司机ID, 公司ID， 用户ID
     var query = "INSERT INTO drive_salary(month_date_id, drive_id, company_id, user_id)" +
-        // 费用申请 + 洗车费相关 + 杂费相关 + 暂扣款
+        // 洗车费相关 + 杂费相关 + 暂扣款
         " SELECT " + params.yMonth + " as month_date_id, dtt.drive_id, di.company_id, di.user_id" +
         " FROM ( " +
         "    SELECT DISTINCT drive_id FROM dp_route_task WHERE task_plan_date>='" + params.monthStart + "' AND task_plan_date<='" + params.monthEnd + "' AND task_status=10" +
@@ -17,6 +17,12 @@ function addDriveSalaryBatch(params, callback) {
         "    UNION SELECT DISTINCT drive_id FROM drive_work WHERE y_month=" + params.yMonth +
         "    UNION SELECT DISTINCT drive_id FROM drive_peccancy WHERE date_id>=" + params.yMonth + "01 AND date_id<=" + params.yMonth + "31) as dtt" +
         " LEFT JOIN drive_info di ON di.id = dtt.drive_id" +
+        // 费用申请
+        " UNION" +
+        " SELECT " + params.yMonth + " as month_date_id, di.id as drive_id, di.company_id, di.user_id " +
+        " FROM dp_route_task_fee drtf" +
+        " LEFT JOIN drive_info di on drtf.drive_id = di.id" +
+        " WHERE drtf.drive_id is not null AND drtf.created_on>='" + params.monthStart + " 00:00:00' AND drtf.created_on<='" + params.monthEnd + " 23:59:59' AND drtf.status=2" +
         // 商品车质损相关
         " UNION" +
         " SELECT " + params.yMonth + " as month_date_id, di.id as drive_id, di.company_id, di.user_id " +
@@ -186,7 +192,7 @@ function updateDpRouteTaskFee(params, callback) {
         " INNER JOIN (" +
         "   SELECT drive_id, sum(car_oil_fee) as car_oil_fee, sum(total_price) as truck_parking_fee, sum(car_total_price) as car_parking_fee, sum(other_fee) as dp_other_fee" +
         "   FROM dp_route_task_fee" +
-        "   WHERE created_on>='" + params.monthStart + "' AND created_on<='" + params.monthEnd + "' AND status=2" +
+        "   WHERE created_on>='" + params.monthStart + " 00:00:00' AND created_on<='" + params.monthEnd + " 23:59:59' AND status=2" +
         "   GROUP BY drive_id ) as base" +
         " ON ds.drive_id = base.drive_id " +
         " AND ds.month_date_id = " + params.yMonth +
@@ -210,7 +216,7 @@ function updateCleanFee(params, callback) {
         "          sum(dpltcr.total_run_fee) as run_fee, sum(dpltcr.lead_fee) as lead_fee, sum(dpltcr.car_parking_fee) as car_pick_fee" +
         "   FROM dp_route_load_task_clean_rel dpltcr" +
         "   LEFT JOIN dp_route_load_task dplt ON dplt.id = dpltcr.dp_route_load_task_id" +
-        "   WHERE dplt.load_date >= '" + params.monthStart + "' AND dplt.load_date <= '" + params.monthEnd + "' AND dpltcr.status=2" +
+        "   WHERE dplt.load_date >= '" + params.monthStart + " 00:00:00' AND dplt.load_date <= '" + params.monthEnd + " 23:59:59' AND dpltcr.status=2" +
         "   GROUP BY dpltcr.drive_id) as base" +
         " ON ds.drive_id = base.drive_id " +
         " AND ds.month_date_id = " + params.yMonth +
