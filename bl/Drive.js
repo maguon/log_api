@@ -66,6 +66,9 @@ function createDrive(req,res,next){
         })
     }).seq(function(){
         params.userId = userId;
+        if(params.socialType == null){
+            params.socialType = 1;
+        }
         driveDAO.addDrive(params,function(error,result){
             if (error) {
                 logger.error(' createDrive ' + error.message);
@@ -333,7 +336,7 @@ function updateDriveStatus (req,res,next){
 
 function getDriveCsv(req,res,next){
     var csvString = "";
-    var header = "姓名" + ',' + "运营状态" + ',' + "性别" + ','+ "所属类型" + ','+ "所属公司"+','+ "主驾货车" + ','+
+    var header = "姓名" + ',' + "运营状态" + ',' + "性别" + ','+ "所属类型" + ',' + "所属公司" + ',' + "社保类型" + ',' + "主驾货车" + ','+
         "电话" + ','+ "身份证号" + ','+ "驾驶类型" + ','+ "驾驶证到期时间"+ ','+ "紧急联系人电话" + ','+ "家庭住址" + ','+ "备注";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -365,6 +368,11 @@ function getDriveCsv(req,res,next){
                     parkObj.operateType = "承包";
                 }
                 parkObj.companyName = rows[i].company_name;
+                if(rows[i].social_type == 1){
+                    parkObj.socialType = "在保";
+                }else{
+                    parkObj.socialType = "退保";
+                }
                 if(rows[i].truck_num == null){
                     parkObj.truckNum = "";
                 }else{
@@ -414,7 +422,7 @@ function getDriveCsv(req,res,next){
                     parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.operateFlag+","+parkObj.gender+","+parkObj.operateType+","+
-                    parkObj.companyName +","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.idNumber+","+parkObj.licenseType +","+
+                    parkObj.companyName +","+parkObj.socialType +","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.idNumber+","+parkObj.licenseType +","+
                     parkObj.licenseDate+","+parkObj.sibTel+","+parkObj.address+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');

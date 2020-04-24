@@ -8666,6 +8666,14 @@
 
           },
           {
+            "name": "socialType",
+            "in": "query",
+            "description": "social type",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -8971,6 +8979,14 @@
             "description": "licenseDate end",
             "required": false,
             "type": "string"
+
+          },
+          {
+            "name": "socialType",
+            "in": "query",
+            "description": "social type",
+            "required": false,
+            "type": "integer"
 
           }
         ],
@@ -38719,6 +38735,9 @@
         },
         "licenseDate": {
           "type": "string"
+        },
+        "socialType": {
+          "type": "integer"
         },
         "remark": {
           "type": "string"

@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
     var query = " insert into drive_info (user_id,drive_name,gender,id_number,tel,operate_type,company_id,license_type," +
-        " address,sib_tel,license_date,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " address,sib_tel,license_date,social_type,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.driveName;
@@ -21,6 +21,7 @@ function addDrive(params,callback){
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
+    paramsArray[i++]=params.socialType;
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug( ' addDrive ');
@@ -101,6 +102,10 @@ function getDrive(params,callback) {
         paramsArray[i++] = params.licenseDateEnd;
         query = query + " and d.license_date <= ? ";
     }
+    if(params.socialType){
+        paramsArray[i++] = params.socialType;
+        query = query + " and d.social_type = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -177,7 +182,7 @@ function getDriveTruckCount(params,callback) {
 
 function updateDrive(params,callback){
     var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , license_type = ? , " +
-        " address = ? , sib_tel = ? , license_date = ? , remark= ?  where id = ? ";
+        " address = ? , sib_tel = ? , license_date = ? ,  social_type = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
@@ -186,6 +191,7 @@ function updateDrive(params,callback){
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;
     paramsArray[i++]=params.licenseDate;
+    paramsArray[i++]=params.socialType;
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.driveId;
     db.dbQuery(query,paramsArray,function(error,rows){

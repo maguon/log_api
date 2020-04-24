@@ -1039,3 +1039,9 @@ ALTER TABLE `drive_truck_month_value`
 CHANGE COLUMN `hotel_fee` `hotel_bonus` decimal(10,2) DEFAULT 0 COMMENT '出差补助' AFTER `work_count`,
 ADD COLUMN `full_work_bonus`  decimal(10,2) DEFAULT 0 COMMENT '满勤补助' AFTER `hotel_bonus`,
 ADD COLUMN `other_bonus`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `full_work_bonus`;
+
+-- ----------------------------
+-- 2019-04-24 更新
+-- ----------------------------
+ALTER TABLE `drive_info`
+ADD COLUMN `social_type` tinyint(1) DEFAULT 1 COMMENT '社保类型（0-退保，1-在保）' AFTER `license_type`;
