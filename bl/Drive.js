@@ -370,6 +370,8 @@ function getDriveCsv(req,res,next){
                 parkObj.companyName = rows[i].company_name;
                 if(rows[i].social_type == 1){
                     parkObj.socialType = "在保";
+                }else if(rows[i].social_type == 2){
+                    parkObj.socialType = "未保";
                 }else{
                     parkObj.socialType = "退保";
                 }
