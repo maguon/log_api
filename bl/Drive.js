@@ -367,7 +367,11 @@ function getDriveCsv(req,res,next){
                 }else{
                     parkObj.operateType = "承包";
                 }
-                parkObj.companyName = rows[i].company_name;
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
                 if(rows[i].social_type == 1){
                     parkObj.socialType = "在保";
                 }else if(rows[i].social_type == 2){
