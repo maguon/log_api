@@ -27,6 +27,7 @@ var truckSecurityCheck = require('./bl/TruckSecurityCheck.js');
 var truckEtc = require('./bl/TruckEtc.js');
 var truckDepreciation = require('./bl/TruckDepreciation.js');
 var brand = require('./bl/Brand.js');
+var brandStyle = require('./bl/BrandStyle.js');
 var drive = require('./bl/Drive.js');
 var driveRefuel = require('./bl/DriveRefuel.js');
 var driveSalary = require('./bl/DriveSalary.js');
@@ -388,6 +389,13 @@ function createServer() {
     server.post({path:'/api/user/:userId/brand',contentType: 'application/json'},brand.createBrand);
     server.put({path:'/api/user/:userId/brand/:brandId',contentType: 'application/json'} ,brand.updateBrand);
     server.put({path:'/api/user/:userId/brand/:brandId/truckLoadDistanceOil',contentType: 'application/json'} ,brand.updateTruckLoadDistanceOil);
+
+    /**
+     * BrandStyle Module
+     */
+    server.get('/api/brandStyle',brandStyle.queryBrandStyle);
+    server.post({path:'/api/user/:userId/brandStyle',contentType: 'application/json'},brandStyle.createBrandStyle);
+    server.put({path:'/api/user/:userId/brandStyle/:brandStyleId',contentType: 'application/json'} ,brandStyle.updateBrandStyle);
 
     /**
      * Drive Module

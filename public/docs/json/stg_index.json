@@ -8542,6 +8542,149 @@
         }
       }
     },
+    "/brandStyle": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  brandStyle list",
+        "description": "query brandStyle",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "brandStyleId",
+            "in": "query",
+            "description": "brandStyle id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandStyleName",
+            "in": "query",
+            "description": "brand style name",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/brandStyle"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid brand style id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/brandStyle": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create brandStyle",
+        "description": "user create brandStyle",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandStyle",
+            "in": "body",
+            "description": "brandStyle info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/brandStyle"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid brand style id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/brandStyle/{brandStyleId}": {
+      "put": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "update brandStyle info",
+        "description": "update brandStyle info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandStyleId",
+            "in": "path",
+            "description": "brandStyle id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandStyle",
+            "in": "body",
+            "description": "brandStyle info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/brandStyle"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid brand Style id"
+          }
+        }
+      }
+    },
     "/drive": {
       "get": {
         "tags": [
@@ -38732,6 +38875,18 @@
       },
       "xml": {
         "name": "brand"
+      }
+    },
+    "brandStyle": {
+      "type": "object",
+      "properties": {
+
+        "brandStyleName": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "brandStyle"
       }
     },
     "drive": {
