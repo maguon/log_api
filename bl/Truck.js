@@ -929,7 +929,7 @@ function getTruckOperateCsv(req,res,next){
 
 function getTruckFirstCsv(req,res,next){
     var csvString = "";
-    var header = "货车牌号" + ',' + "品牌" + ',' + "关联挂车号" + ',' + "挂车货位" + ','+ "联系电话" + ','+ "主驾司机"+ ','+ "副驾司机" + ','+
+    var header = "货车牌号" + ',' + "品牌" + ',' + "品牌型号" + ',' + "关联挂车号" + ',' + "挂车货位" + ','+ "联系电话" + ','+ "主驾司机"+ ','+ "副驾司机" + ','+
         "所属类型" + ','+ "所属公司" + ','+ "货车状态"+ ',' +
         "头车行驶证检验日期" + ','+ "头车营运证检验日期" + ','+ "挂车行驶证检验日期"+ ','+ "挂车营运证检验日期";
     csvString = header + '\r\n'+csvString;
@@ -943,6 +943,7 @@ function getTruckFirstCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.truckNum = rows[i].truck_num;
                 parkObj.brandName = rows[i].brand_name;
+                parkObj.brandStyleName = rows[i].brand_style_name;
                 if(rows[i].trail_num == null){
                     parkObj.trailNum = "";
                 }else{
@@ -1003,7 +1004,7 @@ function getTruckFirstCsv(req,res,next){
                 }else{
                     parkObj.trailLicenseDate = new Date(rows[i].trail_license_date).toLocaleDateString();
                 }
-                csvString = csvString+parkObj.truckNum+","+parkObj.brandName+","+parkObj.trailNum+"," +parkObj.trailNumber+"," +parkObj.truckTel+","+
+                csvString = csvString+parkObj.truckNum+","+parkObj.brandName+","+parkObj.brandStyleName+","+parkObj.trailNum+"," +parkObj.trailNumber+"," +parkObj.truckTel+","+
                     parkObj.driveName+"," +parkObj.viceDriveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckStatus+","+
                 parkObj.drivingDate+","+parkObj.licenseDate+","+parkObj.trailDrivingDate+","+parkObj.trailLicenseDate+ '\r\n';
             }
@@ -1021,7 +1022,7 @@ function getTruckFirstCsv(req,res,next){
 
 function getTruckTrailerCsv(req,res,next){
     var csvString = "";
-    var header = "挂车牌号" + ',' + "挂车货位" + ',' + "关联头车号" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态"+ ','+
+    var header = "挂车牌号" + ',' + "品牌型号" + ',' + "挂车货位" + ',' + "关联头车号" + ','+ "所属类型" + ','+ "所属公司" + ','+ "货车状态"+ ','+
     "挂车行驶证检验日期" + ','+ "挂车营运证检验日期" + ','+ "头车行驶证检验日期"+ ','+ "头车营运证检验日期";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -1033,6 +1034,7 @@ function getTruckTrailerCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.truckNum = rows[i].truck_num;
+                parkObj.brandStyleName = rows[i].brand_style_name;
                 parkObj.number = rows[i].number;
                 if(rows[i].first_num == null){
                     parkObj.firstNum = "";
@@ -1074,7 +1076,7 @@ function getTruckTrailerCsv(req,res,next){
                 }else{
                     parkObj.firstLicenseDate = new Date(rows[i].first_license_date).toLocaleDateString();
                 }
-                csvString = csvString+parkObj.truckNum+"," +parkObj.number+"," +parkObj.firstNum+","+parkObj.operateType+","+
+                csvString = csvString+parkObj.truckNum+"," +parkObj.brandStyleName+"," +parkObj.number+"," +parkObj.firstNum+","+parkObj.operateType+","+
                     parkObj.companyName+","+parkObj.truckStatus+","+
                 parkObj.drivingDate+","+parkObj.licenseDate+","+parkObj.firstDrivingDate+","+parkObj.firstLicenseDate+ '\r\n';
             }

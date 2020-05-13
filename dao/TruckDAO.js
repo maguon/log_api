@@ -7,11 +7,13 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckDAO.js');
 
 function addTruckFirst(params,callback){
-    var query = "insert into truck_info (truck_num,brand_id,hp,truck_tel,the_code,operate_type,company_id,output_company_id,output_company_name, " +
-        " truck_type,driving_date,license_date,two_date,remark) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = "insert into truck_info (truck_num,brand_id,brand_style_id,brand_style_name,hp,truck_tel,the_code,operate_type,company_id,output_company_id,output_company_name, " +
+        " truck_type,driving_date,license_date,two_date,remark) values ( ? , ? , ? , ? ,? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
+    paramsArray[i++]=params.brandStyleId;
+    paramsArray[i++]=params.brandStyleName;
     paramsArray[i++]=params.hp;
     paramsArray[i++]=params.truckTel;
     paramsArray[i++]=params.theCode;
@@ -31,11 +33,13 @@ function addTruckFirst(params,callback){
 }
 
 function addTruckTrailer(params,callback){
-    var query = "insert into truck_info (truck_num,brand_id,the_code,operate_type,company_id,output_company_id,output_company_name,truck_type,number,driving_date,license_date,two_date,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+    var query = "insert into truck_info (truck_num,brand_id,brand_style_id,brand_style_name,the_code,operate_type,company_id,output_company_id,output_company_name,truck_type,number,driving_date,license_date,two_date,remark) " +
+        " values ( ? , ? , ? , ? ,? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.truckNum;
     paramsArray[i++]=params.brandId;
+    paramsArray[i++]=params.brandStyleId;
+    paramsArray[i++]=params.brandStyleName;
     paramsArray[i++]=params.theCode;
     paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.companyId;
@@ -76,6 +80,10 @@ function getTruckFirst(params,callback) {
     if(params.brandId){
         paramsArray[i++] = params.brandId;
         query = query + " and h.brand_id = ? ";
+    }
+    if(params.brandStyleId){
+        paramsArray[i++] = params.brandStyleId;
+        query = query + " and h.brand_style_id = ? ";
     }
     if(params.driveId){
         paramsArray[i++] = params.driveId;
@@ -154,6 +162,10 @@ function getTruckTrailer(params,callback) {
     if(params.brandId){
         paramsArray[i++] = params.brandId;
         query = query + " and h.brand_id = ? ";
+    }
+    if(params.brandStyleId){
+        paramsArray[i++] = params.brandStyleId;
+        query = query + " and h.brand_style_id = ? ";
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
@@ -522,6 +534,14 @@ function updateTruck(params,callback){
     if(params.brandId){
         paramsArray[i++]=params.brandId;
         query = query + " , brand_id = ? ";
+    }
+    if(params.brandStyleId){
+        paramsArray[i++]=params.brandStyleId;
+        query = query + " , brand_style_id = ? ";
+    }
+    if(params.brandStyleName){
+        paramsArray[i++]=params.brandStyleName;
+        query = query + " , brand_style_name = ? ";
     }
     if(params.hp){
         paramsArray[i++]=params.hp;

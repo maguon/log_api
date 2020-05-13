@@ -1061,3 +1061,7 @@ CREATE TABLE `truck_brand_style` (
   `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `truck_info`
+ADD COLUMN `brand_style_id` int(10) COMMENT '品牌型号ID' AFTER `brand_id`,
+ADD COLUMN `brand_style_name` varchar(50) COMMENT '品牌型号名称' AFTER `brand_style_Id`;
