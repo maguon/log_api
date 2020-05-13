@@ -7,13 +7,15 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveDAO.js');
 
 function addDrive(params,callback){
-    var query = " insert into drive_info (user_id,drive_name,gender,id_number,tel,operate_type,company_id,license_type," +
-        " address,sib_tel,license_date,social_type,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+    var query = " insert into drive_info (user_id,drive_name,gender,id_number,entry_time,archives_num,tel,operate_type,company_id,license_type," +
+        " address,sib_tel,license_date,social_type,remark) values( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
     paramsArray[i++]=params.idNumber;
+    paramsArray[i++]=params.entryTime;
+    paramsArray[i++]=params.archivesNum;
     paramsArray[i++]=params.tel;
     paramsArray[i++]=params.operateType;
     paramsArray[i++]=params.companyId;
@@ -85,6 +87,24 @@ function getDrive(params,callback) {
     if(params.driveStatus){
         paramsArray[i++] = params.driveStatus;
         query = query + " and d.drive_status = ? ";
+    }
+    if(params.idNumber){
+        if(params.idNumber.length == 18){
+            paramsArray[i++] = params.idNumber;
+            query = query + " and d.id_number = ? ";
+        }
+    }
+    if(params.entryTimeStart){
+        paramsArray[i++] = params.entryTimeStart;
+        query = query + " and d.entry_time >= ? ";
+    }
+    if(params.entryTimeEnd){
+        paramsArray[i++] = params.entryTimeEnd;
+        query = query + " and d.entry_time <= ? ";
+    }
+    if(params.archivesNum){
+        paramsArray[i++] = params.archivesNum;
+        query = query + " and d.archives_num = ? ";
     }
     if(params.mobile){
         paramsArray[i++] = params.mobile;
@@ -181,12 +201,14 @@ function getDriveTruckCount(params,callback) {
 }
 
 function updateDrive(params,callback){
-    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , license_type = ? , " +
+    var query = " update drive_info set drive_name = ? , gender = ? , id_number = ? , entry_time = ? , archives_num = ? , license_type = ? , " +
         " address = ? , sib_tel = ? , license_date = ? ,  social_type = ? , remark= ?  where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveName;
     paramsArray[i++]=params.gender;
     paramsArray[i++]=params.idNumber;
+    paramsArray[i++]=params.entryTime;
+    paramsArray[i++]=params.archivesNum;
     paramsArray[i++]=params.licenseType;
     paramsArray[i++]=params.address;
     paramsArray[i++]=params.sibTel;

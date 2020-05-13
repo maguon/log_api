@@ -8634,6 +8634,38 @@
 
           },
           {
+            "name": "idNumber",
+            "in": "query",
+            "description": "drive idNumber",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "entryTimeStart",
+            "in": "query",
+            "description": "entryTime start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "entryTimeEnd",
+            "in": "query",
+            "description": "entryTime end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "archivesNum",
+            "in": "query",
+            "description": "drive archivesNum",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "mobile",
             "in": "query",
             "description": "drive mobile",
@@ -38713,6 +38745,12 @@
           "type": "string"
         },
         "idNumber": {
+          "type": "string"
+        },
+        "entryTime": {
+          "type": "string"
+        },
+        "archivesNum": {
           "type": "string"
         },
         "tel": {

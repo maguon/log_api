@@ -1045,3 +1045,10 @@ ADD COLUMN `other_bonus`  decimal(10,2) DEFAULT 0 COMMENT '其他补助' AFTER `
 -- ----------------------------
 ALTER TABLE `drive_info`
 ADD COLUMN `social_type` tinyint(1) DEFAULT 1 COMMENT '社保类型（0-退保，1-在保）' AFTER `license_type`;
+
+-- ----------------------------
+-- 2019-05-13 更新
+-- ----------------------------
+ALTER TABLE `drive_info`
+ADD COLUMN `entry_time` date DEFAULT NULL COMMENT '入职时间' AFTER `id_number`,
+ADD COLUMN `archives_num` varchar(50) COMMENT '档案编号' AFTER `entry_time`;

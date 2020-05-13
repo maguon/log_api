@@ -337,7 +337,7 @@ function updateDriveStatus (req,res,next){
 function getDriveCsv(req,res,next){
     var csvString = "";
     var header = "姓名" + ',' + "运营状态" + ',' + "性别" + ','+ "所属类型" + ',' + "所属公司" + ',' + "社保类型" + ',' + "主驾货车" + ','+
-        "电话" + ','+ "身份证号" + ','+ "驾驶类型" + ','+ "驾驶证到期时间"+ ','+ "紧急联系人电话" + ','+ "家庭住址" + ','+ "备注";
+        "电话" + ','+ "身份证号" + ','+ "入职时间" + ','+ "档案编号" + ','+  "驾驶类型" + ','+ "驾驶证到期时间"+ ','+ "紧急联系人电话" + ','+ "家庭住址" + ','+ "备注";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -390,6 +390,16 @@ function getDriveCsv(req,res,next){
                 }else{
                     parkObj.idNumber = rows[i].id_number;
                 }
+                if(rows[i].entry_time == null){
+                    parkObj.entryTime = "";
+                }else{
+                    parkObj.entryTime = new Date(rows[i].entry_time).toLocaleDateString();
+                }
+                if(rows[i].archives_num == null){
+                    parkObj.archivesNum = "";
+                }else{
+                    parkObj.archivesNum = rows[i].archives_num;
+                }
                 if(rows[i].license_type == 1){
                     parkObj.licenseType = "A1";
                 }else if(rows[i].license_type == 2){
@@ -428,7 +438,8 @@ function getDriveCsv(req,res,next){
                     parkObj.remark = rows[i].remark.replace(/[\r\n]/g, '');
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.operateFlag+","+parkObj.gender+","+parkObj.operateType+","+
-                    parkObj.companyName +","+parkObj.socialType +","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.idNumber+","+parkObj.licenseType +","+
+                    parkObj.companyName +","+parkObj.socialType +","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.idNumber+","+
+                    parkObj.entryTime+","+ parkObj.archivesNum+","+ parkObj.licenseType +","+
                     parkObj.licenseDate+","+parkObj.sibTel+","+parkObj.address+","+parkObj.remark+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
