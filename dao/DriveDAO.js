@@ -89,10 +89,8 @@ function getDrive(params,callback) {
         query = query + " and d.drive_status = ? ";
     }
     if(params.idNumber){
-        if(params.idNumber.length == 18){
-            paramsArray[i++] = params.idNumber;
-            query = query + " and d.id_number = ? ";
-        }
+        paramsArray[i++] = params.idNumber;
+        query = query + " and d.id_number = ? ";
     }
     if(params.entryTimeStart){
         paramsArray[i++] = params.entryTimeStart;
