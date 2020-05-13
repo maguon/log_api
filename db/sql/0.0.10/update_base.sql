@@ -1065,3 +1065,6 @@ CREATE TABLE `truck_brand_style` (
 ALTER TABLE `truck_info`
 ADD COLUMN `brand_style_id` int(10) COMMENT '品牌型号ID' AFTER `brand_id`,
 ADD COLUMN `brand_style_name` varchar(50) COMMENT '品牌型号名称' AFTER `brand_style_Id`;
+
+ALTER TABLE `truck_brand_style`
+ADD COLUMN `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '品牌型号状态（0-停用,1-可用）' AFTER `brand_style_name`;
