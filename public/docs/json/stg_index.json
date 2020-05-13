@@ -2142,6 +2142,14 @@
 
           },
           {
+            "name": "brandStyleId",
+            "in": "query",
+            "description": "brandStyle id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
             "name": "driveId",
             "in": "query",
             "description": "drive id",
@@ -2269,6 +2277,14 @@
             "name": "brandId",
             "in": "query",
             "description": "brand id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "brandStyleId",
+            "in": "query",
+            "description": "brandStyle id",
             "required": false,
             "type": "integer"
 
