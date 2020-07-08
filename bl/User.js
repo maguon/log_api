@@ -9,6 +9,7 @@ var encrypt = require('../util/Encrypt.js');
 var listOfValue = require('../util/ListOfValue.js');
 var userDAO = require('../dao/UserDAO.js');
 var userDeviceDAO = require('../dao/UserDeviceDAO.js');
+var driveDAO = require('../dao/DriveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -433,6 +434,7 @@ function updateUserAvatarImage(req,res,next){
 
 function updateUserMobile(req,res,next){
     var params = req.params;
+    var returnMsg;
     Seq().seq(function(){
         var that = this;
         userDAO.getUser({mobile:params.newMobile},function(error,rows){
@@ -464,14 +466,30 @@ function updateUserMobile(req,res,next){
                 that();
             }
         })
+        that();
     }).seq(function(){
+        var that = this;
         userDAO.updateUserMobile(params,function(error,result){
             if (error) {
                 logger.error(' updateUserMobile ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 logger.info(' updateUserMobile ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
+                returnMsg = result;
+                that();
+            }
+        })
+    }).seq(function(){
+        if(params.newMobile){
+            params.tel = params.newMobile;
+        }
+        driveDAO.updateDriveTel(params,function (error,result){
+            if (error) {
+                logger.error(' updateUserMobile ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateUserMobile ' + 'success');
+                resUtil.resetUpdateRes(res,returnMsg,null);
                 return next();
             }
         })

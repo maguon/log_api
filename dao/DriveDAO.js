@@ -311,6 +311,17 @@ function updateDriveStatus(params,callback){
     });
 }
 
+function updateDriveTel(params,callback){
+    var query = " update drive_info set tel = ? where user_id = ? ";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.tel;
+    paramsArray[i] = params.userId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveTel ');
+        return callback(error,rows);
+    });
+}
+
 
 module.exports ={
     addDrive : addDrive,
@@ -327,5 +338,6 @@ module.exports ={
     updateLicenseImage : updateLicenseImage,
     updateOpLicenseImage : updateOpLicenseImage,
     updateDriverAvatarImage : updateDriverAvatarImage,
-    updateDriveStatus : updateDriveStatus
+    updateDriveStatus : updateDriveStatus,
+    updateDriveTel : updateDriveTel
 }
