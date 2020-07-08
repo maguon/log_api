@@ -81,8 +81,8 @@ function getSettleOuterTruck(params,callback) {
 }
 
 function getSettleOuterTruckList(params,callback) {
-    var query = " select dpr.id,dpr.truck_id,t.truck_num,cm.company_name,dpr.drive_id,d.drive_name, " +
-        " c.vin,c.make_name,e.short_name as e_short_name,c.route_start,ba.addr_name,c.route_end, " +
+    var query = " select dpr.id,dpr.truck_id,dpr.route_start,dpr.route_end,t.truck_num,cm.company_name,dpr.drive_id,d.drive_name, " +
+        " c.vin,c.make_name,e.short_name as e_short_name,c.c_route_start,ba.addr_name,c.c_route_end, " +
         " r.short_name as r_short_name,c.order_date,sot.distance,sot.fee,dpr.task_plan_date " +
         " from dp_route_task dpr " +
         " left join truck_info t on dpr.truck_id = t.id " +
@@ -93,8 +93,8 @@ function getSettleOuterTruckList(params,callback) {
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
-        " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
-        " and c.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
+        " left join settle_outer_truck sot on c.make_id = sot.make_id and dpr.route_start_id = sot.route_start_id " +
+        " and dpr.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
         " left join settle_outer_invoice_car_rel soicr on c.id = soicr.car_id " +
         " where dpr.id is not null and c.car_status=9 ";
     var paramsArray=[],i=0;
@@ -124,7 +124,7 @@ function getSettleOuterTruckList(params,callback) {
     }
     if(params.routeStartId){
         paramsArray[i++] = params.routeStartId;
-        query = query + " and c.route_start_id = ? ";
+        query = query + " and dpr.route_start_id = ? ";
     }
     if(params.addrId){
         paramsArray[i++] = params.addrId;
@@ -132,7 +132,7 @@ function getSettleOuterTruckList(params,callback) {
     }
     if(params.routeEndId){
         paramsArray[i++] = params.routeEndId;
-        query = query + " and c.route_end_id = ? ";
+        query = query + " and dpr.route_end_id = ? ";
     }
     if(params.receiveId){
         paramsArray[i++] = params.receiveId;
