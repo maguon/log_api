@@ -82,7 +82,7 @@ function getSettleOuterTruck(params,callback) {
 
 function getSettleOuterTruckList(params,callback) {
     var query = " select dpr.id,dpr.truck_id,dpr.route_start,dpr.route_end,t.truck_num,cm.company_name,dpr.drive_id,d.drive_name, " +
-        " c.vin,c.make_name,e.short_name as e_short_name,c.c_route_start,ba.addr_name,c.c_route_end, " +
+        " c.vin,c.make_name,e.short_name as e_short_name,c.route_start c_route_start,ba.addr_name,c.route_end c_route_end, " +
         " r.short_name as r_short_name,c.order_date,sot.distance,sot.fee,dpr.task_plan_date " +
         " from dp_route_task dpr " +
         " left join truck_info t on dpr.truck_id = t.id " +
