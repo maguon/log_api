@@ -606,8 +606,9 @@ function getDriveSettleCsv(req,res,next){
 
 function getDriveSettleDetailCsv(req,res,next){
     var csvString = "";
-    var header = "调度编号"+ ','+"司机"+ ',' +"货车牌号"+ ',' +"计划执行时间"+ ',' +"VIN"+ ','+"委托方"+ ','+"品牌"+ ','+"起始城市"+ ','+
-        "目的城市"+ ','+"经销商"+ ','+"车型"+ ','+"产值率"+ ','+"预估公里数"+ ','+"预估单价"+ ','+"产值"+ ','+"二级产值";
+    var header = "调度编号"+ ','+"司机"+ ',' +"货车牌号"+ ',' +"计划执行时间"+ ',' +"VIN"+ ','+"委托方"+ ','+"品牌"+ ','
+        +"任务起始城市"+ ','+ "任务目的城市 "+ ',' +"需求起始城市"+ ','+ "需求目的城市 "+ ','
+        +"经销商"+ ','+"车型"+ ','+"产值率"+ ','+"预估公里数"+ ','+"预估单价"+ ','+"产值"+ ','+"二级产值";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -635,6 +636,16 @@ function getDriveSettleDetailCsv(req,res,next){
                     parkObj.makeName = "";
                 }else{
                     parkObj.makeName = rows[i].make_name;
+                }
+                if(rows[i].dpr_route_start == null){
+                    parkObj.dprRouteStart = "";
+                }else{
+                    parkObj.dprRouteStart = rows[i].dpr_route_start;
+                }
+                if(rows[i].dpr_route_end == null){
+                    parkObj.dprRouteEnd = "";
+                }else{
+                    parkObj.dprRouteEnd = rows[i].dpr_route_end;
                 }
                 if(rows[i].route_start == null){
                     parkObj.routeStart = "";
@@ -682,7 +693,7 @@ function getDriveSettleDetailCsv(req,res,next){
                     parkObj.twoOutput = rows[i].two_output;
                 }
                 csvString = csvString+parkObj.id+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.taskPlanDate+","+
-                    parkObj.vin+","+parkObj.eShortName+","+parkObj.makeName+","+parkObj.routeStart +","+parkObj.routeEnd+","+
+                    parkObj.vin+","+parkObj.eShortName+","+parkObj.makeName+","+parkObj.dprRouteStart +","+parkObj.dprRouteEnd+","+parkObj.routeStart +","+parkObj.routeEnd+","+
                     parkObj.shortName+","+parkObj.sizeType+","+parkObj.outputRatio+","+parkObj.distance +","+parkObj.fee+","+ parkObj.output+","+
                     parkObj.twoOutput+ '\r\n';
             }
