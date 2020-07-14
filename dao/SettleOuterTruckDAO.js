@@ -93,8 +93,8 @@ function getSettleOuterTruckList(params,callback) {
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join base_addr ba on c.base_addr_id = ba.id " +
         " left join receive_info r on c.receive_id = r.id " +
-        " left join settle_outer_truck sot on c.make_id = sot.make_id and dpr.route_start_id = sot.route_start_id " +
-        " and dpr.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
+        " left join settle_outer_truck sot on c.make_id = sot.make_id and c.route_start_id = sot.route_start_id " +
+        " and c.route_end_id = sot.route_end_id and t.company_id = sot.company_id " +
         " left join settle_outer_invoice_car_rel soicr on c.id = soicr.car_id " +
         " where dpr.id is not null and c.car_status=9 ";
     var paramsArray=[],i=0;
