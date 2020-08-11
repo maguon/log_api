@@ -22,7 +22,7 @@ function createUser(req,res,next){
         userDAO.getUser({mobile:params.mobile},function(error,rows){
             if (error) {
                 logger.error(' createUser ' + error.message);
-                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG) ;
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
                 return next();
             } else {
                 if(rows && rows.length>0){

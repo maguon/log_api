@@ -181,6 +181,7 @@ function getEntrustCityRouteRelCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.shortName = rows[i].short_name;
                 parkObj.makeName = rows[i].make_name;
+
                 if(rows[i].size_type == 1){
                     parkObj.sizeType = "大";
                 }else{
