@@ -33982,6 +33982,190 @@
         }
       }
     },
+    "/user/{userId}/damageQaTask": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user create damageQaTask",
+        "description": "user create damageQaTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "uploadId",
+            "in": "query",
+            "description": "uploadId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageQaTask id"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageQaTask list",
+        "description": "query damageQaTask",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "damageQaTaskId",
+            "in": "query",
+            "description": "damageQaTask id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "date ID start",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "date id end",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid token value or invalid damageQaTask id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/damageQaTaskCarRel": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageQaTaskCarRel list",
+        "description": "query damageQaTaskCarRel ",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "qtId",
+            "in": "query",
+            "description": "qtId",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vinCode",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "qaStatus",
+            "in": "query",
+            "description": "qa status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "qaUserId",
+            "in": "query",
+            "description": "qa user Id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "dateIdStart",
+            "in": "query",
+            "description": "date ID start",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dateIdEnd",
+            "in": "query",
+            "description": "date id end",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid token value or invalid damageQaTask id"
+          }
+        }
+      }
+    },
     "/repairStation": {
       "get": {
         "tags": [

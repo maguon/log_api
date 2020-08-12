@@ -87,6 +87,8 @@ var damageCheckIndemnity = require('./bl/DamageCheckIndemnity.js');
 var damageInsure = require('./bl/DamageInsure.js');
 var damageInsureRel = require('./bl/DamageInsureRel.js');
 var damageInsureLoan = require('./bl/DamageInsureLoan.js');
+var damageQaTask = require('./bl/DamageQaTask.js');
+var damageQaTaskCarRel = require('./bl/DamageQaTaskCarRel.js');
 var repairStation = require('./bl/RepairStation.js');
 var settleHandover = require('./bl/SettleHandover.js');
 var settleHandoverCarRel = require('./bl/SettleHandoverCarRel.js');
@@ -1021,6 +1023,16 @@ function createServer() {
     server.put({path:'/api/user/:userId/damageInsureRepayment/:loanId',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureRepayment);
     server.put({path:'/api/user/:userId/damageInsureLoan/:loanId/loanStatus/:loanStatus',contentType: 'application/json'} ,damageInsureLoan.updateDamageInsureLoanStatus);
 
+    /**
+     * DamageQaTask Module
+     */
+    server.post({path:'/api/user/:userId/damageQaTask',contentType: 'application/json'},damageQaTask.createDamageQaTask);
+    server.get('/api/user/:userId/damageQaTask' ,damageQaTask.queryDamageQaTask);
+
+    /**
+     * DamageQaTaskCarRel Module
+     */
+    server.get('/api/user/:userId/damageQaTaskCarRel' ,damageQaTaskCarRel.queryDamageQaTaskCarRel);
 
     /**
      * RepairStation Module
