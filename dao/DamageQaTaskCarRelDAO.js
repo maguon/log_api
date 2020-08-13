@@ -77,7 +77,8 @@ function damageQaTaskCarRelByDayStat(params,callback){
         paramsArray[i++] = params.dateId;
         query = query + " and dr.date_id = ? ";
     }
-    query += " ORDER BY date_id DESC " ;
+    query += " GROUP BY dr.date_id " ;
+    query += " ORDER BY dr.date_id DESC " ;
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
