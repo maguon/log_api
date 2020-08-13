@@ -34166,7 +34166,7 @@
         }
       }
     },
-    "/user/{userId}/damageQaTaskCarRelByDayStat": {
+    "/user/{userId}/damageQaTaskDayStat": {
       "get": {
         "tags": [
           "damage"
