@@ -1033,6 +1033,7 @@ function createServer() {
      * DamageQaTaskCarRel Module
      */
     server.get('/api/user/:userId/damageQaTaskCarRel' ,damageQaTaskCarRel.queryDamageQaTaskCarRel);
+    server.get('/api/user/:userId/damageQaTaskCarRelByDayStat',damageQaTaskCarRel.damageQaTaskCarRelByDayStat);
 
     /**
      * RepairStation Module

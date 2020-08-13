@@ -34166,6 +34166,60 @@
         }
       }
     },
+    "/user/{userId}/damageQaTaskCarRelByDayStat": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageQaTaskCarRel By Day Stat list",
+        "description": "query damageQaTaskCarRel By Day Stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "qaUserId",
+            "in": "query",
+            "description": "qa user Id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "dateId",
+            "in": "query",
+            "description": "date ID",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid token value or invalid damageQaTask By Day Stat id"
+          }
+        }
+      }
+    },
     "/repairStation": {
       "get": {
         "tags": [

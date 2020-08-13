@@ -21,8 +21,9 @@ function addDamageQaTaskCarRel(params,callback){
 }
 
 function getDamageQaTaskCarRel(params,callback) {
-    var query = " select dqtcr.*,c.vin from damage_qa_task_car_rel dqtcr" +
+    var query = " select dqtcr.*,c.vin,u.real_name from damage_qa_task_car_rel dqtcr" +
         " left join car_info c on dqtcr.car_id = c.id " +
+        " left join user_info u on dqtcr.user_id = u.uid " +
         " where dqtcr.id is not null ";
     var paramsArray=[],i=0;
     if(params.qtId){
@@ -60,7 +61,53 @@ function getDamageQaTaskCarRel(params,callback) {
     });
 }
 
+function damageQaTaskCarRelByDayStat(params,callback){
+    var paramsArray=[],i=0;
+
+    var query = " select db.id,IFNULL(dr_temp.qa_count,0) as qa_count " +
+        " from date_base db " +
+        " LEFT JOIN ( SELECT dr.date_id, count( dr.id ) qa_count FROM damage_qa_task_car_rel dr " +
+        " WHERE dr.qa_status = 1 " ;
+
+    if(params.qaUserId){
+        paramsArray[i++] = params.qaUserId;
+        query = query + " and dr.user_id = ? ";
+    }
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and dr.date_id = ? ";
+    }
+    query += " ORDER BY date_id DESC " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }else{
+        query += " limit 0 , 10 "
+    }
+    query += " ) AS dr_temp ON db.id = dr_temp.date_id  " +
+        " where db.id is not null ";
+
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and db.id = ? ";
+    }
+    query = query + ' order by db.id desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }else{
+        query += " limit 0 , 10 "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' damageQaTaskCarRelByDayStat ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addDamageQaTaskCarRel : addDamageQaTaskCarRel,
-    getDamageQaTaskCarRel : getDamageQaTaskCarRel
+    getDamageQaTaskCarRel : getDamageQaTaskCarRel,
+    damageQaTaskCarRelByDayStat : damageQaTaskCarRelByDayStat
 }

@@ -25,6 +25,21 @@ function queryDamageQaTaskCarRel(req,res,next){
     })
 }
 
+function damageQaTaskCarRelByDayStat(req,res,next){
+    var params = req.params;
+    damageQaTaskCarRelDAO.damageQaTaskCarRelByDayStat(params,function(error,result){
+        if (error) {
+            logger.error(' damageQaTaskCarRelByDayStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' damageQaTaskCarRelByDayStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 module.exports = {
-    queryDamageQaTaskCarRel : queryDamageQaTaskCarRel
+    queryDamageQaTaskCarRel : queryDamageQaTaskCarRel,
+    damageQaTaskCarRelByDayStat : damageQaTaskCarRelByDayStat
 }
