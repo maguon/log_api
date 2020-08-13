@@ -119,7 +119,7 @@ function damageQaTaskUserStat(params,callback){
         query = query + " and dr.qt_id = ? ";
     }
     query += " GROUP BY dr.user_id " ;
-    query += " order by dr.id desc ";
+    query += " ORDER BY qa_count DESC " ;
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
