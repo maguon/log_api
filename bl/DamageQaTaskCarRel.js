@@ -25,14 +25,28 @@ function queryDamageQaTaskCarRel(req,res,next){
     })
 }
 
-function damageQaTaskCarRelByDayStat(req,res,next){
+function damageQaTaskDayStat(req,res,next){
     var params = req.params;
     damageQaTaskCarRelDAO.damageQaTaskCarRelByDayStat(params,function(error,result){
         if (error) {
-            logger.error(' damageQaTaskCarRelByDayStat ' + error.message);
+            logger.error(' damageQaTaskDayStat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' damageQaTaskCarRelByDayStat ' + 'success');
+            logger.info(' damageQaTaskDayStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function damageQaTaskUserStat(req,res,next){
+    var params = req.params;
+    damageQaTaskCarRelDAO.damageQaTaskUserStat(params,function(error,result){
+        if (error) {
+            logger.error(' damageQaTaskUserStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' damageQaTaskUserStat ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -41,5 +55,6 @@ function damageQaTaskCarRelByDayStat(req,res,next){
 
 module.exports = {
     queryDamageQaTaskCarRel : queryDamageQaTaskCarRel,
-    damageQaTaskCarRelByDayStat : damageQaTaskCarRelByDayStat
+    damageQaTaskDayStat : damageQaTaskDayStat,
+    damageQaTaskUserStat : damageQaTaskUserStat
 }

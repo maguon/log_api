@@ -34220,6 +34220,53 @@
         }
       }
     },
+    "/user/{userId}/qtId/{qtId}/userStat": {
+      "get": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "query  damageQaTaskCarRel By User Stat list",
+        "description": "query damageQaTaskCarRel By User Stat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "qtId",
+            "in": "path",
+            "description": "qt Id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid token value or invalid damageQaTask By User Stat id"
+          }
+        }
+      }
+    },
     "/repairStation": {
       "get": {
         "tags": [
