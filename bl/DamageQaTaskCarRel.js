@@ -27,7 +27,7 @@ function queryDamageQaTaskCarRel(req,res,next){
 
 function damageQaTaskDayStat(req,res,next){
     var params = req.params;
-    damageQaTaskCarRelDAO.damageQaTaskCarRelByDayStat(params,function(error,result){
+    damageQaTaskCarRelDAO.damageQaTaskDayStat(params,function(error,result){
         if (error) {
             logger.error(' damageQaTaskDayStat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
