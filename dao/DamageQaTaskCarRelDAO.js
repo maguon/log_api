@@ -130,9 +130,22 @@ function damageQaTaskUserStat(params,callback){
     });
 }
 
+function updateDrStatus(params,callback){
+    var query = " update damage_qa_task_car_rel set qa_status = 1, user_id = ?,date_id = ?  where car_id = ? and qa_status = 0 " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i]=params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateQaTaskCarRelStatus ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addDamageQaTaskCarRel : addDamageQaTaskCarRel,
     getDamageQaTaskCarRel : getDamageQaTaskCarRel,
     damageQaTaskDayStat : damageQaTaskDayStat,
-    damageQaTaskUserStat : damageQaTaskUserStat
+    damageQaTaskUserStat : damageQaTaskUserStat,
+    updateDrStatus : updateDrStatus
 }

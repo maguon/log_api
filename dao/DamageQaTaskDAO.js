@@ -48,7 +48,20 @@ function getDamageQaTask(params,callback) {
     });
 }
 
+function updateDtStatus(params,callback){
+    var query = " update damage_qa_task set qa_car_count = qa_car_count + 1 where id = (" +
+        "SELECT dr.qt_id FROM damage_qa_task_car_rel dr WHERE dr.car_id = ? )" ;
+    var paramsArray=[],i=0;
+    paramsArray[i]=params.carId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDtStatus ');
+        return callback(error,rows);
+    });
+}
+
+
 module.exports ={
     addDamageQaTask : addDamageQaTask,
-    getDamageQaTask : getDamageQaTask
+    getDamageQaTask : getDamageQaTask,
+    updateDtStatus : updateDtStatus
 }

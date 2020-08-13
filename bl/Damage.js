@@ -10,6 +10,8 @@ var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var damageDAO = require('../dao/DamageDAO.js');
 var damageCheckDAO = require('../dao/DamageCheckDAO.js');
+var damageQaTaskDAO = require('../dao/DamageQaTaskDAO.js');
+var damageQaTaskCarRelDAO = require('../dao/DamageQaTaskCarRelDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
@@ -225,9 +227,52 @@ function createQualityAssurance(req,res,next){
     req.params.carContent =" 质检 ";
     req.params.unique =1;
     req.params.op =sysConst.CAR_OP_TYPE.QUALITY;
-    logger.info(' createQualityAssurance ' + params.vin)
+    logger.info(' createQualityAssurance ' + params.vin);
     resUtil.resetCreateRes(res,{insertId:1},null);
     return next();
+}
+
+function createQa(req,res,next){
+    var params = req.params;
+    var myDate = new Date();
+    params.dateId = moment(myDate).format('YYYYMMDD');
+    Seq().seq(function(){
+        var that = this;
+        damageQaTaskCarRelDAO.updateDrStatus(params,function (error,result) {
+            if (error) {
+                logger.error(' createQa updateDrStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result && result.affectedRows>0){
+                    logger.info(' createQa updateDrStatus ' + 'success');
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res,"车辆未在检测任务中或车辆已被检测");
+                    return next();
+                }
+            }
+        })
+
+    }).seq(function(){
+        damageQaTaskDAO.updateDtStatus(params,function(error,result){
+            if (error) {
+                logger.error(' createQa updateDtStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.insertId>0){
+                    req.params.carContent =" 质检 ";
+                    req.params.unique =1;
+                    req.params.op =sysConst.CAR_OP_TYPE.QUALITY;
+                    logger.info(' createQa updateDtStatus ' + params.vin)
+                    resUtil.resetCreateRes(res,{insertId:1},null);
+                    return next();
+                }else{
+                    resUtil.resetQueryRes(res,{},null);
+                    return next();
+                }
+            }
+        })
+    })
 }
 
 function queryDamageTypeMonthStat(req,res,next){
@@ -819,6 +864,7 @@ module.exports = {
     updateDamageStatus : updateDamageStatus ,
     updateDamageHangStatus : updateDamageHangStatus,
     createQualityAssurance : createQualityAssurance ,
+    createQa : createQa ,
     queryDamageTypeMonthStat : queryDamageTypeMonthStat,
     queryDamageLinkTypeMonthStat : queryDamageLinkTypeMonthStat,
     queryDamageTypeWeekStat : queryDamageTypeWeekStat,

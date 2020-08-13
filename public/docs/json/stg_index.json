@@ -31513,6 +31513,51 @@
         }
       }
     },
+    "/user/{userId}/qa": {
+      "post": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "user add Qa",
+        "description": "user add a Qa",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "quality",
+            "in": "body",
+            "description": "quality info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quality"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid parameter id"
+          }
+        }
+      }
+    },
     "/user/{userId}/damage": {
       "post": {
         "tags": [

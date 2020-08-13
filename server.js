@@ -965,6 +965,7 @@ function createServer() {
     server.get('/api/damageBase.csv', damage.getDamageBaseCsv);
     server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},sysRecord.checkUserStatus,damage.createDamage,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},sysRecord.checkUserStatus,damage.createQualityAssurance,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/qa',contentType: 'application/json'},sysRecord.checkUserStatus,damage.createQa,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/damageFile',contentType: 'multipart/form-data'},damage.uploadDamageFile);
     server.put({path:'/api/user/:userId/damage/:damageId',contentType: 'application/json'} ,damage.updateDamage);
     server.put({path:'/api/user/:userId/damage/:damageId/damageStatus/:damageStatus',contentType: 'application/json'} ,damage.updateDamageStatus);
