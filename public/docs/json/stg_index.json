@@ -34036,7 +34036,7 @@
         "parameters": [
           {
             "name": "userId",
-            "in": "query",
+            "in": "path",
             "description": "user id",
             "required": true,
             "type": "integer"
@@ -34097,7 +34097,7 @@
         "parameters": [
           {
             "name": "userId",
-            "in": "query",
+            "in": "path",
             "description": "user id",
             "required": true,
             "type": "integer"
