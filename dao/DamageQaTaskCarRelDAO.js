@@ -7,12 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageQaTaskCarRelDAO.js');
 
 function addDamageQaTaskCarRel(params,callback){
-    var query = " INSERT INTO damage_qa_task_car_rel ( qt_id, car_id, qa_status,date_id)" +
-        " SELECT ? , id , ? ,? FROM car_info WHERE upload_id = ?";
+    var query = " INSERT INTO damage_qa_task_car_rel ( qt_id, car_id, qa_status)" +
+        " SELECT ? , id , ?  FROM car_info WHERE upload_id = ?";
     var paramsArray=[],i=0;
     paramsArray[i++] = params.qtId;
     paramsArray[i++] = params.qaStatus;
-    paramsArray[i++] = params.dateId;
     paramsArray[i] = params.uploadId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addDamageQaTaskCarRel ');
