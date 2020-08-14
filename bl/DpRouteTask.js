@@ -26,13 +26,13 @@ var moment = require('moment/moment.js');
 var logger = serverLogger.createLogger('DpRouteTask.js');
 
 function checkTaskExpired(taskPlanDate, deadDay) {
-    const now = new Date();
+    var now = new Date();
     // 当前日
-    const nowDay = now.getDate();
+    var nowDay = now.getDate();
     // 任务计划时间 年月
-    const taskPlanMonth = moment(taskPlanDate).format('YYYYMM');
+    var taskPlanMonth = moment(taskPlanDate).format('YYYYMM');
     // 可以更新的 年月
-    let taskActiveMonth;
+    var taskActiveMonth;
     if (nowDay > deadDay) {
         // 8号以后，可以更新 为 当前月
         taskActiveMonth = moment(now).format('YYYYMM');
