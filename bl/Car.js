@@ -719,15 +719,19 @@ function createCarSort(req,res,next){
     var params = req.params;
     req.params.carContent =" 分拣 ";
     req.params.unique =1;
-    if(req.params.opType == 11){
-        req.params.op =sysConst.CAR_OP_TYPE.IMPORT;
-    }else if(req.params.opType == 13){
-        req.params.op =sysConst.CAR_OP_TYPE.EXPORT;
-    }else if(req.params.opType == 17){
+    if(req.params.opType == "undefined" || req.params.opType == null ){
         req.params.op =sysConst.CAR_OP_TYPE.SORT;
     }else{
-        resUtil.resetFailedRes(res,"返回操作类型错误");
-        return next();
+        if(req.params.opType == 11){
+            req.params.op =sysConst.CAR_OP_TYPE.IMPORT;
+        }else if(req.params.opType == 13){
+            req.params.op =sysConst.CAR_OP_TYPE.EXPORT;
+        }else if(req.params.opType == 17){
+            req.params.op =sysConst.CAR_OP_TYPE.SORT;
+        }else{
+            resUtil.resetFailedRes(res,"返回操作类型错误");
+            return next();
+        }
     }
     logger.info(' createCarSort ' + params.vin);
     resUtil.resetCreateRes(res,{insertId:1},null);
