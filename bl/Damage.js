@@ -264,10 +264,10 @@ function createQa(req,res,next){
                     req.params.unique =1;
                     req.params.op =sysConst.CAR_OP_TYPE.QUALITY;
                     logger.info(' createQa updateDtStatus ' + params.vin)
-                    resUtil.resetCreateRes(res,{insertId:1},null);
+                    resUtil.resetUpdateRes(res,result,null);
                     return next();
                 }else{
-                    resUtil.resetQueryRes(res,{},null);
+                    resUtil.resetFailedRes(res,"质检统计错误");
                     return next();
                 }
             }

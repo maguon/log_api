@@ -40572,6 +40572,9 @@
         },
         "vin": {
           "type": "string"
+        },
+        "opType": {
+          "type": "integer"
         }
       },
       "xml": {
