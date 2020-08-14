@@ -259,7 +259,7 @@ function createQa(req,res,next){
                 logger.error(' createQa updateDtStatus ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                if(result&&result.insertId>0){
+                if(result&&result.affectedRows>0){
                     req.params.carContent =" 质检 ";
                     req.params.unique =1;
                     req.params.op =sysConst.CAR_OP_TYPE.QUALITY;
