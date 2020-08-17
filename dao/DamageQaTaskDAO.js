@@ -48,6 +48,21 @@ function getDamageQaTask(params,callback) {
     });
 }
 
+function getQaUploadId(params,callback) {
+    var query = " select * from damage_qa_task " +
+        " where id is not null ";
+    var paramsArray=[],i=0;
+    if(params.uploadId){
+        paramsArray[i++] = params.uploadId;
+        query = query + " and upload_id = ? ";
+    }
+    query = query + ' order by id desc ';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getQaUploadId ');
+        return callback(error,rows);
+    });
+}
+
 function updateDtStatus(params,callback){
     var query = " update damage_qa_task set qa_car_count = qa_car_count + 1 where id = (" +
         "SELECT dr.qt_id FROM damage_qa_task_car_rel dr WHERE dr.car_id = ? )" ;
@@ -63,5 +78,6 @@ function updateDtStatus(params,callback){
 module.exports ={
     addDamageQaTask : addDamageQaTask,
     getDamageQaTask : getDamageQaTask,
+    getQaUploadId : getQaUploadId,
     updateDtStatus : updateDtStatus
 }

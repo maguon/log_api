@@ -20,6 +20,22 @@ function createDamageQaTask(req,res,next) {
 
     Seq().seq(function () {
         var that = this;
+        damageQaTaskDAO.getQaUploadId(params, function (error, rows) {
+            if (error) {
+                logger.error(' createDamageQaTask getQaUploadId ' + error.message);
+                throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(rows&&rows.length>0){
+                    resUtil.resetFailedRes(res,"该批车辆已被导入，请不要重复导入");
+                    return next();
+                }else{
+                    logger.info(' createDamageQaTask getQaUploadId ' + 'success');
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
         damageQaTaskDAO.addDamageQaTask(params, function (error, result) {
             if (error) {
                 logger.error(' createDamageQaTask addDamageQaTask ' + error.message);
