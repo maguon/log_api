@@ -112,7 +112,11 @@ function getDamageInsureRelCsv(req,res,next){
                     parkObj.invoiceMoney = rows[i].invoice_money;
                 }
                 parkObj.damageId = rows[i].damage_id;
-                parkObj.vin = rows[i].vin;
+                if(arkObj.vin == null){
+                    parkObj.vin = "";
+                }else{
+                    parkObj.vin = rows[i].vin;
+                }
                 parkObj.eShortName = rows[i].e_short_name;
                 if(rows[i].r_short_name==null){
                     parkObj.rShortName = "";
@@ -154,7 +158,7 @@ function getDamageInsureRelCsv(req,res,next){
                     +parkObj.damageMoney+"," +parkObj.insurePlan+","+parkObj.insureActual+"," +parkObj.insureUserName+","
                     +parkObj.cityName+"," +parkObj.declareDate+","+parkObj.liabilityType+"," +parkObj.refRemark+","
                     +parkObj.derateMoney+"," +parkObj.carValuation+","+parkObj.invoiceMoney+","
-                    +parkObj.damageId+","+parkObj.vin+parkObj.eShortName+","+parkObj.rShortName+","+parkObj.damageType+","
+                    +parkObj.damageId+","+parkObj.vin+","+parkObj.eShortName+","+parkObj.rShortName+","+parkObj.damageType+","
                     +parkObj.underUserName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.damageExplain+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
