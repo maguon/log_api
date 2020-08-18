@@ -112,7 +112,7 @@ function getDamageInsureRelCsv(req,res,next){
                     parkObj.invoiceMoney = rows[i].invoice_money;
                 }
                 parkObj.damageId = rows[i].damage_id;
-                if(arkObj.vin == null){
+                if(parkObj.vin == null){
                     parkObj.vin = "";
                 }else{
                     parkObj.vin = rows[i].vin;
