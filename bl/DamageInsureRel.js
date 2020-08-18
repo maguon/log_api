@@ -112,12 +112,16 @@ function getDamageInsureRelCsv(req,res,next){
                     parkObj.invoiceMoney = rows[i].invoice_money;
                 }
                 parkObj.damageId = rows[i].damage_id;
-                if(parkObj.vin == null){
+                if(rows[i].vin == null){
                     parkObj.vin = "";
                 }else{
                     parkObj.vin = rows[i].vin;
                 }
-                parkObj.eShortName = rows[i].e_short_name;
+                if(rows[i].e_short_name == null){
+                    parkObj.eShortName = "";
+                }else{
+                    parkObj.eShortName = rows[i].e_short_name;
+                }
                 if(rows[i].r_short_name==null){
                     parkObj.rShortName = "";
                 }else{
