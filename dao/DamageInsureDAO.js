@@ -35,11 +35,12 @@ function addDamageInsure(params,callback){
 }
 
 function getDamageInsure(params,callback) {
-    var query = " select di.*,ti.insure_name,u.real_name as insure_user_name from damage_insure di " +
+    var query = " select di.*,ti.insure_name,u.real_name as insure_user_name,c.vin from damage_insure di " +
         " left join damage_insure_rel dir on di.id = dir.damage_insure_id " +
         " left join damage_info d on dir.damage_id = d.id " +
         " left join truck_insure ti on di.insure_id = ti.id " +
         " left join user_info u on di.insure_user_id = u.uid " +
+        " left join car_info c on d.car_id = c.id " +
         " where di.id is not null ";
     var paramsArray=[],i=0;
     if(params.damageInsureId){
@@ -93,6 +94,9 @@ function getDamageInsure(params,callback) {
     if(params.liabilityType){
         paramsArray[i++] = params.liabilityType;
         query = query + " and di.liability_type = ? ";
+    }
+    if(params.vinCode){
+        query = query + " and c.vin like '%"+params.vinCode+"%'";
     }
     if(params.declareDateStart){
         paramsArray[i++] = params.declareDateStart;

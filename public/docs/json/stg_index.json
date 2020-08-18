@@ -33006,6 +33006,14 @@
 
           },
           {
+            "name": "vinCode",
+            "in": "query",
+            "description": "vinCode",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "declareDateStart",
             "in": "query",
             "description": "declareDate start",
