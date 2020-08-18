@@ -35,7 +35,7 @@ function addDamageInsure(params,callback){
 }
 
 function getDamageInsure(params,callback) {
-    var query = " select di.*,ti.insure_name,u.real_name as insure_user_name,c.vin from damage_insure di " +
+    var query = " select di.*,ti.insure_name,u.real_name as insure_user_name from damage_insure di " +
         " left join damage_insure_rel dir on di.id = dir.damage_insure_id " +
         " left join damage_info d on dir.damage_id = d.id " +
         " left join truck_insure ti on di.insure_id = ti.id " +
