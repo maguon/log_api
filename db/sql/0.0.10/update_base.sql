@@ -1068,3 +1068,31 @@ ADD COLUMN `brand_style_name` varchar(50) COMMENT '品牌型号名称' AFTER `br
 
 ALTER TABLE `truck_brand_style`
 ADD COLUMN `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '品牌型号状态（0-停用,1-可用）' AFTER `brand_style_name`;
+
+-- ----------------------------
+-- 2020-08-20 更新
+-- ----------------------------
+DROP TABLE IF EXISTS `damage_qa_task`;
+CREATE TABLE `damage_qa_task`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `upload_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '上传ID',
+  `car_count` int(10) COMMENT '商品车计数',
+  `qa_car_count` int(10) DEFAULT 0 COMMENT '质检车计数',
+  `date_id` int(4) NOT NULL COMMENT '质检任务时间',
+  `created_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '质检任务创建时间',
+  `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `damage_qa_task_car_rel`;
+CREATE TABLE `damage_qa_task_car_rel`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `qt_id` int(10) NOT NULL COMMENT '质检任务ID',
+  `car_id` int(10) NOT NULL COMMENT '商品车ID',
+  `qa_status` tinyint(1) DEFAULT 0 COMMENT '质检状态(0-未检,1-已检)',
+  `user_id` int(10) DEFAULT 0 COMMENT '用户ID',
+  `date_id` int(4) COMMENT '质检时间',
+  `created_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '质检任务创建时间',
+  `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
