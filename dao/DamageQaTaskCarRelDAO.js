@@ -68,8 +68,8 @@ function damageQaTaskDayStat(params,callback){
         " LEFT JOIN ( SELECT dr.date_id, count( dr.id ) qa_count FROM damage_qa_task_car_rel dr " +
         " WHERE dr.qa_status = 1 " ;
 
-    if(params.qaUserId){
-        paramsArray[i++] = params.qaUserId;
+    if(params.userId){
+        paramsArray[i++] = params.userId;
         query = query + " and dr.user_id = ? ";
     }
     if(params.dateId){
