@@ -1096,3 +1096,9 @@ CREATE TABLE `damage_qa_task_car_rel`  (
   `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ----------------------------
+-- 2020-09-04 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+ADD COLUMN `op_user_id` int(10) DEFAULT 0 COMMENT '用户ID' AFTER `size_type`,
+ADD COLUMN `op_user_id` int(0) AFTER `updated_on`;
