@@ -1100,5 +1100,4 @@ CREATE TABLE `damage_qa_task_car_rel`  (
 -- 2020-09-04 更新
 -- ----------------------------
 ALTER TABLE `entrust_city_route_rel`
-ADD COLUMN `op_user_id` int(10) DEFAULT 0 COMMENT '用户ID' AFTER `size_type`,
-ADD COLUMN `op_user_id` int(0) AFTER `updated_on`;
+ADD COLUMN `op_user_id` int(10) DEFAULT 0 COMMENT '用户ID' AFTER `size_type`;
