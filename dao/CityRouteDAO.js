@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
     var query = " insert into city_route_info (route_id,route_start_id,route_start,route_end_id,route_end, " +
-        " distance,reverse_money) values ( ? , ? , ? , ? , ? , ? , ? , ? )";
+        " distance,reverse_money,op_user_id) values ( ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     if(params.routeStartId>params.routeEndId){
         paramsArray[i++] = params.routeEndId+''+params.routeStartId;
