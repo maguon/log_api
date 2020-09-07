@@ -96,8 +96,8 @@ function updateCityRoute(params,callback){
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.reverseMoney;
-    paramsArray[i++]=params.routeId;
-    paramsArray[i]=params.userId;
+    paramsArray[i++]=params.userId;
+    paramsArray[i]=params.routeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCityRoute ');
         return callback(error,rows);
