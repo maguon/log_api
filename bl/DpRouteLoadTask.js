@@ -394,7 +394,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             }
             params.carCount = parkObj.carCount;
             params.type = 0;
-            dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRel(params, function (error, result) {
+            dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRelUnique(params, function (error, result) {
                 if (error) {
                     logger.error(' addDpRouteLoadTaskCleanRel ' + error.message);
                     throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);

@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
     var query = " insert into city_route_info (route_id,route_start_id,route_start,route_end_id,route_end, " +
-        " distance,reverse_money) values ( ? , ? , ? , ? , ? , ? , ? )";
+        " distance,reverse_money,op_user_id) values ( ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     if(params.routeStartId>params.routeEndId){
         paramsArray[i++] = params.routeEndId+''+params.routeStartId;
@@ -20,7 +20,8 @@ function addCityRoute(params,callback){
     paramsArray[i++]=params.routeEndId;
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.distance;
-    paramsArray[i]=params.reverseMoney;
+    paramsArray[i++]=params.reverseMoney;
+    paramsArray[i]=params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCityRoute ');
         return callback(error,rows);
@@ -91,10 +92,11 @@ function getCityRouteDispatch(params,callback) {
 }
 
 function updateCityRoute(params,callback){
-    var query = " update city_route_info set distance = ? , reverse_money = ? where id = ? ";
+    var query = " update city_route_info set distance = ? , reverse_money = ? , op_user_id = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.reverseMoney;
+    paramsArray[i++]=params.userId;
     paramsArray[i]=params.routeId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateCityRoute ');

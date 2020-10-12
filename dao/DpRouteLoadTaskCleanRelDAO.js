@@ -45,6 +45,48 @@ function addDpRouteLoadTaskCleanRel(params,callback){
     });
 }
 
+function addDpRouteLoadTaskCleanRelUnique(params,callback){
+    var query = " insert into dp_route_load_task_clean_rel (dp_route_task_id,dp_route_load_task_id," +
+        " drive_id,truck_id,receive_id,small_single_price,big_single_price,small_car_count,big_car_count," +
+        " trailer_fee,total_trailer_fee,actual_trailer_fee,car_parking_fee,run_fee,total_run_fee,actual_run_fee," +
+        " lead_fee,actual_lead_fee,month_flag,total_price,actual_price,car_count,type,create_user_id,remark) " +
+        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? " +
+        " from DUAL " +
+        " where not exists(select id from dp_route_load_task_clean_rel where dp_route_load_task_id = ? and create_user_id = 0 ); " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.dpRouteTaskId;
+    paramsArray[i++]=params.dpRouteLoadTaskId;
+    paramsArray[i++]=params.driveId;
+    paramsArray[i++]=params.truckId;
+    paramsArray[i++]=params.receiveId;
+    paramsArray[i++]=params.smallSinglePrice;
+    paramsArray[i++]=params.bigSinglePrice;
+    paramsArray[i++]=params.smallCarCount;
+    paramsArray[i++]=params.bigCarCount;
+    paramsArray[i++]=params.trailerFee;
+    paramsArray[i++]=params.totalTrailerFee;
+    paramsArray[i++]=params.actualTrailerFee;
+    paramsArray[i++]=params.carParkingFee;
+    paramsArray[i++]=params.runFee;
+    paramsArray[i++]=params.totalRunFee;
+    paramsArray[i++]=params.actualRunFee;
+    paramsArray[i++]=params.leadFee;
+    paramsArray[i++]=params.actualLeadFee;
+    paramsArray[i++]=params.monthFlag;
+    paramsArray[i++]=params.totalPrice;
+    paramsArray[i++]=params.actualPrice;
+    paramsArray[i++]=params.carCount;
+    paramsArray[i++]=params.type;
+    // 2019-11-14 表结构新加字段【create_user_id】对应
+    paramsArray[i++] = params.type == 0 ? 0 : params.userId;
+    paramsArray[i++]=params.remark;
+    paramsArray[i]=params.dpRouteLoadTaskId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDpRouteLoadTaskCleanRelUnique ');
+        return callback(error,rows);
+    });
+}
+
 function getDpRouteLoadTaskCleanRel(params,callback) {
     var query = " select dpcr.*,d.drive_name,d.bank_number,d.bank_name,d.bank_user_name,u3.mobile,t.truck_num,u.real_name as field_op_name,dprl.load_date, " +
         " dprl.route_start as route_start_name,ba.addr_name,dprl.route_end as route_end_name,c.company_name, " +
@@ -445,6 +487,7 @@ function deleteDpRouteLoadTaskCleanRel(params,callback){    //装车回退删除
 
 module.exports ={
     addDpRouteLoadTaskCleanRel : addDpRouteLoadTaskCleanRel,
+    addDpRouteLoadTaskCleanRelUnique : addDpRouteLoadTaskCleanRelUnique,
     getDpRouteLoadTaskCleanRel : getDpRouteLoadTaskCleanRel,
     getDpRouteLoadTaskCleanRelBase : getDpRouteLoadTaskCleanRelBase,
     getDpRouteLoadTaskCleanRelCount : getDpRouteLoadTaskCleanRelCount,
