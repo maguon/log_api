@@ -7,6 +7,60 @@ var serverLogger = require('../util/ServerLogger.js');
 var sysConst = require('../util/SysConst.js');
 var logger = serverLogger.createLogger('DpRouteTaskDAO.js');
 
+function addDpRouteTaskForSelect(params,callback){
+    var query = " insert into dp_route_task (user_id,truck_id,drive_id,route_id,route_start_id,route_start,route_end_id,route_end, " +
+        " distance,oil_distance,task_plan_date,task_start_date,task_end_date,date_id,truck_number," +
+        " reverse_flag,reverse_money,outer_flag,task_status) " +
+        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , distance , distance , ? , ? , ? , ? , ? "
+        + ", ? , case when ? = 1 then reverse_money else 0 end , ? , ? " +
+        " from city_route_info " +
+        " where route_id = ? ";
+
+    var paramsArray=[],i=0;
+    // 指令调度人ID
+    paramsArray[i++]=params.userId;
+    // 货车ID
+    paramsArray[i++]=params.truckId;
+    // 司机ID
+    paramsArray[i++]=params.driveId;
+    let routId = '';
+    if(params.routeStartId>params.routeEndId){
+        routId = params.routeEndId+''+params.routeStartId;
+    }else{
+        routId = params.routeStartId+''+params.routeEndId;
+    }
+    // 线路组合ID
+    paramsArray[i++] = routId;
+    // 城市
+    paramsArray[i++] = params.routeStartId;
+    paramsArray[i++] = params.routeStart;
+    paramsArray[i++] = params.routeEndId;
+    paramsArray[i++] = params.routeEnd;
+    // // 公里数
+    // paramsArray[i++]=params.distance;
+    // // 油耗里程
+    // paramsArray[i++]=params.oilDistance;
+    paramsArray[i++]=params.taskPlanDate;
+    paramsArray[i++]=params.taskStartDate;
+    paramsArray[i++]=params.taskEndDate;
+    paramsArray[i++]=params.dateId;
+    paramsArray[i++]=params.truckNumber;
+    // 是否倒板(0-否,1-是)
+    paramsArray[i++]=params.reverseFlag;
+    // 判断倒板金额用
+    paramsArray[i++]=params.reverseFlag;
+    // paramsArray[i++]=params.reverseMoney;
+
+    paramsArray[i++]=params.outerFlag;
+    paramsArray[i]=params.taskStatus;
+    // select 条件
+    paramsArray[i] = routId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' addDpRouteTaskForSelect ');
+        return callback(error,rows);
+    });
+}
+
 function addDpRouteTask(params,callback){
     var query = " insert into dp_route_task (user_id,truck_id,drive_id,route_id,route_start_id,route_start,route_end_id,route_end, " +
         " distance,oil_distance,task_plan_date,task_start_date,task_end_date,date_id,truck_number," +
@@ -1055,6 +1109,7 @@ function getDriveCost(params,callback) {
 
 
 module.exports ={
+    addDpRouteTaskForSelect : addDpRouteTaskForSelect,
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
     getDpRouteTaskCsv : getDpRouteTaskCsv,

@@ -85,17 +85,17 @@ function createDpRouteTask(req,res,next){
         }else{
             params.outerFlag = 1;
         }
-        dpRouteTaskDAO.addDpRouteTask(params,function(error,result){
+        dpRouteTaskDAO.addDpRouteTaskForSelect(params,function(error,result){
             if (error) {
-                logger.error(' createDpRouteTask ' + error.message);
+                logger.error(' addDpRouteTaskForSelect ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.insertId>0){
-                    logger.info(' createDpRouteTask ' + 'success');
+                    logger.info(' addDpRouteTaskForSelect ' + 'success');
                     dpRouteTaskId = result.insertId;
                     that();
                 }else{
-                    resUtil.resetFailedRes(res,"create dpRouteTask failed");
+                    resUtil.resetFailedRes(res,"create addDpRouteTaskForSelect failed");
                     return next();
                 }
             }
