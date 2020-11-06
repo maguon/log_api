@@ -34163,6 +34163,13 @@
             "type": "integer"
           },
           {
+            "name": "carId",
+            "in": "query",
+            "description": "carId",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "vinCode",
             "in": "query",
             "description": "vinCode",

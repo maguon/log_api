@@ -29,6 +29,10 @@ function getDamageQaTaskCarRel(params,callback) {
         paramsArray[i++] = params.qtId;
         query = query + " and dqtcr.qt_id = ? ";
     }
+    if(params.carId){
+        paramsArray[i++] = params.carId;
+        query = query + " and dqtcr.car_id = ? ";
+    }
     if(params.vinCode){
         query = query + " and c.vin like '%"+params.vinCode+"%'";
     }
