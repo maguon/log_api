@@ -11,7 +11,8 @@ function addDpRouteTaskForSelect(params, callback) {
     var query = " insert into dp_route_task (user_id,truck_id,drive_id,route_id,route_start_id,route_start,route_end_id,route_end, " +
         " distance,oil_distance,task_plan_date,task_start_date,task_end_date,date_id,truck_number," +
         " reverse_flag,reverse_money,outer_flag,task_status) " +
-        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , distance , distance , ? , ? , ? , ? , ? , ? , case when ? = 1 then reverse_money else 0 end , ? , ? " +
+        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , distance , distance , ? , ? , ? , ? , ? , ? , " +
+        " case when ? = 1 then ( case when ? = 6 then reverse_money else reverse_money_2 end ) else 0 end , ? , ? " +
         " from city_route_info " +
         " where route_id = ? ";
 
@@ -48,6 +49,8 @@ function addDpRouteTaskForSelect(params, callback) {
     paramsArray[i++] = params.reverseFlag;
     // 判断倒板金额用
     paramsArray[i++] = params.reverseFlag;
+    // 判断车位 8 or 6
+    paramsArray[i++] = params.truckNumber;
     // paramsArray[i++]=params.reverseMoney;
 
     paramsArray[i++] = params.outerFlag;
