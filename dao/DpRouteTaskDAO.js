@@ -12,7 +12,7 @@ function addDpRouteTaskForSelect(params, callback) {
         " distance,oil_distance,task_plan_date,task_start_date,task_end_date,date_id,truck_number," +
         " reverse_flag,reverse_money,outer_flag,task_status) " +
         " SELECT ? , ? , ? , ? , ? , ? , ? , ? , distance , distance , ? , ? , ? , ? , ? , ? , " +
-        " case when ? = 1 then ( case when ? = 6 then reverse_money else reverse_money_2 end ) else 0 end , ? , ? " +
+        " case when ? = 1 then ( case when ? = 8 then reverse_money_2 else reverse_money end ) else 0 end , ? , ? " +
         " from city_route_info " +
         " where route_id = ? ";
 
