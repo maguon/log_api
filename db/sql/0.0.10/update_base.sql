@@ -1106,3 +1106,9 @@ ADD COLUMN `op_user_id` int(10) DEFAULT 0 COMMENT '用户ID' AFTER `size_type`;
 -- ----------------------------
 ALTER TABLE `city_route_info`
 ADD COLUMN `op_user_id` int(10) DEFAULT 0 COMMENT '用户ID' AFTER `reverse_money`;
+-- ----------------------------
+-- 2020-11-20 更新
+-- ----------------------------
+ALTER TABLE `city_route_info`
+MODIFY COLUMN `reverse_money` decimal(10, 2) DEFAULT 0.00 COMMENT '倒板金额(6位)' AFTER `distance`,
+ADD COLUMN `reverse_money_2` decimal(10, 2) DEFAULT 0.00 COMMENT '倒板金额(8位)' AFTER `reverse_money`;

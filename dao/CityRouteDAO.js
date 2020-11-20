@@ -8,7 +8,7 @@ var logger = serverLogger.createLogger('CityRouteDAO.js');
 
 function addCityRoute(params,callback){
     var query = " insert into city_route_info (route_id,route_start_id,route_start,route_end_id,route_end, " +
-        " distance,reverse_money,op_user_id) values ( ? , ? , ? , ? , ? , ? , ? , ? )";
+        " distance,reverse_money,reverse_money_2,op_user_id) values ( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     if(params.routeStartId>params.routeEndId){
         paramsArray[i++] = params.routeEndId+''+params.routeStartId;
@@ -21,6 +21,7 @@ function addCityRoute(params,callback){
     paramsArray[i++]=params.routeEnd;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.reverseMoney;
+    paramsArray[i++]=params.reverseMoney2;
     paramsArray[i]=params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCityRoute ');
@@ -78,10 +79,10 @@ function getCityRouteCheck(params,callback) {
 }
 
 function getCityRouteDispatch(params,callback) {
-    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.route_id,cd.distance,cd.reverse_money,cd.id from city_info ci left join " +
-        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.route_id,cri.distance,cri.reverse_money,cri.id from city_route_info cri where cri.route_start_id = " + params.routeStartId +
+    var query = " select "+ params.routeStartId +" ,ci.id as end_id,ci.city_name,cd.route_id,cd.distance,cd.reverse_money,cd.reverse_money_2,cd.id from city_info ci left join " +
+        " (select cri.route_start_id as start_id, cri.route_end_id as end_id ,cri.route_id,cri.distance,cri.reverse_money,cri.reverse_money_2,cri.id from city_route_info cri where cri.route_start_id = " + params.routeStartId +
         " union " +
-        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.route_id,cri2.distance,cri2.reverse_money,cri2.id from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
+        " select cri2.route_end_id as start_id ,cri2.route_start_id as end_id ,cri2.route_id,cri2.distance,cri2.reverse_money,cri2.reverse_money_2,cri2.id from city_route_info cri2 where cri2.route_end_id = " + params.routeStartId +
         " ) as cd on cd.start_id = " + params.routeStartId + " and cd.end_id = ci.id where  cd.distance >= 0 ";
     var paramsArray=[],i=0;
     query = query + '  order by end_id  ';
@@ -92,10 +93,11 @@ function getCityRouteDispatch(params,callback) {
 }
 
 function updateCityRoute(params,callback){
-    var query = " update city_route_info set distance = ? , reverse_money = ? , op_user_id = ? where id = ? ";
+    var query = " update city_route_info set distance = ? , reverse_money = ? , reverse_money_2 = ? , op_user_id = ? where id = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.distance;
     paramsArray[i++]=params.reverseMoney;
+    paramsArray[i++]=params.reverseMoney2;
     paramsArray[i++]=params.userId;
     paramsArray[i]=params.routeId;
     db.dbQuery(query,paramsArray,function(error,rows){

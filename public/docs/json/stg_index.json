@@ -40182,6 +40182,9 @@
         },
         "reverseMoney": {
           "type": "integer"
+        },
+        "reverseMoney2": {
+          "type": "integer"
         }
       },
       "xml": {
