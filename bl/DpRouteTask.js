@@ -1800,14 +1800,14 @@ function getDpRouteTaskDetailCsv(req,res,next){
     })
 }
 
-function queryDpRouteTaskMoneyTotal(req,res,next){
+function queryRouteStat(req,res,next){
     var params = req.params ;
-    dpRouteTaskDAO.getDpRouteTaskMoneyTotal(params,function(error,result){
+    dpRouteTaskDAO.queryRouteStat(params,function(error,result){
         if (error) {
-            logger.error(' queryDpRouteTaskMoneyTotal ' + error.message);
+            logger.error(' queryRouteStat ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDpRouteTaskMoneyTotal ' + 'success');
+            logger.info(' queryRouteStat ' + 'success');
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
@@ -1844,5 +1844,5 @@ module.exports = {
     queryDriveCost : queryDriveCost,
     getDriveCostCsv : getDriveCostCsv,
     getDpRouteTaskDetailCsv : getDpRouteTaskDetailCsv,
-    queryDpRouteTaskMoneyTotal : queryDpRouteTaskMoneyTotal
+    queryRouteStat : queryRouteStat
 }

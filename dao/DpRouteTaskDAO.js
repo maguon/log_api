@@ -1108,7 +1108,7 @@ function getDriveCost(params,callback) {
     });
 }
 
-function getDpRouteTaskMoneyTotal(params,callback) {
+function queryRouteStat(params,callback) {
 
     var query = " select  count( drt.id ) as countRout, drt.route_start_id , cs.city_name as route_start_name , drt.route_end_id , ce.city_name as route_end_name " +
         " from dp_route_task drt " +
@@ -1116,12 +1116,12 @@ function getDpRouteTaskMoneyTotal(params,callback) {
         " left join city_info ce on drt.route_end_id = ce.id " +
         " where drt.id is not null and drt.task_status = 9 ";
     var paramsArray=[],i=0;
-    if(params.monthStart){
-        paramsArray[i++] = params.monthStart;
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
         query = query + " and drt.date_id >= ? ";
     }
-    if(params.monthEnd){
-        paramsArray[i++] = params.monthEnd;
+    if(params.dateEnd){
+        paramsArray[i++] = params.dateEnd;
         query = query + " and drt.date_id <= ? ";
     }
     query = query + ' GROUP BY drt.route_start_id, drt.route_end_id ';
@@ -1132,7 +1132,7 @@ function getDpRouteTaskMoneyTotal(params,callback) {
         query += " limit ? , ? "
     }
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' getDpRouteTaskMoneyTotal ');
+        logger.debug(' queryRouteStat ');
         return callback(error,rows);
     });
 }
@@ -1164,5 +1164,5 @@ module.exports ={
     updateDistanceRecordCount : updateDistanceRecordCount,
     updateDpRouteTaskRemark : updateDpRouteTaskRemark,
     getDriveCost : getDriveCost,
-    getDpRouteTaskMoneyTotal : getDpRouteTaskMoneyTotal
+    queryRouteStat : queryRouteStat
 }

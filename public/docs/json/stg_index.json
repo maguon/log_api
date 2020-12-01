@@ -25514,7 +25514,7 @@
         }
       }
     },
-    "/dpRouteTaskMoneyTotal": {
+    "/routeStat": {
       "get": {
         "tags": [
           "dispatch"
@@ -25526,17 +25526,17 @@
         ],
         "parameters": [
           {
-            "name": "monthStart",
+            "name": "dateStart",
             "in": "query",
-            "description": "month start",
+            "description": "date start",
             "required": false,
             "type": "string"
 
           },
           {
-            "name": "monthEnd",
+            "name": "dateEnd",
             "in": "query",
-            "description": "month end",
+            "description": "date end",
             "required": false,
             "type": "string"
 
