@@ -315,6 +315,38 @@ function updateOutputById(params,callback){
     });
 }
 
+function queryReceiveStat(params,callback) {
+
+    var query = " select sum(drlt.real_count) countRealCar, ri.receive_name " +
+        " from dp_route_load_task drlt " +
+        " left join receive_info ri on drlt.receive_id = ri.id " +
+        " where drlt.id is not null";
+    var paramsArray=[],i=0;
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
+        query = query + " and drlt.date_id >= ? ";
+    }
+    if(params.dateEnd){
+        paramsArray[i++] = params.dateEnd;
+        query = query + " and drlt.date_id <= ? ";
+    }
+    if(params.receiveFlag){
+        paramsArray[i++] = params.receiveFlag;
+        query = query + " and drlt.receive_flag = ? ";
+    }
+    query = query + ' GROUP BY drlt.receive_id';
+    query = query + ' order by countRealCar desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' queryReceiveStat ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addDpRouteLoadTask : addDpRouteLoadTask,
     addDpRouteLoadTaskBatch : addDpRouteLoadTaskBatch,
@@ -324,5 +356,6 @@ module.exports ={
     getDpRouteLoadTaskCount : getDpRouteLoadTaskCount,
     updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus,
     getDpRouteLoadTaskPatch : getDpRouteLoadTaskPatch ,
-    updateOutputById : updateOutputById
+    updateOutputById : updateOutputById,
+    queryReceiveStat : queryReceiveStat
 }

@@ -25519,8 +25519,8 @@
         "tags": [
           "dispatch"
         ],
-        "summary": "query  dpRouteTaskMoney list",
-        "description": "query dpRouteTaskMoney",
+        "summary": "query  routeStat",
+        "description": "query routeStat",
         "produces": [
           "application/json"
         ],
@@ -26481,6 +26481,74 @@
           },
           "400": {
             "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/receiveStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  receiveStat",
+        "description": "query receiveStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateStart",
+            "in": "query",
+            "description": "date start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateEnd",
+            "in": "query",
+            "description": "date end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "receiveFlag",
+            "in": "query",
+            "description": "receive flag",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskMoney"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
           }
         }
       }
