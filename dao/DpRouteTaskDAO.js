@@ -1110,8 +1110,10 @@ function getDriveCost(params,callback) {
 
 function getDpRouteTaskMoneyTotal(params,callback) {
 
-    var query = " select  count( drt.route_start_id + drt.route_end_id ) as countRout, drt.route_start_id , drt.route_start , drt.route_end_id , drt.route_end " +
+    var query = " select  count( drt.id ) as countRout, drt.route_start_id , cs.city_name as route_start_name , drt.route_end_id , ce.city_name as route_end_name " +
         " from dp_route_task drt " +
+        " left join city_info cs on drt.route_start_id = cs.id " +
+        " left join city_info ce on drt.route_end_id = ce.id " +
         " where drt.id is not null and drt.task_status = 9 ";
 
     var paramsArray=[],i=0;
