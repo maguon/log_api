@@ -1123,7 +1123,7 @@ function getDpRouteTaskMoneyTotal(params,callback) {
         paramsArray[i++] = params.monthEnd;
         query = query + " and drt.date_id <= ? ";
     }
-    query = query + ' GROUP BY route_id ';
+    query = query + ' GROUP BY drt.oute_id ';
     query = query + ' order by count desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
