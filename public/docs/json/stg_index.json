@@ -25514,6 +25514,66 @@
         }
       }
     },
+    "/dpRouteTaskMoneyTotal": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  dpRouteTaskMoney list",
+        "description": "query dpRouteTaskMoney",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monthStart",
+            "in": "query",
+            "description": "month start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "monthEnd",
+            "in": "query",
+            "description": "month end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskMoney"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask": {
       "post": {
         "tags": [

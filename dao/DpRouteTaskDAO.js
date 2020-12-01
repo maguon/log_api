@@ -1108,6 +1108,33 @@ function getDriveCost(params,callback) {
     });
 }
 
+function getDpRouteTaskMoneyTotal(params,callback) {
+
+    var query = " select count(*) as count, drt.route_start_id , drt.route_start , drt.route_end_id , drt.route_end " +
+        " from dp_route_task drt " +
+        " where drt.id is not null and drt.task_status = 9 ";
+
+    var paramsArray=[],i=0;
+    if(params.monthStart){
+        paramsArray[i++] = params.monthStart;
+        query = query + " and drt.date_id >= ? ";
+    }
+    if(params.monthEnd){
+        paramsArray[i++] = params.monthEnd;
+        query = query + " and drt.date_id <= ? ";
+    }
+    query = query + ' GROUP BY route_id ';
+    query = query + ' order by count desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDpRouteTaskMoneyTotal ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
     addDpRouteTaskForSelect : addDpRouteTaskForSelect,
@@ -1135,5 +1162,6 @@ module.exports ={
     updateDpRouteReverseFlag : updateDpRouteReverseFlag,
     updateDistanceRecordCount : updateDistanceRecordCount,
     updateDpRouteTaskRemark : updateDpRouteTaskRemark,
-    getDriveCost : getDriveCost
+    getDriveCost : getDriveCost,
+    getDpRouteTaskMoneyTotal : getDpRouteTaskMoneyTotal
 }
