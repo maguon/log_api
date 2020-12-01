@@ -1115,7 +1115,6 @@ function getDpRouteTaskMoneyTotal(params,callback) {
         " left join city_info cs on drt.route_start_id = cs.id " +
         " left join city_info ce on drt.route_end_id = ce.id " +
         " where drt.id is not null and drt.task_status = 9 ";
-
     var paramsArray=[],i=0;
     if(params.monthStart){
         paramsArray[i++] = params.monthStart;
