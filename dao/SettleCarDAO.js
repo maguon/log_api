@@ -212,9 +212,10 @@ function getNotSettleCarCount(params,callback) {
 
 function getEntrustStat(params,callback) {
 
-    var query = " SELECT cv.entrust_id, count( cv.id ) AS countCar, sum(price+price_2+price_3) AS sumFee  " +
+    var query = " SELECT ei.id , ei.short_name , ei.entrust_name , count( cv.id ) AS countCar, sum(price+price_2+price_3) AS sumFee  " +
         " From settle_car sc " +
         " LEFT JOIN car_info cv ON cv.vin = sc.vin " +
+        " LEFT JOIN entrust_info ei ON ei.id = sc.entrust_id " +
         " WHERE sc.id IS NOT NULL " +
         " AND cv.entrust_id = sc.entrust_id  " +
         " AND cv.route_start_id = sc.route_start_id  " +
