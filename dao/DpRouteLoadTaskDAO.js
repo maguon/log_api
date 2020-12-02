@@ -317,7 +317,7 @@ function updateOutputById(params,callback){
 
 function queryReceiveStat(params,callback) {
 
-    var query = " select sum(drlt.real_count) countRealCar, ri.receive_name " +
+    var query = " select sum(drlt.real_count) countRealCar, ri.id , ri.short_name , ri.receive_name  " +
         " from dp_route_load_task drlt " +
         " left join receive_info ri on drlt.receive_id = ri.id " +
         " where drlt.id is not null";

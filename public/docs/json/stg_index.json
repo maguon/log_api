@@ -26515,7 +26515,7 @@
           {
             "name": "receiveFlag",
             "in": "query",
-            "description": "receive flag",
+            "description": "是否为库(0-非库,1-是库)",
             "required": false,
             "type": "integer"
 
