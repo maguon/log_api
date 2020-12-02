@@ -36733,6 +36733,57 @@
         }
       }
     },
+    "/entrustStat": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query  entrustStat",
+        "description": "query entrustStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateStart",
+            "in": "query",
+            "description": "date start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateEnd",
+            "in": "query",
+            "description": "date end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/settleCarFile": {
       "post": {
         "tags": [

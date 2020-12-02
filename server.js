@@ -1083,6 +1083,8 @@ function createServer() {
     server.get('/api/notSettleCarCount', settleCar.queryNotSettleCarCount);
     server.get('/api/settleCar.csv',settleCar.getSettleCarCsv);
     server.get('/api/notSettleCar.csv',settleCar.getNotSettleCarCsv);
+    server.get('/api/entrustStat' , settleCar.getEntrustStat);
+
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);
     server.post({path:'/api/user/:userId/settleCarFile',contentType: 'multipart/form-data'},settleCar.uploadSettleCarFile);
     server.put({path:'/api/user/:userId/settleCar/:settleCarId',contentType: 'application/json'} ,settleCar.updateSettleCar);

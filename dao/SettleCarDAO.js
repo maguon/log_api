@@ -210,6 +210,37 @@ function getNotSettleCarCount(params,callback) {
     });
 }
 
+function getEntrustStat(params,callback) {
+
+    var query = " SELECT cv.entrust_id, count( cv.id ) AS countCar, sum(price+price_2+price_3) AS sumFee  " +
+        " From settle_car sc " +
+        " LEFT JOIN car_info cv ON cv.vin = sc.vin " +
+        " WHERE sc.id IS NOT NULL " +
+        " AND cv.entrust_id = sc.entrust_id  " +
+        " AND cv.route_start_id = sc.route_start_id  " +
+        " AND cv.route_end_id = sc.route_end_id  " ;
+    var paramsArray=[],i=0;
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
+        query = query + " and cv.order_date_id >= ? ";
+    }
+    if(params.dateEnd){
+        paramsArray[i++] = params.dateEnd;
+        query = query + " and cv.order_date_id <= ? ";
+    }
+    query = query + ' GROUP BY cv.entrust_id ';
+    query = query + ' order by sumFee desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getEntrustStat ');
+        return callback(error,rows);
+    });
+}
+
 function updateSettleCar(params,callback){
     var query = " update settle_car set vin = ? , entrust_id = ? , route_start_id = ? , route_end_id = ? , price = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -254,6 +285,7 @@ module.exports ={
     getNotSettleCarCount : getNotSettleCarCount,
     addUploadSettleCar : addUploadSettleCar,
     getSettleCar : getSettleCar,
+    getEntrustStat : getEntrustStat,
     updateSettleCar : updateSettleCar,
     updateUploadSettleCar : updateUploadSettleCar
 }
