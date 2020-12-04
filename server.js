@@ -836,6 +836,8 @@ function createServer() {
     server.get('/api/driveCost', dpRouteTask.queryDriveCost);
     server.get('/api/driveCost.csv' , dpRouteTask.getDriveCostCsv);
     server.get('/api/dpRouteTaskDetail.csv' , dpRouteTask.getDpRouteTaskDetailCsv);
+    server.get('/api/routeStat' , dpRouteTask.queryRouteStat);
+
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
     server.post({path:'/api/user/:userId/emptyDpRouteTask',contentType: 'application/json'},dpRouteTask.createEmptyDpRouteTask,sysRecord.saveRouteRecord);
     server.post({path:'/api/user/:userId/dpRouteTaskBatch',contentType: 'application/json'},dpRouteTask.createDpRouteTaskBatch,sysRecord.saveRouteRecord);
@@ -863,6 +865,8 @@ function createServer() {
      */
     server.get('/api/dpRouteLoadTask',dpRouteLoadTask.queryDpRouteLoadTask);
     server.get('/api/dpRouteLoadTaskCount',dpRouteLoadTask.queryDpRouteLoadTaskCount);
+    server.get('/api/receiveStat' , dpRouteLoadTask.queryReceiveStat);
+
     server.post({path:'/api/user/:userId/dpRouteTask/:dpRouteTaskId/dpRouteLoadTask',contentType: 'application/json'},dpRouteLoadTask.createDpRouteLoadTask);
     server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatus/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatus,sysRecord.saveRouteRecord);
     server.put({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/loadTaskStatusBack/:loadTaskStatus',contentType: 'application/json'} ,dpRouteLoadTask.updateDpRouteLoadTaskStatusBack,sysRecord.saveRouteRecord);
@@ -1079,6 +1083,8 @@ function createServer() {
     server.get('/api/notSettleCarCount', settleCar.queryNotSettleCarCount);
     server.get('/api/settleCar.csv',settleCar.getSettleCarCsv);
     server.get('/api/notSettleCar.csv',settleCar.getNotSettleCarCsv);
+    server.get('/api/entrustStat' , settleCar.getEntrustStat);
+
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);
     server.post({path:'/api/user/:userId/settleCarFile',contentType: 'multipart/form-data'},settleCar.uploadSettleCarFile);
     server.put({path:'/api/user/:userId/settleCar/:settleCarId',contentType: 'application/json'} ,settleCar.updateSettleCar);

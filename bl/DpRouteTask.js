@@ -1800,6 +1800,19 @@ function getDpRouteTaskDetailCsv(req,res,next){
     })
 }
 
+function queryRouteStat(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.queryRouteStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryRouteStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryRouteStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
 
 module.exports = {
     createDpRouteTask : createDpRouteTask,
@@ -1830,5 +1843,6 @@ module.exports = {
     updateDpRouteTaskRemark : updateDpRouteTaskRemark,
     queryDriveCost : queryDriveCost,
     getDriveCostCsv : getDriveCostCsv,
-    getDpRouteTaskDetailCsv : getDpRouteTaskDetailCsv
+    getDpRouteTaskDetailCsv : getDpRouteTaskDetailCsv,
+    queryRouteStat : queryRouteStat
 }

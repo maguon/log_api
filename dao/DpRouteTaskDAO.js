@@ -1108,6 +1108,34 @@ function getDriveCost(params,callback) {
     });
 }
 
+function queryRouteStat(params,callback) {
+
+    var query = " select  count( drt.id ) as countRout, drt.route_start_id , cs.city_name as route_start_name , drt.route_end_id , ce.city_name as route_end_name " +
+        " from dp_route_task drt " +
+        " left join city_info cs on drt.route_start_id = cs.id " +
+        " left join city_info ce on drt.route_end_id = ce.id " +
+        " where drt.id is not null and drt.task_status = 9 ";
+    var paramsArray=[],i=0;
+    if(params.dateStart){
+        paramsArray[i++] = params.dateStart;
+        query = query + " and drt.date_id >= ? ";
+    }
+    if(params.dateEnd){
+        paramsArray[i++] = params.dateEnd;
+        query = query + " and drt.date_id <= ? ";
+    }
+    query = query + ' GROUP BY drt.route_start_id, drt.route_end_id ';
+    query = query + ' order by countRout desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' queryRouteStat ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
     addDpRouteTaskForSelect : addDpRouteTaskForSelect,
@@ -1135,5 +1163,6 @@ module.exports ={
     updateDpRouteReverseFlag : updateDpRouteReverseFlag,
     updateDistanceRecordCount : updateDistanceRecordCount,
     updateDpRouteTaskRemark : updateDpRouteTaskRemark,
-    getDriveCost : getDriveCost
+    getDriveCost : getDriveCost,
+    queryRouteStat : queryRouteStat
 }

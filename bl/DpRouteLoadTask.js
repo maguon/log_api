@@ -141,6 +141,20 @@ function queryDpRouteLoadTaskCount(req,res,next){
     })
 }
 
+function queryReceiveStat(req,res,next){
+    var params = req.params ;
+    dpRouteLoadTaskDAO.queryReceiveStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryReceiveStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryReceiveStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDpRouteLoadTaskStatus(req,res,next){
     var params = req.params;
     var parkObj = {};
@@ -806,6 +820,7 @@ module.exports = {
     createDpRouteLoadTask : createDpRouteLoadTask,
     queryDpRouteLoadTask : queryDpRouteLoadTask,
     queryDpRouteLoadTaskCount : queryDpRouteLoadTaskCount,
+    queryReceiveStat : queryReceiveStat,
     updateDpRouteLoadTaskStatus : updateDpRouteLoadTaskStatus,
     updateDpRouteLoadTaskStatusBack : updateDpRouteLoadTaskStatusBack,
     removeDpRouteLoadTask : removeDpRouteLoadTask

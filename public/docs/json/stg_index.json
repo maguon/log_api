@@ -25514,6 +25514,66 @@
         }
       }
     },
+    "/routeStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  routeStat",
+        "description": "query routeStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateStart",
+            "in": "query",
+            "description": "date start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateEnd",
+            "in": "query",
+            "description": "date end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskMoney"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
+          }
+        }
+      }
+    },
     "/user/{userId}/dpRouteTask": {
       "post": {
         "tags": [
@@ -26421,6 +26481,74 @@
           },
           "400": {
             "description": "Invalid token value or invalid dpRouteTask id"
+          }
+        }
+      }
+    },
+    "/receiveStat": {
+      "get": {
+        "tags": [
+          "dispatch"
+        ],
+        "summary": "query  receiveStat",
+        "description": "query receiveStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateStart",
+            "in": "query",
+            "description": "date start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateEnd",
+            "in": "query",
+            "description": "date end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "receiveFlag",
+            "in": "query",
+            "description": "是否为库(0-非库,1-是库)",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/dpRouteTaskMoney"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid storage id"
           }
         }
       }
@@ -36601,6 +36729,57 @@
           },
           "400": {
             "description": "Invalid token value or invalid settleCar id"
+          }
+        }
+      }
+    },
+    "/entrustStat": {
+      "get": {
+        "tags": [
+          "settle"
+        ],
+        "summary": "query  entrustStat",
+        "description": "query entrustStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dateStart",
+            "in": "query",
+            "description": "date start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "dateEnd",
+            "in": "query",
+            "description": "date end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid token value or invalid storage id"
           }
         }
       }
