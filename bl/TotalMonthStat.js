@@ -335,7 +335,65 @@ function querySettleStat(req,res,next){
     })
 }
 
+function getSettleStatCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' +"产值" + ','+"外协产值" + ','+"单车产值"+ ','+ "单车公里产值";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    totalMonthStatDAO.getSettleStat(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveTruckMonthValue ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                // 月份
+                parkObj.yMonth = rows[i].y_month;
+
+                // 产值
+                if(rows[i].output == null){
+                    parkObj.output = "";
+                }else{
+                    parkObj.output = rows[i].output;
+                }
+
+                // 外协产值
+                if(rows[i].outer_output   == null){
+                    parkObj.outer_output   = "";
+                }else{
+                    parkObj.outer_output   = rows[i].outer_output  ;
+                }
+
+                // 单车产值
+                if(rows[i].per_truck_output  == null){
+                    parkObj.per_truck_output  = "";
+                }else{
+                    parkObj.per_truck_output  = rows[i].per_truck_output ;
+                }
+
+                // 单车公里产值
+                if(rows[i].per_km_output == null){
+                    parkObj.per_km_output = "";
+                }else{
+                    parkObj.per_km_output = rows[i].per_km_output;
+                }
+
+                csvString = csvString+parkObj.yMonth+","+parkObj.output+","+parkObj.outer_output+","+parkObj.per_truck_output+","+parkObj.per_km_output+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 module.exports = {
     createTotalMonthStat : createTotalMonthStat,
-    querySettleStat : querySettleStat
+    querySettleStat : querySettleStat,
+    getSettleStatCsv : getSettleStatCsv
 }
