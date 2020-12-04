@@ -64,14 +64,15 @@ function updateOutputCount(params,callback) {
 //运营货车数量 , 重载公里数 , 空载公里数 , 总公里数 , 重载率
 function updateTruckCount(params,callback) {
     var query = " UPDATE total_month_stat tms INNER JOIN( " +
-        " SELECT sum(drt.truck_id) as truck_count, " +
+        " SELECT count(DISTINCT(drt.truck_id)) as truck_count, " +
         " sum( CASE WHEN drt.load_flag = 1 THEN drt.distance END ) AS load_distance, " +
         " sum( CASE WHEN drt.load_flag = 0 THEN drt.distance END ) AS no_load_distance " +
         " FROM dp_route_task drt " +
         " WHERE drt.id is not null " +
         " AND drt.date_id >= " + params.yMonth + "01 " +
         " AND drt.date_id <= " + params.yMonth +"31 " +
-        " AND drt.task_status = 10 ) drtm " +
+        " AND drt.task_status = 10 " +
+        " AND outer_flag = 0 ) drtm " +
         " ON tms.y_month = " + params.yMonth  +
         " SET tms.truck_count = drtm.truck_count ," +
         " tms.load_distance = drtm.load_distance, " +
@@ -346,7 +347,7 @@ function updateCleanFeeCount(params,callback) {
         " WHERE drlt.id is not null " +
         " AND drlt.date_id >= " + params.yMonth + "01 " +
         " AND drlt.date_id <= " + params.yMonth +"31 " +
-        " AND drlt.status =2 ) dim " +
+        " AND drlt.status = 2 ) dim " +
         " ON tms.y_month = " + params.yMonth  +
         " SET tms.clean_fee = dim.clean_fee ";
     var paramsArray=[],i=0;
@@ -434,6 +435,21 @@ function deleteTotalMonthStat(params,callback){
     });
 }
 
+function getSettleStat(params,callback) {
+    var query = " select tms.y_month, tms.output, tms.outer_output, " +
+        " tms.per_truck_output, tms.per_km_output " +
+        " FROM total_month_stat tms " +
+        " where tms.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.yMonth){
+        paramsArray[i++] = params.yMonth;
+        query = query + " and tms.y_month = ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getSettleStat ');
+        return callback(error,rows);
+    });
+}
 
 module.exports ={
     addTotalMonthStat : addTotalMonthStat,
@@ -454,5 +470,6 @@ module.exports ={
     updatePerOutputCount : updatePerOutputCount,
     updatePerCarDamageMoneyCount : updatePerCarDamageMoneyCount,
     updatePerCarCleanFeeCount : updatePerCarCleanFeeCount,
-    deleteTotalMonthStat : deleteTotalMonthStat
+    deleteTotalMonthStat : deleteTotalMonthStat,
+    getSettleStat : getSettleStat
 }

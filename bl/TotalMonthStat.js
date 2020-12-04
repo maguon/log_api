@@ -11,7 +11,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TotalMonthStatDAO.js');
 
 
-function createDriveTruckMonthValue(req,res,next){
+function createTotalMonthStat(req,res,next){
     var params = req.params ;
     Seq().seq(function(){
         var that = this;
@@ -321,6 +321,21 @@ function createDriveTruckMonthValue(req,res,next){
     })
 }
 
+function querySettleStat(req,res,next){
+    var params = req.params ;
+    totalMonthStatDAO.getSettleStat(params,function(error,result){
+        if (error) {
+            logger.error(' querySettleStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' querySettleStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 module.exports = {
-    createDriveTruckMonthValue : createDriveTruckMonthValue
+    createTotalMonthStat : createTotalMonthStat,
+    querySettleStat : querySettleStat
 }

@@ -96,6 +96,7 @@ var settleCar = require('./bl/SettleCar.js');
 var settleOuterTruck = require('./bl/SettleOuterTruck.js');
 var settleOuterInvoice = require('./bl/SettleOuterInvoice.js');
 var settleOuterInvoiceCarRel = require('./bl/SettleOuterInvoiceCarRel.js');
+var totalMonthStat = require('./bl/TotalMonthStat.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
@@ -1127,11 +1128,19 @@ function createServer() {
      * MsgPush Module
      */
     server.get('/api/user/:userId/pushMsg' ,msgPush.pushMsg);
+
     /**
      * SMS Module
      */
     server.post({path:'/api/phone/:mobile/passwordSms',contentType: 'application/json'},sms.sendPswdSms);
     server.post({path:'/api/user/:userId/phone/:mobile/mobileSms',contentType: 'application/json'},sms.sendPhoneSms);
+
+    /**
+     * Statistics Module
+     */
+    server.get('/api/user/:userId/settleStat' ,totalMonthStat.querySettleStat);
+
+
     /**
      * App Module
      */

@@ -81,6 +81,10 @@
       "description":"MsgPush of log api"
     },
     {
+      "name":"statistics",
+      "description":"statistics of log api"
+    },
+    {
       "name":"app",
       "description":"app version"
     }
@@ -38501,6 +38505,47 @@
             "description": "message type",
             "required": false,
             "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/settleStat": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "get pushMsg list",
+        "description": "get pushMsg",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonth",
+            "in": "query",
+            "description": "yMonth",
+            "required": true,
+            "type": "integer"
 
           }
         ],
