@@ -411,6 +411,19 @@ function updatePerCarDamageMoneyCount(params,callback) {
     });
 }
 
+//质损率
+function updateDamageRatioCount(params,callback) {
+    var query = " UPDATE total_month_stat " +
+        " SET damage_ratio = damage_count / car_count " +
+        " WHERE y_month = " + params.yMonth ;
+    var paramsArray=[],i=0;
+
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageRatioCount ');
+        return callback(error,rows);
+    });
+}
+
 //单车洗车费
 function updatePerCarCleanFeeCount(params,callback) {
     var query = " UPDATE total_month_stat " +
@@ -505,6 +518,7 @@ module.exports ={
     updateDriveTruckFeeCount : updateDriveTruckFeeCount,
     updatePerOutputCount : updatePerOutputCount,
     updatePerCarDamageMoneyCount : updatePerCarDamageMoneyCount,
+    updateDamageRatioCount : updateDamageRatioCount,
     updatePerCarCleanFeeCount : updatePerCarCleanFeeCount,
     deleteTotalMonthStat : deleteTotalMonthStat,
     getSettleStat : getSettleStat,

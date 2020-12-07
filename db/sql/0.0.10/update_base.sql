@@ -1168,3 +1168,8 @@ CREATE TABLE `total_month_stat` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- ----------------------------
+-- 2020-12-07 更新
+-- ----------------------------
+ALTER TABLE `total_month_stat`
+ADD COLUMN `damage_ratio` decimal(10, 2) DEFAULT 0.00 COMMENT '质损率' AFTER `per_car_c_damange_money`;

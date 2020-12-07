@@ -310,6 +310,22 @@ function createTotalMonthStat(req,res,next){
             }
         })
     }).seq(function () {
+        var that = this;
+        //质损率
+        totalMonthStatDAO.updateDamageRatioCount(params,function(err,result){
+            if (err) {
+                logger.error(' updateDamageRatioCount ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateDamageRatioCount ' + 'success');
+                }else{
+                    logger.warn(' updateDamageRatioCount ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
         //单车洗车费
         totalMonthStatDAO.updatePerCarCleanFeeCount(params,function(err,result){
             if (err) {
