@@ -437,7 +437,6 @@ function updatePerCarCleanFeeCount(params,callback) {
     });
 }
 
-
 function deleteTotalMonthStat(params,callback){
     var query = " delete from total_month_stat where y_month = ? ";
     var paramsArray=[],i=0;
@@ -447,7 +446,7 @@ function deleteTotalMonthStat(params,callback){
         return callback(error,rows);
     });
 }
-
+//结算部门
 function getSettleStat(params,callback) {
     var query = " select tms.y_month, tms.output, tms.outer_output, " +
         " tms.per_truck_output, tms.per_km_output " +
@@ -473,7 +472,7 @@ function getSettleStat(params,callback) {
         return callback(error,rows);
     });
 }
-
+//调度
 function getDispatchStat(params,callback) {
     var query = " select tms.y_month, tms.truck_count , tms.car_count , " +
         " tms.total_distance , tms.load_distance , tms.load_ratio " +
@@ -499,11 +498,38 @@ function getDispatchStat(params,callback) {
         return callback(error,rows);
     });
 }
-
+//质量
 function getQualityStat(params,callback) {
     var query = " select tms.y_month, tms.damage_count  , tms.total_damange_money  , " +
         " tms.company_damage_money , tms.per_car_damage_money  , tms.per_car_c_damange_money , " +
         " tms.clean_fee  , tms.per_car_clean_fee  , tms.damage_ratio  " +
+        " FROM total_month_stat tms " +
+        " where tms.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.yMonthStart){
+        paramsArray[i++] = params.yMonthStart;
+        query = query + " and tms.y_month >= ? ";
+    }
+    if(params.yMonthEnd){
+        paramsArray[i++] = params.yMonthEnd;
+        query = query + " and tms.y_month <= ? ";
+    }
+    query = query + ' order by tms.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDispatchStat ');
+        return callback(error,rows);
+    });
+}
+//车管
+function getTruckStat(params,callback) {
+    var query = " select tms.y_month, 	tms.etc_fee, tms.oil_vol, tms.oil_fee, tms.urea_vol, tms.urea_fee," +
+        " tms.repair_fee, tms.part_fee, tms.maintain_fee, tms.outer_repair_count, tms.outer_repair_fee, " +
+        " tms.buy_score_fee, tms.traffic_fine_fee, tms.driver_under_money, tms.company_under_money  " +
         " FROM total_month_stat tms " +
         " where tms.id is not null ";
     var paramsArray=[],i=0;
@@ -550,5 +576,6 @@ module.exports ={
     deleteTotalMonthStat : deleteTotalMonthStat,
     getSettleStat : getSettleStat,
     getDispatchStat : getDispatchStat,
-    getQualityStat : getQualityStat
+    getQualityStat : getQualityStat,
+    getTruckStat : getTruckStat
 }

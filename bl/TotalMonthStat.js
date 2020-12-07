@@ -596,6 +596,156 @@ function getQualityStatCsv(req,res,next){
     })
 }
 
+//车管统计
+function queryTruckStat(req,res,next){
+    var params = req.params ;
+    totalMonthStatDAO.getTruckStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function getTruckStatCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' +"过路费" + ','+"油量" + ','+"油费"+ ','+
+        "尿素量" + ',' + "尿素费  " + ',' + "修理费 "+ ',' +
+        "配件费" + ',' + "保养费  " + ',' + "在外维修次数 "+ ',' +
+        "在外维修金额" + ',' + "买分金额  " + ',' + "交通罚款 "+ ',' +
+        "个人承担违章" + ',' + "公司承担违章  " ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    totalMonthStatDAO.getTruckStat(params,function(error,rows){
+        if (error) {
+            logger.error(' getTruckStatCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                // 月份
+                parkObj.yMonth = rows[i].y_month;
+
+                // 过路费
+                if(rows[i].etc_fee  == null){
+                    parkObj.etc_fee  = "";
+                }else{
+                    parkObj.etc_fee  = rows[i].etc_fee ;
+                }
+
+                // 油量
+                if(rows[i].oil_vol  == null){
+                    parkObj.oil_vol  = "";
+                }else{
+                    parkObj.oil_vol  = rows[i].oil_vol   ;
+                }
+
+                // 油费
+                if(rows[i].oil_fee  == null){
+                    parkObj.oil_fee  = "";
+                }else{
+                    parkObj.oil_fee  = rows[i].oil_fee  ;
+                }
+
+                // 尿素量
+                if(rows[i].urea_vol  == null){
+                    parkObj.urea_vol  = "";
+                }else{
+                    parkObj.urea_vol  = rows[i].urea_vol ;
+                }
+
+                // 尿素费
+                if(rows[i].urea_fee  == null){
+                    parkObj.urea_fee  = "";
+                }else{
+                    parkObj.urea_fee  = rows[i].urea_fee   ;
+                }
+
+                // 修理费
+                if(rows[i].repair_fee  == null){
+                    parkObj.repair_fee  = "";
+                }else{
+                    parkObj.repair_fee  = rows[i].repair_fee  ;
+                }
+
+                // 配件费
+                if(rows[i].part_fee  == null){
+                    parkObj.part_fee  = "";
+                }else{
+                    parkObj.part_fee  = rows[i].part_fee ;
+                }
+
+                // 保养费
+                if(rows[i].maintain_fee  == null){
+                    parkObj.maintain_fee  = "";
+                }else{
+                    parkObj.maintain_fee  = rows[i].maintain_fee ;
+                }
+
+                // 在外维修次数
+                if(rows[i].outer_repair_count  == null){
+                    parkObj.outer_repair_count  = "";
+                }else{
+                    parkObj.outer_repair_count  = rows[i].outer_repair_count ;
+                }
+
+                // 在外维修金额
+                if(rows[i].outer_repair_fee  == null){
+                    parkObj.outer_repair_fee  = "";
+                }else{
+                    parkObj.outer_repair_fee  = rows[i].outer_repair_fee ;
+                }
+
+                // 买分金额
+                if(rows[i].buy_score_fee  == null){
+                    parkObj.buy_score_fee  = "";
+                }else{
+                    parkObj.buy_score_fee  = rows[i].buy_score_fee ;
+                }
+
+                // 交通罚款
+                if(rows[i].traffic_fine_fee  == null){
+                    parkObj.traffic_fine_fee  = "";
+                }else{
+                    parkObj.traffic_fine_fee  = rows[i].traffic_fine_fee ;
+                }
+
+                //  个人承担违章
+                if(rows[i].driver_under_money  == null){
+                    parkObj.driver_under_money  = "";
+                }else{
+                    parkObj.driver_under_money  = rows[i].driver_under_money ;
+                }
+
+                //  公司承担违章
+                if(rows[i].company_under_money  == null){
+                    parkObj.company_under_money  = "";
+                }else{
+                    parkObj.company_under_money  = rows[i].company_under_money ;
+                }
+
+                csvString = csvString+parkObj.yMonth+","+parkObj.etc_fee+","+parkObj.oil_vol +
+                    ","+parkObj.oil_fee+ ","+ parkObj.urea_vol+ ","+parkObj.urea_fee +
+                    ","+parkObj.repair_fee+ ","+ parkObj.part_fee+ ","+parkObj.maintain_fee +
+                    ","+parkObj.outer_repair_count+ ","+ parkObj.outer_repair_fee+ ","+parkObj.buy_score_fee +
+                    ","+parkObj.traffic_fine_fee+ ","+ parkObj.driver_under_money+ ","+parkObj.company_under_money+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 module.exports = {
     createTotalMonthStat : createTotalMonthStat,
     querySettleStat : querySettleStat,
@@ -603,5 +753,7 @@ module.exports = {
     queryDispatchStat : queryDispatchStat,
     getDispatchStatCsv : getDispatchStatCsv,
     queryQualityStat : queryQualityStat,
-    getQualityStatCsv : getQualityStatCsv
+    getQualityStatCsv : getQualityStatCsv,
+    queryTruckStat : queryTruckStat,
+    getTruckStatCsv : getTruckStatCsv
 }
