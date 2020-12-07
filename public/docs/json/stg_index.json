@@ -38781,6 +38781,136 @@
         }
       }
     },
+    "/user/{userId}/qualityStat": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "get qualityStat list",
+        "description": "get qualityStat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonthStart",
+            "in": "query",
+            "description": "yMonth Start",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonthEnd",
+            "in": "query",
+            "description": "yMonth End",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
+    "/qualityStat.csv": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "get qualityStat list csv",
+        "description": "get qualityStat csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonthStart",
+            "in": "query",
+            "description": "yMonth Start",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "yMonthEnd",
+            "in": "query",
+            "description": "yMonth End",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid user id"
+          }
+        }
+      }
+    },
     "/app": {
       "get": {
         "tags": [

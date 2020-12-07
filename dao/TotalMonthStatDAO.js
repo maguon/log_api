@@ -500,6 +500,33 @@ function getDispatchStat(params,callback) {
     });
 }
 
+function getQualityStat(params,callback) {
+    var query = " select tms.y_month, tms.damage_count  , tms.total_damange_money  , " +
+        " tms.company_damage_money , tms.per_car_damage_money  , tms.per_car_c_damange_money , " +
+        " tms.clean_fee  , tms.per_car_clean_fee  , tms.damage_ratio  " +
+        " FROM total_month_stat tms " +
+        " where tms.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.yMonthStart){
+        paramsArray[i++] = params.yMonthStart;
+        query = query + " and tms.y_month >= ? ";
+    }
+    if(params.yMonthEnd){
+        paramsArray[i++] = params.yMonthEnd;
+        query = query + " and tms.y_month <= ? ";
+    }
+    query = query + ' order by tms.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDispatchStat ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addTotalMonthStat : addTotalMonthStat,
     updateCarCount : updateCarCount,
@@ -522,5 +549,6 @@ module.exports ={
     updatePerCarCleanFeeCount : updatePerCarCleanFeeCount,
     deleteTotalMonthStat : deleteTotalMonthStat,
     getSettleStat : getSettleStat,
-    getDispatchStat : getDispatchStat
+    getDispatchStat : getDispatchStat,
+    getQualityStat : getQualityStat
 }

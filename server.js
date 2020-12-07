@@ -1142,6 +1142,8 @@ function createServer() {
     server.get('/api/settleStat.csv', totalMonthStat.getSettleStatCsv);
     server.get('/api/user/:userId/dispatchStat' ,totalMonthStat.queryDispatchStat);
     server.get('/api/dispatchStat.csv', totalMonthStat.getDispatchStatCsv);
+    server.get('/api/user/:userId/qualityStat' ,totalMonthStat.queryQualityStat);
+    server.get('/api/qualityStat.csv', totalMonthStat.getQualityStatCsv);
 
     /**
      * App Module

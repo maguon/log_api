@@ -340,6 +340,7 @@ function createTotalMonthStat(req,res,next){
     })
 }
 
+//结算部门统计
 function querySettleStat(req,res,next){
     var params = req.params ;
     totalMonthStatDAO.getSettleStat(params,function(error,result){
@@ -411,6 +412,7 @@ function getSettleStatCsv(req,res,next){
     })
 }
 
+//调度统计
 function queryDispatchStat(req,res,next){
     var params = req.params ;
     totalMonthStatDAO.getDispatchStat(params,function(error,result){
@@ -490,10 +492,116 @@ function getDispatchStatCsv(req,res,next){
     })
 }
 
+//质量统计
+function queryQualityStat(req,res,next){
+    var params = req.params ;
+    totalMonthStatDAO.getQualityStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryQualityStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryQualityStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function getQualityStatCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' +"质损次数" + ','+"总体质损成本" + ','+"公司承担质损成本"+ ','+
+        "单车质损成本" + ',' + "单车公司质损成本 " + ',' + "洗车费 "+ ',' +
+        "单车洗车费 "+ ',' + "质损率 ";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    totalMonthStatDAO.getQualityStat(params,function(error,rows){
+        if (error) {
+            logger.error(' getQualityStatCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                // 月份
+                parkObj.yMonth = rows[i].y_month;
+
+                // 质损次数
+                if(rows[i].damage_count  == null){
+                    parkObj.damage_count  = "";
+                }else{
+                    parkObj.damage_count  = rows[i].damage_count ;
+                }
+
+                // 总体质损成本
+                if(rows[i].total_damange_money    == null){
+                    parkObj.total_damange_money    = "";
+                }else{
+                    parkObj.total_damange_money    = rows[i].total_damange_money   ;
+                }
+
+                // 公司承担质损成本
+                if(rows[i].company_damage_money   == null){
+                    parkObj.company_damage_money   = "";
+                }else{
+                    parkObj.company_damage_money   = rows[i].company_damage_money  ;
+                }
+
+                // 单车质损成本
+                if(rows[i].per_car_damage_money  == null){
+                    parkObj.per_car_damage_money  = "";
+                }else{
+                    parkObj.per_car_damage_money  = rows[i].per_car_damage_money ;
+                }
+
+                // 单车公司质损成本
+                if(rows[i].per_car_c_damange_money    == null){
+                    parkObj.per_car_c_damange_money    = "";
+                }else{
+                    parkObj.per_car_c_damange_money    = rows[i].per_car_c_damange_money   ;
+                }
+
+                // 洗车费
+                if(rows[i].clean_fee   == null){
+                    parkObj.clean_fee   = "";
+                }else{
+                    parkObj.clean_fee   = rows[i].clean_fee  ;
+                }
+
+                // 单车洗车费
+                if(rows[i].per_car_clean_fee  == null){
+                    parkObj.per_car_clean_fee  = "";
+                }else{
+                    parkObj.per_car_clean_fee  = rows[i].per_car_clean_fee ;
+                }
+
+                // 质损率
+                if(rows[i].damage_ratio  == null){
+                    parkObj.damage_ratio  = "";
+                }else{
+                    parkObj.damage_ratio  = rows[i].damage_ratio ;
+                }
+
+                csvString = csvString+parkObj.yMonth+","+parkObj.damage_count+","+parkObj.total_damange_money +
+                    ","+parkObj.company_damage_money+ ","+ parkObj.per_car_damage_money+ ","+parkObj.per_car_c_damange_money +
+                    ","+parkObj.clean_fee+ ","+ parkObj.per_car_clean_fee+ ","+parkObj.damage_ratio+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 module.exports = {
     createTotalMonthStat : createTotalMonthStat,
     querySettleStat : querySettleStat,
     getSettleStatCsv : getSettleStatCsv,
     queryDispatchStat : queryDispatchStat,
-    getDispatchStatCsv : getDispatchStatCsv
+    getDispatchStatCsv : getDispatchStatCsv,
+    queryQualityStat : queryQualityStat,
+    getQualityStatCsv : getQualityStatCsv
 }
