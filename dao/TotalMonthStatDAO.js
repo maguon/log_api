@@ -235,12 +235,12 @@ function updateOilCount(params,callback) {
 //内部维修数 , 内部维修费 , 在外维修次数 , 在外维修数
 function updateRepairCount(params,callback) {
     var query = " UPDATE total_month_stat tms INNER JOIN( " +
-        " SELECT sum( trr.repair_money ) as repari_fee, " +
+        " SELECT sum( trr.repair_money ) as repair_fee, " +
         " sum( trr.parts_money ) as part_fee, " +
         " sum( trr.maintain_money ) as maintain_fee ," +
         " count( CASE WHEN trr.repair_type = 2 THEN trr.repair_money END ) AS inner_repair_count, " +
         " count( CASE WHEN trr.repair_type = 3 THEN trr.repair_money END ) AS outer_repair_count, " +
-        " sum( CASE WHEN trr.repair_type = 2 THEN trr.repair_money END ) AS inner_repari_fee, " +
+        " sum( CASE WHEN trr.repair_type = 2 THEN trr.repair_money END ) AS inner_repair_fee, " +
         " sum( CASE WHEN trr.repair_type = 3 THEN trr.repair_money END ) AS outer_repair_fee " +
         " FROM truck_repair_rel trr " +
         " WHERE trr.id is not null " +
@@ -249,11 +249,11 @@ function updateRepairCount(params,callback) {
         " AND trr.payment_status = 1 " +
         " AND trr.repair_status = 1 ) trrm " +
         " ON tms.y_month = " + params.yMonth  +
-        " SET tms.repari_fee = trrm.repari_fee, " +
+        " SET tms.repair_fee = trrm.repair_fee, " +
         " tms.part_fee = trrm.part_fee, " +
         " tms.maintain_fee = trrm.maintain_fee, " +
         " tms.inner_repair_count = trrm.inner_repair_count, " +
-        " tms.inner_repari_fee = trrm.inner_repari_fee, " +
+        " tms.inner_repair_fee = trrm.inner_repair_fee, " +
         " tms.outer_repair_count = trrm.outer_repair_count," +
         " tms.outer_repair_fee = trrm.outer_repair_fee";
     var paramsArray=[],i=0;
