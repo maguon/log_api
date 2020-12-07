@@ -395,8 +395,89 @@ function getSettleStatCsv(req,res,next){
     })
 }
 
+function queryDispatchStat(req,res,next){
+    var params = req.params ;
+    totalMonthStatDAO.getDispatchStat(params,function(error,result){
+        if (error) {
+            logger.error(' queryDispatchStat ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDispatchStat ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function getDispatchStatCsv(req,res,next){
+    var csvString = "";
+    var header = "月份" + ',' +"出车数" + ','+"发运量" + ','+"总里程"+ ','+ "重载历程" + ',' + "重载率";
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    totalMonthStatDAO.getDispatchStat(params,function(error,rows){
+        if (error) {
+            logger.error(' getDispatchStatCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                // 月份
+                parkObj.yMonth = rows[i].y_month;
+
+                // 出车数
+                if(rows[i].truck_count  == null){
+                    parkObj.truck_count  = "";
+                }else{
+                    parkObj.truck_count  = rows[i].truck_count ;
+                }
+
+                // 发运量
+                if(rows[i].car_count    == null){
+                    parkObj.car_count    = "";
+                }else{
+                    parkObj.car_count    = rows[i].car_count   ;
+                }
+
+                // 总里程
+                if(rows[i].total_distance   == null){
+                    parkObj.total_distance   = "";
+                }else{
+                    parkObj.total_distance   = rows[i].total_distance  ;
+                }
+
+                // 重载历程
+                if(rows[i].load_distance  == null){
+                    parkObj.load_distance  = "";
+                }else{
+                    parkObj.load_distance  = rows[i].load_distance ;
+                }
+
+                // 重载率
+                if(rows[i].load_ratio  == null){
+                    parkObj.load_ratio  = "";
+                }else{
+                    parkObj.load_ratio  = rows[i].load_ratio ;
+                }
+
+                csvString = csvString+parkObj.yMonth+","+parkObj.truck_count+","+parkObj.car_count+","+parkObj.total_distance+","+
+                    parkObj.load_distance+ ","+parkObj.load_ratio+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 module.exports = {
     createTotalMonthStat : createTotalMonthStat,
     querySettleStat : querySettleStat,
-    getSettleStatCsv : getSettleStatCsv
+    getSettleStatCsv : getSettleStatCsv,
+    queryDispatchStat : queryDispatchStat,
+    getDispatchStatCsv : getDispatchStatCsv
 }

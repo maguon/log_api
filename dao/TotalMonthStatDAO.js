@@ -461,6 +461,32 @@ function getSettleStat(params,callback) {
     });
 }
 
+function getDispatchStat(params,callback) {
+    var query = " select tms.y_month, tms.truck_count , tms.car_count , " +
+        " tms.total_distance , tms.load_distance , tms.load_ratio " +
+        " FROM total_month_stat tms " +
+        " where tms.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.yMonthStart){
+        paramsArray[i++] = params.yMonthStart;
+        query = query + " and tms.y_month >= ? ";
+    }
+    if(params.yMonthEnd){
+        paramsArray[i++] = params.yMonthEnd;
+        query = query + " and tms.y_month <= ? ";
+    }
+    query = query + ' order by tms.y_month desc ';
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDispatchStat ');
+        return callback(error,rows);
+    });
+}
+
 module.exports ={
     addTotalMonthStat : addTotalMonthStat,
     updateCarCount : updateCarCount,
@@ -481,5 +507,6 @@ module.exports ={
     updatePerCarDamageMoneyCount : updatePerCarDamageMoneyCount,
     updatePerCarCleanFeeCount : updatePerCarCleanFeeCount,
     deleteTotalMonthStat : deleteTotalMonthStat,
-    getSettleStat : getSettleStat
+    getSettleStat : getSettleStat,
+    getDispatchStat : getDispatchStat
 }
