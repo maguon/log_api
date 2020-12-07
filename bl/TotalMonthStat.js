@@ -7,6 +7,7 @@ var sysError = require('../util/SystemError.js');
 var resUtil = require('../util/ResponseUtil.js');
 var totalMonthStatDAO = require('../dao/TotalMonthStatDAO.js');
 var Seq = require('seq');
+var moment = require('moment/moment.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TotalMonthStatDAO.js');
 
@@ -245,6 +246,8 @@ function createTotalMonthStat(req,res,next){
     }).seq(function () {
         var that = this;
         //洗车费
+        params.startDate = params.yMonth.substr(0,4) + '-' + params.yMonth.substr(4,2) + '-01';
+        params.lastDateTime = moment(params.yMonth+'01').endOf('month').format("YYYY-MM-DD") ;
         totalMonthStatDAO.updateCleanFeeCount(params,function(err,result){
             if (err) {
                 logger.error(' updateCleanFeeCount ' + err.message);

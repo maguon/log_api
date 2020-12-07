@@ -345,8 +345,8 @@ function updateCleanFeeCount(params,callback) {
         " SELECT sum( drlt.total_price ) AS clean_fee " +
         " FROM dp_route_load_task_clean_rel drlt " +
         " WHERE drlt.id is not null " +
-        " AND drlt.date_id >= " + params.yMonth + "01 " +
-        " AND drlt.date_id <= " + params.yMonth +"31 " +
+        " AND drlt.created_on >= ' " + params.startDate + "'" +
+        " AND drlt.created_on <= ' " + params.lastDateTime + " 23:59:59' " +
         " AND drlt.status = 2 ) dim " +
         " ON tms.y_month = " + params.yMonth  +
         " SET tms.clean_fee = dim.clean_fee ";

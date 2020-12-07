@@ -143,6 +143,8 @@ function createDriveTruckMonthValue(req,res,next){
     }).seq(function () {
         var that = this;
         params.yMonth = yMonth;
+        params.startDate = params.yMonth.substr(0,4) + '-' + params.yMonth.substr(4,2) + '-01';
+        params.lastDateTime = moment(params.yMonth+'01').endOf('month').format("YYYY-MM-DD") ;
         driveTruckMonthValueDAO.updateCleanFee(params,function(err,result){
             if (err) {
                 logger.error(' updateCleanFee ' + err.message);

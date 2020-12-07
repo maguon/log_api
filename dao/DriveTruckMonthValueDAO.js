@@ -140,6 +140,7 @@ function updateDamage(params,callback){
 }
 
 function updateCleanFee(params,callback){
+
     var query = " update drive_truck_month_value dtmv inner join( " +
         " select drcr.drive_id,drcr.truck_id," +
         " sum(drcr.total_price) total_clean_fee, " +
@@ -148,7 +149,7 @@ function updateCleanFee(params,callback){
         " sum(drcr.total_run_fee) total_run_fee, " +
         " sum(drcr.lead_fee) lead_fee " +
         " from dp_route_load_task_clean_rel drcr " +
-        " where drcr.date_id>="+params.yMonth+"01 and drcr.date_id<="+params.yMonth+"31 and drcr.status=2 " +
+        " where drcr.created_on>=' "+ params.startDate + "' and drcr.created_on<=' "+params.lastDateTime+ " 23:59:59' " +
         " group by drcr.drive_id,drcr.truck_id) drcrm " +
         " on dtmv.drive_id = drcrm.drive_id and dtmv.truck_id = drcrm.truck_id and dtmv.y_month = " +params.yMonth+
         " set dtmv.clean_fee = drcrm.total_clean_fee , dtmv.trailer_fee = drcrm.total_trailer_fee , " +
