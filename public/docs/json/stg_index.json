@@ -38609,7 +38609,7 @@
             "name": "yMonthStart",
             "in": "query",
             "description": "yMonth Start",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -38617,7 +38617,7 @@
             "name": "yMonthEnd",
             "in": "query",
             "description": "yMonth End",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -38721,8 +38721,8 @@
         "tags": [
           "statistics"
         ],
-        "summary": "get settleStat list csv",
-        "description": "get settleStat csv",
+        "summary": "get dispatchStat list csv",
+        "description": "get dispatchStat csv",
         "produces": [
           "application/json"
         ],
@@ -38739,7 +38739,7 @@
             "name": "yMonthStart",
             "in": "query",
             "description": "yMonth Start",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -38747,7 +38747,7 @@
             "name": "yMonthEnd",
             "in": "query",
             "description": "yMonth End",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -38869,7 +38869,7 @@
             "name": "yMonthStart",
             "in": "query",
             "description": "yMonth Start",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -38877,7 +38877,7 @@
             "name": "yMonthEnd",
             "in": "query",
             "description": "yMonth End",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -38999,7 +38999,7 @@
             "name": "yMonthStart",
             "in": "query",
             "description": "yMonth Start",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
@@ -39007,7 +39007,7 @@
             "name": "yMonthEnd",
             "in": "query",
             "description": "yMonth End",
-            "required": true,
+            "required": false,
             "type": "integer"
 
           },
