@@ -24,6 +24,20 @@ function createSysNotification(req,res,next){
     })
 }
 
+function queryTitleList(req,res,next){
+    var params = req.params ;
+    sysNotificationDAO.getTitleList(params,function(error,result){
+        if (error) {
+            logger.error(' queryTitleList ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTitleList ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function querySysNotification(req,res,next){
     var params = req.params ;
     sysNotificationDAO.getSysNotification(params,function(error,result){
@@ -40,7 +54,7 @@ function querySysNotification(req,res,next){
 
 function updateSysNotification(req,res,next){
     var params = req.params ;
-    sysNotificationDAO.updateSysNotificationStatus(params,function(error,result){
+    sysNotificationDAO.updateSysNotification(params,function(error,result){
         if (error) {
             logger.error(' updateSysNotification ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
@@ -52,8 +66,24 @@ function updateSysNotification(req,res,next){
     })
 }
 
+function updateSysNotificationStatus(req,res,next){
+    var params = req.params ;
+    sysNotificationDAO.updateSysNotificationStatus(params,function(error,result){
+        if (error) {
+            logger.error(' updateSysNotificationStatus ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateSysNotificationStatus ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 module.exports = {
     createSysNotification : createSysNotification,
+    queryTitleList : queryTitleList,
     querySysNotification : querySysNotification,
-    updateSysNotification : updateSysNotification
+    updateSysNotification : updateSysNotification,
+    updateSysNotificationStatus : updateSysNotificationStatus
 }

@@ -1128,9 +1128,11 @@ function createServer() {
     /**
      * Sys_notification
      */
-    server.post({path:'/api/user/:user/sysNotification',contentType: 'application/json'}, sysNotification.createSysNotification);
+    server.get('/api/user/:userId/titleList' , sysNotification.queryTitleList);
     server.get('/api/user/:userId/sysNotification' , sysNotification.querySysNotification);
-    server.put({path:'/api/user/:userId/sysNotification/:sysNotificationId/status/:status',contentType: 'application/json'} , sysNotification.updateSysNotification);
+    server.post({path:'/api/user/:user/sysNotification',contentType: 'application/json'}, sysNotification.createSysNotification);
+    server.put({path:'/api/user/:userId/sysNotification/:sysNotificationId/updateNotification',contentType: 'application/json'} ,sysNotification.updateSysNotification);
+    server.put({path:'/api/user/:userId/sysNotification/:sysNotificationId/status/:status',contentType: 'application/json'} , sysNotification.updateSysNotificationStatus);
 
     /**
      * MsgPush Module

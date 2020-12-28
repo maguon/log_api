@@ -38476,6 +38476,82 @@
         }
       }
     },
+    "/user/{userId}/titleList": {
+      "get": {
+        "tags": [
+          "sysNotification"
+        ],
+        "summary": "query  sysNotification titleList",
+        "description": "query sysNotification titleList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/sysNotification"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid sysNotification id"
+          }
+        }
+      }
+    },
     "/user/{userId}/sysNotification": {
       "post": {
         "tags": [
@@ -38603,13 +38679,67 @@
         }
       }
     },
-    "/user/{userId}/sysNotification/{sysNotificationId}/status/{status}": {
+    "/user/{userId}/sysNotification/{sysNotificationId}/updateNotification": {
       "put": {
         "tags": [
           "sysNotification"
         ],
         "summary": "update sysNotification info",
         "description": "update sysNotification",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "sysNotificationId",
+            "in": "path",
+            "description": "sysNotification id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "sysNotification",
+            "in": "body",
+            "description": "app sysNotification info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sysNotificationContent"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid repairStation id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/sysNotification/{sysNotificationId}/status/{status}": {
+      "put": {
+        "tags": [
+          "sysNotification"
+        ],
+        "summary": "update sysNotification info status",
+        "description": "update sysNotification status",
         "produces": [
           "application/json"
         ],
@@ -38650,7 +38780,7 @@
             }
           },
           "400": {
-            "description": "Invalid token value or invalid repairStation id"
+            "description": "Invalid token value or invalid sysNotification id"
           }
         }
       }
@@ -42879,6 +43009,21 @@
       },
       "xml": {
         "name": "sysNotification"
+      }
+    },
+    "sysNotificationContent": {
+      "type": "object",
+      "properties": {
+
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "sysNotificationContent"
       }
     }
   },
