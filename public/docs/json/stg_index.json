@@ -42862,6 +42862,24 @@
       "xml": {
         "name": "settleOuterInvoice"
       }
+    },
+    "sysNotification": {
+      "type": "object",
+      "properties": {
+
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "sysNotification"
+      }
     }
   },
   "externalDocs": {
