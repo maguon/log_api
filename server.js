@@ -100,6 +100,7 @@ var totalMonthStat = require('./bl/TotalMonthStat.js');
 var app = require('./bl/App.js');
 var sysRecord = require('./bl/SysRecord.js');
 var oauth = require('./bl/OAuth.js');
+var sysNotification = require('./bl/SysNotification.js');
 var msgPush = require('./bl/MsgPush.js');
 var sms = require('./bl/Sms.js');
 var sysPatch = require('./bl/SysPatch.js');
@@ -1123,6 +1124,13 @@ function createServer() {
      */
     server.get('/api/settleOuterInvoiceCarRel', settleOuterInvoiceCarRel.querySettleOuterInvoiceCarRel);
     server.get('/api/settleOuterInvoiceCarRel.csv', settleOuterInvoiceCarRel.getSettleOuterInvoiceCarRelCsv);
+
+    /**
+     * Sys_notification
+     */
+    server.post({path:'/api/user/:user/sysNotification',contentType: 'application/json'}, sysNotification.createSysNotification);
+    server.get('/api/user/:userId/sysNotification' , sysNotification.querySysNotification);
+    server.put({path:'/api/user/:userId/sysNotification/:sysNotificationId/status/:status',contentType: 'application/json'} , sysNotification.updateSysNotification);
 
     /**
      * MsgPush Module

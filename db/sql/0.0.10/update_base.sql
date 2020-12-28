@@ -1173,3 +1173,17 @@ CREATE TABLE `total_month_stat` (
 -- ----------------------------
 ALTER TABLE `total_month_stat`
 ADD COLUMN `damage_ratio` decimal(10, 2) DEFAULT 0.00 COMMENT '质损率' AFTER `per_car_c_damange_money`;
+-- ----------------------------
+-- 2020-12-28 更新
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_notification`;
+CREATE TABLE `sys_notification`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `user_id` int(10) NOT NULL COMMENT '用户ID',
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
+  `content` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息内容',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态(0-不可用,1-可用)',
+  `created_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;

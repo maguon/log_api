@@ -77,6 +77,10 @@
       "description":"settle of log api"
     },
     {
+      "name":"sysNotification",
+      "description":"SysNotification of log api"
+    },
+    {
       "name":"msgPush",
       "description":"MsgPush of log api"
     },
@@ -38468,6 +38472,185 @@
           },
           "400": {
             "description": "Invalid token value or invalid settleOuterInvoiceCarRel id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/sysNotification": {
+      "post": {
+        "tags": [
+          "sysNotification"
+        ],
+        "summary": "user create sysNotification",
+        "description": "user create sysNotification",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user1 id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "sysNotification",
+            "in": "body",
+            "description": "sysNotification info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sysNotification"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid sysNotification id"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "sysNotification"
+        ],
+        "summary": "query  sysNotification list",
+        "description": "query sysNotification",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user1 id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "sysNotificationId",
+            "in": "query",
+            "description": "sysNotification id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/sysNotification"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid sysNotification id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/sysNotification/{sysNotificationId}/status/{status}": {
+      "put": {
+        "tags": [
+          "sysNotification"
+        ],
+        "summary": "update sysNotification info",
+        "description": "update sysNotification",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "sysNotificationId",
+            "in": "path",
+            "description": "sysNotification id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "user status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid repairStation id"
           }
         }
       }
