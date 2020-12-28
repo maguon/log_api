@@ -38600,7 +38600,7 @@
         "tags": [
           "sysNotification"
         ],
-        "summary": "query  sysNotification list",
+        "summary": "query  sysNotification info",
         "description": "query sysNotification",
         "produces": [
           "application/json"
