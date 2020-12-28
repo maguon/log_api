@@ -38476,7 +38476,7 @@
         }
       }
     },
-    "/user/{userId}/titleList": {
+    "/user/{userId}/sysNotification": {
       "get": {
         "tags": [
           "sysNotification"
@@ -38550,9 +38550,7 @@
             "description": "Invalid token value or invalid sysNotification id"
           }
         }
-      }
-    },
-    "/user/{userId}/sysNotification": {
+      },
       "post": {
         "tags": [
           "sysNotification"
@@ -38595,7 +38593,9 @@
             "description": "Invalid token value or invalid sysNotification id"
           }
         }
-      },
+      }
+    },
+    "/user/{userId}/sysNotification/{sysNotificationId}/": {
       "get": {
         "tags": [
           "sysNotification"
@@ -38616,9 +38616,9 @@
           },
           {
             "name": "sysNotificationId",
-            "in": "query",
+            "in": "path",
             "description": "sysNotification id",
-            "required": false,
+            "required": true,
             "type": "integer"
 
           },
@@ -38677,9 +38677,7 @@
             "description": "Invalid token value or invalid sysNotification id"
           }
         }
-      }
-    },
-    "/user/{userId}/sysNotification/{sysNotificationId}/updateNotification": {
+      },
       "put": {
         "tags": [
           "sysNotification"
@@ -38733,7 +38731,7 @@
         }
       }
     },
-    "/user/{userId}/sysNotification/{sysNotificationId}/status/{status}": {
+    "/user/{userId}/sysNotification/{sysNotificationId}/status": {
       "put": {
         "tags": [
           "sysNotification"
@@ -38762,10 +38760,12 @@
           },
           {
             "name": "status",
-            "in": "path",
-            "description": "user status",
+            "in": "body",
+            "description": "status",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "$ref": "#/definitions/sysNotificationStatus"
+            }
 
           }
         ],
@@ -43024,6 +43024,18 @@
       },
       "xml": {
         "name": "sysNotificationContent"
+      }
+    },
+    "sysNotificationStatus": {
+      "type": "object",
+      "properties": {
+
+        "status": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "sysNotificationStatus"
       }
     }
   },

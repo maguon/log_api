@@ -20,7 +20,7 @@ function addSysNotification(params,callback){
 }
 
 function getTitleList(params,callback) {
-    var query = " select u.real_name , sn.title , sn.status , sn.created_on , sn.updated_on from sys_notification sn" +
+    var query = " select sn.id , u.real_name , sn.title , sn.status , sn.created_on , sn.updated_on from sys_notification sn" +
         " left join user_info u on sn.user_id = u.uid " +
         " where sn.id is not null ";
     var paramsArray=[],i=0;
@@ -49,7 +49,7 @@ function getTitleList(params,callback) {
 }
 
 function getSysNotification(params,callback) {
-    var query = " select u.real_name , sn.title , sn.content , sn.status , sn.created_on , sn.updated_on from sys_notification sn" +
+    var query = " select sn.id , u.real_name , sn.title , sn.content , sn.status , sn.created_on , sn.updated_on from sys_notification sn" +
         " left join user_info u on sn.user_id = u.uid " +
         " where sn.id is not null ";
     var paramsArray=[],i=0;
