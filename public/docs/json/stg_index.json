@@ -39624,7 +39624,7 @@
           "type": "integer"
         },
         "deviceId": {
-          "type": "integer"
+          "type": "string"
         }
       },
       "xml": {
