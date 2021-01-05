@@ -37,9 +37,13 @@ function getUserDevice(params,callback){
         paramsArray[i++] = params.deviceId;
         query = query + " and ud.device_id = ? ";
     }
-    if(params.appType){
+    if(params.appType!= null || params.appType==0 ){
         paramsArray[i++] = params.appType;
         query = query + " and ud.app_type = ? ";
+    }
+    if(params.deviceType!= null || params.deviceType==0 ){
+        paramsArray[i++] = params.deviceType;
+        query = query + " and ud.device_type = ? ";
     }
     if(params.deviceToken){
         paramsArray[i++] = params.deviceToken;
@@ -53,13 +57,14 @@ function getUserDevice(params,callback){
 
 function updateUserDevice(params,callback){
     var query = " update user_device set version = ? , updated_on = ? " +
-        " where user_id = ? and device_id = ? and app_type = ? ";
+        " where user_id = ? and device_id = ? and app_type = ? and device_type = ? ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.version;
     paramsArray[i++] = params.updatedOn;
     paramsArray[i++] = params.userId;
     paramsArray[i++] = params.deviceId;
     paramsArray[i++] = params.appType;
+    paramsArray[i] = params.deviceType;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateUserDevice ');
         return callback(error,rows);

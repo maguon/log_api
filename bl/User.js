@@ -74,7 +74,7 @@ function userLogin(req,res,next){
             }else{
                 var passwordMd5 = encrypt.encryptByMd5(params.password);
                 if(passwordMd5 != rows[0].password){
-                    logger.warn(' userLogin ' +params.phone+ sysMsg.CUST_LOGIN_PSWD_ERROR);
+                    logger.warn(' userLogin ' +params.phone + ' ' + sysMsg.CUST_LOGIN_PSWD_ERROR);
                     resUtil.resetFailedRes(res,sysMsg.CUST_LOGIN_PSWD_ERROR) ;
                     return next();
                 }else{

@@ -16,14 +16,51 @@ var logger = serverLogger.createLogger('UserDevice.js');
 
 function createUserDevice(req,res,next){
     var params = req.params ;
-    userDeviceDAO.addUserDevice(params,function(error,result){
-        if (error) {
-            logger.error(' createUserDevice ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createUserDevice ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
+    var newUserDeviceFlag = true;
+    var deviceId=0;
+    Seq().seq(function(){
+        var that = this;
+        userDeviceDAO.getUserDevice(params, function (error, rows) {
+            if (error) {
+                logger.error(' createUserDevice getUserDevice ' + error.message);
+                resUtil.resetFailedRes(res, sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if (rows && rows.length > 0) {
+                    newUserDeviceFlag = false;
+                    deviceId = rows[0].deviceId;
+                    that();
+                } else {
+                    that();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        if(newUserDeviceFlag) {
+            userDeviceDAO.addUserDevice(params,function(error,result){
+                if (error) {
+                    logger.error(' createUserDevice addUserDevice ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    logger.info(' createUserDevice addUserDevice ' + 'success');
+                    resUtil.resetCreateRes(res,result,null);
+                    return next();
+                }
+            })
+        }else{
+            var myDate = new Date();
+            params.updatedOn = myDate;
+            userDeviceDAO.updateUserDevice(params, function (error, result) {
+                if (error) {
+                    logger.error(' createUserDevice updateUserDevice ' + error.message);
+                    throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                } else {
+                    logger.info(' createUserDevice updateUserDevice ' + 'success');
+                    resUtil.resetUpdateRes(res,result,null);
+                    return next();
+                }
+            })
         }
     })
 }
