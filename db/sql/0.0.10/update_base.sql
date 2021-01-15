@@ -1187,3 +1187,9 @@ CREATE TABLE `sys_notification`  (
   `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+-- ----------------------------
+-- 2021-1-15 更新
+-- ----------------------------
+ALTER TABLE `drive_truck_month_value`
+ADD COLUMN `oil_vol` decimal(10, 2) DEFAULT 0 COMMENT '升数' AFTER `etc_fee`,
+ADD COLUMN `urea_vol` decimal(10, 2) DEFAULT 0 COMMENT '尿素升数' AFTER `oil_fee`;

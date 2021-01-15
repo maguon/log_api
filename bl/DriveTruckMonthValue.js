@@ -435,7 +435,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
         "倒板数" + ','+"倒板工资" + ','+"重载里程" + ','+ "空载里程"+ ','+ "总里程"+ ','+ "重载率"+ ','+ "重载油耗里程"+ ','+ "空载油耗里程" + ','+
         "运送经销商台数" + ','+ "运送到库台数" + ','+"产值" + ','+"二级产值" + ','+"货车保险"+ ','+ "折旧费"+ ','+ "应发里程工资"+ ','+
         "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"满勤补助" + ','+ "交车打车进门费"+ ','+
-        "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" + ','+ "油费" + ','+"尿素费" + ','+
+        "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" + ','+ "油量" + ','+ "油费" + ',' + "尿素量" + ','+"尿素费" + ','+
         "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "维修费"+ ','+ "配件费"+ ','+ "保养费"+ ','+ "商品车加油费" + ','+ "商品车停车费"+ ','+
         "货车停车费"+','+"其他费用";
     csvString = header + '\r\n'+csvString;
@@ -626,11 +626,25 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }else{
                     parkObj.etcFee = rows[i].etc_fee;
                 }
+                //油量
+                if(rows[i].oil_vol == null){
+                    parkObj.oilVol = "";
+                }else{
+                    parkObj.oilVol = rows[i].oil_vol;
+                }
+                //油费
                 if(rows[i].oil_fee == null){
                     parkObj.oilFee = "";
                 }else{
                     parkObj.oilFee = rows[i].oil_fee;
                 }
+                //尿素量
+                if(rows[i].urea_vol == null){
+                    parkObj.ureaVol = "";
+                }else{
+                    parkObj.ureaVol = rows[i].urea_vol;
+                }
+                //尿素费
                 if(rows[i].urea_fee == null){
                     parkObj.ureaFee = "";
                 }else{
@@ -688,7 +702,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.insureFee+","+parkObj.depreciationFee+","+
                     parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
                     parkObj.fullWorkBonus+","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
-                    parkObj.leadFee+","+parkObj.etcFee+","+parkObj.oilFee+","+parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
+                    parkObj.leadFee+","+parkObj.etcFee+","+parkObj.oilVol+","+ parkObj.oilFee+","+parkObj.ureaVol+"," +parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
                     parkObj.peccancyCompanyFee+","+parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+parkObj.carOilFee+","+
                     parkObj.carParkingTotalFee+","+parkObj.truckParkingFee+","+parkObj.otherFee+ '\r\n';
             }

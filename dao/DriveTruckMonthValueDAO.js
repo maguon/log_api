@@ -200,12 +200,14 @@ function updateEtcFee(params,callback){
 
 function updateOilFee(params,callback){
     var query = " update drive_truck_month_value dtmv inner join( " +
-        " select deor.drive_id,deor.truck_id,sum(deor.oil_money) oil_fee,sum(deor.urea_money) urea_fee " +
+        " select deor.drive_id,deor.truck_id, sum( deor.oil ) oil_vol, sum(deor.oil_money) oil_fee, " +
+        " sum( deor.urea ) urea_vol, sum(deor.urea_money) urea_fee " +
         " from drive_exceed_oil_rel deor " +
         " where deor.payment_status = 1 and deor.date_id>="+params.yMonth+"01 and deor.date_id<="+params.yMonth+"31 " +
         " group by deor.drive_id,deor.truck_id) deorm " +
         " on dtmv.drive_id = deorm.drive_id and dtmv.truck_id = deorm.truck_id and dtmv.y_month = " +params.yMonth+
-        " set dtmv.oil_fee = deorm.oil_fee , dtmv.urea_fee = deorm.urea_fee ";
+        " set dtmv.oil_vol = deorm.oil_vol , dtmv.oil_fee = deorm.oil_fee , " +
+        " dtmv.urea_vol = deorm.urea_vol , dtmv.urea_fee = deorm.urea_fee ";
     var paramsArray=[],i=0;
 
     db.dbQuery(query,paramsArray,function(error,rows){
