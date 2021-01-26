@@ -602,8 +602,8 @@ function getDriveSettleDetail(params,callback) {
         " left join receive_info r on c.receive_id = r.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id " +
-        " where dpr.task_plan_date>="+params.taskPlanDateStart+" " +
-        " and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status >=9 " +
+        " where dpr.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' " +
+        " and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status >=9 " +
         " and c.make_id = ecrr.make_id and c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
         " and c.size_type =ecrr.size_type " ;
     var paramsArray=[],i=0;
@@ -617,11 +617,11 @@ function getDriveSettleDetail(params,callback) {
     }
     if(params.operateType){
         paramsArray[i++] = params.operateType;
-        query = query + " and t.operate_type = ? ";
+        query = query + " and d.operate_type = ? ";
     }
     if(params.companyId){
         paramsArray[i++] = params.companyId;
-        query = query + " and t.company_id = ? ";
+        query = query + " and d.company_id = ? ";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
