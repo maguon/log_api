@@ -320,6 +320,58 @@ function queryDriveSettle(req,res,next){
     })
 }
 
+function queryDriveSettleSalary(req,res,next){
+    var params = req.params ;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
+    settleHandoverDAO.getDriveSettleSalary(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveSettleSalary ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveSettleSalary ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
+function queryDriveSettleOutput(req,res,next){
+    var params = req.params ;
+    if(params.dateIdStart !=null || params.dateIdStart !=""){
+        var dateIdStart = params.dateIdStart;
+        var d = new Date(dateIdStart);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdStart = parseInt(currentDateStr);
+    }
+    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
+        var dateIdEnd = params.dateIdEnd;
+        var d = new Date(dateIdEnd);
+        var currentDateStr = moment(d).format('YYYYMMDD');
+        params.dateIdEnd = parseInt(currentDateStr);
+    }
+    settleHandoverDAO.getDriveSettleOutput(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveSettleOutput ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveSettleOutput ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryDriveCost(req,res,next){
     var params = req.params ;
     settleHandoverDAO.getDriveCost(params,function(error,result){
@@ -604,6 +656,124 @@ function getDriveSettleCsv(req,res,next){
     })
 }
 
+function getDriveSettleSalaryCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' + "货车牌号" + ',' + "所属类型" + ','+ "所属公司" + ','+ "商品车到库数"+ ','+ "商品车非到库数" + ','+
+        "里程工资"+ ','+ "倒板工资" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    settleHandoverDAO.getDriveSettleSalary(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSettle ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else if(rows[i].operate_type == 2){
+                    parkObj.operateType = "外协";
+                }else if(rows[i].operate_type == 3){
+                    parkObj.operateType = "供方";
+                }else{
+                    parkObj.operateType = "承包";
+                }
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
+                if(rows[i].storage_car_count == null){
+                    parkObj.storageCarCount = "";
+                }else{
+                    parkObj.storageCarCount = rows[i].storage_car_count;
+                }
+                if(rows[i].not_storage_car_count == null){
+                    parkObj.notStorageCarCount = "";
+                }else{
+                    parkObj.notStorageCarCount = rows[i].not_storage_car_count;
+                }
+                if(rows[i].distance_salary == null){
+                    parkObj.distanceSalary = "";
+                }else{
+                    parkObj.distanceSalary = rows[i].distance_salary;
+                }
+                if(rows[i].reverse_salary == null){
+                    parkObj.reverseSalary = "";
+                }else{
+                    parkObj.reverseSalary = rows[i].reverse_salary;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
+                    parkObj.storageCarCount+","+parkObj.notStorageCarCount +","+parkObj.distanceSalary+","+parkObj.reverseSalary+","+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
+function getDriveSettleOutputCsv(req,res,next){
+    var csvString = "";
+    var header = "司机" + ',' + "货车牌号" + ',' + "所属类型" + ','+ "所属公司" + ','+ "产值"+ ','+ "二级产值" ;
+    csvString = header + '\r\n'+csvString;
+    var params = req.params ;
+    var parkObj = {};
+    settleHandoverDAO.getDriveSettleOutput(params,function(error,rows){
+        if (error) {
+            logger.error(' getDriveSettle ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            for(var i=0;i<rows.length;i++){
+                parkObj.driveName = rows[i].drive_name;
+                parkObj.truckNum = rows[i].truck_num;
+                if(rows[i].operate_type == 1){
+                    parkObj.operateType = "自营";
+                }else if(rows[i].operate_type == 2){
+                    parkObj.operateType = "外协";
+                }else if(rows[i].operate_type == 3){
+                    parkObj.operateType = "供方";
+                }else{
+                    parkObj.operateType = "承包";
+                }
+                if(rows[i].company_name == null){
+                    parkObj.companyName = "";
+                }else{
+                    parkObj.companyName = rows[i].company_name;
+                }
+
+                if(rows[i].output == null){
+                    parkObj.output = "";
+                }else{
+                    parkObj.output = rows[i].output;
+                }
+                if(rows[i].two_output == null){
+                    parkObj.twoOutput = "";
+                }else{
+                    parkObj.twoOutput = rows[i].two_output;
+                }
+                csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
+                    parkObj.output+","+parkObj.twoOutput+ '\r\n';
+            }
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 function getDriveSettleDetailCsv(req,res,next){
     var csvString = "";
     var header = "调度编号"+ ','+"司机"+ ',' +"货车牌号"+ ',' +"计划执行时间"+ ',' +"VIN"+ ','+"委托方"+ ','+"品牌"+ ','
@@ -831,12 +1001,16 @@ module.exports = {
     querySettleHandoverDayCount : querySettleHandoverDayCount,
     querySettleHandoverMonthCount : querySettleHandoverMonthCount,
     queryDriveSettle : queryDriveSettle,
+    queryDriveSettleSalary : queryDriveSettleSalary,
+    queryDriveSettleOutput : queryDriveSettleOutput,
     queryDriveCost : queryDriveCost,
     updateSettleHandover : updateSettleHandover,
     updateHandoveImage : updateHandoveImage,
     getSettleHandoverCsv : getSettleHandoverCsv,
     getNotSettleHandoverCsv : getNotSettleHandoverCsv,
     getDriveSettleCsv : getDriveSettleCsv,
+    getDriveSettleSalaryCsv : getDriveSettleSalaryCsv,
+    getDriveSettleOutputCsv : getDriveSettleOutputCsv,
     getDriveSettleDetailCsv : getDriveSettleDetailCsv,
     getDriveCostCsv : getDriveCostCsv
 }

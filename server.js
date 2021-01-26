@@ -1062,7 +1062,11 @@ function createServer() {
     server.get('/api/settleHandover.csv', settleHandover.getSettleHandoverCsv);
     server.get('/api/notSettleHandover.csv', settleHandover.getNotSettleHandoverCsv);
     server.get('/api/driveSettle' , settleHandover.queryDriveSettle);
+    server.get('/api/driveSettleSalary' , settleHandover.queryDriveSettleSalary);
+    server.get('/api/driveSettleOutput' , settleHandover.queryDriveSettleOutput);
     server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
+    server.get('/api/driveSettleSalary.csv' , settleHandover.getDriveSettleSalaryCsv);
+    server.get('/api/driveSettleOutput.csv' , settleHandover.getDriveSettleOutputCsv);
     server.get('/api/driveSettleDetail.csv' , settleHandover.getDriveSettleDetailCsv);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
     server.post({path:'/api/user/:userId/settleHandoverAll',contentType: 'application/json'},settleHandover.createSettleHandoverAll);

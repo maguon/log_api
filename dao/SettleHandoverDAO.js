@@ -430,14 +430,14 @@ function getDriveSettle(params,callback) {
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
         " left join company_info c on t.company_id = c.id " +
-        " where drt.task_plan_date>="+params.taskPlanDateStart+" and drt.task_plan_date<="+params.taskPlanDateEnd+" and drt.task_status>=9 " +
+        " where drt.task_plan_date>= '"+params.taskPlanDateStart+"' and drt.task_plan_date<='"+params.taskPlanDateEnd+"' and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end) not_storage_car_count, " +
         " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dprl.real_count end) storage_car_count " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
-        " where dpr.task_plan_date>="+params.taskPlanDateStart+" and dpr.task_plan_date<="+params.taskPlanDateEnd+" and dpr.task_status>=9 " +
+        " where dpr.task_plan_date>= '"+params.taskPlanDateStart+"' and dpr.task_plan_date<= '"+params.taskPlanDateEnd+"' and dpr.task_status>=9 " +
         " group by dpr.drive_id,dpr.truck_id) dprm on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
         " left join (select dprt.drive_id,dprt.truck_id,sum(ecrr.fee*ecrr.distance*drlt.output_ratio) output," +
         " sum(ecrr.two_fee*ecrr.two_distance*drlt.output_ratio) two_output " +
@@ -447,7 +447,7 @@ function getDriveSettle(params,callback) {
         " left join car_info ci on drltd.car_id = ci.id " +
         " left join entrust_city_route_rel ecrr on ci.entrust_id = ecrr.entrust_id and " +
         " ci.make_id = ecrr.make_id and ci.route_start_id = ecrr.route_start_id and ci.route_end_id = ecrr.route_end_id and ci.size_type =ecrr.size_type " +
-        " where dprt.task_plan_date>="+params.taskPlanDateStart+" and dprt.task_plan_date<="+params.taskPlanDateEnd+" and dprt.task_status>=9 " +
+        " where dprt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00'and dprt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59 'and dprt.task_status>=9 " +
         " group by dprt.drive_id,dprt.truck_id) dprtm on drtm.drive_id = dprtm.drive_id and drtm.truck_id = dprtm.truck_id " +
         " where drtm.drive_id is not null ";
     var paramsArray=[],i=0;
@@ -474,6 +474,116 @@ function getDriveSettle(params,callback) {
     }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDriveSettle ');
+        return callback(error,rows);
+    });
+}
+//工资
+function getDriveSettleSalary(params,callback) {
+    var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name, " +
+        " drtm.distance_salary,drtm.reverse_salary,dprm.storage_car_count,dprm.not_storage_car_count " +
+        " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name, " +
+        " sum( case " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count<=3 then drt.distance*0.6 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=4 then drt.distance*0.7 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=5 then drt.distance*0.8 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=6 then drt.distance*0.9 " +
+        " when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count>=7 then drt.distance " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count<5 then drt.distance*0.6 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=5 then drt.distance*0.7 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=6 then drt.distance*0.8 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=7 then drt.distance*0.9 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=8 then drt.distance " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 then drt.distance*1.4 " +
+        " end) distance_salary, " +
+        " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary" +
+        " from dp_route_task drt " +
+        " left join drive_info d on drt.drive_id = d.id " +
+        " left join truck_info t on drt.truck_id = t.id " +
+        " left join company_info c on t.company_id = c.id " +
+        " where drt.task_plan_date>= '"+params.taskPlanDateStart+"'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 'and drt.task_status>=9 " +
+        " group by drt.drive_id,drt.truck_id) drtm " +
+        " left join (select dpr.drive_id,dpr.truck_id, " +
+        " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end) not_storage_car_count, " +
+        " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dprl.real_count end) storage_car_count " +
+        " from dp_route_task dpr " +
+        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " where dpr.task_plan_date>= ' "+params.taskPlanDateStart+" 00:00:00 'and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status>=9 " +
+        " group by dpr.drive_id,dpr.truck_id) dprm on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
+        " where drtm.drive_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drtm.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and drtm.truck_id = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and drtm.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and drtm.company_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveSettleSalary ');
+        return callback(error,rows);
+    });
+}
+//产值
+function getDriveSettleOutput(params,callback) {
+    var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name, " +
+        " dprtm.output,dprtm.two_output " +
+        " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name " +
+        " from dp_route_task drt " +
+        " left join drive_info d on drt.drive_id = d.id " +
+        " left join truck_info t on drt.truck_id = t.id " +
+        " left join company_info c on t.company_id = c.id " +
+        " where drt.task_plan_date>= ' "+params.taskPlanDateStart+" 'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 'and drt.task_status>=9 " +
+        " group by drt.drive_id,drt.truck_id) drtm " +
+        " LEFT JOIN ( SELECT dprt.drive_id,dprt.truck_id," +
+        " sum( ecrr.fee * ecrr.distance * drlt.output_ratio ) output, " +
+        " sum(ecrr.two_fee*ecrr.two_distance*drlt.output_ratio) two_output " +
+        " from dp_route_load_task_detail drltd " +
+        " left join dp_route_load_task drlt on drlt.id = drltd.dp_route_load_task_id " +
+        " left join dp_route_task dprt on drltd.dp_route_task_id = dprt.id " +
+        " left join car_info ci on drltd.car_id = ci.id " +
+        " left join entrust_city_route_rel ecrr on ci.entrust_id = ecrr.entrust_id and " +
+        " ci.make_id = ecrr.make_id and ci.route_start_id = ecrr.route_start_id and ci.route_end_id = ecrr.route_end_id and ci.size_type =ecrr.size_type " +
+        " where dprt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00 'and dprt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59 'and dprt.task_status>=9 " +
+        " group by dprt.drive_id,dprt.truck_id) dprtm on drtm.drive_id = dprtm.drive_id and drtm.truck_id = dprtm.truck_id " +
+        " where drtm.drive_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and drtm.drive_id = ? ";
+    }
+    if(params.truckId){
+        paramsArray[i++] = params.truckId;
+        query = query + " and drtm.truck_id = ? ";
+    }
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and drtm.operate_type = ? ";
+    }
+    if(params.companyId){
+        paramsArray[i++] = params.companyId;
+        query = query + " and drtm.company_id = ? ";
+    }
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDriveSettleOutput ');
         return callback(error,rows);
     });
 }
@@ -656,6 +766,8 @@ module.exports ={
     getSettleHandoverDayCount : getSettleHandoverDayCount,
     getSettleHandoverMonthCount : getSettleHandoverMonthCount,
     getDriveSettle : getDriveSettle,
+    getDriveSettleSalary : getDriveSettleSalary,
+    getDriveSettleOutput : getDriveSettleOutput,
     getDriveSettleDetail : getDriveSettleDetail,
     getDriveCost : getDriveCost,
     updateSettleHandover : updateSettleHandover,
