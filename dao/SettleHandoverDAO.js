@@ -429,7 +429,7 @@ function getDriveSettle(params,callback) {
         " from dp_route_task drt " +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
-        " left join company_info c on t.company_id = c.id " +
+        " left join company_info c on d.company_id = c.id " +
         " where drt.task_plan_date>= '"+params.taskPlanDateStart+"' and drt.task_plan_date<='"+params.taskPlanDateEnd+"' and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +
@@ -499,7 +499,7 @@ function getDriveSettleSalary(params,callback) {
         " from dp_route_task drt " +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
-        " left join company_info c on t.company_id = c.id " +
+        " left join company_info c on d.company_id = c.id " +
         " where drt.task_plan_date>= '"+params.taskPlanDateStart+"'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 'and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +
@@ -545,7 +545,7 @@ function getDriveSettleOutput(params,callback) {
         " from dp_route_task drt " +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
-        " left join company_info c on t.company_id = c.id " +
+        " left join company_info c on d.company_id = c.id " +
         " where drt.task_plan_date>= ' "+params.taskPlanDateStart+" 'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 'and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " LEFT JOIN ( SELECT dprt.drive_id,dprt.truck_id," +
