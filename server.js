@@ -887,7 +887,7 @@ function createServer() {
     server.get('/api/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',dpRouteLoadTaskDetail.queryDpRouteLoadTaskDetail);
     server.get('/api/dpRouteLoadTaskDetailBase',dpRouteLoadTaskDetail.queryDpRouteLoadTaskDetailBase);
     server.get('/api/carLoadStatusCount',dpRouteLoadTaskDetail.queryCarLoadStatusCount);
-    server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail,sysRecord.checkUserStatus,sysRecord.saveCarRecord);
+    server.post({path:'/api/user/:userId/dpRouteLoadTask/:dpRouteLoadTaskId/dpRouteLoadTaskDetail',contentType: 'application/json'},sysRecord.checkUserStatus,dpRouteLoadTaskDetail.createDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId/carLoadStatus/:carLoadStatus',contentType: 'application/json'} ,sysRecord.checkUserStatus,dpRouteLoadTaskDetail.updateDpRouteLoadTaskDetailStatus,sysRecord.saveCarRecord);
     server.del('/api/user/:userId/dpRouteTaskDetail/:dpRouteTaskDetailId' , sysRecord.checkUserStatus,dpRouteLoadTaskDetail.removeDpRouteLoadTaskDetail,sysRecord.saveCarRecord);
 
