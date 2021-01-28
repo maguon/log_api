@@ -16208,6 +16208,22 @@
 
           },
           {
+            "name": "provinceId",
+            "in": "query",
+            "description": "province id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "provinceName",
+            "in": "query",
+            "description": "Province name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
             "name": "start",
             "in": "query",
             "description": " list start pos",
@@ -16424,6 +16440,60 @@
             "description": "city status",
             "required": true,
             "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid city id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/city/{cityId}/cityProvince": {
+      "put": {
+        "tags": [
+          "city"
+        ],
+        "summary": "update city info",
+        "description": "update city info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityId",
+            "in": "path",
+            "description": "city id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityProvinceId",
+            "in": "body",
+            "description": "cityProvince id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cityProvinceId"
+            }
 
           }
         ],
@@ -41679,6 +41749,18 @@
       },
       "xml": {
         "name": "city"
+      }
+    },
+    "cityProvinceId": {
+      "type": "object",
+      "properties": {
+
+        "cityProvinceId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "cityProvince"
       }
     },
     "cityProvince": {

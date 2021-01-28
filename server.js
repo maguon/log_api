@@ -610,6 +610,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
     server.put({path:'/api/user/:userId/city/:cityId/cityOilFlag/:cityOilFlag',contentType: 'application/json'} ,city.updateCityOilFlag);
     server.put({path:'/api/user/:userId/city/:cityId/cityStatus/:cityStatus',contentType: 'application/json'} ,city.updateCityStatus);
+    server.put({path:'/api/user/:userId/city/:cityId/cityProvince',contentType: 'application/json'} ,city.updateCityProvince);
 
     /**
      * CityProvince Module

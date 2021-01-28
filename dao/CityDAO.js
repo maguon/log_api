@@ -27,6 +27,14 @@ function getCity(params,callback) {
         paramsArray[i++] = params.cityName;
         query = query + " and city_name = ? ";
     }
+    if(params.provinceId){
+        paramsArray[i++] = params.provinceId;
+        query = query + " and province_id = ? ";
+    }
+    if(params.provinceName){
+        paramsArray[i++] = params.provinceName;
+        query = query + " and province_name = ? ";
+    }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
@@ -71,6 +79,18 @@ function updateCityStatus(params,callback){
     });
 }
 
+function updateCityProvince(params,callback){
+    var query = " update city_info set province_id = ? , province_name = ? where id = ?";
+    var paramsArray=[],i=0;
+    paramsArray[i++] = params.provinceId;
+    paramsArray[i++] = params.provinceName;
+    paramsArray[i] = params.cityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateCityProvince ');
+        return callback(error,rows);
+    });
+}
+
 
 
 module.exports ={
@@ -78,5 +98,6 @@ module.exports ={
     getCity : getCity,
     updateCity : updateCity,
     updateCityStatus : updateCityStatus,
-    updateCityOilFlag : updateCityOilFlag
+    updateCityOilFlag : updateCityOilFlag,
+    updateCityProvince : updateCityProvince
 }
