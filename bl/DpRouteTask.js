@@ -1268,24 +1268,26 @@ function getDriveDistanceLoadStatCsv(req,res,next){
                     parkObj.loadDistanceOilCount = rows[i].load_oil_distance_count;
                 }
 
+
+                //空载油量公里数
                 if(rows[i].no_oil_distance == null){
                     parkObj.noOilDistance = 0;
                 }else{
                     parkObj.noOilDistance = rows[i].no_oil_distance;
                 }
-
+                //重载油量公里数
                 if(rows[i].load_oil_distance == null){
                     parkObj.loadOilDistance = 0;
                 }else{
                     parkObj.loadOilDistance = rows[i].load_oil_distance;
                 }
-
+                //重载公里数
                 if(rows[i].no_load_distance == null){
                     parkObj.noLoadDistance = 0;
                 }else{
                     parkObj.noLoadDistance = rows[i].no_load_distance;
                 }
-
+                //空载公里数
                 if(rows[i].load_distance == null){
                     parkObj.loadDistance = 0;
                 }else{
