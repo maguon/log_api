@@ -219,6 +219,27 @@ function getTruckDispatchCount(params,callback) {
     });
 }
 
+function getTruckDispatchOpTypeCount(params,callback) {
+    var query = " SELECT td.truck_number, count( * ) " +
+        " FROM truck_dispatch td " +
+        " LEFT JOIN truck_info ti ON td.truck_id = ti.id " +
+        " where td.truck_id is not null ";
+    var paramsArray=[],i=0;
+    if(params.operateType){
+        paramsArray[i++] = params.operateType;
+        query = query + " and ti.operate_type = ? ";
+    }
+    if(params.dispatchFlag){
+        paramsArray[i++] = params.dispatchFlag;
+        query = query + " and td.dispatch_flag = ? ";
+    }
+    query = query + ' group by td.truck_number';
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getTruckDispatchOpTypeCount ');
+        return callback(error,rows);
+    });
+}
+
 function getTruckNumberType(params,callback) {
     var query = " select td.truck_number from truck_dispatch td " +
         " where td.truck_id is not null and td.truck_number > 0 ";
@@ -330,6 +351,7 @@ module.exports = {
     getTruckDispatchStop : getTruckDispatchStop,
     getTruckDispatchLoadTask : getTruckDispatchLoadTask,
     getTruckDispatchCount : getTruckDispatchCount,
+    getTruckDispatchOpTypeCount : getTruckDispatchOpTypeCount,
     getTruckNumberType : getTruckNumberType,
     getCityTruckDispatchCount : getCityTruckDispatchCount,
     updateTruckDispatchCarCount : updateTruckDispatchCarCount,

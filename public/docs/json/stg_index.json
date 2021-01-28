@@ -5380,6 +5380,50 @@
         }
       }
     },
+    "/truckDispatchOpTypeCount": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckDispatchOpType count",
+        "description": "query truckDispatchOpType Count ",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dispatchFlag",
+            "in": "query",
+            "description": "dispatch flag",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "operateType",
+            "in": "query",
+            "description": "operateType",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truck"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckDispatch id"
+          }
+        }
+      }
+    },
     "/truckNumberType": {
       "get": {
         "tags": [

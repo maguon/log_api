@@ -69,6 +69,20 @@ function queryTruckDispatchCount(req,res,next){
     })
 }
 
+function queryTruckDispatchOpTypeCount(req,res,next){
+    var params = req.params ;
+    truckDispatchDAO.getTruckDispatchOpTypeCount(params,function(error,result){
+        if (error) {
+            logger.error(' queryTruckDispatchOpTypeCount ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryTruckDispatchOpTypeCount ' + 'success');
+            resUtil.resetQueryRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function queryTruckNumberType(req,res,next){
     var params = req.params ;
     truckDispatchDAO.getTruckNumberType(params,function(error,result){
@@ -119,6 +133,7 @@ module.exports = {
     queryTruckDispatchStop : queryTruckDispatchStop,
     queryTruckDispatchLoadTask : queryTruckDispatchLoadTask,
     queryTruckDispatchCount : queryTruckDispatchCount,
+    queryTruckDispatchOpTypeCount : queryTruckDispatchOpTypeCount,
     queryTruckNumberType : queryTruckNumberType,
     queryCityTruckDispatchCount : queryCityTruckDispatchCount,
     initTruckDispatchCity : initTruckDispatchCity
