@@ -16443,6 +16443,171 @@
         }
       }
     },
+    "/cityProvince": {
+      "get": {
+        "tags": [
+          "city"
+        ],
+        "summary": "query  cityProvince list",
+        "description": "query cityProvince",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "provinceId",
+            "in": "query",
+            "description": "province id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "provinceName",
+            "in": "query",
+            "description": "Province name",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "provinceStatus",
+            "in": "query",
+            "description": "provinceStatus id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/cityProvince"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid cityProvince id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/cityProvince": {
+      "post": {
+        "tags": [
+          "city"
+        ],
+        "summary": "user create cityProvince",
+        "description": "user create cityProvince",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityProvince",
+            "in": "body",
+            "description": "cityProvince info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cityProvince"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid cityProvince id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/cityProvince/{cityProvinceId}/status/{status}": {
+      "put": {
+        "tags": [
+          "city"
+        ],
+        "summary": "update cityProvince status",
+        "description": "update cityProvince status",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "cityProvinceId",
+            "in": "path",
+            "description": "cityProvince id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "status",
+            "required": true,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid cityProvince id"
+          }
+        }
+      }
+    },
     "/cityRoute": {
       "get": {
         "tags": [
@@ -41514,6 +41679,21 @@
       },
       "xml": {
         "name": "city"
+      }
+    },
+    "cityProvince": {
+      "type": "object",
+      "properties": {
+
+        "provinceName": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "cityProvince"
       }
     },
     "cityRoute": {

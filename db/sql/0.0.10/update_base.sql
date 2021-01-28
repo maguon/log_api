@@ -1193,3 +1193,21 @@ CREATE TABLE `sys_notification`  (
 ALTER TABLE `drive_truck_month_value`
 ADD COLUMN `oil_vol` decimal(10, 2) DEFAULT 0 COMMENT '升数' AFTER `etc_fee`,
 ADD COLUMN `urea_vol` decimal(10, 2) DEFAULT 0 COMMENT '尿素升数' AFTER `oil_fee`;
+-- ----------------------------
+-- 2021-1-28 更新
+-- ----------------------------
+ALTER TABLE `city_info`
+ADD COLUMN `province_id` int(11) NOT NULL COMMENT '省份ID' AFTER `city_name`,
+ADD COLUMN `province_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '省份名称' AFTER `province_id`;
+
+DROP TABLE IF EXISTS `city_province`;
+CREATE TABLE `city_province`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一自增ID',
+  `province_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '省份名称',
+  `province_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '省份状态(0-停用，1-可用)',
+  `remark` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+
