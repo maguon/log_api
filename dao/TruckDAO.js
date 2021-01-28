@@ -298,6 +298,10 @@ function getTruckCount(params,callback) {
         paramsArray[i++] = params.operateType;
         query = query + " and c.operate_type = ? ";
     }
+    if(params.truckStatus){
+        paramsArray[i++] = params.truckStatus;
+        query = query + " and t.truck_status = ? ";
+    }
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getTruckCount ');
         return callback(error,rows);
