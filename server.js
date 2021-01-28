@@ -49,6 +49,7 @@ var driveSocialSecurity = require('./bl/DriveSocialSecurity.js');
 var driveTruckMonthValue = require('./bl/DriveTruckMonthValue.js');
 var company = require('./bl/Company.js');
 var city = require('./bl/City.js');
+var cityProvince = require('./bl/CityProvince');
 var cityRoute = require('./bl/CityRoute.js');
 var baseAddr = require('./bl/BaseAddr.js');
 var receive = require('./bl/Receive.js');
@@ -609,6 +610,13 @@ function createServer() {
     server.put({path:'/api/user/:userId/city/:cityId',contentType: 'application/json'} ,city.updateCity);
     server.put({path:'/api/user/:userId/city/:cityId/cityOilFlag/:cityOilFlag',contentType: 'application/json'} ,city.updateCityOilFlag);
     server.put({path:'/api/user/:userId/city/:cityId/cityStatus/:cityStatus',contentType: 'application/json'} ,city.updateCityStatus);
+
+    /**
+     * CityProvince Module
+     */
+    server.get('/api/cityProvince',cityProvince.queryCityProvince);
+    server.post({path:'/api/user/:userId/cityProvince',contentType: 'application/json'},cityProvince.createCityProvince);
+    server.put({path:'/api/user/:userId/cityProvince/:cityProvinceId/status/:status',contentType: 'application/json'} ,cityProvince.updateCityProvinceStatus);
 
     /**
      * CityRoute Module
