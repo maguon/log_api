@@ -41,12 +41,16 @@ function addUploadSettleCar(params,callback){
 
 function getSettleCar(params,callback) {
     var query = " select sc.*,e.short_name as e_short_name,c1.city_name as route_start,c2.city_name as route_end,c.order_date,c.make_name," +
-        " ecrr.distance as current_distance,ecrr.fee as current_fee " +
+        " ecrr.distance as current_distance,ecrr.fee as current_fee , " +
+        " cis.province_id as province_start_id, cis.province_name as province_start_name ," +
+        " cir.province_id as province_end_id,cir.province_name as province_end_name " +
         " from settle_car sc " +
         " left join entrust_info e on sc.entrust_id = e.id " +
         " left join city_info c1 on sc.route_start_id = c1.id " +
         " left join city_info c2 on sc.route_end_id = c2.id " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
+        " LEFT JOIN city_info cis ON sc.route_start_id = cis.id  " +
+        " LEFT JOIN city_info cir ON sc.route_end_id = cir.id  " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
         " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id and c.make_id = ecrr.make_id " +
         " and c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id and c.size_type = ecrr.size_type " +

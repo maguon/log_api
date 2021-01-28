@@ -140,8 +140,8 @@ function uploadSettleCarFile(req,res,next){
 
 function getSettleCarCsv(req,res,next){
     var csvString = "";
-    var header = "VIN" + ',' + "委托方" + ','+ "品牌" + ',' + "起始城市" + ','+ "目的城市" + ','+ "公里数"+ ','+ "价格/公里"+ ','+ "实际金额"+ ','+
-        "当前公里数"+ ','+ "当前单价"+ ','+"指令时间" ;
+    var header = "VIN" + ',' + "委托方" + ','+ "品牌" + ',' + "起始省份" +  ',' + "起始城市" + ','+ "目的省份" + ','+ "目的城市" + ','+
+        "公里数"+ ','+ "价格/公里"+ ','+ "实际金额"+ ','+ "当前公里数"+ ','+ "当前单价"+ ','+"指令时间" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -162,11 +162,25 @@ function getSettleCarCsv(req,res,next){
                 }else{
                     parkObj.makeName = rows[i].make_name;
                 }
+                //起始省份
+                if(rows[i].province_start_name == null){
+                    parkObj.provinceStartName = "";
+                }else{
+                    parkObj.provinceStartName = rows[i].province_start_name;
+                }
+                //起始城市
                 if(rows[i].route_start == null){
                     parkObj.routeStart = "";
                 }else{
                     parkObj.routeStart = rows[i].route_start;
                 }
+                //目的省份
+                if(rows[i].province_end_name == null){
+                    parkObj.provinceEndName = "";
+                }else{
+                    parkObj.provinceEndName = rows[i].province_end_name;
+                }
+                //目的城市
                 if(rows[i].route_end == null){
                     parkObj.routeEnd = "";
                 }else{
@@ -198,7 +212,8 @@ function getSettleCarCsv(req,res,next){
                 }else{
                     parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
                 }
-                csvString = csvString+parkObj.vin+","+parkObj.eShortName+","+parkObj.makeName+","+parkObj.routeStart+","+parkObj.routeEnd +","+
+                csvString = csvString+parkObj.vin+","+parkObj.eShortName+","+parkObj.makeName+","+parkObj.provinceStartName+","+parkObj.routeStart+","+
+                    parkObj.provinceEndName +","+parkObj.routeEnd +","+
                     parkObj.distance+","+parkObj.fee+","+parkObj.price+","+parkObj.currentDistance+","+parkObj.currentFee+","+
                     parkObj.orderDate+ '\r\n';
             }
