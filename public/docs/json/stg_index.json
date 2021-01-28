@@ -1555,6 +1555,14 @@
             "required": false,
             "type": "integer"
 
+          },
+          {
+            "name": "truckStatus",
+            "in": "query",
+            "description": "truck Status",
+            "required": false,
+            "type": "integer"
+
           }
         ],
         "responses": {

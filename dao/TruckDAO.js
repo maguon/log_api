@@ -275,6 +275,10 @@ function getOperateTypeCount(params,callback) {
         paramsArray[i++] = params.truckType;
         query = query + " and t.truck_type= ? ";
     }
+    if(params.truckStatus){
+        paramsArray[i++] = params.truckStatus;
+        query = query + " and t.truck_status= ? ";
+    }
     query = query + ' group by c.operate_type ';
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getOperateTypeCount ');
