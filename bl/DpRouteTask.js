@@ -1205,8 +1205,10 @@ function getDpRouteTaskCsv(req,res,next){
 
 function getDriveDistanceLoadStatCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "所属类型"+ ',' +"完成任务数" + ',' + "倒板数" + ',' +
-        "空载油量公里数" + ','+"重载油量公里数" + ','+ "空载公里数" + ','+"重载公里数" + ','+"总计里程"+ ',' + "重载率(%)" ;
+    var header = "司机" + ',' +"货车牌号" + ',' + "所属类型"+ ',' +"空载任务数" + ',' + "重载任务数"  + "," + "完成任务数" + ',' +
+        "空载油耗任务数" + ',' + "重载油耗任务数"  + "," + "倒板数" + ',' +
+        "空载油量公里数" + ','+ "重载油量公里数" + ','+"空载公里数" + ','+"重载公里数"+ ','+
+        "总计里程"+ ',' + "重载率(%)" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -1241,33 +1243,63 @@ function getDriveDistanceLoadStatCsv(req,res,next){
                 }else{
                     parkObj.reverseCount = rows[i].reverse_count;
                 }
+                //空载完成任务数
+                if(rows[i].no_load_distance_count == null){
+                    parkObj.noLoadDistanceCount = 0;
+                }else{
+                    parkObj.noLoadDistanceCount = rows[i].no_load_distance_count;
+                }
+                //重载完成任务数
+                if(rows[i].load_distance_count == null){
+                    parkObj.loadDistanceCount = 0;
+                }else{
+                    parkObj.loadDistanceCount = rows[i].load_distance_count;
+                }
+                //空载油耗完成任务数
+                if(rows[i].no_oil_distance_count == null){
+                    parkObj.noOilDistanceCount = 0;
+                }else{
+                    parkObj.noOilDistanceCount = rows[i].no_oil_distance_count;
+                }
+                //重载油耗完成任务书
+                if(rows[i].load_oil_distance_count == null){
+                    parkObj.loadDistanceOilCount = 0;
+                }else{
+                    parkObj.loadDistanceOilCount = rows[i].load_oil_distance_count;
+                }
 
                 if(rows[i].no_oil_distance == null){
                     parkObj.noOilDistance = 0;
                 }else{
                     parkObj.noOilDistance = rows[i].no_oil_distance;
                 }
+
                 if(rows[i].load_oil_distance == null){
-                    parkObj.loadDistanceOil = 0;
+                    parkObj.loadOilDistance = 0;
                 }else{
-                    parkObj.loadDistanceOil = rows[i].load_oil_distance;
+                    parkObj.loadOilDistance = rows[i].load_oil_distance;
                 }
+
                 if(rows[i].no_load_distance == null){
                     parkObj.noLoadDistance = 0;
                 }else{
                     parkObj.noLoadDistance = rows[i].no_load_distance;
                 }
+
                 if(rows[i].load_distance == null){
                     parkObj.loadDistance = 0;
                 }else{
                     parkObj.loadDistance = rows[i].load_distance;
                 }
+
                 parkObj.totalDistance = rows[i].load_distance+rows[i].no_load_distance;
                 parkObj.loadDistanceRate =rows[i].load_distance/(rows[i].load_distance+rows[i].no_load_distance)*100;
 
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+
-                    parkObj.completeCount+","+parkObj.reverseCount+","+parkObj.noOilDistance+","+parkObj.loadDistanceOil+","+
-                    parkObj.noLoadDistance+","+parkObj.loadDistance+","+parkObj.totalDistance+","+parkObj.loadDistanceRate.toFixed(2) + '\r\n';
+                    parkObj.noLoadDistanceCount+","+parkObj.loadDistanceCount+","+parkObj.completeCount+","+
+                    parkObj.noOilDistanceCount+","+parkObj.loadDistanceOilCount + "," + parkObj.reverseCount+","+
+                    parkObj.noOilDistance+","+parkObj.loadOilDistance+","+ parkObj.noLoadDistance+","+parkObj.loadDistance+","+
+                    parkObj.totalDistance+","+parkObj.loadDistanceRate.toFixed(2) + '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
