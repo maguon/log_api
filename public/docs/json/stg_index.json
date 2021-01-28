@@ -41745,6 +41745,9 @@
 
         "cityName": {
           "type": "string"
+        },
+        "cityProvinceId": {
+          "type": "integer"
         }
       },
       "xml": {

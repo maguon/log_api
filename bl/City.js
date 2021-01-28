@@ -16,15 +16,36 @@ var logger = serverLogger.createLogger('City.js');
 
 function createCity(req,res,next){
     var params = req.params ;
-    cityDAO.addCity(params,function(error,result){
-        if (error) {
-            logger.error(' createCity ' + error.message);
-            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-        } else {
-            logger.info(' createCity ' + 'success');
-            resUtil.resetCreateRes(res,result,null);
-            return next();
-        }
+    Seq().seq(function () {
+        var that = this;
+        params.provinceId = params.cityProvinceId;
+        cityProvinceDAO.getCityProvince(params,function(error,rows){
+            if (error) {
+                logger.error(' createCity getCityProvince ' + error.message);
+                resUtil.resetFailedRes(res,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                return next();
+            } else {
+                if(rows && rows.length>0){
+                    params.provinceName = rows[0].province_name;
+                    that();
+                }else{
+                    logger.warn(' createCity getCityProvince ' + 'failed');
+                    resUtil.resetFailedRes(res, " 省份不存在，操作失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        cityDAO.addCity(params,function(error,result){
+            if (error) {
+                logger.error(' createCity addCity ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' createCity addCity ' + 'success');
+                resUtil.resetCreateRes(res,result,null);
+                return next();
+            }
+        })
     })
 }
 

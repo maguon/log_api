@@ -7,9 +7,11 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('CityDAO.js');
 
 function addCity(params,callback){
-    var query = " insert into city_info (city_name)  values (?)";
+    var query = " insert into city_info (city_name, province_id, province_name)  values (? , ? , ?)";
     var paramsArray=[],i=0;
-    paramsArray[i]=params.cityName;
+    paramsArray[i++]=params.cityName;
+    paramsArray[i++]=params.provinceId;
+    paramsArray[i]=params.provinceName;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCity ');
         return callback(error,rows);
@@ -33,7 +35,7 @@ function getCity(params,callback) {
     }
     if(params.provinceName){
         paramsArray[i++] = params.provinceName;
-        query = query + " and province_name = ? ";
+        query = query + " and province_name like '%"+params.provinceName+"%'";
     }
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
