@@ -579,7 +579,7 @@ function getCarRelCsv(req,res,next){
 
 function getCarListCsv(req,res,next){
     var csvString = "";
-    var header = "VIN" + ',' + "制造商" + ',' +"委托方" + ',' + "发运地城市" + ','+ "发运地地址" + ','+ "目的地城市"+ ','+
+    var header = "VIN" + ',' + "制造商" + ',' +"委托方" + ',' + "发运地省份"  +  ',' + "发运地城市" + ','+ "发运地地址" + ','+ "目的地省份"+ ','+ "目的地城市"+ ','+
         "经销商" + ','+ "指令时间" + ','+ "状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -597,6 +597,11 @@ function getCarListCsv(req,res,next){
                 }else{
                     parkObj.enShortName = rows[i].en_short_name;
                 }
+                if(rows[i].province_start_name == null){
+                    parkObj.provinceStartName = "";
+                }else{
+                    parkObj.provinceStartName = rows[i].province_start_name;
+                }
                 if(rows[i].route_start == null){
                     parkObj.routeStart = "";
                 }else{
@@ -606,6 +611,11 @@ function getCarListCsv(req,res,next){
                     parkObj.addrName = "";
                 }else{
                     parkObj.addrName = rows[i].addr_name;
+                }
+                if(rows[i].province_end_name == null){
+                    parkObj.provinceEndName = "";
+                }else{
+                    parkObj.provinceEndName = rows[i].province_end_name;
                 }
                 if(rows[i].route_end == null){
                     parkObj.routeEnd = "";
@@ -631,8 +641,8 @@ function getCarListCsv(req,res,next){
                 }else{
                     parkObj.carStatus = "已完成";
                 }
-                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.enShortName+","+parkObj.routeStart+","+parkObj.addrName+","
-                    +parkObj.routeEnd+","+parkObj.reShortName+","+parkObj.orderDate+","+parkObj.carStatus+ '\r\n';
+                csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.enShortName+","+parkObj.provinceStartName+","+parkObj.routeStart+","+parkObj.addrName+","
+                    +parkObj.provinceEndName+","+parkObj.routeEnd+","+parkObj.reShortName+","+parkObj.orderDate+","+parkObj.carStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
