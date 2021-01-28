@@ -220,7 +220,7 @@ function getTruckDispatchCount(params,callback) {
 }
 
 function getTruckDispatchOpTypeCount(params,callback) {
-    var query = " SELECT td.truck_number, count( * ) " +
+    var query = " SELECT td.truck_number, count( * ) as total_count " +
         " FROM truck_dispatch td " +
         " LEFT JOIN truck_info ti ON td.truck_id = ti.id " +
         " where td.truck_id is not null ";
