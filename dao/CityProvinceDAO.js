@@ -32,7 +32,7 @@ function getCityProvince(params,callback) {
         paramsArray[i++] = params.provinceStatus;
         query = query + " and province_status = ? ";
     }
-    query = query + ' order by id asc';
+    query = query + ' order by province_status desc';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i++] = parseInt(params.size);
