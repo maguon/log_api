@@ -44,7 +44,7 @@ function getTruckQa(params,callback) {
     }
     if(params.qaType){
         paramsArray[i++] = params.qaType;
-        query = query + " and tq.qa_yype = ? ";
+        query = query + " and tq.qa_type = ? ";
     }
     if(params.qaDateStart){
         paramsArray[i++] = params.qaDateStart +" 00:00:00";
