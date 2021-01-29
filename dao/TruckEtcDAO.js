@@ -53,8 +53,8 @@ function getTruckEtc(params,callback) {
         paramsArray[i++] = params.etcDateStart +" 00:00:00";
         query = query + " and te.etc_date >= ? ";
     }
-    if(params.etcDatenEnd){
-        paramsArray[i++] = params.etcDatenEnd +" 23:59:59";
+    if(params.etcDateEnd){
+        paramsArray[i++] = params.etcDateEnd +" 23:59:59";
         query = query + " and te.etc_date <= ? ";
     }
     if(params.createdOnStart){
@@ -109,8 +109,8 @@ function getTruckEtcFeeCount(params,callback) {
         paramsArray[i++] = params.etcDateStart +" 00:00:00";
         query = query + " and te.etc_date >= ? ";
     }
-    if(params.etcDatenEnd){
-        paramsArray[i++] = params.etcDatenEnd +" 23:59:59";
+    if(params.etcDateEnd){
+        paramsArray[i++] = params.etcDateEnd +" 23:59:59";
         query = query + " and te.etc_date <= ? ";
     }
     if(params.createdOnStart){
