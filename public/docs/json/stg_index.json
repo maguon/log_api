@@ -8052,7 +8052,7 @@
 
           },
           {
-            "name": "etcDatenEnd",
+            "name": "etcDateEnd",
             "in": "query",
             "description": "etcDate end",
             "required": false,
