@@ -25,6 +25,7 @@ var truckAccidentInsureRel = require('./bl/TruckAccidentInsureRel.js');
 var truckAccidentInsureLoan = require('./bl/TruckAccidentInsureLoan.js');
 var truckSecurityCheck = require('./bl/TruckSecurityCheck.js');
 var truckEtc = require('./bl/TruckEtc.js');
+var truckQa = require('./bl/TruckQa.js');
 var truckDepreciation = require('./bl/TruckDepreciation.js');
 var brand = require('./bl/Brand.js');
 var brandStyle = require('./bl/BrandStyle.js');
@@ -381,6 +382,14 @@ function createServer() {
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
     server.put({path:'/api/user/:userId/truckEtc/:truckEtcId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,truckEtc.updatePaymentStatus);
     server.put({path:'/api/user/:userId/paymentStatus/:paymentStatus/paymentStatusAll',contentType: 'application/json'} ,truckEtc.updatePaymentStatusAll);
+
+    /**
+     * TruckQa Module
+     */
+    server.get('/api/truckQa' ,truckQa.queryTruckQa);
+    server.get('/api/truckQa.csv' ,truckQa.getTruckQaCsv);
+    server.post({path:'/api/user/:userId/truckQa',contentType: 'application/json'},truckQa.createTruckQa);
+    server.post({path:'/api/user/:userId/truckQaFile',contentType: 'multipart/form-data'},truckQa.uploadTruckQaFile);
 
     /**
      * TruckDepreciation Module

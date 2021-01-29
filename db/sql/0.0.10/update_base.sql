@@ -1210,4 +1210,32 @@ CREATE TABLE `city_province`  (
   `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+-- ----------------------------
+-- 2021-1-29 更新
+-- ----------------------------
+ALTER TABLE `log_base`.`truck_info`
+MODIFY COLUMN `driving_date` date DEFAULT NULL COMMENT '行驶证检验日期' AFTER `number`,
+MODIFY COLUMN `license_date` date DEFAULT NULL COMMENT '营运证检验日期' AFTER `driving_date`;
+
+DROP TABLE IF EXISTS `truck_qa`;
+CREATE TABLE `truck_qa`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '编号',
+  `truck_id` int(10) DEFAULT 0 COMMENT '货车ID',
+  `truck_num` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '货车牌号',
+  `qa_type` decimal(10, 2) DEFAULT 0.00 COMMENT '检车类型(1-运营证2-行驶证)',
+  `qa_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '检车费用',
+  `tax_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '税费',
+  `qa_date` date DEFAULT NULL COMMENT '检车时间',
+  `date_id` int(4) DEFAULT NULL COMMENT '检车统计时间',
+  `op_user_id` int(10) DEFAULT 0 COMMENT '操作人ID',
+  `upload_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上传ID',
+  `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `created_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `log_base`.`car_info`
+ADD COLUMN `qa_level` varchar(255) DEFAULT 0 COMMENT '检车类型（0-正常1-重检）' AFTER `size_type`;
 

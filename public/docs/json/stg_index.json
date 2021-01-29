@@ -8325,6 +8325,286 @@
         }
       }
     },
+    "/truckQa": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckQa list",
+        "description": "query truckQa",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckQaId",
+            "in": "query",
+            "description": "truckQa id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "qaType",
+            "in": "query",
+            "description": "qaType id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "qaDateStart",
+            "in": "query",
+            "description": "qaDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "qaDateEnd",
+            "in": "query",
+            "description": "qaDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": " list start pos",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "list size for pagination",
+            "required": false,
+            "type": "integer"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckQa"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckQa id"
+          }
+        }
+      }
+    },
+    "/truckQa.csv": {
+      "get": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "query  truckQa csv",
+        "description": "query truckQa csv",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "truckQaId",
+            "in": "query",
+            "description": "truckQa id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckId",
+            "in": "query",
+            "description": "truck id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "qaType",
+            "in": "query",
+            "description": "qaType id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "qaDateStart",
+            "in": "query",
+            "description": "qaDate start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "qaDateEnd",
+            "in": "query",
+            "description": "qaDate end",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnStart",
+            "in": "query",
+            "description": "createdOn start",
+            "required": false,
+            "type": "string"
+
+          },
+          {
+            "name": "createdOnEnd",
+            "in": "query",
+            "description": "createdOn end",
+            "required": false,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/truckQa"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckQa id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckQa": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user create truckQa",
+        "description": "user create truckQa",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "truckQa",
+            "in": "body",
+            "description": "truckQa info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/truckQa"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckEtc id"
+          }
+        }
+      }
+    },
+    "/user/{userId}/truckQaFile": {
+      "post": {
+        "tags": [
+          "truck"
+        ],
+        "summary": "user upload truckQaFile ",
+        "description": "user upload truckQaFile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "uploadId",
+            "in": "query",
+            "description": "upload id",
+            "required": true,
+            "type": "string"
+
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid truckQa id"
+          }
+        }
+      }
+    },
     "/truckDepreciation": {
       "get": {
         "tags": [
@@ -40881,6 +41161,39 @@
       },
       "xml": {
         "name": "paymentStatusAll"
+      }
+    },
+    "truckQa": {
+      "type": "object",
+      "properties": {
+
+        "number": {
+          "type": "string"
+        },
+        "truckId": {
+          "type": "integer"
+        },
+        "truckNum": {
+          "type": "string"
+        },
+        "qaType": {
+          "type": "integer"
+        },
+        "qaFee": {
+          "type": "integer"
+        },
+        "taxFee": {
+          "type": "integer"
+        },
+        "qaDate": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "truckQa"
       }
     },
     "truckDepreciation": {

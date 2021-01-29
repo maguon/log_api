@@ -208,6 +208,11 @@ var TRUCK_INSURE_STATUS = {  //货车保险状态
     normal : 1 //正常
 };
 
+var TRUCK_QA_TYPE = {  //货车检车类型
+    license : 1 ,  //运营证
+    driving : 2 //行驶证
+};
+
 var STAT_STATUS = {  //工资结算状态
     not_stat : 1 ,  //未结算
     stat : 2 //已结算
@@ -293,6 +298,7 @@ module.exports = {
     TASK_LOAN_STATUS : TASK_LOAN_STATUS,
     DAMAGE_INDEMNITY_STATUS : DAMAGE_INDEMNITY_STATUS,
     TRUCK_INSURE_STATUS : TRUCK_INSURE_STATUS,
+    TRUCK_QA_TYPE : TRUCK_QA_TYPE,
     STAT_STATUS : STAT_STATUS,
     RECEIVE_TYPE : RECEIVE_TYPE,
     RECEIVE_FLAG : RECEIVE_FLAG,
