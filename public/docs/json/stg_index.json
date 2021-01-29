@@ -7812,9 +7812,9 @@
 
           },
           {
-            "name": "etcDatenEnd",
+            "name": "etcDateEnd",
             "in": "query",
-            "description": "etcDaten end",
+            "description": "etcDate end",
             "required": false,
             "type": "string"
 
@@ -7936,9 +7936,9 @@
 
           },
           {
-            "name": "etcDatenEnd",
+            "name": "etcDateEnd",
             "in": "query",
-            "description": "etcDaten end",
+            "description": "etcDate end",
             "required": false,
             "type": "string"
 
@@ -8054,7 +8054,7 @@
           {
             "name": "etcDatenEnd",
             "in": "query",
-            "description": "etcDaten end",
+            "description": "etcDate end",
             "required": false,
             "type": "string"
 
