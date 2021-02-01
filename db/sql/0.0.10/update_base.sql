@@ -1213,7 +1213,7 @@ CREATE TABLE `city_province`  (
 -- ----------------------------
 -- 2021-1-29 更新
 -- ----------------------------
-ALTER TABLE `log_base`.`truck_info`
+ALTER TABLE `truck_info`
 MODIFY COLUMN `driving_date` date DEFAULT NULL COMMENT '行驶证检验日期' AFTER `number`,
 MODIFY COLUMN `license_date` date DEFAULT NULL COMMENT '营运证检验日期' AFTER `driving_date`;
 
@@ -1236,6 +1236,6 @@ CREATE TABLE `truck_qa`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
-ALTER TABLE `log_base`.`car_info`
+ALTER TABLE `car_info`
 ADD COLUMN `qa_level` varchar(255) DEFAULT 0 COMMENT '检车类型（0-正常1-重检）' AFTER `size_type`;
 
