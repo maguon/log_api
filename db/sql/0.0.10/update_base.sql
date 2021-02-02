@@ -1239,3 +1239,8 @@ CREATE TABLE `truck_qa`  (
 ALTER TABLE `car_info`
 ADD COLUMN `qa_level` varchar(255) DEFAULT 0 COMMENT '检车类型（0-正常1-重检）' AFTER `size_type`;
 
+-- ----------------------------
+-- 2021-2-2 更新
+-- ----------------------------
+ALTER TABLE `car_info`
+MODIFY COLUMN `qa_level` tinyint(1) DEFAULT 0 COMMENT '检车类型（0-正常1-重检）' AFTER `size_type`;

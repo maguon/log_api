@@ -50,8 +50,8 @@ function addCarTmp(params,callback){
 
 function addCar(params,callback){
     var query = " insert into car_info (user_id,vin,company_id,make_id,make_name,model_id,model_name," +
-        " route_start_id,route_start,base_addr_id,route_end_id,route_end,route_id,receive_id,entrust_id,order_date,order_date_id,ship_name,colour,engine_num,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " route_start_id,route_start,base_addr_id,route_end_id,route_end,route_id,receive_id,entrust_id,order_date,order_date_id,ship_name,colour,engine_num,qa_level,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.vin;
@@ -86,6 +86,11 @@ function addCar(params,callback){
     paramsArray[i++]=params.shipName;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
+    if(params.qaLevel !=null && params.qaLevel != ''){
+        paramsArray[i++]=params.qaLevel;
+    }else{
+        paramsArray[i++] =0;
+    }
     paramsArray[i]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' addCar ');
@@ -655,7 +660,7 @@ function getCarDamageDeclare(params,callback) {
 function updateCar(params,callback){
     var query = " update car_info set vin = ? , company_id = ? , make_id = ? , make_name = ? , model_id = ? , model_name = ? , " +
         " route_start_id = ? , route_start = ? , base_addr_id = ? , route_end_id = ? , route_end = ? , route_id = ? , receive_id = ? , " +
-        " entrust_id = ? , order_date = ? , order_date_id = ? , ship_name = ? , colour = ? , engine_num = ? , remark = ? where id = ? "  ;
+        " entrust_id = ? , order_date = ? , order_date_id = ? , ship_name = ? , colour = ? , engine_num = ? , qa_level = ? , remark = ? where id = ? "  ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     if(params.companyId){
@@ -689,6 +694,11 @@ function updateCar(params,callback){
     paramsArray[i++]=params.shipName;
     paramsArray[i++]=params.colour;
     paramsArray[i++]=params.engineNum;
+    if(params.qaLevel !=null && params.qaLevel != ''){
+        paramsArray[i++]=params.qaLevel;
+    }else{
+        paramsArray[i++] =0;
+    }
     paramsArray[i++]=params.remark;
     paramsArray[i]=params.carId;
     db.dbQuery(query,paramsArray,function(error,rows){

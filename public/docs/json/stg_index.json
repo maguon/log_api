@@ -42506,6 +42506,9 @@
         "engineNum": {
           "type": "string"
         },
+        "qaLevel": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }
