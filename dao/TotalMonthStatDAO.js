@@ -102,9 +102,8 @@ function updateTruckCountConcat(params,callback) {
         " AND drt.task_status = 10 " +
         " AND outer_flag = 0  " +
         " AND drt.truck_number > 0 " +
-        " GROUP BY drt.truck_number ) drt_count " +
-        " ) drtm" +
-        " ON tms.y_month = " + params.yMonth  +
+        " GROUP BY drt.truck_number ORDER BY drt.truck_number asc) drt_count " +
+        " ) drtm ON tms.y_month = " + params.yMonth  +
         " SET tms.truck_count_desc = drtm.concat_truck_count " ;
     var paramsArray=[],i=0;
 
