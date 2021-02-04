@@ -1171,6 +1171,7 @@ function createServer() {
     /**
      * Statistics Module
      */
+    server.post({path:'/api/createTotalMonthStat',contentType: 'application/json'},totalMonthStat.createTotalMonthStat);
     server.get('/api/user/:userId/settleStat' ,totalMonthStat.querySettleStat);
     server.get('/api/settleStat.csv', totalMonthStat.getSettleStatCsv);
     server.get('/api/user/:userId/dispatchStat' ,totalMonthStat.queryDispatchStat);
