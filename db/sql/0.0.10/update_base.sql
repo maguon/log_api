@@ -1244,3 +1244,9 @@ ADD COLUMN `qa_level` varchar(255) DEFAULT 0 COMMENT '检车类型（0-正常1-�
 -- ----------------------------
 ALTER TABLE `car_info`
 MODIFY COLUMN `qa_level` tinyint(1) DEFAULT 0 COMMENT '检车类型（0-正常1-重检）' AFTER `size_type`;
+
+-- ----------------------------
+-- 2021-2-4 更新
+-- ----------------------------
+ALTER TABLE `total_month_stat`
+ADD COLUMN `truck_count_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '板车位数统计' AFTER `truck_count`;
