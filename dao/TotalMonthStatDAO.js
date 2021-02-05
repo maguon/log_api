@@ -89,7 +89,7 @@ function updateTruckCount(params,callback) {
 
 //运营货车数量  truck_count 根据位数统计
 function updateTruckCountConcat(params,callback) {
-    var query = " UPDATE total_month_stat tms INNER JOIN( " +
+    var query = " UPDATE total_month_stat tms SET truck_count_desc = ( " +
         " SELECT CONCAT( '{', " +
         " group_concat( CONCAT_WS( ',', " +
         " CONCAT( '\"', drt_count.truck_number, '\":', drt_count.truck_count ) ) ),'}' ) AS concat_truck_count " +
@@ -103,8 +103,7 @@ function updateTruckCountConcat(params,callback) {
         " AND outer_flag = 0  " +
         " AND drt.truck_number > 0 " +
         " GROUP BY drt.truck_number ORDER BY drt.truck_number asc) drt_count " +
-        " ) drtm ON tms.y_month = " + params.yMonth  +
-        " SET tms.truck_count_desc = drtm.concat_truck_count " ;
+        " ) where tms.y_month = " + params.yMonth;
     var paramsArray=[],i=0;
 
     db.dbQuery(query,paramsArray,function(error,rows){
