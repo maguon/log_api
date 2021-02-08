@@ -430,14 +430,14 @@ function getDriveSettle(params,callback) {
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
         " left join company_info c on d.company_id = c.id " +
-        " where drt.task_plan_date>= '"+params.taskPlanDateStart+"' and drt.task_plan_date<='"+params.taskPlanDateEnd+"' and drt.task_status>=9 " +
+        " where drt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' and drt.task_plan_date<='"+params.taskPlanDateEnd+" 23:59:59' and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end) not_storage_car_count, " +
         " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dprl.real_count end) storage_car_count " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
-        " where dpr.task_plan_date>= '"+params.taskPlanDateStart+"' and dpr.task_plan_date<= '"+params.taskPlanDateEnd+"' and dpr.task_status>=9 " +
+        " where dpr.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status>=9 " +
         " group by dpr.drive_id,dpr.truck_id) dprm on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
         " left join (select dprt.drive_id,dprt.truck_id,sum(ecrr.fee*ecrr.distance*drlt.output_ratio) output," +
         " sum(ecrr.two_fee*ecrr.two_distance*drlt.output_ratio) two_output " +
@@ -447,7 +447,7 @@ function getDriveSettle(params,callback) {
         " left join car_info ci on drltd.car_id = ci.id " +
         " left join entrust_city_route_rel ecrr on ci.entrust_id = ecrr.entrust_id and " +
         " ci.make_id = ecrr.make_id and ci.route_start_id = ecrr.route_start_id and ci.route_end_id = ecrr.route_end_id and ci.size_type =ecrr.size_type " +
-        " where dprt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00'and dprt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59 'and dprt.task_status>=9 " +
+        " where dprt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' and dprt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dprt.task_status>=9 " +
         " group by dprt.drive_id,dprt.truck_id) dprtm on drtm.drive_id = dprtm.drive_id and drtm.truck_id = dprtm.truck_id " +
         " where drtm.drive_id is not null ";
     var paramsArray=[],i=0;
@@ -500,14 +500,14 @@ function getDriveSettleSalary(params,callback) {
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
         " left join company_info c on d.company_id = c.id " +
-        " where drt.task_plan_date>= '"+params.taskPlanDateStart+"'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 'and drt.task_status>=9 " +
+        " where drt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " left join (select dpr.drive_id,dpr.truck_id, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end) not_storage_car_count, " +
         " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dprl.real_count end) storage_car_count " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
-        " where dpr.task_plan_date>= ' "+params.taskPlanDateStart+" 00:00:00 'and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status>=9 " +
+        " where dpr.task_plan_date>= ' "+params.taskPlanDateStart+" 00:00:00'and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status>=9 " +
         " group by dpr.drive_id,dpr.truck_id) dprm on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
         " where drtm.drive_id is not null ";
     var paramsArray=[],i=0;
@@ -546,7 +546,7 @@ function getDriveSettleOutput(params,callback) {
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
         " left join company_info c on d.company_id = c.id " +
-        " where drt.task_plan_date>= ' "+params.taskPlanDateStart+"  00:00:00 'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59  'and drt.task_status>=9 " +
+        " where drt.task_plan_date>= ' "+params.taskPlanDateStart+" 00:00:00' and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " LEFT JOIN ( SELECT dprt.drive_id,dprt.truck_id," +
         " sum( ecrr.fee * ecrr.distance * drlt.output_ratio ) output, " +
@@ -557,7 +557,7 @@ function getDriveSettleOutput(params,callback) {
         " left join car_info ci on drltd.car_id = ci.id " +
         " left join entrust_city_route_rel ecrr on ci.entrust_id = ecrr.entrust_id and " +
         " ci.make_id = ecrr.make_id and ci.route_start_id = ecrr.route_start_id and ci.route_end_id = ecrr.route_end_id and ci.size_type =ecrr.size_type " +
-        " where dprt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00 'and dprt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59 'and dprt.task_status>=9 " +
+        " where dprt.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' and dprt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dprt.task_status>=9 " +
         " group by dprt.drive_id,dprt.truck_id) dprtm on drtm.drive_id = dprtm.drive_id and drtm.truck_id = dprtm.truck_id " +
         " where drtm.drive_id is not null ";
     var paramsArray=[],i=0;
