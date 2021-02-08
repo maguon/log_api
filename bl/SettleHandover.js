@@ -322,18 +322,6 @@ function queryDriveSettle(req,res,next){
 
 function queryDriveSettleSalary(req,res,next){
     var params = req.params ;
-    if(params.dateIdStart !=null || params.dateIdStart !=""){
-        var dateIdStart = params.dateIdStart;
-        var d = new Date(dateIdStart);
-        var currentDateStr = moment(d).format('YYYYMMDD');
-        params.dateIdStart = parseInt(currentDateStr);
-    }
-    if(params.dateIdEnd !=null || params.dateIdEnd !=""){
-        var dateIdEnd = params.dateIdEnd;
-        var d = new Date(dateIdEnd);
-        var currentDateStr = moment(d).format('YYYYMMDD');
-        params.dateIdEnd = parseInt(currentDateStr);
-    }
     settleHandoverDAO.getDriveSettleSalary(params,function(error,result){
         if (error) {
             logger.error(' queryDriveSettleSalary ' + error.message);
