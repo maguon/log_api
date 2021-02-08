@@ -546,7 +546,7 @@ function getDriveSettleOutput(params,callback) {
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
         " left join company_info c on d.company_id = c.id " +
-        " where drt.task_plan_date>= ' "+params.taskPlanDateStart+" 'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 'and drt.task_status>=9 " +
+        " where drt.task_plan_date>= ' "+params.taskPlanDateStart+"  00:00:00 'and drt.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59  'and drt.task_status>=9 " +
         " group by drt.drive_id,drt.truck_id) drtm " +
         " LEFT JOIN ( SELECT dprt.drive_id,dprt.truck_id," +
         " sum( ecrr.fee * ecrr.distance * drlt.output_ratio ) output, " +
