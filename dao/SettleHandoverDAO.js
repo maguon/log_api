@@ -505,8 +505,8 @@ function getDriveSettleSalary(params,callback) {
         " left join (select dpr.drive_id,dpr.truck_id, " +
         " sum( case when dprl.receive_flag=0 and dprl.transfer_flag=0 then dprl.real_count end) not_storage_car_count, " +
         " sum( case when dprl.receive_flag=1 or dprl.transfer_flag=1 then dprl.real_count end) storage_car_count " +
-        " from dp_route_task dpr " +
-        " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
+        " from dp_route_load_task dprl " +
+        " left join dp_route_task dpr on dpr.id = dprl.dp_route_task_id " +
         " where dpr.task_plan_date>= ' "+params.taskPlanDateStart+" 00:00:00'and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status>=9 " +
         " group by dpr.drive_id,dpr.truck_id) dprm on drtm.drive_id = dprm.drive_id and drtm.truck_id = dprm.truck_id " +
         " where drtm.drive_id is not null ";
