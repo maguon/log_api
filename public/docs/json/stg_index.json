@@ -43911,6 +43911,9 @@
         "routeEndId": {
           "type": "integer"
         },
+        "orderDateId": {
+          "type": "integer"
+        },
         "price": {
           "type": "integer"
         }
