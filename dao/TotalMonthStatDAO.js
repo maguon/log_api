@@ -203,7 +203,8 @@ function updateOuterRouteOutput(params,callback) {
         " AND drt.task_status = 10 " +
         " AND ci.entrust_id = sc.entrust_id " +
         " AND ci.route_start_id = sc.route_start_id " +
-        " AND ci.route_end_id = sc.route_end_id  ) drtm " +
+        " AND ci.route_end_id = sc.route_end_id " +
+        " AND ci.order_date_id = sc.order_date_id  ) drtm " +
         " ON tms.y_month = " + params.yMonth  +
         " SET tms.outer_output = tms.outer_output + drtm.sumPrice";
     var paramsArray=[],i=0;
