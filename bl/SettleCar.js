@@ -97,12 +97,12 @@ function uploadSettleCarFile(req,res,next){
             var that = this;
             var subParams ={
                 vin : objArray[i].vin,
-                entrustId : objArray[i].entrustId,
-                routeStartId : objArray[i].routeStartId,
-                routeEndId : objArray[i].routeEndId,
-                orderDateId : objArray[i].orderDateId,
-                price : objArray[i].price,
-                seq : objArray[i].seq,
+                entrustId : objArray[i].委托方ID,
+                routeStartId : objArray[i].起始城市ID,
+                routeEndId : objArray[i].目的地ID,
+                orderDateId : objArray[i].指令时间,
+                price : objArray[i].金额,
+                seq : objArray[i].结算次序,
                 settleStatus : sysConst.SETTLE_STATUS.settle,
                 userId : params.userId,
                 uploadId : params.uploadId,
