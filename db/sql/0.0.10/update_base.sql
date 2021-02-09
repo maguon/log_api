@@ -1250,3 +1250,34 @@ MODIFY COLUMN `qa_level` tinyint(1) DEFAULT 0 COMMENT '检车类型（0-正常1-
 -- ----------------------------
 ALTER TABLE `total_month_stat`
 ADD COLUMN `truck_count_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '板车位数统计' AFTER `truck_count`;
+-- ----------------------------
+-- 2021-2-9 更新
+-- ----------------------------
+ALTER TABLE `settle_car`
+ADD COLUMN `order_date_id` int(4) AFTER `route_end_id`;
+
+ALTER TABLE `settle_car`
+DROP INDEX `vin`,
+ADD UNIQUE INDEX `vin`(`vin`, `entrust_id`, `route_start_id`, `route_end_id`, `order_date_id`) USING BTREE COMMENT '唯一VIN';
+
+UPDATE settle_car scu
+INNER JOIN (
+SELECT
+	c.vin,
+	c.entrust_id,
+	c.route_start_id,
+	c.route_end_id,
+	c.order_date_id
+FROM
+	settle_car sc
+	LEFT JOIN car_info c ON sc.vin = c.vin
+	AND sc.entrust_id = c.entrust_id
+	AND sc.route_start_id = c.route_start_id
+	AND sc.route_end_id = c.route_end_id
+WHERE
+	sc.id IS NOT NULL
+	) scc ON scu.vin = scc.vin
+	AND scu.entrust_id = scc.entrust_id
+	AND scu.route_start_id = scc.route_start_id
+	AND scu.route_end_id = scc.route_end_id
+	SET scu.order_date_id = scc.order_date_id

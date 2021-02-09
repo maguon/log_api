@@ -7,13 +7,14 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('SettleCarDAO.js');
 
 function addSettleCar(params,callback){
-    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,price,user_id) " +
-        " values ( ? , ? , ? , ? , ? , ? )";
+    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,order_date_id,price,user_id) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? )";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.orderDateId;
     paramsArray[i++]=params.price;
     paramsArray[i++]=params.userId;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -248,12 +249,13 @@ function getEntrustStat(params,callback) {
 }
 
 function updateSettleCar(params,callback){
-    var query = " update settle_car set vin = ? , entrust_id = ? , route_start_id = ? , route_end_id = ? , price = ? where id = ? " ;
+    var query = " update settle_car set vin = ? , entrust_id = ? , route_start_id = ? , route_end_id = ? ,order_date_id = ? , price = ? where id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.vin;
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.orderDateId;
     paramsArray[i++]=params.price;
     paramsArray[i++]=params.settleCarId;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -268,7 +270,7 @@ function updateUploadSettleCar(params,callback){
         priceQueryString = "price_"+params.seq;
     }
     var query = " update settle_car set "+priceQueryString+" = ? , settle_status = ? , user_id = ? , upload_id = ? " +
-        " where vin = ? and entrust_id = ? and route_start_id = ? and route_end_id = ? " ;
+        " where vin = ? and entrust_id = ? and route_start_id = ? and route_end_id = ? and order_date_id = ?" ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.price;
     paramsArray[i++]=params.settleStatus;
@@ -278,6 +280,7 @@ function updateUploadSettleCar(params,callback){
     paramsArray[i++]=params.entrustId;
     paramsArray[i++]=params.routeStartId;
     paramsArray[i++]=params.routeEndId;
+    paramsArray[i++]=params.orderDateId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateUploadSettleCar ');
         return callback(error,rows);
