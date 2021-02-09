@@ -362,8 +362,8 @@ function updateEntrustCarParkingFee(params,callback){
 }
 
 function addSettleCarBatch(params,callback) {
-    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,distance,fee,plan_price) " +
-        " select c.vin,c.entrust_id,c.route_start_id,c.route_end_id,ecrr.distance,ecrr.fee,(ecrr.distance*ecrr.fee) as plan_price " +
+    var query = " insert into settle_car (vin,entrust_id,route_start_id,route_end_id,order_date_id,distance,fee,plan_price) " +
+        " select c.vin,c.entrust_id,c.route_start_id,c.route_end_id,c.order_date_id,ecrr.distance,ecrr.fee,(ecrr.distance*ecrr.fee) as plan_price " +
         " from car_info c " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join entrust_city_route_rel ecrr on c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
