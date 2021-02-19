@@ -592,7 +592,7 @@ function getDriveSettleDetail(params,callback) {
     var query = " select dpr.id,dpr.drive_id,d.drive_name,dpr.truck_id,t.truck_num,dpr.task_plan_date,dpr.route_start as dpr_route_start,dpr.route_end as dpr_route_end ," +
         " drltd.car_id,drltd.vin,e.short_name as e_short_name,c.make_name,c.route_start,c.route_end,c.size_type,r.short_name,dprl.output_ratio, " +
         " ecrr.distance,ecrr.fee,(ecrr.fee*ecrr.distance*dprl.output_ratio) output," +
-        " (ecrr.two_fee*ecrr.two_distance*dprl.output_ratio) two_output " +
+        " (ecrr.two_fee*ecrr.two_distance*dprl.output_ratio) two_output , r.receive_flag " +
         " from dp_route_load_task_detail drltd " +
         " left join dp_route_load_task dprl on drltd.dp_route_load_task_id = dprl.id " +
         " left join dp_route_task dpr on drltd.dp_route_task_id = dpr.id " +
