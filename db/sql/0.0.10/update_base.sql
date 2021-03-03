@@ -1281,3 +1281,14 @@ WHERE
 	AND scu.route_start_id = scc.route_start_id
 	AND scu.route_end_id = scc.route_end_id
 	SET scu.order_date_id = scc.order_date_id
+-- ----------------------------
+-- 2021-3-3 更新
+-- ----------------------------
+ALTER TABLE `entrust_city_route_rel`
+MODIFY COLUMN `fee` decimal(12, 4) NOT NULL DEFAULT 0 COMMENT '每公里费用' AFTER `distance`;
+
+ALTER TABLE `settle_car`
+MODIFY COLUMN `fee` decimal(12, 4) DEFAULT 0.00 COMMENT '公里数单价' AFTER `distance`;
+
+ALTER TABLE `drive_truck_month_value`
+MODIFY COLUMN `output` decimal(12, 4) DEFAULT 0.00 COMMENT '产值收入' AFTER `storage_car_count`;
