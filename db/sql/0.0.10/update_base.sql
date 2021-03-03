@@ -1288,7 +1288,7 @@ ALTER TABLE `entrust_city_route_rel`
 MODIFY COLUMN `fee` decimal(12, 4) NOT NULL DEFAULT 0 COMMENT '每公里费用' AFTER `distance`;
 
 ALTER TABLE `settle_car`
-MODIFY COLUMN `fee` decimal(12, 4) DEFAULT 0.00 COMMENT '公里数单价' AFTER `distance`;
+MODIFY COLUMN `fee` decimal(12, 4) DEFAULT 0 COMMENT '公里数单价' AFTER `distance`;
 
 ALTER TABLE `drive_truck_month_value`
-MODIFY COLUMN `output` decimal(12, 4) DEFAULT 0.00 COMMENT '产值收入' AFTER `storage_car_count`;
+MODIFY COLUMN `output` decimal(12, 4) DEFAULT 0 COMMENT '产值收入' AFTER `storage_car_count`;
