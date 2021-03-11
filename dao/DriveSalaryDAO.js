@@ -88,11 +88,7 @@ function getDriveSalary(params,callback) {
         " left join company_info c on t.company_id = c.id " +
         " left join (select drt.drive_id, " +
         "               sum( case " +
-        "               when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count<=3 then drt.distance*0.6 " +
-        "               when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=4 then drt.distance*0.7 " +
-        "               when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=5 then drt.distance*0.8 " +
-        "               when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count=6 then drt.distance*0.9 " +
-        "               when drt.reverse_flag=0 and drt.truck_number=6 and drt.car_count>=7 then drt.distance " +
+        "               when drt.reverse_flag=0 and drt.truck_number=6 and then drt.distance*0.8 " +
         "               when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count<5 then drt.distance*0.6 " +
         "               when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=5 then drt.distance*0.7 " +
         "               when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=6 then drt.distance*0.8 " +
