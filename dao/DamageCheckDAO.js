@@ -8,8 +8,8 @@ var logger = serverLogger.createLogger('DamageCheckDAO.js');
 
 function addDamageCheck(params,callback){
     var query = " insert into damage_check (damage_id,under_user_id,under_user_name,damage_type,damage_link_type,refund_user_id,refund_user_name," +
-        " reduction_cost,penalty_cost,profit,repair_id,repair_cost,transport_cost,under_cost,company_cost,op_user_id,date_id,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " reduction_cost,penalty_cost,profit,repair_id,repair_cost,transport_cost,under_cost,company_cost, sc_payment_date ,op_user_id,date_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.damageId;
     paramsArray[i++]=params.underUserId;
@@ -26,6 +26,7 @@ function addDamageCheck(params,callback){
     paramsArray[i++]=params.transportCost;
     paramsArray[i++]=params.underCost;
     paramsArray[i++]=params.companyCost;
+    paramsArray[i++]=params.scPaymentDate == ""?null:params.scPaymentDate;
     paramsArray[i++]=params.userId;
     paramsArray[i++]=params.dateId;
     paramsArray[i]=params.remark;
@@ -63,7 +64,7 @@ function getDamageCheck(params,callback) {
 function updateDamageCheck(params,callback){
     var query = " update damage_check set under_user_id = ? , under_user_name = ? , damage_type = ? , damage_link_type = ? , " +
         " refund_user_id = ? , refund_user_name = ? , reduction_cost = ?, penalty_cost = ? , profit = ? , repair_id = ? , repair_cost = ? , " +
-        " transport_cost = ? , under_cost = ? , company_cost = ? , op_user_id = ? , remark = ? where id = ? and damage_id = ? " ;
+        " transport_cost = ? , under_cost = ? , company_cost = ? , op_user_id = ? , sc_payment_date = ? ,remark = ? where id = ? and damage_id = ? " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.underUserId;
     paramsArray[i++]=params.underUserName;
@@ -80,11 +81,41 @@ function updateDamageCheck(params,callback){
     paramsArray[i++]=params.underCost;
     paramsArray[i++]=params.companyCost;
     paramsArray[i++]=params.userId;
+    paramsArray[i++]=params.scPaymentDate == ""?null:params.scPaymentDate;
     paramsArray[i++]=params.remark;
     paramsArray[i++]=params.damageCheckId;
     paramsArray[i]=params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateDamageCheck ');
+        return callback(error,rows);
+    });
+}
+
+function updateScPayment(params,callback){
+    var query = " UPDATE damage_check dc INNER JOIN ( " +
+        " SELECT dci.actual_money , dci.damage_id " +
+        " FROM damage_check_indemnity dci " +
+        " WHERE dci.id is not NULL AND dci.damage_id =  " + params.damageId +
+        " ) dcim ON dc.damage_id = dcim.damage_id " +
+        " SET dc.sc_payment = " + params.scPayment + ", " +
+        " dc.sc_profit = " + params.scPayment + " - dcim.actual_money" ;
+    var paramsArray=[],i=0;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateScPayment ');
+        return callback(error,rows);
+    });
+}
+
+function updateScPaymentByDamageId(params,callback){
+    var query = " UPDATE damage_check dc INNER JOIN ( " +
+        " SELECT dcs.sc_payment , dcs.damage_id " +
+        " FROM damage_check dcs " +
+        " WHERE dcs.id is not NULL AND dcs.damage_id =  " + params.damageId +
+        " ) dcsm ON dc.damage_id = dcsm.damage_id " +
+        " SET dc.sc_profit = dcsm.sc_payment - " + params.actualMoney ;
+    var paramsArray=[],i=0;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateScPayment ');
         return callback(error,rows);
     });
 }
@@ -216,25 +247,13 @@ function getDamageCheckUnderWeekStat(params,callback){
     });
 }
 
-function getDamageCheckStat(params,callback){
-    var query = "select count(dc.id),sum(dc.reduction_cost) total_reduce_cost, " +
-        " sum(dc.penalty_cost) total_penalty_cost ,sum(dc.profit) total_profit,sum(dc.repair_cost) total_repair_cost, " +
-        " sum(dc.transport_cost) total_trans_cost,sum(dc.under_cost) total_under_cost,sum(dc.company_cost) total_com_cost " ;
-    if(params.damageType){
-        query = query + " , dc.damage_type "
-    }
-    if(params.damageLinkeType){
-        query = query + " , dc.damage_link_type "
-    }
-        " from damage_check dc left join date_base db on dc.date_id = db.id " +
-        " group by dc.damage_type"
-}
-
 
 module.exports ={
     addDamageCheck : addDamageCheck,
     getDamageCheck : getDamageCheck,
     updateDamageCheck : updateDamageCheck,
+    updateScPayment : updateScPayment,
+    updateScPaymentByDamageId : updateScPaymentByDamageId,
     updateDamageCheckFinishTime : updateDamageCheckFinishTime,
     updateDamageCheckIndemnityStatus : updateDamageCheckIndemnityStatus,
     getDamageCheckMonthStat  : getDamageCheckMonthStat,

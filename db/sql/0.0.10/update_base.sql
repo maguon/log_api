@@ -1297,3 +1297,8 @@ MODIFY COLUMN `output` decimal(12, 4) DEFAULT 0 COMMENT '产值收入' AFTER `st
 -- ----------------------------
 ALTER TABLE `drive_work`
 ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '出车补助' AFTER `full_work_bonus`;
+
+ALTER TABLE `damage_check`
+ADD COLUMN `sc_payment` decimal(10, 2) DEFAULT 0 COMMENT '前端支付费用' AFTER `company_cost`,
+ADD COLUMN `sc_payment_date` int(4) DEFAULT NULL COMMENT '前端支付时间' AFTER `sc_payment`,
+ADD COLUMN `sc_profit` decimal(10, 2) DEFAULT 0 COMMENT '前端盈亏' AFTER `sc_payment`;

@@ -77,6 +77,20 @@ function updateDamageCheck(req,res,next){
     })
 }
 
+function updateScPayment(req,res,next){
+    var params = req.params;
+    damageCheckDAO.updateScPayment(params,function(error,result){
+        if (error) {
+            logger.error(' updateScPayment ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateScPayment ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+}
+
 function updateDamageCheckIndemnityStatus(req,res,next){
     var params = req.params;
     damageCheckDAO.updateDamageCheckIndemnityStatus(params,function(error,result){
@@ -151,6 +165,7 @@ module.exports = {
     createDamageCheck : createDamageCheck,
     queryDamageCheck : queryDamageCheck,
     updateDamageCheck : updateDamageCheck,
+    updateScPayment : updateScPayment,
     updateDamageCheckIndemnityStatus : updateDamageCheckIndemnityStatus,
     queryDamageCheckMonthStat : queryDamageCheckMonthStat,
     queryDamageCheckWeekStat : queryDamageCheckWeekStat,

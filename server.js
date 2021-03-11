@@ -1007,6 +1007,7 @@ function createServer() {
     server.post({path:'/api/user/:userId/damageCheck',contentType: 'application/json'},damageCheck.createDamageCheck);
     server.put({path:'/api/user/:userId/damageCheck/:damageCheckId',contentType: 'application/json'} ,damageCheck.updateDamageCheck);
     server.put({path:'/api/user/:userId/damageCheck/:damageCheckId/damageIndemnityStatus/:damageIndemnityStatus',contentType: 'application/json'} ,damageCheck.updateDamageCheckIndemnityStatus);
+    server.put({path:'/api/user/:userId/damage/:damageId/scPayment',contentType: 'application/json'} ,damageCheck.updateScPayment);
 
     /**
      * DamageCheckIndemnity Module

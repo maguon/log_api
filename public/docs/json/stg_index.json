@@ -32982,6 +32982,60 @@
         }
       }
     },
+    "/user/{userId}/damage/{damageId}/scPayment": {
+      "put": {
+        "tags": [
+          "damage"
+        ],
+        "summary": "update damageCheck scPayment",
+        "description": "update damageCheck scPayment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageId",
+            "in": "path",
+            "description": "damage id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageCheck",
+            "in": "body",
+            "description": "damageCheck info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/damageCheckScPayment"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid damageCheck id"
+          }
+        }
+      }
+    },
     "/damageCheckIndemnity": {
       "get": {
         "tags": [
@@ -33013,6 +33067,14 @@
             "name": "damageId",
             "in": "query",
             "description": "damage id",
+            "required": false,
+            "type": "integer"
+
+          },
+          {
+            "name": "damageInsureId",
+            "in": "query",
+            "description": "damageInsure id",
             "required": false,
             "type": "integer"
 
@@ -43504,6 +43566,9 @@
         "companyCost": {
           "type": "integer"
         },
+        "scPaymentDate": {
+          "type": "integer"
+        },
         "remark": {
           "type": "string"
         }
@@ -43566,6 +43631,18 @@
       },
       "xml": {
         "name": "damageCheckIndemnityImage"
+      }
+    },
+    "damageCheckScPayment": {
+      "type": "object",
+      "properties": {
+
+        "scPayment": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "damageCheckScPayment"
       }
     },
     "indemnity": {

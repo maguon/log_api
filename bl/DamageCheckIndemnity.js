@@ -117,6 +117,8 @@ function updateIndemnity(req,res,next){
 
 function updateIndemnityStatus(req,res,next){
     var params = req.params ;
+    var returnMsg = {};
+    var parkObj = {};
     Seq().seq(function(){
         var that = this;
         damageCheckIndemnityDAO.updateIndemnityStatus(params,function(error,result){
@@ -135,6 +137,7 @@ function updateIndemnityStatus(req,res,next){
             }
         })
     }).seq(function () {
+        var that = this;
         var myDate = new Date();
         var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
@@ -144,8 +147,44 @@ function updateIndemnityStatus(req,res,next){
                 logger.error(' updateIndemnityDate ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateIndemnityDate ' + 'success');
-                resUtil.resetUpdateRes(res,result,null);
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateIndemnityDate ' + 'success');
+                    returnMsg = result;
+                    that();
+                }else{
+                    logger.warn(' updateIndemnityDate ' + 'failed');
+                    resUtil.resetFailedRes(res," 更新打款时间失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        damageCheckIndemnityDAO.getDamageCheckIndemnity(params,function(error,rows){
+            if (error) {
+                logger.error(' queryDamageCheckIndemnity ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if (rows && rows.length > 0) {
+                    logger.info(' queryDamageCheckIndemnity ' + 'success');
+                    parkObj.damageId=rows[0].damage_id;
+                    parkObj.actualMoney=rows[0].actual_money;
+                    that();
+                } else {
+                    logger.warn(' queryDamageCheckIndemnity ' + 'failed');
+                    resUtil.resetFailedRes(res, " 未查到关联数据，或已被删除 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        damageCheckDAO.updateScPaymentByDamageId(parkObj,function(error,result){
+            if (error) {
+                logger.error(' updateScPayment ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateScPayment ' + 'success');
+                resUtil.resetUpdateRes(res,returnMsg,null);
                 return next();
             }
         })
@@ -183,7 +222,7 @@ function queryIndemnityMonthStat(req,res,next){
 function getDamageCheckIndemnityCsv(req,res,next){
     var csvString = "";
     var header = "质损编号" + ',' + "打款账号" + ',' + "户名"+ ',' + "开户行"  + ',' + "开户行号" + ',' + "城市" + ','+ "经销商"+ ','+ "计划打款金额" + ','+ "联系人" + ','+ "联系电话"
-        + ','+ "申请时间" + ','+ "申请打款备注" + ','+ "申报人"+ ','+ "实际打款金额" + ','+ "打款说明" + ','+ "打款时间" + ','+ "状态" ;
+        + ','+ "申请时间" + ','+ "申请打款备注" + ','+ "申报人"+ ','+ "前端支付费用" + ',' + "前端支付时间" + ',' + "前端盈亏" + ',' + "实际打款金额" + ','+ "打款说明" + ','+ "打款时间" + ','+ "状态" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -218,6 +257,27 @@ function getDamageCheckIndemnityCsv(req,res,next){
                     parkObj.applyExplain = rows[i].apply_explain.replace(/[\r\n]/g, '');
                 }
                 parkObj.applyUserName = rows[i].apply_user_name;
+                //前端打款金额
+                if(rows[i].sc_payment == null){
+                    parkObj.scPayment = "";
+                }else{
+                    parkObj.scPayment = rows[i].sc_payment;
+                }
+
+                //前端打款时间
+                if(rows[i].sc_payment_date == null){
+                    parkObj.scPaymentDate = "";
+                }else{
+                    parkObj.scPaymentDate = rows[i].sc_payment_date;
+                }
+
+                //前端盈亏
+                if(rows[i].sc_profit == null){
+                    parkObj.scProfit = "";
+                }else{
+                    parkObj.scProfit = rows[i].sc_profit;
+                }
+
                 if(rows[i].actual_money == null){
                     parkObj.actualMoney = "";
                 }else{
@@ -240,7 +300,7 @@ function getDamageCheckIndemnityCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.damageId+","+parkObj.bankNumber+","+parkObj.bankUserName+"," +parkObj.bankName+","+parkObj.bankId+","+parkObj.cityName+","
                     +parkObj.receiveName+"," +parkObj.planMoney+"," +parkObj.contactsName+","+parkObj.tel+","+parkObj.createdOn+"," +parkObj.applyExplain+","
-                    +parkObj.applyUserName+","+parkObj.actualMoney+","+parkObj.indemnityExplain+","+parkObj.indemnityDate+","+parkObj.indemnityStatus+ '\r\n';
+                    +parkObj.applyUserName+","+parkObj.scPayment+","+parkObj.scPaymentDate+","+parkObj.scProfit+","+parkObj.actualMoney+","+parkObj.indemnityExplain+","+parkObj.indemnityDate+","+parkObj.indemnityStatus+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
