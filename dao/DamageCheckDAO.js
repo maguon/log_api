@@ -92,13 +92,10 @@ function updateDamageCheck(params,callback){
 }
 
 function updateScPayment(params,callback){
-    var query = " UPDATE damage_check dc INNER JOIN ( " +
-        " SELECT dci.actual_money , dci.damage_id " +
-        " FROM damage_check_indemnity dci " +
-        " WHERE dci.id is not NULL AND dci.damage_id =  " + params.damageId +
-        " ) dcim ON dc.damage_id = dcim.damage_id " +
-        " SET dc.sc_payment = " + params.scPayment + ", " +
-        " dc.sc_profit = " + params.scPayment + " - dcim.actual_money" ;
+    var query = " UPDATE damage_check SET sc_payment =  " + params.scPayment + "," +
+        " sc_profit = " + params.scPayment +
+        " - IFNULL( ( SELECT actual_money FROM damage_check_indemnity WHERE damage_id =" + params.damageId + " ), 0 ) " +
+        " WHERE damage_id = " + params.damageId;
     var paramsArray=[],i=0;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateScPayment ');
@@ -107,15 +104,12 @@ function updateScPayment(params,callback){
 }
 
 function updateScPaymentByDamageId(params,callback){
-    var query = " UPDATE damage_check dc INNER JOIN ( " +
-        " SELECT dcs.sc_payment , dcs.damage_id " +
-        " FROM damage_check dcs " +
-        " WHERE dcs.id is not NULL AND dcs.damage_id =  " + params.damageId +
-        " ) dcsm ON dc.damage_id = dcsm.damage_id " +
-        " SET dc.sc_profit = dcsm.sc_payment - " + params.actualMoney ;
+    var query = " UPDATE damage_check " +
+        " SET sc_profit = sc_payment - " + params.actualMoney +
+        " WHERE damage_id = " + params.damageId;
     var paramsArray=[],i=0;
     db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateScPayment ');
+        logger.debug(' updateScPaymentByDamageId ');
         return callback(error,rows);
     });
 }
