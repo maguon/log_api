@@ -1292,3 +1292,8 @@ MODIFY COLUMN `fee` decimal(12, 4) DEFAULT 0 COMMENT '公里数单价' AFTER `di
 
 ALTER TABLE `drive_truck_month_value`
 MODIFY COLUMN `output` decimal(12, 4) DEFAULT 0 COMMENT '产值收入' AFTER `storage_car_count`;
+-- ----------------------------
+-- 2021-3-11 更新
+-- ----------------------------
+ALTER TABLE `drive_work`
+ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '出车补助' AFTER `full_work_bonus`;

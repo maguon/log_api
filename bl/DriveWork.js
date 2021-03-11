@@ -148,6 +148,7 @@ function uploadDriveWorkFile(req,res,next){
                             workCount : objArray[i].出勤天数,
                             hotelBonus : objArray[i].出差补助,
                             fullWorkBonus : objArray[i].满勤补助,
+                            transferBonus : objArray[i].出车补助,
                             otherBonus : objArray[i].其他补助,
                             row : i+1
                         }
@@ -175,6 +176,7 @@ function uploadDriveWorkFile(req,res,next){
                             workCount : objArray[i].出勤天数,
                             hotelBonus : objArray[i].出差补助,
                             fullWorkBonus : objArray[i].满勤补助,
+                            transferBonus : objArray[i].出车补助,
                             otherBonus : objArray[i].其他补助,
                             row : i+1
                         }
@@ -240,7 +242,7 @@ function updateDriveWork(req,res,next){
 
 function getDriveWorkCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "其他补助" + ','+ "备注" ;
+    var header = "司机" + ',' +"货车牌号" + ',' + "电话" + ',' + "月份" + ','+ "出勤天数" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "出车补助" + ','+ "其他补助" + ','+ "备注" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -270,6 +272,11 @@ function getDriveWorkCsv(req,res,next){
                 }else{
                     parkObj.fullWorkBonus = rows[i].full_work_bonus;
                 }
+                if(rows[i].transfer_bonus == null){
+                    parkObj.transferBonus = "";
+                }else{
+                    parkObj.transferBonus = rows[i].transfer_bonus;
+                }
                 if(rows[i].other_bonus == null){
                     parkObj.otherBonus = "";
                 }else{
@@ -281,7 +288,7 @@ function getDriveWorkCsv(req,res,next){
                     parkObj.remark = rows[i].remark;
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.yMonth+","+parkObj.workCount+","+
-                    parkObj.hotelBonus+ "," + parkObj.fullWorkBonus+ "," + parkObj.otherBonus + "," + parkObj.remark+'\r\n';
+                    parkObj.hotelBonus+ "," + parkObj.fullWorkBonus+ "," + parkObj.transferBonus +","+parkObj.otherBonus + "," + parkObj.remark+'\r\n';
 
             }
             var csvBuffer = new Buffer(csvString,'utf8');

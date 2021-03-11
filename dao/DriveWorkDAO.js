@@ -7,7 +7,7 @@ var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveWorkDAO.js');
 
 function addDriveWork(params,callback){
-    var query = "insert into drive_work (drive_id,drive_name,truck_id,truck_num,mobile,y_month,work_count,hotel_bonus,full_work_bonus,other_bonus,remark) " +
+    var query = "insert into drive_work (drive_id,drive_name,truck_id,truck_num,mobile,y_month,work_count,hotel_bonus,full_work_bonus,transfer_bonus,other_bonus,remark) " +
         " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.driveId;
@@ -19,6 +19,7 @@ function addDriveWork(params,callback){
     paramsArray[i++]=params.workCount;
     paramsArray[i++]=params.hotelBonus;
     paramsArray[i++]=params.fullWorkBonus;
+    paramsArray[i++]=params.transferBonus;
     paramsArray[i++]=params.otherBonus;
     paramsArray[i++]=params.remark;
     db.dbQuery(query,paramsArray,function(error,rows){
@@ -64,11 +65,12 @@ function getDriveWork(params,callback) {
 }
 
 function updateDriveWork(params,callback){
-    var query = " update drive_work set work_count = ? , hotel_bonus = ?, full_work_bonus = ?, other_bonus = ?, remark = ? where id is not null " ;
+    var query = " update drive_work set work_count = ? , hotel_bonus = ?, full_work_bonus = ?, transfer_bonus = ? , other_bonus = ?, remark = ? where id is not null " ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.workCount;
     paramsArray[i++]=params.hotelBonus;
     paramsArray[i++]=params.fullWorkBonus;
+    paramsArray[i++]=params.transferBonus;
     paramsArray[i++]=params.otherBonus;
     paramsArray[i++]=params.remark;
     if(params.driveId){
