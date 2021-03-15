@@ -1296,7 +1296,7 @@ MODIFY COLUMN `output` decimal(12, 4) DEFAULT 0 COMMENT '产值收入' AFTER `st
 -- 2021-3-11 更新
 -- ----------------------------
 ALTER TABLE `drive_work`
-ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '出车补助' AFTER `full_work_bonus`;
+ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '拼装补助' AFTER `full_work_bonus`;
 
 ALTER TABLE `damage_check`
 ADD COLUMN `sc_payment` decimal(10, 2) DEFAULT 0 COMMENT '前端支付费用' AFTER `company_cost`,
@@ -1306,7 +1306,7 @@ ADD COLUMN `sc_profit` decimal(10, 2) DEFAULT 0 COMMENT '前端盈亏' AFTER `sc
 -- 2021-3-15 更新
 -- ----------------------------
 ALTER TABLE `drive_truck_month_value`
-ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '出车补助' AFTER `full_work_bonus`;
+ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '拼装补助' AFTER `full_work_bonus`;
 
 ALTER TABLE `drive_salary`
-ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '出车补助' AFTER `full_work_bonus`;
+ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '拼装补助' AFTER `full_work_bonus`;

@@ -122,7 +122,7 @@ function updateExceedOilFee(params, callback) {
     });
 }
 
-// 满勤补助，出差补助，出车补助，其他补助
+// 满勤补助，出差补助，拼装补助，其他补助
 function updateBonus(params, callback) {
     var query = "UPDATE drive_salary as ds" +
         " INNER JOIN (" +
