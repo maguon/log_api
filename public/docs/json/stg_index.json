@@ -41502,6 +41502,9 @@
         "fullWorkBonus": {
           "type": "integer"
         },
+        "transferBonus": {
+          "type": "integer"
+        },
         "otherBonus": {
           "type": "integer"
         },

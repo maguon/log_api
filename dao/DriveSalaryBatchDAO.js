@@ -122,11 +122,11 @@ function updateExceedOilFee(params, callback) {
     });
 }
 
-// 满勤补助，出差补助，其他补助
+// 满勤补助，出差补助，出车补助，其他补助
 function updateBonus(params, callback) {
     var query = "UPDATE drive_salary as ds" +
         " INNER JOIN (" +
-        "   SELECT drive_id, sum(full_work_bonus) as full_work_bonus, sum(hotel_bonus) as hotel_bonus, sum(other_bonus) as other_bonus" +
+        "   SELECT drive_id, sum(full_work_bonus) as full_work_bonus, sum(hotel_bonus) as hotel_bonus, sum(transfer_bonus) as transfer_bonus, sum(other_bonus) as other_bonus" +
         "   FROM drive_work" +
         "   WHERE y_month=" + params.yMonth +
         "   GROUP BY drive_id ) as base" +
@@ -135,6 +135,7 @@ function updateBonus(params, callback) {
         // 更新字段
         " SET ds.full_work_bonus=base.full_work_bonus," +
         "     ds.hotel_bonus=base.hotel_bonus," +
+        "     ds.transfer_bonus = base.transfer_bonus, " +
         "     ds.other_bonus=base.other_bonus";
     var paramsArray = [], i = 0;
     db.dbQuery(query, paramsArray, function (error, rows) {

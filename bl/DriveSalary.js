@@ -145,7 +145,7 @@ function createDriveSalaryBatch(req,res,next){
         })
     }).seq(function () {
         var that = this;
-        // 更新 满勤补助，出差补助，其他补助
+        // 更新 满勤补助，出差补助，出车补助，其他补助
         driveSalaryBatchDAO.updateBonus(params,function(err,result){
             if (err) {
                 logger.error(' updateBonus ' + err.message);
@@ -440,7 +440,7 @@ function getDriveSalaryCsv(req,res,next){
     var csvString = "";
     var header = "月份" + ',' +"司机姓名" + ',' + "手机号"+ ','+"所属类型" + ',' + "所属公司" + ','+ "货车牌号" + ','+ "品牌"+ ','+
         "里程工资" + ','+ "交车打车进门费" + ','+ "倒板工资" + ','+ "商品车质损承担"+ ','+ "货车事故承担"+ ','+
-        "违章扣款"+ ','+ "超量扣款" + ','+ "质损暂扣款" + ','+ "质安罚款" + ','+ "交车暂扣款" + ','+ "个税" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "其他补助" + ','+
+        "违章扣款"+ ','+ "超量扣款" + ','+ "质损暂扣款" + ','+ "质安罚款" + ','+ "交车暂扣款" + ','+ "个税" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "出车补助" + ','+  "其他补助" + ','+
         "商品车加油费" + ','+ "货车停车费" + ','+ "商品车停车费" + ','+ "其它运送费用" + ','+ "洗车费" + ','+ "拖车费" + ','+ "提车费" + ','+ "地跑费" + ','+ "带路费" + ','+
         "社保缴费" + ','+"伙食费"+ ','+ "个人借款" + ','+ "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态";
     csvString = header + '\r\n'+csvString;
@@ -568,6 +568,12 @@ function getDriveSalaryCsv(req,res,next){
                 }else{
                     parkObj.fullWorkBonus = rows[i].full_work_bonus;
                 }
+                // 出车补助
+                if(rows[i].transfer_bonus == null){
+                    parkObj.transferBonus = "";
+                }else{
+                    parkObj.transferBonus = rows[i].transfer_bonus;
+                }
                 // 其他补助
                 if(rows[i].other_bonus == null){
                     parkObj.otherBonus = "";
@@ -677,7 +683,7 @@ function getDriveSalaryCsv(req,res,next){
                     parkObj.truckNum+","+parkObj.brandName+","+parkObj.distanceSalary+","+parkObj.enterFee+","+parkObj.reverseSalary+","+
                     parkObj.damageUnderFee+","+parkObj.accidentFee+","+parkObj.peccancyUnderFee+","+parkObj.exceedOilFee+","+
                     parkObj.damageRetainFee+","+parkObj.damageOpFee+","+parkObj.truckRetainFee+","+parkObj.personalTax+","+
-                    parkObj.hotelBonus+","+parkObj.fullWorkBonus+","+parkObj.otherBonus+","+parkObj.carOilFee+","+
+                    parkObj.hotelBonus+","+parkObj.fullWorkBonus+","+parkObj.transferBonus+","+parkObj.otherBonus+","+parkObj.carOilFee+","+
                     parkObj.truckParkingFee+","+parkObj.carParkingFee+","+parkObj.dpOtherFee+","+parkObj.cleanFee+","+
                     parkObj.trailerFee+","+parkObj.carPickFee+","+parkObj.runFee+","+parkObj.leadFee+","+
                     parkObj.socialSecurityFee+","+parkObj.foodFee+","+parkObj.loanFee+","+
