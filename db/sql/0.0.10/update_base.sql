@@ -1310,3 +1310,8 @@ ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '拼装补助' A
 
 ALTER TABLE `drive_salary`
 ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '拼装补助' AFTER `full_work_bonus`;
+-- ----------------------------
+-- 2021-3-24 更新
+-- ----------------------------
+ALTER TABLE `drive_info`
+ADD COLUMN `level` tinyint(1) NOT NULL DEFAULT 0 COMMENT '工资等级（0-正常1-专）' AFTER `driver_avatar_image`;

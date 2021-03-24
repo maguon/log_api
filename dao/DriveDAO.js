@@ -300,6 +300,17 @@ function updateDriverAvatarImage(params,callback){
     });
 }
 
+function updateDriveLevel(params,callback){
+    var query = " update drive_info set level = ? where id = ? " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.level;
+    paramsArray[i]=params.driveId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDriveLevel ');
+        return callback(error,rows);
+    });
+}
+
 function updateDriveStatus(params,callback){
     var query = " update drive_info set drive_status = ? where id = ? ";
     var paramsArray=[],i=0;
@@ -338,6 +349,7 @@ module.exports ={
     updateLicenseImage : updateLicenseImage,
     updateOpLicenseImage : updateOpLicenseImage,
     updateDriverAvatarImage : updateDriverAvatarImage,
+    updateDriveLevel : updateDriveLevel,
     updateDriveStatus : updateDriveStatus,
     updateDriveTel : updateDriveTel
 }

@@ -9822,6 +9822,60 @@
         }
       }
     },
+    "/user/{userId}/drive/{driveId}/level": {
+      "put": {
+        "tags": [
+          "drive"
+        ],
+        "summary": "update drive level",
+        "description": "update drive level",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "driveId",
+            "in": "path",
+            "description": "drive id",
+            "required": true,
+            "type": "integer"
+
+          },
+          {
+            "name": "level",
+            "in": "body",
+            "description": "level url",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/driveLevel"
+            }
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token value or invalid drive id"
+          }
+        }
+      }
+    },
     "/user/{userId}/drive/{driveId}/driveStatus/{driveStatus}": {
       "put": {
         "tags": [
@@ -41397,6 +41451,18 @@
       },
       "xml": {
         "name": "driveImage"
+      }
+    },
+    "driveLevel": {
+      "type": "object",
+      "properties": {
+
+        "level": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "driveLevel"
       }
     },
     "driveRefuel": {

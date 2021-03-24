@@ -297,6 +297,21 @@ function updateDriveImage(req,res,next){
     }
 }
 
+function updateDriveLevel(req,res,next){
+    var params = req.params ;
+    driveDAO.updateDriveLevel(params,function(error,result){
+        if (error) {
+            logger.error(' updateDriveLevel ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDriveLevel ' + 'success');
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
+        }
+    })
+
+}
+
 function updateDriveStatus (req,res,next){
     var params = req.params;
     Seq().seq(function(){
@@ -466,6 +481,7 @@ module.exports = {
     updateDriveCompany : updateDriveCompany,
     updateDriveBankNumber : updateDriveBankNumber,
     updateDriveImage : updateDriveImage,
+    updateDriveLevel : updateDriveLevel,
     updateDriveStatus : updateDriveStatus,
     getDriveCsv : getDriveCsv
 }
