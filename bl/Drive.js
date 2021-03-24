@@ -307,6 +307,15 @@ function updateDriveLevel(req,res,next){
             logger.info(' updateDriveLevel ' + 'success');
             resUtil.resetUpdateRes(res,result,null);
             return next();
+            if(params.level == 0){
+                req.params.driverContent ="取消司机专属的等级";
+            }else{
+                req.params.driverContent ="修改司机专属等级为" + params.level;
+            }
+            req.params.tid = params.driveId;
+            req.params.driverOp =30;
+            resUtil.resetUpdateRes(res,result,null);
+            return next();
         }
     })
 

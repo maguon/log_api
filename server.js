@@ -426,7 +426,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/drive/:driveId/driveCompany',contentType: 'application/json'} ,drive.updateDriveCompany,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId/driveBankNumber',contentType: 'application/json'} ,drive.updateDriveBankNumber);
     server.put({path:'/api/user/:userId/drive/:driveId/image',contentType: 'application/json'} ,drive.updateDriveImage);
-    server.put({path:'/api/user/:userId/drive/:driveId/level',contentType: 'application/json'} ,drive.updateDriveLevel);
+    server.put({path:'/api/user/:userId/drive/:driveId/level',contentType: 'application/json'} ,drive.updateDriveLevel,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId/driveStatus/:driveStatus',contentType: 'application/json'} ,drive.updateDriveStatus);
 
     /**
