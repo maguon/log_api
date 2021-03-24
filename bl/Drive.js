@@ -305,8 +305,6 @@ function updateDriveLevel(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' updateDriveLevel ' + 'success');
-            resUtil.resetUpdateRes(res,result,null);
-            return next();
             if(params.level == 0){
                 req.params.driverContent ="取消司机专属的等级";
             }else{
