@@ -1208,7 +1208,7 @@ function getDriveDistanceLoadStatCsv(req,res,next){
     var header = "司机" + ',' +"货车牌号" + ',' + "所属类型"+ ',' +"空载任务数" + ',' + "重载任务数"  + "," + "完成任务数" + ',' +
         "空载油耗任务数" + ',' + "重载油耗任务数"  + "," + "倒板数" + ',' +
         "空载油量公里数" + ','+ "重载油量公里数" + ','+"空载公里数" + ','+"重载公里数"+ ','+
-        "总计里程"+ ',' + "重载率(%)" ;
+        "总计里程"+ ',' + "重载率(%)" + ',' + "专线" ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -1293,6 +1293,12 @@ function getDriveDistanceLoadStatCsv(req,res,next){
                 }else{
                     parkObj.loadDistance = rows[i].load_distance;
                 }
+                //专线
+                if(rows[i].level == 0){
+                    parkObj.level = "否";
+                }else{
+                    parkObj.level = "是";
+                }
 
                 parkObj.totalDistance = rows[i].load_distance+rows[i].no_load_distance;
                 parkObj.loadDistanceRate =rows[i].load_distance/(rows[i].load_distance+rows[i].no_load_distance)*100;
@@ -1301,7 +1307,7 @@ function getDriveDistanceLoadStatCsv(req,res,next){
                     parkObj.noLoadDistanceCount+","+parkObj.loadDistanceCount+","+parkObj.completeCount+","+
                     parkObj.noOilDistanceCount+","+parkObj.loadDistanceOilCount + "," + parkObj.reverseCount+","+
                     parkObj.noOilDistance+","+parkObj.loadOilDistance+","+ parkObj.noLoadDistance+","+parkObj.loadDistance+","+
-                    parkObj.totalDistance+","+parkObj.loadDistanceRate.toFixed(2) + '\r\n';
+                    parkObj.totalDistance+","+parkObj.loadDistanceRate.toFixed(2) +","+parkObj.level+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

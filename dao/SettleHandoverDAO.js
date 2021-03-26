@@ -531,9 +531,9 @@ function getDriveSettleSalary(params,callback) {
 }
 //产值
 function getDriveSettleOutput(params,callback) {
-    var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name, " +
+    var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name,drtm.level, " +
         " dprtm.output,dprtm.two_output " +
-        " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name " +
+        " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name,d.level " +
         " from dp_route_task drt " +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +

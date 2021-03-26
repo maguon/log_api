@@ -562,7 +562,7 @@ function getDriveDistanceCount(params,callback) {
 }
 
 function getDriveDistanceLoadStat(params,callback) {
-    var query = " select d.id as drive_id,d.drive_name,d.operate_type,u.mobile,t.id as truck_id,t.truck_num, " +
+    var query = " select d.id as drive_id,d.drive_name,d.operate_type,d.level,u.mobile,t.id as truck_id,t.truck_num, " +
         " count(dpr.id) as complete_count, " +
         " sum(dpr.reverse_flag) as reverse_count, " +
         " count(case when dpr.load_flag = 1 then dpr.distance end) as load_distance_count, " +

@@ -698,7 +698,7 @@ function getDriveSettleSalaryCsv(req,res,next){
 
 function getDriveSettleOutputCsv(req,res,next){
     var csvString = "";
-    var header = "司机" + ',' + "货车牌号" + ',' + "所属类型" + ','+ "所属公司" + ','+ "产值"+ ','+ "二级产值" ;
+    var header = "司机" + ',' + "货车牌号" + ',' + "所属类型" + ','+ "所属公司" + ','+ "产值"+ ','+ "二级产值" + ','+ "专线"  ;
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -735,8 +735,13 @@ function getDriveSettleOutputCsv(req,res,next){
                 }else{
                     parkObj.twoOutput = rows[i].two_output;
                 }
+                if(rows[i].level == 0){
+                    parkObj.level = "否";
+                }else{
+                    parkObj.level = "是";
+                }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
-                    parkObj.output+","+parkObj.twoOutput+ '\r\n';
+                    parkObj.output+","+parkObj.twoOutput+","+parkObj.level+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
