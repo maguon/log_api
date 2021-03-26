@@ -1315,3 +1315,10 @@ ADD COLUMN `transfer_bonus` decimal(10, 2) DEFAULT 0.00 COMMENT '拼装补助' A
 -- ----------------------------
 ALTER TABLE `drive_info`
 ADD COLUMN `level` tinyint(1) NOT NULL DEFAULT 0 COMMENT '工资等级（0-正常1-专）' AFTER `driver_avatar_image`;
+-- ----------------------------
+-- 2021-3-26 更新
+-- ----------------------------
+ALTER TABLE `drive_salary`
+ADD COLUMN `s_car_count` int(10) DEFAULT 0 COMMENT '到库数' AFTER `no_load_distance`,
+ADD COLUMN `ns_car_count` int(10) DEFAULT 0 COMMENT '非到库数' AFTER `s_car_count`,
+ADD COLUMN `storage_ratio` decimal(10, 2) DEFAULT 1.00 COMMENT '系数' AFTER `ns_car_count`;
