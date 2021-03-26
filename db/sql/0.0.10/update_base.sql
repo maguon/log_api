@@ -1321,4 +1321,4 @@ ADD COLUMN `level` tinyint(1) NOT NULL DEFAULT 0 COMMENT '工资等级（0-正�
 ALTER TABLE `drive_salary`
 ADD COLUMN `s_car_count` int(10) DEFAULT 0 COMMENT '到库数' AFTER `no_load_distance`,
 ADD COLUMN `ns_car_count` int(10) DEFAULT 0 COMMENT '非到库数' AFTER `s_car_count`,
-ADD COLUMN `storage_ratio` decimal(10, 2) DEFAULT 1.00 COMMENT '系数' AFTER `ns_car_count`;
+ADD COLUMN `salary_ratio` decimal(10, 2) DEFAULT 1.00 COMMENT '系数' AFTER `ns_car_count`;

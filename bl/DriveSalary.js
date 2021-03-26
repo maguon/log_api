@@ -679,10 +679,10 @@ function getDriveSalaryCsv(req,res,next){
                     parkObj.grantStatus = "未结算";
                 }
                 // 系数
-                if(rows[i].storage_ratio == null){
-                    parkObj.storageRatio = "";
+                if(rows[i].salary_ratio == null){
+                    parkObj.salaryRatio = "";
                 }else{
-                    parkObj.storageRatio = rows[i].storage_ratio;
+                    parkObj.salaryRatio = rows[i].salary_ratio;
                 }
                 csvString = csvString+parkObj.monthDateId+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.operateType+","+ parkObj.companyName+","+
                     parkObj.truckNum+","+parkObj.brandName+","+parkObj.distanceSalary+","+parkObj.enterFee+","+parkObj.reverseSalary+","+
@@ -692,7 +692,7 @@ function getDriveSalaryCsv(req,res,next){
                     parkObj.truckParkingFee+","+parkObj.carParkingFee+","+parkObj.dpOtherFee+","+parkObj.cleanFee+","+
                     parkObj.trailerFee+","+parkObj.carPickFee+","+parkObj.runFee+","+parkObj.leadFee+","+
                     parkObj.socialSecurityFee+","+parkObj.foodFee+","+parkObj.loanFee+","+
-                    parkObj.otherFee+","+parkObj.actualSalary+","+parkObj.remark+","+parkObj.grantStatus+","+parkObj.storageRatio+ '\r\n';
+                    parkObj.otherFee+","+parkObj.actualSalary+","+parkObj.remark+","+parkObj.grantStatus+","+parkObj.salaryRatio+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
