@@ -61,7 +61,7 @@ function addDriveSalary(params,callback){
 }
 
 function getDriveSalary(params,callback) {
-    var query = " select ds.id,ds.month_date_id,ds.truck_id,ds.company_id,ds.user_id,ds.load_distance,ds.no_load_distance," +
+    var query = " select ds.id,ds.month_date_id,ds.truck_id,ds.company_id,ds.user_id,ds.load_distance,ds.no_load_distance,ds.storage_ratio," +
         " ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
         " ds.exceed_oil_fee,ds.damage_retain_fee,ds.damage_op_fee,ds.truck_retain_fee,ds.personal_tax,ds.hotel_bonus,ds.full_work_bonus, ds.transfer_bonus , ds.other_bonus," +
         " ds.car_oil_fee,ds.truck_parking_fee,ds.car_parking_fee,ds.lead_fee,ds.run_fee,ds.car_pick_fee,ds.trailer_fee,ds.clean_fee,ds.dp_other_fee," +
@@ -81,7 +81,7 @@ function getDriveSalary(params,callback) {
         "           ds.distance_salary,ds.reverse_salary,ds.enter_fee,ds.damage_under_fee,ds.accident_fee,ds.peccancy_under_fee," +
         "           ds.exceed_oil_fee,ds.damage_retain_fee,ds.damage_op_fee,ds.truck_retain_fee,ds.personal_tax,ds.hotel_bonus,ds.full_work_bonus, ds.transfer_bonus ,ds.other_bonus," +
         "           ds.car_oil_fee,ds.truck_parking_fee,ds.car_parking_fee,ds.lead_fee,ds.run_fee,ds.car_pick_fee,ds.trailer_fee,ds.clean_fee,ds.dp_other_fee," +
-        "           ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status" +
+        "           ds.social_security_fee,ds.food_fee,ds.loan_fee,ds.other_fee,ds.actual_salary,ds.remark,ds.grant_status,ds.storage_ratio" +
         "           from drive_salary ds where ds.month_date_id ="+params.monthDateId+" ) ds on dprtm.drive_id = ds.drive_id " +
         " left join truck_info t on dprtm.id = t.drive_id " +
         " left join truck_brand tb on t.brand_id = tb.id " +

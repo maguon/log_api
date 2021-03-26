@@ -442,7 +442,7 @@ function getDriveSalaryCsv(req,res,next){
         "里程工资" + ','+ "交车打车进门费" + ','+ "倒板工资" + ','+ "商品车质损承担"+ ','+ "货车事故承担"+ ','+
         "违章扣款"+ ','+ "超量扣款" + ','+ "质损暂扣款" + ','+ "质安罚款" + ','+ "交车暂扣款" + ','+ "个税" + ','+ "出差补助" + ','+ "满勤补助" + ','+ "拼装补助" + ','+  "其他补助" + ','+
         "商品车加油费" + ','+ "货车停车费" + ','+ "商品车停车费" + ','+ "其它运送费用" + ','+ "洗车费" + ','+ "拖车费" + ','+ "提车费" + ','+ "地跑费" + ','+ "带路费" + ','+
-        "社保缴费" + ','+"伙食费"+ ','+ "个人借款" + ','+ "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态";
+        "社保缴费" + ','+"伙食费"+ ','+ "个人借款" + ','+ "其他扣款"+ ','+ "应付工资"+ ','+ "备注"+ ','+ "发放状态"+ ','+ "系数";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -678,7 +678,12 @@ function getDriveSalaryCsv(req,res,next){
                 }else{
                     parkObj.grantStatus = "未结算";
                 }
-
+                // 系数
+                if(rows[i].storage_ratio == null){
+                    parkObj.storageRatio = "";
+                }else{
+                    parkObj.storageRatio = rows[i].storage_ratio;
+                }
                 csvString = csvString+parkObj.monthDateId+","+parkObj.driveName+","+parkObj.mobile+","+parkObj.operateType+","+ parkObj.companyName+","+
                     parkObj.truckNum+","+parkObj.brandName+","+parkObj.distanceSalary+","+parkObj.enterFee+","+parkObj.reverseSalary+","+
                     parkObj.damageUnderFee+","+parkObj.accidentFee+","+parkObj.peccancyUnderFee+","+parkObj.exceedOilFee+","+
@@ -687,7 +692,7 @@ function getDriveSalaryCsv(req,res,next){
                     parkObj.truckParkingFee+","+parkObj.carParkingFee+","+parkObj.dpOtherFee+","+parkObj.cleanFee+","+
                     parkObj.trailerFee+","+parkObj.carPickFee+","+parkObj.runFee+","+parkObj.leadFee+","+
                     parkObj.socialSecurityFee+","+parkObj.foodFee+","+parkObj.loanFee+","+
-                    parkObj.otherFee+","+parkObj.actualSalary+","+parkObj.remark+","+parkObj.grantStatus+ '\r\n';
+                    parkObj.otherFee+","+parkObj.actualSalary+","+parkObj.remark+","+parkObj.grantStatus+","+parkObj.storageRatio+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
