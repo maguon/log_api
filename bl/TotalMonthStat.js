@@ -445,7 +445,7 @@ function queryDispatchStat(req,res,next){
 
 function getDispatchStatCsv(req,res,next){
     var csvString = "";
-    var header = "月份" + ',' +"出车数" + ','+"发运量" + ','+"总里程"+ ','+ "重载历程" + ',' + "重载率";
+    var header = "月份" + ',' +"出车数" + ','+"发运量" + ','+"总里程"+ ','+ "重载里程" + ',' + "重载率";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -479,7 +479,7 @@ function getDispatchStatCsv(req,res,next){
                     parkObj.total_distance   = rows[i].total_distance  ;
                 }
 
-                // 重载历程
+                // 重载里程
                 if(rows[i].load_distance  == null){
                     parkObj.load_distance  = "";
                 }else{
