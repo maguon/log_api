@@ -476,7 +476,8 @@ function getDriveSettle(params,callback) {
 //工资
 function getDriveSettleSalary(params,callback) {
     var query = " select drtm.drive_id,drtm.drive_name,drtm.truck_id,drtm.truck_num,drtm.operate_type,drtm.company_name, " +
-        " drtm.distance_salary,drtm.reverse_salary,dprm.storage_car_count,dprm.not_storage_car_count " +
+        " drtm.distance_salary,drtm.reverse_salary,drtm.load_distance," +
+        " drtm.no_load_distance,dprm.storage_car_count,dprm.not_storage_car_count,drtm.level " +
         " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name, " +
         " sum( case " +
         " when drt.reverse_flag=0 and drt.truck_number=6 then drt.distance*0.8 " +
@@ -487,7 +488,10 @@ function getDriveSettleSalary(params,callback) {
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=8 then drt.distance " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 then drt.distance*1.4 " +
         " end) distance_salary, " +
-        " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary" +
+        " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary, " +
+        " sum( CASE WHEN drt.load_flag = 1 THEN drt.distance END ) AS load_distance, " +
+        " sum( CASE WHEN drt.load_flag = 0 THEN drt.distance END ) AS no_load_distance, " +
+        " d.level " +
         " from dp_route_task drt " +
         " left join drive_info d on drt.drive_id = d.id " +
         " left join truck_info t on drt.truck_id = t.id " +
