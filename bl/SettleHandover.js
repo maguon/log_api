@@ -635,7 +635,7 @@ function getDriveSettleCsv(req,res,next){
 function getDriveSettleSalaryCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' + "货车牌号" + ',' + "所属类型" + ','+ "所属公司" + ','+ "重载里程"+ ','+ "空载里程" + ',' + "商品车到库数"+ ','+ "商品车非到库数" + ','+
-        "里程工资"+ ','+ "倒板工资"+ ','+ "系数" ;
+        "里程工资"+ ','+ "倒板工资"+ ','+ "系数" + ','+ "专线";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -698,9 +698,16 @@ function getDriveSettleSalaryCsv(req,res,next){
                 //系数
                 parkObj.salaryRatio = getSalaryRatio(parkObj.loadDistance,parkObj.storageCarCount,parkObj.notStorageCarCount);
 
+                //专线
+                if(rows[i].level == 0){
+                    parkObj.level = "否";
+                }else{
+                    parkObj.level = "是";
+                }
+
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.operateType+","+parkObj.companyName+","+
                     parkObj.loadDistance +","+parkObj.noLoadDistance+","+parkObj.storageCarCount+","+parkObj.notStorageCarCount +","+
-                    parkObj.distanceSalary+","+parkObj.reverseSalary+","+parkObj.salaryRatio+"," +'\r\n';
+                    parkObj.distanceSalary+","+parkObj.reverseSalary+","+parkObj.salaryRatio+","+parkObj.level+'\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
