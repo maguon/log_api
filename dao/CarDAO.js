@@ -645,7 +645,7 @@ function getCarDamageDeclare(params,callback) {
         paramsArray[i++] = params.currentAddrId;
         query = query + " and c.current_addr_id = ? ";
     }
-    query = query + '  order by c.id desc ';
+    query = query + '  order by dprl.load_date desc ';
     if (params.start && params.size) {
         paramsArray[i++] = parseInt(params.start);
         paramsArray[i] = parseInt(params.size);
