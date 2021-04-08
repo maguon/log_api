@@ -1324,7 +1324,7 @@ function getDriveDistanceLoadStatCsv(req,res,next){
 function getDriveDistanceLoadCsv(req,res,next){
     var csvString = "";
     var header = "司机" + ',' +"货车牌号" + ',' + "联系电话" + ',' + "调度编号"+ ',' + "计划执行时间" + ','+ "起始城市" + ','+ "目的城市"+ ','+
-        "起始装车地" + ','+ "经销商" + ','+ "装载车辆" + ','+ "公里数"+ ','+
+        "起始装车地" + ','+ "经销商" + ','+ "送入中转站" + ',' + "装载车辆" + ','+ "公里数"+ ','+
         "小车洗车费" + ','+ "大车洗车费" + ','+ "拖车费" + ','+ "地跑费" + ','+ "带路费";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
@@ -1356,6 +1356,12 @@ function getDriveDistanceLoadCsv(req,res,next){
                     parkObj.shortName = "";
                 }else{
                     parkObj.shortName = rows[i].short_name;
+                }
+                //送入中转站
+                if(rows[i].transfer_flag == 1){
+                    parkObj.transferFlag = "是";
+                }else{
+                    parkObj.transferFlag = "否";
                 }
                 if(rows[i].real_count == null){
                     parkObj.realCount = "";
@@ -1389,7 +1395,7 @@ function getDriveDistanceLoadCsv(req,res,next){
                     parkObj.leadFee = rows[i].lead_fee;
                 }
                 csvString = csvString+parkObj.driveName+","+parkObj.truckNum+","+parkObj.mobile+","+parkObj.id+"," +parkObj.taskPlanDate+","+
-                    parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.addrName+","+parkObj.shortName+","+parkObj.realCount+","+parkObj.distance+","+
+                    parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.addrName+","+parkObj.shortName+","+parkObj.transferFlag+","+parkObj.realCount+","+parkObj.distance+","+
                     parkObj.cleanFee+","+parkObj.bigCleanFee+","+parkObj.trailerFee+","+parkObj.runFee+"," +parkObj.leadFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');

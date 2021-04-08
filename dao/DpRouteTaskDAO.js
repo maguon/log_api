@@ -630,7 +630,7 @@ function getDriveDistanceLoadStat(params,callback) {
 function getDriveDistanceLoad(params,callback) {
     var query = " select dpr.*,dprl.addr_name,dprl.short_name,dprl.plan_count,real_count," +
         " t.truck_num,d.drive_name,u1.mobile," +
-        " r.clean_fee,r.big_clean_fee,r.trailer_fee,r.run_fee,r.lead_fee " +
+        " r.clean_fee,r.big_clean_fee,r.trailer_fee,r.run_fee,r.lead_fee, dprl.transfer_flag " +
         " from dp_route_task dpr " +
         " left join dp_route_load_task dprl on dpr.id = dprl.dp_route_task_id " +
         " left join receive_info r on dprl.receive_id = r.id " +
