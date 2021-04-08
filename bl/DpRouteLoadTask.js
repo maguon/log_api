@@ -16,6 +16,7 @@ var dpTaskStatDAO = require('../dao/DpTaskStatDAO.js');
 var dpTransferDemandDAO = require('../dao/DpTransferDemandDAO.js');
 var carDAO = require('../dao/CarDAO.js');
 var dpRouteLoadTaskCleanRelDAO = require('../dao/DpRouteLoadTaskCleanRelDAO.js');
+var receiveDAO = require('../dao/ReceiveDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -91,7 +92,34 @@ function createDpRouteLoadTask(req,res,next){
                 }
             })
         }
-
+    }).seq(function(){
+        var that = this;
+        if(params.receiveFlag == null){
+            if(params.transferFlag==1){
+                params.receiveFlag=1;
+                that();
+            }else{
+                //查询receiveFlag
+                receiveDAO.getReceive({receiveId:params.receiveId},function(error,rows){
+                    if (error) {
+                        logger.error(' getReceive ' + error.message);
+                        throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+                    } else{
+                        if(rows&&rows.length >0){
+                            params.receiveFlag = rows[0].receive_flag;
+                            logger.info(' getReceive ' + 'success');
+                            that();
+                        }else{
+                            params.receiveFlag = 0;
+                            logger.info(' getReceive rows=0 ' + 'success');
+                            that();
+                        }
+                    }
+                })
+            }
+        }else{
+            that();
+        }
     }).seq(function () {
         params.truckId=parkObj.truckId;
         params.driveId=parkObj.driveId;
