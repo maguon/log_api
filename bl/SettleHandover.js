@@ -695,8 +695,13 @@ function getDriveSettleSalaryCsv(req,res,next){
                 }else{
                     parkObj.reverseSalary = rows[i].reverse_salary;
                 }
+
                 //系数
-                parkObj.salaryRatio = getSalaryRatio(parkObj.loadDistance,parkObj.storageCarCount,parkObj.notStorageCarCount);
+                if(rows[i].level == 1){
+                    parkObj.salaryRatio = getSalaryRatio(parkObj.loadDistance,parkObj.storageCarCount,parkObj.notStorageCarCount);
+                }else{
+                    parkObj.salaryRatio = 1;
+                }
 
                 //专线
                 if(rows[i].level == 0){
