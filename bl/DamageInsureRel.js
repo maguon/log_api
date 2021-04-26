@@ -45,7 +45,7 @@ function getDamageInsureRelCsv(req,res,next){
     var csvString = "";
     var header = "赔付编号" + ',' + "办理时间" + ','+ "保险公司"+ ',' + "定损金额"+ ',' + "待赔金额" + ','+ "实际赔付" + ','+ "经办人"
         + ','+ "出险城市" + ',' + "报案日期" + ','+ "责任判定"+ ',' + "定损员信息"+ ',' + "免赔金额" + ','+ "车辆估值" + ','+ "发票金额"
-        + ','+ "质损编号" + ','+ "VIN码" + ','+ "委托方" + ','+ "经销商" + ','+ "质损类型" + ','+ "责任人" + ','+ "司机" + ','+ "货车牌号" + ','+ "质损说明";
+        + ','+ "质损编号" + ','+ "VIN码" + ','+ "委托方" + ','+ "经销商" + ','+ "质损类型" + ','+ "责任人" + ','+ "司机" + ','+ "货车牌号" + ','+ "质损说明"+ ','+ "实际赔付";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -158,12 +158,18 @@ function getDamageInsureRelCsv(req,res,next){
                 }else{
                     parkObj.damageExplain = rows[i].damage_explain.replace(/[\r\n]/g, '');
                 }
+                //实际赔付
+                if(rows[i].actual_money==null){
+                    parkObj.actualMoney = "";
+                }else{
+                    parkObj.actualMoney = rows[i].actual_money;
+                }
                 csvString = csvString+parkObj.damageInsureId+","+parkObj.createdOn+","+parkObj.insureName+","
                     +parkObj.damageMoney+"," +parkObj.insurePlan+","+parkObj.insureActual+"," +parkObj.insureUserName+","
                     +parkObj.cityName+"," +parkObj.declareDate+","+parkObj.liabilityType+"," +parkObj.refRemark+","
                     +parkObj.derateMoney+"," +parkObj.carValuation+","+parkObj.invoiceMoney+","
                     +parkObj.damageId+","+parkObj.vin+","+parkObj.eShortName+","+parkObj.rShortName+","+parkObj.damageType+","
-                    +parkObj.underUserName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.damageExplain+ '\r\n';
+                    +parkObj.underUserName+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.damageExplain+","+parkObj.actualMoney+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

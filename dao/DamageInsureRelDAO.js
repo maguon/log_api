@@ -22,11 +22,12 @@ function getDamageInsureRel(params,callback) {
         " di.damage_money,di.insure_plan,di.insure_actual,u.real_name as insure_user_name, " +
         " di.city_name,di.declare_date,di.liability_type,di.ref_remark,di.derate_money,di.car_valuation,di.invoice_money, " +
         " c.vin,e.short_name as e_short_name,r.short_name as r_short_name,dc.damage_type, " +
-        " dc.under_user_name,d.drive_name,d.truck_num,d.damage_explain " +
+        " dc.under_user_name,d.drive_name,d.truck_num,d.damage_explain,dci.actual_money  " +
         " from damage_insure_rel dir " +
         " left join damage_insure di  on di.id = dir.damage_insure_id " +
         " left join damage_info d on dir.damage_id = d.id " +
         " left join damage_check dc on d.id = dc.damage_id " +
+        " LEFT JOIN damage_check_indemnity dci ON d.id = dci.damage_id " +
         " left join car_info c on d.car_id = c.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join receive_info r on c.receive_id = r.id " +
@@ -102,7 +103,7 @@ function getDamageInsureRel(params,callback) {
         paramsArray[i++] = params.completedDateEnd +" 23:59:59";
         query = query + " and di.completed_date <= ? ";
     }
-    query = query + " group by dir.id ";
+    // query = query + " group by dir.id ";
     query = query + " order by dir.id desc ";
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' getDamageInsureRel ');
