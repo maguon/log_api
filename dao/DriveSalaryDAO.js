@@ -268,7 +268,7 @@ function updateDriveSalaryStatus(params,callback){
 
 function updateDriveSalaryPersonalTax(params,callback){
     var query = " update drive_salary set personal_tax = ? , " +
-        "actual_salary = IFNULL(distance_salary + reverse_salary + enter_fee " +
+        "actual_salary = IFNULL(distance_salary*salary_ratio + reverse_salary + enter_fee " +
         " - damage_under_fee - accident_fee - peccancy_under_fee - exceed_oil_fee " +
         " + full_work_bonus + transfer_bonus +  other_bonus " +
         " - hotel_bonus - social_security_fee - food_fee - loan_fee " +
