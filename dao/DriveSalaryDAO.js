@@ -242,11 +242,11 @@ function updateDriveActualSalary(params,callback){
     var query = " update drive_salary set social_security_fee = ? , food_fee = ? , loan_fee = ? , " +
         "other_fee = ? , actual_salary = ? , remark = ? where id = ? ";
     var paramsArray=[],i=0;
-    paramsArray[i++] = params.socialSecurityFee;
-    paramsArray[i++]=params.foodFee;
-    paramsArray[i++]=params.loanFee;
-    paramsArray[i++] = params.otherFee;
-    paramsArray[i++] = params.actualSalary;
+    paramsArray[i++] = params.socialSecurityFee||0;
+    paramsArray[i++]=params.foodFee||0;
+    paramsArray[i++]=params.loanFee||0;
+    paramsArray[i++] = params.otherFee||0;
+    paramsArray[i++] = params.actualSalary||0;
     paramsArray[i++] = params.remark;
     paramsArray[i] = params.driveSalaryId;
     db.dbQuery(query,paramsArray,function(error,rows){
