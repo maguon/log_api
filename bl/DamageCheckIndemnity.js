@@ -121,23 +121,6 @@ function updateIndemnityStatus(req,res,next){
     var parkObj = {};
     Seq().seq(function(){
         var that = this;
-        damageCheckIndemnityDAO.updateIndemnityStatus(params,function(error,result){
-            if (error) {
-                logger.error(' updateIndemnityStatus ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' updateIndemnityStatus ' + 'success');
-                    that();
-                }else{
-                    logger.warn(' updateIndemnityStatus ' + 'failed');
-                    resUtil.resetFailedRes(res," 处理结束失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        var that = this;
         var myDate = new Date();
         var strDate = moment(myDate).format('YYYYMMDD');
         params.dateId = parseInt(strDate);
@@ -158,27 +141,27 @@ function updateIndemnityStatus(req,res,next){
                 }
             }
         })
+    // }).seq(function () {
+    //     var that = this;
+    //     damageCheckIndemnityDAO.getDamageCheckIndemnity(params,function(error,rows){
+    //         if (error) {
+    //             logger.error(' queryDamageCheckIndemnity ' + error.message);
+    //             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+    //         } else {
+    //             if (rows && rows.length > 0) {
+    //                 logger.info(' queryDamageCheckIndemnity ' + 'success');
+    //                 parkObj.damageId=rows[0].damage_id;
+    //                 parkObj.actualMoney=rows[0].actual_money;
+    //                 that();
+    //             } else {
+    //                 logger.warn(' queryDamageCheckIndemnity ' + 'failed');
+    //                 resUtil.resetFailedRes(res, " 未查到关联数据，或已被删除 ");
+    //                 return next();
+    //             }
+    //         }
+    //     })
     }).seq(function () {
-        var that = this;
-        damageCheckIndemnityDAO.getDamageCheckIndemnity(params,function(error,rows){
-            if (error) {
-                logger.error(' queryDamageCheckIndemnity ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if (rows && rows.length > 0) {
-                    logger.info(' queryDamageCheckIndemnity ' + 'success');
-                    parkObj.damageId=rows[0].damage_id;
-                    parkObj.actualMoney=rows[0].actual_money;
-                    that();
-                } else {
-                    logger.warn(' queryDamageCheckIndemnity ' + 'failed');
-                    resUtil.resetFailedRes(res, " 未查到关联数据，或已被删除 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        damageCheckDAO.updateScPaymentByDamageId(parkObj,function(error,result){
+        damageCheckDAO.updateScPaymentByDamageId(params,function(error,result){
             if (error) {
                 logger.error(' updateScPayment ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
