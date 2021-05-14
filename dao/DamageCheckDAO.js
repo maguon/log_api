@@ -92,8 +92,8 @@ function updateDamageCheck(params,callback){
 }
 
 function updateScPayment(params,callback){
-    var query = " UPDATE damage_check SET sc_payment =  " + params.scPayment|| 0 + "," +
-        " sc_profit = " + params.scPayment|| 0 +
+    var query = " UPDATE damage_check SET sc_payment =  " + (params.scPayment||0) + "," +
+        " sc_profit = " + (params.scPayment||0) +
         " - IFNULL( ( SELECT actual_money FROM damage_check_indemnity WHERE damage_id =" + params.damageId + " ), 0 ) " +
         " WHERE damage_id = " + params.damageId;
     var paramsArray=[],i=0;
