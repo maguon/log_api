@@ -92,11 +92,14 @@ function updateDamageCheck(params,callback){
 }
 
 function updateScPayment(params,callback){
-    var query = " UPDATE damage_check SET sc_payment =  " + (params.scPayment||0) + "," +
-        " sc_profit = " + (params.scPayment||0) +
-        " - IFNULL( ( SELECT actual_money FROM damage_check_indemnity WHERE damage_id =" + params.damageId + " ), 0 ) " +
-        " WHERE damage_id = " + params.damageId;
+    var query = " UPDATE damage_check SET sc_payment = ? ," +
+        " sc_profit = ? - IFNULL( ( SELECT actual_money FROM damage_check_indemnity WHERE damage_id = ? ), 0 ) " +
+        " WHERE damage_id IS NOT NULL AND damage_id = ? ";
     var paramsArray=[],i=0;
+    paramsArray[i++]=params.scPayment||0;
+    paramsArray[i++]=params.scPayment||0;
+    paramsArray[i++]=params.damageId;
+    paramsArray[i]=params.damageId;
     db.dbQuery(query,paramsArray,function(error,rows){
         logger.debug(' updateScPayment ');
         return callback(error,rows);
