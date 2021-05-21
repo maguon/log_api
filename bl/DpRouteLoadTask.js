@@ -41,6 +41,7 @@ function createDpRouteLoadTask(req,res,next){
                 }else{
                     parkObj.truckId = rows[0].truck_id;
                     parkObj.driveId = rows[0].drive_id;
+                    parkObj.reverseFlag = rows[0].reverse_flag;
                     that();
                 }
             }
@@ -94,7 +95,7 @@ function createDpRouteLoadTask(req,res,next){
         }
     }).seq(function(){
         var that = this;
-        if(params.transferFlag==1){
+        if(params.transferFlag==1 || params.baseAddrId ==131 || parkObj.reverseFlag ==1 ){
             params.receiveFlag=1;
             that();
         }else{
