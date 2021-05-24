@@ -42415,6 +42415,12 @@
         "leadMonthFlag": {
           "type": "integer"
         },
+        "otherFee": {
+          "type": "integer"
+        },
+        "otherMonthFlag": {
+          "type": "integer"
+        },
         "monthFlag": {
           "type": "integer"
         }

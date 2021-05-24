@@ -1322,3 +1322,9 @@ ALTER TABLE `drive_salary`
 ADD COLUMN `s_car_count` int(10) DEFAULT 0 COMMENT '到库数' AFTER `no_load_distance`,
 ADD COLUMN `ns_car_count` int(10) DEFAULT 0 COMMENT '非到库数' AFTER `s_car_count`,
 ADD COLUMN `salary_ratio` decimal(10, 2) DEFAULT 1.00 COMMENT '系数' AFTER `ns_car_count`;
+-- ----------------------------
+-- 2021-5-24 更新
+-- ----------------------------
+ALTER TABLE `receive_info`
+ADD COLUMN `other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '其他费用' AFTER `lead_month_flag`,
+ADD COLUMN `other_month_flag` tinyint(1) DEFAULT 0 COMMENT '其他费用是否月结(0-否,1-是)' AFTER `other_fee`;
