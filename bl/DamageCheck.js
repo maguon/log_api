@@ -93,63 +93,16 @@ function updateScPayment(req,res,next){
 
 function updateDamageCheckIndemnityStatus(req,res,next){
     var params = req.params;
-    Seq().seq(function() {
-        var that = this;
-        damageCheckDAO.updateDamageCheckIndemnityStatus(params,function(error,result){
-            if (error) {
-                logger.error(' updateDamageCheckIndemnityStatus ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' updateDamageCheckIndemnityStatus ' + 'success');
-                    that();
-                }else{
-                    logger.warn(' updateDamageCheckIndemnityStatus ' + 'failed');
-                    resUtil.resetFailedRes(res," 赔款状态更新失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        var that = this;
-        var myDate = new Date();
-        var strDate = moment(myDate).format('YYYYMMDD');
-        params.dateId = parseInt(strDate);
-        damageCheckDAO.updateDamageCheckDateId(params,function(error,result){
-            if (error) {
-                logger.error(' updateDamageCheckDateId ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' updateDamageCheckDateId ' + 'success');
-                    that();
-                }else{
-                    logger.warn(' updateDamageCheckDateId ' + 'failed');
-                    resUtil.resetFailedRes(res," 赔款处理结束时间更新失败 ");
-                    return next();
-                }
-            }
-        })
-    }).seq(function () {
-        params.damageStatus=3;
-        damageDAO.updateDamageStatusCheckId(params,function(error,result){
-            if (error) {
-                logger.error(' updateDamageStatus ' + error.message);
-                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
-            } else {
-                if(result&&result.affectedRows>0){
-                    logger.info(' updateDamageStatus ' + 'success');
-                    resUtil.resetUpdateRes(res,result,null);
-                    return next();
-                }else{
-                    logger.warn(' updateDamageStatus ' + 'failed');
-                    resUtil.resetFailedRes(res," 质损状态更新失败 ");
-                    return next();
-                }
-            }
-        })
+    damageCheckDAO.updateDamageCheckIndemnityStatus(params,function(error,result) {
+        if (error) {
+            logger.error(' updateDamageCheckIndemnityStatus ' + error.message);
+            throw sysError.InternalError(error.message, sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' updateDamageCheckIndemnityStatus ' + 'success');
+            resUtil.resetUpdateRes(res, result, null);
+            return next();
+        }
     })
-
 }
 
 function queryDamageCheckMonthStat(req,res,next){

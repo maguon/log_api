@@ -136,19 +136,8 @@ function updateDamageCheckFinishTime(params,callback){
     });
 }
 
-function updateDamageCheckDateId(params,callback){
-    var query = " update damage_check set date_id = ? where id = ? " ;
-    var paramsArray=[],i=0;
-    paramsArray[i++]=params.dateId;
-    paramsArray[i]=params.damageCheckId;
-    db.dbQuery(query,paramsArray,function(error,rows){
-        logger.debug(' updateDamageCheckDateId ');
-        return callback(error,rows);
-    });
-}
-
 function updateDamageCheckIndemnityStatus(params,callback){
-    var query = " update damage_check set damage_indemnity_status = ? where id = ? and damage_indemnity_status=1" ;
+    var query = " update damage_check set damage_indemnity_status = ? where id = ?" ;
     var paramsArray=[],i=0;
     paramsArray[i++]=params.damageIndemnityStatus;
     paramsArray[i]=params.damageCheckId;
@@ -269,7 +258,6 @@ module.exports ={
     updateScPayment : updateScPayment,
     updateScPaymentByDamageId : updateScPaymentByDamageId,
     updateDamageCheckFinishTime : updateDamageCheckFinishTime,
-    updateDamageCheckDateId : updateDamageCheckDateId,
     updateDamageCheckIndemnityStatus : updateDamageCheckIndemnityStatus,
     getDamageCheckMonthStat  : getDamageCheckMonthStat,
     getDamageCheckWeekStat : getDamageCheckWeekStat,
