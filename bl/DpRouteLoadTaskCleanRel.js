@@ -231,8 +231,8 @@ function updateCleanRelStatus(req,res,next){
 function getDpRouteLoadTaskCleanRelCsv(req,res,next){
     var csvString = "";
     var header = "洗车编号" + ',' + "调度编号" + ',' + "司机" + ',' + "电话" + ',' + "小车单价" + ',' + "大车单价" + ',' + "小车台数" + ',' +
-        "大车台数" + ',' + "装车数" + ',' + "洗车费" + ',' + "拖车费" + ',' + "地跑费" + ',' + "带路费" + ','
-        + "应发洗车费" + ',' + "应发拖车费" + ',' + "应发地跑费" + ',' + "应发带路费" + ',' + "提车费" + ','
+        "大车台数" + ',' + "装车数" + ',' + "洗车费" + ',' + "拖车费" + ',' + "地跑费" + ',' + "带路费" + ',' + "其他费用" + ','
+        + "应发洗车费" + ',' + "应发拖车费" + ',' + "应发地跑费" + ',' + "应发带路费" + ',' + "应发其他费用" + ',' + "提车费" + ','
         + "货车牌号" + ',' + "所属公司" + ',' + "起始城市" + ',' + "目的城市" + ',' + "送达经销商" + ',' + "品牌" + ',' + "装车日期" + ',' + "银行账号" + ',' + "户名" + ',' + "开户行" + ',' +
         "领取时间" + ',' + "领取状态" + ',' + "是否补发" + ',' + "是否月结" + ',' + "备注";
     csvString = header + '\r\n'+csvString;
@@ -314,6 +314,12 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }else{
                     parkObj.actualLeadFee = rows[i].actual_lead_fee;
                 }
+                // 其他费用
+                if(rows[i].actual_other_fee==null){
+                    parkObj.actualOtherFee = "";
+                }else{
+                    parkObj.actualOtherFee = rows[i].actual_other_fee;
+                }
 
                 // 应发洗车费
                 if(rows[i].actual_price==null){
@@ -338,6 +344,12 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                     parkObj.leadFee = "";
                 }else{
                     parkObj.leadFee = rows[i].lead_fee;
+                }
+                // 应发其他费用
+                if(rows[i].total_other_fee==null){
+                    parkObj.totalOtherFee = "";
+                }else{
+                    parkObj.totalOtherFee = rows[i].total_other_fee;
                 }
 
                 // 提车费
@@ -449,10 +461,10 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 }
                 csvString = csvString+parkObj.id+","+parkObj.dpRouteTaskId+","+parkObj.driveName+","+parkObj.mobile+","+
                     parkObj.smallSinglePrice+","+parkObj.bigSinglePrice+","+parkObj.smallCarCount+","+parkObj.bigCarCount+","+parkObj.carCount+","+
-                    parkObj.totalPrice+","+parkObj.actualTrailerFee+","+parkObj.actualRunFee+","+parkObj.actualLeadFee+","
-                    +parkObj.actualPrice+","+parkObj.totalTrailerFee+","+parkObj.totalRunFee+","+parkObj.leadFee+","
-                    +parkObj.carParkingFee+","+ parkObj.truckNum+","+ parkObj.companyName+","
-                    +parkObj.routeStartName+","+parkObj.routeEndName+","+parkObj.shortName+","+parkObj.makeName+","+
+                    parkObj.totalPrice+","+parkObj.actualTrailerFee+","+parkObj.actualRunFee+","+parkObj.actualLeadFee+","+parkObj.actualOtherFee+","+
+                    parkObj.actualPrice+","+parkObj.totalTrailerFee+","+parkObj.totalRunFee+","+parkObj.leadFee+"," +parkObj.totalOtherFee+","+
+                    parkObj.carParkingFee+","+ parkObj.truckNum+","+ parkObj.companyName+","+
+                    parkObj.routeStartName+","+parkObj.routeEndName+","+parkObj.shortName+","+parkObj.makeName+","+
                     parkObj.loadDate+","+parkObj.bankNumber+","+parkObj.bankName+","+parkObj.bankUserName+","+
                     parkObj.cleanDate+","+parkObj.status+","+parkObj.type+","+parkObj.monthFlag+","+parkObj.remark+ '\r\n';
             }

@@ -1328,3 +1328,8 @@ ADD COLUMN `salary_ratio` decimal(10, 2) DEFAULT 1.00 COMMENT '系数' AFTER `ns
 ALTER TABLE `receive_info`
 ADD COLUMN `other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '其他费用' AFTER `lead_month_flag`,
 ADD COLUMN `other_month_flag` tinyint(1) DEFAULT 0 COMMENT '其他费用是否月结(0-否,1-是)' AFTER `other_fee`;
+
+ALTER TABLE `dp_route_load_task_clean_rel`
+ADD COLUMN `other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '其他费用' AFTER `actual_price`,
+ADD COLUMN `actual_other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '总其他费用' AFTER `actual_price`,
+ADD COLUMN `total_other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '应发其他费用' AFTER `actual_other_fee`;

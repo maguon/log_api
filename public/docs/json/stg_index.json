@@ -43332,6 +43332,15 @@
         "actualLeadFee": {
           "type": "integer"
         },
+        "otherFee": {
+          "type": "integer"
+        },
+        "actualOtherFee": {
+          "type": "integer"
+        },
+        "totalOtherFee": {
+          "type": "integer"
+        },
         "type": {
           "type": "integer"
         },

@@ -10,8 +10,8 @@ function addDpRouteLoadTaskCleanRel(params,callback){
     var query = " insert into dp_route_load_task_clean_rel (dp_route_task_id,dp_route_load_task_id," +
         " drive_id,truck_id,receive_id,small_single_price,big_single_price,small_car_count,big_car_count," +
         " trailer_fee,total_trailer_fee,actual_trailer_fee,car_parking_fee,run_fee,total_run_fee,actual_run_fee," +
-        " lead_fee,actual_lead_fee,month_flag,total_price,actual_price,car_count,type,create_user_id,remark) " +
-        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ) ";
+        " lead_fee,actual_lead_fee,month_flag,total_price,actual_price,other_fee,actual_other_fee,total_other_fee,car_count,type,create_user_id,remark) " +
+        " values ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,? , ? , ? , ? ) ";
     var paramsArray=[],i=0;
     paramsArray[i++]=params.dpRouteTaskId;
     paramsArray[i++]=params.dpRouteLoadTaskId;
@@ -34,6 +34,9 @@ function addDpRouteLoadTaskCleanRel(params,callback){
     paramsArray[i++]=params.monthFlag;
     paramsArray[i++]=params.totalPrice;
     paramsArray[i++]=params.actualPrice;
+    paramsArray[i++]=params.otherFee;
+    paramsArray[i++]=params.actualOtherFee;
+    paramsArray[i++]=params.totalOtherFee;
     paramsArray[i++]=params.carCount;
     paramsArray[i++]=params.type;
     // 2019-11-14 表结构新加字段【create_user_id】对应
@@ -49,8 +52,9 @@ function addDpRouteLoadTaskCleanRelUnique(params,callback){
     var query = " insert into dp_route_load_task_clean_rel (dp_route_task_id,dp_route_load_task_id," +
         " drive_id,truck_id,receive_id,small_single_price,big_single_price,small_car_count,big_car_count," +
         " trailer_fee,total_trailer_fee,actual_trailer_fee,car_parking_fee,run_fee,total_run_fee,actual_run_fee," +
+        " other_fee, actual_other_fee,total_other_fee, " +
         " lead_fee,actual_lead_fee,month_flag,total_price,actual_price,car_count,type,create_user_id,remark) " +
-        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? " +
+        " SELECT ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? " +
         " from DUAL " +
         " where not exists(select id from dp_route_load_task_clean_rel where dp_route_load_task_id = ? and create_user_id = 0 ); " ;
     var paramsArray=[],i=0;
@@ -70,6 +74,9 @@ function addDpRouteLoadTaskCleanRelUnique(params,callback){
     paramsArray[i++]=params.runFee;
     paramsArray[i++]=params.totalRunFee;
     paramsArray[i++]=params.actualRunFee;
+    paramsArray[i++]=params.otherFee;
+    paramsArray[i++]=params.totalOtherFee;
+    paramsArray[i++]=params.actualOtherFee;
     paramsArray[i++]=params.leadFee;
     paramsArray[i++]=params.actualLeadFee;
     paramsArray[i++]=params.monthFlag;
@@ -229,7 +236,7 @@ function getDpRouteLoadTaskCleanRelBase(params,callback) {
 
 function getDpRouteLoadTaskCleanRelCount(params,callback) {
     var query = " select sum(dpcr.car_count) as car_count ,sum(dpcr.total_price) as total_clean_fee,sum(dpcr.total_trailer_fee) as total_trailer_fee, " +
-        " sum(dpcr.car_parking_fee) as car_parking_fee,sum(dpcr.total_run_fee) as total_run_fee,sum(dpcr.lead_fee) as lead_fee " +
+        " sum(dpcr.car_parking_fee) as car_parking_fee,sum(dpcr.total_run_fee) as total_run_fee,sum(dpcr.lead_fee) as lead_fee , sum( dpcr.total_other_fee ) AS total_other_fee " +
         " from dp_route_load_task_clean_rel dpcr " +
         " left join dp_route_load_task dprl on dpcr.dp_route_load_task_id = dprl.id " +
         " left join truck_info t on dpcr.truck_id = t.id " +

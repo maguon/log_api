@@ -218,6 +218,8 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                     parkObj.carParkingFee = rows[0].car_parking_fee;
                     parkObj.runFee = rows[0].run_fee;
                     parkObj.runMonthFlag = rows[0].run_month_flag;
+                    parkObj.otherFee = rows[0].other_fee;
+                    parkObj.otherMonthFlag = rows[0].other_month_flag;
 
                     // dp_route_load_task 表： 计划派发商品车数量
                     parkObj.planCount = rows[0].plan_count;
@@ -404,6 +406,15 @@ function updateDpRouteLoadTaskStatus(req,res,next){
                 params.totalRunFee = parkObj.runFee*parkObj.carCount;
             }
 
+            //其他费用
+            params.otherFee = parkObj.otherFee;
+            params.actualOtherFee = parkObj.otherFee*parkObj.carCount;
+            if(parkObj.otherMonthFlag==1){
+                params.totalOtherFee = 0;
+            }else{
+                params.totalOtherFee = parkObj.otherFee*parkObj.carCount;
+            }
+
             // 带路费(*月结)
             params.actualLeadFee = 0;
             // 应发带路费(*非月结)
@@ -432,6 +443,7 @@ function updateDpRouteLoadTaskStatus(req,res,next){
             }else{
                 params.actualPrice = (parkObj.cleanFee*parkObj.smallCarCount)+(parkObj.bigCleanFee*parkObj.bigCarCount);
             }
+
             params.carCount = parkObj.carCount;
             params.type = 0;
             dpRouteLoadTaskCleanRelDAO.addDpRouteLoadTaskCleanRelUnique(params, function (error, result) {
