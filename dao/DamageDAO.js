@@ -466,6 +466,17 @@ function updateDamageStatus(params,callback){
     });
 }
 
+function updateDamageStatusIndemnityId(params,callback){
+    var query = " update damage_info set damage_status = ? where id = (SELECT damage_id FROM damage_check_indemnity WHERE id = ? )" ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.damageStatus;
+    paramsArray[i]=params.indemnityId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageStatusIndemnityId ');
+        return callback(error,rows);
+    });
+}
+
 function updateDamageHangStatus(params,callback){
     var query = " update damage_info set hang_status = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -798,6 +809,7 @@ module.exports ={
     getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus,
+    updateDamageStatusIndemnityId : updateDamageStatusIndemnityId,
     updateDamageHangStatus : updateDamageHangStatus,
     updateDamageStatStatus : updateDamageStatStatus,
     getDamageTypeMonthStat : getDamageTypeMonthStat,

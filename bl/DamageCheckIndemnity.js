@@ -10,6 +10,7 @@ var listOfValue = require('../util/ListOfValue.js');
 var sysConst = require('../util/SysConst.js');
 var damageCheckIndemnityDAO = require('../dao/DamageCheckIndemnityDAO.js');
 var damageCheckDAO = require('../dao/DamageCheckDAO.js');
+var damageDAO = require('../dao/DamageDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
 var serverLogger = require('../util/ServerLogger.js');
@@ -161,12 +162,29 @@ function updateIndemnityStatus(req,res,next){
     //         }
     //     })
     }).seq(function () {
+        var that = this;
         damageCheckDAO.updateScPaymentByDamageId(params,function(error,result){
             if (error) {
-                logger.error(' updateScPayment ' + error.message);
+                logger.error(' updateScPaymentByDamageId ' + error.message);
                 throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
-                logger.info(' updateScPayment ' + 'success');
+                if(result&&result.affectedRows>0){
+                    logger.info(' updateScPaymentByDamageId ' + 'success');
+                    that();
+                }else{
+                    resUtil.resetFailedRes(res," 更新时间失败 ");
+                    return next();
+                }
+            }
+        })
+    }).seq(function () {
+        params.damageStatus=3;
+        damageDAO.updateDamageStatusIndemnityId(params,function(error,result){
+            if (error) {
+                logger.error(' updateDamageStatus ' + error.message);
+                throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                logger.info(' updateDamageStatus ' + 'success');
                 resUtil.resetUpdateRes(res,returnMsg,null);
                 return next();
             }
