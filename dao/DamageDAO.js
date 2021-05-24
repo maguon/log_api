@@ -466,6 +466,18 @@ function updateDamageStatus(params,callback){
     });
 }
 
+function updateDamageStatusCheckId(params,callback){
+    var query = " UPDATE damage_info SET damage_status = ?" +
+        " WHERE id = ( SELECT damage_id FROM damage_check WHERE id = ? ) " ;
+    var paramsArray=[],i=0;
+    paramsArray[i++]=params.damageStatus;
+    paramsArray[i]=params.damageCheckId;
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' updateDamageStatusCheckId ');
+        return callback(error,rows);
+    });
+}
+
 function updateDamageHangStatus(params,callback){
     var query = " update damage_info set hang_status = ? where id = ? " ;
     var paramsArray=[],i=0;
@@ -798,6 +810,7 @@ module.exports ={
     getDamageTotalCost : getDamageTotalCost,
     updateDamage : updateDamage,
     updateDamageStatus : updateDamageStatus,
+    updateDamageStatusCheckId : updateDamageStatusCheckId,
     updateDamageHangStatus : updateDamageHangStatus,
     updateDamageStatStatus : updateDamageStatStatus,
     getDamageTypeMonthStat : getDamageTypeMonthStat,
