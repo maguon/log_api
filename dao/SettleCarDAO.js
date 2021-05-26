@@ -56,7 +56,7 @@ function getSettleCar(params,callback) {
         " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id and c.make_id = ecrr.make_id " +
         " and c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id and c.size_type = ecrr.size_type " +
         " where sc.id is not null AND sc.entrust_id = c.entrust_id AND sc.route_start_id = c.route_start_id " +
-        " AND sc.route_end_id = c.route_end_id ";
+        " AND sc.route_end_id = c.route_end_id and sc.order_date_id = c.order_date_id ";
     var paramsArray=[],i=0;
     if(params.settleCarId){
         paramsArray[i++] = params.settleCarId;
@@ -172,7 +172,7 @@ function getNotSettleCarCount(params,callback) {
         " from settle_car sc " +
         " left join car_info c on sc.vin = c.vin and sc.entrust_id = c.entrust_id " +
         " and sc.route_start_id = c.route_start_id and sc.route_end_id = c.route_end_id " +
-        " where sc.id is not null ";
+        " where sc.id is not null and sc.order_date_id = c.order_date_id";
     var paramsArray=[],i=0;
     if(params.vin){
         paramsArray[i++] = params.vin;
