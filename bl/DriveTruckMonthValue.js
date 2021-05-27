@@ -225,15 +225,31 @@ function createDriveTruckMonthValue(req,res,next){
     }).seq(function () {
         var that = this;
         params.yMonth = yMonth;
-        driveTruckMonthValueDAO.updateRepair(params,function(err,result){
+        driveTruckMonthValueDAO.updateRepair2(params,function(err,result){
             if (err) {
-                logger.error(' updateRepair ' + err.message);
+                logger.error(' updateRepair2 ' + err.message);
                 throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
             } else {
                 if(result&&result.affectedRows>0){
-                    logger.info(' updatePeccancy ' + 'success');
+                    logger.info(' updatePeccancy2 ' + 'success');
                 }else{
-                    logger.warn(' updatePeccancy ' + 'failed');
+                    logger.warn(' updatePeccancy2 ' + 'failed');
+                }
+                that();
+            }
+        })
+    }).seq(function () {
+        var that = this;
+        params.yMonth = yMonth;
+        driveTruckMonthValueDAO.updateRepair3(params,function(err,result){
+            if (err) {
+                logger.error(' updateRepair3 ' + err.message);
+                throw sysError.InternalError(err.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+            } else {
+                if(result&&result.affectedRows>0){
+                    logger.info(' updatePeccancy3 ' + 'success');
+                }else{
+                    logger.warn(' updatePeccancy3 ' + 'failed');
                 }
                 that();
             }
@@ -436,8 +452,8 @@ function getDriveTruckMonthValueCsv(req,res,next){
         "运送经销商台数" + ','+ "运送到库台数" + ','+"产值" + ','+"二级产值" + ','+"货车保险"+ ','+ "折旧费"+ ','+ "应发里程工资"+ ','+
         "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"满勤补助" + ','+ "拼装补助" + ','+ "交车打车进门费"+ ','+
         "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" + ','+ "油量" + ','+ "油费" + ',' + "尿素量" + ','+"尿素费" + ','+
-        "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "维修费"+ ','+ "配件费"+ ','+ "保养费"+ ','+ "商品车加油费" + ','+ "商品车停车费"+ ','+
-        "货车停车费"+','+"其他费用";
+        "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "公司维修费"+ ','+ "公司配件费"+ ','+ "公司保养费"+','+ "在外维修费"+ ','+ "在外配件费"+ ','+
+        "在外保养费"+ ','+ "商品车加油费" + ','+ "商品车停车费"+ ','+ "货车停车费"+','+"其他费用"+','+"经销商其他费用";
     csvString = header + '\r\n'+csvString;
     var params = req.params ;
     var parkObj = {};
@@ -666,21 +682,44 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }else{
                     parkObj.peccancyCompanyFee = rows[i].peccancy_company_fee;
                 }
-                if(rows[i].repair_fee == null){
-                    parkObj.repairFee = "";
+                //公司维修费
+                if(rows[i].repair_fee_2 == null){
+                    parkObj.repairFee2 = "";
                 }else{
-                    parkObj.repairFee = rows[i].repair_fee;
+                    parkObj.repairFee2 = rows[i].repair_fee_2;
                 }
-                if(rows[i].parts_fee == null){
-                    parkObj.partsFee = "";
+                //公司配件费
+                if(rows[i].parts_fee_2 == null){
+                    parkObj.partsFee2 = "";
                 }else{
-                    parkObj.partsFee = rows[i].parts_fee;
+                    parkObj.partsFee2 = rows[i].parts_fee_2;
                 }
-                if(rows[i].maintain_fee == null){
-                    parkObj.maintainFee = "";
+                //公司保养费
+                if(rows[i].maintain_fee_2 == null){
+                    parkObj.maintainFee2 = "";
                 }else{
-                    parkObj.maintainFee = rows[i].maintain_fee;
+                    parkObj.maintainFee2 = rows[i].maintain_fee_2;
                 }
+                //在外维修费
+                if(rows[i].repair_fee_3 == null){
+                    parkObj.repairFee3 = "";
+                }else{
+                    parkObj.repairFee3 = rows[i].repair_fee_3;
+                }
+                //在外配件费
+                if(rows[i].parts_fee_3 == null){
+                    parkObj.partsFee3 = "";
+                }else{
+                    parkObj.partsFee3 = rows[i].parts_fee_3;
+                }
+                //在外保养费
+                if(rows[i].maintain_fee_3 == null){
+                    parkObj.maintainFee3 = "";
+                }else{
+                    parkObj.maintainFee3 = rows[i].maintain_fee_3;
+                }
+
+
                 if(rows[i].car_oil_fee == null){
                     parkObj.carOilFee = "";
                 }else{
@@ -701,6 +740,12 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }else{
                     parkObj.otherFee = rows[i].other_fee;
                 }
+                //其他洗车费(经销商其他费用)
+                if(rows[i].other_clean_fee == null){
+                    parkObj.otherCleanFee = "";
+                }else{
+                    parkObj.otherCleanFee = rows[i].other_clean_fee;
+                }
                 csvString = csvString+parkObj.yMonth+","+parkObj.driveName+","+parkObj.truckNum+","+parkObj.brandName+","+parkObj.truckNumber+","+
                     parkObj.operateType+","+parkObj.companyName+","+parkObj.outputCompanyName+","+parkObj.reverseCount+","+parkObj.reverseSalary+","+
                     parkObj.loadDistance+","+parkObj.noLoadDistance+","+parkObj.distance+","+parkObj.loadRatio.toFixed(2)+","+parkObj.loadOilDistance+","+
@@ -709,8 +754,9 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
                     parkObj.fullWorkBonus+","+ parkObj.transferBonus +","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
                     parkObj.leadFee+","+parkObj.etcFee+","+parkObj.oilVol+","+ parkObj.oilFee+","+parkObj.ureaVol+"," +parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
-                    parkObj.peccancyCompanyFee+","+parkObj.repairFee+","+parkObj.partsFee+","+parkObj.maintainFee+","+parkObj.carOilFee+","+
-                    parkObj.carParkingTotalFee+","+parkObj.truckParkingFee+","+parkObj.otherFee+ '\r\n';
+                    parkObj.peccancyCompanyFee+","+parkObj.repairFee2+","+parkObj.partsFee2+","+parkObj.maintainFee2+","+
+                    parkObj.repairFee3+","+parkObj.partsFee3+","+parkObj.maintainFee3+ ","+parkObj.carOilFee+","+
+                    parkObj.carParkingTotalFee+","+parkObj.truckParkingFee+","+parkObj.otherFee+","+parkObj.otherCleanFee+ '\r\n';
             }
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');

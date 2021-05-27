@@ -1333,3 +1333,14 @@ ALTER TABLE `dp_route_load_task_clean_rel`
 ADD COLUMN `other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '其他费用' AFTER `actual_price`,
 ADD COLUMN `actual_other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '总其他费用' AFTER `actual_price`,
 ADD COLUMN `total_other_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '应发其他费用' AFTER `actual_other_fee`;
+-- ----------------------------
+-- 2021-5-27 更新
+-- ----------------------------
+ALTER TABLE `drive_truck_month_value`
+CHANGE COLUMN `repair_fee` `repair_fee_2` decimal(10, 2) DEFAULT 0.00 COMMENT '公司维修2' AFTER `peccancy_company_fee`,
+CHANGE COLUMN `parts_fee` `parts_fee_2` decimal(10, 2) DEFAULT 0.00 COMMENT '公司配件2' AFTER `repair_fee_2`,
+CHANGE COLUMN `maintain_fee` `maintain_fee_2` decimal(10, 2) DEFAULT 0.00 COMMENT '公司保养2' AFTER `parts_fee_2`,
+ADD COLUMN `repair_fee_3` decimal(10, 2) DEFAULT 0.00 COMMENT '在外维修3' AFTER `maintain_fee_2`,
+ADD COLUMN `parts_fee_3` decimal(10, 2) DEFAULT 0.00 COMMENT '在外配件3' AFTER `repair_fee_3`,
+ADD COLUMN `maintain_fee_3` decimal(10, 2) DEFAULT 0.00 COMMENT '在外保养3' AFTER `parts_fee_3`,
+ADD COLUMN `other_clean_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '其他洗车费(经销商其他费用)' AFTER `other_fee`;
