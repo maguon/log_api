@@ -383,7 +383,8 @@ function createDpRouteTaskBatch(req,res,next){
 }
 
 function queryDpRouteTask(req,res,next){
-    var params = req.params ;
+    resUtil.resetQueryRes(res,[],null);
+    /*var params = req.params ;
     if(params.dateIdStart !=null || params.dateIdStart !=""){
         var dateIdStart = params.dateIdStart;
         var d = new Date(dateIdStart);
@@ -405,7 +406,7 @@ function queryDpRouteTask(req,res,next){
             resUtil.resetQueryRes(res,result,null);
             return next();
         }
-    })
+    })*/
 }
 
 function queryDpRouteTaskList(req,res,next){
