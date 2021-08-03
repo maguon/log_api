@@ -598,10 +598,10 @@ function getDriveSettleDetail(params,callback) {
         " left join receive_info r on c.receive_id = r.id " +
         " left join entrust_info e on c.entrust_id = e.id " +
         " left join entrust_city_route_rel ecrr on c.entrust_id = ecrr.entrust_id " +
-        " where dpr.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' " +
-        " and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status >=9 " +
         " and c.make_id = ecrr.make_id and c.route_start_id = ecrr.route_start_id and c.route_end_id = ecrr.route_end_id " +
-        " and c.size_type =ecrr.size_type " ;
+        " and c.size_type =ecrr.size_type " +
+        " where dpr.task_plan_date>= '"+params.taskPlanDateStart+" 00:00:00' " +
+        " and dpr.task_plan_date<= '"+params.taskPlanDateEnd+" 23:59:59' and dpr.task_status >=9 " ;
     var paramsArray=[],i=0;
     if(params.driveId){
         paramsArray[i++] = params.driveId;
