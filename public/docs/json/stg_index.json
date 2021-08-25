@@ -33126,14 +33126,6 @@
 
           },
           {
-            "name": "damageInsureId",
-            "in": "query",
-            "description": "damageInsure id",
-            "required": false,
-            "type": "integer"
-
-          },
-          {
             "name": "indemnityStatus",
             "in": "query",
             "description": "indemnity status",

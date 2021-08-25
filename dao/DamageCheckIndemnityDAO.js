@@ -30,10 +30,9 @@ function addDamageCheckIndemnity(params,callback){
 }
 
 function getDamageCheckIndemnity(params,callback) {
-    var query = " select dci.*,d.created_on as declare_date,u.real_name as apply_user_name,c.city_name , dir.damage_insure_id , dc.sc_payment , dc.sc_payment_date ,dc.sc_profit from damage_check_indemnity dci " +
+    var query = " select dci.*,d.created_on as declare_date,u.real_name as apply_user_name,c.city_name , dc.sc_payment , dc.sc_payment_date ,dc.sc_profit from damage_check_indemnity dci " +
         " left join damage_check dc on dci.damage_check_id = dc.id " +
         " left join damage_info d on dci.damage_id = d.id " +
-        " left join damage_insure_rel dir on dir.damage_id = d.id " +
         " left join city_info c on dci.city_id = c.id " +
         " left join user_info u on dci.apply_user_id = u.uid where dci.id is not null ";
     var paramsArray=[],i=0;
@@ -48,10 +47,6 @@ function getDamageCheckIndemnity(params,callback) {
     if(params.damageId){
         paramsArray[i++] = params.damageId;
         query = query + " and dci.damage_id = ? ";
-    }
-    if(params.damageInsureId){
-        paramsArray[i++] = params.damageInsureId;
-        query = query + " and dir.damage_insure_id = ? ";
     }
     if(params.indemnityStatus){
         paramsArray[i++] = params.indemnityStatus;
