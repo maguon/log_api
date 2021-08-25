@@ -770,7 +770,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/car/:carId/vin',contentType: 'application/json'} ,sysRecord.checkUserStatus,car.updateCarVin,sysRecord.saveCarRecord);
     server.put({path:'/api/user/:userId/car/:carId/carStatus/:carStatus',contentType: 'application/json'} ,sysRecord.checkUserStatus,car.updateCarStatus,sysRecord.saveCarRecord);
     server.del('/api/user/:userId/upload/:uploadId' , car.removeUploadCar);
-    server.del('/api/user/:userId/car/:carId/car' , car.removeCar);
+    server.del('/api/user/:userId/car/:carId/vin/:vin/car' , sysRecord.checkUserStatus,car.removeCar,sysRecord.saveCarRecord);
 
     /**
      * CarStorageRel Module
