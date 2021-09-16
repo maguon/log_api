@@ -30,7 +30,8 @@ var CAR_OP_TYPE = {
     ARRIVED : 15, //到达
     SETTLE_HANDOVER : 16, //交接单
     SORT : 17,  //分拣
-    DIRECT_ARRIVED : 19 //直发送达
+    DIRECT_ARRIVED : 19, //直发送达
+    DELETE:99 //删除
 };
 var RECORD_OP_TYPE  ={
     truckOp : 20,

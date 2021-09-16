@@ -515,6 +515,10 @@ function removeCar(req,res,next){
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
             logger.info(' removeCar ' + 'success');
+            req.params.carContent =" 删除车辆信息：";
+            req.params.vin =params.vin;
+            req.params.carId = params.carId;
+            req.params.op =sysConst.CAR_OP_TYPE.DELETE;
             resUtil.resetUpdateRes(res,result,null);
             return next();
         }

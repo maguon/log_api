@@ -22608,7 +22608,7 @@
         }
       }
     },
-    "/user/{userId}/car/{carId}/car": {
+    "/user/{userId}/car/{carId}/vin/{vin}/car": {
       "delete": {
         "tags": [
           "car"
@@ -22633,6 +22633,14 @@
             "description": "car id",
             "required": true,
             "type": "integer"
+
+          },
+          {
+            "name": "vin",
+            "in": "path",
+            "description": "car vin",
+            "required": true,
+            "type": "string"
 
           }
         ],
