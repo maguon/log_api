@@ -1344,3 +1344,9 @@ ADD COLUMN `repair_fee_3` decimal(10, 2) DEFAULT 0.00 COMMENT '在外维修3' AF
 ADD COLUMN `parts_fee_3` decimal(10, 2) DEFAULT 0.00 COMMENT '在外配件3' AFTER `repair_fee_3`,
 ADD COLUMN `maintain_fee_3` decimal(10, 2) DEFAULT 0.00 COMMENT '在外保养3' AFTER `parts_fee_3`,
 ADD COLUMN `other_clean_fee` decimal(10, 2) DEFAULT 0.00 COMMENT '其他洗车费(经销商其他费用)' AFTER `other_fee`;
+-- ----------------------------
+-- 2021-9-16 更新
+-- ----------------------------
+ALTER TABLE `drive_peccancy`
+ADD COLUMN `out_id` varchar(40) DEFAULT NULL COMMENT '编号' AFTER `date_id`,
+ADD UNIQUE INDEX `out_id`(`out_id`) USING BTREE COMMENT '外部编号';

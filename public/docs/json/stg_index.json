@@ -4508,15 +4508,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/truck"
-              }
-            }
-          },
           "400": {
             "description": "Invalid token value or invalid truckRepairRel id"
           }
@@ -39619,7 +39610,7 @@
         "tags": [
           "sysNotification"
         ],
-        "summary": "query  sysNotification info",
+        "summary": "query  sysNotification list",
         "description": "query sysNotification",
         "produces": [
           "application/json"
@@ -41839,6 +41830,9 @@
           "type": "string"
         },
         "address": {
+          "type": "string"
+        },
+        "outId": {
           "type": "string"
         },
         "remark": {
