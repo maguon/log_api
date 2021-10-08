@@ -450,7 +450,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
     var header = "月份" + ',' +"司机" + ',' + "货车牌号" + ',' + "货车品牌" + ','+ "板位数" + ','+ "所属类型"+ ','+ "所属公司" + ','+ "产值公司" + ','+
         "倒板数" + ','+"倒板工资" + ','+"重载里程" + ','+ "空载里程"+ ','+ "总里程"+ ','+ "重载率"+ ','+ "重载油耗里程"+ ','+ "空载油耗里程" + ','+
         "运送经销商台数" + ','+ "运送到库台数" + ','+"产值" + ','+"二级产值" + ','+"货车保险"+ ','+ "折旧费"+ ','+ "应发里程工资"+ ','+
-        "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"满勤补助" + ','+ "拼装补助" + ','+ "交车打车进门费"+ ','+
+        "质损个人承担"+ ','+ "质损公司承担"+ ','+ "洗车费" + ','+ "出勤天数" + ','+"满勤补助" + ','+ "拼装补助" + ','+ "其他补助" + ','+ "交车打车进门费"+ ','+
         "拖车费"+ ','+ "提车费"+ ','+ "地跑费"+ ','+ "带路费"+ ','+ "过路费" +','+"经销商其他费用" + ','+ "油量" + ','+ "油费" + ',' + "尿素量" + ','+"尿素费" + ','+
         "违章罚款个人承担"+ ','+ "违章罚款公司承担"+ ','+ "公司维修费"+ ','+ "公司配件费"+ ','+ "公司保养费"+','+ "在外维修费"+ ','+ "在外配件费"+ ','+
         "在外保养费"+ ','+ "商品车加油费" + ','+ "商品车停车费"+ ','+ "货车停车费"+','+"其他费用";
@@ -616,6 +616,12 @@ function getDriveTruckMonthValueCsv(req,res,next){
                 }else{
                     parkObj.transferBonus = rows[i].transfer_bonus;
                 }
+                // 其他补助
+                if(rows[i].other_bonus == null){
+                    parkObj.otherBonus = "";
+                }else{
+                    parkObj.otherBonus = rows[i].other_bonus;
+                }
                 // 交车打车进门费
                 if(rows[i].enter_fee == null){
                     parkObj.enterFee = "";
@@ -754,7 +760,7 @@ function getDriveTruckMonthValueCsv(req,res,next){
                     parkObj.noOilDistance+","+ parkObj.receiveCarCount+","+parkObj.storageCarCount+","+parkObj.output+","+parkObj.twoOutput+","+
                     parkObj.insureFee+","+parkObj.depreciationFee+","+
                     parkObj.distanceSalary+","+parkObj.damageUnderFee+","+parkObj.damageCompanyFee+","+parkObj.cleanFee+","+parkObj.workCount+","+
-                    parkObj.fullWorkBonus+","+ parkObj.transferBonus +","+parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
+                    parkObj.fullWorkBonus+","+ parkObj.transferBonus +","+parkObj.otherBonus + "," + parkObj.enterFee+","+parkObj.trailerFee+","+parkObj.carParkingFee+","+parkObj.runFee+","+
                     parkObj.leadFee+","+parkObj.etcFee+","+parkObj.otherCleanFee+","+parkObj.oilVol+","+ parkObj.oilFee+","+parkObj.ureaVol+"," +parkObj.ureaFee+","+parkObj.peccancyUnderFee+","+
                     parkObj.peccancyCompanyFee+","+parkObj.repairFee2+","+parkObj.partsFee2+","+parkObj.maintainFee2+","+
                     parkObj.repairFee3+","+parkObj.partsFee3+","+parkObj.maintainFee3+ ","+parkObj.carOilFee+","+
