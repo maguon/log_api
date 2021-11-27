@@ -153,7 +153,7 @@ function damageQaTaskUserStat(params,callback){
     }
     if(params.qaUserId){
         paramsArray[i++] = params.qaUserId;
-        query = query + " and dr.userId = ? ";
+        query = query + " and dr.user_id = ? ";
     }
     if(params.dateIdStart){
         paramsArray[i++] = params.dateIdStart;
