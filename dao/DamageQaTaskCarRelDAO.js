@@ -19,6 +19,36 @@ function addDamageQaTaskCarRel(params,callback){
     });
 }
 
+/* function getDamageQaTaskUserStat(params,callback){
+    var query ="select user_id ,count(d.id),u.real_name,date_id "+
+    " from damage_qa_task_car_rel d " +
+    "left join user_info  u on d.user_id = u.uid " +
+    " where d.id is not null ";
+    var paramsArray=[],i=0;
+    if(params.qaUserId){
+        paramsArray[i++] = params.qaUserId;
+        query = query + " and d.user_id = ? ";
+    }
+    if(params.dateId){
+        paramsArray[i++] = params.dateId;
+        query = query + " and d.date_id = ? ";
+    }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and d.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and d.date_id <= ? ";
+    }
+    query += " GROUP BY dr.user_id " ;
+    if (params.start && params.size) {
+        paramsArray[i++] = parseInt(params.start);
+        paramsArray[i++] = parseInt(params.size);
+        query += " limit ? , ? "
+    }
+} */
+
 function getDamageQaTaskCarRel(params,callback) {
     var query = " select dqtcr.*,c.vin,u.real_name from damage_qa_task_car_rel dqtcr" +
         " left join car_info c on dqtcr.car_id = c.id " +
@@ -120,6 +150,14 @@ function damageQaTaskUserStat(params,callback){
     if(params.qtId){
         paramsArray[i++] = params.qtId;
         query = query + " and dr.qt_id = ? ";
+    }
+    if(params.dateIdStart){
+        paramsArray[i++] = params.dateIdStart;
+        query = query + " and dr.date_id >= ? ";
+    }
+    if(params.dateIdEnd){
+        paramsArray[i++] = params.dateIdEnd;
+        query = query + " and dr.date_id <= ? ";
     }
     query += " GROUP BY dr.user_id " ;
     query += " ORDER BY qa_count DESC " ;
