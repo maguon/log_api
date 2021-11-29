@@ -59,7 +59,7 @@ function damageQaTaskUserStatCsv(req,res,next){
     csvString = header + '\r\n'+csvString;
     var parkObj = {};
     var params = req.params;
-    damageQaTaskCarRelDAO.damageQaTaskUserStat(params,function(error,result){
+    damageQaTaskCarRelDAO.damageQaTaskUserStat(params,function(error,rows){
         if (error) {
             logger.error(' damageQaTaskUserStatCsv ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
