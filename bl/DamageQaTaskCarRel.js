@@ -68,8 +68,9 @@ function damageQaTaskUserStatCsv(req,res,next){
             for(var i=0;i<rows.length;i++){
                 parkObj.realName = rows[i].real_name;
                 parkObj.qaCount = rows[i].qa_count;
+                csvString = csvString+parkObj.realName+","+parkObj.qaCount+ '\r\n';
             }
-            csvString = csvString+parkObj.realName+","+parkObj.qaCount+ '\r\n';
+            
             var csvBuffer = new Buffer(csvString,'utf8');
             res.set('content-type', 'application/csv');
             res.set('charset', 'utf8');
