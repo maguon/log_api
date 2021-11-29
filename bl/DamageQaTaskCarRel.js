@@ -53,8 +53,38 @@ function damageQaTaskUserStat(req,res,next){
     })
 }
 
+function damageQaTaskUserStatCsv(req,res,next){
+    var csvString = "";
+    var header = "操作员" + "质检数" ;
+    csvString = header + '\r\n'+csvString;
+    var parkObj = {};
+    var params = req.params;
+    damageQaTaskCarRelDAO.damageQaTaskUserStat(params,function(error,result){
+        if (error) {
+            logger.error(' damageQaTaskUserStatCsv ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' damageQaTaskUserStatCsv ' + 'success');
+            for(var i=0;i<rows.length;i++){
+                parkObj.realName = rows[i].real_name;
+                parkObj.qaCount = rows[i].qa_count;
+            }
+            csvString = csvString+parkObj.realName+","+parkObj.qaCount+ '\r\n';
+            var csvBuffer = new Buffer(csvString,'utf8');
+            res.set('content-type', 'application/csv');
+            res.set('charset', 'utf8');
+            res.set('content-length', csvBuffer.length);
+            res.writeHead(200);
+            res.write(csvBuffer);//TODO
+            res.end();
+            return next(false);
+        }
+    })
+}
+
 module.exports = {
     queryDamageQaTaskCarRel : queryDamageQaTaskCarRel,
     damageQaTaskDayStat : damageQaTaskDayStat,
-    damageQaTaskUserStat : damageQaTaskUserStat
+    damageQaTaskUserStat : damageQaTaskUserStat,
+    damageQaTaskUserStatCsv: damageQaTaskUserStatCsv
 }

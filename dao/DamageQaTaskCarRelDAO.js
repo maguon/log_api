@@ -143,7 +143,7 @@ function damageQaTaskDayStat(params,callback){
 function damageQaTaskUserStat(params,callback){
     var paramsArray=[],i=0;
 
-    var query = " SELECT u.real_name, count( dr.user_id ) qa_count FROM damage_qa_task_car_rel dr " +
+    var query = " SELECT u.user_id,u.real_name, count( dr.user_id ) qa_count FROM damage_qa_task_car_rel dr " +
         " left join user_info u on dr.user_id = u.uid " +
         " WHERE dr.qa_status = 1 " ;
 
