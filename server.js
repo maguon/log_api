@@ -1064,7 +1064,7 @@ function createServer() {
     server.get('/api/user/:userId/damageQaTaskDayStat',damageQaTaskCarRel.damageQaTaskDayStat);
     server.get('/api/user/:userId/qtId/:qtId/userStat',damageQaTaskCarRel.damageQaTaskUserStat);
     server.get('/api/user/:userId/damageQaUserStat',damageQaTaskCarRel.damageQaTaskUserStat);
-    server.get('/api/user/:userId/damageQaUserStat.csv',damageQaTaskCarRel.damageQaTaskUserStat);
+    server.get('/api/user/:userId/damageQaUserStat.csv',damageQaTaskCarRel.damageQaTaskUserStatCsv);
 
     /**
      * RepairStation Module
