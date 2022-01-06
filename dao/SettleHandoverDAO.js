@@ -419,7 +419,9 @@ function getDriveSettle(params,callback) {
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=6 then drt.distance*0.8 " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=7 then drt.distance*0.9 " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=8 then drt.distance " +
-        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 then drt.distance*1.4 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 and drt.distance <500 then drt.distance*1.4 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 and drt.distance >=500 and drt.distance <1000 then drt.distance*1.3 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 and drt.distance >=1000 then drt.distance*1.2 " +
         " end) distance_salary, " +
         " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary" +
         " from dp_route_task drt " +
@@ -486,7 +488,9 @@ function getDriveSettleSalary(params,callback) {
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=6 then drt.distance*0.8 " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=7 then drt.distance*0.9 " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=8 then drt.distance " +
-        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 then drt.distance*1.4 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 and drt.distance<500 then drt.distance*1.4 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 and drt.distance>=500 and drt.distance<1000 then drt.distance*1.3 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count>=9 then and drt.distance>=1000 drt.distance*1.2 " +
         " end) distance_salary, " +
         " sum(case when drt.reverse_flag=1 then drt.reverse_money end) reverse_salary, " +
         " sum( CASE WHEN drt.load_flag = 1 THEN drt.distance END ) AS load_distance, " +
