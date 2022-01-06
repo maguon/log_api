@@ -492,7 +492,14 @@ function  queryDpRouteTaskBaseCsv(req,res,next) {
                         parkObj.mileageSalary =1.0;
                     }
                     else if(rows[i].car_count==9){
-                        parkObj.mileageSalary =1.1;
+                        if(rows[i].distance<500){
+                            parkObj.mileageSalary =1.4;
+                        }else if(rows[i].distance>=500 && rows[i].distance<1000){
+                            parkObj.mileageSalary =1.3;
+                        }else{
+                            parkObj.mileageSalary =1.2;
+                        }
+                        
                     }
                     else if(rows[i].car_count>=10){
                         parkObj.mileageSalary =1.2;
