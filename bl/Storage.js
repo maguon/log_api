@@ -172,7 +172,7 @@ function getStorageCarCsv(req,res,next){
                 parkObj.routeEnd = rows[i].route_end;
                 parkObj.receiveName = rows[i].receive_name;
                 parkObj.entrustName = rows[i].entrust_name;
-                parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                parkObj.orderDate = moment(rows[i].order_date).format('YYYY-MM-DD');
                 csvString = csvString+parkObj.vin+","+parkObj.makeName+","+parkObj.routeStart+","+parkObj.routeEnd+","+parkObj.receiveName+","+parkObj.entrustName+","+parkObj.orderDate+ '\r\n';
             }
                 var csvBuffer = new Buffer(csvString,'utf8');

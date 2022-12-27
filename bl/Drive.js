@@ -12,6 +12,7 @@ var driveDAO = require('../dao/DriveDAO.js');
 var userDAO = require('../dao/UserDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
+var moment = require('moment/moment.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('Drive.js');
 
@@ -415,7 +416,7 @@ function getDriveCsv(req,res,next){
                 if(rows[i].entry_time == null){
                     parkObj.entryTime = "";
                 }else{
-                    parkObj.entryTime = new Date(rows[i].entry_time).toLocaleDateString();
+                    parkObj.entryTime = moment(rows[i].entry_time).format('YYYY-MM-DD');
                 }
                 if(rows[i].archives_num == null){
                     parkObj.archivesNum = "";
@@ -442,7 +443,7 @@ function getDriveCsv(req,res,next){
                 if(rows[i].license_date == null){
                     parkObj.licenseDate = "";
                 }else{
-                    parkObj.licenseDate = new Date(rows[i].license_date).toLocaleDateString();
+                    parkObj.licenseDate = moment(rows[i].license_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].sib_tel == null){
                     parkObj.sibTel = "";

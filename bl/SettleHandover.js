@@ -434,7 +434,7 @@ function getSettleHandoverCsv(req,res,next){
                 if(rows[i].received_date == null){
                     parkObj.receivedDate = "";
                 }else{
-                    parkObj.receivedDate = new Date(rows[i].received_date).toLocaleDateString();
+                    parkObj.receivedDate = moment(rows[i].received_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].op_user_name == null){
                     parkObj.opUserName = "";
@@ -523,12 +523,12 @@ function getNotSettleHandoverCsv(req,res,next){
                 if(rows[i].task_plan_date == null){
                     parkObj.taskPlanDate = "";
                 }else{
-                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                    parkObj.taskPlanDate = moment(rows[i].task_plan_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].arrive_date == null){
                     parkObj.arriveDate = "";
                 }else{
-                    parkObj.arriveDate = new Date(rows[i].arrive_date).toLocaleDateString();
+                    parkObj.arriveDate = moment(rows[i].arrive_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].handover_flag ==1){
                     parkObj.handoverFlag = "未返还";
@@ -819,7 +819,7 @@ function getDriveSettleDetailCsv(req,res,next){
                 if(rows[i].task_plan_date == null){
                     parkObj.taskPlanDate = "";
                 }else{
-                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                    parkObj.taskPlanDate = moment(rows[i].task_plan_date).format('YYYY-MM-DD');
                 }
                 parkObj.vin = rows[i].vin;
                 if(rows[i].e_short_name == null){

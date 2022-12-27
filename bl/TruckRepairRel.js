@@ -367,12 +367,12 @@ function getTruckRepairCsv(req,res,next){
                 if(rows[i].repair_date == null){
                     parkObj.repairDate = "";
                 }else{
-                    parkObj.repairDate = new Date(rows[i].repair_date).toLocaleDateString();
+                    parkObj.repairDate = moment(rows[i].repair_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].end_date == null){
                     parkObj.endDate = "";
                 }else{
-                    parkObj.endDate = new Date(rows[i].end_date).toLocaleDateString();
+                    parkObj.endDate = moment(rows[i].end_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].repair_reason == null){
                     parkObj.repairReason = "";

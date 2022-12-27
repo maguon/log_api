@@ -247,12 +247,12 @@ function getTruckQaCsv(req,res,next){
                 if(rows[i].qa_date==null){
                     parkObj.qaDate = "";
                 }else{
-                    parkObj.qaDate = new Date(rows[i].qa_date).toLocaleDateString();
+                    parkObj.qaDate = moment(rows[i].qa_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].created_on==null){
                     parkObj.createdOn = "";
                 }else{
-                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                    parkObj.createdOn = moment(rows[i].created_on).format('YYYY-MM-DD');
                 }
                 if(rows[i].remark==null){
                     parkObj.remark = "";

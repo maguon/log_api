@@ -10,6 +10,7 @@ var listOfValue = require('../util/ListOfValue.js');
 var truckSecurityCheckDAO = require('../dao/TruckSecurityCheckDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
+var moment = require('moment/moment.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('TruckSecurityCheck.js');
 
@@ -253,7 +254,7 @@ function getTruckSecurityCheckCsv(req,res,next){
                 if(rows[i].check_date == null){
                     parkObj.checkDate = "";
                 }else{
-                    parkObj.checkDate = new Date(rows[i].check_date).toLocaleDateString();
+                    parkObj.checkDate = moment(rows[i].check_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].remark == null){
                     parkObj.remark = "";

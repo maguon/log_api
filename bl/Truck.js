@@ -987,22 +987,22 @@ function getTruckFirstCsv(req,res,next){
                 if(rows[i].driving_date == null){
                     parkObj.drivingDate = "";
                 }else{
-                    parkObj.drivingDate = new Date(rows[i].driving_date).toLocaleDateString();
+                    parkObj.drivingDate = moment(rows[i].driving_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].license_date == null){
                     parkObj.licenseDate = "";
                 }else{
-                    parkObj.licenseDate = new Date(rows[i].license_date).toLocaleDateString();
+                    parkObj.licenseDate = moment(rows[i].license_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].trail_driving_date == null){
                     parkObj.trailDrivingDate = "";
                 }else{
-                    parkObj.trailDrivingDate = new Date(rows[i].trail_driving_date).toLocaleDateString();
+                    parkObj.trailDrivingDate = moment(rows[i].trail_driving_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].trail_license_date == null){
                     parkObj.trailLicenseDate = "";
                 }else{
-                    parkObj.trailLicenseDate = new Date(rows[i].trail_license_date).toLocaleDateString();
+                    parkObj.trailLicenseDate = moment(rows[i].trail_license_date).format('YYYY-MM-DD');
                 }
                 csvString = csvString+parkObj.truckNum+","+parkObj.brandName+","+parkObj.brandStyleName+","+parkObj.trailNum+"," +parkObj.trailNumber+"," +parkObj.truckTel+","+
                     parkObj.driveName+"," +parkObj.viceDriveName+","+parkObj.operateType+","+parkObj.companyName+","+parkObj.truckStatus+","+
@@ -1059,22 +1059,22 @@ function getTruckTrailerCsv(req,res,next){
                 if(rows[i].driving_date == null){
                     parkObj.drivingDate = "";
                 }else{
-                    parkObj.drivingDate = new Date(rows[i].driving_date).toLocaleDateString();
+                    parkObj.drivingDate = moment(rows[i].driving_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].license_date == null){
                     parkObj.licenseDate = "";
                 }else{
-                    parkObj.licenseDate = new Date(rows[i].license_date).toLocaleDateString();
+                    parkObj.licenseDate = moment(rows[i].license_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].first_driving_date == null){
                     parkObj.firstDrivingDate = "";
                 }else{
-                    parkObj.firstDrivingDate = new Date(rows[i].first_driving_date).toLocaleDateString();
+                    parkObj.firstDrivingDate = moment(rows[i].first_driving_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].first_license_date == null){
                     parkObj.firstLicenseDate = "";
                 }else{
-                    parkObj.firstLicenseDate = new Date(rows[i].first_license_date).toLocaleDateString();
+                    parkObj.firstLicenseDate = moment(rows[i].first_license_date).format('YYYY-MM-DD');
                 }
                 csvString = csvString+parkObj.truckNum+"," +parkObj.brandStyleName+"," +parkObj.number+"," +parkObj.firstNum+","+parkObj.operateType+","+
                     parkObj.companyName+","+parkObj.truckStatus+","+

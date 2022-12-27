@@ -251,7 +251,7 @@ function getDamageCheckIndemnityCsv(req,res,next){
                 }else{
                     parkObj.tel = rows[i].tel;
                 }
-                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                parkObj.createdOn = moment(rows[i].created_on).format('YYYY-MM-DD');;
                 if(rows[i].apply_explain == null){
                     parkObj.applyExplain = "";
                 }else{
@@ -292,7 +292,7 @@ function getDamageCheckIndemnityCsv(req,res,next){
                 if(rows[i].indemnity_date == null){
                     parkObj.indemnityDate = "";
                 }else{
-                    parkObj.indemnityDate = new Date(rows[i].indemnity_date).toLocaleDateString();
+                    parkObj.indemnityDate = moment(rows[i].indemnity_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].indemnity_status == 1){
                     parkObj.indemnityStatus = "未打款";

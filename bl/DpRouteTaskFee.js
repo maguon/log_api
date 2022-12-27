@@ -262,7 +262,7 @@ function getDpRouteTaskFeeCsv(req,res,next){
                 if(rows[i].created_on == null){
                     parkObj.createdOn = "";
                 }else{
-                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                    parkObj.createdOn = moment(rows[i].created_on).format('YYYY-MM-DD');
                 }
                 if(rows[i].bank_number==null){
                     parkObj.bankNumber = "";

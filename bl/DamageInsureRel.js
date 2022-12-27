@@ -10,6 +10,7 @@ var listOfValue = require('../util/ListOfValue.js');
 var damageInsureRelDAO = require('../dao/DamageInsureRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
+var moment = require('moment/moment.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DamageInsureRel.js');
 
@@ -56,7 +57,7 @@ function getDamageInsureRelCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.damageInsureId = rows[i].damage_insure_id;
-                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                parkObj.createdOn = moment(rows[i].created_on).format('YYYY-MM-DD');
                 parkObj.insureName = rows[i].insure_name;
                 if(rows[i].damage_money==null){
                     parkObj.damageMoney = "";
@@ -78,7 +79,7 @@ function getDamageInsureRelCsv(req,res,next){
                 if(rows[i].declare_date == null){
                     parkObj.declareDate = "";
                 }else{
-                    parkObj.declareDate = new Date(rows[i].declare_date).toLocaleDateString();
+                    parkObj.declareDate = moment(rows[i].declare_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].liability_type == 1){
                     parkObj.liabilityType = "全责";

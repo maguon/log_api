@@ -407,7 +407,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 if(rows[i].load_date==null){
                     parkObj.loadDate = "";
                 }else{
-                    parkObj.loadDate = new Date(rows[i].load_date).toLocaleDateString();
+                    parkObj.loadDate = moment(rows[i].load_date).format('YYYY-MM-DD');;
                 }
                 // 银行账号
                 if(rows[i].bank_number==null){
@@ -431,7 +431,7 @@ function getDpRouteLoadTaskCleanRelCsv(req,res,next){
                 if(rows[i].clean_date==null){
                     parkObj.cleanDate = "";
                 }else{
-                    parkObj.cleanDate = new Date(rows[i].clean_date).toLocaleDateString();
+                    parkObj.cleanDate = moment(rows[i].clean_date).format('YYYY-MM-DD');;
                 }
                 // 领取状态
                 if(rows[i].status == 0){
@@ -546,12 +546,12 @@ function getDpRouteLoadTaskProtectCsv(req,res,next){
                 if(rows[i].load_date==null){
                     parkObj.loadDate = "";
                 }else{
-                    parkObj.loadDate = new Date(rows[i].load_date).toLocaleDateString();
+                    parkObj.loadDate = moment(rows[i].load_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].clean_date==null){
                     parkObj.cleanDate = "";
                 }else{
-                    parkObj.cleanDate = new Date(rows[i].clean_date).toLocaleDateString();
+                    parkObj.cleanDate = moment(rows[i].clean_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].status == 0){
                     parkObj.status = "未通过";

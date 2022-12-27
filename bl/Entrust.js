@@ -10,6 +10,7 @@ var listOfValue = require('../util/ListOfValue.js');
 var entrustDAO = require('../dao/EntrustDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
+var moment = require('moment/moment.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('Entrust.js');
 
@@ -219,7 +220,7 @@ function getEntrustCarCsv(req,res,next){
                 if(rows[i].order_date == null){
                     parkObj.orderDate = "";
                 }else{
-                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                    parkObj.orderDate = moment(rows[i].order_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].distance == null){
                     parkObj.distance = "";
@@ -301,7 +302,7 @@ function getEntrustNotCarCsv(req,res,next){
                 if(rows[i].order_date == null){
                     parkObj.orderDate = "";
                 }else{
-                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                    parkObj.orderDate = moment(rows[i].order_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].distance == null){
                     parkObj.distance = "";

@@ -211,7 +211,7 @@ function getSettleCarCsv(req,res,next){
                 if(rows[i].order_date == null){
                     parkObj.orderDate = "";
                 }else{
-                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                    parkObj.orderDate = moment(rows[i].order_date).format('YYYY-MM-DD');
                 }
                 csvString = csvString+parkObj.vin+","+parkObj.eShortName+","+parkObj.makeName+","+parkObj.provinceStartName+","+parkObj.routeStart+","+
                     parkObj.provinceEndName +","+parkObj.routeEnd +","+
@@ -282,7 +282,7 @@ function getNotSettleCarCsv(req,res,next){
                 if(rows[i].order_date == null){
                     parkObj.orderDate = "";
                 }else{
-                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                    parkObj.orderDate = moment(rows[i].order_date).format('YYYY-MM-DD');
                 }
                 csvString = csvString+parkObj.vin+","+parkObj.eShortName+","+parkObj.makeName+","+parkObj.routeStart+","+parkObj.routeEnd +","+
                     parkObj.distance+","+parkObj.fee+","+parkObj.planPrice+","+parkObj.orderDate+ '\r\n';

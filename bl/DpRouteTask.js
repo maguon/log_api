@@ -525,7 +525,7 @@ function  queryDpRouteTaskBaseCsv(req,res,next) {
                 if(rows[i].task_end_date == null){
                     parkObj.taskEndDate = "";
                 }else{
-                    parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
+                    parkObj.taskEndDate = moment(rows[i].task_end_date).format('YYYY-MM-DD');
                 }
                 csvString = csvString+parkObj.id+","+parkObj.route+","+parkObj.distance+"," +parkObj.truckNum+","+ parkObj.carCount+","+
                     parkObj.truckNumber+","+parkObj.mileageSalary +","+parkObj.loadFlag+","+
@@ -1162,12 +1162,12 @@ function getDpRouteTaskCsv(req,res,next){
                     parkObj.truckNumber = rows[i].truck_number;
                 }
                 // 计划执行时间
-                parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                parkObj.taskPlanDate = moment(rows[i].task_plan_date).format('YYYY-MM-DD');
                 // 完成时间
                 if(rows[i].task_end_date == null){
                     parkObj.taskEndDate = "";
                 }else{
-                    parkObj.taskEndDate = new Date(rows[i].task_end_date).toLocaleDateString();
+                    parkObj.taskEndDate = moment(rows[i].task_end_date).format('YYYY-MM-DD');;
                 }
                 // 调度人
                 parkObj.routeOpName = rows[i].route_op_name;
@@ -1349,7 +1349,7 @@ function getDriveDistanceLoadCsv(req,res,next){
                 if(rows[i].task_plan_date == null){
                     parkObj.taskPlanDate = "";
                 }else{
-                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                    parkObj.taskPlanDate = moment(rows[i].task_plan_date).format('YYYY-MM-DD');
                 }
                 parkObj.routeStart = rows[i].route_start;
                 parkObj.routeEnd = rows[i].route_end;
@@ -1804,7 +1804,7 @@ function getDpRouteTaskDetailCsv(req,res,next){
                 if(rows[i].task_plan_date == null){
                     parkObj.taskPlanDate = "";
                 }else{
-                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                    parkObj.taskPlanDate = moment(rows[i].task_plan_date).format('YYYY-MM-DD');
                 }
                 parkObj.vin = rows[i].vin;
                 if(rows[i].short_name == null){

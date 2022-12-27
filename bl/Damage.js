@@ -499,7 +499,7 @@ function getDamageCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.id = rows[i].id;
-                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                parkObj.createdOn = moment(rows[i].created_on).format('YYYY-MM-DD');
                 parkObj.vin = rows[i].vin;
                 parkObj.makeName = rows[i].make_name;
                 if(rows[i].remark==null){
@@ -537,7 +537,7 @@ function getDamageCsv(req,res,next){
                 if(rows[i].order_date==null){
                     parkObj.orderDate = "";
                 }else{
-                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                    parkObj.orderDate = moment(rows[i].order_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].damage_explain==null){
                     parkObj.damageExplain = "";
@@ -657,7 +657,7 @@ function getDamageCsv(req,res,next){
                 if(rows[i].insure_created_on==null){
                     parkObj.insureCreatedOn = "";
                 }else{
-                    parkObj.insureCreatedOn = new Date(rows[i].insure_created_on).toLocaleDateString();
+                    parkObj.insureCreatedOn = moment(rows[i].insure_created_on).format('YYYY-MM-DD');
                 }
                 if(rows[i].insure_name==null){
                     parkObj.insureName = "";
@@ -705,9 +705,8 @@ function getDamageCsv(req,res,next){
                 if(rows[i].indemnity_date==null){
                     parkObj.indemnityDate = "";
                 }else{
-                    parkObj.indemnityDate = new Date(rows[i].indemnity_date).toLocaleDateString();
+                    parkObj.indemnityDate = moment(rows[i].indemnity_date).format('YYYY-MM-DD');
                 }
-
                 // 状态 赔款状态(1-未打款,2-已打款)
                 if(rows[i].indemnity_status == 1){
                     parkObj.indemnityStatus = "未打款";
@@ -797,7 +796,7 @@ function getDamageBaseCsv(req,res,next){
         } else {
             for(var i=0;i<rows.length;i++){
                 parkObj.id = rows[i].id;
-                parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                parkObj.createdOn =  moment(rows[i].created_on).format('YYYY-MM-DD');
                 parkObj.vin = rows[i].vin;
                 if(rows[i].make_name==null){
                     parkObj.makeName = "";

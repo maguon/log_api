@@ -211,7 +211,7 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 if(rows[i].grant_date == null){
                     parkObj.grantDate = "";
                 }else{
-                    parkObj.grantDate = new Date(rows[i].grant_date).toLocaleDateString();
+                    parkObj.grantDate = moment(rows[i].grant_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].grant_user_name == null){
                     parkObj.grantUserName = "";
@@ -227,7 +227,7 @@ function getDpRouteTaskLoanCsv(req,res,next){
                 if(rows[i].refund_date == null){
                     parkObj.refundDate = "";
                 }else{
-                    parkObj.refundDate = new Date(rows[i].refund_date).toLocaleDateString();
+                    parkObj.refundDate = moment(rows[i].refund_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].refund_user_name == null){
                     parkObj.refundUserName = "";

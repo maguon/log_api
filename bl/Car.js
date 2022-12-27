@@ -542,7 +542,7 @@ function getCarRelCsv(req,res,next){
                 if(rows[i].enter_time == null){
                     parkObj.enterTime = "";
                 }else{
-                    parkObj.enterTime = new Date(rows[i].enter_time).toLocaleDateString();
+                    parkObj.enterTime = moment(rows[i].enter_time).format('YYYY-MM-DD');
                 }
                 if(rows[i].storage_name == null){
                     parkObj.storageName = "";
@@ -562,7 +562,7 @@ function getCarRelCsv(req,res,next){
                 if(rows[i].real_out_time == null){
                     parkObj.realOutTime = "";
                 }else{
-                    parkObj.realOutTime = new Date(rows[i].real_out_time).toLocaleDateString();
+                    parkObj.realOutTime = moment(rows[i].real_out_time).format('YYYY-MM-DD');
                 }
 
 
@@ -634,7 +634,7 @@ function getCarListCsv(req,res,next){
                 if(rows[i].order_date == null){
                     parkObj.orderDate = "";
                 }else{
-                    parkObj.orderDate = new Date(rows[i].order_date).toLocaleDateString();
+                    parkObj.orderDate = moment(rows[i].order_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].car_status == 1){
                     parkObj.carStatus = "待发运";

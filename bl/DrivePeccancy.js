@@ -246,12 +246,12 @@ function getDrivePeccancyCsv(req,res,next){
                 if(rows[i].start_date == null){
                     parkObj.startDate = "";
                 }else{
-                    parkObj.startDate = new Date(rows[i].start_date).toLocaleDateString();
+                    parkObj.startDate = moment(rows[i].start_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].handle_date == null){
                     parkObj.handleDate = "";
                 }else{
-                    parkObj.handleDate = new Date(rows[i].handle_date).toLocaleDateString();
+                    parkObj.handleDate = moment(rows[i].handle_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].city_name == null){
                     parkObj.cityName = "";

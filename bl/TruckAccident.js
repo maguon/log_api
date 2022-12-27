@@ -201,7 +201,7 @@ function getTruckAccidentCsv(req,res,next){
                 if(rows[i].accident_date == null){
                     parkObj.accidentDate = "";
                 }else{
-                    parkObj.accidentDate = new Date(rows[i].accident_date).toLocaleDateString();
+                    parkObj.accidentDate = moment(rows[i].accident_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].company_name == null){
                     parkObj.companyName = "";

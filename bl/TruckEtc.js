@@ -196,12 +196,12 @@ function getTruckEtcCsv(req,res,next){
                 if(rows[i].etc_date==null){
                     parkObj.etcDate = "";
                 }else{
-                    parkObj.etcDate = new Date(rows[i].etc_date).toLocaleDateString();
+                    parkObj.etcDate = moment(rows[i].etc_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].created_on==null){
                     parkObj.createdOn = "";
                 }else{
-                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                    parkObj.createdOn = moment(rows[i].created_on).format('YYYY-MM-DD');
                 }
                 if(rows[i].remark==null){
                     parkObj.remark = "";

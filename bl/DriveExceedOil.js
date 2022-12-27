@@ -199,7 +199,7 @@ function getDriveExceedOilCsv(req,res,next){
                 if(rows[i].oil_date == null){
                     parkObj.oilDate = "";
                 }else{
-                    parkObj.oilDate = new Date(rows[i].oil_date).toLocaleDateString();
+                    parkObj.oilDate = moment(rows[i].oil_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].plan_oil == null){
                     parkObj.planOil = "";

@@ -232,12 +232,12 @@ function getTruckAccidentInsureCsv(req,res,next){
                 if(rows[i].created_on == null){
                     parkObj.createdOn = "";
                 }else{
-                    parkObj.createdOn = new Date(rows[i].created_on).toLocaleDateString();
+                    parkObj.createdOn = moment(rows[i].created_on).format('YYYY-MM-DD');
                 }
                 if(rows[i].completed_date == null){
                     parkObj.completedDate = "";
                 }else{
-                    parkObj.completedDate = new Date(rows[i].completed_date).toLocaleDateString();
+                    parkObj.completedDate = moment(rows[i].completed_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].insure_status == 1){
                     parkObj.insureStatus = "处理中";

@@ -11,6 +11,7 @@ var driveExceedOilDateDAO = require('../dao/DriveExceedOilDateDAO.js');
 var dpRouteTaskOilRelDAO = require('../dao/DpRouteTaskOilRelDAO.js');
 var oAuthUtil = require('../util/OAuthUtil.js');
 var Seq = require('seq');
+var moment = require('moment/moment.js');
 var serverLogger = require('../util/ServerLogger.js');
 var logger = serverLogger.createLogger('DriveExceedOilDate.js');
 
@@ -359,7 +360,7 @@ function getDriveDpRouteTaskOilRelCsv(req,res,next){
                 if(rows[i].task_plan_date == null){
                     parkObj.taskPlanDate = "";
                 }else{
-                    parkObj.taskPlanDate = new Date(rows[i].task_plan_date).toLocaleDateString();
+                    parkObj.taskPlanDate = moment(rows[i].task_plan_date).format('YYYY-MM-DD');
                 }
                 if(rows[i].distance == null){
                     parkObj.distance = "";
