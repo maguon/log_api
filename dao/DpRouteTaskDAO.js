@@ -547,6 +547,31 @@ function getDriveDistanceMoney(params,callback) {
     });
 }
 
+function getDprouteTaskV2 (params,callback) {
+    var query = " select  * from dp_route_task dpr where dpr.id is not null " ;
+    var paramsArray=[],i=0;
+    if(params.taskStatus){
+        paramsArray[i++] = params.taskStatus;
+        query = query + " and dpr.task_status >= ? ";
+    }
+    if(params.driveId){
+        paramsArray[i++] = params.driveId;
+        query = query + " and dpr.drive_id = ? ";
+    }
+    if(params.taskPlanDateStart){
+        paramsArray[i++] = params.taskPlanDateStart +" 00:00:00";
+        query = query + " and dpr.task_plan_date >= ? ";
+    }
+    if(params.taskPlanDateEnd){
+        paramsArray[i++] = params.taskPlanDateEnd +" 23:59:59";
+        query = query + " and dpr.task_plan_date <= ? ";
+    }
+    db.dbQuery(query,paramsArray,function(error,rows){
+        logger.debug(' getDprouteTaskV2 ');
+        return callback(error,rows);
+    });
+}
+
 function getDriveDistanceCount(params,callback) {
     var query = " select sum(dpr.distance) as distance, " +
         " (select sum(dprl.real_count) from dp_route_load_task dprl " +
@@ -1143,6 +1168,7 @@ module.exports ={
     addDpRouteTaskForSelect : addDpRouteTaskForSelect,
     addDpRouteTask : addDpRouteTask,
     getDpRouteTask : getDpRouteTask,
+    getDprouteTaskV2 : getDprouteTaskV2,
     getDpRouteTaskCsv : getDpRouteTaskCsv,
     getDpRouteTaskList : getDpRouteTaskList,
     getDpRouteTaskBase : getDpRouteTaskBase,

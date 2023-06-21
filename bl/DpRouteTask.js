@@ -557,6 +557,72 @@ function queryDriveDistanceMoney(req,res,next){
     })
 }
 
+function queryDriveDistanceMoneyV2(req,res,next){
+    var params = req.params ;
+    dpRouteTaskDAO.getDprouteTaskV2(params,function(error,result){
+        if (error) {
+            logger.error(' queryDriveDistanceMoneyV2 ' + error.message);
+            throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
+        } else {
+            logger.info(' queryDriveDistanceMoneyV2 ' + 'success');
+            var distanceSalary =0 ;
+            var reverseSalary = 0 ;
+            for(i = 0; i< result.length; i++){
+                if(result[i].reverse_flag == 1){
+                    reverseSalary += result[i].reverse_money;
+                    continue;
+                }else{
+                    if(result[i].truck_number ==6 ){
+                        distanceSalary += result[i].distance*0.8;
+                        continue;
+                    }else if(result[i].truck_number ==8 && result[i].car_count <=8){
+                        if(result[i].car_count <5){
+                            distanceSalary += result[i].distance*0.6 ;
+                            continue;
+                        }else if(result[i].car_count == 5){
+                            distanceSalary += result[i].distance*0.7 ;
+                            continue;
+                        }else if(result[i].car_count == 6){
+                            distanceSalary += result[i].distance*0.8 ;
+                            continue;
+                        }else if(result[i].car_count == 7){
+                            distanceSalary += result[i].distance*0.9 ;
+                            continue;
+                        }else {
+                            distanceSalary += result[i].distance ;
+                            continue;
+                        }
+
+                    }else if(result[i].truck_number ==8 && result[i].car_count ==9) {
+                        if(result[i].distance < 500){
+                            distanceSalary += result[i].distance*1.3 ;
+                            continue;
+                        }else if (result[i].distance >=500 && result[i].distance <= 1000){
+                            distanceSalary += result[i].distance*1.22 ;
+                            continue;
+                        }else {
+                            distanceSalary += result[i].distance*1.15 ;
+                            continue;
+                        }
+                    }else if(result[i].truck_number ==8 && result[i].car_count ==10) {
+                        if(result[i].distance < 500){
+                            distanceSalary += result[i].distance*1.45 ;
+                            continue;
+                        }else if (result[i].distance >=500 && result[i].distance <= 1000){
+                            distanceSalary += result[i].distance*1.37 ;
+                            continue;
+                        }else {
+                            distanceSalary += result[i].distance*1.3 ;
+                            continue;
+                        }
+                    }
+                }
+            }
+            resUtil.resetQueryRes(res,[{distance_salary:distanceSalary,reverse_salary:reverseSalary}],null);
+            return next();
+        }
+    })
+}
 function queryDriveDistanceCount(req,res,next){
     var params = req.params ;
     if(params.dateIdStart !=null || params.dateIdStart !=""){
@@ -1876,6 +1942,7 @@ module.exports = {
     queryDpRouteTaskBase : queryDpRouteTaskBase,
     queryDpRouteTaskBaseCsv : queryDpRouteTaskBaseCsv,
     queryDriveDistanceMoney : queryDriveDistanceMoney,
+    queryDriveDistanceMoneyV2 : queryDriveDistanceMoneyV2,
     queryDriveDistanceCount : queryDriveDistanceCount,
     queryDriveDistanceLoadStat : queryDriveDistanceLoadStat,
     queryDriveDistanceLoad : queryDriveDistanceLoad,
