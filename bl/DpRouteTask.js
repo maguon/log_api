@@ -618,7 +618,7 @@ function queryDriveDistanceMoneyV2(req,res,next){
                     }
                 }
             }
-            resUtil.resetQueryRes(res,[{distance_salary:distanceSalary,reverse_salary:reverseSalary}],null);
+            resUtil.resetQueryRes(res,[{distance_salary:distanceSalary.toFixed(2),reverse_salary:reverseSalary.toFixed(2)}],null);
             return next();
         }
     })
