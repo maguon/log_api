@@ -575,7 +575,7 @@ function queryDriveDistanceMoneyV2(req,res,next){
                     if(result[i].truck_number ==6 ){
                         distanceSalary += result[i].distance*0.8;
                         continue;
-                    }else if(result[i].truck_number ==8 && result[i].car_count <=8){
+                    }else if(result[i].truck_number ==8 && (result[i].car_count <=8 || result[i].car_count ==12)){
                         if(result[i].car_count <5){
                             distanceSalary += result[i].distance*0.6 ;
                             continue;
@@ -592,8 +592,7 @@ function queryDriveDistanceMoneyV2(req,res,next){
                             distanceSalary += result[i].distance ;
                             continue;
                         }
-
-                    }else if(result[i].truck_number ==8 && result[i].car_count ==9) {
+                    }else if(result[i].truck_number ==8 && (result[i].car_count ==9 || result[i].car_count == 13)) {
                         if(result[i].distance < 500){
                             distanceSalary += result[i].distance*1.3 ;
                             continue;
@@ -604,7 +603,7 @@ function queryDriveDistanceMoneyV2(req,res,next){
                             distanceSalary += result[i].distance*1.15 ;
                             continue;
                         }
-                    }else if(result[i].truck_number ==8 && result[i].car_count ==10) {
+                    }else if(result[i].truck_number ==8 && (result[i].car_count ==10 ||result[i].car_count ==14)) {
                         if(result[i].distance < 500){
                             distanceSalary += result[i].distance*1.45 ;
                             continue;
@@ -613,6 +612,17 @@ function queryDriveDistanceMoneyV2(req,res,next){
                             continue;
                         }else {
                             distanceSalary += result[i].distance*1.3 ;
+                            continue;
+                        }
+                    }else  if(result[i].truck_number ==8 && (result[i].car_count ==11)){
+                        if(result[i].distance < 500){
+                            distanceSalary += result[i].distance*1.7 ;
+                            continue;
+                        }else if (result[i].distance >=500 && result[i].distance <= 1000){
+                            distanceSalary += result[i].distance*1.57 ;
+                            continue;
+                        }else {
+                            distanceSalary += result[i].distance*1.45 ;
                             continue;
                         }
                     }
