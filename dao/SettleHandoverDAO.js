@@ -414,7 +414,8 @@ function getDriveSettle(params,callback) {
         " from (select  drt.drive_id,d.drive_name,drt.truck_id,t.truck_num,t.operate_type,d.company_id,c.company_name, " +
         " sum( case " +
         " when drt.reverse_flag=0 and drt.truck_number=6 then drt.distance*0.8 " +
-        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count<5 then drt.distance*0.6 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count<4 then drt.distance*0.3 " +
+        " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=4 then drt.distance*0.6 " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=5 then drt.distance*0.7 " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=6 then drt.distance*0.8 " +
         " when drt.reverse_flag=0 and drt.truck_number=8 and drt.car_count=7 then drt.distance*0.9 " +

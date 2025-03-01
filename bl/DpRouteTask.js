@@ -476,7 +476,10 @@ function  queryDpRouteTaskBaseCsv(req,res,next) {
                     }
                 }
                 else if(rows[i].truck_number == 8){
-                    if(rows[i].car_count<=4){
+                    if(rows[i].car_count<=3){
+                        parkObj.mileageSalary=0.3;
+                    }
+                    if(rows[i].car_count=4){
                         parkObj.mileageSalary=0.6;
                     }
                     else if(rows[i].car_count==5){
