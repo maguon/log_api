@@ -579,7 +579,10 @@ function queryDriveDistanceMoneyV2(req,res,next){
                         distanceSalary += result[i].distance*0.8;
                         continue;
                     }else if(result[i].truck_number ==8 && (result[i].car_count <=8 || result[i].car_count ==12)){
-                        if(result[i].car_count <5){
+                        if(result[i].car_count <4){
+                            distanceSalary += result[i].distance*0.3 ;
+                            continue;
+                        }else if(result[i].car_count ==4){
                             distanceSalary += result[i].distance*0.6 ;
                             continue;
                         }else if(result[i].car_count == 5){
