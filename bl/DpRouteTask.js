@@ -567,7 +567,7 @@ function queryDriveDistanceMoneyV2(req,res,next){
             logger.error(' queryDriveDistanceMoneyV2 ' + error.message);
             throw sysError.InternalError(error.message,sysMsg.SYS_INTERNAL_ERROR_MSG);
         } else {
-            logger.info(' queryDriveDistanceMoneyV2 ' + 'success');
+            logger.info(' queryDriveDistanceMoneyV2 ' + ' success');
             var distanceSalary =0 ;
             var reverseSalary = 0 ;
             for(i = 0; i< result.length; i++){
