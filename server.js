@@ -250,10 +250,10 @@ function createServer() {
     server.get('/api/truckOperateTypeCountTotal',truck.queryTruckOperateTypeCountTotal);
     server.get('/api/truckOperate',truck.queryTruckOperate);
     server.get('/api/truckCost', truck.queryTruckCost);
-    server.get('/api/truckOperate.csv', truck.getTruckOperateCsv);
-    server.get('/api/truckFirstCsv.csv', truck.getTruckFirstCsv);
-    server.get('/api/truckTrailerCsv.csv', truck.getTruckTrailerCsv);
-    server.get('/api/truckCost.csv', truck.getTruckCostCsv);
+    //server.get('/api/truckOperate.csv', truck.getTruckOperateCsv);
+    //server.get('/api/truckFirstCsv.csv', truck.getTruckFirstCsv);
+    //server.get('/api/truckTrailerCsv.csv', truck.getTruckTrailerCsv);
+    //server.get('/api/truckCost.csv', truck.getTruckCostCsv);
     server.post({path:'/api/user/:userId/truckFirst',contentType: 'application/json'},truck.createTruckFirst,sysRecord.saveTruckRecord);
     server.post({path:'/api/user/:userId/truckTrailer',contentType: 'application/json'},truck.createTruckTrailer,sysRecord.saveTruckRecord);
     server.put({path:'/api/user/:userId/truck/:truckId',contentType: 'application/json'} ,truck.updateTruck,sysRecord.saveTruckRecord);
@@ -276,7 +276,7 @@ function createServer() {
     server.get('/api/truckInsureTypeTotal',truckInsureRel.queryTruckInsureTypeTotal);
     server.get('/api/truckInsureMoneyTotal',truckInsureRel.queryTruckInsureMoneyTotal);
     server.get('/api/truckInsureCountTotal',truckInsureRel.queryTruckInsureCountTotal);
-    server.get('/api/truckInsureRel.csv', truckInsureRel.getTruckInsureRelCsv);
+    //server.get('/api/truckInsureRel.csv', truckInsureRel.getTruckInsureRelCsv);
     server.post({path:'/api/user/:userId/truckInsureRel',contentType: 'application/json'},truckInsureRel.createTruckInsureRel);
     server.post({path:'/api/user/:userId/truckInsureRelFile',contentType: 'multipart/form-data'},truckInsureRel.uploadTruckInsureRelFile);
     server.put({path:'/api/user/:userId/truckInsureRel/:relId',contentType: 'application/json'} ,truckInsureRel.updateTruckInsureRel);
@@ -296,7 +296,7 @@ function createServer() {
     server.get('/api/truckRepairRelCount' , truckRepairRel.queryTruckRepairRelCount);
     server.get('/api/truckRepairCountTotal' , truckRepairRel.queryTruckRepairCountTotal);
     server.get('/api/truckRepairMoneyTotal' , truckRepairRel.queryTruckRepairMoneyTotal);
-    server.get('/api/truckRepair.csv', truckRepairRel.getTruckRepairCsv);
+    //server.get('/api/truckRepair.csv', truckRepairRel.getTruckRepairCsv);
     server.post({path:'/api/user/:userId/truck/:truckId/truckRepairRel',contentType: 'application/json'},truckRepairRel.createTruckRepairRel);
     server.post({path:'/api/user/:userId/truckRepairRelFile',contentType: 'multipart/form-data'},truckRepairRel.uploadTruckRepairRelFile);
     server.put({path:'/api/user/:userId/truckRepairRel/:relId',contentType: 'application/json'} ,truckRepairRel.updateTruckRepairRel);
@@ -324,7 +324,7 @@ function createServer() {
     server.get('/api/truckAccidentTotalCost' , truckAccident.queryTruckAccidentTotalCost);
     server.get('/api/truckAccidentTypeMonthStat' , truckAccident.queryTruckAccidentTypeMonthStat);
     server.get('/api/truckAccidentCostMonthStat' , truckAccident.queryTruckAccidentCostMonthStat);
-    server.get('/api/truckAccident.csv' , truckAccident.getTruckAccidentCsv);
+    //server.get('/api/truckAccident.csv' , truckAccident.getTruckAccidentCsv);
     server.post({path:'/api/user/:userId/truckAccident',contentType: 'application/json'},truckAccident.createTruckAccident);
     server.put({path:'/api/user/:userId/truckAccident/:truckAccidentId',contentType: 'application/json'} ,truckAccident.updateTruckAccident);
     server.put({path:'/api/user/:userId/truckAccident/:truckAccidentId/accidentStatus/:accidentStatus',contentType: 'application/json'} ,truckAccident.updateTruckAccidentStatus);
@@ -342,7 +342,7 @@ function createServer() {
     server.get('/api/truckAccidentInsure' ,truckAccidentInsure.queryTruckAccidentInsure);
     server.get('/api/truckAccidentInsurePlanTotal' ,truckAccidentInsure.queryTruckAccidentInsurePlanTotal);
     server.get('/api/truckAccidentInsureMonthStat' ,truckAccidentInsure.queryTruckAccidentInsureMonthStat);
-    server.get('/api/truckAccidentInsure.csv' ,truckAccidentInsure.getTruckAccidentInsureCsv);
+    //server.get('/api/truckAccidentInsure.csv' ,truckAccidentInsure.getTruckAccidentInsureCsv);
     server.post({path:'/api/user/:userId/truckAccidentInsureBase',contentType: 'application/json'},truckAccidentInsure.createTruckAccidentInsureBase);
     server.post({path:'/api/user/:userId/truckAccidentInsure',contentType: 'application/json'},truckAccidentInsure.createTruckAccidentInsure);
     server.put({path:'/api/user/:userId/truckAccidentInsure/:accidentInsureId',contentType: 'application/json'} ,truckAccidentInsure.updateTruckAccidentInsure);
@@ -370,14 +370,14 @@ function createServer() {
     server.get('/api/truckSecurityCheck' ,truckSecurityCheck.queryTruckSecurityCheck);
     server.post({path:'/api/user/:userId/truckSecurityCheck',contentType: 'application/json'},truckSecurityCheck.createTruckSecurityCheck);
     server.put({path:'/api/user/:userId/truckSecurityCheck/:securityCheckId',contentType: 'application/json'} ,truckSecurityCheck.updateTruckSecurityCheck);
-    server.get('/api/truckSecurityCheck.csv', truckSecurityCheck.getTruckSecurityCheckCsv);
+    //server.get('/api/truckSecurityCheck.csv', truckSecurityCheck.getTruckSecurityCheckCsv);
 
     /**
      * TruckEtc Module
      */
     server.get('/api/truckEtc' ,truckEtc.queryTruckEtc);
     server.get('/api/truckEtcFeeCount' ,truckEtc.queryTruckEtcFeeCount);
-    server.get('/api/truckEtc.csv' ,truckEtc.getTruckEtcCsv);
+    //server.get('/api/truckEtc.csv' ,truckEtc.getTruckEtcCsv);
     server.post({path:'/api/user/:userId/truckEtc',contentType: 'application/json'},truckEtc.createTruckEtc);
     server.post({path:'/api/user/:userId/truckEtcFile',contentType: 'multipart/form-data'},truckEtc.uploadTruckEtcFile);
     server.put({path:'/api/user/:userId/truckEtc/:truckEtcId/paymentStatus/:paymentStatus',contentType: 'application/json'} ,truckEtc.updatePaymentStatus);
@@ -387,7 +387,7 @@ function createServer() {
      * TruckQa Module
      */
     server.get('/api/truckQa' ,truckQa.queryTruckQa);
-    server.get('/api/truckQa.csv' ,truckQa.getTruckQaCsv);
+    //server.get('/api/truckQa.csv' ,truckQa.getTruckQaCsv);
     server.post({path:'/api/user/:userId/truckQa',contentType: 'application/json'},truckQa.createTruckQa);
     server.post({path:'/api/user/:userId/truckQaFile',contentType: 'multipart/form-data'},truckQa.uploadTruckQaFile);
 
@@ -420,7 +420,7 @@ function createServer() {
     server.get('/api/company/:companyId/driveCount' , drive.queryDriveCount);
     server.get('/api/driveOperateTypeCount' , drive.queryDriveOperateTypeCount);
     server.get('/api/driveTruckCount' , drive.queryDriveTruckCount);
-    server.get('/api/drive.csv' , drive.getDriveCsv);
+    //server.get('/api/drive.csv' , drive.getDriveCsv);
     server.post({path:'/api/user/:userId/drive',contentType: 'application/json'},drive.createDrive,sysRecord.saveDriverRecord);
     server.put({path:'/api/user/:userId/drive/:driveId',contentType: 'application/json'} ,drive.updateDrive);
     server.put({path:'/api/user/:userId/drive/:driveId/driveCompany',contentType: 'application/json'} ,drive.updateDriveCompany,sysRecord.saveDriverRecord);
@@ -444,7 +444,7 @@ function createServer() {
      */
     server.get('/api/driveSalary' , driveSalary.queryDriveSalary);
     server.get('/api/driveSalaryBase' , driveSalary.queryDriveSalaryBase);
-    server.get('/api/driveSalary.csv' , driveSalary.getDriveSalaryCsv);
+    //server.get('/api/driveSalary.csv' , driveSalary.getDriveSalaryCsv);
     server.post({path:'/api/user/:userId/driveSalary',contentType: 'application/json'},driveSalary.createDriveSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId',contentType: 'application/json'} ,driveSalary.updateDrivePlanSalary);
     server.put({path:'/api/user/:userId/driveSalary/:driveSalaryId/driveActualSalary',contentType: 'application/json'} ,driveSalary.updateDriveActualSalary);
@@ -501,7 +501,7 @@ function createServer() {
      */
     server.get('/api/drivePeccancy' , drivePeccancy.queryDrivePeccancy);
     server.get('/api/drivePeccancyCount' , drivePeccancy.queryDrivePeccancyCount);
-    server.get('/api/drivePeccancy.csv' , drivePeccancy.getDrivePeccancyCsv);
+    //server.get('/api/drivePeccancy.csv' , drivePeccancy.getDrivePeccancyCsv);
     server.post({path:'/api/user/:userId/drivePeccancy',contentType: 'application/json'},drivePeccancy.createDrivePeccancy);
     server.post({path:'/api/user/:userId/drivePeccancyFile',contentType: 'multipart/form-data'},drivePeccancy.uploadDrivePeccancyFile);
     server.put({path:'/api/user/:userId/peccancy/:peccancyId',contentType: 'application/json'} ,drivePeccancy.updateDrivePeccancy);
@@ -517,7 +517,7 @@ function createServer() {
     server.get('/api/driveOilWeekStat' , driveExceedOil.queryDriveOilWeekStat);
     server.get('/api/driveUreaWeekStat' , driveExceedOil.queryDriveUreaWeekStat);
     server.get('/api/driveOilMoneyWeekStat' , driveExceedOil.queryDriveOilMoneyWeekStat);
-    server.get('/api/driveExceedOil.csv' , driveExceedOil.getDriveExceedOilCsv);
+    //server.get('/api/driveExceedOil.csv' , driveExceedOil.getDriveExceedOilCsv);
     server.post({path:'/api/user/:userId/driveExceedOil',contentType: 'application/json'},driveExceedOil.createDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId',contentType: 'application/json'} ,driveExceedOil.updateDriveExceedOil);
     server.put({path:'/api/user/:userId/exceedOil/:exceedOilId/oilStatus/:oilStatus',contentType: 'application/json'} ,driveExceedOil.updateDriveOilStatus);
@@ -528,8 +528,8 @@ function createServer() {
     server.get('/api/driveExceedOilDate' , driveExceedOilDate.queryDriveExceedOilDate);
     server.get('/api/driveExceedOilDateList' , driveExceedOilDate.queryDriveExceedOilDateList);
     server.get('/api/driveExceedOilMonth' , driveExceedOilDate.queryDriveExceedOilMonth);
-    server.get('/api/driveExceedOilDate.csv' , driveExceedOilDate.getDriveExceedOilDateCsv);
-    server.get('/api/driveDpRouteTaskOilRel.csv' , driveExceedOilDate.getDriveDpRouteTaskOilRelCsv);
+    //server.get('/api/driveExceedOilDate.csv' , driveExceedOilDate.getDriveExceedOilDateCsv);
+    //server.get('/api/driveDpRouteTaskOilRel.csv' , driveExceedOilDate.getDriveDpRouteTaskOilRelCsv);
     server.post({path:'/api/user/:userId/driveExceedOilDate',contentType: 'application/json'},driveExceedOilDate.createDriveExceedOilDate);
     server.put({path:'/api/user/:userId/exceedOilDateId/:exceedOilDateId',contentType: 'application/json'} ,driveExceedOilDate.updateDriveExceedOilDate);
     server.put({path:'/api/user/:userId/exceedOilDateId/:exceedOilDateId/actualMoney',contentType: 'application/json'} ,driveExceedOilDate.updateDriveExceedOilDateMoney);
@@ -549,7 +549,7 @@ function createServer() {
     server.get('/api/driveExceedOilRelMonthStat' , driveExceedOilRel.queryDriveExceedOilRelMonthStat);
     server.get('/api/driveExceedOilMoneyMonthStat' , driveExceedOilRel.queryDriveExceedOilMoneyMonthStat);
     server.get('/api/driveExceedOilRelWeekStat' , driveExceedOilRel.queryDriveExceedOilRelWeekStat);
-    server.get('/api/driveExceedOilRel.csv' , driveExceedOilRel.getDriveExceedOilRelCsv);
+    //server.get('/api/driveExceedOilRel.csv' , driveExceedOilRel.getDriveExceedOilRelCsv);
     server.post({path:'/api/user/:userId/driveExceedOilRel',contentType: 'application/json'},driveExceedOilRel.createDriveExceedOilRel);
     server.post({path:'/api/user/:userId/driveExceedOilRelFile',contentType: 'multipart/form-data'},driveExceedOilRel.uploadDriveExceedOilRelFile);
     server.put({path:'/api/user/:userId/driveExceedOilRel/:relId',contentType: 'application/json'} ,driveExceedOilRel.updateDriveExceedOilRel);
@@ -568,7 +568,7 @@ function createServer() {
      * DriveWork Module
      */
     server.get('/api/driveWork' , driveWork.queryDriveWork);
-    server.get('/api/driveWork.csv' , driveWork.getDriveWorkCsv);
+    //server.get('/api/driveWork.csv' , driveWork.getDriveWorkCsv);
     server.post({path:'/api/user/:userId/driveWork',contentType: 'application/json'},driveWork.createDriveWork);
     server.put({path:'/api/user/:userId/driveWork/:driveWorkId',contentType: 'application/json'} ,driveWork.updateDriveWork);
     server.post({path:'/api/user/:userId/driveWorkFile',contentType: 'multipart/form-data'},driveWork.uploadDriveWorkFile);
@@ -577,7 +577,7 @@ function createServer() {
      * DriveSundryFee Module add by yujy at 2020/03/05
      */
     server.get('/api/driveSundryFee' , driveSundryFee.queryDriveSundryFee);
-    server.get('/api/driveSundryFee.csv' , driveSundryFee.getDriveSundryFeeCsv);
+    //server.get('/api/driveSundryFee.csv' , driveSundryFee.getDriveSundryFeeCsv);
     server.post({path:'/api/user/:userId/driveSundryFee',contentType: 'application/json'},driveSundryFee.createDriveSundryFee);
     server.put({path:'/api/user/:userId/driveSundryFee/:driveSundryFeeId',contentType: 'application/json'} ,driveSundryFee.updateDriveSundryFee);
     server.post({path:'/api/user/:userId/driveSundryFeeFile',contentType: 'multipart/form-data'},driveSundryFee.uploadDriveSundryFee);
@@ -587,7 +587,7 @@ function createServer() {
      * DriveSocialSecurity Module
      */
     server.get('/api/driveSocialSecurity' , driveSocialSecurity.queryDriveSocialSecurity);
-    server.get('/api/driveSocialSecurity.csv' , driveSocialSecurity.getDriveSocialSecurityCsv);
+    //server.get('/api/driveSocialSecurity.csv' , driveSocialSecurity.getDriveSocialSecurityCsv);
     server.post({path:'/api/user/:userId/driveSocialSecurity',contentType: 'application/json'},driveSocialSecurity.createDriveSocialSecurity);
     server.post({path:'/api/user/:userId/driveSocialSecurityFile',contentType: 'multipart/form-data'},driveSocialSecurity.uploadDriveSocialSecurityFile);
     server.put({path:'/api/user/:userId/socialSecurity/:socialSecurityId',contentType: 'application/json'} ,driveSocialSecurity.updateDriveSocialSecurity);
@@ -596,7 +596,7 @@ function createServer() {
      * DriveTruckMonthValue Module
      */
     server.get('/api/driveTruckMonthValue' , driveTruckMonthValue.queryDriveTruckMonthValue);
-    server.get('/api/driveTruckMonthValue.csv',driveTruckMonthValue.getDriveTruckMonthValueCsv);
+    //server.get('/api/driveTruckMonthValue.csv',driveTruckMonthValue.getDriveTruckMonthValueCsv);
     server.post({path:'/api/user/:userId/driveTruckMonthValue',contentType: 'application/json'},driveTruckMonthValue.createDriveTruckMonthValue);
     server.post({path:'/api/user/:userId/depreciationFeeFile',contentType: 'multipart/form-data'},driveTruckMonthValue.uploadDepreciationFeeFile);
     server.put({path:'/api/user/:userId/truck/:truckId/yMonth/:yMonth',contentType: 'application/json'} ,driveTruckMonthValue.updateTruckDepreciationFee);
@@ -672,11 +672,11 @@ function createServer() {
     server.get('/api/entrustCar',entrust.queryEntrustCar);
     server.get('/api/entrustCarCount',entrust.queryEntrustCarCount);
     server.get('/api/entrustCarNotCount',entrust.queryEntrustCarNotCount);
-    server.get('/api/entrustCar.csv',entrust.getEntrustCarCsv);
+    //server.get('/api/entrustCar.csv',entrust.getEntrustCarCsv);
     // 2020/3/9 新建2个接口，委托方估值
     server.get('/api/entrustPrice',entrust.queryEntrustPrice);
-    server.get('/api/entrustPrice.csv',entrust.getEntrustPriceCsv);
-    server.get('/api/entrustNotCar.csv',entrust.getEntrustNotCarCsv);
+    //server.get('/api/entrustPrice.csv',entrust.getEntrustPriceCsv);
+    //server.get('/api/entrustNotCar.csv',entrust.getEntrustNotCarCsv);
     server.post({path:'/api/user/:userId/entrust',contentType: 'application/json'},entrust.createEntrust);
     server.get('/api/settleCarBatch',entrust.createSettleCarBatch);
     server.put({path:'/api/user/:userId/entrust/:entrustId',contentType: 'application/json'} ,entrust.updateEntrust);
@@ -694,7 +694,7 @@ function createServer() {
      * EntrustCityRouteRel Module
      */
     server.get('/api/entrustCityRouteRel',entrustCityRouteRel.queryEntrustCityRouteRel);
-    server.get('/api/entrustCityRouteRel.csv',entrustCityRouteRel.getEntrustCityRouteRelCsv);
+    //server.get('/api/entrustCityRouteRel.csv',entrustCityRouteRel.getEntrustCityRouteRelCsv);
     server.post({path:'/api/user/:userId/entrustCityRouteRel',contentType: 'application/json'},entrustCityRouteRel.createEntrustCityRouteRel,sysRecord.saveEntrustRecord);
     server.post({path:'/api/user/:userId/entrustCityRouteRelFile',contentType: 'multipart/form-data'},entrustCityRouteRel.uploadEntrustCityRouteRelFile);
     server.put({path:'/api/user/:userId/entrust/:entrustId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId/size/:sizeType',contentType: 'application/json'} ,entrustCityRouteRel.updateEntrustCityRouteRel,sysRecord.saveEntrustRecord);
@@ -728,7 +728,7 @@ function createServer() {
     server.get('/api/storageCount',storage.queryStorageCount);
     server.get('/api/storageTotalMonth',storage.queryStorageTotalMonth);
     server.get('/api/storageTotalDay',storage.queryStorageTotalDay);
-    server.get('/api/storageCar.csv', storage.getStorageCarCsv);
+    //server.get('/api/storageCar.csv', storage.getStorageCarCsv);
     server.post({path:'/api/user/:userId/storage',contentType: 'application/json'},storage.createStorage);
     server.put({path:'/api/user/:userId/storage/:storageId',contentType: 'application/json'} ,storage.updateStorage);
     server.put({path:'/api/user/:userId/storage/:storageId/storageStatus/:storageStatus',contentType: 'application/json'} ,storage.updateStorageStatus);
@@ -759,8 +759,8 @@ function createServer() {
     server.get('/api/carMonthStat',car.queryCarMonthStat);
     server.get('/api/carDayStat',car.queryCarDayStat);
     server.get('/api/carDamageDeclare',car.queryCarDamageDeclare);
-    server.get('/api/carRel.csv',car.getCarRelCsv);
-    server.get('/api/carList.csv',car.getCarListCsv);
+    //server.get('/api/carRel.csv',car.getCarRelCsv);
+    //server.get('/api/carList.csv',car.getCarListCsv);
     server.post({path:'/api/user/:userId/uploadCar',contentType: 'application/json'},car.createUploadCar);
     server.post({path:'/api/user/:userId/car',contentType: 'application/json'},sysRecord.checkUserStatus,car.createCar,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/entrustCar',contentType: 'application/json'},sysRecord.checkUserStatus,car.createEntrustCar,sysRecord.saveCarRecord);
@@ -842,23 +842,23 @@ function createServer() {
     server.get('/api/dpRouteTask' , dpRouteTask.queryDpRouteTask);
     server.get('/api/dpRouteTaskList' , dpRouteTask.queryDpRouteTaskList);
     server.get('/api/dpRouteTaskBase' , dpRouteTask.queryDpRouteTaskBase);
-    server.get('/api/dpRouteTaskBase.csv' , dpRouteTask.queryDpRouteTaskBaseCsv);
+    //server.get('/api/dpRouteTaskBase.csv' , dpRouteTask.queryDpRouteTaskBaseCsv);
     server.get('/api/driveDistanceMoney' , dpRouteTask.queryDriveDistanceMoney);
     server.get('/api/driveDistanceMoneyV2' , dpRouteTask.queryDriveDistanceMoneyV2);
     server.get('/api/driveDistanceCount' , dpRouteTask.queryDriveDistanceCount);
     server.get('/api/driveDistanceLoadStat' , dpRouteTask.queryDriveDistanceLoadStat);
     server.get('/api/driveDistanceLoad' , dpRouteTask.queryDriveDistanceLoad);
-    server.get('/api/driveDistanceLoadStat.csv', dpRouteTask.getDriveDistanceLoadStatCsv);
-    server.get('/api/driveDistanceLoad.csv', dpRouteTask.getDriveDistanceLoadCsv);
+    //server.get('/api/driveDistanceLoadStat.csv', dpRouteTask.getDriveDistanceLoadStatCsv);
+    //server.get('/api/driveDistanceLoad.csv', dpRouteTask.getDriveDistanceLoadCsv);
     server.get('/api/distanceMonthStat' , dpRouteTask.queryRouteTaskMonthStat);
     server.get('/api/distanceWeekStat' , dpRouteTask.queryRouteTaskWeekStat);
     server.get('/api/distanceDayStat' , dpRouteTask.queryRouteTaskDayStat);
     server.get('/api/notCompletedTaskStatusCount' , dpRouteTask.queryNotCompletedTaskStatusCount);
     server.get('/api/taskStatusCount' , dpRouteTask.queryTaskStatusCount);
-    server.get('/api/dpRouteTask.csv', dpRouteTask.getDpRouteTaskCsv);
+    //server.get('/api/dpRouteTask.csv', dpRouteTask.getDpRouteTaskCsv);
     server.get('/api/driveCost', dpRouteTask.queryDriveCost);
-    server.get('/api/driveCost.csv' , dpRouteTask.getDriveCostCsv);
-    server.get('/api/dpRouteTaskDetail.csv' , dpRouteTask.getDpRouteTaskDetailCsv);
+    //server.get('/api/driveCost.csv' , dpRouteTask.getDriveCostCsv);
+    //server.get('/api/dpRouteTaskDetail.csv' , dpRouteTask.getDpRouteTaskDetailCsv);
     server.get('/api/routeStat' , dpRouteTask.queryRouteStat);
 
     server.post({path:'/api/user/:userId/dpRouteTask',contentType: 'application/json'},dpRouteTask.createDpRouteTask,sysRecord.saveRouteRecord);
@@ -921,8 +921,8 @@ function createServer() {
     server.get('/api/dpRouteLoadTaskCleanRelReceiveMonthStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelReceiveMonthStat);
     server.get('/api/dpRouteLoadTaskCleanRelWeekStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelWeekStat);
     server.get('/api/dpRouteLoadTaskCleanRelReceiveWeekStat',dpRouteLoadTaskCleanRel.queryDpRouteLoadTaskCleanRelReceiveWeekStat);
-    server.get('/api/dpRouteLoadTaskCleanRel.csv',dpRouteLoadTaskCleanRel.getDpRouteLoadTaskCleanRelCsv);
-    server.get('/api/dpRouteLoadTaskProtect.csv',dpRouteLoadTaskCleanRel.getDpRouteLoadTaskProtectCsv);
+    //server.get('/api/dpRouteLoadTaskCleanRel.csv',dpRouteLoadTaskCleanRel.getDpRouteLoadTaskCleanRelCsv);
+    //server.get('/api/dpRouteLoadTaskProtect.csv',dpRouteLoadTaskCleanRel.getDpRouteLoadTaskProtectCsv);
     server.post({path:'/api/user/:userId/dpRouteLoadTaskCleanRel',contentType: 'application/json'},dpRouteLoadTaskCleanRel.createDpRouteLoadTaskCleanRel);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRel);
     server.put({path:'/api/user/:userId/loadTaskCleanRel/:loadTaskCleanRelId/status/:status',contentType: 'application/json'} ,dpRouteLoadTaskCleanRel.updateDpRouteLoadTaskCleanRelStatus);
@@ -936,7 +936,7 @@ function createServer() {
     server.get('/api/dpRouteTaskLoanCount',dpRouteTaskLoan.queryDpRouteTaskLoanCount);
     server.get('/api/dpRouteTaskLoanMonthStat',dpRouteTaskLoan.queryDpRouteTaskLoanMonthStat);
     server.get('/api/dpRouteTaskLoanDayStat',dpRouteTaskLoan.queryDpRouteTaskLoanDayStat);
-    server.get('/api/dpRouteTaskLoan.csv',dpRouteTaskLoan.getDpRouteTaskLoanCsv);
+    //server.get('/api/dpRouteTaskLoan.csv',dpRouteTaskLoan.getDpRouteTaskLoanCsv);
     server.get('/api/dpRouteTaskNotLoan',dpRouteTaskLoan.queryDpRouteTaskNotLoan);
     server.get('/api/dpRouteTaskNotLoanCount',dpRouteTaskLoan.queryDpRouteTaskNotLoanCount);
     server.post({path:'/api/user/:userId/dpRouteTaskLoan',contentType: 'application/json'},dpRouteTaskLoan.createDpRouteTaskLoan);
@@ -969,7 +969,7 @@ function createServer() {
     server.put({path:'/api/user/:userId/dpRouteTaskFee/:dpRouteTaskFeeId',contentType: 'application/json'} ,dpRouteTaskFee.updateDpRouteTaskFee);
     server.put({path:'/api/user/:userId/dpRouteTaskFee/:dpRouteTaskFeeId/status/:status',contentType: 'application/json'} ,dpRouteTaskFee.updateDpRouteTaskFeeStatus);
     server.put({path:'/api/user/:userId/status/:status/dpRouteTaskFeeStatusAll',contentType: 'application/json'} ,dpRouteTaskFee.updateDpRouteTaskFeeStatusAll);
-    server.get('/api/dpRouteTaskFee.csv', dpRouteTaskFee.getDpRouteTaskFeeCsv);
+    //server.get('/api/dpRouteTaskFee.csv', dpRouteTaskFee.getDpRouteTaskFeeCsv);
 
     /**
      * Damage Module
@@ -988,8 +988,8 @@ function createServer() {
     server.get('/api/damageMakeTopMonthStat',damage.queryDamageMakeTopMonthStat);
     server.get('/api/damageReceiveTopMonthStat',damage.queryDamageReceiveTopMonthStat);
     server.get('/api/damageDaseAddrTopMonthStat',damage.queryDamageDaseAddrTopMonthStat);
-    server.get('/api/damage.csv', damage.getDamageCsv);
-    server.get('/api/damageBase.csv', damage.getDamageBaseCsv);
+    //server.get('/api/damage.csv', damage.getDamageCsv);
+    //server.get('/api/damageBase.csv', damage.getDamageBaseCsv);
     server.post({path:'/api/user/:userId/damage',contentType: 'application/json'},sysRecord.checkUserStatus,damage.createDamage,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/qualityAssurance',contentType: 'application/json'},sysRecord.checkUserStatus,damage.createQualityAssurance,sysRecord.saveCarRecord);
     server.post({path:'/api/user/:userId/qa',contentType: 'application/json'},sysRecord.checkUserStatus,damage.createQa,sysRecord.saveCarRecord);
@@ -1017,7 +1017,7 @@ function createServer() {
     server.get('/api/damageCheckIndemnity',damageCheckIndemnity.queryDamageCheckIndemnity);
     server.get('/api/indemnityStatusCount' ,damageCheckIndemnity.queryIndemnityStatusCount);
     server.get('/api/indemnityMonthStat' ,damageCheckIndemnity.queryIndemnityMonthStat);
-    server.get('/api/damageCheckIndemnity.csv', damageCheckIndemnity.getDamageCheckIndemnityCsv);
+    //server.get('/api/damageCheckIndemnity.csv', damageCheckIndemnity.getDamageCheckIndemnityCsv);
     server.post({path:'/api/user/:userId/damageCheckIndemnity',contentType: 'application/json'},damageCheckIndemnity.createDamageCheckIndemnity);
     server.put({path:'/api/user/:userId/damageCheckIndemnity/:indemnityId',contentType: 'application/json'} ,damageCheckIndemnity.updateDamageCheckIndemnity);
     server.put({path:'/api/user/:userId/damageCheckIndemnity/:indemnityId/image',contentType: 'application/json'} ,damageCheckIndemnity.updateDamageCheckIndemnityImage);
@@ -1038,7 +1038,7 @@ function createServer() {
     /**
      * DamageInsureRel Module
      */
-    server.get('/api/damageInsureRel.csv', damageInsureRel.getDamageInsureRelCsv);
+    //server.get('/api/damageInsureRel.csv', damageInsureRel.getDamageInsureRelCsv);
     server.post({path:'/api/user/:userId/damageInsureRel',contentType: 'application/json'},damageInsureRel.createDamageInsureRel);
     server.del('/api/user/:userId/damageInsure/:damageInsureId/damage/:damageId' , damageInsureRel.removeDamageInsureRel);
 
@@ -1065,7 +1065,7 @@ function createServer() {
     server.get('/api/user/:userId/damageQaTaskDayStat',damageQaTaskCarRel.damageQaTaskDayStat);
     server.get('/api/user/:userId/qtId/:qtId/userStat',damageQaTaskCarRel.damageQaTaskUserStat);
     server.get('/api/user/:userId/damageQaUserStat',damageQaTaskCarRel.damageQaTaskUserStat);
-    server.get('/api/user/:userId/damageQaUserStat.csv',damageQaTaskCarRel.damageQaTaskUserStatCsv);
+    //server.get('/api/user/:userId/damageQaUserStat.csv',damageQaTaskCarRel.damageQaTaskUserStatCsv);
 
     /**
      * RepairStation Module
@@ -1083,15 +1083,15 @@ function createServer() {
     server.get('/api/notSettleHandoverCarCount', settleHandover.queryNotSettleHandoverCarCount);
     server.get('/api/settleHandoverDayCount', settleHandover.querySettleHandoverDayCount);
     server.get('/api/settleHandoverMonthCount', settleHandover.querySettleHandoverMonthCount);
-    server.get('/api/settleHandover.csv', settleHandover.getSettleHandoverCsv);
-    server.get('/api/notSettleHandover.csv', settleHandover.getNotSettleHandoverCsv);
+    //server.get('/api/settleHandover.csv', settleHandover.getSettleHandoverCsv);
+    //server.get('/api/notSettleHandover.csv', settleHandover.getNotSettleHandoverCsv);
     server.get('/api/driveSettle' , settleHandover.queryDriveSettle);
     server.get('/api/driveSettleSalary' , settleHandover.queryDriveSettleSalary);
     server.get('/api/driveSettleOutput' , settleHandover.queryDriveSettleOutput);
-    server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
-    server.get('/api/driveSettleSalary.csv' , settleHandover.getDriveSettleSalaryCsv);
-    server.get('/api/driveSettleOutput.csv' , settleHandover.getDriveSettleOutputCsv);
-    server.get('/api/driveSettleDetail.csv' , settleHandover.getDriveSettleDetailCsv);
+    //server.get('/api/driveSettle.csv' , settleHandover.getDriveSettleCsv);
+    //server.get('/api/driveSettleSalary.csv' , settleHandover.getDriveSettleSalaryCsv);
+    //server.get('/api/driveSettleOutput.csv' , settleHandover.getDriveSettleOutputCsv);
+    //server.get('/api/driveSettleDetail.csv' , settleHandover.getDriveSettleDetailCsv);
     server.post({path:'/api/user/:userId/settleHandover',contentType: 'application/json'},settleHandover.createSettleHandover);
     server.post({path:'/api/user/:userId/settleHandoverAll',contentType: 'application/json'},settleHandover.createSettleHandoverAll);
     server.put({path:'/api/user/:userId/settleHandover/:settleHandoverId',contentType: 'application/json'} ,settleHandover.updateSettleHandover);
@@ -1111,8 +1111,8 @@ function createServer() {
     server.get('/api/settleCar', settleCar.querySettleCar);
     server.get('/api/settleCarCount', settleCar.querySettleCarCount);
     server.get('/api/notSettleCarCount', settleCar.queryNotSettleCarCount);
-    server.get('/api/settleCar.csv',settleCar.getSettleCarCsv);
-    server.get('/api/notSettleCar.csv',settleCar.getNotSettleCarCsv);
+    //server.get('/api/settleCar.csv',settleCar.getSettleCarCsv);
+    //server.get('/api/notSettleCar.csv',settleCar.getNotSettleCarCsv);
     server.get('/api/entrustStat' , settleCar.getEntrustStat);
 
     server.post({path:'/api/user/:userId/settleCar',contentType: 'application/json'},settleCar.createSettleCar);
@@ -1123,16 +1123,16 @@ function createServer() {
      * SettleOuterTruck Module
      */
     server.get('/api/settleOuterTruck', settleOuterTruck.querySettleOuterTruck);
-    server.get('/api/settleOuterTruckBase.csv', settleOuterTruck.getSettleOuterTruckBaseCsv);
+    //server.get('/api/settleOuterTruckBase.csv', settleOuterTruck.getSettleOuterTruckBaseCsv);
     server.get('/api/settleOuterTruckList', settleOuterTruck.querySettleOuterTruckList);
     // 2020-01-06 新加接口：外协导入车辆查询
     server.get('/api/settleOuterCarList', settleOuterTruck.querySettleOuterCarList);
     server.get('/api/settleOuterTruckCarCount', settleOuterTruck.querySettleOuterTruckCarCount);
     // 2020-01-06 新加接口：外协导入车辆查询 结算车辆数:0 结算金额:元
     server.get('/api/settleOuterCarCount', settleOuterTruck.querySettleOuterCarCount);
-    server.get('/api/settleOuterTruck.csv', settleOuterTruck.getSettleOuterTruckCsv);
+    //server.get('/api/settleOuterTruck.csv', settleOuterTruck.getSettleOuterTruckCsv);
     // 2020-01-06 新加接口：外协导入车辆下载
-    server.get('/api/settleOuterCar.csv', settleOuterTruck.getSettleOuterCarCsv);
+    //server.get('/api/settleOuterCar.csv', settleOuterTruck.getSettleOuterCarCsv);
     server.post({path:'/api/user/:userId/settleOuterTruckFile',contentType: 'multipart/form-data'},settleOuterTruck.uploadSettleOuterTruckFile);
     server.post({path:'/api/user/:userId/settleOuterTruck',contentType: 'application/json'},settleOuterTruck.createSettleOuterTruck);
     server.put({path:'/api/user/:userId/company/:companyId/make/:makeId/routeStart/:routeStartId/routeEnd/:routeEndId',contentType: 'application/json'} ,settleOuterTruck.updateSettleOuterTruck);
@@ -1151,7 +1151,7 @@ function createServer() {
      * SettleOuterInvoiceCarRel Module
      */
     server.get('/api/settleOuterInvoiceCarRel', settleOuterInvoiceCarRel.querySettleOuterInvoiceCarRel);
-    server.get('/api/settleOuterInvoiceCarRel.csv', settleOuterInvoiceCarRel.getSettleOuterInvoiceCarRelCsv);
+    //server.get('/api/settleOuterInvoiceCarRel.csv', settleOuterInvoiceCarRel.getSettleOuterInvoiceCarRelCsv);
 
     /**
      * Sys_notification
@@ -1178,13 +1178,13 @@ function createServer() {
      */
     server.post({path:'/api/createTotalMonthStat',contentType: 'application/json'},totalMonthStat.createTotalMonthStat);
     server.get('/api/user/:userId/settleStat' ,totalMonthStat.querySettleStat);
-    server.get('/api/settleStat.csv', totalMonthStat.getSettleStatCsv);
+    //server.get('/api/settleStat.csv', totalMonthStat.getSettleStatCsv);
     server.get('/api/user/:userId/dispatchStat' ,totalMonthStat.queryDispatchStat);
-    server.get('/api/dispatchStat.csv', totalMonthStat.getDispatchStatCsv);
+    //server.get('/api/dispatchStat.csv', totalMonthStat.getDispatchStatCsv);
     server.get('/api/user/:userId/qualityStat' ,totalMonthStat.queryQualityStat);
-    server.get('/api/qualityStat.csv', totalMonthStat.getQualityStatCsv);
+    //server.get('/api/qualityStat.csv', totalMonthStat.getQualityStatCsv);
     server.get('/api/user/:userId/truckStat' ,totalMonthStat.queryTruckStat);
-    server.get('/api/truckStat.csv', totalMonthStat.getTruckStatCsv);
+    //server.get('/api/truckStat.csv', totalMonthStat.getTruckStatCsv);
 
     /**
      * App Module
