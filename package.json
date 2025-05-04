@@ -5,7 +5,7 @@
         "csvtojson": "2.0.8",
         "extend": "*",
         "gm": "1.23.0",
-        "log4js": "1.1.1",
+        "log4js": "6.4.0",
         "moment": "^2.18.1",
         "mongodb": "2.2.24",
         "mysql": "*",
